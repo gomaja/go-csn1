@@ -565,6 +565,82 @@ func TestSI18AndSI20ContinuationCount(t *testing.T) {
 	}
 }
 
+func TestSI18AndSI20ContinuationCountAtReaderOffset(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.2
+	// measures the remainder within this SI value, not from stream bit zero.
+	wire := append([]byte{0x00, 0x3f}, bytes.Repeat([]byte{0xaa}, 18)...)
+	for _, tc := range []struct {
+		name   string
+		decode func(*runtime.Reader) (any, error)
+		encode func(*runtime.Writer, any) error
+	}{
+		{"SI18", func(r *runtime.Reader) (any, error) { return DecodeSI18RestOctetsFrom(r) }, func(w *runtime.Writer, v any) error { return EncodeSI18RestOctetsTo(w, v.(SI18RestOctets)) }},
+		{"SI20", func(r *runtime.Reader) (any, error) { return DecodeSI20RestOctetsFrom(r) }, func(w *runtime.Writer, v any) error { return EncodeSI20RestOctetsTo(w, v.(SI20RestOctets)) }},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			input := append(append([]byte{0x55}, wire...), 0x77)
+			r := runtime.NewReader(input)
+			if _, err := r.ReadUint(8); err != nil {
+				t.Fatal(err)
+			}
+			value, err := tc.decode(r)
+			if err != nil || r.Position() != 168 || r.Remaining() != 8 {
+				t.Fatalf("decode at offset: position %d, remaining %d, %v", r.Position(), r.Remaining(), err)
+			}
+			w := runtime.NewWriter()
+			if err := w.WriteUint(0x55, 8); err != nil {
+				t.Fatal(err)
+			}
+			if err := tc.encode(w, value); err != nil {
+				t.Fatal(err)
+			}
+			if err := w.WriteUint(0x77, 8); err != nil {
+				t.Fatal(err)
+			}
+			encoded, err := w.Finish(runtime.BitString{})
+			if err != nil || !bytes.Equal(encoded, input) {
+				t.Fatalf("encode at offset %x: %v", encoded, err)
+			}
+		})
+	}
+}
+
+func TestNonGSMContinuationRequiresEnclosingSIValue(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.2
+	// defines code 31 relative to the containing SI message instance.
+	standalone := append([]byte{0x3f}, bytes.Repeat([]byte{0xaa}, 18)...)
+	if _, err := DecodeNonGSMMessageStruct(standalone); err == nil || !strings.Contains(err.Error(), "requires enclosing SI value") {
+		t.Fatalf("standalone count 31: %v", err)
+	}
+	if _, err := EncodeNonGSMMessageStruct(NonGSMMessageStruct{
+		NonGSMProtocolDiscriminator: 1,
+		NROFCONTAINEROCTETS:         31,
+		CONTAINERList:               bytes.Repeat([]byte{0xaa}, 18),
+	}); err == nil {
+		t.Fatal("encoded context-dependent count without enclosing SI value")
+	}
+}
+
+func FuzzSI18SI20DecodeFromOffset(f *testing.F) {
+	f.Add(append([]byte{0x55, 0x00, 0x3f}, bytes.Repeat([]byte{0xaa}, 18)...))
+	f.Add(append([]byte{0x55, 0x00, 0x21, 0xaa, 0x3f}, bytes.Repeat([]byte{0xbb}, 16)...))
+	f.Add([]byte{0x55, 0x00, 0x3f})
+	f.Fuzz(func(t *testing.T, data []byte) {
+		for _, decode := range []func(*runtime.Reader) error{
+			func(r *runtime.Reader) error { _, err := DecodeSI18RestOctetsFrom(r); return err },
+			func(r *runtime.Reader) error { _, err := DecodeSI20RestOctetsFrom(r); return err },
+		} {
+			r := runtime.NewReader(data)
+			if _, err := r.ReadUint(8); err != nil {
+				continue
+			}
+			if err := decode(r); err == nil && r.Position() != 168 {
+				t.Fatalf("fixed 160-bit value ended at bit %d", r.Position())
+			}
+		}
+	})
+}
+
 func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.37g tables 10.5.2.37g.1–2:
 	// Printed repeat and exposed count use the raw 4-bit count; the frequency

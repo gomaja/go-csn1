@@ -48,6 +48,7 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 type Reader struct {
 	data              []byte
 	pos, end, virtual int
+	boundDepth        int
 	allowZero         bool
 	vars              map[string]uint64
 	steps             *int
@@ -69,8 +70,14 @@ func CheckInput(data []byte) error {
 	return nil
 }
 
-func (r *Reader) Position() int                 { return r.pos }
-func (r *Reader) Remaining() int                { return r.end - r.pos }
+func (r *Reader) Position() int  { return r.pos }
+func (r *Reader) Remaining() int { return r.end - r.pos }
+func (r *Reader) BoundedRemaining() int {
+	if r.boundDepth == 0 {
+		return -1
+	}
+	return r.Remaining()
+}
 func (r *Reader) VirtualBits() int              { return r.virtual }
 func (r *Reader) Wire() WireInfo                { r.wire.ImplicitZeros = r.virtual; return r.wire }
 func (r *Reader) Tail() BitString               { return bitsAt(r.data, r.pos, len(r.data)*8-r.pos) }
@@ -244,13 +251,18 @@ func (r *Reader) PushLimit(width int) (int, error) {
 	}
 	old := r.end
 	r.end = r.pos + width
+	r.boundDepth++
 	return old, nil
 }
 func (r *Reader) PopLimit(old int) error {
+	if r.boundDepth == 0 {
+		return r.fail(InvalidValue, "no enclosing length limit")
+	}
 	if r.pos != r.end {
 		return r.fail(InvalidValue, "length-delimited content leaves unparsed bits")
 	}
 	r.end = old
+	r.boundDepth--
 	return nil
 }
 func (r *Reader) RecordTruncation(path string, child int) { r.wire.TruncatedAt[path] = child }
@@ -271,6 +283,8 @@ func (r *Reader) RecordSpareCount(path string, count int) {
 type Writer struct {
 	bytes                    []byte
 	bits, virtual            int
+	limit                    int
+	bounded                  bool
 	vars                     map[string]uint64
 	path                     string
 	depth                    int
@@ -303,7 +317,42 @@ func (w *Writer) SpareCount(path string) (int, bool) {
 	w.spareCountIndex[path] = i + 1
 	return counts[i], true
 }
-func (w *Writer) Position() int                       { return w.bits }
+func (w *Writer) Position() int { return w.bits }
+func (w *Writer) RemainingLimit() int {
+	if !w.bounded {
+		return -1
+	}
+	return w.limit - w.bits
+}
+func (w *Writer) BoundEndOr(unbounded int) int {
+	if w.bounded {
+		return w.limit
+	}
+	return unbounded
+}
+func (w *Writer) PushLimit(width int) (int, error) {
+	if width < 0 || width > maxBits-w.bits || w.bounded && width > w.limit-w.bits {
+		return 0, fmt.Errorf("fixed value exceeds enclosing limit at %s", w.path)
+	}
+	old := -1
+	if w.bounded {
+		old = w.limit
+	}
+	w.limit = w.bits + width
+	w.bounded = true
+	return old, nil
+}
+func (w *Writer) PopLimit(old int) error {
+	if !w.bounded || old < -1 || old > maxBits {
+		return fmt.Errorf("invalid enclosing fixed value at %s", w.path)
+	}
+	if w.bits != w.limit {
+		return fmt.Errorf("fixed value has %d bits, want %d at %s", w.bits, w.limit, w.path)
+	}
+	w.limit = old
+	w.bounded = old >= 0
+	return nil
+}
 func (w *Writer) Set(name string, v uint64)           { w.vars[key(name)] = v }
 func (w *Writer) Eval(expression string) (int, error) { return eval(expression, w.vars) }
 func (w *Writer) Enter(name string) error {
@@ -331,6 +380,9 @@ func (w *Writer) Leave() {
 	w.path = ""
 }
 func (w *Writer) put(bit uint8) error {
+	if w.bounded && w.bits >= w.limit {
+		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
+	}
 	if w.bits+w.virtual >= maxBits {
 		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
 	}

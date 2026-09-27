@@ -55703,7 +55703,7 @@ func decodeSI19RestOctetsSparePadding(r *runtime.Reader) (runtime.BitString, err
 	return r.ReadPadding(), nil
 }
 func encodeSI19RestOctetsSparePadding(w *runtime.Writer, _ runtime.BitString) error {
-	return w.WritePaddingTo(160)
+	return w.WritePaddingTo(w.BoundEndOr(160))
 }
 func decodeSI19RestOctets(r *runtime.Reader) (SI19RestOctets, error) {
 	if err := r.Enter("SI19RestOctets"); err != nil {
@@ -57310,16 +57310,15 @@ func encodeSI18RestOctetsNonGSMMessageList(w *runtime.Writer, v []NonGSMMessageS
 			return err
 		}
 	}
-	if w.Position() < 160 {
-		if 160-w.Position() < 8 {
+	if remaining := w.RemainingLimit(); remaining < 0 {
+		return fmt.Errorf("SI message list exceeds fixed IE")
+	} else if remaining > 0 {
+		if remaining < 8 {
 			return fmt.Errorf("SI stop record does not fit")
 		}
 		if err := w.WriteZeroLengthTerminal(); err != nil {
 			return err
 		}
-	}
-	if w.Position() > 160 {
-		return fmt.Errorf("SI message list exceeds fixed IE")
 	}
 	return nil
 }
@@ -57327,7 +57326,7 @@ func decodeSI18RestOctetsSparePadding(r *runtime.Reader) (runtime.BitString, err
 	return r.ReadPadding(), nil
 }
 func encodeSI18RestOctetsSparePadding(w *runtime.Writer, _ runtime.BitString) error {
-	return w.WritePaddingTo(160)
+	return w.WritePaddingTo(w.BoundEndOr(160))
 }
 func decodeSI18RestOctets(r *runtime.Reader) (SI18RestOctets, error) {
 	if err := r.Enter("SI18RestOctets"); err != nil {
@@ -57335,6 +57334,10 @@ func decodeSI18RestOctets(r *runtime.Reader) (SI18RestOctets, error) {
 	}
 	defer r.Leave()
 	var v SI18RestOctets
+	oldBound, err := r.PushLimit(160)
+	if err != nil {
+		return SI18RestOctets{}, err
+	}
 	x0, err := decodeSI18RestOctetsSI18CHANGEMARK(r)
 	if err != nil {
 		return SI18RestOctets{}, err
@@ -57365,6 +57368,9 @@ func decodeSI18RestOctets(r *runtime.Reader) (SI18RestOctets, error) {
 		return SI18RestOctets{}, err
 	}
 	_ = x5
+	if err := r.PopLimit(oldBound); err != nil {
+		return SI18RestOctets{}, err
+	}
 	return v, nil
 }
 func encodeSI18RestOctets(w *runtime.Writer, v SI18RestOctets) error {
@@ -57378,6 +57384,10 @@ func encodeSI18RestOctets(w *runtime.Writer, v SI18RestOctets) error {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	oldBound, err := w.PushLimit(160)
+	if err != nil {
+		return err
 	}
 	if limit <= 0 && !runtime.IsZero(v.SI18CHANGEMARK) {
 		return fmt.Errorf("edit to field beyond transmitted truncation: SI18CHANGEMARK")
@@ -57421,7 +57431,7 @@ func encodeSI18RestOctets(w *runtime.Writer, v SI18RestOctets) error {
 			return err
 		}
 	}
-	return nil
+	return w.PopLimit(oldBound)
 }
 func decodeNonGSMMessageStructNonGSMProtocolDiscriminator(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("NonGSMMessageStructNonGSMProtocolDiscriminator"); err != nil {
@@ -57523,8 +57533,11 @@ func decodeNonGSMMessageStructCONTAINERList(r *runtime.Reader) ([]uint8, error) 
 		return nil, err
 	}
 	if count == 31 {
-		remaining := 160 - r.Position()
-		if remaining <= 0 || remaining%8 != 0 || remaining > r.Remaining() {
+		remaining := r.BoundedRemaining()
+		if remaining < 0 {
+			return nil, r.Error(runtime.InvalidValue, "continuation count requires enclosing SI value")
+		}
+		if remaining == 0 || remaining%8 != 0 {
 			return nil, r.Error(runtime.InvalidValue, "continuation container does not fill whole remaining octets")
 		}
 		count = remaining / 8
@@ -57546,7 +57559,7 @@ func encodeNonGSMMessageStructCONTAINERList(w *runtime.Writer, v []uint8) error 
 		return err
 	}
 	if count == 31 {
-		remaining := 160 - w.Position()
+		remaining := w.RemainingLimit()
 		if remaining <= 0 || remaining%8 != 0 {
 			return fmt.Errorf("continuation container does not fill whole remaining octets")
 		}
@@ -60678,16 +60691,15 @@ func encodeSI20RestOctetsNonGSMMessageList(w *runtime.Writer, v []NonGSMMessageS
 			return err
 		}
 	}
-	if w.Position() < 160 {
-		if 160-w.Position() < 8 {
+	if remaining := w.RemainingLimit(); remaining < 0 {
+		return fmt.Errorf("SI message list exceeds fixed IE")
+	} else if remaining > 0 {
+		if remaining < 8 {
 			return fmt.Errorf("SI stop record does not fit")
 		}
 		if err := w.WriteZeroLengthTerminal(); err != nil {
 			return err
 		}
-	}
-	if w.Position() > 160 {
-		return fmt.Errorf("SI message list exceeds fixed IE")
 	}
 	return nil
 }
@@ -60695,7 +60707,7 @@ func decodeSI20RestOctetsSparePadding(r *runtime.Reader) (runtime.BitString, err
 	return r.ReadPadding(), nil
 }
 func encodeSI20RestOctetsSparePadding(w *runtime.Writer, _ runtime.BitString) error {
-	return w.WritePaddingTo(160)
+	return w.WritePaddingTo(w.BoundEndOr(160))
 }
 func decodeSI20RestOctets(r *runtime.Reader) (SI20RestOctets, error) {
 	if err := r.Enter("SI20RestOctets"); err != nil {
@@ -60703,6 +60715,10 @@ func decodeSI20RestOctets(r *runtime.Reader) (SI20RestOctets, error) {
 	}
 	defer r.Leave()
 	var v SI20RestOctets
+	oldBound, err := r.PushLimit(160)
+	if err != nil {
+		return SI20RestOctets{}, err
+	}
 	x0, err := decodeSI20RestOctetsSI18CHANGEMARK(r)
 	if err != nil {
 		return SI20RestOctets{}, err
@@ -60733,6 +60749,9 @@ func decodeSI20RestOctets(r *runtime.Reader) (SI20RestOctets, error) {
 		return SI20RestOctets{}, err
 	}
 	_ = x5
+	if err := r.PopLimit(oldBound); err != nil {
+		return SI20RestOctets{}, err
+	}
 	return v, nil
 }
 func encodeSI20RestOctets(w *runtime.Writer, v SI20RestOctets) error {
@@ -60746,6 +60765,10 @@ func encodeSI20RestOctets(w *runtime.Writer, v SI20RestOctets) error {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	oldBound, err := w.PushLimit(160)
+	if err != nil {
+		return err
 	}
 	if limit <= 0 && !runtime.IsZero(v.SI18CHANGEMARK) {
 		return fmt.Errorf("edit to field beyond transmitted truncation: SI18CHANGEMARK")
@@ -60789,7 +60812,7 @@ func encodeSI20RestOctets(w *runtime.Writer, v SI20RestOctets) error {
 			return err
 		}
 	}
-	return nil
+	return w.PopLimit(oldBound)
 }
 func decodeGroupCallInformationGroupCallReference(r *runtime.Reader) (uint64, error) {
 	if err := r.Enter("GroupCallInformationGroupCallReference"); err != nil {

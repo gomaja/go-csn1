@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "b849217f71fa8b1fd731a20468300976619b79b0",
+  "compiler_commit": "e1864d0107a51bc1fd4f8a9ff6bf1477d6ac782d",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1610,7 +1610,7 @@
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "010084ae4095a336dced5447d27c2aa8705e700192d06628a0f21bded92d94c9"
+      "sha256": "eb9ca275e087624d98b569803d592056c4cb3ff164e6764d743b60ca511473d7"
     },
     {
       "path": "ts44060/ies/generated.go",
@@ -1673,6 +1673,50 @@
     {
       "module": "go-csn1",
       "command": "go test -race ./... -count=1"
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "go run ./cmd/csn1c -check"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./registry -run '^TestDirectEncoderCorpus$' -count=1 -v"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts24008/classmark -run '^$' -fuzz '^FuzzClassmarkDefinitions$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts24008/msrac -run '^$' -fuzz '^FuzzMSRADefinitions$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts36331/uecapability -run '^$' -fuzz '^FuzzGERANContainers$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts44018/restoctets -run '^$' -fuzz '^FuzzIADefinitions$' -fuzztime=10s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts44018/restoctets -run '^$' -fuzz '^FuzzSI7SI8WithACS$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts44018/restoctets -run '^$' -fuzz '^FuzzSI18SI20DecodeFromOffset$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts44018/measurement -run '^$' -fuzz '^FuzzMeasurementDefinitions$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./registry -run '^$' -fuzz '^FuzzGeneratedDecodeFrom$' -fuzztime=5s -parallel=2"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./ts44060/ies -run '^$' -fuzz '^FuzzIEDefinitions$' -fuzztime=15s -parallel=2"
     }
   ]
 }

@@ -43,6 +43,73 @@ func TestDirectReaderChoiceSnapshot(t *testing.T) {
 	}
 }
 
+func TestWriterFixedLimitIsRelativeToCurrentPosition(t *testing.T) {
+	zero := NewWriter()
+	zeroOld, err := zero.PushLimit(0)
+	if err != nil || zero.RemainingLimit() != 0 {
+		t.Fatalf("zero bit limit: remaining=%d err=%v", zero.RemainingLimit(), err)
+	}
+	if err := zero.WriteUint(1, 1); err == nil {
+		t.Fatal("wrote past zero bit limit")
+	}
+	if err := zero.PopLimit(zeroOld); err != nil {
+		t.Fatal(err)
+	}
+	w := NewWriter()
+	if err := w.WriteUint(0x55, 8); err != nil {
+		t.Fatal(err)
+	}
+	old, err := w.PushLimit(16)
+	if err != nil || w.RemainingLimit() != 16 || w.BoundEndOr(0) != 24 {
+		t.Fatalf("push fixed value: remaining=%d end=%d err=%v", w.RemainingLimit(), w.BoundEndOr(0), err)
+	}
+	if _, err := w.PushLimit(17); err == nil {
+		t.Fatal("accepted nested limit past enclosing value")
+	}
+	if err := w.WriteUint(0xaa, 8); err != nil {
+		t.Fatal(err)
+	}
+	nested, err := w.PushLimit(8)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := w.WriteUint(0xbb, 8); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.WriteUint(1, 1); err == nil {
+		t.Fatal("wrote past fixed value")
+	}
+	if err := w.PopLimit(nested); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.PopLimit(old); err != nil {
+		t.Fatal(err)
+	}
+	if w.RemainingLimit() != -1 || w.BoundEndOr(32) != 32 {
+		t.Fatal("limit not restored")
+	}
+	if got, err := w.Bytes(); err != nil || !bytes.Equal(got, []byte{0x55, 0xaa, 0xbb}) {
+		t.Fatalf("bytes=%x err=%v", got, err)
+	}
+}
+
+func TestReaderBoundedRemainingRequiresExplicitLimit(t *testing.T) {
+	r := NewReader([]byte{0xaa})
+	if got := r.BoundedRemaining(); got != -1 {
+		t.Fatalf("unbounded remaining = %d", got)
+	}
+	old, err := r.PushLimit(8)
+	if err != nil || r.BoundedRemaining() != 8 {
+		t.Fatalf("bounded remaining = %d, %v", r.BoundedRemaining(), err)
+	}
+	if _, err := r.ReadUint(8); err != nil {
+		t.Fatal(err)
+	}
+	if err := r.PopLimit(old); err != nil || r.BoundedRemaining() != -1 {
+		t.Fatalf("restored bound = %d, %v", r.BoundedRemaining(), err)
+	}
+}
+
 func TestSealRecordsTransmittedBoundary(t *testing.T) {
 	wire := Seal(struct{}{}, []byte{0x30}, 4, BitString{Bytes: []byte{0}, BitLength: 4}, WireInfo{})
 	if wire.BitsConsumed != 4 || wire.TransmittedBits != 8 || wire.Tail.BitLength != 4 {
