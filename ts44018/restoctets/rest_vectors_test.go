@@ -429,6 +429,10 @@ func TestSI18AndSI20ZeroLengthTerminator(t *testing.T) {
 		// A record with 18 container octets fills the 20-octet IE, so the
 		// second stop condition needs no zero-length terminator.
 		full := append([]byte{0x00, 0x32}, bytes.Repeat([]byte{0xaa}, 18)...)
+		reserved := append([]byte{0x00, 0x12}, bytes.Repeat([]byte{0xaa}, 18)...)
+		if _, err := d.Decode(reserved); err == nil {
+			t.Fatalf("%s accepted reserved non-GSM discriminator", tc.name)
+		}
 		decoded, err = d.Decode(full)
 		if err != nil {
 			t.Fatalf("%s full IE: %v", tc.name, err)
@@ -460,6 +464,15 @@ func TestSI18AndSI20ZeroLengthTerminator(t *testing.T) {
 		}
 		if _, err = d.Decode(encoded); err != nil {
 			t.Fatalf("%s constructed decode: %v", tc.name, err)
+		}
+		messages[0].NonGSMProtocolDiscriminator = 0
+		if tc.name == "SI 18 Rest Octets" {
+			constructed = SI18RestOctets{NonGSMMessageList: messages}
+		} else {
+			constructed = SI20RestOctets{NonGSMMessageList: messages}
+		}
+		if _, err = d.Encode(constructed); err == nil {
+			t.Fatalf("%s encoded reserved non-GSM discriminator", tc.name)
 		}
 	}
 }

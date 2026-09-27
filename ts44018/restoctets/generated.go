@@ -54767,6 +54767,9 @@ func decodeSI18RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 			r.RecordTerminal(before)
 			break
 		}
+		if v.NonGSMProtocolDiscriminator != 1 {
+			return nil, r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator")
+		}
 		out = append(out, v)
 	}
 	return out, nil
@@ -54775,6 +54778,9 @@ func encodeSI18RestOctetsNonGSMMessageList(w *runtime.Writer, v []NonGSMMessageS
 	for _, item := range v {
 		if item.NROFCONTAINEROCTETS == 0 {
 			return fmt.Errorf("zero-length SI stop record belongs in Wire")
+		}
+		if item.NonGSMProtocolDiscriminator != 1 {
+			return fmt.Errorf("reserved Non-GSM protocol discriminator")
 		}
 		if err := encodeSI18RestOctetsNonGSMMessageListEntry(w, item); err != nil {
 			return err
@@ -57952,6 +57958,9 @@ func decodeSI20RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 			r.RecordTerminal(before)
 			break
 		}
+		if v.NonGSMProtocolDiscriminator != 1 {
+			return nil, r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator")
+		}
 		out = append(out, v)
 	}
 	return out, nil
@@ -57960,6 +57969,9 @@ func encodeSI20RestOctetsNonGSMMessageList(w *runtime.Writer, v []NonGSMMessageS
 	for _, item := range v {
 		if item.NROFCONTAINEROCTETS == 0 {
 			return fmt.Errorf("zero-length SI stop record belongs in Wire")
+		}
+		if item.NonGSMProtocolDiscriminator != 1 {
+			return fmt.Errorf("reserved Non-GSM protocol discriminator")
 		}
 		if err := encodeSI20RestOctetsNonGSMMessageListEntry(w, item); err != nil {
 			return err
