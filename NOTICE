@@ -8,5 +8,6 @@ field tables published in 3GPP Technical Specifications (TS 24.008, TS 36.331,
 TS 44.018 and TS 44.060) by the 3GPP Organizational Partners (ARIB, ATIS,
 CCSA, ETSI, TSDSI, TTA, TTC). Those specifications remain the property of
 their respective copyright holders and are subject to their terms of use. The
-specification editions, archive hashes and typed source corrections used for
-generation are recorded in the source lock of github.com/gomaja/asn1-go-compiler.
+specification editions, archive hashes, extracted-file hashes, typed source
+corrections and generated-file hashes are recorded in release-evidence.json in
+this repository.

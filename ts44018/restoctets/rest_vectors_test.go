@@ -491,6 +491,80 @@ func TestSI18AndSI20ZeroLengthTerminator(t *testing.T) {
 	}
 }
 
+func TestSI18AndSI20ContinuationCount(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.2:
+	// count code 11111 occupies the remainder of this 20-octet SI value.
+	// §10.5.2.37i gives SI20 the same format.
+	for _, tc := range []struct{ clause, name string }{{"10.5.2.37h", "SI 18 Rest Octets"}, {"10.5.2.37i", "SI 20 Rest Octets"}} {
+		d, err := LookupClause(tc.clause, tc.name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, vector := range []struct {
+			name    string
+			wire    []byte
+			lengths []int
+		}{
+			{"first record", append([]byte{0x00, 0x3f}, bytes.Repeat([]byte{0xaa}, 18)...), []int{18}},
+			{"after one octet", append([]byte{0x00, 0x21, 0xaa, 0x3f}, bytes.Repeat([]byte{0xbb}, 16)...), []int{1, 16}},
+		} {
+			t.Run(tc.name+"/"+vector.name, func(t *testing.T) {
+				decoded, err := d.Decode(vector.wire)
+				if err != nil {
+					t.Fatal(err)
+				}
+				var messages []NonGSMMessageStruct
+				switch v := decoded.(type) {
+				case runtime.Decoded[SI18RestOctets]:
+					messages = v.Value.NonGSMMessageList
+				case runtime.Decoded[SI20RestOctets]:
+					messages = v.Value.NonGSMMessageList
+				default:
+					t.Fatalf("unexpected value type %T", decoded)
+				}
+				if len(messages) != len(vector.lengths) || messages[len(messages)-1].NROFCONTAINEROCTETS != 31 {
+					t.Fatalf("messages = %+v", messages)
+				}
+				for i, want := range vector.lengths {
+					if len(messages[i].CONTAINERList) != want {
+						t.Fatalf("container %d has %d octets, want %d", i, len(messages[i].CONTAINERList), want)
+					}
+				}
+				encoded, err := d.Encode(decoded)
+				if err != nil || !bytes.Equal(encoded, vector.wire) {
+					t.Fatalf("round trip %x: %v", encoded, err)
+				}
+				var constructed any
+				if tc.name == "SI 18 Rest Octets" {
+					constructed = SI18RestOctets{NonGSMMessageList: messages}
+				} else {
+					constructed = SI20RestOctets{NonGSMMessageList: messages}
+				}
+				encoded, err = d.Encode(constructed)
+				if err != nil || !bytes.Equal(encoded, vector.wire) {
+					t.Fatalf("constructed continuation %x: %v", encoded, err)
+				}
+				messages[len(messages)-1].CONTAINERList = messages[len(messages)-1].CONTAINERList[:len(messages[len(messages)-1].CONTAINERList)-1]
+				var invalid any
+				if tc.name == "SI 18 Rest Octets" {
+					invalid = SI18RestOctets{NonGSMMessageList: messages}
+				} else {
+					invalid = SI20RestOctets{NonGSMMessageList: messages}
+				}
+				if _, err := d.Encode(invalid); err == nil {
+					t.Fatal("accepted continuation container shorter than remaining SI value")
+				}
+			})
+		}
+		for _, code := range []byte{19, 30} {
+			reserved := append([]byte{0x00, 0x20 | code}, bytes.Repeat([]byte{0xaa}, 18)...)
+			if _, err := d.Decode(reserved); err == nil || !strings.Contains(err.Error(), "reserved container length code") {
+				t.Fatalf("%s count code %d: %v", tc.name, code, err)
+			}
+		}
+	}
+}
+
 func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.37g tables 10.5.2.37g.1–2:
 	// Printed repeat and exposed count use the raw 4-bit count; the frequency

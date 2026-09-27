@@ -57522,6 +57522,15 @@ func decodeNonGSMMessageStructCONTAINERList(r *runtime.Reader) ([]uint8, error) 
 	if err != nil {
 		return nil, err
 	}
+	if count == 31 {
+		remaining := 160 - r.Position()
+		if remaining <= 0 || remaining%8 != 0 || remaining > r.Remaining() {
+			return nil, r.Error(runtime.InvalidValue, "continuation container does not fill whole remaining octets")
+		}
+		count = remaining / 8
+	} else if count > 18 {
+		return nil, r.Error(runtime.InvalidValue, "reserved container length code")
+	}
 	for i := 0; i < count; i++ {
 		v, err := decodeNonGSMMessageStructCONTAINERListEntry(r)
 		if err != nil {
@@ -57535,6 +57544,15 @@ func encodeNonGSMMessageStructCONTAINERList(w *runtime.Writer, v []uint8) error 
 	count, err := w.Eval("val(NR_OF_CONTAINER_OCTETS)")
 	if err != nil {
 		return err
+	}
+	if count == 31 {
+		remaining := 160 - w.Position()
+		if remaining <= 0 || remaining%8 != 0 {
+			return fmt.Errorf("continuation container does not fill whole remaining octets")
+		}
+		count = remaining / 8
+	} else if count > 18 {
+		return fmt.Errorf("reserved container length code")
 	}
 	if len(v) != count {
 		return fmt.Errorf("repeat count mismatch")

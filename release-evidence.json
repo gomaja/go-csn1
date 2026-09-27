@@ -1,0 +1,1678 @@
+{
+  "schema_version": 1,
+  "compiler_commit": "b849217f71fa8b1fd731a20468300976619b79b0",
+  "sources": [
+    {
+      "standard": "TS 24.008",
+      "version": "20.1.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/24_series/24.008/24008-k10.zip",
+      "archive_sha256": "6ecd3b3e31269d9d8ff23ce43d2abcfdab0fd449f70ffe4d00fabd1a22ad7d1d",
+      "member": "24008-k10.docx",
+      "member_sha256": "0ecc37cd0f806e95c125d2a192bc28a190f6cba43392bc9a0344e8c406e35bdc"
+    },
+    {
+      "standard": "TS 36.331",
+      "version": "19.4.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/36_series/36.331/36331-j40.zip",
+      "archive_sha256": "5233add4d12e129afebc0178aa350b79ede23f816f897cf43b09923b595829f4",
+      "member": "36331-j40.docx",
+      "member_sha256": "26407c6c0ae31fd5da09eb81f7e9cd8cf49c0c51606811b13ce15a2e326fe058"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.018/44018-j00.zip",
+      "archive_sha256": "5e19fa62f3fc5671fd36ffeb81bc12bfb8160fe90edbf706a4207e4fcdcac277",
+      "member": "44018-j00.docx",
+      "member_sha256": "604156e97ce816f38d23711acaafc292257012e93a285eae990fdded8d33668b"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.060/44060-j00.zip",
+      "archive_sha256": "c106a388834eca5e5e136739c1e50f422fee3ef93bbd906325c02118df1ff119",
+      "member": "44060-j00.docx",
+      "member_sha256": "1eb357daf5db58369a44664eb753def088587403c52902ed5bcf728b0a032f1e"
+    }
+  ],
+  "extracted_files": [
+    {
+      "path": "docs/csn1/ts24008/classmark2-layout.txt",
+      "sha256": "fe9b53189829aa5e9b350f345f68197cb9ca1851945cbb82b5f74158a39ee3f3"
+    },
+    {
+      "path": "docs/csn1/ts24008/classmark3.csn",
+      "sha256": "9e7354672d4b26f0d939394ad0ca199a2a4e25254082d593ccf8bd6a6db55744"
+    },
+    {
+      "path": "docs/csn1/ts24008/msrac.csn",
+      "sha256": "d29c1dc404cc286173d03199bc321eb61e8cb3c91785b420c065a76ea2c1e1b2"
+    },
+    {
+      "path": "docs/csn1/ts24008/msrac_closure.csn",
+      "sha256": "6ec05762939830ce5f0eb2fcae8d4522a14484b3c558cdbe89b09551ab9098ea"
+    },
+    {
+      "path": "docs/csn1/ts36331/geran-wrapper.txt",
+      "sha256": "25aea756f06882c43c5483796ddd170c7ba87e187aba91108ed4c4eeff8ea825"
+    },
+    {
+      "path": "docs/csn1/ts44018/emergency-ind.csn",
+      "sha256": "cd42328fc634c0753ea6979e39907f6295377efb6ab679e745ba93ac6452cbe4"
+    },
+    {
+      "path": "docs/csn1/ts44018/enhanced-measurement-report.csn",
+      "sha256": "2a8052f13bf84ee22d19f2555f66b65b23c3d4e01b81b27b4eff9c062e388644"
+    },
+    {
+      "path": "docs/csn1/ts44018/group-call-information.csn",
+      "sha256": "6e957586121bd6d934cf1c414a38f217abb7653a553cb8651451acef4309c99f"
+    },
+    {
+      "path": "docs/csn1/ts44018/group-call-lv-evidence.txt",
+      "sha256": "0e9ab814ad35a8ce3025cee6ffb790837f0ff29d8242d7750d2f1b090c1b9c6f"
+    },
+    {
+      "path": "docs/csn1/ts44018/group-channel-description.csn",
+      "sha256": "200001d631bdb134c652200d908f093a5eef62abecdb0863d02f4d3590d5b65d"
+    },
+    {
+      "path": "docs/csn1/ts44018/ia-rest-octets.csn",
+      "sha256": "2283e8365d82c26bbf3ace1aa43eb1330f91ece085a57b5e29a904f2a2cd4c88"
+    },
+    {
+      "path": "docs/csn1/ts44018/iar-rest-octets.csn",
+      "sha256": "bc2ed5d7074a3ea4106f7c122d01a1218144081de5e4487377cd7eb6c992ecba"
+    },
+    {
+      "path": "docs/csn1/ts44018/iax-rest-octets.csn",
+      "sha256": "802cf3030ede3190356498aedd1c9890f044eff65f72e706d51c0af840910bfa"
+    },
+    {
+      "path": "docs/csn1/ts44018/ipa-rest-octets.csn",
+      "sha256": "98e72b44ece91a950100ddfd68301961289a0c426ccaf553c0ed8efbfc002a18"
+    },
+    {
+      "path": "docs/csn1/ts44018/mobile-allocation-length-evidence.txt",
+      "sha256": "6f60a37bc75dcb90dd5fcde1ed277dca1ded53b1e675912a1bf2a50c86c6161c"
+    },
+    {
+      "path": "docs/csn1/ts44018/ntn-reduced-gcr.csn",
+      "sha256": "8aac2dd4eb45a2b375cd31742aa8aa079d7f9afc3317ebc2406ffc78c5dd0ee0"
+    },
+    {
+      "path": "docs/csn1/ts44018/ntn-rest-octets.csn",
+      "sha256": "b996369689358f7d9154b76bd97db39b95e14e53a6a8ccc4de3f00888554c907"
+    },
+    {
+      "path": "docs/csn1/ts44018/ntn-vstk-rand.csn",
+      "sha256": "9bb579cf6989b77245e344158aa654877ae91be422e6df424d415e1a7603308d"
+    },
+    {
+      "path": "docs/csn1/ts44018/p1-etws.csn",
+      "sha256": "2a4c760f213f068e22a3264dcac67ba869c1bc375cbc2ee0c1dd3f128324c366"
+    },
+    {
+      "path": "docs/csn1/ts44018/p1-mbms-information.csn",
+      "sha256": "0d34bf49029748e1327ac2b7ab0d0f4f57bd7bf0d156b9fdb360cf1a654072ed"
+    },
+    {
+      "path": "docs/csn1/ts44018/p1-peo.csn",
+      "sha256": "913fd90afc7d192adb6eb69359103d1dd446cc2c2a05da9c4cd63f9d7f7530d6"
+    },
+    {
+      "path": "docs/csn1/ts44018/p1-priority.csn",
+      "sha256": "ecf4ff2afc381ed43fc670ff573811cfa509031ebf986798910874288b5043cd"
+    },
+    {
+      "path": "docs/csn1/ts44018/p1-rest-octets.csn",
+      "sha256": "6db892591585677ff09fc355553a44602524bf9520117fd7e29783d653ea0402"
+    },
+    {
+      "path": "docs/csn1/ts44018/p2-rest-octets.csn",
+      "sha256": "5cbb46439866d6511b23ec1717612e11559d48b9336b70c9d9d60f01b8751156"
+    },
+    {
+      "path": "docs/csn1/ts44018/p3-rest-octets.csn",
+      "sha256": "8f4b9b3becb62785e2bcb56b3ed70c90eb478b1ac5cf4e7f9b42190cbdb8cac1"
+    },
+    {
+      "path": "docs/csn1/ts44018/rr-short-message-types.txt",
+      "sha256": "7d9397992f8c268bd2f3b9b5c4cce01fd2bd0a29b16d71fb3889c3b853adf2f0"
+    },
+    {
+      "path": "docs/csn1/ts44018/si1-rest-octets.csn",
+      "sha256": "1d8abe42df449719668f923e934c0ca3ef756827c09367aeff95e564be6cd1e8"
+    },
+    {
+      "path": "docs/csn1/ts44018/si10-rest-octets.csn",
+      "sha256": "6c2350324ce2cd734caa4cb9184d55957f16c58b82a906b5346a4fccbb2cf294"
+    },
+    {
+      "path": "docs/csn1/ts44018/si10bis-frequency-list-evidence.txt",
+      "sha256": "24da2b18d587c3933851b615e25f42dc73f6fc92ec045be780c6a9dc4969ad24"
+    },
+    {
+      "path": "docs/csn1/ts44018/si10bis-rest-octets.csn",
+      "sha256": "ce25c537373d07e9cd227d449051f7ebc444ac287ebbae731e3738e3eb5cb435"
+    },
+    {
+      "path": "docs/csn1/ts44018/si10ter-rest-octets.csn",
+      "sha256": "28eefe664d0a2483ad6cb0be8787aad91c8f931a73ff7b79e05586d8addddc6c"
+    },
+    {
+      "path": "docs/csn1/ts44018/si13-rest-octets.csn",
+      "sha256": "be0803240e650bb7aee67eba284883bb46d687b2772c51156ccdb0292d1f1dec"
+    },
+    {
+      "path": "docs/csn1/ts44018/si13alt-rest-octets.csn",
+      "sha256": "8d5d9a432f4581891e1c2f3db050cec417153027bec744b5b4622464c5a507a6"
+    },
+    {
+      "path": "docs/csn1/ts44018/si14-rest-octets.csn",
+      "sha256": "9bc3bd6450ea4c7e8ccd07985845ade8dbbc51378f2a412f16b30838716823cb"
+    },
+    {
+      "path": "docs/csn1/ts44018/si15-rest-octets.csn",
+      "sha256": "ac72e94c64d51ac052b31d55ca0a784c2659814587e1c00d1f65bf98ada60662"
+    },
+    {
+      "path": "docs/csn1/ts44018/si16-rest-octets.csn",
+      "sha256": "4491663d2100e290864063298fe8558f7ea096d1c9fa4d4add81342c1835ab6e"
+    },
+    {
+      "path": "docs/csn1/ts44018/si18-rest-octets.csn",
+      "sha256": "babb6767f91c545606267a90731fd8ebc888a4d203ab2dc30d158356a8c7cd70"
+    },
+    {
+      "path": "docs/csn1/ts44018/si19-rest-octets.csn",
+      "sha256": "38d85218a47b094254653dc44ed7d32a86ff04a3a5d990f29295001dc30cd81a"
+    },
+    {
+      "path": "docs/csn1/ts44018/si20-reuse.txt",
+      "sha256": "80b49cf1bad3aaa8f30ce774c6d463e6c3485c415121160c46461b42ff7288fd"
+    },
+    {
+      "path": "docs/csn1/ts44018/si21-rest-octets.csn",
+      "sha256": "f7557856bf216bbc7d77d2d0c3f0337bfda50a79b43efa9f40884b1f2a03bd19"
+    },
+    {
+      "path": "docs/csn1/ts44018/si22-rest-octets.csn",
+      "sha256": "f7d449792cf116621ae8249e5129e0832656081afca896cbc792941ea8050b06"
+    },
+    {
+      "path": "docs/csn1/ts44018/si23-neighbour-closure.csn",
+      "sha256": "a1ddb57229bbd33fd38f8e9ab05f454185e7ce02ad48f9ef1603d186eb39d65d"
+    },
+    {
+      "path": "docs/csn1/ts44018/si23-rest-octets.csn",
+      "sha256": "4147d194ec768e41088b6c9c88e217ab09a5b6008a8bae7b584facd996143fd0"
+    },
+    {
+      "path": "docs/csn1/ts44018/si2bis-rest-octets.csn",
+      "sha256": "57bbbe86dac46d3f15486f5aaa609c38bd954d6e8699d81c705e81b5b87a5eab"
+    },
+    {
+      "path": "docs/csn1/ts44018/si2n-rest-octets.csn",
+      "sha256": "50420ff820fd32648f26225f7c4b3169e5bd8d34673bf94a7c35937c5d9cbdae"
+    },
+    {
+      "path": "docs/csn1/ts44018/si2quater-cell-widths.txt",
+      "sha256": "1b14a173e6b6df1cf132d44ee59fdfc9f04cdc887353ea8121e3a2b45dba54f9"
+    },
+    {
+      "path": "docs/csn1/ts44018/si2quater-rest-octets.csn",
+      "sha256": "5d881ec7431c93863d19b4736cb024a52ba3fbd2a4c5e8d59c2ec65c81fcac30"
+    },
+    {
+      "path": "docs/csn1/ts44018/si2ter-rest-octets.csn",
+      "sha256": "070bc1e500771e5c8b5f240fbfeff2d6f123fc29fd1d1535526ad4a8a385a64a"
+    },
+    {
+      "path": "docs/csn1/ts44018/si3-rest-octets.csn",
+      "sha256": "db040fcb14e03f5702177a721f5ffe792cddb9225a85f993b36c3e959b04058c"
+    },
+    {
+      "path": "docs/csn1/ts44018/si4-rest-octets.csn",
+      "sha256": "d2ae82b290d3cdae4e36e0fdc7e07f09a200c709a790a0c813de1c69d69134d9"
+    },
+    {
+      "path": "docs/csn1/ts44018/si6-rest-octets.csn",
+      "sha256": "6b64670c21510cf05cc359ddb2f80d244abba62448738bcbb42e0c1b37e04a4d"
+    },
+    {
+      "path": "docs/csn1/ts44018/si9-rest-octets.csn",
+      "sha256": "cf82c987d004a359b90c02b405cc2c915eefcca30957f198eb45d6a464312b5c"
+    },
+    {
+      "path": "docs/csn1/ts44060/egprs-level-layout.txt",
+      "sha256": "ed31f427fcf3dec872ceb231f5b79732fc27013796a2ae5b310cec7651f07d2e"
+    },
+    {
+      "path": "docs/csn1/ts44060/egprs-modulation-and-coding-layout.txt",
+      "sha256": "f322fb0b4d852454983aeb09ad8cd0379c8a6937642abd1882a8c0f9b219e592"
+    },
+    {
+      "path": "docs/csn1/ts44060/egprs-window-size-layout.txt",
+      "sha256": "1163938b9df231e478d47e8455d3bf5ace0d231b66835f8e040579b65610e66b"
+    },
+    {
+      "path": "docs/csn1/ts44060/enhanced-cell-reselection-ie.csn",
+      "sha256": "5e5476a591d7af545ca6a0933af8045d3eb3c2cc0ce56191e0dea2657962b7ff"
+    },
+    {
+      "path": "docs/csn1/ts44060/frequency-parameters-ie.csn",
+      "sha256": "aa1c6735c3d2762754cb7def9326758c3752575e284f9c5165bc3ef197761c0f"
+    },
+    {
+      "path": "docs/csn1/ts44060/gprs-cell-options-ie.csn",
+      "sha256": "ac93866a176603667b15b8d74284d9994783c971bb8c37509064b3de32abc8d4"
+    },
+    {
+      "path": "docs/csn1/ts44060/gprs-mobile-allocation-ie.csn",
+      "sha256": "639d225fd6a32f054e2b6d7b1f2551942b1a9f21acab996f7ae9c9af1477a937"
+    },
+    {
+      "path": "docs/csn1/ts44060/gprs-power-control-parameters-ie.csn",
+      "sha256": "81953b4b5d4d8ea389b2259f5fe6774c89518bd8ccc45c32669f089a4f7d01d9"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-channel-parameters-ie.csn",
+      "sha256": "712841a82cd9c902299bb094ebfbabc2891fd716f518e3bdf87be20b0e0bd0a8"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-ptm-channel-description-ie.csn",
+      "sha256": "d2085e073e18bfea07e3dc8361ff8dea4f9c444813bee5026694ace800300c33"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-session-list-ie.csn",
+      "sha256": "8b9c464b037fc6d1389d9d6e549a87baf497693971cf3724c292f5d827b994ff"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-session-parameters-list-ie.csn",
+      "sha256": "dc745286fa89a2f7c2f2ef1846944c2716fed74b42a4cc73f39a17ec167a4724"
+    },
+    {
+      "path": "docs/csn1/ts44060/mprach-control-parameters-ie.csn",
+      "sha256": "d370ff483fac526825ecbefdb47aee994009f141f5cc439f0d96bd836c1e8366"
+    },
+    {
+      "path": "docs/csn1/ts44060/mprach-description-ie.csn",
+      "sha256": "5c1ec9331827aff4b0397a4d86836238cc61ed411712ea5d5ef49842b8bbb0c1"
+    },
+    {
+      "path": "docs/csn1/ts44060/packet-timing-advance-ie.csn",
+      "sha256": "616ab3a3fe806332641f528d917873b7793fc54183725074873ce5b1ea942ba9"
+    },
+    {
+      "path": "docs/csn1/ts44060/pcid-group-ie.csn",
+      "sha256": "4699d8a13613b419d9ed9980068ee15d4972dd0526ee157f01bf182bb63e3d66"
+    },
+    {
+      "path": "docs/csn1/ts44060/psc-group-ie.csn",
+      "sha256": "92a0788dc37d73e11c8beea8a56602e3e257e7ff1004fa54c86f90b2c24f8830"
+    },
+    {
+      "path": "docs/csn1/ts44060/tmgi-ie.csn",
+      "sha256": "b9b63ddc29f6dac40d201110615c9b9af317065f0084ebcdbf5b13e12db872d4"
+    },
+    {
+      "path": "docs/csn1/ts44060/utran-csg-measurement-report-ie.csn",
+      "sha256": "3b13c4e4865da5ff04e69f4aca8860ed2d848d68ddc828df69de474e84ad5e9f"
+    }
+  ],
+  "corrections": [
+    {
+      "standard": "TS 24.008",
+      "version": "20.1.0",
+      "clause": "10.5.1.7",
+      "paragraph": 21815,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 24.008 V20.1.0 §10.5.1.7: malformed assignment separator for 8-PSK Struct",
+      "citation": "TS 24.008 V20.1.0 §10.5.1.7 paragraph 21815"
+    },
+    {
+      "standard": "TS 24.008",
+      "version": "20.1.0",
+      "clause": "10.5.1.7",
+      "paragraph": 21818,
+      "expected": "\u003c 8-PSK RF Power Capability 2: bit(2) \u003e }",
+      "replacement": "\u003c 8-PSK RF Power Capability 2: bit(2) \u003e } ;",
+      "reason": "TS 24.008 V20.1.0 §10.5.1.7: missing 8-PSK Struct terminator before next assignment",
+      "citation": "TS 24.008 V20.1.0 §10.5.1.7 paragraph 21818"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37g",
+      "paragraph": 19926,
+      "expected": "bit (n)",
+      "replacement": "bit (val(FREQ_DIFF_LENGTH)+1)",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.2: three-bit FREQ_DIFF_LENGTH codes widths 1 through 8",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraph 19926"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37g",
+      "paragraph": 19927,
+      "expected": "\u003c COMPACT Cell Selection struct \u003e \u003e } * val(NR_OF_REMAINING_CELLS",
+      "replacement": "\u003c COMPACT Cell Selection struct \u003e } * (val(NR_OF_REMAINING_CELLS))",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1: close the nested cell reference and the printed repeat-count expression",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraph 19927"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37g",
+      "paragraph": 19939,
+      "expected": "\u003c TEMPORARY_OFFSET: bit (3)",
+      "replacement": "\u003c TEMPORARY_OFFSET: bit (3) \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1: close the three-bit temporary-offset field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraph 19939"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37g",
+      "paragraph": 19944,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1: repair LA Different struct assignment separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraph 19944"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37g",
+      "paragraph": 19945,
+      "expected": "bit (3) \u003e ;",
+      "replacement": "bit (3) \u003e } ;",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1: close the LA Different optional group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraph 19945"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.21a",
+      "paragraph": 7322,
+      "expected": "\u003cGroup Channel Description\u003e : :=",
+      "replacement": "\u003cGroup Channel Description\u003e ::=",
+      "reason": "TS 44.018 V19.0.0 §9.1.21a: malformed Group Channel Description assignment separator",
+      "citation": "TS 44.018 V19.0.0 §9.1.21a paragraph 7322"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.22c",
+      "paragraph": 17309,
+      "expected": "NT/N Rest Octets ::=",
+      "replacement": "\u003c NT/N Rest Octets \u003e ::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.22c: delimit the printed NT/N definition name",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.22c paragraph 17309"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.22c",
+      "paragraph": 17310,
+      "expected": "0 I 1",
+      "replacement": "0 | 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.22c: restore the binary NLN alternative separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.22c paragraph 17310"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.22c",
+      "paragraph": 17311,
+      "expected": "\u003clist of Group Call NCH information\u003e",
+      "replacement": "\u003cList of Group Call NCH information\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.22c: align the recursive list reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.22c paragraph 17311"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17389,
+      "expected": "{\t\u003c P1 Rest Octets \u003e ::=",
+      "replacement": "\u003c P1 Rest Octets \u003e ::= {",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23 and §8.9: place the truncatable group after the definition assignment",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17389"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17390,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: restore the NLN L/H choice separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17390"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17391,
+      "expected": "L I H \u003c Priority1 ::= Priority \u003e",
+      "replacement": "L | H \u003c Priority1 : \u003c Priority \u003e \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: bind Priority1 to the local three-bit Priority definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17391"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17392,
+      "expected": "L I H \u003c Priority2 ::= Priority \u003e",
+      "replacement": "L | H \u003c Priority2 : \u003c Priority \u003e \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: bind Priority2 to the local three-bit Priority definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17392"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17411,
+      "expected": "I 1",
+      "replacement": "| 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: restore the first MBMS notification alternative separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17411"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17414,
+      "expected": "I 1",
+      "replacement": "| 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: restore the second MBMS notification alternative separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17414"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17453,
+      "expected": "\u003c spare padding \u003e;",
+      "replacement": "\u003c spare padding \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: keep spare padding inside the truncatable P1 group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17453"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17454,
+      "expected": "} //",
+      "replacement": "} // ;",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23 and §8.9: terminate the truncatable P1 group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17454"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17463,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: align the MBMS reference with TS 44.060 V19.0.0 §12.39",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17463"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17470,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: align the MBMS reference with TS 44.060 V19.0.0 §12.39",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17470"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.23",
+      "paragraph": 17474,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.23: align the MBMS reference with TS 44.060 V19.0.0 §12.39",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.23 paragraph 17474"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.55",
+      "paragraph": 11357,
+      "expected": "\u003c SI23_BA_USED : bit ",
+      "replacement": "\u003c SI23_BA_USED : bit \u003e",
+      "reason": "TS 44.018 V19.0.0 §9.1.55: close the one-bit SI23_BA_USED field; the message field table specifies one bit",
+      "citation": "TS 44.018 V19.0.0 §9.1.55 paragraph 11357"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19556,
+      "expected": "L I H \u003cPCH and NCH info\u003e}",
+      "replacement": "{ L | H \u003cPCH and NCH info\u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19556"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19557,
+      "expected": "L I H \u003cVBS/VGCS options : bit(2)\u003e}",
+      "replacement": "{ L | H \u003cVBS/VGCS options : bit(2)\u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19557"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19558,
+      "expected": "\u003c DTM_support : bit == L \u003e",
+      "replacement": "{ \u003c DTM_support : bit == L \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: open the two-branch DTM support choice closed in paragraph 19561",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19558"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19559,
+      "expected": "I\t\u003c DTM_support",
+      "replacement": "|\t\u003c DTM_support",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: replace the alternative separator with the Annex B choice bar",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19559"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19580,
+      "expected": "0 I 1",
+      "replacement": "0 | 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: replace the Call priority alternative separator with the Annex B choice bar",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19580"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19585,
+      "expected": "\t0\t--",
+      "replacement": "\t0 ;\t--",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: terminate the paging channel restructuring definition before prose",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19585"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19593,
+      "expected": "\t\tinspect the NCH for notifications",
+      "replacement": "",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: remove explanatory prose that interrupts a CSN.1 choice before its terminator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19593"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19595,
+      "expected": "\t\tNOTIFICATION/FACCH, the mobile need not to inspect the NCH",
+      "replacement": "",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: remove explanatory prose that interrupts a CSN.1 choice before its terminator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19595"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19599,
+      "expected": "\t\tshould inspect the PCH for pagings",
+      "replacement": "",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: remove explanatory prose that interrupts a CSN.1 choice before its terminator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19599"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19601,
+      "expected": "\t\tthrough NOTIFICATION/FACCH, the mobile need not to inspect the PCH",
+      "replacement": "",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: remove explanatory prose that interrupts a CSN.1 choice before its terminator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19601"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19594,
+      "expected": "\t1\t--",
+      "replacement": "\t1 ;\t--",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: terminate the inband notifications definition before prose",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19594"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35a",
+      "paragraph": 19600,
+      "expected": "\t1\t--",
+      "replacement": "\t1 ;\t--",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: terminate the inband pagings definition before prose",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19600"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17690,
+      "expected": "\u003c P3 Rest Octets \u003e ::=",
+      "replacement": "\u003c P3 Rest Octets \u003e ::= {",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25 and §8.9: open the truncatable P3 rest-octet group closed at paragraph 17722",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17690"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17691,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17691; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17691"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17692,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17692; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17692"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17693,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17693; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17693"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17694,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17694; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17694"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17695,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17695; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17695"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17696,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: OCR-like I must be the L/H alternative separator at paragraph 17696; Release 13 pycrate and TS 24.007 Annex B use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17696"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17693,
+      "expected": "Priority1 ::= Priority",
+      "replacement": "Priority1 : \u003c Priority \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: malformed named reference to local three-bit Priority definition at paragraph 17693",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17693"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17694,
+      "expected": "Priority2 ::= Priority",
+      "replacement": "Priority2 : \u003c Priority \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: malformed named reference to local three-bit Priority definition at paragraph 17694",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17694"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17695,
+      "expected": "Priority3 ::= Priority",
+      "replacement": "Priority3 : \u003c Priority \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: malformed named reference to local three-bit Priority definition at paragraph 17695",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17695"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17696,
+      "expected": "Priority4 ::= Priority",
+      "replacement": "Priority4 : \u003c Priority \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25: malformed named reference to local three-bit Priority definition at paragraph 17696",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17696"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17721,
+      "expected": "\u003c spare padding \u003e;",
+      "replacement": "\u003c spare padding \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25 and §8.9: terminator belongs after the closing truncatable group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17721"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25",
+      "paragraph": 17722,
+      "expected": "} //",
+      "replacement": "} // ;",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.25 and §8.9: close and terminate the truncatable P3 group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25 paragraph 17722"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35",
+      "paragraph": 19470,
+      "expected": "\u003cSI Rest Octets_S\u003e",
+      "replacement": "\u003cSI4 Rest Octets_S\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35: reference must name the SI4 Rest Octets_S definition printed in paragraph 19480",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35 paragraph 19470"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35",
+      "paragraph": 19487,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35: malformed Break Indicator assignment separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35 paragraph 19487"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.35",
+      "paragraph": 19517,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35: malformed LSA identity assignment separator; table 10.5.2.35.2 defines the two alternatives",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.35 paragraph 19517"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33a",
+      "paragraph": 18932,
+      "expected": " 0 | 1\t\u003c FDD_Qoffset",
+      "replacement": " { 0 | 1\t\u003c FDD_Qoffset",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33a: the FDD optional branch closes with a brace but lacks its opening brace",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33a paragraph 18932"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33a",
+      "paragraph": 18932,
+      "expected": " 0 | 1\t\u003c TDD_Qoffset",
+      "replacement": " { 0 | 1\t\u003c TDD_Qoffset",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33a: the TDD optional branch closes with a brace but lacks its opening brace",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33a paragraph 18932"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37a",
+      "paragraph": 19648,
+      "expected": "bit6)",
+      "replacement": "bit (6)",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37a: malformed Info_type_6 width; table 10.5.2.37a.2 defines six bits",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37a paragraph 19648"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37e",
+      "paragraph": 19889,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37e: malformed assignment separator for LSA identity; table 10.5.2.37e.2 confirms the 24-bit and 10-bit alternatives",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37e paragraph 19889"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16147,
+      "expected": "\u003c Compressed_Inter_RAT_HO_INFO_IND \u003e",
+      "replacement": "\u003c Compressed_Inter_RAT_HO_INFO_IND : bit \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16 table 10.5.2.16.1 defines this as a one-bit L/H field; §10.5.2.18 prints the explicit bit grammar",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16147"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16169,
+      "expected": "\u003c Compressed_Inter_RAT_HO_INFO_IND \u003e",
+      "replacement": "\u003c Compressed_Inter_RAT_HO_INFO_IND : bit \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16 table 10.5.2.16.1 defines this as a one-bit L/H field; §10.5.2.18 prints the explicit bit grammar",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16169"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16199,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: malformed assignment separator for EGPRS Packet Uplink Assignment",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16199"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16229,
+      "expected": "\u003cRTTI USF Mode :_ bit(1)\u003e",
+      "replacement": "\u003cRTTI USF Mode : bit(1)\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: stray underscore after field colon; table 10.5.2.16.1 defines RTTI USF Mode as one bit",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16229"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16236,
+      "expected": "-- Time-based encoding is selected",
+      "replacement": "",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: inline comment precedes the TSH field on the same paragraph and would hide its transmitted bits",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16236"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16349,
+      "expected": "TLLI / G-RNTI bit (32)",
+      "replacement": "TLLI / G-RNTI : bit (32)",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: missing field-name separator for 32-bit TLLI or G-RNTI in Multiple Blocks Packet Downlink Assignment",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16349"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16351,
+      "expected": "Length Indicator of MS_ID",
+      "replacement": "Length Indicator of MS ID",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: the expression must reference the exact two-bit Length Indicator of MS ID field printed in paragraph 16350",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16351"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17568,
+      "expected": "{\t\u003cP2 Rest Octets\u003e ::=",
+      "replacement": "\u003cP2 Rest Octets\u003e ::= {",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24 and §8.9: put the opening truncatable group after the P2 definition assignment",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17568"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17569,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is a malformed L/H alternative separator; TS 24.007 Annex B and pycrate use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17569"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17570,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is a malformed L/H alternative separator; TS 24.007 Annex B and pycrate use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17570"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17571,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is a malformed L/H alternative separator; TS 24.007 Annex B and pycrate use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17571"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17572,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is a malformed L/H alternative separator; TS 24.007 Annex B and pycrate use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17572"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17573,
+      "expected": "L I H",
+      "replacement": "L | H",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is a malformed L/H alternative separator; TS 24.007 Annex B and pycrate use |",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17573"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17571,
+      "expected": "Priority1 ::= Priority",
+      "replacement": "Priority1 : \u003cPriority\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: bind Priority1 to the local three-bit Priority definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17571"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17572,
+      "expected": "Priority2 ::= Priority",
+      "replacement": "Priority2 : \u003cPriority\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: bind Priority2 to the local three-bit Priority definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17572"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17573,
+      "expected": "Priority3 ::= Priority",
+      "replacement": "Priority3 : \u003cPriority\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: bind Priority3 to the local three-bit Priority definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17573"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17577,
+      "expected": "0\tI 1",
+      "replacement": "0\t| 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is the malformed MBMS alternative separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17577"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17579,
+      "expected": "I 1",
+      "replacement": "| 1",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: I is the malformed MBMS notification alternative separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17579"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17608,
+      "expected": "} //",
+      "replacement": "} // ;",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24 and §8.9: terminate the P2 definition after its truncatable group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17608"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17614,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: TS 44.060 V19.0.0 §12.39 prints the dependency as MBMS Session List IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17614"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17620,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: TS 44.060 V19.0.0 §12.39 prints the dependency as MBMS Session List IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17620"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.24",
+      "paragraph": 17623,
+      "expected": "MBMS Sessions List IE",
+      "replacement": "MBMS Session List IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.24: TS 44.060 V19.0.0 §12.39 prints the dependency as MBMS Session List IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.24 paragraph 17623"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18973,
+      "expected": "\u003c \u003c bit (val(extension length)+1) \u003e \u0026",
+      "replacement": "\u003c bit (val(extension length)+1) \u0026",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: remove the redundant inner angle delimiter around the extension length",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18973"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18967,
+      "expected": "\u003c GPRS_Real Time Difference Description struct \u003e\u003e",
+      "replacement": "\u003c GPRS Real Time Difference Description struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS real-time-difference reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18967"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18966,
+      "expected": "\u003c Measurement Parameters Description struct \u003e\u003e",
+      "replacement": "\u003c MEASUREMENT PARAMETERS Description Struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the measurement-parameters reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18966"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18977,
+      "expected": "\u003c 3G Measurement Parameters Description struct \u003e\u003e",
+      "replacement": "\u003c 3G MEASUREMENT PARAMETERS Description struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the 3G measurement-parameters reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18977"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18982,
+      "expected": "\u003c 3G ADDITIONAL MEASUREMENT Parameters Description 2 struct \u003e\u003e",
+      "replacement": "\u003c 3G Additional Measurement Parameters Description 2 struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the additional 3G measurement reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18982"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18968,
+      "expected": "GPRS_BSIC Description struct",
+      "replacement": "GPRS BSIC Description struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS BSIC reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18968"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18969,
+      "expected": "GPRS_REPORT_PRIORITY Description struct",
+      "replacement": "GPRS REPORT PRIORITY Description struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the reporting-priority reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18969"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18970,
+      "expected": "GPRS_MEASUREMENT Parameters Description struct",
+      "replacement": "GPRS MEASUREMENT PARAMETERS Description struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS measurement reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18970"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18978,
+      "expected": "GPRS_3G MEASUREMENT Parameters Description struct",
+      "replacement": "GPRS 3G MEASUREMENT PARAMETERS Description struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS 3G measurement reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18978"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 18974,
+      "expected": "Ignore: bit ** = \u003cno string\u003e",
+      "replacement": "bit ** = \u003cno string\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: keep the no-string extension fallback as ignored wire bits without an unsupported bare label",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18974"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19021,
+      "expected": "Index_Start_3G : bit (7) }",
+      "replacement": "Index_Start_3G : bit (7) \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: close the seven-bit Index_Start_3G field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19021"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19022,
+      "expected": "Absolute_Index_Start_EMR : bit (7) }",
+      "replacement": "Absolute_Index_Start_EMR : bit (7) \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: close the seven-bit Absolute_Index_Start_EMR field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19022"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19023,
+      "expected": "UTRAN FDD Description : UTRAN FDD Description struct \u003e\u003e",
+      "replacement": "UTRAN FDD Description : \u003c UTRAN FDD Description struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: mark the printed UTRAN FDD definition as a nested reference",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19023"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19024,
+      "expected": "UTRAN TDD Description : UTRAN TDD Description struct \u003e\u003e",
+      "replacement": "UTRAN TDD Description : \u003c UTRAN TDD Description struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: mark the printed UTRAN TDD definition as a nested reference",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19024"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19027,
+      "expected": "Bandwidth_FDD : bit (3) }",
+      "replacement": "Bandwidth_FDD : bit (3) \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: close the three-bit FDD bandwidth field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19027"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19028,
+      "expected": "Repeated UTRAN FDD Neighbour Cells : Repeated UTRAN FDD Neighbour Cells struct \u003e\u003e",
+      "replacement": "Repeated UTRAN FDD Neighbour Cells : \u003c Repeated UTRAN FDD Neighbour Cells struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: mark the repeated FDD neighbour definition as a nested reference",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19028"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19032,
+      "expected": "UTRAN TDD Description struct \u003e : :=",
+      "replacement": "UTRAN TDD Description struct \u003e ::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: malformed UTRAN TDD assignment separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19032"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19033,
+      "expected": "Bandwidth_TDD : bit (3) }",
+      "replacement": "Bandwidth_TDD : bit (3) \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: close the three-bit TDD bandwidth field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19033"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19034,
+      "expected": "Repeated UMTS TDD Neighbour Cells : Repeated UMTS TDD Neighbour Cells struct \u003e\u003e",
+      "replacement": "Repeated UTRAN TDD Neighbour Cells : \u003c Repeated UTRAN TDD Neighbour Cells struct \u003e\u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: align the repeated TDD reference with its printed UTRAN definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19034"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19037,
+      "expected": "bit(q(NR_OF_TDD_CELLS) \u003e",
+      "replacement": "bit(q(NR_OF_TDD_CELLS)) \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b and table 9.1.54.1b: close the q(m) width expression",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19037"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19043,
+      "expected": " 0 | 1\t\u003c FDD_Qoffset",
+      "replacement": " { 0 | 1\t\u003c FDD_Qoffset",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: open the FDD parameters optional group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19043"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19043,
+      "expected": " 0 | 1\t\u003c TDD_Qoffset",
+      "replacement": " { 0 | 1\t\u003c TDD_Qoffset",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: open the TDD parameters optional group",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19043"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19054,
+      "expected": "{ REP_PRIORITY: bit }",
+      "replacement": "{ \u003c REP_PRIORITY: bit \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: delimit the repeated one-bit reporting priority field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19054"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19077,
+      "expected": "SI2q Extension Information \u003e :: =",
+      "replacement": "SI2q Extension Information \u003e ::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: malformed SI2q extension assignment separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19077"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19083,
+      "expected": "{ CCN_SUPPORTED : bit }",
+      "replacement": "{ \u003c CCN_SUPPORTED : bit \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: delimit the repeated one-bit CCN_SUPPORTED field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19083"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19126,
+      "expected": "1\tE-UTRAN Measurement Parameters Description :",
+      "replacement": "1\t\u003c E-UTRAN Measurement Parameters Description :",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: delimit the E-UTRAN measurement optional field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19126"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.33b",
+      "paragraph": 19128,
+      "expected": "1\tGPRS E-UTRAN Measurement Parameters Description :",
+      "replacement": "1\t\u003c GPRS E-UTRAN Measurement Parameters Description :",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: delimit the GPRS E-UTRAN measurement optional field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19128"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21920,
+      "expected": ": :=",
+      "replacement": "::=",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: malformed IPA Uplink Assignment assignment separator",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21920"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21929,
+      "expected": "} ** 0;",
+      "replacement": "} ** 0",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: the IPA Uplink Assignment continues with TN and Frequency Parameters after its list",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21929"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21931,
+      "expected": "{ 0\t;",
+      "replacement": "{ 0\t",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: remove the assignment separator inside the uplink frequency choice",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21931"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21933,
+      "expected": "\t}",
+      "replacement": "\t};",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: terminate the IPA Uplink Assignment after its frequency choice",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21933"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21940,
+      "expected": "} ** 0;",
+      "replacement": "} ** 0",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: the IPA Downlink Assignment continues with link mode, TN and frequency after its list",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21940"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21946,
+      "expected": "\t}",
+      "replacement": "\t};",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: terminate the IPA Downlink Assignment after its frequency choice",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21946"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21953,
+      "expected": "\u003c STARTING_TIME_OFFSET: bit (6) \u003e,",
+      "replacement": "\u003c STARTING_TIME_OFFSET: bit (6) \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: remove punctuation after the six-bit starting-time field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21953"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21954,
+      "expected": "} ** 0;",
+      "replacement": "} ** 0",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: the IPA Single Block Uplink Assignment continues with TN and frequency after its list",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21954"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21956,
+      "expected": "{ 0\t;",
+      "replacement": "{ 0\t",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: remove the assignment separator inside the single-block frequency choice",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21956"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21958,
+      "expected": "\t}",
+      "replacement": "\t};",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: terminate the IPA Single Block Uplink Assignment after its frequency choice",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21958"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21964,
+      "expected": "| 11  -- Reserved }",
+      "replacement": "| 11 }; -- Reserved",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: close the reserved acknowledged-access alternative before its comment",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21964"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21908,
+      "expected": "Acknowldeged Access Request struct",
+      "replacement": "Acknowledged Access Request struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: align the acknowledged-access reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21908"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21909,
+      "expected": "Acknowldeged Access Request struct",
+      "replacement": "Acknowledged Access Request struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: align the acknowledged-access reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21909"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21910,
+      "expected": "Acknowldeged Access Request struct",
+      "replacement": "Acknowledged Access Request struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: align the acknowledged-access reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21910"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21911,
+      "expected": "Acknowldeged Access Request struct",
+      "replacement": "Acknowledged Access Request struct",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78: align the acknowledged-access reference with its printed definition",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21911"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21932,
+      "expected": "Frequency Parameters struct",
+      "replacement": "Frequency Parameters IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21932"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21945,
+      "expected": "Frequency Parameters struct",
+      "replacement": "Frequency Parameters IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21945"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.78",
+      "paragraph": 21957,
+      "expected": "Frequency Parameters struct",
+      "replacement": "Frequency Parameters IE",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21957"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.24",
+      "paragraph": 23358,
+      "expected": ": : =",
+      "replacement": "::=",
+      "reason": "TS 44.060 V19.0.0 §12.24: malformed Extension Information assignment separator",
+      "citation": "TS 44.060 V19.0.0 §12.24 paragraph 23358"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.24",
+      "paragraph": 23360,
+      "expected": "1 - EGPRS supported",
+      "replacement": "1 -- EGPRS supported",
+      "reason": "TS 44.060 V19.0.0 §12.24: explanatory EGPRS text needs a CSN.1 comment marker after the choice bit",
+      "citation": "TS 44.060 V19.0.0 §12.24 paragraph 23360"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.37",
+      "paragraph": 23646,
+      "expected": ":: =",
+      "replacement": "::=",
+      "reason": "TS 44.060 V19.0.0 §12.37: malformed assignment separator in MBMS p-t-m channel description",
+      "citation": "TS 44.060 V19.0.0 §12.37 paragraph 23646"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.38",
+      "paragraph": 23658,
+      "expected": ":: =",
+      "replacement": "::=",
+      "reason": "TS 44.060 V19.0.0 §12.38: malformed assignment separator in MPRACH description",
+      "citation": "TS 44.060 V19.0.0 §12.38 paragraph 23658"
+    }
+  ],
+  "source_discrepancies": [
+    {
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1",
+      "source_text": "NR_OF_REMAINING_CELLS: Range 1-16.",
+      "resolution": "Expose the raw four-bit count 0-15, equal to the number of repeated cells; FREQ_DIFF_LENGTH separately uses its printed +1 width.",
+      "evidence": "Printed * (val(NR_OF_REMAINING_CELLS)) grammar; pycrate_csn1dir si_19_rest_octets.py; Wireshark packet-gsm_rlcmac.c COMPACT neighbour-cell repetition."
+    }
+  ],
+  "generated_files": [
+    {
+      "path": "ts24008/classmark/generated.go",
+      "sha256": "69375670d9b7c849366946b5a75f600ed474e0fcf7332d17100f7fb16edc786e"
+    },
+    {
+      "path": "ts24008/msrac/generated.go",
+      "sha256": "82ab528ae0ba8aa7cc713bb895e4a113479becb2b302d978f0b2afd19606c06f"
+    },
+    {
+      "path": "ts36331/uecapability/generated.go",
+      "sha256": "5c650271167d85c0ad532a340327d092dc305b4ea6a631888ec33011864a053c"
+    },
+    {
+      "path": "ts44018/measurement/generated.go",
+      "sha256": "8761c5e96ddbf43265f6868776871f36250504d75a794054e76227d74d002bfb"
+    },
+    {
+      "path": "ts44018/restoctets/generated.go",
+      "sha256": "010084ae4095a336dced5447d27c2aa8705e700192d06628a0f21bded92d94c9"
+    },
+    {
+      "path": "ts44060/ies/generated.go",
+      "sha256": "c17d71e7b25bdbc3b219f41c5a7438e4360685d7d760b1f58b0df63a379f1d04"
+    }
+  ],
+  "validation_commands": [
+    {
+      "module": "asn1-go-compiler",
+      "command": "go build ./..."
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "go test ./... -count=1"
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "go vet ./..."
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "~/go/bin/staticcheck ./..."
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "~/go/bin/golangci-lint run ./..."
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "~/go/bin/gopls check \u003cchanged .go files\u003e"
+    },
+    {
+      "module": "asn1-go-compiler",
+      "command": "go test -race ./... -count=1"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go build ./..."
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test ./... -count=1"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go vet ./..."
+    },
+    {
+      "module": "go-csn1",
+      "command": "~/go/bin/staticcheck ./..."
+    },
+    {
+      "module": "go-csn1",
+      "command": "~/go/bin/golangci-lint run ./..."
+    },
+    {
+      "module": "go-csn1",
+      "command": "~/go/bin/gopls check \u003cchanged .go files\u003e"
+    },
+    {
+      "module": "go-csn1",
+      "command": "go test -race ./... -count=1"
+    }
+  ]
+}
