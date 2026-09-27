@@ -4692,6 +4692,12 @@ func encodeSingleBandSupport(w *runtime.Writer, v SingleBandSupport) error {
 }
 
 // DecodeClassmark3ValuePart decodes TS 24.008 V20.1.0 §10.5.1.7 <Classmark 3 Value part>.
+func DecodeClassmark3ValuePartFrom(r *runtime.Reader) (Classmark3ValuePart, error) {
+	return decodeClassmark3ValuePart(r)
+}
+func EncodeClassmark3ValuePartTo(w *runtime.Writer, v Classmark3ValuePart) error {
+	return encodeClassmark3ValuePart(w, v)
+}
 func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Classmark3ValuePart]{}, err
@@ -4727,6 +4733,8 @@ func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 }
 
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.1.7 <A5 bits>.
+func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) { return decodeA5Bits(r) }
+func EncodeA5BitsTo(w *runtime.Writer, v A5Bits) error   { return encodeA5Bits(w, v) }
 func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[A5Bits]{}, err
@@ -4756,6 +4764,8 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 }
 
 // DecodeRSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <R Support>.
+func DecodeRSupportFrom(r *runtime.Reader) (RSupport, error) { return decodeRSupport(r) }
+func EncodeRSupportTo(w *runtime.Writer, v RSupport) error   { return encodeRSupport(w, v) }
 func DecodeRSupport(data []byte) (runtime.Decoded[RSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RSupport]{}, err
@@ -4785,6 +4795,12 @@ func EncodeRSupport(v RSupport) ([]byte, error) {
 }
 
 // DecodeHSCSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <HSCSD Multi Slot Capability>.
+func DecodeHSCSDMultiSlotCapabilityFrom(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
+	return decodeHSCSDMultiSlotCapability(r)
+}
+func EncodeHSCSDMultiSlotCapabilityTo(w *runtime.Writer, v HSCSDMultiSlotCapability) error {
+	return encodeHSCSDMultiSlotCapability(w, v)
+}
 func DecodeHSCSDMultiSlotCapability(data []byte) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[HSCSDMultiSlotCapability]{}, err
@@ -4814,6 +4830,12 @@ func EncodeHSCSDMultiSlotCapability(v HSCSDMultiSlotCapability) ([]byte, error) 
 }
 
 // DecodeMSMeasurementCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Measurement capability>.
+func DecodeMSMeasurementCapabilityFrom(r *runtime.Reader) (MSMeasurementCapability, error) {
+	return decodeMSMeasurementCapability(r)
+}
+func EncodeMSMeasurementCapabilityTo(w *runtime.Writer, v MSMeasurementCapability) error {
+	return encodeMSMeasurementCapability(w, v)
+}
 func DecodeMSMeasurementCapability(data []byte) (runtime.Decoded[MSMeasurementCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSMeasurementCapability]{}, err
@@ -4843,6 +4865,12 @@ func EncodeMSMeasurementCapability(v MSMeasurementCapability) ([]byte, error) {
 }
 
 // DecodeMSPositioningMethodCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Positioning Method Capability>.
+func DecodeMSPositioningMethodCapabilityFrom(r *runtime.Reader) (MSPositioningMethodCapability, error) {
+	return decodeMSPositioningMethodCapability(r)
+}
+func EncodeMSPositioningMethodCapabilityTo(w *runtime.Writer, v MSPositioningMethodCapability) error {
+	return encodeMSPositioningMethodCapability(w, v)
+}
 func DecodeMSPositioningMethodCapability(data []byte) (runtime.Decoded[MSPositioningMethodCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSPositioningMethodCapability]{}, err
@@ -4872,6 +4900,12 @@ func EncodeMSPositioningMethodCapability(v MSPositioningMethodCapability) ([]byt
 }
 
 // DecodeECSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <ECSD Multi Slot Capability>.
+func DecodeECSDMultiSlotCapabilityFrom(r *runtime.Reader) (ECSDMultiSlotCapability, error) {
+	return decodeECSDMultiSlotCapability(r)
+}
+func EncodeECSDMultiSlotCapabilityTo(w *runtime.Writer, v ECSDMultiSlotCapability) error {
+	return encodeECSDMultiSlotCapability(w, v)
+}
 func DecodeECSDMultiSlotCapability(data []byte) (runtime.Decoded[ECSDMultiSlotCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[ECSDMultiSlotCapability]{}, err
@@ -4901,6 +4935,8 @@ func EncodeECSDMultiSlotCapability(v ECSDMultiSlotCapability) ([]byte, error) {
 }
 
 // DecodeN8PSKStruct decodes TS 24.008 V20.1.0 §10.5.1.7 <8-PSK Struct>.
+func DecodeN8PSKStructFrom(r *runtime.Reader) (N8PSKStruct, error) { return decodeN8PSKStruct(r) }
+func EncodeN8PSKStructTo(w *runtime.Writer, v N8PSKStruct) error   { return encodeN8PSKStruct(w, v) }
 func DecodeN8PSKStruct(data []byte) (runtime.Decoded[N8PSKStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[N8PSKStruct]{}, err
@@ -4930,6 +4966,12 @@ func EncodeN8PSKStruct(v N8PSKStruct) ([]byte, error) {
 }
 
 // DecodeSingleBandSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <Single Band Support>.
+func DecodeSingleBandSupportFrom(r *runtime.Reader) (SingleBandSupport, error) {
+	return decodeSingleBandSupport(r)
+}
+func EncodeSingleBandSupportTo(w *runtime.Writer, v SingleBandSupport) error {
+	return encodeSingleBandSupport(w, v)
+}
 func DecodeSingleBandSupport(data []byte) (runtime.Decoded[SingleBandSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SingleBandSupport]{}, err

@@ -2,9 +2,15 @@
 package runtime
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
+
+// ErrEmptyValue means a named rest-octet value is absent from the containing
+// message. TS 44.018 V19.0.0 §10.5.2.16 permits a zero-octet IE length,
+// while its printed CSN.1 grammar begins with a required discriminator.
+var ErrEmptyValue = errors.New("empty CSN.1 value")
 
 // BitString is an MSB-first bit sequence. Unused low bits in the last byte
 // are ignored; BitLength is the exact number of significant bits.

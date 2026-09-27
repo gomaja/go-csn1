@@ -10,16 +10,26 @@ import (
 	"github.com/gomaja/go-csn1/ts24008/classmark"
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 	"github.com/gomaja/go-csn1/ts36331/uecapability"
+	"github.com/gomaja/go-csn1/ts44018/restoctets"
+	"github.com/gomaja/go-csn1/ts44060/ies"
 )
 
 func descriptors() []runtime.Descriptor {
-	out := make([]runtime.Descriptor, 0, len(classmark.Definitions())+len(msrac.Definitions())+3)
+	out := make([]runtime.Descriptor, 0, len(classmark.Definitions())+len(msrac.Definitions())+len(restoctets.Definitions())+len(ies.Definitions())+3)
 	for _, name := range classmark.Definitions() {
 		d, _ := classmark.Lookup(name)
 		out = append(out, d)
 	}
 	for _, name := range msrac.Definitions() {
 		d, _ := msrac.Lookup(name)
+		out = append(out, d)
+	}
+	for _, name := range restoctets.Definitions() {
+		d, _ := restoctets.Lookup(name)
+		out = append(out, d)
+	}
+	for _, name := range ies.Definitions() {
+		d, _ := ies.Lookup(name)
 		out = append(out, d)
 	}
 	out = append(out,

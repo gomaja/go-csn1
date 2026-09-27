@@ -149,8 +149,58 @@ func (p *expression) primary() (int64, error) {
 	if n, err := strconv.ParseInt(t, 10, 64); err == nil {
 		return n, nil
 	}
-	if n, ok := p.vars[key(t)]; ok {
-		return int64(n), nil
+	// TS 44.018 V19.0.0 §10.5.2.16 references printed field labels
+	// containing spaces inside val(...). Match the longest bound label so
+	// arithmetic after it remains a separate expression.
+	parts := []string{t}
+	last := p.position
+	var value uint64
+	found := false
+	if n, ok, err := p.resolveVar(t); err != nil {
+		return 0, err
+	} else if ok {
+		value, found = n, true
+	}
+	for i := p.position; i < len(p.tokens); i++ {
+		part := p.tokens[i]
+		if part == "(" || part == ")" || part == "+" || part == "-" || part == "*" || part == "/" {
+			break
+		}
+		parts = append(parts, part)
+		n, ok, err := p.resolveVar(strings.Join(parts, " "))
+		if err != nil {
+			return 0, err
+		}
+		if ok {
+			value, found, last = n, true, i+1
+		}
+	}
+	if found {
+		p.position = last
+		return int64(value), nil
 	}
 	return 0, fmt.Errorf("unresolved width variable %q", t)
+}
+
+func (p *expression) resolveVar(name string) (uint64, bool, error) {
+	canonical := key(name)
+	if n, ok := p.vars[canonical]; ok {
+		return n, true, nil
+	}
+	// Word extraction can omit spaces inside a val(...) reference while
+	// preserving them in its printed field declaration. Ambiguous compact
+	// spellings fail closed instead of selecting whichever map entry wins.
+	compact := strings.ReplaceAll(canonical, " ", "")
+	var value uint64
+	found := false
+	for label, n := range p.vars {
+		if strings.ReplaceAll(label, " ", "") != compact {
+			continue
+		}
+		if found {
+			return 0, false, fmt.Errorf("ambiguous width variable %q", name)
+		}
+		value, found = n, true
+	}
+	return value, found, nil
 }

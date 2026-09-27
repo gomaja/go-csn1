@@ -17,6 +17,7 @@ type WireInfo struct {
 	Spare         []BitString
 	Padding       []BitString
 	TruncatedAt   map[string]int
+	SpareCounts   map[string][]int
 	ImplicitZeros int
 	valueChecksum [sha256.Size]byte
 	rawChecksum   [sha256.Size]byte
@@ -129,6 +130,10 @@ func (r *Reader) Fork() *Reader {
 	for k, v := range r.wire.TruncatedAt {
 		copy.wire.TruncatedAt[k] = v
 	}
+	copy.wire.SpareCounts = make(map[string][]int, len(r.wire.SpareCounts))
+	for k, counts := range r.wire.SpareCounts {
+		copy.wire.SpareCounts[k] = append([]int(nil), counts...)
+	}
 	return &copy
 }
 func (r *Reader) Commit(other *Reader) { *r = *other }
@@ -232,21 +237,37 @@ func (r *Reader) PopLimit(old int) error {
 	return nil
 }
 func (r *Reader) RecordTruncation(path string, child int) { r.wire.TruncatedAt[path] = child }
+func (r *Reader) RecordSpareCount(path string, count int) {
+	if r.wire.SpareCounts == nil {
+		r.wire.SpareCounts = make(map[string][]int)
+	}
+	r.wire.SpareCounts[path] = append(r.wire.SpareCounts[path], count)
+}
 
 // Writer uses the same MSB-first bit order and expression rules as Reader.
 type Writer struct {
-	bytes          []byte
-	bits           int
-	vars           map[string]uint64
-	path           string
-	depth          int
-	spare, padding int
-	wire           WireInfo
+	bytes           []byte
+	bits            int
+	vars            map[string]uint64
+	path            string
+	depth           int
+	spare, padding  int
+	spareCountIndex map[string]int
+	wire            WireInfo
 }
 
-func NewWriter() *Writer                              { return &Writer{vars: make(map[string]uint64)} }
-func (w *Writer) WithWire(wire WireInfo)              { w.wire = wire }
-func (w *Writer) Truncation(path string) (int, bool)  { n, ok := w.wire.TruncatedAt[path]; return n, ok }
+func NewWriter() *Writer                             { return &Writer{vars: make(map[string]uint64)} }
+func (w *Writer) WithWire(wire WireInfo)             { w.wire = wire; w.spareCountIndex = make(map[string]int) }
+func (w *Writer) Truncation(path string) (int, bool) { n, ok := w.wire.TruncatedAt[path]; return n, ok }
+func (w *Writer) SpareCount(path string) (int, bool) {
+	counts := w.wire.SpareCounts[path]
+	i := w.spareCountIndex[path]
+	if i >= len(counts) {
+		return 0, false
+	}
+	w.spareCountIndex[path] = i + 1
+	return counts[i], true
+}
 func (w *Writer) Position() int                       { return w.bits }
 func (w *Writer) Set(name string, v uint64)           { w.vars[key(name)] = v }
 func (w *Writer) Eval(expression string) (int, error) { return eval(expression, w.vars) }

@@ -32,6 +32,27 @@ func TestConstructedAccessTechnologyList(t *testing.T) {
 	}
 }
 
+func TestRepeatedSpareBitsStayInWireState(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.5.12a permits arbitrary future-use
+	// spare bits after the access-technology chain.
+	wire := []byte{0xf0, 0x2f, 0x81, 0x2a}
+	decoded, err := DecodeMSRACapabilityValuePart(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(decoded.Value.Wire.SpareCounts) == 0 || len(decoded.Value.Wire.Spare) == 0 {
+		t.Fatal("repeated spare bits missing from wire record")
+	}
+	decoded.Value.Wire.Original = nil // force the generated encoder path
+	encoded, err := EncodeMSRACapabilityValuePart(decoded.Value)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(encoded, wire) {
+		t.Fatalf("repeated spare bits changed: %x, want %x", encoded, wire)
+	}
+}
+
 func TestAccessTechnologyConstraintsOnEncode(t *testing.T) {
 	base := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
 		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
