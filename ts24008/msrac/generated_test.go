@@ -7,9 +7,9 @@ import (
 )
 
 func TestConstructedAccessTechnologyList(t *testing.T) {
-	entry := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-		Alternative: MSRACapabilityValuePartStructElementNode1Alternative2,
-		Alt2:        &MSRACapabilityValuePartStructElementNode1Alt2{AccessTechnologyType: 15, Length: 1},
+	entry := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
+		Length:      &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 15, Length: 1},
 	}}
 	v := MSRACapabilityValuePart{MSRACapabilityValuePartStruct: MSRACapabilityValuePartStruct{
 		Entries: []MSRACapabilityValuePartStructElement{entry, entry},
@@ -33,17 +33,17 @@ func TestConstructedAccessTechnologyList(t *testing.T) {
 }
 
 func TestAccessTechnologyConstraintsOnEncode(t *testing.T) {
-	base := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-		Alternative: MSRACapabilityValuePartStructElementNode1Alternative2,
-		Alt2:        &MSRACapabilityValuePartStructElementNode1Alt2{AccessTechnologyType: 14, Length: 1},
+	base := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
+		Length:      &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 14, Length: 1},
 	}}
 	v := MSRACapabilityValuePart{MSRACapabilityValuePartStruct: MSRACapabilityValuePartStruct{Entries: []MSRACapabilityValuePartStructElement{base}}}
 	if _, err := EncodeMSRACapabilityValuePart(v); err == nil {
 		t.Fatal("== 1111 constraint ignored")
 	}
-	base.Choice.Alternative = MSRACapabilityValuePartStructElementNode1Alternative1
-	base.Choice.Alt2 = nil
-	base.Choice.Alt1 = &MSRACapabilityValuePartStructElementNode1Alt1{AccessTechnologyType: 15}
+	base.AccessTechnologyTypeChoice.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities
+	base.AccessTechnologyTypeChoice.Length = nil
+	base.AccessTechnologyTypeChoice.AccessCapabilities = &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities{AccessTechnologyType: 15}
 	v.MSRACapabilityValuePartStruct.Entries[0] = base
 	if _, err := EncodeMSRACapabilityValuePart(v); err == nil {
 		t.Fatal("exclude 1111 constraint ignored")
@@ -51,7 +51,7 @@ func TestAccessTechnologyConstraintsOnEncode(t *testing.T) {
 }
 
 func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
-	content := Content{RFPowerCapability: 4, Choice: &ContentNode2Alt2{A5Bits: A5Bits{A51: 1, A53: 1}}}
+	content := Content{RFPowerCapability: 4, A5Bits: &A5Bits{A51: 1, A53: 1}}
 	encodedContent, err := EncodeContent(content)
 	if err != nil {
 		t.Fatal(err)
@@ -63,16 +63,16 @@ func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
 	if decodedContent.BitsConsumed > 127 {
 		t.Fatal("access capabilities length exceeds 7 bits")
 	}
-	first := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-		Alternative: MSRACapabilityValuePartStructElementNode1Alternative1,
-		Alt1: &MSRACapabilityValuePartStructElementNode1Alt1{AccessTechnologyType: 1, AccessCapabilities: AccessCapabilitiesStruct{
-			Length: uint8(decodedContent.BitsConsumed), Content: AccessCapabilitiesStructNode2Content{AccessCapabilities: content},
+	first := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities,
+		AccessCapabilities: &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities{AccessTechnologyType: 1, AccessCapabilities: AccessCapabilitiesStruct{
+			Length: uint8(decodedContent.BitsConsumed), Content: AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities{AccessCapabilities: content},
 		}},
 	}}
-	second := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-		Alternative: MSRACapabilityValuePartStructElementNode1Alternative2,
-		Alt2: &MSRACapabilityValuePartStructElementNode1Alt2{AccessTechnologyType: 15, Length: 21, Content: MSRACapabilityValuePartStructElementNode1Alt2Node3Content{
-			Items: []MSRACapabilityValuePartStructElementNode1Alt2Node3ContentNode1Item{
+	second := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
+		Length: &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 15, Length: 21, Content: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies{
+			Items: []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry{
 				{AdditionalAccessTechnologies: AdditionalAccessTechnologiesStruct{AccessTechnologyType: 3, GMSKPowerClass: 1, N8PSKPowerClass: 2}},
 				{AdditionalAccessTechnologies: AdditionalAccessTechnologiesStruct{AccessTechnologyType: 7, GMSKPowerClass: 4, N8PSKPowerClass: 2}},
 			},
@@ -89,7 +89,7 @@ func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := decoded.Value.MSRACapabilityValuePartStruct.Entries
-	if len(got) != 2 || got[1].Choice.Alt2 == nil || len(got[1].Choice.Alt2.Content.Items) != 2 {
+	if len(got) != 2 || got[1].AccessTechnologyTypeChoice.Length == nil || len(got[1].AccessTechnologyTypeChoice.Length.Content.Items) != 2 {
 		t.Fatalf("access technology structure: %+v", got)
 	}
 	reencoded, err := EncodeMSRACapabilityValuePart(decoded.Value)
@@ -99,7 +99,7 @@ func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
 }
 
 func TestContentOptionalGroupsAcrossLengthBoundedVectors(t *testing.T) {
-	groups := [][]string{{"Choice", "Choice2", "Choice3"}, {"Choice4", "Choice5", "Choice6"}, {"Choice7", "Choice8", "Choice9"}}
+	groups := [][]string{{"A5Bits", "MultislotCapability", "N8PSKPowerCapability"}, {"ExtendedDTMGPRSMultiSlotClassGroup", "HighMultislotCapability", "DTMGPRSHighMultiSlotClassGroup"}, {"MultislotCapabilityReductionForDownlinkDualCarrierGroup", "DLMCCapability", "MSSyncAccuracy"}}
 	for i, selected := range groups {
 		content := Content{RFPowerCapability: 4}
 		for _, name := range selected {
@@ -121,10 +121,10 @@ func TestContentOptionalGroupsAcrossLengthBoundedVectors(t *testing.T) {
 				t.Fatalf("vector %d lost %s", i, name)
 			}
 		}
-		entry := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-			Alternative: MSRACapabilityValuePartStructElementNode1Alternative1,
-			Alt1: &MSRACapabilityValuePartStructElementNode1Alt1{AccessTechnologyType: 1, AccessCapabilities: AccessCapabilitiesStruct{
-				Length: uint8(decoded.BitsConsumed), Content: AccessCapabilitiesStructNode2Content{AccessCapabilities: content},
+		entry := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+			Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities,
+			AccessCapabilities: &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities{AccessTechnologyType: 1, AccessCapabilities: AccessCapabilitiesStruct{
+				Length: uint8(decoded.BitsConsumed), Content: AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities{AccessCapabilities: content},
 			}},
 		}}
 		value := MSRACapabilityValuePart{MSRACapabilityValuePartStruct: MSRACapabilityValuePartStruct{Entries: []MSRACapabilityValuePartStructElement{entry}}}
@@ -151,10 +151,13 @@ func fillContentPointers(value reflect.Value) {
 		return
 	}
 	if alt := value.FieldByName("Alternative"); alt.IsValid() {
-		choice := value.FieldByName("Alt1")
-		if choice.IsValid() && choice.Kind() == reflect.Pointer {
-			alt.SetUint(0)
-			fillContentPointers(choice)
+		for i := 1; i < value.NumField(); i++ {
+			choice := value.Field(i)
+			if choice.Kind() == reflect.Pointer {
+				alt.SetUint(0)
+				fillContentPointers(choice)
+				break
+			}
 		}
 		return
 	}
@@ -173,9 +176,9 @@ func FuzzMSRADefinitions(f *testing.F) {
 	f.Add([]byte{})
 	f.Add([]byte{0})
 	f.Add([]byte{0xff, 0x2b})
-	entry := MSRACapabilityValuePartStructElement{Choice: MSRACapabilityValuePartStructElementNode1{
-		Alternative: MSRACapabilityValuePartStructElementNode1Alternative2,
-		Alt2:        &MSRACapabilityValuePartStructElementNode1Alt2{AccessTechnologyType: 15, Length: 1},
+	entry := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
+		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
+		Length:      &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 15, Length: 1},
 	}}
 	minimal, err := EncodeMSRACapabilityValuePart(MSRACapabilityValuePart{MSRACapabilityValuePartStruct: MSRACapabilityValuePartStruct{Entries: []MSRACapabilityValuePartStructElement{entry}}})
 	if err != nil {

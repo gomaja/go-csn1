@@ -16,7 +16,10 @@ import (
 // TestLocalUuContainers reads local trace data only. No trace bytes or values
 // derived from them belong in the repository.
 func TestLocalUuContainers(t *testing.T) {
-	const path = "/Users/marwanjadid/Desktop/R&D/open-source/working-on-asn1-go-compiler/training_data/lte-rrc/uu.json"
+	path := os.Getenv("GO_CSN1_LTE_RRC_UU_JSON")
+	if path == "" {
+		t.Skip("GO_CSN1_LTE_RRC_UU_JSON is unset")
+	}
 	f, err := os.Open(path)
 	if os.IsNotExist(err) {
 		t.Skip("local trace file absent")

@@ -14,19 +14,19 @@ func TestDecodeRejectsOversizedInput(t *testing.T) {
 }
 
 func TestConstructedClassmark3MultibandBranches(t *testing.T) {
-	branches := []Classmark3ValuePartNode2{
-		{Alternative: Classmark3ValuePartNode2Alternative1, Alt1: &Classmark3ValuePartNode2Alt1{A5Bits: A5Bits{A57: 1}}},
-		{Alternative: Classmark3ValuePartNode2Alternative2, Alt2: &Classmark3ValuePartNode2Alt2{
-			MultibandSupported: Classmark3ValuePartNode2Alt2Node1{Alternative: Classmark3ValuePartNode2Alt2Node1Alternative1, Alt1: &struct{}{}},
+	branches := []Classmark3ValuePartMultibandSupportedChoice{
+		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{A5Bits: A5Bits{A57: 1}}},
+		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2, AssociatedRadioCapability2: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{
+			MultibandSupported: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101, Alt101: &struct{}{}},
 			A5Bits:             A5Bits{A54: 1}, AssociatedRadioCapability1: 2, AssociatedRadioCapability2: 3,
 		}},
-		{Alternative: Classmark3ValuePartNode2Alternative3, Alt3: &Classmark3ValuePartNode2Alt3{
-			MultibandSupported: Classmark3ValuePartNode2Alt3Node1{Alternative: Classmark3ValuePartNode2Alt3Node1Alternative2, Alt2: &struct{}{}},
+		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1, AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{
+			MultibandSupported: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010, Alt010: &struct{}{}},
 			A5Bits:             A5Bits{A56: 1}, Items: make([]runtime.BitString, 4), AssociatedRadioCapability1: 4,
 		}},
 	}
 	for i, choice := range branches {
-		v := Classmark3ValuePart{Choice: choice}
+		v := Classmark3ValuePart{MultibandSupportedChoice: choice}
 		encoded, err := EncodeClassmark3ValuePart(v)
 		if err != nil {
 			t.Fatalf("branch %d encode: %v", i, err)
@@ -35,21 +35,21 @@ func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 		if err != nil {
 			t.Fatalf("branch %d decode: %v", i, err)
 		}
-		if decoded.Value.Choice.Alternative != choice.Alternative {
-			t.Fatalf("branch %d selected %d", i, decoded.Value.Choice.Alternative)
+		if decoded.Value.MultibandSupportedChoice.Alternative != choice.Alternative {
+			t.Fatalf("branch %d selected %d", i, decoded.Value.MultibandSupportedChoice.Alternative)
 		}
 		reencoded, err := EncodeClassmark3ValuePart(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, reencoded) {
 			t.Fatalf("branch %d round trip: %v", i, err)
 		}
 		if i == 0 {
-			decoded.Value.Choice.Alt1.A5Bits.A54 = 1
+			decoded.Value.MultibandSupportedChoice.A5Bits.A5Bits.A54 = 1
 			edited, err := EncodeClassmark3ValuePart(decoded.Value)
 			if err != nil || bytes.Equal(encoded, edited) {
 				t.Fatalf("edited value was not encoded: %v", err)
 			}
 			changed, err := DecodeClassmark3ValuePart(edited)
-			if err != nil || changed.Value.Choice.Alt1.A5Bits.A54 != 1 {
+			if err != nil || changed.Value.MultibandSupportedChoice.A5Bits.A5Bits.A54 != 1 {
 				t.Fatalf("edited value lost: %v", err)
 			}
 		}
@@ -60,8 +60,8 @@ func FuzzClassmarkDefinitions(f *testing.F) {
 	f.Add([]byte{})
 	f.Add([]byte{0})
 	f.Add([]byte{0xff, 0x2b})
-	minimal, err := EncodeClassmark3ValuePart(Classmark3ValuePart{Choice: Classmark3ValuePartNode2{
-		Alternative: Classmark3ValuePartNode2Alternative1, Alt1: &Classmark3ValuePartNode2Alt1{},
+	minimal, err := EncodeClassmark3ValuePart(Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{
+		Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{},
 	}})
 	if err != nil {
 		f.Fatal(err)
@@ -87,7 +87,7 @@ func FuzzClassmarkDefinitions(f *testing.F) {
 }
 
 func TestClassmark3ImplicitZeroExtensionPreservesPrefix(t *testing.T) {
-	v := Classmark3ValuePart{Choice: Classmark3ValuePartNode2{Alternative: Classmark3ValuePartNode2Alternative1, Alt1: &Classmark3ValuePartNode2Alt1{}}}
+	v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{}}}
 	complete, err := EncodeClassmark3ValuePart(v)
 	if err != nil {
 		t.Fatal(err)
@@ -107,7 +107,7 @@ func TestClassmark3ImplicitZeroExtensionPreservesPrefix(t *testing.T) {
 }
 
 func TestClassmark3AllOptionalGroupsPresent(t *testing.T) {
-	v := Classmark3ValuePart{Choice: Classmark3ValuePartNode2{Alternative: Classmark3ValuePartNode2Alternative1, Alt1: &Classmark3ValuePartNode2Alt1{}}}
+	v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{}}}
 	setAllOptionalPointers(reflect.ValueOf(&v))
 	encoded, err := EncodeClassmark3ValuePart(v)
 	if err != nil {
@@ -136,28 +136,28 @@ func TestClassmark3AllOptionalGroupsPresent(t *testing.T) {
 func TestClassmark3BandChoiceAlternatives(t *testing.T) {
 	for gsm := 0; gsm < 3; gsm++ {
 		for tgsm := 0; tgsm < 3; tgsm++ {
-			g := Classmark3ValuePartNode11Alt2Node2{Alternative: Classmark3ValuePartNode11Alt2Node2Alternative(gsm)}
+			g := Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported{Alternative: Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative(gsm)}
 			switch gsm {
 			case 0:
-				g.Alt1 = &struct{}{}
+				g.Alt01 = &struct{}{}
 			case 1:
-				g.Alt2 = &struct{}{}
+				g.Alt10 = &struct{}{}
 			case 2:
-				g.Alt3 = &struct{}{}
+				g.Alt11 = &struct{}{}
 			}
-			tg := Classmark3ValuePartNode28Alt2Node2{Alternative: Classmark3ValuePartNode28Alt2Node2Alternative(tgsm)}
+			tg := Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported{Alternative: Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative(tgsm)}
 			switch tgsm {
 			case 0:
-				tg.Alt1 = &struct{}{}
+				tg.Alt01 = &struct{}{}
 			case 1:
-				tg.Alt2 = &struct{}{}
+				tg.Alt10 = &struct{}{}
 			case 2:
-				tg.Alt3 = &struct{}{}
+				tg.Alt11 = &struct{}{}
 			}
 			v := Classmark3ValuePart{
-				Choice:   Classmark3ValuePartNode2{Alternative: Classmark3ValuePartNode2Alternative1, Alt1: &Classmark3ValuePartNode2Alt1{}},
-				Choice8:  &Classmark3ValuePartNode11Alt2{GSM400BandsSupported: g},
-				Choice16: &Classmark3ValuePartNode28Alt2{TGSM400BandsSupported: tg},
+				MultibandSupportedChoice:   Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{}},
+				GSM400BandsSupportedGroup:  &Classmark3ValuePartGSM400BandsSupportedGroup{GSM400BandsSupported: g},
+				TGSM400BandsSupportedGroup: &Classmark3ValuePartTGSM400BandsSupportedGroup{TGSM400BandsSupported: tg},
 			}
 			encoded, err := EncodeClassmark3ValuePart(v)
 			if err != nil {
@@ -167,7 +167,7 @@ func TestClassmark3BandChoiceAlternatives(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if decoded.Value.Choice8 == nil || decoded.Value.Choice16 == nil || decoded.Value.Choice8.GSM400BandsSupported.Alternative != g.Alternative || decoded.Value.Choice16.TGSM400BandsSupported.Alternative != tg.Alternative {
+			if decoded.Value.GSM400BandsSupportedGroup == nil || decoded.Value.TGSM400BandsSupportedGroup == nil || decoded.Value.GSM400BandsSupportedGroup.GSM400BandsSupported.Alternative != g.Alternative || decoded.Value.TGSM400BandsSupportedGroup.TGSM400BandsSupported.Alternative != tg.Alternative {
 				t.Fatalf("band choices %d/%d lost", gsm, tgsm)
 			}
 			t.Logf("band choice %d/%d: %x", gsm, tgsm, encoded)
@@ -177,14 +177,14 @@ func TestClassmark3BandChoiceAlternatives(t *testing.T) {
 
 func TestClassmark3MultibandSubchoices(t *testing.T) {
 	for i := 0; i < 2; i++ {
-		band := Classmark3ValuePartNode2Alt2Node1{Alternative: Classmark3ValuePartNode2Alt2Node1Alternative(i)}
+		band := Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternative(i)}
 		if i == 0 {
-			band.Alt1 = &struct{}{}
+			band.Alt101 = &struct{}{}
 		} else {
-			band.Alt2 = &struct{}{}
+			band.Alt110 = &struct{}{}
 		}
-		v := Classmark3ValuePart{Choice: Classmark3ValuePartNode2{Alternative: Classmark3ValuePartNode2Alternative2,
-			Alt2: &Classmark3ValuePartNode2Alt2{MultibandSupported: band}}}
+		v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2,
+			AssociatedRadioCapability2: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{MultibandSupported: band}}}
 		encoded, err := EncodeClassmark3ValuePart(v)
 		if err != nil {
 			t.Fatal(err)
@@ -193,23 +193,23 @@ func TestClassmark3MultibandSubchoices(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if decoded.Value.Choice.Alt2 == nil || decoded.Value.Choice.Alt2.MultibandSupported.Alternative != band.Alternative {
+		if decoded.Value.MultibandSupportedChoice.AssociatedRadioCapability2 == nil || decoded.Value.MultibandSupportedChoice.AssociatedRadioCapability2.MultibandSupported.Alternative != band.Alternative {
 			t.Fatalf("multiband alt2/%d lost", i)
 		}
 		t.Logf("multiband alt2/%d: %x", i, encoded)
 	}
 	for i := 0; i < 3; i++ {
-		band := Classmark3ValuePartNode2Alt3Node1{Alternative: Classmark3ValuePartNode2Alt3Node1Alternative(i)}
+		band := Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative(i)}
 		switch i {
 		case 0:
-			band.Alt1 = &struct{}{}
+			band.Alt001 = &struct{}{}
 		case 1:
-			band.Alt2 = &struct{}{}
+			band.Alt010 = &struct{}{}
 		case 2:
-			band.Alt3 = &struct{}{}
+			band.Alt100 = &struct{}{}
 		}
-		v := Classmark3ValuePart{Choice: Classmark3ValuePartNode2{Alternative: Classmark3ValuePartNode2Alternative3,
-			Alt3: &Classmark3ValuePartNode2Alt3{MultibandSupported: band, Items: make([]runtime.BitString, 4)}}}
+		v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1,
+			AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{MultibandSupported: band, Items: make([]runtime.BitString, 4)}}}
 		encoded, err := EncodeClassmark3ValuePart(v)
 		if err != nil {
 			t.Fatal(err)
@@ -218,7 +218,7 @@ func TestClassmark3MultibandSubchoices(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if decoded.Value.Choice.Alt3 == nil || decoded.Value.Choice.Alt3.MultibandSupported.Alternative != band.Alternative {
+		if decoded.Value.MultibandSupportedChoice.AssociatedRadioCapability1 == nil || decoded.Value.MultibandSupportedChoice.AssociatedRadioCapability1.MultibandSupported.Alternative != band.Alternative {
 			t.Fatalf("multiband alt3/%d lost", i)
 		}
 		t.Logf("multiband alt3/%d: %x", i, encoded)
@@ -237,10 +237,13 @@ func setAllOptionalPointers(value reflect.Value) {
 		return
 	}
 	if alt := value.FieldByName("Alternative"); alt.IsValid() {
-		choice := value.FieldByName("Alt1")
-		if choice.IsValid() && choice.Kind() == reflect.Pointer {
-			alt.SetUint(0)
-			setAllOptionalPointers(choice)
+		for i := 1; i < value.NumField(); i++ {
+			choice := value.Field(i)
+			if choice.Kind() == reflect.Pointer {
+				alt.SetUint(0)
+				setAllOptionalPointers(choice)
+				break
+			}
 		}
 		return
 	}

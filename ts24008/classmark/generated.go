@@ -9,189 +9,144 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
-type Classmark3ValuePartNode2Alt1 struct {
+type Classmark3ValuePartMultibandSupportedChoiceA5Bits struct {
 	A5Bits A5Bits
 }
-type Classmark3ValuePartNode2Alt2Node1Alternative uint8
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternative uint8
 
 const (
-	Classmark3ValuePartNode2Alt2Node1Alternative1 Classmark3ValuePartNode2Alt2Node1Alternative = iota
-	Classmark3ValuePartNode2Alt2Node1Alternative2 Classmark3ValuePartNode2Alt2Node1Alternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101 Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110 Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternative = iota
 )
 
-type Classmark3ValuePartNode2Alt2Node1 struct {
-	Alternative Classmark3ValuePartNode2Alt2Node1Alternative
-	Alt1        *struct{}
-	Alt2        *struct{}
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported struct {
+	Alternative Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternative
+	Alt101      *struct{}
+	Alt110      *struct{}
 }
-type Classmark3ValuePartNode2Alt2 struct {
-	MultibandSupported         Classmark3ValuePartNode2Alt2Node1
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2 struct {
+	MultibandSupported         Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported
 	A5Bits                     A5Bits
 	AssociatedRadioCapability2 uint8
 	AssociatedRadioCapability1 uint8
 }
-type Classmark3ValuePartNode2Alt3Node1Alternative uint8
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative uint8
 
 const (
-	Classmark3ValuePartNode2Alt3Node1Alternative1 Classmark3ValuePartNode2Alt3Node1Alternative = iota
-	Classmark3ValuePartNode2Alt3Node1Alternative2 Classmark3ValuePartNode2Alt3Node1Alternative = iota
-	Classmark3ValuePartNode2Alt3Node1Alternative3 Classmark3ValuePartNode2Alt3Node1Alternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001 Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010 Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100 Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative = iota
 )
 
-type Classmark3ValuePartNode2Alt3Node1 struct {
-	Alternative Classmark3ValuePartNode2Alt3Node1Alternative
-	Alt1        *struct{}
-	Alt2        *struct{}
-	Alt3        *struct{}
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported struct {
+	Alternative Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternative
+	Alt001      *struct{}
+	Alt010      *struct{}
+	Alt100      *struct{}
 }
-type Classmark3ValuePartNode2Alt3 struct {
-	MultibandSupported         Classmark3ValuePartNode2Alt3Node1
+type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1 struct {
+	MultibandSupported         Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	A5Bits                     A5Bits
 	Items                      []runtime.BitString
 	AssociatedRadioCapability1 uint8
 }
-type Classmark3ValuePartNode2Alternative uint8
+type Classmark3ValuePartMultibandSupportedChoiceAlternative uint8
 
 const (
-	Classmark3ValuePartNode2Alternative1 Classmark3ValuePartNode2Alternative = iota
-	Classmark3ValuePartNode2Alternative2 Classmark3ValuePartNode2Alternative = iota
-	Classmark3ValuePartNode2Alternative3 Classmark3ValuePartNode2Alternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits                     Classmark3ValuePartMultibandSupportedChoiceAlternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2 Classmark3ValuePartMultibandSupportedChoiceAlternative = iota
+	Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1 Classmark3ValuePartMultibandSupportedChoiceAlternative = iota
 )
 
-type Classmark3ValuePartNode2 struct {
-	Alternative Classmark3ValuePartNode2Alternative
-	Alt1        *Classmark3ValuePartNode2Alt1
-	Alt2        *Classmark3ValuePartNode2Alt2
-	Alt3        *Classmark3ValuePartNode2Alt3
+type Classmark3ValuePartMultibandSupportedChoice struct {
+	Alternative                Classmark3ValuePartMultibandSupportedChoiceAlternative
+	A5Bits                     *Classmark3ValuePartMultibandSupportedChoiceA5Bits
+	AssociatedRadioCapability2 *Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
+	AssociatedRadioCapability1 *Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 }
-type Classmark3ValuePartNode3Alt2 struct {
-	RSupport RSupport
-}
-type Classmark3ValuePartNode4Alt2 struct {
-	HSCSDMultiSlotCapability HSCSDMultiSlotCapability
-}
-type Classmark3ValuePartNode7Alt2 struct {
-	MSMeasurementCapability MSMeasurementCapability
-}
-type Classmark3ValuePartNode8Alt2 struct {
-	MSPositioningMethodCapability MSPositioningMethodCapability
-}
-type Classmark3ValuePartNode9Alt2 struct {
-	ECSDMultiSlotCapability ECSDMultiSlotCapability
-}
-type Classmark3ValuePartNode10Alt2 struct {
-	N8PSKStruct N8PSKStruct
-}
-type Classmark3ValuePartNode11Alt2Node2Alternative uint8
+type Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative uint8
 
 const (
-	Classmark3ValuePartNode11Alt2Node2Alternative1 Classmark3ValuePartNode11Alt2Node2Alternative = iota
-	Classmark3ValuePartNode11Alt2Node2Alternative2 Classmark3ValuePartNode11Alt2Node2Alternative = iota
-	Classmark3ValuePartNode11Alt2Node2Alternative3 Classmark3ValuePartNode11Alt2Node2Alternative = iota
+	Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01 Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative = iota
+	Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10 Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative = iota
+	Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11 Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative = iota
 )
 
-type Classmark3ValuePartNode11Alt2Node2 struct {
-	Alternative Classmark3ValuePartNode11Alt2Node2Alternative
-	Alt1        *struct{}
-	Alt2        *struct{}
-	Alt3        *struct{}
+type Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported struct {
+	Alternative Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternative
+	Alt01       *struct{}
+	Alt10       *struct{}
+	Alt11       *struct{}
 }
-type Classmark3ValuePartNode11Alt2 struct {
-	GSM400BandsSupported            Classmark3ValuePartNode11Alt2Node2
+type Classmark3ValuePartGSM400BandsSupportedGroup struct {
+	GSM400BandsSupported            Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported
 	GSM400AssociatedRadioCapability uint8
 }
-type Classmark3ValuePartNode12Alt2 struct {
-	GSM850AssociatedRadioCapability uint8
+type Classmark3ValuePartDTMGPRSMultiSlotClassGroup struct {
+	DTMGPRSMultiSlotClass  uint8
+	SingleSlotDTM          uint8
+	DTMEGPRSMultiSlotClass *uint8
 }
-type Classmark3ValuePartNode13Alt2 struct {
-	GSM1900AssociatedRadioCapability uint8
-}
-type Classmark3ValuePartNode17Alt2Node4Alt2 struct {
-	DTMEGPRSMultiSlotClass uint8
-}
-type Classmark3ValuePartNode17Alt2 struct {
-	DTMGPRSMultiSlotClass uint8
-	SingleSlotDTM         uint8
-	Choice                *Classmark3ValuePartNode17Alt2Node4Alt2
-}
-type Classmark3ValuePartNode18Alt2 struct {
-	SingleBandSupport SingleBandSupport
-}
-type Classmark3ValuePartNode19Alt2 struct {
-	GSM750AssociatedRadioCapability uint8
-}
-type Classmark3ValuePartNode22Alt2 struct {
+type Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup struct {
 	ExtendedDTMGPRSMultiSlotClass  uint8
 	ExtendedDTMEGPRSMultiSlotClass uint8
 }
-type Classmark3ValuePartNode23Alt2 struct {
-	HighMultislotCapability uint8
-}
-type Classmark3ValuePartNode28Alt2Node2Alternative uint8
+type Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative uint8
 
 const (
-	Classmark3ValuePartNode28Alt2Node2Alternative1 Classmark3ValuePartNode28Alt2Node2Alternative = iota
-	Classmark3ValuePartNode28Alt2Node2Alternative2 Classmark3ValuePartNode28Alt2Node2Alternative = iota
-	Classmark3ValuePartNode28Alt2Node2Alternative3 Classmark3ValuePartNode28Alt2Node2Alternative = iota
+	Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01 Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative = iota
+	Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10 Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative = iota
+	Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11 Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative = iota
 )
 
-type Classmark3ValuePartNode28Alt2Node2 struct {
-	Alternative Classmark3ValuePartNode28Alt2Node2Alternative
-	Alt1        *struct{}
-	Alt2        *struct{}
-	Alt3        *struct{}
+type Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported struct {
+	Alternative Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternative
+	Alt01       *struct{}
+	Alt10       *struct{}
+	Alt11       *struct{}
 }
-type Classmark3ValuePartNode28Alt2 struct {
-	TGSM400BandsSupported            Classmark3ValuePartNode28Alt2Node2
+type Classmark3ValuePartTGSM400BandsSupportedGroup struct {
+	TGSM400BandsSupported            Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported
 	TGSM400AssociatedRadioCapability uint8
 }
-type Classmark3ValuePartNode32Alt2Node4Alt2 struct {
-	DTMEGPRSHighMultiSlotClass uint8
-}
-type Classmark3ValuePartNode32Alt2 struct {
-	DTMGPRSHighMultiSlotClass uint8
-	OffsetRequired            uint8
-	Choice                    *Classmark3ValuePartNode32Alt2Node4Alt2
-}
-type Classmark3ValuePartNode34Alt2 struct {
-	GSM710AssociatedRadioCapability uint8
-}
-type Classmark3ValuePartNode35Alt2 struct {
-	TGSM810AssociatedRadioCapability uint8
+type Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup struct {
+	DTMGPRSHighMultiSlotClass  uint8
+	OffsetRequired             uint8
+	DTMEGPRSHighMultiSlotClass *uint8
 }
 type Classmark3ValuePart struct {
-	Choice                                        Classmark3ValuePartNode2
-	Choice2                                       *Classmark3ValuePartNode3Alt2
-	Choice3                                       *Classmark3ValuePartNode4Alt2
+	MultibandSupportedChoice                      Classmark3ValuePartMultibandSupportedChoice
+	RSupport                                      *RSupport
+	HSCSDMultiSlotCapability                      *HSCSDMultiSlotCapability
 	UCS2Treatment                                 uint8
 	ExtendedMeasurementCapability                 uint8
-	Choice4                                       *Classmark3ValuePartNode7Alt2
-	Choice5                                       *Classmark3ValuePartNode8Alt2
-	Choice6                                       *Classmark3ValuePartNode9Alt2
-	Choice7                                       *Classmark3ValuePartNode10Alt2
-	Choice8                                       *Classmark3ValuePartNode11Alt2
-	Choice9                                       *Classmark3ValuePartNode12Alt2
-	Choice10                                      *Classmark3ValuePartNode13Alt2
+	MSMeasurementCapability                       *MSMeasurementCapability
+	MSPositioningMethodCapability                 *MSPositioningMethodCapability
+	ECSDMultiSlotCapability                       *ECSDMultiSlotCapability
+	N8PSKStruct                                   *N8PSKStruct
+	GSM400BandsSupportedGroup                     *Classmark3ValuePartGSM400BandsSupportedGroup
+	GSM850AssociatedRadioCapability               *uint8
+	GSM1900AssociatedRadioCapability              *uint8
 	UMTSFDDRadioAccessTechnologyCapability        uint8
 	UMTS384McpsTDDRadioAccessTechnologyCapability uint8
 	CDMA2000RadioAccessTechnologyCapability       uint8
-	Choice11                                      *Classmark3ValuePartNode17Alt2
-	Choice12                                      *Classmark3ValuePartNode18Alt2
-	Choice13                                      *Classmark3ValuePartNode19Alt2
+	DTMGPRSMultiSlotClassGroup                    *Classmark3ValuePartDTMGPRSMultiSlotClassGroup
+	SingleBandSupport                             *SingleBandSupport
+	GSM750AssociatedRadioCapability               *uint8
 	UMTS128McpsTDDRadioAccessTechnologyCapability uint8
 	GERANFeaturePackage1                          uint8
-	Choice14                                      *Classmark3ValuePartNode22Alt2
-	Choice15                                      *Classmark3ValuePartNode23Alt2
+	ExtendedDTMGPRSMultiSlotClassGroup            *Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup
+	HighMultislotCapability                       *uint8
 	GERANFeaturePackage2                          uint8
 	GMSKMultislotPowerProfile                     uint8
 	N8PSKMultislotPowerProfile                    uint8
-	Choice16                                      *Classmark3ValuePartNode28Alt2
+	TGSM400BandsSupportedGroup                    *Classmark3ValuePartTGSM400BandsSupportedGroup
 	DownlinkAdvancedReceiverPerformance           uint8
 	DTMEnhancementsCapability                     uint8
-	Choice17                                      *Classmark3ValuePartNode32Alt2
+	DTMGPRSHighMultiSlotClassGroup                *Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup
 	RepeatedACCHCapability                        uint8
-	Choice18                                      *Classmark3ValuePartNode34Alt2
-	Choice19                                      *Classmark3ValuePartNode35Alt2
+	GSM710AssociatedRadioCapability               *uint8
+	TGSM810AssociatedRadioCapability              *uint8
 	CipheringModeSettingCapability                uint8
 	AdditionalPositioningCapabilities             uint8
 	EUTRAFDDSupport                               uint8
@@ -241,131 +196,125 @@ type ECSDMultiSlotCapability struct {
 	ECSDMultiSlotClass uint8
 	Wire               runtime.WireInfo `json:"-"`
 }
-type N8PSKStructNode2Alt2 struct {
-	N8PSKRFPowerCapability1 uint8
-}
-type N8PSKStructNode3Alt2 struct {
-	N8PSKRFPowerCapability2 uint8
-}
 type N8PSKStruct struct {
-	ModulationCapability uint8
-	Choice               *N8PSKStructNode2Alt2
-	Choice2              *N8PSKStructNode3Alt2
-	Wire                 runtime.WireInfo `json:"-"`
+	ModulationCapability    uint8
+	N8PSKRFPowerCapability1 *uint8
+	N8PSKRFPowerCapability2 *uint8
+	Wire                    runtime.WireInfo `json:"-"`
 }
 type SingleBandSupport struct {
 	GSMBand uint8
 	Wire    runtime.WireInfo `json:"-"`
 }
 
-func decodeClassmark3ValuePartNode1(r *runtime.Reader) (runtime.BitString, error) {
+func decodeClassmark3ValuePartSpareBit(r *runtime.Reader) (runtime.BitString, error) {
 	return r.ReadSpare()
 }
-func encodeClassmark3ValuePartNode1(w *runtime.Writer, _ runtime.BitString) error {
+func encodeClassmark3ValuePartSpareBit(w *runtime.Writer, _ runtime.BitString) error {
 	return w.WriteSpare()
 }
-func decodeClassmark3ValuePartNode2Alt1Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt1Node1"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceA5BitsMultibandSupported(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceA5BitsMultibandSupported"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("000")
 }
-func encodeClassmark3ValuePartNode2Alt1Node1(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceA5BitsMultibandSupported(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("000")
 }
-func decodeClassmark3ValuePartNode2Alt1Node2(r *runtime.Reader) (A5Bits, error) {
+func decodeClassmark3ValuePartMultibandSupportedChoiceA5BitsA5Bits(r *runtime.Reader) (A5Bits, error) {
 	return decodeA5Bits(r)
 }
-func encodeClassmark3ValuePartNode2Alt1Node2(w *runtime.Writer, v A5Bits) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceA5BitsA5Bits(w *runtime.Writer, v A5Bits) error {
 	return encodeA5Bits(w, v)
 }
-func decodeClassmark3ValuePartNode2Alt1(r *runtime.Reader) (Classmark3ValuePartNode2Alt1, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt1"); err != nil {
-		return Classmark3ValuePartNode2Alt1{}, err
+func decodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceA5Bits, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceA5Bits"); err != nil {
+		return Classmark3ValuePartMultibandSupportedChoiceA5Bits{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode2Alt1
-	x0, err := decodeClassmark3ValuePartNode2Alt1Node1(r)
+	var v Classmark3ValuePartMultibandSupportedChoiceA5Bits
+	x0, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5BitsMultibandSupported(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt1{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceA5Bits{}, err
 	}
 	_ = x0
-	x1, err := decodeClassmark3ValuePartNode2Alt1Node2(r)
+	x1, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5BitsA5Bits(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt1{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceA5Bits{}, err
 	}
 	v.A5Bits = x1
 	return v, nil
 }
-func encodeClassmark3ValuePartNode2Alt1(w *runtime.Writer, v Classmark3ValuePartNode2Alt1) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt1"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoiceA5Bits) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceA5Bits"); err != nil {
 		return err
 	}
 	defer w.Leave()
 	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode2Alt1"); ok {
+	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceA5Bits"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode2Alt1Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceA5BitsMultibandSupported(w, struct{}{}); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode2Alt1Node2(w, v.A5Bits); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceA5BitsA5Bits(w, v.A5Bits); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt2Node1Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt2Node1Alt1"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("101")
 }
-func encodeClassmark3ValuePartNode2Alt2Node1Alt1(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("101")
 }
-func decodeClassmark3ValuePartNode2Alt2Node1Alt2(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt2Node1Alt2"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("110")
 }
-func encodeClassmark3ValuePartNode2Alt2Node1Alt2(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("110")
 }
-func decodeClassmark3ValuePartNode2Alt2Node1(r *runtime.Reader) (Classmark3ValuePartNode2Alt2Node1, error) {
-	var result Classmark3ValuePartNode2Alt2Node1
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported, error) {
+	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt2Node1Alt1(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alt2Node1Alternative1
-			result.Alt1 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101
+			result.Alt101 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt2Node1Alt2(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alt2Node1Alternative2
-			result.Alt2 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110
+			result.Alt110 = &v
 		}
 	}
 	if matches != 1 {
@@ -374,40 +323,40 @@ func decodeClassmark3ValuePartNode2Alt2Node1(r *runtime.Reader) (Classmark3Value
 	r.Commit(chosen)
 	return result, nil
 }
-func encodeClassmark3ValuePartNode2Alt2Node1(w *runtime.Writer, v Classmark3ValuePartNode2Alt2Node1) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported) error {
 	count := 0
-	if v.Alt1 != nil {
+	if v.Alt101 != nil {
 		count++
 	}
-	if v.Alt2 != nil {
+	if v.Alt110 != nil {
 		count++
 	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
 	switch v.Alternative {
-	case Classmark3ValuePartNode2Alt2Node1Alternative1:
-		if v.Alt1 == nil {
+	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101:
+		if v.Alt101 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt2Node1Alt1(w, *v.Alt1)
-	case Classmark3ValuePartNode2Alt2Node1Alternative2:
-		if v.Alt2 == nil {
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(w, *v.Alt101)
+	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110:
+		if v.Alt110 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt2Node1Alt2(w, *v.Alt2)
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(w, *v.Alt110)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
-func decodeClassmark3ValuePartNode2Alt2Node2(r *runtime.Reader) (A5Bits, error) {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2A5Bits(r *runtime.Reader) (A5Bits, error) {
 	return decodeA5Bits(r)
 }
-func encodeClassmark3ValuePartNode2Alt2Node2(w *runtime.Writer, v A5Bits) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2A5Bits(w *runtime.Writer, v A5Bits) error {
 	return encodeA5Bits(w, v)
 }
-func decodeClassmark3ValuePartNode2Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -422,8 +371,8 @@ func decodeClassmark3ValuePartNode2Alt2Node3(r *runtime.Reader) (uint8, error) {
 	r.Set("Associated Radio Capability 2", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode2Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -437,8 +386,8 @@ func encodeClassmark3ValuePartNode2Alt2Node3(w *runtime.Writer, v uint8) error {
 	w.Set("Associated Radio Capability 2", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt2Node4(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt2Node4"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -453,8 +402,8 @@ func decodeClassmark3ValuePartNode2Alt2Node4(r *runtime.Reader) (uint8, error) {
 	r.Set("Associated Radio Capability 1", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode2Alt2Node4(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt2Node4"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -468,133 +417,133 @@ func encodeClassmark3ValuePartNode2Alt2Node4(w *runtime.Writer, v uint8) error {
 	w.Set("Associated Radio Capability 1", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt2(r *runtime.Reader) (Classmark3ValuePartNode2Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt2"); err != nil {
-		return Classmark3ValuePartNode2Alt2{}, err
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2"); err != nil {
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode2Alt2
-	x0, err := decodeClassmark3ValuePartNode2Alt2Node1(r)
+	var v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
+	x0, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt2{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{}, err
 	}
 	v.MultibandSupported = x0
-	x1, err := decodeClassmark3ValuePartNode2Alt2Node2(r)
+	x1, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2A5Bits(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt2{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{}, err
 	}
 	v.A5Bits = x1
-	x2, err := decodeClassmark3ValuePartNode2Alt2Node3(r)
+	x2, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt2{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{}, err
 	}
 	v.AssociatedRadioCapability2 = x2
-	x3, err := decodeClassmark3ValuePartNode2Alt2Node4(r)
+	x3, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt2{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2{}, err
 	}
 	v.AssociatedRadioCapability1 = x3
 	return v, nil
 }
-func encodeClassmark3ValuePartNode2Alt2(w *runtime.Writer, v Classmark3ValuePartNode2Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt2"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2"); err != nil {
 		return err
 	}
 	defer w.Leave()
 	limit := 4
-	if n, ok := w.Truncation("Classmark3ValuePartNode2Alt2"); ok {
+	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode2Alt2Node1(w, v.MultibandSupported); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported(w, v.MultibandSupported); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode2Alt2Node2(w, v.A5Bits); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2A5Bits(w, v.A5Bits); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode2Alt2Node3(w, v.AssociatedRadioCapability2); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2(w, v.AssociatedRadioCapability2); err != nil {
 			return err
 		}
 	}
 	if limit > 3 {
-		if err := encodeClassmark3ValuePartNode2Alt2Node4(w, v.AssociatedRadioCapability1); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(w, v.AssociatedRadioCapability1); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt3Node1Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt3Node1Alt1"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("001")
 }
-func encodeClassmark3ValuePartNode2Alt3Node1Alt1(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("001")
 }
-func decodeClassmark3ValuePartNode2Alt3Node1Alt2(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt3Node1Alt2"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("010")
 }
-func encodeClassmark3ValuePartNode2Alt3Node1Alt2(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("010")
 }
-func decodeClassmark3ValuePartNode2Alt3Node1Alt3(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt3Node1Alt3"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("100")
 }
-func encodeClassmark3ValuePartNode2Alt3Node1Alt3(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("100")
 }
-func decodeClassmark3ValuePartNode2Alt3Node1(r *runtime.Reader) (Classmark3ValuePartNode2Alt3Node1, error) {
-	var result Classmark3ValuePartNode2Alt3Node1
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported, error) {
+	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt3Node1Alt1(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alt3Node1Alternative1
-			result.Alt1 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001
+			result.Alt001 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt3Node1Alt2(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alt3Node1Alternative2
-			result.Alt2 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010
+			result.Alt010 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt3Node1Alt3(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alt3Node1Alternative3
-			result.Alt3 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100
+			result.Alt100 = &v
 		}
 	}
 	if matches != 1 {
@@ -603,60 +552,60 @@ func decodeClassmark3ValuePartNode2Alt3Node1(r *runtime.Reader) (Classmark3Value
 	r.Commit(chosen)
 	return result, nil
 }
-func encodeClassmark3ValuePartNode2Alt3Node1(w *runtime.Writer, v Classmark3ValuePartNode2Alt3Node1) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported) error {
 	count := 0
-	if v.Alt1 != nil {
+	if v.Alt001 != nil {
 		count++
 	}
-	if v.Alt2 != nil {
+	if v.Alt010 != nil {
 		count++
 	}
-	if v.Alt3 != nil {
+	if v.Alt100 != nil {
 		count++
 	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
 	switch v.Alternative {
-	case Classmark3ValuePartNode2Alt3Node1Alternative1:
-		if v.Alt1 == nil {
+	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001:
+		if v.Alt001 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt3Node1Alt1(w, *v.Alt1)
-	case Classmark3ValuePartNode2Alt3Node1Alternative2:
-		if v.Alt2 == nil {
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(w, *v.Alt001)
+	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010:
+		if v.Alt010 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt3Node1Alt2(w, *v.Alt2)
-	case Classmark3ValuePartNode2Alt3Node1Alternative3:
-		if v.Alt3 == nil {
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(w, *v.Alt010)
+	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100:
+		if v.Alt100 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt3Node1Alt3(w, *v.Alt3)
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(w, *v.Alt100)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
-func decodeClassmark3ValuePartNode2Alt3Node2(r *runtime.Reader) (A5Bits, error) {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1A5Bits(r *runtime.Reader) (A5Bits, error) {
 	return decodeA5Bits(r)
 }
-func encodeClassmark3ValuePartNode2Alt3Node2(w *runtime.Writer, v A5Bits) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1A5Bits(w *runtime.Writer, v A5Bits) error {
 	return encodeA5Bits(w, v)
 }
-func decodeClassmark3ValuePartNode2Alt3Node3Item(r *runtime.Reader) (runtime.BitString, error) {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r *runtime.Reader) (runtime.BitString, error) {
 	return r.ReadSpare()
 }
-func encodeClassmark3ValuePartNode2Alt3Node3Item(w *runtime.Writer, _ runtime.BitString) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w *runtime.Writer, _ runtime.BitString) error {
 	return w.WriteSpare()
 }
-func decodeClassmark3ValuePartNode2Alt3Node3(r *runtime.Reader) ([]runtime.BitString, error) {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(r *runtime.Reader) ([]runtime.BitString, error) {
 	var out []runtime.BitString
 	count, err := r.Eval("4")
 	if err != nil {
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
-		v, err := decodeClassmark3ValuePartNode2Alt3Node3Item(r)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r)
 		if err != nil {
 			return nil, err
 		}
@@ -664,7 +613,7 @@ func decodeClassmark3ValuePartNode2Alt3Node3(r *runtime.Reader) ([]runtime.BitSt
 	}
 	return out, nil
 }
-func encodeClassmark3ValuePartNode2Alt3Node3(w *runtime.Writer, v []runtime.BitString) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w *runtime.Writer, v []runtime.BitString) error {
 	count, err := w.Eval("4")
 	if err != nil {
 		return err
@@ -673,14 +622,14 @@ func encodeClassmark3ValuePartNode2Alt3Node3(w *runtime.Writer, v []runtime.BitS
 		return fmt.Errorf("repeat count mismatch")
 	}
 	for _, item := range v {
-		if err := encodeClassmark3ValuePartNode2Alt3Node3Item(w, item); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w, item); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt3Node4(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt3Node4"); err != nil {
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -695,8 +644,8 @@ func decodeClassmark3ValuePartNode2Alt3Node4(r *runtime.Reader) (uint8, error) {
 	r.Set("Associated Radio Capability 1", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode2Alt3Node4(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt3Node4"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -710,103 +659,103 @@ func encodeClassmark3ValuePartNode2Alt3Node4(w *runtime.Writer, v uint8) error {
 	w.Set("Associated Radio Capability 1", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode2Alt3(r *runtime.Reader) (Classmark3ValuePartNode2Alt3, error) {
-	if err := r.Enter("Classmark3ValuePartNode2Alt3"); err != nil {
-		return Classmark3ValuePartNode2Alt3{}, err
+func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1, error) {
+	if err := r.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1"); err != nil {
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode2Alt3
-	x0, err := decodeClassmark3ValuePartNode2Alt3Node1(r)
+	var v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
+	x0, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt3{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
 	v.MultibandSupported = x0
-	x1, err := decodeClassmark3ValuePartNode2Alt3Node2(r)
+	x1, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1A5Bits(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt3{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
 	v.A5Bits = x1
-	x2, err := decodeClassmark3ValuePartNode2Alt3Node3(r)
+	x2, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt3{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
 	v.Items = x2
-	x3, err := decodeClassmark3ValuePartNode2Alt3Node4(r)
+	x3, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(r)
 	if err != nil {
-		return Classmark3ValuePartNode2Alt3{}, err
+		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
 	v.AssociatedRadioCapability1 = x3
 	return v, nil
 }
-func encodeClassmark3ValuePartNode2Alt3(w *runtime.Writer, v Classmark3ValuePartNode2Alt3) error {
-	if err := w.Enter("Classmark3ValuePartNode2Alt3"); err != nil {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1) error {
+	if err := w.Enter("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1"); err != nil {
 		return err
 	}
 	defer w.Leave()
 	limit := 4
-	if n, ok := w.Truncation("Classmark3ValuePartNode2Alt3"); ok {
+	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode2Alt3Node1(w, v.MultibandSupported); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported(w, v.MultibandSupported); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode2Alt3Node2(w, v.A5Bits); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1A5Bits(w, v.A5Bits); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode2Alt3Node3(w, v.Items); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w, v.Items); err != nil {
 			return err
 		}
 	}
 	if limit > 3 {
-		if err := encodeClassmark3ValuePartNode2Alt3Node4(w, v.AssociatedRadioCapability1); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(w, v.AssociatedRadioCapability1); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode2(r *runtime.Reader) (Classmark3ValuePartNode2, error) {
-	var result Classmark3ValuePartNode2
+func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoice, error) {
+	var result Classmark3ValuePartMultibandSupportedChoice
 	matches := 0
 	var chosen *runtime.Reader
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt1(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alternative1
-			result.Alt1 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits
+			result.A5Bits = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt2(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alternative2
-			result.Alt2 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2
+			result.AssociatedRadioCapability2 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode2Alt3(candidate)
+		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode2Alternative3
-			result.Alt3 = &v
+			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1
+			result.AssociatedRadioCapability1 = &v
 		}
 	}
 	if matches != 1 {
@@ -815,248 +764,106 @@ func decodeClassmark3ValuePartNode2(r *runtime.Reader) (Classmark3ValuePartNode2
 	r.Commit(chosen)
 	return result, nil
 }
-func encodeClassmark3ValuePartNode2(w *runtime.Writer, v Classmark3ValuePartNode2) error {
+func encodeClassmark3ValuePartMultibandSupportedChoice(w *runtime.Writer, v Classmark3ValuePartMultibandSupportedChoice) error {
 	count := 0
-	if v.Alt1 != nil {
+	if v.A5Bits != nil {
 		count++
 	}
-	if v.Alt2 != nil {
+	if v.AssociatedRadioCapability2 != nil {
 		count++
 	}
-	if v.Alt3 != nil {
+	if v.AssociatedRadioCapability1 != nil {
 		count++
 	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
 	switch v.Alternative {
-	case Classmark3ValuePartNode2Alternative1:
-		if v.Alt1 == nil {
+	case Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits:
+		if v.A5Bits == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt1(w, *v.Alt1)
-	case Classmark3ValuePartNode2Alternative2:
-		if v.Alt2 == nil {
+		return encodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(w, *v.A5Bits)
+	case Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2:
+		if v.AssociatedRadioCapability2 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt2(w, *v.Alt2)
-	case Classmark3ValuePartNode2Alternative3:
-		if v.Alt3 == nil {
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(w, *v.AssociatedRadioCapability2)
+	case Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1:
+		if v.AssociatedRadioCapability1 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode2Alt3(w, *v.Alt3)
+		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(w, *v.AssociatedRadioCapability1)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
-func decodeClassmark3ValuePartNode3Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode3Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode3Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode3Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode3Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode3Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode3Alt2Node2(r *runtime.Reader) (RSupport, error) {
+func decodeClassmark3ValuePartRSupportValue(r *runtime.Reader) (RSupport, error) {
 	return decodeRSupport(r)
 }
-func encodeClassmark3ValuePartNode3Alt2Node2(w *runtime.Writer, v RSupport) error {
+func encodeClassmark3ValuePartRSupportValue(w *runtime.Writer, v RSupport) error {
 	return encodeRSupport(w, v)
 }
-func decodeClassmark3ValuePartNode3Alt2(r *runtime.Reader) (Classmark3ValuePartNode3Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode3Alt2"); err != nil {
-		return Classmark3ValuePartNode3Alt2{}, err
+func decodeClassmark3ValuePartRSupportSelector(r *runtime.Reader) (*RSupport, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode3Alt2
-	x0, err := decodeClassmark3ValuePartNode3Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartRSupportValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode3Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode3Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode3Alt2{}, err
-	}
-	v.RSupport = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode3Alt2(w *runtime.Writer, v Classmark3ValuePartNode3Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode3Alt2"); err != nil {
+func encodeClassmark3ValuePartRSupportSelector(w *runtime.Writer, v *RSupport) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode3Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode3Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode3Alt2Node2(w, v.RSupport); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartRSupportValue(w, *v)
 }
-func decodeClassmark3ValuePartNode3(r *runtime.Reader) (*Classmark3ValuePartNode3Alt2, error) {
-	var result *Classmark3ValuePartNode3Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode3Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode3Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode3(w *runtime.Writer, v *Classmark3ValuePartNode3Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode3Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode3Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode4Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode4Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode4Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode4Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode4Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode4Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode4Alt2Node2(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
+func decodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
 	return decodeHSCSDMultiSlotCapability(r)
 }
-func encodeClassmark3ValuePartNode4Alt2Node2(w *runtime.Writer, v HSCSDMultiSlotCapability) error {
+func encodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(w *runtime.Writer, v HSCSDMultiSlotCapability) error {
 	return encodeHSCSDMultiSlotCapability(w, v)
 }
-func decodeClassmark3ValuePartNode4Alt2(r *runtime.Reader) (Classmark3ValuePartNode4Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode4Alt2"); err != nil {
-		return Classmark3ValuePartNode4Alt2{}, err
+func decodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(r *runtime.Reader) (*HSCSDMultiSlotCapability, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode4Alt2
-	x0, err := decodeClassmark3ValuePartNode4Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode4Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode4Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode4Alt2{}, err
-	}
-	v.HSCSDMultiSlotCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode4Alt2(w *runtime.Writer, v Classmark3ValuePartNode4Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode4Alt2"); err != nil {
+func encodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(w *runtime.Writer, v *HSCSDMultiSlotCapability) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode4Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode4Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode4Alt2Node2(w, v.HSCSDMultiSlotCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode4(r *runtime.Reader) (*Classmark3ValuePartNode4Alt2, error) {
-	var result *Classmark3ValuePartNode4Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode4Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode4Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode4(w *runtime.Writer, v *Classmark3ValuePartNode4Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode4Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode4Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode5(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode5"); err != nil {
+func decodeClassmark3ValuePartUCS2Treatment(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUCS2Treatment"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -1071,8 +878,8 @@ func decodeClassmark3ValuePartNode5(r *runtime.Reader) (uint8, error) {
 	r.Set("UCS2 treatment", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode5(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode5"); err != nil {
+func encodeClassmark3ValuePartUCS2Treatment(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUCS2Treatment"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -1086,8 +893,8 @@ func encodeClassmark3ValuePartNode5(w *runtime.Writer, v uint8) error {
 	w.Set("UCS2 treatment", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode6(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode6"); err != nil {
+func decodeClassmark3ValuePartExtendedMeasurementCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedMeasurementCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -1102,8 +909,8 @@ func decodeClassmark3ValuePartNode6(r *runtime.Reader) (uint8, error) {
 	r.Set("Extended Measurement Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode6(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode6"); err != nil {
+func encodeClassmark3ValuePartExtendedMeasurementCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartExtendedMeasurementCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -1117,503 +924,199 @@ func encodeClassmark3ValuePartNode6(w *runtime.Writer, v uint8) error {
 	w.Set("Extended Measurement Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode7Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode7Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode7Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode7Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode7Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode7Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode7Alt2Node2(r *runtime.Reader) (MSMeasurementCapability, error) {
+func decodeClassmark3ValuePartMSMeasurementCapabilityValue(r *runtime.Reader) (MSMeasurementCapability, error) {
 	return decodeMSMeasurementCapability(r)
 }
-func encodeClassmark3ValuePartNode7Alt2Node2(w *runtime.Writer, v MSMeasurementCapability) error {
+func encodeClassmark3ValuePartMSMeasurementCapabilityValue(w *runtime.Writer, v MSMeasurementCapability) error {
 	return encodeMSMeasurementCapability(w, v)
 }
-func decodeClassmark3ValuePartNode7Alt2(r *runtime.Reader) (Classmark3ValuePartNode7Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode7Alt2"); err != nil {
-		return Classmark3ValuePartNode7Alt2{}, err
+func decodeClassmark3ValuePartMSMeasurementCapabilitySelector(r *runtime.Reader) (*MSMeasurementCapability, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode7Alt2
-	x0, err := decodeClassmark3ValuePartNode7Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartMSMeasurementCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode7Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode7Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode7Alt2{}, err
-	}
-	v.MSMeasurementCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode7Alt2(w *runtime.Writer, v Classmark3ValuePartNode7Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode7Alt2"); err != nil {
+func encodeClassmark3ValuePartMSMeasurementCapabilitySelector(w *runtime.Writer, v *MSMeasurementCapability) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode7Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode7Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode7Alt2Node2(w, v.MSMeasurementCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartMSMeasurementCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode7(r *runtime.Reader) (*Classmark3ValuePartNode7Alt2, error) {
-	var result *Classmark3ValuePartNode7Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode7Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode7Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode7(w *runtime.Writer, v *Classmark3ValuePartNode7Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode7Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode7Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode8Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode8Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode8Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode8Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode8Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode8Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode8Alt2Node2(r *runtime.Reader) (MSPositioningMethodCapability, error) {
+func decodeClassmark3ValuePartMSPositioningMethodCapabilityValue(r *runtime.Reader) (MSPositioningMethodCapability, error) {
 	return decodeMSPositioningMethodCapability(r)
 }
-func encodeClassmark3ValuePartNode8Alt2Node2(w *runtime.Writer, v MSPositioningMethodCapability) error {
+func encodeClassmark3ValuePartMSPositioningMethodCapabilityValue(w *runtime.Writer, v MSPositioningMethodCapability) error {
 	return encodeMSPositioningMethodCapability(w, v)
 }
-func decodeClassmark3ValuePartNode8Alt2(r *runtime.Reader) (Classmark3ValuePartNode8Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode8Alt2"); err != nil {
-		return Classmark3ValuePartNode8Alt2{}, err
+func decodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(r *runtime.Reader) (*MSPositioningMethodCapability, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode8Alt2
-	x0, err := decodeClassmark3ValuePartNode8Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartMSPositioningMethodCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode8Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode8Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode8Alt2{}, err
-	}
-	v.MSPositioningMethodCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode8Alt2(w *runtime.Writer, v Classmark3ValuePartNode8Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode8Alt2"); err != nil {
+func encodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(w *runtime.Writer, v *MSPositioningMethodCapability) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode8Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode8Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode8Alt2Node2(w, v.MSPositioningMethodCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartMSPositioningMethodCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode8(r *runtime.Reader) (*Classmark3ValuePartNode8Alt2, error) {
-	var result *Classmark3ValuePartNode8Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode8Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode8Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode8(w *runtime.Writer, v *Classmark3ValuePartNode8Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode8Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode8Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode9Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode9Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode9Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode9Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode9Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode9Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode9Alt2Node2(r *runtime.Reader) (ECSDMultiSlotCapability, error) {
+func decodeClassmark3ValuePartECSDMultiSlotCapabilityValue(r *runtime.Reader) (ECSDMultiSlotCapability, error) {
 	return decodeECSDMultiSlotCapability(r)
 }
-func encodeClassmark3ValuePartNode9Alt2Node2(w *runtime.Writer, v ECSDMultiSlotCapability) error {
+func encodeClassmark3ValuePartECSDMultiSlotCapabilityValue(w *runtime.Writer, v ECSDMultiSlotCapability) error {
 	return encodeECSDMultiSlotCapability(w, v)
 }
-func decodeClassmark3ValuePartNode9Alt2(r *runtime.Reader) (Classmark3ValuePartNode9Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode9Alt2"); err != nil {
-		return Classmark3ValuePartNode9Alt2{}, err
+func decodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(r *runtime.Reader) (*ECSDMultiSlotCapability, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode9Alt2
-	x0, err := decodeClassmark3ValuePartNode9Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartECSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode9Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode9Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode9Alt2{}, err
-	}
-	v.ECSDMultiSlotCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode9Alt2(w *runtime.Writer, v Classmark3ValuePartNode9Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode9Alt2"); err != nil {
+func encodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(w *runtime.Writer, v *ECSDMultiSlotCapability) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode9Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode9Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode9Alt2Node2(w, v.ECSDMultiSlotCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartECSDMultiSlotCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode9(r *runtime.Reader) (*Classmark3ValuePartNode9Alt2, error) {
-	var result *Classmark3ValuePartNode9Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode9Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode9Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode9(w *runtime.Writer, v *Classmark3ValuePartNode9Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode9Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode9Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode10Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode10Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode10Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode10Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode10Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode10Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode10Alt2Node2(r *runtime.Reader) (N8PSKStruct, error) {
+func decodeClassmark3ValuePartN8PSKStructValue(r *runtime.Reader) (N8PSKStruct, error) {
 	return decodeN8PSKStruct(r)
 }
-func encodeClassmark3ValuePartNode10Alt2Node2(w *runtime.Writer, v N8PSKStruct) error {
+func encodeClassmark3ValuePartN8PSKStructValue(w *runtime.Writer, v N8PSKStruct) error {
 	return encodeN8PSKStruct(w, v)
 }
-func decodeClassmark3ValuePartNode10Alt2(r *runtime.Reader) (Classmark3ValuePartNode10Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode10Alt2"); err != nil {
-		return Classmark3ValuePartNode10Alt2{}, err
+func decodeClassmark3ValuePartN8PSKStructSelector(r *runtime.Reader) (*N8PSKStruct, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode10Alt2
-	x0, err := decodeClassmark3ValuePartNode10Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartN8PSKStructValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode10Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode10Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode10Alt2{}, err
-	}
-	v.N8PSKStruct = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode10Alt2(w *runtime.Writer, v Classmark3ValuePartNode10Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode10Alt2"); err != nil {
+func encodeClassmark3ValuePartN8PSKStructSelector(w *runtime.Writer, v *N8PSKStruct) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode10Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode10Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode10Alt2Node2(w, v.N8PSKStruct); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartN8PSKStructValue(w, *v)
 }
-func decodeClassmark3ValuePartNode10(r *runtime.Reader) (*Classmark3ValuePartNode10Alt2, error) {
-	var result *Classmark3ValuePartNode10Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode10Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode10Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode10(w *runtime.Writer, v *Classmark3ValuePartNode10Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode10Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode10Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode11Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode11Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode11Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode11Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode11Alt2Node2Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2Node2Alt1"); err != nil {
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("01")
 }
-func encodeClassmark3ValuePartNode11Alt2Node2Alt1(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("01")
 }
-func decodeClassmark3ValuePartNode11Alt2Node2Alt2(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2Node2Alt2"); err != nil {
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("10")
 }
-func encodeClassmark3ValuePartNode11Alt2Node2Alt2(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("10")
 }
-func decodeClassmark3ValuePartNode11Alt2Node2Alt3(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2Node2Alt3"); err != nil {
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("11")
 }
-func encodeClassmark3ValuePartNode11Alt2Node2Alt3(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("11")
 }
-func decodeClassmark3ValuePartNode11Alt2Node2(r *runtime.Reader) (Classmark3ValuePartNode11Alt2Node2, error) {
-	var result Classmark3ValuePartNode11Alt2Node2
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *runtime.Reader) (Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported, error) {
+	var result Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode11Alt2Node2Alt1(candidate)
+		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode11Alt2Node2Alternative1
-			result.Alt1 = &v
+			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01
+			result.Alt01 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode11Alt2Node2Alt2(candidate)
+		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode11Alt2Node2Alternative2
-			result.Alt2 = &v
+			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10
+			result.Alt10 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode11Alt2Node2Alt3(candidate)
+		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode11Alt2Node2Alternative3
-			result.Alt3 = &v
+			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11
+			result.Alt11 = &v
 		}
 	}
 	if matches != 1 {
@@ -1622,42 +1125,42 @@ func decodeClassmark3ValuePartNode11Alt2Node2(r *runtime.Reader) (Classmark3Valu
 	r.Commit(chosen)
 	return result, nil
 }
-func encodeClassmark3ValuePartNode11Alt2Node2(w *runtime.Writer, v Classmark3ValuePartNode11Alt2Node2) error {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(w *runtime.Writer, v Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported) error {
 	count := 0
-	if v.Alt1 != nil {
+	if v.Alt01 != nil {
 		count++
 	}
-	if v.Alt2 != nil {
+	if v.Alt10 != nil {
 		count++
 	}
-	if v.Alt3 != nil {
+	if v.Alt11 != nil {
 		count++
 	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
 	switch v.Alternative {
-	case Classmark3ValuePartNode11Alt2Node2Alternative1:
-		if v.Alt1 == nil {
+	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01:
+		if v.Alt01 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode11Alt2Node2Alt1(w, *v.Alt1)
-	case Classmark3ValuePartNode11Alt2Node2Alternative2:
-		if v.Alt2 == nil {
+		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(w, *v.Alt01)
+	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10:
+		if v.Alt10 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode11Alt2Node2Alt2(w, *v.Alt2)
-	case Classmark3ValuePartNode11Alt2Node2Alternative3:
-		if v.Alt3 == nil {
+		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(w, *v.Alt10)
+	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11:
+		if v.Alt11 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode11Alt2Node2Alt3(w, *v.Alt3)
+		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(w, *v.Alt11)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
-func decodeClassmark3ValuePartNode11Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -1672,8 +1175,8 @@ func decodeClassmark3ValuePartNode11Alt2Node3(r *runtime.Reader) (uint8, error) 
 	r.Set("GSM 400 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode11Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode11Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -1687,115 +1190,76 @@ func encodeClassmark3ValuePartNode11Alt2Node3(w *runtime.Writer, v uint8) error 
 	w.Set("GSM 400 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode11Alt2(r *runtime.Reader) (Classmark3ValuePartNode11Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode11Alt2"); err != nil {
-		return Classmark3ValuePartNode11Alt2{}, err
+func decodeClassmark3ValuePartGSM400BandsSupportedGroup(r *runtime.Reader) (Classmark3ValuePartGSM400BandsSupportedGroup, error) {
+	if err := r.Enter("Classmark3ValuePartGSM400BandsSupportedGroup"); err != nil {
+		return Classmark3ValuePartGSM400BandsSupportedGroup{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode11Alt2
-	x0, err := decodeClassmark3ValuePartNode11Alt2Node1(r)
+	var v Classmark3ValuePartGSM400BandsSupportedGroup
+	x0, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r)
 	if err != nil {
-		return Classmark3ValuePartNode11Alt2{}, err
+		return Classmark3ValuePartGSM400BandsSupportedGroup{}, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode11Alt2Node2(r)
+	v.GSM400BandsSupported = x0
+	x1, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(r)
 	if err != nil {
-		return Classmark3ValuePartNode11Alt2{}, err
+		return Classmark3ValuePartGSM400BandsSupportedGroup{}, err
 	}
-	v.GSM400BandsSupported = x1
-	x2, err := decodeClassmark3ValuePartNode11Alt2Node3(r)
-	if err != nil {
-		return Classmark3ValuePartNode11Alt2{}, err
-	}
-	v.GSM400AssociatedRadioCapability = x2
+	v.GSM400AssociatedRadioCapability = x1
 	return v, nil
 }
-func encodeClassmark3ValuePartNode11Alt2(w *runtime.Writer, v Classmark3ValuePartNode11Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode11Alt2"); err != nil {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroup(w *runtime.Writer, v Classmark3ValuePartGSM400BandsSupportedGroup) error {
+	if err := w.Enter("Classmark3ValuePartGSM400BandsSupportedGroup"); err != nil {
 		return err
 	}
 	defer w.Leave()
-	limit := 3
-	if n, ok := w.Truncation("Classmark3ValuePartNode11Alt2"); ok {
+	limit := 2
+	if n, ok := w.Truncation("Classmark3ValuePartGSM400BandsSupportedGroup"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode11Alt2Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(w, v.GSM400BandsSupported); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode11Alt2Node2(w, v.GSM400BandsSupported); err != nil {
-			return err
-		}
-	}
-	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode11Alt2Node3(w, v.GSM400AssociatedRadioCapability); err != nil {
+		if err := encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(w, v.GSM400AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode11(r *runtime.Reader) (*Classmark3ValuePartNode11Alt2, error) {
-	var result *Classmark3ValuePartNode11Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode11Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
+func decodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(r *runtime.Reader) (*Classmark3ValuePartGSM400BandsSupportedGroup, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode11Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
+	v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroup(candidate)
+	if err != nil {
+		return nil, err
 	}
-	r.Commit(chosen)
-	return result, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode11(w *runtime.Writer, v *Classmark3ValuePartNode11Alt2) error {
+func encodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(w *runtime.Writer, v *Classmark3ValuePartGSM400BandsSupportedGroup) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode11Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode11Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode12Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode12Alt1"); err != nil {
-		return struct{}{}, err
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
 	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
+	return encodeClassmark3ValuePartGSM400BandsSupportedGroup(w, *v)
 }
-func encodeClassmark3ValuePartNode12Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode12Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode12Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode12Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode12Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode12Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGSM850AssociatedRadioCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -1810,8 +1274,8 @@ func decodeClassmark3ValuePartNode12Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("GSM 850 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode12Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode12Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGSM850AssociatedRadioCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -1825,105 +1289,34 @@ func encodeClassmark3ValuePartNode12Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("GSM 850 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode12Alt2(r *runtime.Reader) (Classmark3ValuePartNode12Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode12Alt2"); err != nil {
-		return Classmark3ValuePartNode12Alt2{}, err
+func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode12Alt2
-	x0, err := decodeClassmark3ValuePartNode12Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode12Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode12Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode12Alt2{}, err
-	}
-	v.GSM850AssociatedRadioCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode12Alt2(w *runtime.Writer, v Classmark3ValuePartNode12Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode12Alt2"); err != nil {
+func encodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode12Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode12Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode12Alt2Node2(w, v.GSM850AssociatedRadioCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode12(r *runtime.Reader) (*Classmark3ValuePartNode12Alt2, error) {
-	var result *Classmark3ValuePartNode12Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode12Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode12Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode12(w *runtime.Writer, v *Classmark3ValuePartNode12Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode12Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode12Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode13Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode13Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode13Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode13Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode13Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode13Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode13Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode13Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGSM1900AssociatedRadioCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -1938,8 +1331,8 @@ func decodeClassmark3ValuePartNode13Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("GSM 1900 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode13Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode13Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGSM1900AssociatedRadioCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -1953,85 +1346,34 @@ func encodeClassmark3ValuePartNode13Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("GSM 1900 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode13Alt2(r *runtime.Reader) (Classmark3ValuePartNode13Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode13Alt2"); err != nil {
-		return Classmark3ValuePartNode13Alt2{}, err
+func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode13Alt2
-	x0, err := decodeClassmark3ValuePartNode13Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode13Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode13Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode13Alt2{}, err
-	}
-	v.GSM1900AssociatedRadioCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode13Alt2(w *runtime.Writer, v Classmark3ValuePartNode13Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode13Alt2"); err != nil {
+func encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode13Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode13Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode13Alt2Node2(w, v.GSM1900AssociatedRadioCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode13(r *runtime.Reader) (*Classmark3ValuePartNode13Alt2, error) {
-	var result *Classmark3ValuePartNode13Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode13Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode13Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode13(w *runtime.Writer, v *Classmark3ValuePartNode13Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode13Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode13Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode14(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode14"); err != nil {
+func decodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUMTSFDDRadioAccessTechnologyCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2046,8 +1388,8 @@ func decodeClassmark3ValuePartNode14(r *runtime.Reader) (uint8, error) {
 	r.Set("UMTS FDD Radio Access Technology Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode14(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode14"); err != nil {
+func encodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUMTSFDDRadioAccessTechnologyCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2061,8 +1403,8 @@ func encodeClassmark3ValuePartNode14(w *runtime.Writer, v uint8) error {
 	w.Set("UMTS FDD Radio Access Technology Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode15(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode15"); err != nil {
+func decodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2077,8 +1419,8 @@ func decodeClassmark3ValuePartNode15(r *runtime.Reader) (uint8, error) {
 	r.Set("UMTS 3.84 Mcps TDD Radio Access Technology Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode15(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode15"); err != nil {
+func encodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2092,8 +1434,8 @@ func encodeClassmark3ValuePartNode15(w *runtime.Writer, v uint8) error {
 	w.Set("UMTS 3.84 Mcps TDD Radio Access Technology Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode16(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode16"); err != nil {
+func decodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartCDMA2000RadioAccessTechnologyCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2108,8 +1450,8 @@ func decodeClassmark3ValuePartNode16(r *runtime.Reader) (uint8, error) {
 	r.Set("CDMA 2000 Radio Access Technology Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode16(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode16"); err != nil {
+func encodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartCDMA2000RadioAccessTechnologyCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2123,28 +1465,8 @@ func encodeClassmark3ValuePartNode16(w *runtime.Writer, v uint8) error {
 	w.Set("CDMA 2000 Radio Access Technology Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode17Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode17Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode17Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode17Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode17Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2159,8 +1481,8 @@ func decodeClassmark3ValuePartNode17Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("DTM GPRS Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode17Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode17Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2174,8 +1496,8 @@ func encodeClassmark3ValuePartNode17Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("DTM GPRS Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode17Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2190,8 +1512,8 @@ func decodeClassmark3ValuePartNode17Alt2Node3(r *runtime.Reader) (uint8, error) 
 	r.Set("Single Slot DTM", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode17Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode17Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2205,28 +1527,8 @@ func encodeClassmark3ValuePartNode17Alt2Node3(w *runtime.Writer, v uint8) error 
 	w.Set("Single Slot DTM", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode17Alt2Node4Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node4Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode17Alt2Node4Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode17Alt2Node4Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node4Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode17Alt2Node4Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node4Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2241,8 +1543,8 @@ func decodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(r *runtime.Reader) (uint8
 	r.Set("DTM EGPRS Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode17Alt2Node4Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2256,305 +1558,144 @@ func encodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(w *runtime.Writer, v uint
 	w.Set("DTM EGPRS Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode17Alt2Node4Alt2(r *runtime.Reader) (Classmark3ValuePartNode17Alt2Node4Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2Node4Alt2"); err != nil {
-		return Classmark3ValuePartNode17Alt2Node4Alt2{}, err
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode17Alt2Node4Alt2
-	x0, err := decodeClassmark3ValuePartNode17Alt2Node4Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode17Alt2Node4Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode17Alt2Node4Alt2{}, err
-	}
-	v.DTMEGPRSMultiSlotClass = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode17Alt2Node4Alt2(w *runtime.Writer, v Classmark3ValuePartNode17Alt2Node4Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode17Alt2Node4Alt2"); err != nil {
-		return err
-	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode17Alt2Node4Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node4Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node4Alt2Node2(w, v.DTMEGPRSMultiSlotClass); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-func decodeClassmark3ValuePartNode17Alt2Node4(r *runtime.Reader) (*Classmark3ValuePartNode17Alt2Node4Alt2, error) {
-	var result *Classmark3ValuePartNode17Alt2Node4Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode17Alt2Node4Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode17Alt2Node4Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode17Alt2Node4(w *runtime.Writer, v *Classmark3ValuePartNode17Alt2Node4Alt2) error {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(w *runtime.Writer, v *uint8) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode17Alt2Node4Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode17Alt2Node4Alt2(w, *v)
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
+	}
+	return encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(w, *v)
 }
-func decodeClassmark3ValuePartNode17Alt2(r *runtime.Reader) (Classmark3ValuePartNode17Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode17Alt2"); err != nil {
-		return Classmark3ValuePartNode17Alt2{}, err
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(r *runtime.Reader) (Classmark3ValuePartDTMGPRSMultiSlotClassGroup, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroup"); err != nil {
+		return Classmark3ValuePartDTMGPRSMultiSlotClassGroup{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode17Alt2
-	x0, err := decodeClassmark3ValuePartNode17Alt2Node1(r)
+	var v Classmark3ValuePartDTMGPRSMultiSlotClassGroup
+	x0, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(r)
 	if err != nil {
-		return Classmark3ValuePartNode17Alt2{}, err
+		return Classmark3ValuePartDTMGPRSMultiSlotClassGroup{}, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode17Alt2Node2(r)
+	v.DTMGPRSMultiSlotClass = x0
+	x1, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(r)
 	if err != nil {
-		return Classmark3ValuePartNode17Alt2{}, err
+		return Classmark3ValuePartDTMGPRSMultiSlotClassGroup{}, err
 	}
-	v.DTMGPRSMultiSlotClass = x1
-	x2, err := decodeClassmark3ValuePartNode17Alt2Node3(r)
+	v.SingleSlotDTM = x1
+	x2, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(r)
 	if err != nil {
-		return Classmark3ValuePartNode17Alt2{}, err
+		return Classmark3ValuePartDTMGPRSMultiSlotClassGroup{}, err
 	}
-	v.SingleSlotDTM = x2
-	x3, err := decodeClassmark3ValuePartNode17Alt2Node4(r)
-	if err != nil {
-		return Classmark3ValuePartNode17Alt2{}, err
-	}
-	v.Choice = x3
+	v.DTMEGPRSMultiSlotClass = x2
 	return v, nil
 }
-func encodeClassmark3ValuePartNode17Alt2(w *runtime.Writer, v Classmark3ValuePartNode17Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode17Alt2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Classmark3ValuePartDTMGPRSMultiSlotClassGroup) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSMultiSlotClassGroup"); err != nil {
 		return err
 	}
 	defer w.Leave()
-	limit := 4
-	if n, ok := w.Truncation("Classmark3ValuePartNode17Alt2"); ok {
+	limit := 3
+	if n, ok := w.Truncation("Classmark3ValuePartDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(w, v.DTMGPRSMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node2(w, v.DTMGPRSMultiSlotClass); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(w, v.SingleSlotDTM); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node3(w, v.SingleSlotDTM); err != nil {
-			return err
-		}
-	}
-	if limit > 3 {
-		if err := encodeClassmark3ValuePartNode17Alt2Node4(w, v.Choice); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(w, v.DTMEGPRSMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode17(r *runtime.Reader) (*Classmark3ValuePartNode17Alt2, error) {
-	var result *Classmark3ValuePartNode17Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode17Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
+func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartDTMGPRSMultiSlotClassGroup, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode17Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
+	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(candidate)
+	if err != nil {
+		return nil, err
 	}
-	r.Commit(chosen)
-	return result, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode17(w *runtime.Writer, v *Classmark3ValuePartNode17Alt2) error {
+func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(w *runtime.Writer, v *Classmark3ValuePartDTMGPRSMultiSlotClassGroup) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode17Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode17Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode18Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode18Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode18Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode18Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode18Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode18Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode18Alt2Node2(r *runtime.Reader) (SingleBandSupport, error) {
-	return decodeSingleBandSupport(r)
-}
-func encodeClassmark3ValuePartNode18Alt2Node2(w *runtime.Writer, v SingleBandSupport) error {
-	return encodeSingleBandSupport(w, v)
-}
-func decodeClassmark3ValuePartNode18Alt2(r *runtime.Reader) (Classmark3ValuePartNode18Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode18Alt2"); err != nil {
-		return Classmark3ValuePartNode18Alt2{}, err
-	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode18Alt2
-	x0, err := decodeClassmark3ValuePartNode18Alt2Node1(r)
-	if err != nil {
-		return Classmark3ValuePartNode18Alt2{}, err
-	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode18Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode18Alt2{}, err
-	}
-	v.SingleBandSupport = x1
-	return v, nil
-}
-func encodeClassmark3ValuePartNode18Alt2(w *runtime.Writer, v Classmark3ValuePartNode18Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode18Alt2"); err != nil {
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode18Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode18Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode18Alt2Node2(w, v.SingleBandSupport); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(w, *v)
 }
-func decodeClassmark3ValuePartNode18(r *runtime.Reader) (*Classmark3ValuePartNode18Alt2, error) {
-	var result *Classmark3ValuePartNode18Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode18Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode18Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
+func decodeClassmark3ValuePartSingleBandSupportValue(r *runtime.Reader) (SingleBandSupport, error) {
+	return decodeSingleBandSupport(r)
 }
-func encodeClassmark3ValuePartNode18(w *runtime.Writer, v *Classmark3ValuePartNode18Alt2) error {
+func encodeClassmark3ValuePartSingleBandSupportValue(w *runtime.Writer, v SingleBandSupport) error {
+	return encodeSingleBandSupport(w, v)
+}
+func decodeClassmark3ValuePartSingleBandSupportSelector(r *runtime.Reader) (*SingleBandSupport, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
+	}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartSingleBandSupportValue(candidate)
+	if err != nil {
+		return nil, err
+	}
+	r.Commit(candidate)
+	return &v, nil
+}
+func encodeClassmark3ValuePartSingleBandSupportSelector(w *runtime.Writer, v *SingleBandSupport) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode18Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode18Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode19Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode19Alt1"); err != nil {
-		return struct{}{}, err
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
 	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
+	return encodeClassmark3ValuePartSingleBandSupportValue(w, *v)
 }
-func encodeClassmark3ValuePartNode19Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode19Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode19Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode19Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode19Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode19Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGSM750AssociatedRadioCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2569,8 +1710,8 @@ func decodeClassmark3ValuePartNode19Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("GSM 750 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode19Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode19Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGSM750AssociatedRadioCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2584,85 +1725,34 @@ func encodeClassmark3ValuePartNode19Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("GSM 750 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode19Alt2(r *runtime.Reader) (Classmark3ValuePartNode19Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode19Alt2"); err != nil {
-		return Classmark3ValuePartNode19Alt2{}, err
+func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode19Alt2
-	x0, err := decodeClassmark3ValuePartNode19Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode19Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode19Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode19Alt2{}, err
-	}
-	v.GSM750AssociatedRadioCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode19Alt2(w *runtime.Writer, v Classmark3ValuePartNode19Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode19Alt2"); err != nil {
+func encodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode19Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode19Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode19Alt2Node2(w, v.GSM750AssociatedRadioCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode19(r *runtime.Reader) (*Classmark3ValuePartNode19Alt2, error) {
-	var result *Classmark3ValuePartNode19Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode19Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode19Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode19(w *runtime.Writer, v *Classmark3ValuePartNode19Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode19Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode19Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode20(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode20"); err != nil {
+func decodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2677,8 +1767,8 @@ func decodeClassmark3ValuePartNode20(r *runtime.Reader) (uint8, error) {
 	r.Set("UMTS 1.28 Mcps TDD Radio Access Technology Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode20(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode20"); err != nil {
+func encodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2692,8 +1782,8 @@ func encodeClassmark3ValuePartNode20(w *runtime.Writer, v uint8) error {
 	w.Set("UMTS 1.28 Mcps TDD Radio Access Technology Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode21(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode21"); err != nil {
+func decodeClassmark3ValuePartGERANFeaturePackage1(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGERANFeaturePackage1"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2708,8 +1798,8 @@ func decodeClassmark3ValuePartNode21(r *runtime.Reader) (uint8, error) {
 	r.Set("GERAN Feature Package 1", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode21(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode21"); err != nil {
+func encodeClassmark3ValuePartGERANFeaturePackage1(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGERANFeaturePackage1"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2723,28 +1813,8 @@ func encodeClassmark3ValuePartNode21(w *runtime.Writer, v uint8) error {
 	w.Set("GERAN Feature Package 1", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode22Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode22Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode22Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode22Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode22Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode22Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode22Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode22Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2759,8 +1829,8 @@ func decodeClassmark3ValuePartNode22Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("Extended DTM GPRS Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode22Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode22Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2774,8 +1844,8 @@ func encodeClassmark3ValuePartNode22Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("Extended DTM GPRS Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode22Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode22Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2790,8 +1860,8 @@ func decodeClassmark3ValuePartNode22Alt2Node3(r *runtime.Reader) (uint8, error) 
 	r.Set("Extended DTM EGPRS Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode22Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode22Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2805,115 +1875,76 @@ func encodeClassmark3ValuePartNode22Alt2Node3(w *runtime.Writer, v uint8) error 
 	w.Set("Extended DTM EGPRS Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode22Alt2(r *runtime.Reader) (Classmark3ValuePartNode22Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode22Alt2"); err != nil {
-		return Classmark3ValuePartNode22Alt2{}, err
+func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(r *runtime.Reader) (Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup"); err != nil {
+		return Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode22Alt2
-	x0, err := decodeClassmark3ValuePartNode22Alt2Node1(r)
+	var v Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup
+	x0, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(r)
 	if err != nil {
-		return Classmark3ValuePartNode22Alt2{}, err
+		return Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup{}, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode22Alt2Node2(r)
+	v.ExtendedDTMGPRSMultiSlotClass = x0
+	x1, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(r)
 	if err != nil {
-		return Classmark3ValuePartNode22Alt2{}, err
+		return Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup{}, err
 	}
-	v.ExtendedDTMGPRSMultiSlotClass = x1
-	x2, err := decodeClassmark3ValuePartNode22Alt2Node3(r)
-	if err != nil {
-		return Classmark3ValuePartNode22Alt2{}, err
-	}
-	v.ExtendedDTMEGPRSMultiSlotClass = x2
+	v.ExtendedDTMEGPRSMultiSlotClass = x1
 	return v, nil
 }
-func encodeClassmark3ValuePartNode22Alt2(w *runtime.Writer, v Classmark3ValuePartNode22Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode22Alt2"); err != nil {
+func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup) error {
+	if err := w.Enter("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup"); err != nil {
 		return err
 	}
 	defer w.Leave()
-	limit := 3
-	if n, ok := w.Truncation("Classmark3ValuePartNode22Alt2"); ok {
+	limit := 2
+	if n, ok := w.Truncation("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode22Alt2Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(w, v.ExtendedDTMGPRSMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode22Alt2Node2(w, v.ExtendedDTMGPRSMultiSlotClass); err != nil {
-			return err
-		}
-	}
-	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode22Alt2Node3(w, v.ExtendedDTMEGPRSMultiSlotClass); err != nil {
+		if err := encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(w, v.ExtendedDTMEGPRSMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode22(r *runtime.Reader) (*Classmark3ValuePartNode22Alt2, error) {
-	var result *Classmark3ValuePartNode22Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode22Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
+func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode22Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
+	v, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(candidate)
+	if err != nil {
+		return nil, err
 	}
-	r.Commit(chosen)
-	return result, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode22(w *runtime.Writer, v *Classmark3ValuePartNode22Alt2) error {
+func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(w *runtime.Writer, v *Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode22Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode22Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode23Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode23Alt1"); err != nil {
-		return struct{}{}, err
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
 	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
+	return encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(w, *v)
 }
-func encodeClassmark3ValuePartNode23Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode23Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode23Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode23Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode23Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode23Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartHighMultislotCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartHighMultislotCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -2928,8 +1959,8 @@ func decodeClassmark3ValuePartNode23Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("High Multislot Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode23Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode23Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartHighMultislotCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartHighMultislotCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -2943,93 +1974,42 @@ func encodeClassmark3ValuePartNode23Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("High Multislot Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode23Alt2(r *runtime.Reader) (Classmark3ValuePartNode23Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode23Alt2"); err != nil {
-		return Classmark3ValuePartNode23Alt2{}, err
+func decodeClassmark3ValuePartHighMultislotCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode23Alt2
-	x0, err := decodeClassmark3ValuePartNode23Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartHighMultislotCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode23Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode23Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode23Alt2{}, err
-	}
-	v.HighMultislotCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode23Alt2(w *runtime.Writer, v Classmark3ValuePartNode23Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode23Alt2"); err != nil {
+func encodeClassmark3ValuePartHighMultislotCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode23Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode23Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode23Alt2Node2(w, v.HighMultislotCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartHighMultislotCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode23(r *runtime.Reader) (*Classmark3ValuePartNode23Alt2, error) {
-	var result *Classmark3ValuePartNode23Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode23Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode23Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode23(w *runtime.Writer, v *Classmark3ValuePartNode23Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode23Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode23Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode24(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode24"); err != nil {
+func decodeClassmark3ValuePartAlt0(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartAlt0"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("0")
 }
-func encodeClassmark3ValuePartNode24(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("0") }
-func decodeClassmark3ValuePartNode25(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode25"); err != nil {
+func encodeClassmark3ValuePartAlt0(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("0") }
+func decodeClassmark3ValuePartGERANFeaturePackage2(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGERANFeaturePackage2"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3044,8 +2024,8 @@ func decodeClassmark3ValuePartNode25(r *runtime.Reader) (uint8, error) {
 	r.Set("GERAN Feature Package 2", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode25(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode25"); err != nil {
+func encodeClassmark3ValuePartGERANFeaturePackage2(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGERANFeaturePackage2"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3059,8 +2039,8 @@ func encodeClassmark3ValuePartNode25(w *runtime.Writer, v uint8) error {
 	w.Set("GERAN Feature Package 2", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode26(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode26"); err != nil {
+func decodeClassmark3ValuePartGMSKMultislotPowerProfile(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGMSKMultislotPowerProfile"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3075,8 +2055,8 @@ func decodeClassmark3ValuePartNode26(r *runtime.Reader) (uint8, error) {
 	r.Set("GMSK Multislot Power Profile", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode26(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode26"); err != nil {
+func encodeClassmark3ValuePartGMSKMultislotPowerProfile(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGMSKMultislotPowerProfile"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3090,8 +2070,8 @@ func encodeClassmark3ValuePartNode26(w *runtime.Writer, v uint8) error {
 	w.Set("GMSK Multislot Power Profile", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode27(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode27"); err != nil {
+func decodeClassmark3ValuePartN8PSKMultislotPowerProfile(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartN8PSKMultislotPowerProfile"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3106,8 +2086,8 @@ func decodeClassmark3ValuePartNode27(r *runtime.Reader) (uint8, error) {
 	r.Set("8-PSK Multislot Power Profile", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode27(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode27"); err != nil {
+func encodeClassmark3ValuePartN8PSKMultislotPowerProfile(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartN8PSKMultislotPowerProfile"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3121,91 +2101,71 @@ func encodeClassmark3ValuePartNode27(w *runtime.Writer, v uint8) error {
 	w.Set("8-PSK Multislot Power Profile", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode28Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode28Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode28Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode28Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode28Alt2Node2Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2Node2Alt1"); err != nil {
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("01")
 }
-func encodeClassmark3ValuePartNode28Alt2Node2Alt1(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("01")
 }
-func decodeClassmark3ValuePartNode28Alt2Node2Alt2(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2Node2Alt2"); err != nil {
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("10")
 }
-func encodeClassmark3ValuePartNode28Alt2Node2Alt2(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("10")
 }
-func decodeClassmark3ValuePartNode28Alt2Node2Alt3(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2Node2Alt3"); err != nil {
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("11")
 }
-func encodeClassmark3ValuePartNode28Alt2Node2Alt3(w *runtime.Writer, _ struct{}) error {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("11")
 }
-func decodeClassmark3ValuePartNode28Alt2Node2(r *runtime.Reader) (Classmark3ValuePartNode28Alt2Node2, error) {
-	var result Classmark3ValuePartNode28Alt2Node2
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r *runtime.Reader) (Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported, error) {
+	var result Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode28Alt2Node2Alt1(candidate)
+		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode28Alt2Node2Alternative1
-			result.Alt1 = &v
+			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01
+			result.Alt01 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode28Alt2Node2Alt2(candidate)
+		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode28Alt2Node2Alternative2
-			result.Alt2 = &v
+			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10
+			result.Alt10 = &v
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode28Alt2Node2Alt3(candidate)
+		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
 			chosen = candidate
 			_ = v
-			result.Alternative = Classmark3ValuePartNode28Alt2Node2Alternative3
-			result.Alt3 = &v
+			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11
+			result.Alt11 = &v
 		}
 	}
 	if matches != 1 {
@@ -3214,42 +2174,42 @@ func decodeClassmark3ValuePartNode28Alt2Node2(r *runtime.Reader) (Classmark3Valu
 	r.Commit(chosen)
 	return result, nil
 }
-func encodeClassmark3ValuePartNode28Alt2Node2(w *runtime.Writer, v Classmark3ValuePartNode28Alt2Node2) error {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(w *runtime.Writer, v Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported) error {
 	count := 0
-	if v.Alt1 != nil {
+	if v.Alt01 != nil {
 		count++
 	}
-	if v.Alt2 != nil {
+	if v.Alt10 != nil {
 		count++
 	}
-	if v.Alt3 != nil {
+	if v.Alt11 != nil {
 		count++
 	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
 	switch v.Alternative {
-	case Classmark3ValuePartNode28Alt2Node2Alternative1:
-		if v.Alt1 == nil {
+	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01:
+		if v.Alt01 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode28Alt2Node2Alt1(w, *v.Alt1)
-	case Classmark3ValuePartNode28Alt2Node2Alternative2:
-		if v.Alt2 == nil {
+		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(w, *v.Alt01)
+	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10:
+		if v.Alt10 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode28Alt2Node2Alt2(w, *v.Alt2)
-	case Classmark3ValuePartNode28Alt2Node2Alternative3:
-		if v.Alt3 == nil {
+		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(w, *v.Alt10)
+	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11:
+		if v.Alt11 == nil {
 			return fmt.Errorf("choice alternative mismatch")
 		}
-		return encodeClassmark3ValuePartNode28Alt2Node2Alt3(w, *v.Alt3)
+		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(w, *v.Alt11)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
-func decodeClassmark3ValuePartNode28Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3264,8 +2224,8 @@ func decodeClassmark3ValuePartNode28Alt2Node3(r *runtime.Reader) (uint8, error) 
 	r.Set("T-GSM 400 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode28Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode28Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3279,103 +2239,86 @@ func encodeClassmark3ValuePartNode28Alt2Node3(w *runtime.Writer, v uint8) error 
 	w.Set("T-GSM 400 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode28Alt2(r *runtime.Reader) (Classmark3ValuePartNode28Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode28Alt2"); err != nil {
-		return Classmark3ValuePartNode28Alt2{}, err
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroup(r *runtime.Reader) (Classmark3ValuePartTGSM400BandsSupportedGroup, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM400BandsSupportedGroup"); err != nil {
+		return Classmark3ValuePartTGSM400BandsSupportedGroup{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode28Alt2
-	x0, err := decodeClassmark3ValuePartNode28Alt2Node1(r)
+	var v Classmark3ValuePartTGSM400BandsSupportedGroup
+	x0, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r)
 	if err != nil {
-		return Classmark3ValuePartNode28Alt2{}, err
+		return Classmark3ValuePartTGSM400BandsSupportedGroup{}, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode28Alt2Node2(r)
+	v.TGSM400BandsSupported = x0
+	x1, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(r)
 	if err != nil {
-		return Classmark3ValuePartNode28Alt2{}, err
+		return Classmark3ValuePartTGSM400BandsSupportedGroup{}, err
 	}
-	v.TGSM400BandsSupported = x1
-	x2, err := decodeClassmark3ValuePartNode28Alt2Node3(r)
-	if err != nil {
-		return Classmark3ValuePartNode28Alt2{}, err
-	}
-	v.TGSM400AssociatedRadioCapability = x2
+	v.TGSM400AssociatedRadioCapability = x1
 	return v, nil
 }
-func encodeClassmark3ValuePartNode28Alt2(w *runtime.Writer, v Classmark3ValuePartNode28Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode28Alt2"); err != nil {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroup(w *runtime.Writer, v Classmark3ValuePartTGSM400BandsSupportedGroup) error {
+	if err := w.Enter("Classmark3ValuePartTGSM400BandsSupportedGroup"); err != nil {
 		return err
 	}
 	defer w.Leave()
-	limit := 3
-	if n, ok := w.Truncation("Classmark3ValuePartNode28Alt2"); ok {
+	limit := 2
+	if n, ok := w.Truncation("Classmark3ValuePartTGSM400BandsSupportedGroup"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode28Alt2Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(w, v.TGSM400BandsSupported); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode28Alt2Node2(w, v.TGSM400BandsSupported); err != nil {
-			return err
-		}
-	}
-	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode28Alt2Node3(w, v.TGSM400AssociatedRadioCapability); err != nil {
+		if err := encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(w, v.TGSM400AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode28(r *runtime.Reader) (*Classmark3ValuePartNode28Alt2, error) {
-	var result *Classmark3ValuePartNode28Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode28Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
+func decodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(r *runtime.Reader) (*Classmark3ValuePartTGSM400BandsSupportedGroup, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode28Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
+	v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroup(candidate)
+	if err != nil {
+		return nil, err
 	}
-	r.Commit(chosen)
-	return result, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode28(w *runtime.Writer, v *Classmark3ValuePartNode28Alt2) error {
+func encodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(w *runtime.Writer, v *Classmark3ValuePartTGSM400BandsSupportedGroup) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode28Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode28Alt2(w, *v)
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
+	}
+	return encodeClassmark3ValuePartTGSM400BandsSupportedGroup(w, *v)
 }
-func decodeClassmark3ValuePartNode29(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode29"); err != nil {
+func decodeClassmark3ValuePartAlt0Variant2(r *runtime.Reader) (struct{}, error) {
+	if err := r.Enter("Classmark3ValuePartAlt0Variant2"); err != nil {
 		return struct{}{}, err
 	}
 	defer r.Leave()
 	return struct{}{}, r.Expect("0")
 }
-func encodeClassmark3ValuePartNode29(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("0") }
-func decodeClassmark3ValuePartNode30(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode30"); err != nil {
+func encodeClassmark3ValuePartAlt0Variant2(w *runtime.Writer, _ struct{}) error {
+	return w.WriteLiteral("0")
+}
+func decodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDownlinkAdvancedReceiverPerformance"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3390,8 +2333,8 @@ func decodeClassmark3ValuePartNode30(r *runtime.Reader) (uint8, error) {
 	r.Set("Downlink Advanced Receiver Performance", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode30(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode30"); err != nil {
+func encodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDownlinkAdvancedReceiverPerformance"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3405,8 +2348,8 @@ func encodeClassmark3ValuePartNode30(w *runtime.Writer, v uint8) error {
 	w.Set("Downlink Advanced Receiver Performance", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode31(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode31"); err != nil {
+func decodeClassmark3ValuePartDTMEnhancementsCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMEnhancementsCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3421,8 +2364,8 @@ func decodeClassmark3ValuePartNode31(r *runtime.Reader) (uint8, error) {
 	r.Set("DTM Enhancements Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode31(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode31"); err != nil {
+func encodeClassmark3ValuePartDTMEnhancementsCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMEnhancementsCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3436,28 +2379,8 @@ func encodeClassmark3ValuePartNode31(w *runtime.Writer, v uint8) error {
 	w.Set("DTM Enhancements Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode32Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode32Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode32Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode32Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode32Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3472,8 +2395,8 @@ func decodeClassmark3ValuePartNode32Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("DTM GPRS High Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode32Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode32Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3487,8 +2410,8 @@ func encodeClassmark3ValuePartNode32Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("DTM GPRS High Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode32Alt2Node3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node3"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3503,8 +2426,8 @@ func decodeClassmark3ValuePartNode32Alt2Node3(r *runtime.Reader) (uint8, error) 
 	r.Set("Offset required", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode32Alt2Node3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode32Alt2Node3"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3518,28 +2441,8 @@ func encodeClassmark3ValuePartNode32Alt2Node3(w *runtime.Writer, v uint8) error 
 	w.Set("Offset required", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode32Alt2Node4Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node4Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode32Alt2Node4Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode32Alt2Node4Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node4Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode32Alt2Node4Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node4Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3554,8 +2457,8 @@ func decodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(r *runtime.Reader) (uint8
 	r.Set("DTM EGPRS High Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode32Alt2Node4Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3569,182 +2472,112 @@ func encodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(w *runtime.Writer, v uint
 	w.Set("DTM EGPRS High Multi Slot Class", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode32Alt2Node4Alt2(r *runtime.Reader) (Classmark3ValuePartNode32Alt2Node4Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2Node4Alt2"); err != nil {
-		return Classmark3ValuePartNode32Alt2Node4Alt2{}, err
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode32Alt2Node4Alt2
-	x0, err := decodeClassmark3ValuePartNode32Alt2Node4Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode32Alt2Node4Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode32Alt2Node4Alt2{}, err
-	}
-	v.DTMEGPRSHighMultiSlotClass = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode32Alt2Node4Alt2(w *runtime.Writer, v Classmark3ValuePartNode32Alt2Node4Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode32Alt2Node4Alt2"); err != nil {
-		return err
-	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode32Alt2Node4Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node4Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node4Alt2Node2(w, v.DTMEGPRSHighMultiSlotClass); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-func decodeClassmark3ValuePartNode32Alt2Node4(r *runtime.Reader) (*Classmark3ValuePartNode32Alt2Node4Alt2, error) {
-	var result *Classmark3ValuePartNode32Alt2Node4Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode32Alt2Node4Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode32Alt2Node4Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode32Alt2Node4(w *runtime.Writer, v *Classmark3ValuePartNode32Alt2Node4Alt2) error {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(w *runtime.Writer, v *uint8) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode32Alt2Node4Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode32Alt2Node4Alt2(w, *v)
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
+	}
+	return encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(w, *v)
 }
-func decodeClassmark3ValuePartNode32Alt2(r *runtime.Reader) (Classmark3ValuePartNode32Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode32Alt2"); err != nil {
-		return Classmark3ValuePartNode32Alt2{}, err
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(r *runtime.Reader) (Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup, error) {
+	if err := r.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup"); err != nil {
+		return Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup{}, err
 	}
 	defer r.Leave()
-	var v Classmark3ValuePartNode32Alt2
-	x0, err := decodeClassmark3ValuePartNode32Alt2Node1(r)
+	var v Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup
+	x0, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(r)
 	if err != nil {
-		return Classmark3ValuePartNode32Alt2{}, err
+		return Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup{}, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode32Alt2Node2(r)
+	v.DTMGPRSHighMultiSlotClass = x0
+	x1, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(r)
 	if err != nil {
-		return Classmark3ValuePartNode32Alt2{}, err
+		return Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup{}, err
 	}
-	v.DTMGPRSHighMultiSlotClass = x1
-	x2, err := decodeClassmark3ValuePartNode32Alt2Node3(r)
+	v.OffsetRequired = x1
+	x2, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(r)
 	if err != nil {
-		return Classmark3ValuePartNode32Alt2{}, err
+		return Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup{}, err
 	}
-	v.OffsetRequired = x2
-	x3, err := decodeClassmark3ValuePartNode32Alt2Node4(r)
-	if err != nil {
-		return Classmark3ValuePartNode32Alt2{}, err
-	}
-	v.Choice = x3
+	v.DTMEGPRSHighMultiSlotClass = x2
 	return v, nil
 }
-func encodeClassmark3ValuePartNode32Alt2(w *runtime.Writer, v Classmark3ValuePartNode32Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode32Alt2"); err != nil {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(w *runtime.Writer, v Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup) error {
+	if err := w.Enter("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup"); err != nil {
 		return err
 	}
 	defer w.Leave()
-	limit := 4
-	if n, ok := w.Truncation("Classmark3ValuePartNode32Alt2"); ok {
+	limit := 3
+	if n, ok := w.Truncation("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node1(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(w, v.DTMGPRSHighMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node2(w, v.DTMGPRSHighMultiSlotClass); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(w, v.OffsetRequired); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node3(w, v.OffsetRequired); err != nil {
-			return err
-		}
-	}
-	if limit > 3 {
-		if err := encodeClassmark3ValuePartNode32Alt2Node4(w, v.Choice); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(w, v.DTMEGPRSHighMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeClassmark3ValuePartNode32(r *runtime.Reader) (*Classmark3ValuePartNode32Alt2, error) {
-	var result *Classmark3ValuePartNode32Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode32Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
+func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode32Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
+	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(candidate)
+	if err != nil {
+		return nil, err
 	}
-	r.Commit(chosen)
-	return result, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode32(w *runtime.Writer, v *Classmark3ValuePartNode32Alt2) error {
+func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(w *runtime.Writer, v *Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup) error {
 	if v == nil {
-		return encodeClassmark3ValuePartNode32Alt1(w, struct{}{})
+		return w.WriteLiteral("0")
 	}
-	return encodeClassmark3ValuePartNode32Alt2(w, *v)
+	if err := w.WriteLiteral("1"); err != nil {
+		return err
+	}
+	return encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(w, *v)
 }
-func decodeClassmark3ValuePartNode33(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode33"); err != nil {
+func decodeClassmark3ValuePartRepeatedACCHCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartRepeatedACCHCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3759,8 +2592,8 @@ func decodeClassmark3ValuePartNode33(r *runtime.Reader) (uint8, error) {
 	r.Set("Repeated ACCH Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode33(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode33"); err != nil {
+func encodeClassmark3ValuePartRepeatedACCHCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartRepeatedACCHCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3774,28 +2607,8 @@ func encodeClassmark3ValuePartNode33(w *runtime.Writer, v uint8) error {
 	w.Set("Repeated ACCH Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode34Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode34Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode34Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode34Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode34Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode34Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode34Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode34Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGSM710AssociatedRadioCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3810,8 +2623,8 @@ func decodeClassmark3ValuePartNode34Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("GSM 710 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode34Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode34Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGSM710AssociatedRadioCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3825,105 +2638,34 @@ func encodeClassmark3ValuePartNode34Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("GSM 710 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode34Alt2(r *runtime.Reader) (Classmark3ValuePartNode34Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode34Alt2"); err != nil {
-		return Classmark3ValuePartNode34Alt2{}, err
+func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode34Alt2
-	x0, err := decodeClassmark3ValuePartNode34Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode34Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode34Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode34Alt2{}, err
-	}
-	v.GSM710AssociatedRadioCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode34Alt2(w *runtime.Writer, v Classmark3ValuePartNode34Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode34Alt2"); err != nil {
+func encodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode34Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode34Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode34Alt2Node2(w, v.GSM710AssociatedRadioCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode34(r *runtime.Reader) (*Classmark3ValuePartNode34Alt2, error) {
-	var result *Classmark3ValuePartNode34Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode34Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode34Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode34(w *runtime.Writer, v *Classmark3ValuePartNode34Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode34Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode34Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode35Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode35Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeClassmark3ValuePartNode35Alt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeClassmark3ValuePartNode35Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("Classmark3ValuePartNode35Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeClassmark3ValuePartNode35Alt2Node1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
-}
-func decodeClassmark3ValuePartNode35Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode35Alt2Node2"); err != nil {
+func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartTGSM810AssociatedRadioCapabilityValue"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -3938,8 +2680,8 @@ func decodeClassmark3ValuePartNode35Alt2Node2(r *runtime.Reader) (uint8, error) 
 	r.Set("T-GSM 810 Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode35Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode35Alt2Node2"); err != nil {
+func encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartTGSM810AssociatedRadioCapabilityValue"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -3953,85 +2695,34 @@ func encodeClassmark3ValuePartNode35Alt2Node2(w *runtime.Writer, v uint8) error 
 	w.Set("T-GSM 810 Associated Radio Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode35Alt2(r *runtime.Reader) (Classmark3ValuePartNode35Alt2, error) {
-	if err := r.Enter("Classmark3ValuePartNode35Alt2"); err != nil {
-		return Classmark3ValuePartNode35Alt2{}, err
+func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v Classmark3ValuePartNode35Alt2
-	x0, err := decodeClassmark3ValuePartNode35Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
-		return Classmark3ValuePartNode35Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeClassmark3ValuePartNode35Alt2Node2(r)
-	if err != nil {
-		return Classmark3ValuePartNode35Alt2{}, err
-	}
-	v.TGSM810AssociatedRadioCapability = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeClassmark3ValuePartNode35Alt2(w *runtime.Writer, v Classmark3ValuePartNode35Alt2) error {
-	if err := w.Enter("Classmark3ValuePartNode35Alt2"); err != nil {
+func encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("Classmark3ValuePartNode35Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode35Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode35Alt2Node2(w, v.TGSM810AssociatedRadioCapability); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(w, *v)
 }
-func decodeClassmark3ValuePartNode35(r *runtime.Reader) (*Classmark3ValuePartNode35Alt2, error) {
-	var result *Classmark3ValuePartNode35Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode35Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeClassmark3ValuePartNode35Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeClassmark3ValuePartNode35(w *runtime.Writer, v *Classmark3ValuePartNode35Alt2) error {
-	if v == nil {
-		return encodeClassmark3ValuePartNode35Alt1(w, struct{}{})
-	}
-	return encodeClassmark3ValuePartNode35Alt2(w, *v)
-}
-func decodeClassmark3ValuePartNode36(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode36"); err != nil {
+func decodeClassmark3ValuePartCipheringModeSettingCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartCipheringModeSettingCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4046,8 +2737,8 @@ func decodeClassmark3ValuePartNode36(r *runtime.Reader) (uint8, error) {
 	r.Set("Ciphering Mode Setting Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode36(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode36"); err != nil {
+func encodeClassmark3ValuePartCipheringModeSettingCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartCipheringModeSettingCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4061,8 +2752,8 @@ func encodeClassmark3ValuePartNode36(w *runtime.Writer, v uint8) error {
 	w.Set("Ciphering Mode Setting Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode37(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode37"); err != nil {
+func decodeClassmark3ValuePartAdditionalPositioningCapabilities(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartAdditionalPositioningCapabilities"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4077,8 +2768,8 @@ func decodeClassmark3ValuePartNode37(r *runtime.Reader) (uint8, error) {
 	r.Set("Additional Positioning Capabilities", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode37(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode37"); err != nil {
+func encodeClassmark3ValuePartAdditionalPositioningCapabilities(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartAdditionalPositioningCapabilities"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4092,8 +2783,8 @@ func encodeClassmark3ValuePartNode37(w *runtime.Writer, v uint8) error {
 	w.Set("Additional Positioning Capabilities", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode38(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode38"); err != nil {
+func decodeClassmark3ValuePartEUTRAFDDSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartEUTRAFDDSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4108,8 +2799,8 @@ func decodeClassmark3ValuePartNode38(r *runtime.Reader) (uint8, error) {
 	r.Set("E-UTRA FDD support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode38(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode38"); err != nil {
+func encodeClassmark3ValuePartEUTRAFDDSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartEUTRAFDDSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4123,8 +2814,8 @@ func encodeClassmark3ValuePartNode38(w *runtime.Writer, v uint8) error {
 	w.Set("E-UTRA FDD support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode39(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode39"); err != nil {
+func decodeClassmark3ValuePartEUTRATDDSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartEUTRATDDSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4139,8 +2830,8 @@ func decodeClassmark3ValuePartNode39(r *runtime.Reader) (uint8, error) {
 	r.Set("E-UTRA TDD support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode39(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode39"); err != nil {
+func encodeClassmark3ValuePartEUTRATDDSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartEUTRATDDSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4154,8 +2845,8 @@ func encodeClassmark3ValuePartNode39(w *runtime.Writer, v uint8) error {
 	w.Set("E-UTRA TDD support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode40(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode40"); err != nil {
+func decodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartEUTRAMeasurementAndReportingSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4170,8 +2861,8 @@ func decodeClassmark3ValuePartNode40(r *runtime.Reader) (uint8, error) {
 	r.Set("E-UTRA Measurement and Reporting support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode40(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode40"); err != nil {
+func encodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartEUTRAMeasurementAndReportingSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4185,8 +2876,8 @@ func encodeClassmark3ValuePartNode40(w *runtime.Writer, v uint8) error {
 	w.Set("E-UTRA Measurement and Reporting support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode41(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode41"); err != nil {
+func decodeClassmark3ValuePartPriorityBasedReselectionSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartPriorityBasedReselectionSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4201,8 +2892,8 @@ func decodeClassmark3ValuePartNode41(r *runtime.Reader) (uint8, error) {
 	r.Set("Priority-based reselection support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode41(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode41"); err != nil {
+func encodeClassmark3ValuePartPriorityBasedReselectionSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartPriorityBasedReselectionSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4216,8 +2907,8 @@ func encodeClassmark3ValuePartNode41(w *runtime.Writer, v uint8) error {
 	w.Set("Priority-based reselection support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode42(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode42"); err != nil {
+func decodeClassmark3ValuePartUTRACSGCellsReporting(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUTRACSGCellsReporting"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4232,8 +2923,8 @@ func decodeClassmark3ValuePartNode42(r *runtime.Reader) (uint8, error) {
 	r.Set("UTRA CSG Cells Reporting", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode42(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode42"); err != nil {
+func encodeClassmark3ValuePartUTRACSGCellsReporting(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUTRACSGCellsReporting"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4247,8 +2938,8 @@ func encodeClassmark3ValuePartNode42(w *runtime.Writer, v uint8) error {
 	w.Set("UTRA CSG Cells Reporting", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode43(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode43"); err != nil {
+func decodeClassmark3ValuePartVAMOSLevel(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartVAMOSLevel"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4263,8 +2954,8 @@ func decodeClassmark3ValuePartNode43(r *runtime.Reader) (uint8, error) {
 	r.Set("VAMOS Level", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode43(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode43"); err != nil {
+func encodeClassmark3ValuePartVAMOSLevel(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartVAMOSLevel"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4278,8 +2969,8 @@ func encodeClassmark3ValuePartNode43(w *runtime.Writer, v uint8) error {
 	w.Set("VAMOS Level", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode44(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode44"); err != nil {
+func decodeClassmark3ValuePartTIGHTERCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartTIGHTERCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4294,8 +2985,8 @@ func decodeClassmark3ValuePartNode44(r *runtime.Reader) (uint8, error) {
 	r.Set("TIGHTER Capability", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode44(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode44"); err != nil {
+func encodeClassmark3ValuePartTIGHTERCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartTIGHTERCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4309,8 +3000,8 @@ func encodeClassmark3ValuePartNode44(w *runtime.Writer, v uint8) error {
 	w.Set("TIGHTER Capability", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode45(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode45"); err != nil {
+func decodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartSelectiveCipheringOfDownlinkSACCH"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4325,8 +3016,8 @@ func decodeClassmark3ValuePartNode45(r *runtime.Reader) (uint8, error) {
 	r.Set("Selective Ciphering of Downlink SACCH", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode45(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode45"); err != nil {
+func encodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartSelectiveCipheringOfDownlinkSACCH"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4340,8 +3031,8 @@ func encodeClassmark3ValuePartNode45(w *runtime.Writer, v uint8) error {
 	w.Set("Selective Ciphering of Downlink SACCH", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode46(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode46"); err != nil {
+func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartCSToPSSRVCCFromGERANToUTRA"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4356,8 +3047,8 @@ func decodeClassmark3ValuePartNode46(r *runtime.Reader) (uint8, error) {
 	r.Set("CS to PS SRVCC from GERAN to UTRA", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode46(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode46"); err != nil {
+func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartCSToPSSRVCCFromGERANToUTRA"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4371,8 +3062,8 @@ func encodeClassmark3ValuePartNode46(w *runtime.Writer, v uint8) error {
 	w.Set("CS to PS SRVCC from GERAN to UTRA", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode47(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode47"); err != nil {
+func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartCSToPSSRVCCFromGERANToEUTRA"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4387,8 +3078,8 @@ func decodeClassmark3ValuePartNode47(r *runtime.Reader) (uint8, error) {
 	r.Set("CS to PS SRVCC from GERAN to E-UTRA", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode47(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode47"); err != nil {
+func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartCSToPSSRVCCFromGERANToEUTRA"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4402,8 +3093,8 @@ func encodeClassmark3ValuePartNode47(w *runtime.Writer, v uint8) error {
 	w.Set("CS to PS SRVCC from GERAN to E-UTRA", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode48(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode48"); err != nil {
+func decodeClassmark3ValuePartGERANNetworkSharingSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartGERANNetworkSharingSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4418,8 +3109,8 @@ func decodeClassmark3ValuePartNode48(r *runtime.Reader) (uint8, error) {
 	r.Set("GERAN Network Sharing support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode48(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode48"); err != nil {
+func encodeClassmark3ValuePartGERANNetworkSharingSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartGERANNetworkSharingSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4433,8 +3124,8 @@ func encodeClassmark3ValuePartNode48(w *runtime.Writer, v uint8) error {
 	w.Set("GERAN Network Sharing support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode49(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode49"); err != nil {
+func decodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4449,8 +3140,8 @@ func decodeClassmark3ValuePartNode49(r *runtime.Reader) (uint8, error) {
 	r.Set("E-UTRA Wideband RSRQ measurements support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode49(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode49"); err != nil {
+func encodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4464,8 +3155,8 @@ func encodeClassmark3ValuePartNode49(w *runtime.Writer, v uint8) error {
 	w.Set("E-UTRA Wideband RSRQ measurements support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode50(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode50"); err != nil {
+func decodeClassmark3ValuePartERBandSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartERBandSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4480,8 +3171,8 @@ func decodeClassmark3ValuePartNode50(r *runtime.Reader) (uint8, error) {
 	r.Set("ER Band Support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode50(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode50"); err != nil {
+func encodeClassmark3ValuePartERBandSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartERBandSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4495,8 +3186,8 @@ func encodeClassmark3ValuePartNode50(w *runtime.Writer, v uint8) error {
 	w.Set("ER Band Support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode51(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode51"); err != nil {
+func decodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4511,8 +3202,8 @@ func decodeClassmark3ValuePartNode51(r *runtime.Reader) (uint8, error) {
 	r.Set("UTRA Multiple Frequency Band Indicators support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode51(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode51"); err != nil {
+func encodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4526,8 +3217,8 @@ func encodeClassmark3ValuePartNode51(w *runtime.Writer, v uint8) error {
 	w.Set("UTRA Multiple Frequency Band Indicators support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode52(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode52"); err != nil {
+func decodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4542,8 +3233,8 @@ func decodeClassmark3ValuePartNode52(r *runtime.Reader) (uint8, error) {
 	r.Set("E-UTRA Multiple Frequency Band Indicators support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode52(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode52"); err != nil {
+func encodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4557,8 +3248,8 @@ func encodeClassmark3ValuePartNode52(w *runtime.Writer, v uint8) error {
 	w.Set("E-UTRA Multiple Frequency Band Indicators support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode53(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode53"); err != nil {
+func decodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedTSCSetCapabilitySupport"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4573,8 +3264,8 @@ func decodeClassmark3ValuePartNode53(r *runtime.Reader) (uint8, error) {
 	r.Set("Extended TSC Set Capability support", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode53(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode53"); err != nil {
+func encodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartExtendedTSCSetCapabilitySupport"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4588,8 +3279,8 @@ func encodeClassmark3ValuePartNode53(w *runtime.Writer, v uint8) error {
 	w.Set("Extended TSC Set Capability support", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode54(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("Classmark3ValuePartNode54"); err != nil {
+func decodeClassmark3ValuePartExtendedEARFCNValueRange(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("Classmark3ValuePartExtendedEARFCNValueRange"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -4604,8 +3295,8 @@ func decodeClassmark3ValuePartNode54(r *runtime.Reader) (uint8, error) {
 	r.Set("Extended EARFCN value range", v)
 	return uint8(v), nil
 }
-func encodeClassmark3ValuePartNode54(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("Classmark3ValuePartNode54"); err != nil {
+func encodeClassmark3ValuePartExtendedEARFCNValueRange(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("Classmark3ValuePartExtendedEARFCNValueRange"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -4619,10 +3310,10 @@ func encodeClassmark3ValuePartNode54(w *runtime.Writer, v uint8) error {
 	w.Set("Extended EARFCN value range", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartNode55(r *runtime.Reader) (runtime.BitString, error) {
+func decodeClassmark3ValuePartSpareBits(r *runtime.Reader) (runtime.BitString, error) {
 	return r.ReadSpare()
 }
-func encodeClassmark3ValuePartNode55(w *runtime.Writer, _ runtime.BitString) error {
+func encodeClassmark3ValuePartSpareBits(w *runtime.Writer, _ runtime.BitString) error {
 	return w.WriteSpare()
 }
 func decodeClassmark3ValuePart(r *runtime.Reader) (Classmark3ValuePart, error) {
@@ -4631,277 +3322,277 @@ func decodeClassmark3ValuePart(r *runtime.Reader) (Classmark3ValuePart, error) {
 	}
 	defer r.Leave()
 	var v Classmark3ValuePart
-	x0, err := decodeClassmark3ValuePartNode1(r)
+	x0, err := decodeClassmark3ValuePartSpareBit(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	_ = x0
-	x1, err := decodeClassmark3ValuePartNode2(r)
+	x1, err := decodeClassmark3ValuePartMultibandSupportedChoice(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice = x1
-	x2, err := decodeClassmark3ValuePartNode3(r)
+	v.MultibandSupportedChoice = x1
+	x2, err := decodeClassmark3ValuePartRSupportSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice2 = x2
-	x3, err := decodeClassmark3ValuePartNode4(r)
+	v.RSupport = x2
+	x3, err := decodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice3 = x3
-	x4, err := decodeClassmark3ValuePartNode5(r)
+	v.HSCSDMultiSlotCapability = x3
+	x4, err := decodeClassmark3ValuePartUCS2Treatment(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UCS2Treatment = x4
-	x5, err := decodeClassmark3ValuePartNode6(r)
+	x5, err := decodeClassmark3ValuePartExtendedMeasurementCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.ExtendedMeasurementCapability = x5
-	x6, err := decodeClassmark3ValuePartNode7(r)
+	x6, err := decodeClassmark3ValuePartMSMeasurementCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice4 = x6
-	x7, err := decodeClassmark3ValuePartNode8(r)
+	v.MSMeasurementCapability = x6
+	x7, err := decodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice5 = x7
-	x8, err := decodeClassmark3ValuePartNode9(r)
+	v.MSPositioningMethodCapability = x7
+	x8, err := decodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice6 = x8
-	x9, err := decodeClassmark3ValuePartNode10(r)
+	v.ECSDMultiSlotCapability = x8
+	x9, err := decodeClassmark3ValuePartN8PSKStructSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice7 = x9
-	x10, err := decodeClassmark3ValuePartNode11(r)
+	v.N8PSKStruct = x9
+	x10, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice8 = x10
-	x11, err := decodeClassmark3ValuePartNode12(r)
+	v.GSM400BandsSupportedGroup = x10
+	x11, err := decodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice9 = x11
-	x12, err := decodeClassmark3ValuePartNode13(r)
+	v.GSM850AssociatedRadioCapability = x11
+	x12, err := decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice10 = x12
-	x13, err := decodeClassmark3ValuePartNode14(r)
+	v.GSM1900AssociatedRadioCapability = x12
+	x13, err := decodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UMTSFDDRadioAccessTechnologyCapability = x13
-	x14, err := decodeClassmark3ValuePartNode15(r)
+	x14, err := decodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UMTS384McpsTDDRadioAccessTechnologyCapability = x14
-	x15, err := decodeClassmark3ValuePartNode16(r)
+	x15, err := decodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.CDMA2000RadioAccessTechnologyCapability = x15
-	x16, err := decodeClassmark3ValuePartNode17(r)
+	x16, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice11 = x16
-	x17, err := decodeClassmark3ValuePartNode18(r)
+	v.DTMGPRSMultiSlotClassGroup = x16
+	x17, err := decodeClassmark3ValuePartSingleBandSupportSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice12 = x17
-	x18, err := decodeClassmark3ValuePartNode19(r)
+	v.SingleBandSupport = x17
+	x18, err := decodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice13 = x18
-	x19, err := decodeClassmark3ValuePartNode20(r)
+	v.GSM750AssociatedRadioCapability = x18
+	x19, err := decodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UMTS128McpsTDDRadioAccessTechnologyCapability = x19
-	x20, err := decodeClassmark3ValuePartNode21(r)
+	x20, err := decodeClassmark3ValuePartGERANFeaturePackage1(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.GERANFeaturePackage1 = x20
-	x21, err := decodeClassmark3ValuePartNode22(r)
+	x21, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice14 = x21
-	x22, err := decodeClassmark3ValuePartNode23(r)
+	v.ExtendedDTMGPRSMultiSlotClassGroup = x21
+	x22, err := decodeClassmark3ValuePartHighMultislotCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice15 = x22
-	x23, err := decodeClassmark3ValuePartNode24(r)
+	v.HighMultislotCapability = x22
+	x23, err := decodeClassmark3ValuePartAlt0(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	_ = x23
-	x24, err := decodeClassmark3ValuePartNode25(r)
+	x24, err := decodeClassmark3ValuePartGERANFeaturePackage2(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.GERANFeaturePackage2 = x24
-	x25, err := decodeClassmark3ValuePartNode26(r)
+	x25, err := decodeClassmark3ValuePartGMSKMultislotPowerProfile(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.GMSKMultislotPowerProfile = x25
-	x26, err := decodeClassmark3ValuePartNode27(r)
+	x26, err := decodeClassmark3ValuePartN8PSKMultislotPowerProfile(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.N8PSKMultislotPowerProfile = x26
-	x27, err := decodeClassmark3ValuePartNode28(r)
+	x27, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice16 = x27
-	x28, err := decodeClassmark3ValuePartNode29(r)
+	v.TGSM400BandsSupportedGroup = x27
+	x28, err := decodeClassmark3ValuePartAlt0Variant2(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	_ = x28
-	x29, err := decodeClassmark3ValuePartNode30(r)
+	x29, err := decodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.DownlinkAdvancedReceiverPerformance = x29
-	x30, err := decodeClassmark3ValuePartNode31(r)
+	x30, err := decodeClassmark3ValuePartDTMEnhancementsCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.DTMEnhancementsCapability = x30
-	x31, err := decodeClassmark3ValuePartNode32(r)
+	x31, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice17 = x31
-	x32, err := decodeClassmark3ValuePartNode33(r)
+	v.DTMGPRSHighMultiSlotClassGroup = x31
+	x32, err := decodeClassmark3ValuePartRepeatedACCHCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.RepeatedACCHCapability = x32
-	x33, err := decodeClassmark3ValuePartNode34(r)
+	x33, err := decodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice18 = x33
-	x34, err := decodeClassmark3ValuePartNode35(r)
+	v.GSM710AssociatedRadioCapability = x33
+	x34, err := decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
-	v.Choice19 = x34
-	x35, err := decodeClassmark3ValuePartNode36(r)
+	v.TGSM810AssociatedRadioCapability = x34
+	x35, err := decodeClassmark3ValuePartCipheringModeSettingCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.CipheringModeSettingCapability = x35
-	x36, err := decodeClassmark3ValuePartNode37(r)
+	x36, err := decodeClassmark3ValuePartAdditionalPositioningCapabilities(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.AdditionalPositioningCapabilities = x36
-	x37, err := decodeClassmark3ValuePartNode38(r)
+	x37, err := decodeClassmark3ValuePartEUTRAFDDSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.EUTRAFDDSupport = x37
-	x38, err := decodeClassmark3ValuePartNode39(r)
+	x38, err := decodeClassmark3ValuePartEUTRATDDSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.EUTRATDDSupport = x38
-	x39, err := decodeClassmark3ValuePartNode40(r)
+	x39, err := decodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.EUTRAMeasurementAndReportingSupport = x39
-	x40, err := decodeClassmark3ValuePartNode41(r)
+	x40, err := decodeClassmark3ValuePartPriorityBasedReselectionSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.PriorityBasedReselectionSupport = x40
-	x41, err := decodeClassmark3ValuePartNode42(r)
+	x41, err := decodeClassmark3ValuePartUTRACSGCellsReporting(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UTRACSGCellsReporting = x41
-	x42, err := decodeClassmark3ValuePartNode43(r)
+	x42, err := decodeClassmark3ValuePartVAMOSLevel(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.VAMOSLevel = x42
-	x43, err := decodeClassmark3ValuePartNode44(r)
+	x43, err := decodeClassmark3ValuePartTIGHTERCapability(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.TIGHTERCapability = x43
-	x44, err := decodeClassmark3ValuePartNode45(r)
+	x44, err := decodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.SelectiveCipheringOfDownlinkSACCH = x44
-	x45, err := decodeClassmark3ValuePartNode46(r)
+	x45, err := decodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.CSToPSSRVCCFromGERANToUTRA = x45
-	x46, err := decodeClassmark3ValuePartNode47(r)
+	x46, err := decodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.CSToPSSRVCCFromGERANToEUTRA = x46
-	x47, err := decodeClassmark3ValuePartNode48(r)
+	x47, err := decodeClassmark3ValuePartGERANNetworkSharingSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.GERANNetworkSharingSupport = x47
-	x48, err := decodeClassmark3ValuePartNode49(r)
+	x48, err := decodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.EUTRAWidebandRSRQMeasurementsSupport = x48
-	x49, err := decodeClassmark3ValuePartNode50(r)
+	x49, err := decodeClassmark3ValuePartERBandSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.ERBandSupport = x49
-	x50, err := decodeClassmark3ValuePartNode51(r)
+	x50, err := decodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.UTRAMultipleFrequencyBandIndicatorsSupport = x50
-	x51, err := decodeClassmark3ValuePartNode52(r)
+	x51, err := decodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.EUTRAMultipleFrequencyBandIndicatorsSupport = x51
-	x52, err := decodeClassmark3ValuePartNode53(r)
+	x52, err := decodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.ExtendedTSCSetCapabilitySupport = x52
-	x53, err := decodeClassmark3ValuePartNode54(r)
+	x53, err := decodeClassmark3ValuePartExtendedEARFCNValueRange(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
 	v.ExtendedEARFCNValueRange = x53
-	x54, err := decodeClassmark3ValuePartNode55(r)
+	x54, err := decodeClassmark3ValuePartSpareBits(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
@@ -4921,284 +3612,284 @@ func encodeClassmark3ValuePart(w *runtime.Writer, v Classmark3ValuePart) error {
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeClassmark3ValuePartNode1(w, runtime.BitString{}); err != nil {
+		if err := encodeClassmark3ValuePartSpareBit(w, runtime.BitString{}); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeClassmark3ValuePartNode2(w, v.Choice); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoice(w, v.MultibandSupportedChoice); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartNode3(w, v.Choice2); err != nil {
+		if err := encodeClassmark3ValuePartRSupportSelector(w, v.RSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 3 {
-		if err := encodeClassmark3ValuePartNode4(w, v.Choice3); err != nil {
+		if err := encodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(w, v.HSCSDMultiSlotCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 4 {
-		if err := encodeClassmark3ValuePartNode5(w, v.UCS2Treatment); err != nil {
+		if err := encodeClassmark3ValuePartUCS2Treatment(w, v.UCS2Treatment); err != nil {
 			return err
 		}
 	}
 	if limit > 5 {
-		if err := encodeClassmark3ValuePartNode6(w, v.ExtendedMeasurementCapability); err != nil {
+		if err := encodeClassmark3ValuePartExtendedMeasurementCapability(w, v.ExtendedMeasurementCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 6 {
-		if err := encodeClassmark3ValuePartNode7(w, v.Choice4); err != nil {
+		if err := encodeClassmark3ValuePartMSMeasurementCapabilitySelector(w, v.MSMeasurementCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 7 {
-		if err := encodeClassmark3ValuePartNode8(w, v.Choice5); err != nil {
+		if err := encodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(w, v.MSPositioningMethodCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 8 {
-		if err := encodeClassmark3ValuePartNode9(w, v.Choice6); err != nil {
+		if err := encodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(w, v.ECSDMultiSlotCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 9 {
-		if err := encodeClassmark3ValuePartNode10(w, v.Choice7); err != nil {
+		if err := encodeClassmark3ValuePartN8PSKStructSelector(w, v.N8PSKStruct); err != nil {
 			return err
 		}
 	}
 	if limit > 10 {
-		if err := encodeClassmark3ValuePartNode11(w, v.Choice8); err != nil {
+		if err := encodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(w, v.GSM400BandsSupportedGroup); err != nil {
 			return err
 		}
 	}
 	if limit > 11 {
-		if err := encodeClassmark3ValuePartNode12(w, v.Choice9); err != nil {
+		if err := encodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(w, v.GSM850AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 12 {
-		if err := encodeClassmark3ValuePartNode13(w, v.Choice10); err != nil {
+		if err := encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(w, v.GSM1900AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 13 {
-		if err := encodeClassmark3ValuePartNode14(w, v.UMTSFDDRadioAccessTechnologyCapability); err != nil {
+		if err := encodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(w, v.UMTSFDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 14 {
-		if err := encodeClassmark3ValuePartNode15(w, v.UMTS384McpsTDDRadioAccessTechnologyCapability); err != nil {
+		if err := encodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(w, v.UMTS384McpsTDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 15 {
-		if err := encodeClassmark3ValuePartNode16(w, v.CDMA2000RadioAccessTechnologyCapability); err != nil {
+		if err := encodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(w, v.CDMA2000RadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 16 {
-		if err := encodeClassmark3ValuePartNode17(w, v.Choice11); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(w, v.DTMGPRSMultiSlotClassGroup); err != nil {
 			return err
 		}
 	}
 	if limit > 17 {
-		if err := encodeClassmark3ValuePartNode18(w, v.Choice12); err != nil {
+		if err := encodeClassmark3ValuePartSingleBandSupportSelector(w, v.SingleBandSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 18 {
-		if err := encodeClassmark3ValuePartNode19(w, v.Choice13); err != nil {
+		if err := encodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(w, v.GSM750AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 19 {
-		if err := encodeClassmark3ValuePartNode20(w, v.UMTS128McpsTDDRadioAccessTechnologyCapability); err != nil {
+		if err := encodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(w, v.UMTS128McpsTDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 20 {
-		if err := encodeClassmark3ValuePartNode21(w, v.GERANFeaturePackage1); err != nil {
+		if err := encodeClassmark3ValuePartGERANFeaturePackage1(w, v.GERANFeaturePackage1); err != nil {
 			return err
 		}
 	}
 	if limit > 21 {
-		if err := encodeClassmark3ValuePartNode22(w, v.Choice14); err != nil {
+		if err := encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(w, v.ExtendedDTMGPRSMultiSlotClassGroup); err != nil {
 			return err
 		}
 	}
 	if limit > 22 {
-		if err := encodeClassmark3ValuePartNode23(w, v.Choice15); err != nil {
+		if err := encodeClassmark3ValuePartHighMultislotCapabilitySelector(w, v.HighMultislotCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 23 {
-		if err := encodeClassmark3ValuePartNode24(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartAlt0(w, struct{}{}); err != nil {
 			return err
 		}
 	}
 	if limit > 24 {
-		if err := encodeClassmark3ValuePartNode25(w, v.GERANFeaturePackage2); err != nil {
+		if err := encodeClassmark3ValuePartGERANFeaturePackage2(w, v.GERANFeaturePackage2); err != nil {
 			return err
 		}
 	}
 	if limit > 25 {
-		if err := encodeClassmark3ValuePartNode26(w, v.GMSKMultislotPowerProfile); err != nil {
+		if err := encodeClassmark3ValuePartGMSKMultislotPowerProfile(w, v.GMSKMultislotPowerProfile); err != nil {
 			return err
 		}
 	}
 	if limit > 26 {
-		if err := encodeClassmark3ValuePartNode27(w, v.N8PSKMultislotPowerProfile); err != nil {
+		if err := encodeClassmark3ValuePartN8PSKMultislotPowerProfile(w, v.N8PSKMultislotPowerProfile); err != nil {
 			return err
 		}
 	}
 	if limit > 27 {
-		if err := encodeClassmark3ValuePartNode28(w, v.Choice16); err != nil {
+		if err := encodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(w, v.TGSM400BandsSupportedGroup); err != nil {
 			return err
 		}
 	}
 	if limit > 28 {
-		if err := encodeClassmark3ValuePartNode29(w, struct{}{}); err != nil {
+		if err := encodeClassmark3ValuePartAlt0Variant2(w, struct{}{}); err != nil {
 			return err
 		}
 	}
 	if limit > 29 {
-		if err := encodeClassmark3ValuePartNode30(w, v.DownlinkAdvancedReceiverPerformance); err != nil {
+		if err := encodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(w, v.DownlinkAdvancedReceiverPerformance); err != nil {
 			return err
 		}
 	}
 	if limit > 30 {
-		if err := encodeClassmark3ValuePartNode31(w, v.DTMEnhancementsCapability); err != nil {
+		if err := encodeClassmark3ValuePartDTMEnhancementsCapability(w, v.DTMEnhancementsCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 31 {
-		if err := encodeClassmark3ValuePartNode32(w, v.Choice17); err != nil {
+		if err := encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(w, v.DTMGPRSHighMultiSlotClassGroup); err != nil {
 			return err
 		}
 	}
 	if limit > 32 {
-		if err := encodeClassmark3ValuePartNode33(w, v.RepeatedACCHCapability); err != nil {
+		if err := encodeClassmark3ValuePartRepeatedACCHCapability(w, v.RepeatedACCHCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 33 {
-		if err := encodeClassmark3ValuePartNode34(w, v.Choice18); err != nil {
+		if err := encodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(w, v.GSM710AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 34 {
-		if err := encodeClassmark3ValuePartNode35(w, v.Choice19); err != nil {
+		if err := encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(w, v.TGSM810AssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 35 {
-		if err := encodeClassmark3ValuePartNode36(w, v.CipheringModeSettingCapability); err != nil {
+		if err := encodeClassmark3ValuePartCipheringModeSettingCapability(w, v.CipheringModeSettingCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 36 {
-		if err := encodeClassmark3ValuePartNode37(w, v.AdditionalPositioningCapabilities); err != nil {
+		if err := encodeClassmark3ValuePartAdditionalPositioningCapabilities(w, v.AdditionalPositioningCapabilities); err != nil {
 			return err
 		}
 	}
 	if limit > 37 {
-		if err := encodeClassmark3ValuePartNode38(w, v.EUTRAFDDSupport); err != nil {
+		if err := encodeClassmark3ValuePartEUTRAFDDSupport(w, v.EUTRAFDDSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 38 {
-		if err := encodeClassmark3ValuePartNode39(w, v.EUTRATDDSupport); err != nil {
+		if err := encodeClassmark3ValuePartEUTRATDDSupport(w, v.EUTRATDDSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 39 {
-		if err := encodeClassmark3ValuePartNode40(w, v.EUTRAMeasurementAndReportingSupport); err != nil {
+		if err := encodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(w, v.EUTRAMeasurementAndReportingSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 40 {
-		if err := encodeClassmark3ValuePartNode41(w, v.PriorityBasedReselectionSupport); err != nil {
+		if err := encodeClassmark3ValuePartPriorityBasedReselectionSupport(w, v.PriorityBasedReselectionSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 41 {
-		if err := encodeClassmark3ValuePartNode42(w, v.UTRACSGCellsReporting); err != nil {
+		if err := encodeClassmark3ValuePartUTRACSGCellsReporting(w, v.UTRACSGCellsReporting); err != nil {
 			return err
 		}
 	}
 	if limit > 42 {
-		if err := encodeClassmark3ValuePartNode43(w, v.VAMOSLevel); err != nil {
+		if err := encodeClassmark3ValuePartVAMOSLevel(w, v.VAMOSLevel); err != nil {
 			return err
 		}
 	}
 	if limit > 43 {
-		if err := encodeClassmark3ValuePartNode44(w, v.TIGHTERCapability); err != nil {
+		if err := encodeClassmark3ValuePartTIGHTERCapability(w, v.TIGHTERCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 44 {
-		if err := encodeClassmark3ValuePartNode45(w, v.SelectiveCipheringOfDownlinkSACCH); err != nil {
+		if err := encodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(w, v.SelectiveCipheringOfDownlinkSACCH); err != nil {
 			return err
 		}
 	}
 	if limit > 45 {
-		if err := encodeClassmark3ValuePartNode46(w, v.CSToPSSRVCCFromGERANToUTRA); err != nil {
+		if err := encodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(w, v.CSToPSSRVCCFromGERANToUTRA); err != nil {
 			return err
 		}
 	}
 	if limit > 46 {
-		if err := encodeClassmark3ValuePartNode47(w, v.CSToPSSRVCCFromGERANToEUTRA); err != nil {
+		if err := encodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(w, v.CSToPSSRVCCFromGERANToEUTRA); err != nil {
 			return err
 		}
 	}
 	if limit > 47 {
-		if err := encodeClassmark3ValuePartNode48(w, v.GERANNetworkSharingSupport); err != nil {
+		if err := encodeClassmark3ValuePartGERANNetworkSharingSupport(w, v.GERANNetworkSharingSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 48 {
-		if err := encodeClassmark3ValuePartNode49(w, v.EUTRAWidebandRSRQMeasurementsSupport); err != nil {
+		if err := encodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(w, v.EUTRAWidebandRSRQMeasurementsSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 49 {
-		if err := encodeClassmark3ValuePartNode50(w, v.ERBandSupport); err != nil {
+		if err := encodeClassmark3ValuePartERBandSupport(w, v.ERBandSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 50 {
-		if err := encodeClassmark3ValuePartNode51(w, v.UTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
+		if err := encodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(w, v.UTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 51 {
-		if err := encodeClassmark3ValuePartNode52(w, v.EUTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
+		if err := encodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(w, v.EUTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
 			return err
 		}
 	}
 	if limit > 52 {
-		if err := encodeClassmark3ValuePartNode53(w, v.ExtendedTSCSetCapabilitySupport); err != nil {
+		if err := encodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(w, v.ExtendedTSCSetCapabilitySupport); err != nil {
 			return err
 		}
 	}
 	if limit > 53 {
-		if err := encodeClassmark3ValuePartNode54(w, v.ExtendedEARFCNValueRange); err != nil {
+		if err := encodeClassmark3ValuePartExtendedEARFCNValueRange(w, v.ExtendedEARFCNValueRange); err != nil {
 			return err
 		}
 	}
 	if limit > 54 {
-		if err := encodeClassmark3ValuePartNode55(w, runtime.BitString{}); err != nil {
+		if err := encodeClassmark3ValuePartSpareBits(w, runtime.BitString{}); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeA5BitsNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("A5BitsNode1"); err != nil {
+func decodeA5BitsA57(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("A5BitsA57"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5213,8 +3904,8 @@ func decodeA5BitsNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("A5/7", v)
 	return uint8(v), nil
 }
-func encodeA5BitsNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("A5BitsNode1"); err != nil {
+func encodeA5BitsA57(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("A5BitsA57"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5228,8 +3919,8 @@ func encodeA5BitsNode1(w *runtime.Writer, v uint8) error {
 	w.Set("A5/7", uint64(v))
 	return nil
 }
-func decodeA5BitsNode2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("A5BitsNode2"); err != nil {
+func decodeA5BitsA56(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("A5BitsA56"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5244,8 +3935,8 @@ func decodeA5BitsNode2(r *runtime.Reader) (uint8, error) {
 	r.Set("A5/6", v)
 	return uint8(v), nil
 }
-func encodeA5BitsNode2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("A5BitsNode2"); err != nil {
+func encodeA5BitsA56(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("A5BitsA56"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5259,8 +3950,8 @@ func encodeA5BitsNode2(w *runtime.Writer, v uint8) error {
 	w.Set("A5/6", uint64(v))
 	return nil
 }
-func decodeA5BitsNode3(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("A5BitsNode3"); err != nil {
+func decodeA5BitsA55(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("A5BitsA55"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5275,8 +3966,8 @@ func decodeA5BitsNode3(r *runtime.Reader) (uint8, error) {
 	r.Set("A5/5", v)
 	return uint8(v), nil
 }
-func encodeA5BitsNode3(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("A5BitsNode3"); err != nil {
+func encodeA5BitsA55(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("A5BitsA55"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5290,8 +3981,8 @@ func encodeA5BitsNode3(w *runtime.Writer, v uint8) error {
 	w.Set("A5/5", uint64(v))
 	return nil
 }
-func decodeA5BitsNode4(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("A5BitsNode4"); err != nil {
+func decodeA5BitsA54(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("A5BitsA54"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5306,8 +3997,8 @@ func decodeA5BitsNode4(r *runtime.Reader) (uint8, error) {
 	r.Set("A5/4", v)
 	return uint8(v), nil
 }
-func encodeA5BitsNode4(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("A5BitsNode4"); err != nil {
+func encodeA5BitsA54(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("A5BitsA54"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5327,22 +4018,22 @@ func decodeA5Bits(r *runtime.Reader) (A5Bits, error) {
 	}
 	defer r.Leave()
 	var v A5Bits
-	x0, err := decodeA5BitsNode1(r)
+	x0, err := decodeA5BitsA57(r)
 	if err != nil {
 		return A5Bits{}, err
 	}
 	v.A57 = x0
-	x1, err := decodeA5BitsNode2(r)
+	x1, err := decodeA5BitsA56(r)
 	if err != nil {
 		return A5Bits{}, err
 	}
 	v.A56 = x1
-	x2, err := decodeA5BitsNode3(r)
+	x2, err := decodeA5BitsA55(r)
 	if err != nil {
 		return A5Bits{}, err
 	}
 	v.A55 = x2
-	x3, err := decodeA5BitsNode4(r)
+	x3, err := decodeA5BitsA54(r)
 	if err != nil {
 		return A5Bits{}, err
 	}
@@ -5362,29 +4053,29 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeA5BitsNode1(w, v.A57); err != nil {
+		if err := encodeA5BitsA57(w, v.A57); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeA5BitsNode2(w, v.A56); err != nil {
+		if err := encodeA5BitsA56(w, v.A56); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeA5BitsNode3(w, v.A55); err != nil {
+		if err := encodeA5BitsA55(w, v.A55); err != nil {
 			return err
 		}
 	}
 	if limit > 3 {
-		if err := encodeA5BitsNode4(w, v.A54); err != nil {
+		if err := encodeA5BitsA54(w, v.A54); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeRSupportNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("RSupportNode1"); err != nil {
+func decodeRSupportRGSMBandAssociatedRadioCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("RSupportRGSMBandAssociatedRadioCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5399,8 +4090,8 @@ func decodeRSupportNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("R-GSM band Associated Radio Capability", v)
 	return uint8(v), nil
 }
-func encodeRSupportNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("RSupportNode1"); err != nil {
+func encodeRSupportRGSMBandAssociatedRadioCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("RSupportRGSMBandAssociatedRadioCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5420,7 +4111,7 @@ func decodeRSupport(r *runtime.Reader) (RSupport, error) {
 	}
 	defer r.Leave()
 	var v RSupport
-	x0, err := decodeRSupportNode1(r)
+	x0, err := decodeRSupportRGSMBandAssociatedRadioCapability(r)
 	if err != nil {
 		return RSupport{}, err
 	}
@@ -5440,14 +4131,14 @@ func encodeRSupport(w *runtime.Writer, v RSupport) error {
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeRSupportNode1(w, v.RGSMBandAssociatedRadioCapability); err != nil {
+		if err := encodeRSupportRGSMBandAssociatedRadioCapability(w, v.RGSMBandAssociatedRadioCapability); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeHSCSDMultiSlotCapabilityNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("HSCSDMultiSlotCapabilityNode1"); err != nil {
+func decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("HSCSDMultiSlotCapabilityHSCSDMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5462,8 +4153,8 @@ func decodeHSCSDMultiSlotCapabilityNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("HSCSD Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeHSCSDMultiSlotCapabilityNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("HSCSDMultiSlotCapabilityNode1"); err != nil {
+func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("HSCSDMultiSlotCapabilityHSCSDMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5483,7 +4174,7 @@ func decodeHSCSDMultiSlotCapability(r *runtime.Reader) (HSCSDMultiSlotCapability
 	}
 	defer r.Leave()
 	var v HSCSDMultiSlotCapability
-	x0, err := decodeHSCSDMultiSlotCapabilityNode1(r)
+	x0, err := decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r)
 	if err != nil {
 		return HSCSDMultiSlotCapability{}, err
 	}
@@ -5503,14 +4194,14 @@ func encodeHSCSDMultiSlotCapability(w *runtime.Writer, v HSCSDMultiSlotCapabilit
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeHSCSDMultiSlotCapabilityNode1(w, v.HSCSDMultiSlotClass); err != nil {
+		if err := encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w, v.HSCSDMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeMSMeasurementCapabilityNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("MSMeasurementCapabilityNode1"); err != nil {
+func decodeMSMeasurementCapabilitySMSVALUE(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("MSMeasurementCapabilitySMSVALUE"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5525,8 +4216,8 @@ func decodeMSMeasurementCapabilityNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("SMS_VALUE", v)
 	return uint8(v), nil
 }
-func encodeMSMeasurementCapabilityNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("MSMeasurementCapabilityNode1"); err != nil {
+func encodeMSMeasurementCapabilitySMSVALUE(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("MSMeasurementCapabilitySMSVALUE"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5540,8 +4231,8 @@ func encodeMSMeasurementCapabilityNode1(w *runtime.Writer, v uint8) error {
 	w.Set("SMS_VALUE", uint64(v))
 	return nil
 }
-func decodeMSMeasurementCapabilityNode2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("MSMeasurementCapabilityNode2"); err != nil {
+func decodeMSMeasurementCapabilitySMVALUE(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("MSMeasurementCapabilitySMVALUE"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5556,8 +4247,8 @@ func decodeMSMeasurementCapabilityNode2(r *runtime.Reader) (uint8, error) {
 	r.Set("SM_VALUE", v)
 	return uint8(v), nil
 }
-func encodeMSMeasurementCapabilityNode2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("MSMeasurementCapabilityNode2"); err != nil {
+func encodeMSMeasurementCapabilitySMVALUE(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("MSMeasurementCapabilitySMVALUE"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5577,12 +4268,12 @@ func decodeMSMeasurementCapability(r *runtime.Reader) (MSMeasurementCapability, 
 	}
 	defer r.Leave()
 	var v MSMeasurementCapability
-	x0, err := decodeMSMeasurementCapabilityNode1(r)
+	x0, err := decodeMSMeasurementCapabilitySMSVALUE(r)
 	if err != nil {
 		return MSMeasurementCapability{}, err
 	}
 	v.SMSVALUE = x0
-	x1, err := decodeMSMeasurementCapabilityNode2(r)
+	x1, err := decodeMSMeasurementCapabilitySMVALUE(r)
 	if err != nil {
 		return MSMeasurementCapability{}, err
 	}
@@ -5602,19 +4293,19 @@ func encodeMSMeasurementCapability(w *runtime.Writer, v MSMeasurementCapability)
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeMSMeasurementCapabilityNode1(w, v.SMSVALUE); err != nil {
+		if err := encodeMSMeasurementCapabilitySMSVALUE(w, v.SMSVALUE); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeMSMeasurementCapabilityNode2(w, v.SMVALUE); err != nil {
+		if err := encodeMSMeasurementCapabilitySMVALUE(w, v.SMVALUE); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeMSPositioningMethodCapabilityNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("MSPositioningMethodCapabilityNode1"); err != nil {
+func decodeMSPositioningMethodCapabilityMSPositioningMethod(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("MSPositioningMethodCapabilityMSPositioningMethod"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5629,8 +4320,8 @@ func decodeMSPositioningMethodCapabilityNode1(r *runtime.Reader) (uint8, error) 
 	r.Set("MS Positioning Method", v)
 	return uint8(v), nil
 }
-func encodeMSPositioningMethodCapabilityNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("MSPositioningMethodCapabilityNode1"); err != nil {
+func encodeMSPositioningMethodCapabilityMSPositioningMethod(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("MSPositioningMethodCapabilityMSPositioningMethod"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5650,7 +4341,7 @@ func decodeMSPositioningMethodCapability(r *runtime.Reader) (MSPositioningMethod
 	}
 	defer r.Leave()
 	var v MSPositioningMethodCapability
-	x0, err := decodeMSPositioningMethodCapabilityNode1(r)
+	x0, err := decodeMSPositioningMethodCapabilityMSPositioningMethod(r)
 	if err != nil {
 		return MSPositioningMethodCapability{}, err
 	}
@@ -5670,14 +4361,14 @@ func encodeMSPositioningMethodCapability(w *runtime.Writer, v MSPositioningMetho
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeMSPositioningMethodCapabilityNode1(w, v.MSPositioningMethod); err != nil {
+		if err := encodeMSPositioningMethodCapabilityMSPositioningMethod(w, v.MSPositioningMethod); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeECSDMultiSlotCapabilityNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("ECSDMultiSlotCapabilityNode1"); err != nil {
+func decodeECSDMultiSlotCapabilityECSDMultiSlotClass(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("ECSDMultiSlotCapabilityECSDMultiSlotClass"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5692,8 +4383,8 @@ func decodeECSDMultiSlotCapabilityNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("ECSD Multi Slot Class", v)
 	return uint8(v), nil
 }
-func encodeECSDMultiSlotCapabilityNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("ECSDMultiSlotCapabilityNode1"); err != nil {
+func encodeECSDMultiSlotCapabilityECSDMultiSlotClass(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("ECSDMultiSlotCapabilityECSDMultiSlotClass"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5713,7 +4404,7 @@ func decodeECSDMultiSlotCapability(r *runtime.Reader) (ECSDMultiSlotCapability, 
 	}
 	defer r.Leave()
 	var v ECSDMultiSlotCapability
-	x0, err := decodeECSDMultiSlotCapabilityNode1(r)
+	x0, err := decodeECSDMultiSlotCapabilityECSDMultiSlotClass(r)
 	if err != nil {
 		return ECSDMultiSlotCapability{}, err
 	}
@@ -5733,14 +4424,14 @@ func encodeECSDMultiSlotCapability(w *runtime.Writer, v ECSDMultiSlotCapability)
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeECSDMultiSlotCapabilityNode1(w, v.ECSDMultiSlotClass); err != nil {
+		if err := encodeECSDMultiSlotCapabilityECSDMultiSlotClass(w, v.ECSDMultiSlotClass); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeN8PSKStructNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("N8PSKStructNode1"); err != nil {
+func decodeN8PSKStructModulationCapability(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("N8PSKStructModulationCapability"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5755,8 +4446,8 @@ func decodeN8PSKStructNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("Modulation Capability", v)
 	return uint8(v), nil
 }
-func encodeN8PSKStructNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("N8PSKStructNode1"); err != nil {
+func encodeN8PSKStructModulationCapability(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("N8PSKStructModulationCapability"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5770,24 +4461,8 @@ func encodeN8PSKStructNode1(w *runtime.Writer, v uint8) error {
 	w.Set("Modulation Capability", uint64(v))
 	return nil
 }
-func decodeN8PSKStructNode2Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("N8PSKStructNode2Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeN8PSKStructNode2Alt1(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("0") }
-func decodeN8PSKStructNode2Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("N8PSKStructNode2Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeN8PSKStructNode2Alt2Node1(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("1") }
-func decodeN8PSKStructNode2Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("N8PSKStructNode2Alt2Node2"); err != nil {
+func decodeN8PSKStructN8PSKRFPowerCapability1Value(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("N8PSKStructN8PSKRFPowerCapability1Value"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5802,8 +4477,8 @@ func decodeN8PSKStructNode2Alt2Node2(r *runtime.Reader) (uint8, error) {
 	r.Set("8-PSK RF Power Capability 1", v)
 	return uint8(v), nil
 }
-func encodeN8PSKStructNode2Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("N8PSKStructNode2Alt2Node2"); err != nil {
+func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("N8PSKStructN8PSKRFPowerCapability1Value"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5817,101 +4492,34 @@ func encodeN8PSKStructNode2Alt2Node2(w *runtime.Writer, v uint8) error {
 	w.Set("8-PSK RF Power Capability 1", uint64(v))
 	return nil
 }
-func decodeN8PSKStructNode2Alt2(r *runtime.Reader) (N8PSKStructNode2Alt2, error) {
-	if err := r.Enter("N8PSKStructNode2Alt2"); err != nil {
-		return N8PSKStructNode2Alt2{}, err
+func decodeN8PSKStructN8PSKRFPowerCapability1Selector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v N8PSKStructNode2Alt2
-	x0, err := decodeN8PSKStructNode2Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeN8PSKStructN8PSKRFPowerCapability1Value(candidate)
 	if err != nil {
-		return N8PSKStructNode2Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeN8PSKStructNode2Alt2Node2(r)
-	if err != nil {
-		return N8PSKStructNode2Alt2{}, err
-	}
-	v.N8PSKRFPowerCapability1 = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeN8PSKStructNode2Alt2(w *runtime.Writer, v N8PSKStructNode2Alt2) error {
-	if err := w.Enter("N8PSKStructNode2Alt2"); err != nil {
+func encodeN8PSKStructN8PSKRFPowerCapability1Selector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("N8PSKStructNode2Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeN8PSKStructNode2Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeN8PSKStructNode2Alt2Node2(w, v.N8PSKRFPowerCapability1); err != nil {
-			return err
-		}
-	}
-	return nil
+	return encodeN8PSKStructN8PSKRFPowerCapability1Value(w, *v)
 }
-func decodeN8PSKStructNode2(r *runtime.Reader) (*N8PSKStructNode2Alt2, error) {
-	var result *N8PSKStructNode2Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeN8PSKStructNode2Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeN8PSKStructNode2Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeN8PSKStructNode2(w *runtime.Writer, v *N8PSKStructNode2Alt2) error {
-	if v == nil {
-		return encodeN8PSKStructNode2Alt1(w, struct{}{})
-	}
-	return encodeN8PSKStructNode2Alt2(w, *v)
-}
-func decodeN8PSKStructNode3Alt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("N8PSKStructNode3Alt1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeN8PSKStructNode3Alt1(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("0") }
-func decodeN8PSKStructNode3Alt2Node1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("N8PSKStructNode3Alt2Node1"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
-}
-func encodeN8PSKStructNode3Alt2Node1(w *runtime.Writer, _ struct{}) error { return w.WriteLiteral("1") }
-func decodeN8PSKStructNode3Alt2Node2(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("N8PSKStructNode3Alt2Node2"); err != nil {
+func decodeN8PSKStructN8PSKRFPowerCapability2Value(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("N8PSKStructN8PSKRFPowerCapability2Value"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -5926,8 +4534,8 @@ func decodeN8PSKStructNode3Alt2Node2(r *runtime.Reader) (uint8, error) {
 	r.Set("8-PSK RF Power Capability 2", v)
 	return uint8(v), nil
 }
-func encodeN8PSKStructNode3Alt2Node2(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("N8PSKStructNode3Alt2Node2"); err != nil {
+func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("N8PSKStructN8PSKRFPowerCapability2Value"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -5941,82 +4549,31 @@ func encodeN8PSKStructNode3Alt2Node2(w *runtime.Writer, v uint8) error {
 	w.Set("8-PSK RF Power Capability 2", uint64(v))
 	return nil
 }
-func decodeN8PSKStructNode3Alt2(r *runtime.Reader) (N8PSKStructNode3Alt2, error) {
-	if err := r.Enter("N8PSKStructNode3Alt2"); err != nil {
-		return N8PSKStructNode3Alt2{}, err
+func decodeN8PSKStructN8PSKRFPowerCapability2Selector(r *runtime.Reader) (*uint8, error) {
+	candidate := r.Fork()
+	if err := candidate.Expect("0"); err == nil {
+		r.Commit(candidate)
+		return nil, nil
 	}
-	defer r.Leave()
-	var v N8PSKStructNode3Alt2
-	x0, err := decodeN8PSKStructNode3Alt2Node1(r)
+	candidate = r.Fork()
+	if err := candidate.Expect("1"); err != nil {
+		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	}
+	v, err := decodeN8PSKStructN8PSKRFPowerCapability2Value(candidate)
 	if err != nil {
-		return N8PSKStructNode3Alt2{}, err
+		return nil, err
 	}
-	_ = x0
-	x1, err := decodeN8PSKStructNode3Alt2Node2(r)
-	if err != nil {
-		return N8PSKStructNode3Alt2{}, err
-	}
-	v.N8PSKRFPowerCapability2 = x1
-	return v, nil
+	r.Commit(candidate)
+	return &v, nil
 }
-func encodeN8PSKStructNode3Alt2(w *runtime.Writer, v N8PSKStructNode3Alt2) error {
-	if err := w.Enter("N8PSKStructNode3Alt2"); err != nil {
+func encodeN8PSKStructN8PSKRFPowerCapability2Selector(w *runtime.Writer, v *uint8) error {
+	if v == nil {
+		return w.WriteLiteral("0")
+	}
+	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	defer w.Leave()
-	limit := 2
-	if n, ok := w.Truncation("N8PSKStructNode3Alt2"); ok {
-		if n < 0 || n > limit {
-			return fmt.Errorf("invalid truncation point")
-		}
-		limit = n
-	}
-	if limit > 0 {
-		if err := encodeN8PSKStructNode3Alt2Node1(w, struct{}{}); err != nil {
-			return err
-		}
-	}
-	if limit > 1 {
-		if err := encodeN8PSKStructNode3Alt2Node2(w, v.N8PSKRFPowerCapability2); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-func decodeN8PSKStructNode3(r *runtime.Reader) (*N8PSKStructNode3Alt2, error) {
-	var result *N8PSKStructNode3Alt2
-	matches := 0
-	var chosen *runtime.Reader
-	{
-		candidate := r.Fork()
-		v, err := decodeN8PSKStructNode3Alt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-		}
-	}
-	{
-		candidate := r.Fork()
-		v, err := decodeN8PSKStructNode3Alt2(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result = &v
-		}
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeN8PSKStructNode3(w *runtime.Writer, v *N8PSKStructNode3Alt2) error {
-	if v == nil {
-		return encodeN8PSKStructNode3Alt1(w, struct{}{})
-	}
-	return encodeN8PSKStructNode3Alt2(w, *v)
+	return encodeN8PSKStructN8PSKRFPowerCapability2Value(w, *v)
 }
 func decodeN8PSKStruct(r *runtime.Reader) (N8PSKStruct, error) {
 	if err := r.Enter("N8PSKStruct"); err != nil {
@@ -6024,21 +4581,21 @@ func decodeN8PSKStruct(r *runtime.Reader) (N8PSKStruct, error) {
 	}
 	defer r.Leave()
 	var v N8PSKStruct
-	x0, err := decodeN8PSKStructNode1(r)
+	x0, err := decodeN8PSKStructModulationCapability(r)
 	if err != nil {
 		return N8PSKStruct{}, err
 	}
 	v.ModulationCapability = x0
-	x1, err := decodeN8PSKStructNode2(r)
+	x1, err := decodeN8PSKStructN8PSKRFPowerCapability1Selector(r)
 	if err != nil {
 		return N8PSKStruct{}, err
 	}
-	v.Choice = x1
-	x2, err := decodeN8PSKStructNode3(r)
+	v.N8PSKRFPowerCapability1 = x1
+	x2, err := decodeN8PSKStructN8PSKRFPowerCapability2Selector(r)
 	if err != nil {
 		return N8PSKStruct{}, err
 	}
-	v.Choice2 = x2
+	v.N8PSKRFPowerCapability2 = x2
 	return v, nil
 }
 func encodeN8PSKStruct(w *runtime.Writer, v N8PSKStruct) error {
@@ -6054,24 +4611,24 @@ func encodeN8PSKStruct(w *runtime.Writer, v N8PSKStruct) error {
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeN8PSKStructNode1(w, v.ModulationCapability); err != nil {
+		if err := encodeN8PSKStructModulationCapability(w, v.ModulationCapability); err != nil {
 			return err
 		}
 	}
 	if limit > 1 {
-		if err := encodeN8PSKStructNode2(w, v.Choice); err != nil {
+		if err := encodeN8PSKStructN8PSKRFPowerCapability1Selector(w, v.N8PSKRFPowerCapability1); err != nil {
 			return err
 		}
 	}
 	if limit > 2 {
-		if err := encodeN8PSKStructNode3(w, v.Choice2); err != nil {
+		if err := encodeN8PSKStructN8PSKRFPowerCapability2Selector(w, v.N8PSKRFPowerCapability2); err != nil {
 			return err
 		}
 	}
 	return nil
 }
-func decodeSingleBandSupportNode1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("SingleBandSupportNode1"); err != nil {
+func decodeSingleBandSupportGSMBand(r *runtime.Reader) (uint8, error) {
+	if err := r.Enter("SingleBandSupportGSMBand"); err != nil {
 		return 0, err
 	}
 	defer r.Leave()
@@ -6086,8 +4643,8 @@ func decodeSingleBandSupportNode1(r *runtime.Reader) (uint8, error) {
 	r.Set("GSM Band", v)
 	return uint8(v), nil
 }
-func encodeSingleBandSupportNode1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("SingleBandSupportNode1"); err != nil {
+func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
+	if err := w.Enter("SingleBandSupportGSMBand"); err != nil {
 		return err
 	}
 	defer w.Leave()
@@ -6107,7 +4664,7 @@ func decodeSingleBandSupport(r *runtime.Reader) (SingleBandSupport, error) {
 	}
 	defer r.Leave()
 	var v SingleBandSupport
-	x0, err := decodeSingleBandSupportNode1(r)
+	x0, err := decodeSingleBandSupportGSMBand(r)
 	if err != nil {
 		return SingleBandSupport{}, err
 	}
@@ -6127,7 +4684,7 @@ func encodeSingleBandSupport(w *runtime.Writer, v SingleBandSupport) error {
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeSingleBandSupportNode1(w, v.GSMBand); err != nil {
+		if err := encodeSingleBandSupportGSMBand(w, v.GSMBand); err != nil {
 			return err
 		}
 	}
