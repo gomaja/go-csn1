@@ -38,9 +38,9 @@ Packages marked **[compiled]** contain generated Go bindings. Planned packages a
 | `ts24008/msrac` | TS 24.008 V20.1.0 §10.5.5.12a | MS RA capability value part | **[compiled]** |
 | `ts36331/uecapability` | TS 36.331 V19.4.0, UE-CapabilityRAT-ContainerList field descriptions; TS 24.008 V20.1.0 §10.5.1.6 | `geran-cs` and `geran-ps` containers, including Classmark 2 | **[compiled]** |
 | `ts24008/msnetcap` | TS 24.008 V20.1.0 §10.5.5.12 | MS Network Capability value part | planned |
-| `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.16–18, .25, .32–35, .37a, .37e–f, .37j–o, .44, .71 | IA, IAR, IAX, P3, SI1, SI2bis, SI2ter, SI2n, SI3, SI4, SI9, SI10, SI10ter, SI13alt, SI14–17 and SI21–23 with local definitions | **[compiled]** |
+| `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.16–18, .25, .32–35a, .37a, .37e–f, .37j–o, .44, .71 | IA, IAR, IAX, P3, SI1, SI2bis, SI2ter, SI2n, SI3, SI4, SI6, SI9, SI10, SI10ter, SI13alt, SI14–17 and SI21–23 with local definitions | **[compiled]** |
 | `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.36–37, .37g–i | Named SI7, SI8, SI18, SI19 and SI20 entry points | **[fail closed]** |
-| `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.22c–24, .33b, .35a, .37b, .70, .78 | NT/N, P1, P2, SI2quater, SI6, SI13, SI10bis and IPA rest octets | extracted, not compiled |
+| `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.22c–24, .33b, .37b, .70, .78 | NT/N, P1, P2, SI2quater, SI13, SI10bis and IPA rest octets | extracted, not compiled |
 | `ts44018/emr` | TS 44.018 V19.0.0 §9.1.55 | Enhanced Measurement Report body | planned |
 | `ts44060/ies` | TS 44.060 V19.0.0 §§12.5.2, 12.8, 12.10a, 12.10d, 12.10f, 12.12, 12.33, 12.57, 12.59 | Fifteen dependency definitions used by IA, SI13alt and SI23 | **[compiled]** |
 | `ts44060/rlcmac` | TS 44.060 V19.0.0 §11 | RLC/MAC control messages | planned |

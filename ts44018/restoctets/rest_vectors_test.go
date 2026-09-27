@@ -25,6 +25,7 @@ func TestOtherRestOctetNamedVectors(t *testing.T) {
 		{"10.5.2.33c", "SI2n Rest Octets", 20, 0x2b, false},
 		{"10.5.2.34", "SI3 Rest Octet", 4, 0x2b, false},
 		{"10.5.2.35", "SI4 Rest Octets", 1, 0x2b, true},
+		{"10.5.2.35a", "SI6 rest octets", 7, 0x2b, false},
 		{"10.5.2.37a", "SI9 rest octets", 17, 0x2b, false},
 		{"10.5.2.37e", "SI16 Rest Octets", 20, 0x2b, false},
 		{"10.5.2.37f", "SI17 Rest Octets", 20, 0x2b, false},
