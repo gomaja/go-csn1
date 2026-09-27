@@ -93,7 +93,7 @@ func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
 	second := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
 		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
 		Length: &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 15, Length: 21, Content: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies{
-			Items: []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry{
+			AdditionalAccessTechnologiesList: []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry{
 				{AdditionalAccessTechnologies: AdditionalAccessTechnologiesStruct{AccessTechnologyType: 3, GMSKPowerClass: 1, N8PSKPowerClass: 2}},
 				{AdditionalAccessTechnologies: AdditionalAccessTechnologiesStruct{AccessTechnologyType: 7, GMSKPowerClass: 4, N8PSKPowerClass: 2}},
 			},
@@ -110,7 +110,7 @@ func TestMixedAccessTechnologiesAndAdditionalList(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := decoded.Value.MSRACapabilityValuePartStruct.Entries
-	if len(got) != 2 || got[1].AccessTechnologyTypeChoice.Length == nil || len(got[1].AccessTechnologyTypeChoice.Length.Content.Items) != 2 {
+	if len(got) != 2 || got[1].AccessTechnologyTypeChoice.Length == nil || len(got[1].AccessTechnologyTypeChoice.Length.Content.AdditionalAccessTechnologiesList) != 2 {
 		t.Fatalf("access technology structure: %+v", got)
 	}
 	reencoded, err := EncodeMSRACapabilityValuePart(decoded.Value)

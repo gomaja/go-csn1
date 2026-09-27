@@ -22,7 +22,7 @@ func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 		}},
 		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1, AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{
 			MultibandSupported: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010, Alt010: &struct{}{}},
-			A5Bits:             A5Bits{A56: 1}, Items: make([]runtime.BitString, 4), AssociatedRadioCapability1: 4,
+			A5Bits:             A5Bits{A56: 1}, SpareBitList: make([]runtime.BitString, 4), AssociatedRadioCapability1: 4,
 		}},
 	}
 	for i, choice := range branches {
@@ -209,7 +209,7 @@ func TestClassmark3MultibandSubchoices(t *testing.T) {
 			band.Alt100 = &struct{}{}
 		}
 		v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1,
-			AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{MultibandSupported: band, Items: make([]runtime.BitString, 4)}}}
+			AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{MultibandSupported: band, SpareBitList: make([]runtime.BitString, 4)}}}
 		encoded, err := EncodeClassmark3ValuePart(v)
 		if err != nil {
 			t.Fatal(err)

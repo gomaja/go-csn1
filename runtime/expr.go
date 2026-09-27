@@ -15,6 +15,14 @@ type expression struct {
 	vars     map[string]uint64
 }
 
+// TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
+// define the FDD p(n) and TDD q(m) cell-information bit widths.
+// Both tables set the remaining five-bit count values to zero.
+var cellInformationWidths = map[string][]int64{
+	"p": {0, 10, 19, 28, 36, 44, 52, 60, 67, 74, 81, 88, 95, 102, 109, 116, 122},
+	"q": {0, 9, 17, 25, 32, 39, 46, 53, 59, 65, 71, 77, 83, 89, 95, 101, 106, 111, 116, 121, 126},
+}
+
 func eval(raw string, vars map[string]uint64) (int, error) {
 	var tokens []string
 	for i := 0; i < len(raw); {
@@ -141,6 +149,25 @@ func (p *expression) primary() (int64, error) {
 			return 0, fmt.Errorf("unclosed val")
 		}
 		return n, nil
+	}
+	if table, ok := cellInformationWidths[t]; ok {
+		if p.take() != "(" {
+			return 0, fmt.Errorf("%s needs (", t)
+		}
+		index, err := p.sum()
+		if err != nil {
+			return 0, err
+		}
+		if p.take() != ")" {
+			return 0, fmt.Errorf("unclosed %s", t)
+		}
+		if index < 0 || index > 31 {
+			return 0, fmt.Errorf("%s index outside 0..31", t)
+		}
+		if index >= int64(len(table)) {
+			return 0, nil
+		}
+		return table[index], nil
 	}
 	if t == "-" {
 		n, err := p.primary()

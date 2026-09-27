@@ -19,7 +19,7 @@ type MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditio
 	AdditionalAccessTechnologies AdditionalAccessTechnologiesStruct
 }
 type MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies struct {
-	Items []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry
+	AdditionalAccessTechnologiesList []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry
 }
 type MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength struct {
 	AccessTechnologyType uint8
@@ -549,7 +549,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	if err != nil {
 		return MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies{}, err
 	}
-	v.Items = x0
+	v.AdditionalAccessTechnologiesList = x0
 	x1, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList(r)
 	if err != nil {
 		return MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies{}, err
@@ -570,7 +570,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 		limit = n
 	}
 	if limit > 0 {
-		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList(w, v.Items); err != nil {
+		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList(w, v.AdditionalAccessTechnologiesList); err != nil {
 			return err
 		}
 	}

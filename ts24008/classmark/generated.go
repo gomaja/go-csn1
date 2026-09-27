@@ -47,7 +47,7 @@ type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1Multib
 type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1 struct {
 	MultibandSupported         Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	A5Bits                     A5Bits
-	Items                      []runtime.BitString
+	SpareBitList               []runtime.BitString
 	AssociatedRadioCapability1 uint8
 }
 type Classmark3ValuePartMultibandSupportedChoiceAlternative uint8
@@ -679,7 +679,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	if err != nil {
 		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
-	v.Items = x2
+	v.SpareBitList = x2
 	x3, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(r)
 	if err != nil {
 		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
@@ -710,7 +710,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w, v.Items); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w, v.SpareBitList); err != nil {
 			return err
 		}
 	}

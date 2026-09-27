@@ -221,6 +221,23 @@ func (r *Reader) ReadPadding() BitString {
 	r.wire.Padding = append(r.wire.Padding, value)
 	return value
 }
+
+// ReadIgnored retains a nonsemantic "no string" extension arm. TS 44.018
+// V19.0.0 §9.1.55 and TS 44.060 V19.0.0 §12.24 print this construct;
+// pycrate_csn1/csnobj.py consumes the remaining bits in its bounded scope.
+func (r *Reader) ReadIgnored() BitString { return r.ReadPadding() }
+
+// ReadIgnoredFixed retains the exact nonsemantic bit in wire state while
+// leaving later fields available. TS 44.018 V19.0.0 §10.5.2.33b uses a
+// one-bit "no string" release field; pycrate consumes one bit here.
+func (r *Reader) ReadIgnoredFixed(width int) (BitString, error) {
+	value, err := r.ReadBitString(width)
+	if err != nil {
+		return BitString{}, err
+	}
+	r.wire.Padding = append(r.wire.Padding, value)
+	return value, nil
+}
 func (r *Reader) PushLimit(width int) (int, error) {
 	if width < 0 || width > r.Remaining() {
 		return 0, r.fail(Truncated, "length exceeds enclosing input")
@@ -360,6 +377,33 @@ func (w *Writer) WritePadding() error {
 		}
 	}
 	return nil
+}
+
+// WriteIgnored emits exactly the received or supplied fallback bits, without
+// adding L/H spare padding inside a length-delimited extension.
+func (w *Writer) WriteIgnored(value BitString) error {
+	if w.padding < len(w.wire.Padding) {
+		stored := w.wire.Padding[w.padding]
+		w.padding++
+		if value.BitLength == 0 {
+			value = stored
+		}
+	}
+	return w.WriteBitString(value, value.BitLength)
+}
+
+// WriteIgnoredFixed re-emits a received ignored field or a zero-valued
+// field for a newly constructed value (TS 44.018 V19.0.0 §10.5.2.33b).
+func (w *Writer) WriteIgnoredFixed(width int) error {
+	if width < 0 || width > 64 {
+		return fmt.Errorf("ignored field width outside 0..64 at %s", w.path)
+	}
+	if w.padding < len(w.wire.Padding) {
+		value := w.wire.Padding[w.padding]
+		w.padding++
+		return w.WriteBitString(value, width)
+	}
+	return w.WriteUint(0, width)
 }
 func (w *Writer) Finish(tail BitString) ([]byte, error) {
 	if tail.BitLength > 0 {

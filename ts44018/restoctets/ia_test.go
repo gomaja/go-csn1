@@ -107,7 +107,7 @@ func TestIAStructuralVectors(t *testing.T) {
 func TestIARAndIAXRestOctets(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.17 fixes IAR at three octets;
 	// §10.5.2.18 permits an absent IAX IE with zero length.
-	if _, err := DecodeIARRestOctets(nil); err == nil || errors.Is(err, runtime.ErrEmptyValue) {
+	if _, err := DecodeIARRestOctets(nil); !errors.Is(err, runtime.ErrEmptyValue) {
 		t.Fatalf("IAR empty input: %v", err)
 	}
 	if _, err := DecodeIAXRestOctets(nil); !errors.Is(err, runtime.ErrEmptyValue) {
@@ -166,7 +166,7 @@ func FuzzIADefinitions(f *testing.F) {
 	for _, seed := range [][]byte{{}, {0x00}, {0x20}, {0x0b}, {0x0b, 0x2b, 0x2b}, {0x50, 0x00, 0x00, 0x0b}, {0x50, 0, 0, 0x80, 0, 0, 0x09}, {0x50, 0, 0, 0xc0, 0, 0, 0, 0x20, 0x0b}, {0x40, 0x20, 0, 0, 0, 0x09}, {0x80, 0x00}, {0x82, 0x00, 0x00, 0x00}, {0xd0, 0, 0, 0, 0, 0, 0x0b}, {0xe8, 0x2b}, {0xff}} {
 		f.Add(seed)
 	}
-	for _, length := range []int{1, 3, 4, 7, 16, 17, 20} {
+	for _, length := range []int{1, 3, 4, 7, 11, 16, 17, 20} {
 		f.Add(bytes.Repeat([]byte{0x2b}, length))
 	}
 	f.Fuzz(func(t *testing.T, data []byte) {
