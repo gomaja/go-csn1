@@ -1,6 +1,27 @@
 package runtime
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
+
+func TestEvalRejectsWidthOverflow(t *testing.T) {
+	for _, tc := range []struct {
+		expr string
+		vars map[string]uint64
+	}{
+		{"val(Length)", map[string]uint64{"length": 1 << 63}},
+		{"2*val(Length)", map[string]uint64{"length": 1 << 63}},
+		{"val(Length)-1", map[string]uint64{"length": math.MaxUint64}},
+		{"val(Length)*val(Length)", map[string]uint64{"length": math.MaxUint64}},
+		{"1048576*1048576", nil},
+		{"1048576+1", nil},
+	} {
+		if got, err := eval(tc.expr, tc.vars); err == nil {
+			t.Errorf("eval(%q) accepted %d", tc.expr, got)
+		}
+	}
+}
 
 func TestSI2quaterCellInformationWidths(t *testing.T) {
 	// TS 44.018 V19.0.0 §9.1.54 table 9.1.54.1a/b gives p(n), q(m).

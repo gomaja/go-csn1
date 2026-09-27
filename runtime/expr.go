@@ -85,8 +85,14 @@ func (p *expression) sum() (int64, error) {
 			return 0, err
 		}
 		if op == "+" {
+			if n > maxBits-v || n < -maxBits-v {
+				return 0, fmt.Errorf("expression result outside limits")
+			}
 			n += v
 		} else {
+			if n > maxBits+v || n < -maxBits+v {
+				return 0, fmt.Errorf("expression result outside limits")
+			}
 			n -= v
 		}
 		if n < -maxBits || n > maxBits {
@@ -101,13 +107,21 @@ func (p *expression) product() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
+	if n < -maxBits || n > maxBits {
+		return 0, fmt.Errorf("expression operand outside limits")
+	}
 	for p.peek() == "*" || p.peek() == "/" {
 		op := p.take()
 		v, err := p.primary()
 		if err != nil {
 			return 0, err
 		}
+		if v < -maxBits || v > maxBits {
+			return 0, fmt.Errorf("expression operand outside limits")
+		}
 		if op == "*" {
+			// Operands are bounded to +/-maxBits before this operation;
+			// maxBits² fits in int64. Reject the product at each step.
 			n *= v
 		} else {
 			if v == 0 {
@@ -204,6 +218,9 @@ func (p *expression) primary() (int64, error) {
 	}
 	if found {
 		p.position = last
+		if value > maxBits {
+			return 0, fmt.Errorf("width variable %q outside 0..%d", t, maxBits)
+		}
 		return int64(value), nil
 	}
 	return 0, fmt.Errorf("unresolved width variable %q", t)
