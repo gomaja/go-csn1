@@ -5943,81 +5943,97 @@ func EncodeDLMCCapabilityStruct(v DLMCCapabilityStruct) ([]byte, error) {
 func Definitions() []string {
 	return []string{"MS RA capability value part", "MS RA capability value part struct", "Additional access technologies struct", "Access capabilities struct", "Content", "Multislot capability struct", "A5 bits", "Enhanced Flexible Timeslot Assignment struct", "DLMC Capability struct"}
 }
-func Lookup(name string) (runtime.Descriptor, error) {
-	switch name {
-	case "MS RA capability value part":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePart(data) }, Encode: func(value any) ([]byte, error) {
+func Descriptors() []runtime.Descriptor {
+	return []runtime.Descriptor{
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePart(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(MSRACapabilityValuePart)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for MSRACapabilityValuePart")
 			}
 			return EncodeMSRACapabilityValuePart(v)
-		}}, nil
-	case "MS RA capability value part struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePartStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePartStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(MSRACapabilityValuePartStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for MSRACapabilityValuePartStruct")
 			}
 			return EncodeMSRACapabilityValuePartStruct(v)
-		}}, nil
-	case "Additional access technologies struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(AdditionalAccessTechnologiesStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for AdditionalAccessTechnologiesStruct")
 			}
 			return EncodeAdditionalAccessTechnologiesStruct(v)
-		}}, nil
-	case "Access capabilities struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", Decode: func(data []byte) (any, error) { return DecodeAccessCapabilitiesStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", Decode: func(data []byte) (any, error) { return DecodeAccessCapabilitiesStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(AccessCapabilitiesStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for AccessCapabilitiesStruct")
 			}
 			return EncodeAccessCapabilitiesStruct(v)
-		}}, nil
-	case "Content":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", Decode: func(data []byte) (any, error) { return DecodeContent(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", Decode: func(data []byte) (any, error) { return DecodeContent(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(Content)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for Content")
 			}
 			return EncodeContent(v)
-		}}, nil
-	case "Multislot capability struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(MultislotCapabilityStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for MultislotCapabilityStruct")
 			}
 			return EncodeMultislotCapabilityStruct(v)
-		}}, nil
-	case "A5 bits":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(A5Bits)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for A5Bits")
 			}
 			return EncodeA5Bits(v)
-		}}, nil
-	case "Enhanced Flexible Timeslot Assignment struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(EnhancedFlexibleTimeslotAssignmentStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for EnhancedFlexibleTimeslotAssignmentStruct")
 			}
 			return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v)
-		}}, nil
-	case "DLMC Capability struct":
-		return runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(DLMCCapabilityStruct)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for DLMCCapabilityStruct")
 			}
 			return EncodeDLMCCapabilityStruct(v)
-		}}, nil
-	default:
+		}},
+	}
+}
+func Lookup(name string) (runtime.Descriptor, error) {
+	var matches []runtime.Descriptor
+	for _, d := range Descriptors() {
+		if d.Name == name {
+			matches = append(matches, d)
+		}
+	}
+	if len(matches) == 1 {
+		return matches[0], nil
+	}
+	if len(matches) == 0 {
 		return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q", name)
 	}
+	var clauses []string
+	for _, d := range matches {
+		clauses = append(clauses, d.Clause)
+	}
+	return runtime.Descriptor{}, fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses)
+}
+func LookupClause(clause, name string) (runtime.Descriptor, error) {
+	for _, d := range Descriptors() {
+		if d.Clause == clause && d.Name == name {
+			return d, nil
+		}
+	}
+	return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause)
 }

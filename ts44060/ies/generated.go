@@ -997,49 +997,69 @@ func EncodeTMGIIE(v TMGIIE) ([]byte, error) {
 func Definitions() []string {
 	return []string{"EGPRS Window Size IE", "EGPRS Modulation and Coding IE", "EGPRS Level IE", "Packet Timing Advance IE", "TMGI IE"}
 }
-func Lookup(name string) (runtime.Descriptor, error) {
-	switch name {
-	case "EGPRS Window Size IE":
-		return runtime.Descriptor{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, Encode: func(value any) ([]byte, error) {
+func Descriptors() []runtime.Descriptor {
+	return []runtime.Descriptor{
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(EGPRSWindowSizeIE)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for EGPRSWindowSizeIE")
 			}
 			return EncodeEGPRSWindowSizeIE(v)
-		}}, nil
-	case "EGPRS Modulation and Coding IE":
-		return runtime.Descriptor{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(EGPRSModulationAndCodingIE)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for EGPRSModulationAndCodingIE")
 			}
 			return EncodeEGPRSModulationAndCodingIE(v)
-		}}, nil
-	case "EGPRS Level IE":
-		return runtime.Descriptor{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(EGPRSLevelIE)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for EGPRSLevelIE")
 			}
 			return EncodeEGPRSLevelIE(v)
-		}}, nil
-	case "Packet Timing Advance IE":
-		return runtime.Descriptor{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(PacketTimingAdvanceIE)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for PacketTimingAdvanceIE")
 			}
 			return EncodePacketTimingAdvanceIE(v)
-		}}, nil
-	case "TMGI IE":
-		return runtime.Descriptor{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, Encode: func(value any) ([]byte, error) {
+		}},
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, Encode: func(value any) ([]byte, error) {
 			v, ok := value.(TMGIIE)
 			if !ok {
 				return nil, fmt.Errorf("wrong value type for TMGIIE")
 			}
 			return EncodeTMGIIE(v)
-		}}, nil
-	default:
+		}},
+	}
+}
+func Lookup(name string) (runtime.Descriptor, error) {
+	var matches []runtime.Descriptor
+	for _, d := range Descriptors() {
+		if d.Name == name {
+			matches = append(matches, d)
+		}
+	}
+	if len(matches) == 1 {
+		return matches[0], nil
+	}
+	if len(matches) == 0 {
 		return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q", name)
 	}
+	var clauses []string
+	for _, d := range matches {
+		clauses = append(clauses, d.Clause)
+	}
+	return runtime.Descriptor{}, fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses)
+}
+func LookupClause(clause, name string) (runtime.Descriptor, error) {
+	for _, d := range Descriptors() {
+		if d.Clause == clause && d.Name == name {
+			return d, nil
+		}
+	}
+	return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause)
 }

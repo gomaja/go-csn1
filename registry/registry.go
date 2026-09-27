@@ -16,22 +16,10 @@ import (
 
 func descriptors() []runtime.Descriptor {
 	out := make([]runtime.Descriptor, 0, len(classmark.Definitions())+len(msrac.Definitions())+len(restoctets.Definitions())+len(ies.Definitions())+3)
-	for _, name := range classmark.Definitions() {
-		d, _ := classmark.Lookup(name)
-		out = append(out, d)
-	}
-	for _, name := range msrac.Definitions() {
-		d, _ := msrac.Lookup(name)
-		out = append(out, d)
-	}
-	for _, name := range restoctets.Definitions() {
-		d, _ := restoctets.Lookup(name)
-		out = append(out, d)
-	}
-	for _, name := range ies.Definitions() {
-		d, _ := ies.Lookup(name)
-		out = append(out, d)
-	}
+	out = append(out, classmark.Descriptors()...)
+	out = append(out, msrac.Descriptors()...)
+	out = append(out, restoctets.Descriptors()...)
+	out = append(out, ies.Descriptors()...)
 	out = append(out,
 		runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Name: "Mobile Station Classmark 2 value part",
 			Decode: func(b []byte) (any, error) { return uecapability.DecodeClassmark2ValuePart(b) },

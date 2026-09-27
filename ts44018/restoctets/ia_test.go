@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
@@ -103,16 +104,70 @@ func TestIAStructuralVectors(t *testing.T) {
 	}
 }
 
+func TestIARAndIAXRestOctets(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.17 fixes IAR at three octets;
+	// §10.5.2.18 permits an absent IAX IE with zero length.
+	if _, err := DecodeIARRestOctets(nil); err == nil || errors.Is(err, runtime.ErrEmptyValue) {
+		t.Fatalf("IAR empty input: %v", err)
+	}
+	if _, err := DecodeIAXRestOctets(nil); !errors.Is(err, runtime.ErrEmptyValue) {
+		t.Fatalf("IAX empty input: %v", err)
+	}
+	if _, err := DecodeIARRestOctets([]byte{0x0b, 0x2b, 0x2b, 0x2b}); err == nil {
+		t.Fatal("four-octet IAR value accepted")
+	}
+	if _, err := DecodeIAXRestOctets([]byte{0x0b, 0x2b, 0x2b, 0x2b, 0x2b}); err == nil {
+		t.Fatal("five-octet IAX value accepted")
+	}
+	for _, tc := range []struct {
+		name string
+		wire []byte
+	}{
+		{"IAR Rest Octets", []byte{0x0b, 0x2b, 0x2b}},
+		{"IAX Rest Octets", []byte{0x0b}},
+		{"IAX Rest Octets", []byte{0x0b, 0x2b, 0x2b, 0x2b}},
+	} {
+		definition, err := Lookup(tc.name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		decoded, err := definition.Decode(tc.wire)
+		if err != nil {
+			t.Fatal(err)
+		}
+		value := reflect.ValueOf(decoded)
+		if value.FieldByName("BitsConsumed").Int() != int64(len(tc.wire)*8) {
+			t.Fatalf("%s consumed wrong length", tc.name)
+		}
+		encoded, err := definition.Encode(value.FieldByName("Value").Interface())
+		if err != nil || !bytes.Equal(encoded, tc.wire) {
+			t.Fatalf("%s round trip %x -> %x: %v", tc.name, tc.wire, encoded, err)
+		}
+	}
+	if _, err := Lookup("PEO IMM Cell Group Details struct"); err == nil || !strings.Contains(err.Error(), "10.5.2.16") || !strings.Contains(err.Error(), "10.5.2.17") || !strings.Contains(err.Error(), "10.5.2.18") {
+		t.Fatalf("duplicate clause lookup: %v", err)
+	}
+	for _, clause := range []string{"10.5.2.16", "10.5.2.17", "10.5.2.18"} {
+		if _, err := LookupClause(clause, "PEO IMM Cell Group Details struct"); err != nil {
+			t.Fatal(err)
+		}
+	}
+	iar, err := DecodeIARRestOctets([]byte{0x0b, 0x2b, 0x2b})
+	if err != nil || iar.Value.ExtendedRA1 != nil || iar.Value.ExtendedRA2 != nil || iar.Value.ExtendedRA3 != nil || iar.Value.ExtendedRA4 != nil || iar.Value.RCCChoice.AltL == nil {
+		t.Fatalf("IAR field paths: %+v, %v", iar.Value, err)
+	}
+	iax, err := DecodeIAXRestOctets([]byte{0x0b, 0x2b, 0x2b, 0x2b})
+	if err != nil || iax.Value.CompressedInterRATHOINFOIND != 0 || iax.Value.RCCChoice.AltL == nil {
+		t.Fatalf("IAX field paths: %+v, %v", iax.Value, err)
+	}
+}
+
 func FuzzIADefinitions(f *testing.F) {
-	for _, seed := range [][]byte{{}, {0x00}, {0x20}, {0x50, 0x00, 0x00, 0x0b}, {0x50, 0, 0, 0x80, 0, 0, 0x09}, {0x50, 0, 0, 0xc0, 0, 0, 0, 0x20, 0x0b}, {0x40, 0x20, 0, 0, 0, 0x09}, {0x80, 0x00}, {0x82, 0x00, 0x00, 0x00}, {0xd0, 0, 0, 0, 0, 0, 0x0b}, {0xe8, 0x2b}, {0xff}} {
+	for _, seed := range [][]byte{{}, {0x00}, {0x20}, {0x0b}, {0x0b, 0x2b, 0x2b}, {0x50, 0x00, 0x00, 0x0b}, {0x50, 0, 0, 0x80, 0, 0, 0x09}, {0x50, 0, 0, 0xc0, 0, 0, 0, 0x20, 0x0b}, {0x40, 0x20, 0, 0, 0, 0x09}, {0x80, 0x00}, {0x82, 0x00, 0x00, 0x00}, {0xd0, 0, 0, 0, 0, 0, 0x0b}, {0xe8, 0x2b}, {0xff}} {
 		f.Add(seed)
 	}
 	f.Fuzz(func(t *testing.T, data []byte) {
-		for _, name := range Definitions() {
-			definition, err := Lookup(name)
-			if err != nil {
-				t.Fatal(err)
-			}
+		for _, definition := range Descriptors() {
 			decoded, err := definition.Decode(data)
 			if err != nil {
 				continue
@@ -120,7 +175,7 @@ func FuzzIADefinitions(f *testing.F) {
 			value := reflect.ValueOf(decoded).FieldByName("Value").Interface()
 			encoded, err := definition.Encode(value)
 			if err != nil || !bytes.Equal(encoded, data) {
-				t.Fatalf("%s round trip %x -> %x: %v", name, data, encoded, err)
+				t.Fatalf("%s §%s round trip %x -> %x: %v", definition.Name, definition.Clause, data, encoded, err)
 			}
 		}
 	})

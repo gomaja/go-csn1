@@ -23,11 +23,16 @@ func TestClauseQualifiedLookup(t *testing.T) {
 	}
 	for _, tc := range []struct{ standard, clause, name string }{
 		{"TS 44.018", "10.5.2.16", "IA Rest Octets"},
+		{"TS 44.018", "10.5.2.17", "IAR Rest Octets"},
+		{"TS 44.018", "10.5.2.18", "IAX Rest Octets"},
 		{"TS 44.060", "12.5.2", "EGPRS Window Size IE"},
 		{"TS 44.060", "12.12", "Packet Timing Advance IE"},
 	} {
 		if _, err := LookupClause(tc.standard, tc.clause, tc.name); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if _, err := Lookup("TS 44.018", "PEO IMM Cell Group Details struct"); err == nil || !strings.Contains(err.Error(), "10.5.2.18") {
+		t.Fatalf("clause ambiguity was lost: %v", err)
 	}
 }
