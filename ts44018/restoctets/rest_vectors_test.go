@@ -479,8 +479,8 @@ func TestSI18AndSI20ZeroLengthTerminator(t *testing.T) {
 
 func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.37g tables 10.5.2.37g.1–2:
-	// printed repeat uses the raw 4-bit count, while the exposed count and
-	// frequency difference width have table interpretations 1..16, 1..8.
+	// Printed repeat and exposed count use the raw 4-bit count; the frequency
+	// difference width has the table interpretation 1..8.
 	cell := COMPACTCellSelectionStruct{BCCChoice: COMPACTCellSelectionStructBCCChoice{
 		Alternative: COMPACTCellSelectionStructBCCChoiceAlternativeBCC,
 		BCC:         &COMPACTCellSelectionStructBCCChoiceBCC{},
@@ -488,7 +488,7 @@ func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 	v := SI19RestOctets{COMPACTNeighbourCellParameters: COMPACTNeighbourCellParamsStruct{
 		STARTFREQUENCYGroupList: []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry{{
 			STARTFREQUENCY: 1, COMPACTCellSelectionParams: cell,
-			NROFREMAININGCELLS: 1, FREQDIFFLENGTH: 1,
+			NROFREMAININGCELLS: 0, FREQDIFFLENGTH: 1,
 		}},
 	}}
 	wire, err := EncodeSI19RestOctets(v)
@@ -500,22 +500,18 @@ func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 		t.Fatal(err)
 	}
 	groups := decoded.Value.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList
-	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 1 || groups[0].FREQDIFFLENGTH != 1 || len(groups[0].FREQUENCYDIFFGroupList) != 0 {
+	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 0 || groups[0].FREQDIFFLENGTH != 1 || len(groups[0].FREQUENCYDIFFGroupList) != 0 {
 		t.Fatalf("interpreted count/width: %+v", groups)
 	}
 	again, err := EncodeSI19RestOctets(decoded.Value)
 	if err != nil || !bytes.Equal(again, wire) {
 		t.Fatalf("round trip %x: %v", again, err)
 	}
-	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 0
-	if _, err := EncodeSI19RestOctets(v); err == nil {
-		t.Fatal("accepted count below range")
-	}
-	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 17
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 16
 	if _, err := EncodeSI19RestOctets(v); err == nil {
 		t.Fatal("accepted count above range")
 	}
-	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 2
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 1
 	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].FREQDIFFLENGTH = 2
 	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].FREQUENCYDIFFGroupList = []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry{{
 		FREQUENCYDIFF: runtime.BitString{Bytes: []byte{0x80}, BitLength: 2}, COMPACTCellSelectionStruct: cell,
@@ -529,7 +525,7 @@ func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
 		t.Fatal(err)
 	}
 	groups = decoded.Value.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList
-	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 2 || groups[0].FREQDIFFLENGTH != 2 || len(groups[0].FREQUENCYDIFFGroupList) != 1 || groups[0].FREQUENCYDIFFGroupList[0].FREQUENCYDIFF.BitLength != 2 {
+	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 1 || groups[0].FREQDIFFLENGTH != 2 || len(groups[0].FREQUENCYDIFFGroupList) != 1 || groups[0].FREQUENCYDIFFGroupList[0].FREQUENCYDIFF.BitLength != 2 {
 		t.Fatalf("one repeated cell: %+v", groups)
 	}
 }

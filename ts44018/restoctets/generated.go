@@ -53384,10 +53384,6 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryNROFREMAI
 		return 0, err
 	}
 	r.Set("NR_OF_REMAINING_CELLS", v)
-	if v > ^uint64(0)-1 {
-		return 0, r.Error(runtime.InvalidValue, "interpreted field overflows")
-	}
-	v += 1
 	return uint8(v), nil
 }
 func encodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryNROFREMAININGCELLS(w *runtime.Writer, v uint8) error {
@@ -53399,14 +53395,10 @@ func encodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryNROFREMAI
 	if err != nil {
 		return err
 	}
-	if uint64(v) < 1 {
-		return fmt.Errorf("interpreted field below 1")
-	}
-	raw := uint64(v) - 1
-	if err := w.WriteUint(raw, width); err != nil {
+	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NR_OF_REMAINING_CELLS", raw)
+	w.Set("NR_OF_REMAINING_CELLS", uint64(v))
 	return nil
 }
 func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQDIFFLENGTH(r *runtime.Reader) (uint8, error) {
