@@ -1,9 +1,8 @@
 package runtime
 
 import (
-	"crypto/sha256"
-	"encoding/json"
 	"fmt"
+	"reflect"
 )
 
 // WireInfo retains non-semantic received bits and the actual truncation point.
@@ -11,45 +10,37 @@ import (
 // implicit zero extension; TS 24.007 V20.0.0 Annex B §B.1.2.2 and
 // TS 44.060 V19.0.0 §11 define the octet-aligned 0x2b L/H pattern.
 type WireInfo struct {
-	Original      []byte
-	BitsConsumed  int
-	Tail          BitString
-	Spare         []BitString
-	Padding       []BitString
-	Terminal      []BitString
-	TruncatedAt   map[string]int
-	SpareCounts   map[string][]int
-	ImplicitZeros int
-	valueChecksum [sha256.Size]byte
-	rawChecksum   [sha256.Size]byte
+	BitsConsumed    int
+	TransmittedBits int
+	Tail            BitString
+	Spare           []BitString
+	Padding         []BitString
+	Terminal        []BitString
+	TruncatedAt     map[string]int
+	SpareCounts     map[string][]int
+	ImplicitZeros   int
+	ImplicitSpans   []ImplicitSpan
+	sealed          bool
 }
 
-// Seal records a received value after all of its typed fields are populated.
-// Generated codecs can replay an unchanged value exactly; edited and newly
-// constructed values take the generated encoder path.
-func Seal[T any](value T, raw []byte, consumed int, tail BitString, wire WireInfo) WireInfo {
-	wire.Original = make([]byte, len(raw))
-	copy(wire.Original, raw)
+// ImplicitSpan records a receiver-inferred zero run in logical bit order.
+// TS 24.008 V20.1.0 §§10.5.1.7, 10.5.5.12a allow zero extension without
+// transmission, including within a bounded capability before later bits.
+type ImplicitSpan struct{ At, Count int }
+
+// IsZero reports whether a field omitted by a transmitted truncation remains
+// unedited. TS 44.018 V19.0.0 §8.9 permits omission only as an ordered prefix.
+func IsZero[T any](value T) bool { var zero T; return reflect.DeepEqual(value, zero) }
+
+// Seal records the transmitted boundary separately from inferred zero bits.
+// TS 24.008 V20.1.0 §§10.5.1.7, 10.5.5.12a permit receiver-side zero
+// extension; the received bytes themselves are never retained for replay.
+func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) WireInfo {
 	wire.BitsConsumed = consumed
+	wire.TransmittedBits = len(raw) * 8
 	wire.Tail = tail
-	wire.valueChecksum = checksum(value)
-	wire.rawChecksum = sha256.Sum256(wire.Original)
+	wire.sealed = true
 	return wire
-}
-
-func OriginalIfUnchanged[T any](value T, wire WireInfo) ([]byte, bool) {
-	if wire.Original == nil || checksum(value) != wire.valueChecksum || sha256.Sum256(wire.Original) != wire.rawChecksum {
-		return nil, false
-	}
-	return append([]byte(nil), wire.Original...), true
-}
-
-func checksum[T any](value T) [sha256.Size]byte {
-	encoded, err := json.Marshal(value)
-	if err != nil {
-		return [sha256.Size]byte{}
-	}
-	return sha256.Sum256(encoded)
 }
 
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
@@ -128,6 +119,7 @@ func (r *Reader) Fork() *Reader {
 	copy.wire.Spare = append([]BitString(nil), r.wire.Spare...)
 	copy.wire.Padding = append([]BitString(nil), r.wire.Padding...)
 	copy.wire.Terminal = append([]BitString(nil), r.wire.Terminal...)
+	copy.wire.ImplicitSpans = append([]ImplicitSpan(nil), r.wire.ImplicitSpans...)
 	copy.wire.TruncatedAt = make(map[string]int, len(r.wire.TruncatedAt))
 	for k, v := range r.wire.TruncatedAt {
 		copy.wire.TruncatedAt[k] = v
@@ -146,6 +138,12 @@ func (r *Reader) bit() (uint8, bool, error) {
 		return b, true, nil
 	}
 	if r.allowZero {
+		at := r.pos + r.virtual
+		spans := r.wire.ImplicitSpans
+		if len(spans) == 0 || spans[len(spans)-1].At+spans[len(spans)-1].Count != at {
+			r.wire.ImplicitSpans = append(spans, ImplicitSpan{At: at})
+		}
+		r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++
 		r.virtual++
 		return 0, false, nil
 	}
@@ -272,18 +270,30 @@ func (r *Reader) RecordSpareCount(path string, count int) {
 // Writer uses the same MSB-first bit order and expression rules as Reader.
 type Writer struct {
 	bytes                    []byte
-	bits                     int
+	bits, virtual            int
 	vars                     map[string]uint64
 	path                     string
 	depth                    int
 	spare, padding, terminal int
 	spareCountIndex          map[string]int
+	truncationUsed           map[string]bool
 	wire                     WireInfo
+	implicitSpan             int
 }
 
-func NewWriter() *Writer                             { return &Writer{vars: make(map[string]uint64)} }
-func (w *Writer) WithWire(wire WireInfo)             { w.wire = wire; w.spareCountIndex = make(map[string]int) }
-func (w *Writer) Truncation(path string) (int, bool) { n, ok := w.wire.TruncatedAt[path]; return n, ok }
+func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
+func (w *Writer) WithWire(wire WireInfo) {
+	w.wire = wire
+	w.spareCountIndex = make(map[string]int)
+	w.truncationUsed = make(map[string]bool)
+}
+func (w *Writer) Truncation(path string) (int, bool) {
+	n, ok := w.wire.TruncatedAt[path]
+	if ok {
+		w.truncationUsed[path] = true
+	}
+	return n, ok
+}
 func (w *Writer) SpareCount(path string) (int, bool) {
 	counts := w.wire.SpareCounts[path]
 	i := w.spareCountIndex[path]
@@ -321,8 +331,18 @@ func (w *Writer) Leave() {
 	w.path = ""
 }
 func (w *Writer) put(bit uint8) error {
-	if w.bits >= maxBits {
+	if w.bits+w.virtual >= maxBits {
 		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
+	}
+	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) && w.bits+w.virtual >= w.wire.ImplicitSpans[w.implicitSpan].At && w.bits+w.virtual < w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count {
+		if bit != 0 {
+			return fmt.Errorf("edit to receiver-inferred bit at %s bit %d", w.path, w.bits+w.virtual)
+		}
+		w.virtual++
+		if w.bits+w.virtual == w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count {
+			w.implicitSpan++
+		}
+		return nil
 	}
 	if w.bits%8 == 0 {
 		w.bytes = append(w.bytes, 0)
@@ -357,7 +377,7 @@ func (w *Writer) WriteBitString(value BitString, width int) error {
 }
 func (w *Writer) WriteLiteral(pattern string) error {
 	for _, symbol := range pattern {
-		if err := w.put(literalBit(symbol, w.bits)); err != nil {
+		if err := w.put(literalBit(symbol, w.bits+w.virtual)); err != nil {
 			return err
 		}
 	}
@@ -370,6 +390,14 @@ func (w *Writer) WriteSpare() error {
 		if v.BitLength == 1 {
 			return w.WriteBitString(v, 1)
 		}
+		if v.BitLength != 0 {
+			return fmt.Errorf("invalid received spare-bit width")
+		}
+		if w.wire.sealed && (w.implicitSpan >= len(w.wire.ImplicitSpans) || w.bits+w.virtual < w.wire.ImplicitSpans[w.implicitSpan].At || w.bits+w.virtual >= w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count) {
+			return fmt.Errorf("inferred spare bit is outside its zero span")
+		}
+	} else if w.wire.sealed {
+		return fmt.Errorf("received spare-bit state exhausted")
 	}
 	return w.WriteUint(0, 1)
 }
@@ -378,6 +406,9 @@ func (w *Writer) WritePadding() error {
 		v := w.wire.Padding[w.padding]
 		w.padding++
 		return w.WriteBitString(v, v.BitLength)
+	}
+	if w.wire.sealed {
+		return fmt.Errorf("received padding state exhausted")
 	}
 	for w.bits%8 != 0 {
 		if err := w.put(literalBit('L', w.bits)); err != nil {
@@ -404,6 +435,12 @@ func (w *Writer) WritePaddingTo(bits int) error {
 		if v.BitLength == bits-w.bits {
 			return w.WriteBitString(v, v.BitLength)
 		}
+		if w.wire.sealed {
+			return fmt.Errorf("received padding width differs from fixed IE")
+		}
+	}
+	if w.wire.sealed && bits > w.bits {
+		return fmt.Errorf("missing received fixed-IE padding")
 	}
 	for w.bits < bits {
 		if err := w.put(literalBit('L', w.bits)); err != nil {
@@ -456,6 +493,14 @@ func (w *Writer) WriteIgnoredFixed(width int) error {
 	return w.WriteUint(0, width)
 }
 func (w *Writer) Finish(tail BitString) ([]byte, error) {
+	if w.wire.sealed {
+		if err := w.validateSemantic(); err != nil {
+			return nil, err
+		}
+		if tail.BitLength != w.wire.Tail.BitLength {
+			return nil, fmt.Errorf("wire tail length differs from received boundary")
+		}
+	}
 	if tail.BitLength > 0 {
 		if err := w.WriteBitString(tail, tail.BitLength); err != nil {
 			return nil, err
@@ -469,10 +514,86 @@ func (w *Writer) Finish(tail BitString) ([]byte, error) {
 	return w.Bytes()
 }
 func (w *Writer) Bytes() ([]byte, error) {
+	if w.wire.sealed {
+		if err := w.validateState(); err != nil {
+			return nil, err
+		}
+		if w.bits != w.wire.TransmittedBits {
+			return nil, fmt.Errorf("encoded length %d differs from transmitted %d", w.bits, w.wire.TransmittedBits)
+		}
+	}
 	if w.bits%8 != 0 {
 		return nil, fmt.Errorf("encoded %d bits is not octet-aligned", w.bits)
 	}
 	return append([]byte(nil), w.bytes...), nil
+}
+
+func (w *Writer) validateSemantic() error {
+	if err := w.validateState(); err != nil {
+		return err
+	}
+	if w.bits != w.wire.BitsConsumed || w.virtual != w.wire.ImplicitZeros || w.implicitSpan != len(w.wire.ImplicitSpans) {
+		return fmt.Errorf("encoded semantic boundary %d+%d differs from received %d+%d", w.bits, w.virtual, w.wire.BitsConsumed, w.wire.ImplicitZeros)
+	}
+	return nil
+}
+
+func (w *Writer) validateState() error {
+	if w.wire.BitsConsumed < 0 || w.wire.TransmittedBits < 0 || w.wire.TransmittedBits > maxBits || w.wire.TransmittedBits%8 != 0 || w.wire.ImplicitZeros < 0 || w.wire.BitsConsumed+w.wire.Tail.BitLength != w.wire.TransmittedBits || w.wire.Tail.BitLength < 0 || w.wire.Tail.BitLength > len(w.wire.Tail.Bytes)*8 {
+		return fmt.Errorf("inconsistent received wire boundary or tail")
+	}
+	count, end := 0, 0
+	for _, span := range w.wire.ImplicitSpans {
+		if span.Count <= 0 || span.At < end || span.At+span.Count > maxBits {
+			return fmt.Errorf("inconsistent inferred-zero span")
+		}
+		count += span.Count
+		end = span.At + span.Count
+	}
+	if count != w.wire.ImplicitZeros {
+		return fmt.Errorf("inconsistent inferred-zero count")
+	}
+	if w.spare != len(w.wire.Spare) || w.padding != len(w.wire.Padding) || w.terminal != len(w.wire.Terminal) {
+		return fmt.Errorf("unconsumed received spare, padding, or terminal state")
+	}
+	for path := range w.wire.TruncatedAt {
+		if !w.truncationUsed[path] {
+			return fmt.Errorf("unused truncation point %s", path)
+		}
+	}
+	for path, counts := range w.wire.SpareCounts {
+		if w.spareCountIndex[path] != len(counts) {
+			return fmt.Errorf("unused spare count %s", path)
+		}
+	}
+	return nil
+}
+
+// ValidateOutput checks a non-writer wrapper against its received boundary.
+// Wrapper encoders still construct every byte from typed fields and wire state.
+func (wire WireInfo) ValidateOutput(encoded []byte, consumed int) error {
+	if !wire.sealed {
+		return nil
+	}
+	w := NewWriter()
+	w.WithWire(wire)
+	if wire.BitsConsumed < 0 || wire.TransmittedBits != len(encoded)*8 || consumed != wire.BitsConsumed || wire.BitsConsumed+wire.Tail.BitLength != wire.TransmittedBits || wire.Tail.BitLength < 0 || wire.Tail.BitLength > len(wire.Tail.Bytes)*8 {
+		return fmt.Errorf("inconsistent wrapper wire boundary or tail")
+	}
+	if len(wire.Spare) != 0 || len(wire.Padding) != 0 || len(wire.Terminal) != 0 || len(wire.TruncatedAt) != 0 || len(wire.SpareCounts) != 0 || wire.ImplicitZeros != 0 || len(wire.ImplicitSpans) != 0 {
+		return fmt.Errorf("unexpected wrapper wire state")
+	}
+	if err := w.validateState(); err != nil {
+		return err
+	}
+	for i := 0; i < wire.Tail.BitLength; i++ {
+		got := (encoded[(consumed+i)/8] >> (7 - uint((consumed+i)%8))) & 1
+		want := (wire.Tail.Bytes[i/8] >> (7 - uint(i%8))) & 1
+		if got != want {
+			return fmt.Errorf("wrapper tail differs from wire state")
+		}
+	}
+	return nil
 }
 
 // LHBit returns the L/H value at the absolute bit position. TS 24.007

@@ -57,6 +57,7 @@ type Decoded[T any] struct {
 type Descriptor struct {
 	Standard, Version, Clause, Name string
 	Decode                          func([]byte) (any, error)
+	DecodeFrom                      func(*Reader) (any, error)
 	Encode                          func(any) ([]byte, error)
 	DecodeWithContext               func([]byte, SI4ACS) (any, error)
 	EncodeWithContext               func(any, SI4ACS) ([]byte, error)

@@ -54,9 +54,6 @@ func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart
 }
 
 func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	if v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3 {
 		return nil, fmt.Errorf("invalid Classmark 2 field")
 	}
@@ -119,7 +116,11 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 		c |= 1
 	}
 	out := []byte{a, b, c}
-	return append(out, v.Wire.Tail.Bytes...), nil
+	out = append(out, v.Wire.Tail.Bytes...)
+	if err := v.Wire.ValidateOutput(out, 24); err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 type GERANCS struct {
@@ -149,9 +150,6 @@ func DecodeGERANCS(data []byte) (runtime.Decoded[GERANCS], error) {
 }
 
 func EncodeGERANCS(v GERANCS) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	cm2, err := EncodeClassmark2ValuePart(v.Classmark2)
 	if err != nil {
 		return nil, err
@@ -165,7 +163,11 @@ func EncodeGERANCS(v GERANCS) ([]byte, error) {
 	}
 	out := []byte{0x33, 3}
 	out = append(out, cm2...)
-	return append(out, cm3...), nil
+	out = append(out, cm3...)
+	if err := v.Wire.ValidateOutput(out, 40+v.Classmark3.Wire.BitsConsumed); err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 type GERANPS struct {
@@ -186,8 +188,12 @@ func DecodeGERANPS(data []byte) (runtime.Decoded[GERANPS], error) {
 }
 
 func EncodeGERANPS(v GERANPS) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
+	out, err := msrac.EncodeMSRACapabilityValuePart(v.Capability)
+	if err != nil {
+		return nil, err
 	}
-	return msrac.EncodeMSRACapabilityValuePart(v.Capability)
+	if err := v.Wire.ValidateOutput(out, v.Capability.Wire.BitsConsumed); err != nil {
+		return nil, err
+	}
+	return out, nil
 }

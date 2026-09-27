@@ -43,7 +43,6 @@ func TestRepeatedSpareBitsStayInWireState(t *testing.T) {
 	if len(decoded.Value.Wire.SpareCounts) == 0 || len(decoded.Value.Wire.Spare) == 0 {
 		t.Fatal("repeated spare bits missing from wire record")
 	}
-	decoded.Value.Wire.Original = nil // force the generated encoder path
 	encoded, err := EncodeMSRACapabilityValuePart(decoded.Value)
 	if err != nil {
 		t.Fatal(err)

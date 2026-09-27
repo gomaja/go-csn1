@@ -538,6 +538,9 @@ func encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(w *r
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.RepeatedInvalidBSICInformation) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RepeatedInvalidBSICInformation")
+	}
 	if limit > 1 {
 		if err := encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntryRepeatedInvalidBSICInformation(w, v.RepeatedInvalidBSICInformation); err != nil {
 			return err
@@ -1155,6 +1158,9 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.SI23BAUSED) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SI23BAUSED")
+	}
 	if limit > 1 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSEDSI23BAUSED(w, v.SI23BAUSED); err != nil {
 			return err
@@ -1281,10 +1287,16 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.UTRANCSGMeasurementReport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANCSGMeasurementReport")
+	}
 	if limit > 1 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportUTRANCSGMeasurementReportSelector(w, v.UTRANCSGMeasurementReport); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.SI23BAUSEDChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SI23BAUSEDChoice")
 	}
 	if limit > 2 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice(w, v.SI23BAUSEDChoice); err != nil {
@@ -1422,20 +1434,32 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(w *runtime.Wr
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.BITMAPLENGTH) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BITMAPLENGTH")
+	}
 	if limit > 1 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHBITMAPLENGTH(w, v.BITMAPLENGTH); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.REPORTINGQUANTITYList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: REPORTINGQUANTITYList")
 	}
 	if limit > 2 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList(w, v.REPORTINGQUANTITYList); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.EUTRANMeasurementReport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANMeasurementReport")
+	}
 	if limit > 3 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurementReportSelector(w, v.EUTRANMeasurementReport); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.UTRANCSGMeasurementReportChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANCSGMeasurementReportChoice")
 	}
 	if limit > 4 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice(w, v.UTRANCSGMeasurementReportChoice); err != nil {
@@ -1609,55 +1633,88 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.RRShortPD) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RRShortPD")
+	}
 	if limit > 0 {
 		if err := encodeEnhancedMeasurementReportRRShortPD(w, v.RRShortPD); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MessageType) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MessageType")
 	}
 	if limit > 1 {
 		if err := encodeEnhancedMeasurementReportMessageType(w, v.MessageType); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.ShortLayer2Header) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ShortLayer2Header")
+	}
 	if limit > 2 {
 		if err := encodeEnhancedMeasurementReportShortLayer2Header(w, v.ShortLayer2Header); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.BAUSED) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BAUSED")
 	}
 	if limit > 3 {
 		if err := encodeEnhancedMeasurementReportBAUSED(w, v.BAUSED); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.N3GBAUSED) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: N3GBAUSED")
+	}
 	if limit > 4 {
 		if err := encodeEnhancedMeasurementReportN3GBAUSED(w, v.N3GBAUSED); err != nil {
 			return err
 		}
+	}
+	if limit <= 5 && !runtime.IsZero(v.BSICSeen) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BSICSeen")
 	}
 	if limit > 5 {
 		if err := encodeEnhancedMeasurementReportBSICSeen(w, v.BSICSeen); err != nil {
 			return err
 		}
 	}
+	if limit <= 6 && !runtime.IsZero(v.SCALE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SCALE")
+	}
 	if limit > 6 {
 		if err := encodeEnhancedMeasurementReportSCALE(w, v.SCALE); err != nil {
 			return err
 		}
+	}
+	if limit <= 7 && !runtime.IsZero(v.ServingCellData) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ServingCellData")
 	}
 	if limit > 7 {
 		if err := encodeEnhancedMeasurementReportServingCellDataSelector(w, v.ServingCellData); err != nil {
 			return err
 		}
 	}
+	if limit <= 8 && !runtime.IsZero(v.RepeatedInvalidBSICInformationList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RepeatedInvalidBSICInformationList")
+	}
 	if limit > 8 {
 		if err := encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(w, v.RepeatedInvalidBSICInformationList); err != nil {
 			return err
 		}
 	}
+	if limit <= 9 && !runtime.IsZero(v.REPORTINGQUANTITYList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: REPORTINGQUANTITYList")
+	}
 	if limit > 9 {
 		if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListSelector(w, v.REPORTINGQUANTITYList); err != nil {
 			return err
 		}
+	}
+	if limit <= 10 && !runtime.IsZero(v.BITMAPLENGTHChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BITMAPLENGTHChoice")
 	}
 	if limit > 10 {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoice(w, v.BITMAPLENGTHChoice); err != nil {
@@ -1907,30 +1964,48 @@ func encodeServingCellDataStruct(w *runtime.Writer, v ServingCellDataStruct) err
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DTXUSED) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTXUSED")
+	}
 	if limit > 0 {
 		if err := encodeServingCellDataStructDTXUSED(w, v.DTXUSED); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.RXLEVVAL) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RXLEVVAL")
 	}
 	if limit > 1 {
 		if err := encodeServingCellDataStructRXLEVVAL(w, v.RXLEVVAL); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.RXQUALFULL) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RXQUALFULL")
+	}
 	if limit > 2 {
 		if err := encodeServingCellDataStructRXQUALFULL(w, v.RXQUALFULL); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.MEANBEP) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MEANBEP")
 	}
 	if limit > 3 {
 		if err := encodeServingCellDataStructMEANBEP(w, v.MEANBEP); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.CVBEP) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CVBEP")
+	}
 	if limit > 4 {
 		if err := encodeServingCellDataStructCVBEP(w, v.CVBEP); err != nil {
 			return err
 		}
+	}
+	if limit <= 5 && !runtime.IsZero(v.NBRRCVDBLOCKS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NBRRCVDBLOCKS")
 	}
 	if limit > 5 {
 		if err := encodeServingCellDataStructNBRRCVDBLOCKS(w, v.NBRRCVDBLOCKS); err != nil {
@@ -2067,15 +2142,24 @@ func encodeRepeatedInvalidBSICInformationStruct(w *runtime.Writer, v RepeatedInv
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.BCCHFREQNCELL) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BCCHFREQNCELL")
+	}
 	if limit > 0 {
 		if err := encodeRepeatedInvalidBSICInformationStructBCCHFREQNCELL(w, v.BCCHFREQNCELL); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.BSIC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BSIC")
+	}
 	if limit > 1 {
 		if err := encodeRepeatedInvalidBSICInformationStructBSIC(w, v.BSIC); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.RXLEVNCELL) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RXLEVNCELL")
 	}
 	if limit > 2 {
 		if err := encodeRepeatedInvalidBSICInformationStructRXLEVNCELL(w, v.RXLEVNCELL); err != nil {
@@ -2243,15 +2327,24 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(w *ru
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EUTRANFREQUENCYINDEX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANFREQUENCYINDEX")
+	}
 	if limit > 0 {
 		if err := encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryEUTRANFREQUENCYINDEX(w, v.EUTRANFREQUENCYINDEX); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.CELLIDENTITY) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CELLIDENTITY")
+	}
 	if limit > 1 {
 		if err := encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryCELLIDENTITY(w, v.CELLIDENTITY); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.REPORTINGQUANTITY) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: REPORTINGQUANTITY")
 	}
 	if limit > 2 {
 		if err := encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryREPORTINGQUANTITY(w, v.REPORTINGQUANTITY); err != nil {
@@ -2320,10 +2413,16 @@ func encodeEUTRANMeasurementReportStruct(w *runtime.Writer, v EUTRANMeasurementR
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.NEUTRAN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NEUTRAN")
+	}
 	if limit > 0 {
 		if err := encodeEUTRANMeasurementReportStructNEUTRAN(w, v.NEUTRAN); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EUTRANFREQUENCYINDEXGroupList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANFREQUENCYINDEXGroupList")
 	}
 	if limit > 1 {
 		if err := encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(w, v.EUTRANFREQUENCYINDEXGroupList); err != nil {
@@ -2357,9 +2456,6 @@ func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasu
 
 // EncodeEnhancedMeasurementReport encodes an edited or newly constructed value through direct bit operations.
 func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEnhancedMeasurementReport(w, v); err != nil {
@@ -2392,9 +2488,6 @@ func DecodeServingCellDataStruct(data []byte) (runtime.Decoded[ServingCellDataSt
 
 // EncodeServingCellDataStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeServingCellDataStruct(w, v); err != nil {
@@ -2427,9 +2520,6 @@ func DecodeRepeatedInvalidBSICInformationStruct(data []byte) (runtime.Decoded[Re
 
 // EncodeRepeatedInvalidBSICInformationStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeRepeatedInvalidBSICInformationStruct(w, v); err != nil {
@@ -2462,9 +2552,6 @@ func DecodeEUTRANMeasurementReportStruct(data []byte) (runtime.Decoded[EUTRANMea
 
 // EncodeEUTRANMeasurementReportStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEUTRANMeasurementReportStruct(w, v); err != nil {
@@ -2477,7 +2564,7 @@ func Definitions() []string {
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", Decode: func(data []byte) (any, error) { return DecodeEnhancedMeasurementReport(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", Decode: func(data []byte) (any, error) { return DecodeEnhancedMeasurementReport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedMeasurementReportFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedMeasurementReport:
 				return EncodeEnhancedMeasurementReport(v)
@@ -2487,7 +2574,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EnhancedMeasurementReport")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeServingCellDataStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ServingCellDataStruct:
 				return EncodeServingCellDataStruct(v)
@@ -2497,7 +2584,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ServingCellDataStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedInvalidBSICInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedInvalidBSICInformationStruct:
 				return EncodeRepeatedInvalidBSICInformationStruct(v)
@@ -2507,7 +2594,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedInvalidBSICInformationStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANMeasurementReportStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANMeasurementReportStruct:
 				return EncodeEUTRANMeasurementReportStruct(v)

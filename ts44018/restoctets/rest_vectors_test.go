@@ -296,6 +296,20 @@ func TestP2RestOctetsLengthsAndAbsentFields(t *testing.T) {
 	}
 }
 
+func TestP2TruncatedFieldEditIsRejected(t *testing.T) {
+	decoded, err := DecodeP2RestOctets([]byte{0x2b})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(decoded.Value.Wire.TruncatedAt) == 0 {
+		t.Fatal("vector did not truncate")
+	}
+	decoded.Value.PEOBCCHCHANGEMARKChoice.Alternative = 1
+	if _, err := EncodeP2RestOctets(decoded.Value); err == nil {
+		t.Fatal("accepted edit beyond transmitted P2 prefix")
+	}
+}
+
 func TestSI7AndSI8RequireACSContext(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.35 selects the SI7/SI8 grammar
 	// from ACS in the containing SI4 message, outside these 20 octets.

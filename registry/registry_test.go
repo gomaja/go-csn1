@@ -1,12 +1,91 @@
 package registry
 
 import (
+	"bytes"
 	"errors"
+	"math/rand"
+	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts24008/classmark"
+	"github.com/gomaja/go-csn1/ts44018/measurement"
 )
+
+// Every generated descriptor must round-trip through its direct encoder.
+// The fixed corpus covers short truncations, padding, and random branches.
+func TestDirectEncoderCorpus(t *testing.T) {
+	accepted := 0
+	for i, descriptor := range descriptors() {
+		rng := rand.New(rand.NewSource(int64(0x5c51 + i)))
+		inputs := [][]byte{{0}, {0x2b}, {0xff}, {0x10, 0x01}, {0, 0}, {0x2b, 0x2b}}
+		for j := 0; j < 80; j++ {
+			b := make([]byte, 1+rng.Intn(12))
+			_, _ = rng.Read(b)
+			inputs = append(inputs, b)
+		}
+		for _, input := range inputs {
+			decoded, err := descriptor.Decode(input)
+			if err != nil {
+				continue
+			}
+			encoded, err := descriptor.Encode(decoded)
+			if err != nil {
+				// The three TS 36.331 wrappers use their concrete value in
+				// the registry; direct generated descriptors also accept Decoded.
+				value := reflect.ValueOf(decoded).FieldByName("Value")
+				if value.IsValid() {
+					encoded, err = descriptor.Encode(value.Interface())
+				}
+			}
+			accepted++
+			if err != nil || !bytes.Equal(encoded, input) {
+				t.Fatalf("%s V%s §%s <%s> input=%x encoded=%x err=%v", descriptor.Standard, descriptor.Version, descriptor.Clause, descriptor.Name, input, encoded, err)
+			}
+		}
+	}
+	if accepted == 0 {
+		t.Fatal("corpus exercised no accepted values")
+	}
+	t.Logf("%d accepted direct-encoder corpus values across %d descriptors", accepted, len(descriptors()))
+	cm3, err := classmark.DecodeClassmark3ValuePart([]byte{0})
+	if err != nil {
+		t.Fatal(err)
+	}
+	cm3.Value.MultibandSupportedChoice.A5Bits.A5Bits.A57 = 1
+	if out, err := classmark.EncodeClassmark3ValuePart(cm3.Value); err != nil || !bytes.Equal(out, []byte{0x08}) {
+		t.Fatalf("one-octet Classmark 3 edit: %x, %v", out, err)
+	}
+	emr, err := measurement.DecodeEnhancedMeasurementReport([]byte{0x10, 0x01})
+	if err != nil {
+		t.Fatal(err)
+	}
+	emr.Value.Wire.Tail = runtime.BitString{Bytes: []byte{0xaa}, BitLength: 8}
+	if _, err := measurement.EncodeEnhancedMeasurementReport(emr.Value); err == nil {
+		t.Fatal("invented EMR tail accepted")
+	}
+}
+
+func FuzzGeneratedDecodeFrom(f *testing.F) {
+	entries := descriptors()
+	for i, entry := range entries {
+		if entry.DecodeFrom != nil {
+			f.Add([]byte{byte(i), 0x2b, 0x2b})
+		}
+	}
+	f.Fuzz(func(t *testing.T, data []byte) {
+		if len(data) == 0 || len(data) > 4096 {
+			return
+		}
+		entry := entries[int(data[0])%len(entries)]
+		if entry.DecodeFrom == nil {
+			return
+		}
+		reader := runtime.NewReader(data[1:])
+		_, _ = entry.DecodeFrom(reader)
+	})
+}
 
 func TestClauseQualifiedLookup(t *testing.T) {
 	_, err := Lookup("TS 24.008", "A5 bits")

@@ -43,11 +43,36 @@ func TestDirectReaderChoiceSnapshot(t *testing.T) {
 	}
 }
 
-func TestWireReplayRejectsModifiedOriginal(t *testing.T) {
-	value := struct{ Field uint8 }{Field: 3}
-	wire := Seal(value, []byte{0x30}, 4, BitString{}, WireInfo{})
-	wire.Original[0] = 0xff
-	if _, ok := OriginalIfUnchanged(value, wire); ok {
-		t.Fatal("modified original replayed")
+func TestSealRecordsTransmittedBoundary(t *testing.T) {
+	wire := Seal(struct{}{}, []byte{0x30}, 4, BitString{Bytes: []byte{0}, BitLength: 4}, WireInfo{})
+	if wire.BitsConsumed != 4 || wire.TransmittedBits != 8 || wire.Tail.BitLength != 4 {
+		t.Fatalf("wire boundary: %+v", wire)
+	}
+}
+
+func TestWireStateCannotBeSilentlyDropped(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		mutate func(*WireInfo)
+	}{
+		{"spare", func(w *WireInfo) { w.Spare = append(w.Spare, BitString{Bytes: []byte{0}, BitLength: 1}) }},
+		{"padding", func(w *WireInfo) { w.Padding = append(w.Padding, BitString{Bytes: []byte{0}, BitLength: 1}) }},
+		{"terminal", func(w *WireInfo) { w.Terminal = append(w.Terminal, BitString{Bytes: []byte{0}, BitLength: 8}) }},
+		{"truncation", func(w *WireInfo) { w.TruncatedAt = map[string]int{"missing": 1} }},
+		{"spare count", func(w *WireInfo) { w.SpareCounts = map[string][]int{"missing": {1}} }},
+		{"consumed", func(w *WireInfo) { w.BitsConsumed = 7 }},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			wire := Seal(struct{}{}, []byte{0x00}, 8, BitString{}, WireInfo{})
+			tc.mutate(&wire)
+			writer := NewWriter()
+			writer.WithWire(wire)
+			if err := writer.WriteUint(0, 8); err != nil {
+				t.Fatal(err)
+			}
+			if out, err := writer.Finish(wire.Tail); err == nil {
+				t.Fatalf("dropped inconsistent %s state: %x", tc.name, out)
+			}
+		})
 	}
 }

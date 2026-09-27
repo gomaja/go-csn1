@@ -8,6 +8,18 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
+func TestEnhancedMeasurementReportWireTailEdit(t *testing.T) {
+	input := []byte{0x10, 0x01}
+	decoded, err := DecodeEnhancedMeasurementReport(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoded.Value.Wire.Tail = runtime.BitString{Bytes: []byte{0xaa}, BitLength: 8}
+	if _, err := EncodeEnhancedMeasurementReport(decoded.Value); err == nil {
+		t.Fatal("accepted an invented EMR tail")
+	}
+}
+
 func TestEnhancedMeasurementReportVectors(t *testing.T) {
 	// TS 44.018 V19.0.0 §9.1.55 and §10.4 table 10.4.2:
 	// Enhanced Measurement Report has uplink message type 00100.

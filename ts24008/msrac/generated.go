@@ -255,6 +255,9 @@ func encodeMSRACapabilityValuePart(w *runtime.Writer, v MSRACapabilityValuePart)
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MSRACapabilityValuePartStruct) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MSRACapabilityValuePartStruct")
+	}
 	if limit > 0 {
 		if err := encodeMSRACapabilityValuePartMSRACapabilityValuePartStruct(w, v.MSRACapabilityValuePartStruct); err != nil {
 			return err
@@ -340,10 +343,16 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessC
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AccessTechnologyType) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessTechnologyType")
+	}
 	if limit > 0 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilitiesAccessTechnologyType(w, v.AccessTechnologyType); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.AccessCapabilities) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessCapabilities")
 	}
 	if limit > 1 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilitiesAccessCapabilities(w, v.AccessCapabilities); err != nil {
@@ -471,6 +480,9 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.AdditionalAccessTechnologies) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AdditionalAccessTechnologies")
+	}
 	if limit > 1 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntryAdditionalAccessTechnologies(w, v.AdditionalAccessTechnologies); err != nil {
 			return err
@@ -569,6 +581,9 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AdditionalAccessTechnologiesList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AdditionalAccessTechnologiesList")
+	}
 	if limit > 0 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList(w, v.AdditionalAccessTechnologiesList); err != nil {
 			return err
@@ -648,15 +663,24 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength(
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AccessTechnologyType) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessTechnologyType")
+	}
 	if limit > 0 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAccessTechnologyType(w, v.AccessTechnologyType); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.Length) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Length")
+	}
 	if limit > 1 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthLength(w, v.Length); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.Content) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Content")
 	}
 	if limit > 2 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologies(w, v.Content); err != nil {
@@ -747,6 +771,9 @@ func encodeMSRACapabilityValuePartStructElement(w *runtime.Writer, v MSRACapabil
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.AccessTechnologyTypeChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessTechnologyTypeChoice")
 	}
 	if limit > 0 {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(w, v.AccessTechnologyTypeChoice); err != nil {
@@ -931,15 +958,24 @@ func encodeAdditionalAccessTechnologiesStruct(w *runtime.Writer, v AdditionalAcc
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AccessTechnologyType) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessTechnologyType")
+	}
 	if limit > 0 {
 		if err := encodeAdditionalAccessTechnologiesStructAccessTechnologyType(w, v.AccessTechnologyType); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.GMSKPowerClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GMSKPowerClass")
+	}
 	if limit > 1 {
 		if err := encodeAdditionalAccessTechnologiesStructGMSKPowerClass(w, v.GMSKPowerClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.N8PSKPowerClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: N8PSKPowerClass")
 	}
 	if limit > 2 {
 		if err := encodeAdditionalAccessTechnologiesStructN8PSKPowerClass(w, v.N8PSKPowerClass); err != nil {
@@ -1045,6 +1081,9 @@ func encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilities(w *runti
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AccessCapabilities) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessCapabilities")
+	}
 	if limit > 0 {
 		if err := encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesAccessCapabilities(w, v.AccessCapabilities); err != nil {
 			return err
@@ -1119,10 +1158,16 @@ func encodeAccessCapabilitiesStruct(w *runtime.Writer, v AccessCapabilitiesStruc
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.Length) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Length")
+	}
 	if limit > 0 {
 		if err := encodeAccessCapabilitiesStructLength(w, v.Length); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.Content) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Content")
 	}
 	if limit > 1 {
 		if err := encodeAccessCapabilitiesStructAccessCapabilities(w, v.Content); err != nil {
@@ -1712,10 +1757,16 @@ func encodeContentExtendedDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Conten
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.ExtendedDTMGPRSMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedDTMGPRSMultiSlotClass")
+	}
 	if limit > 0 {
 		if err := encodeContentExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(w, v.ExtendedDTMGPRSMultiSlotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.ExtendedDTMEGPRSMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedDTMEGPRSMultiSlotClass")
 	}
 	if limit > 1 {
 		if err := encodeContentExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(w, v.ExtendedDTMEGPRSMultiSlotClass); err != nil {
@@ -2150,10 +2201,16 @@ func encodeContentDTMGPRSHighMultiSlotClassGroup(w *runtime.Writer, v ContentDTM
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DTMGPRSHighMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMGPRSHighMultiSlotClass")
+	}
 	if limit > 0 {
 		if err := encodeContentDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(w, v.DTMGPRSHighMultiSlotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DTMEGPRSHighMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMEGPRSHighMultiSlotClass")
 	}
 	if limit > 1 {
 		if err := encodeContentDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(w, v.DTMEGPRSHighMultiSlotClass); err != nil {
@@ -2342,10 +2399,16 @@ func encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroup(w *run
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MultislotCapabilityReductionForDownlinkDualCarrier) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MultislotCapabilityReductionForDownlinkDualCarrier")
+	}
 	if limit > 0 {
 		if err := encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultislotCapabilityReductionForDownlinkDualCarrier(w, v.MultislotCapabilityReductionForDownlinkDualCarrier); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DownlinkDualCarrierForDTMCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DownlinkDualCarrierForDTMCapability")
 	}
 	if limit > 1 {
 		if err := encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupDownlinkDualCarrierForDTMCapability(w, v.DownlinkDualCarrierForDTMCapability); err != nil {
@@ -3771,90 +3834,144 @@ func encodeContent(w *runtime.Writer, v Content) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.RFPowerCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RFPowerCapability")
+	}
 	if limit > 0 {
 		if err := encodeContentRFPowerCapability(w, v.RFPowerCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.A5Bits) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A5Bits")
 	}
 	if limit > 1 {
 		if err := encodeContentA5BitsSelector(w, v.A5Bits); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.ESIND) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ESIND")
+	}
 	if limit > 2 {
 		if err := encodeContentESIND(w, v.ESIND); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.PS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PS")
 	}
 	if limit > 3 {
 		if err := encodeContentPS(w, v.PS); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.VGCS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: VGCS")
+	}
 	if limit > 4 {
 		if err := encodeContentVGCS(w, v.VGCS); err != nil {
 			return err
 		}
+	}
+	if limit <= 5 && !runtime.IsZero(v.VBS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: VBS")
 	}
 	if limit > 5 {
 		if err := encodeContentVBS(w, v.VBS); err != nil {
 			return err
 		}
 	}
+	if limit <= 6 && !runtime.IsZero(v.MultislotCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MultislotCapability")
+	}
 	if limit > 6 {
 		if err := encodeContentMultislotCapabilitySelector(w, v.MultislotCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 7 && !runtime.IsZero(v.N8PSKPowerCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: N8PSKPowerCapability")
 	}
 	if limit > 7 {
 		if err := encodeContentN8PSKPowerCapabilitySelector(w, v.N8PSKPowerCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 8 && !runtime.IsZero(v.COMPACTInterferenceMeasurementCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: COMPACTInterferenceMeasurementCapability")
+	}
 	if limit > 8 {
 		if err := encodeContentCOMPACTInterferenceMeasurementCapability(w, v.COMPACTInterferenceMeasurementCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 9 && !runtime.IsZero(v.RevisionLevelIndicator) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RevisionLevelIndicator")
 	}
 	if limit > 9 {
 		if err := encodeContentRevisionLevelIndicator(w, v.RevisionLevelIndicator); err != nil {
 			return err
 		}
 	}
+	if limit <= 10 && !runtime.IsZero(v.UMTSFDDRadioAccessTechnologyCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UMTSFDDRadioAccessTechnologyCapability")
+	}
 	if limit > 10 {
 		if err := encodeContentUMTSFDDRadioAccessTechnologyCapability(w, v.UMTSFDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 11 && !runtime.IsZero(v.UMTS384McpsTDDRadioAccessTechnologyCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UMTS384McpsTDDRadioAccessTechnologyCapability")
 	}
 	if limit > 11 {
 		if err := encodeContentUMTS384McpsTDDRadioAccessTechnologyCapability(w, v.UMTS384McpsTDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 12 && !runtime.IsZero(v.CDMA2000RadioAccessTechnologyCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CDMA2000RadioAccessTechnologyCapability")
+	}
 	if limit > 12 {
 		if err := encodeContentCDMA2000RadioAccessTechnologyCapability(w, v.CDMA2000RadioAccessTechnologyCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 13 && !runtime.IsZero(v.UMTS128McpsTDDRadioAccessTechnologyCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UMTS128McpsTDDRadioAccessTechnologyCapability")
 	}
 	if limit > 13 {
 		if err := encodeContentUMTS128McpsTDDRadioAccessTechnologyCapability(w, v.UMTS128McpsTDDRadioAccessTechnologyCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 14 && !runtime.IsZero(v.GERANFeaturePackage1) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GERANFeaturePackage1")
+	}
 	if limit > 14 {
 		if err := encodeContentGERANFeaturePackage1(w, v.GERANFeaturePackage1); err != nil {
 			return err
 		}
+	}
+	if limit <= 15 && !runtime.IsZero(v.ExtendedDTMGPRSMultiSlotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedDTMGPRSMultiSlotClassGroup")
 	}
 	if limit > 15 {
 		if err := encodeContentExtendedDTMGPRSMultiSlotClassGroupSelector(w, v.ExtendedDTMGPRSMultiSlotClassGroup); err != nil {
 			return err
 		}
 	}
+	if limit <= 16 && !runtime.IsZero(v.ModulationBasedMultislotClassSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ModulationBasedMultislotClassSupport")
+	}
 	if limit > 16 {
 		if err := encodeContentModulationBasedMultislotClassSupport(w, v.ModulationBasedMultislotClassSupport); err != nil {
 			return err
 		}
+	}
+	if limit <= 17 && !runtime.IsZero(v.HighMultislotCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: HighMultislotCapability")
 	}
 	if limit > 17 {
 		if err := encodeContentHighMultislotCapabilitySelector(w, v.HighMultislotCapability); err != nil {
@@ -3866,220 +3983,352 @@ func encodeContent(w *runtime.Writer, v Content) error {
 			return err
 		}
 	}
+	if limit <= 19 && !runtime.IsZero(v.GMSKMultislotPowerProfile) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GMSKMultislotPowerProfile")
+	}
 	if limit > 19 {
 		if err := encodeContentGMSKMultislotPowerProfile(w, v.GMSKMultislotPowerProfile); err != nil {
 			return err
 		}
+	}
+	if limit <= 20 && !runtime.IsZero(v.N8PSKMultislotPowerProfile) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: N8PSKMultislotPowerProfile")
 	}
 	if limit > 20 {
 		if err := encodeContentN8PSKMultislotPowerProfile(w, v.N8PSKMultislotPowerProfile); err != nil {
 			return err
 		}
 	}
+	if limit <= 21 && !runtime.IsZero(v.MultipleTBFCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MultipleTBFCapability")
+	}
 	if limit > 21 {
 		if err := encodeContentMultipleTBFCapability(w, v.MultipleTBFCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 22 && !runtime.IsZero(v.DownlinkAdvancedReceiverPerformance) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DownlinkAdvancedReceiverPerformance")
 	}
 	if limit > 22 {
 		if err := encodeContentDownlinkAdvancedReceiverPerformance(w, v.DownlinkAdvancedReceiverPerformance); err != nil {
 			return err
 		}
 	}
+	if limit <= 23 && !runtime.IsZero(v.ExtendedRLCMACControlMessageSegmentationCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedRLCMACControlMessageSegmentationCapability")
+	}
 	if limit > 23 {
 		if err := encodeContentExtendedRLCMACControlMessageSegmentationCapability(w, v.ExtendedRLCMACControlMessageSegmentationCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 24 && !runtime.IsZero(v.DTMEnhancementsCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMEnhancementsCapability")
 	}
 	if limit > 24 {
 		if err := encodeContentDTMEnhancementsCapability(w, v.DTMEnhancementsCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 25 && !runtime.IsZero(v.DTMGPRSHighMultiSlotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMGPRSHighMultiSlotClassGroup")
+	}
 	if limit > 25 {
 		if err := encodeContentDTMGPRSHighMultiSlotClassGroupSelector(w, v.DTMGPRSHighMultiSlotClassGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 26 && !runtime.IsZero(v.PSHandoverCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSHandoverCapability")
 	}
 	if limit > 26 {
 		if err := encodeContentPSHandoverCapability(w, v.PSHandoverCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 27 && !runtime.IsZero(v.DTMHandoverCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMHandoverCapability")
+	}
 	if limit > 27 {
 		if err := encodeContentDTMHandoverCapability(w, v.DTMHandoverCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 28 && !runtime.IsZero(v.MultislotCapabilityReductionForDownlinkDualCarrierGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MultislotCapabilityReductionForDownlinkDualCarrierGroup")
 	}
 	if limit > 28 {
 		if err := encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupSelector(w, v.MultislotCapabilityReductionForDownlinkDualCarrierGroup); err != nil {
 			return err
 		}
 	}
+	if limit <= 29 && !runtime.IsZero(v.FlexibleTimeslotAssignment) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: FlexibleTimeslotAssignment")
+	}
 	if limit > 29 {
 		if err := encodeContentFlexibleTimeslotAssignment(w, v.FlexibleTimeslotAssignment); err != nil {
 			return err
 		}
+	}
+	if limit <= 30 && !runtime.IsZero(v.GANPSHandoverCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GANPSHandoverCapability")
 	}
 	if limit > 30 {
 		if err := encodeContentGANPSHandoverCapability(w, v.GANPSHandoverCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 31 && !runtime.IsZero(v.RLCNonPersistentMode) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RLCNonPersistentMode")
+	}
 	if limit > 31 {
 		if err := encodeContentRLCNonPersistentMode(w, v.RLCNonPersistentMode); err != nil {
 			return err
 		}
+	}
+	if limit <= 32 && !runtime.IsZero(v.ReducedLatencyCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ReducedLatencyCapability")
 	}
 	if limit > 32 {
 		if err := encodeContentReducedLatencyCapability(w, v.ReducedLatencyCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 33 && !runtime.IsZero(v.UplinkEGPRS2) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UplinkEGPRS2")
+	}
 	if limit > 33 {
 		if err := encodeContentUplinkEGPRS2(w, v.UplinkEGPRS2); err != nil {
 			return err
 		}
+	}
+	if limit <= 34 && !runtime.IsZero(v.DownlinkEGPRS2) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DownlinkEGPRS2")
 	}
 	if limit > 34 {
 		if err := encodeContentDownlinkEGPRS2(w, v.DownlinkEGPRS2); err != nil {
 			return err
 		}
 	}
+	if limit <= 35 && !runtime.IsZero(v.EUTRAFDDSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRAFDDSupport")
+	}
 	if limit > 35 {
 		if err := encodeContentEUTRAFDDSupport(w, v.EUTRAFDDSupport); err != nil {
 			return err
 		}
+	}
+	if limit <= 36 && !runtime.IsZero(v.EUTRATDDSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRATDDSupport")
 	}
 	if limit > 36 {
 		if err := encodeContentEUTRATDDSupport(w, v.EUTRATDDSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 37 && !runtime.IsZero(v.GERANToEUTRASupportInGERANPacketTransferMode) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GERANToEUTRASupportInGERANPacketTransferMode")
+	}
 	if limit > 37 {
 		if err := encodeContentGERANToEUTRASupportInGERANPacketTransferMode(w, v.GERANToEUTRASupportInGERANPacketTransferMode); err != nil {
 			return err
 		}
+	}
+	if limit <= 38 && !runtime.IsZero(v.PriorityBasedReselectionSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PriorityBasedReselectionSupport")
 	}
 	if limit > 38 {
 		if err := encodeContentPriorityBasedReselectionSupport(w, v.PriorityBasedReselectionSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 39 && !runtime.IsZero(v.EnhancedFlexibleTimeslotAssignment) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EnhancedFlexibleTimeslotAssignment")
+	}
 	if limit > 39 {
 		if err := encodeContentEnhancedFlexibleTimeslotAssignment(w, v.EnhancedFlexibleTimeslotAssignment); err != nil {
 			return err
 		}
+	}
+	if limit <= 40 && !runtime.IsZero(v.IndicationOfUpperLayerPDUStartCapabilityForRLCUM) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: IndicationOfUpperLayerPDUStartCapabilityForRLCUM")
 	}
 	if limit > 40 {
 		if err := encodeContentIndicationOfUpperLayerPDUStartCapabilityForRLCUM(w, v.IndicationOfUpperLayerPDUStartCapabilityForRLCUM); err != nil {
 			return err
 		}
 	}
+	if limit <= 41 && !runtime.IsZero(v.EMSTCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EMSTCapability")
+	}
 	if limit > 41 {
 		if err := encodeContentEMSTCapability(w, v.EMSTCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 42 && !runtime.IsZero(v.MTTICapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MTTICapability")
 	}
 	if limit > 42 {
 		if err := encodeContentMTTICapability(w, v.MTTICapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 43 && !runtime.IsZero(v.UTRACSGCellsReporting) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UTRACSGCellsReporting")
+	}
 	if limit > 43 {
 		if err := encodeContentUTRACSGCellsReporting(w, v.UTRACSGCellsReporting); err != nil {
 			return err
 		}
+	}
+	if limit <= 44 && !runtime.IsZero(v.EUTRACSGCellsReporting) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRACSGCellsReporting")
 	}
 	if limit > 44 {
 		if err := encodeContentEUTRACSGCellsReporting(w, v.EUTRACSGCellsReporting); err != nil {
 			return err
 		}
 	}
+	if limit <= 45 && !runtime.IsZero(v.DTRCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTRCapability")
+	}
 	if limit > 45 {
 		if err := encodeContentDTRCapability(w, v.DTRCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 46 && !runtime.IsZero(v.EMSRCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EMSRCapability")
 	}
 	if limit > 46 {
 		if err := encodeContentEMSRCapability(w, v.EMSRCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 47 && !runtime.IsZero(v.FastDownlinkFrequencySwitchingCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: FastDownlinkFrequencySwitchingCapability")
+	}
 	if limit > 47 {
 		if err := encodeContentFastDownlinkFrequencySwitchingCapability(w, v.FastDownlinkFrequencySwitchingCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 48 && !runtime.IsZero(v.TIGHTERCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TIGHTERCapability")
 	}
 	if limit > 48 {
 		if err := encodeContentTIGHTERCapability(w, v.TIGHTERCapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 49 && !runtime.IsZero(v.FANRCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: FANRCapability")
+	}
 	if limit > 49 {
 		if err := encodeContentFANRCapability(w, v.FANRCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 50 && !runtime.IsZero(v.IPACapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: IPACapability")
 	}
 	if limit > 50 {
 		if err := encodeContentIPACapability(w, v.IPACapability); err != nil {
 			return err
 		}
 	}
+	if limit <= 51 && !runtime.IsZero(v.GERANNetworkSharingSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GERANNetworkSharingSupport")
+	}
 	if limit > 51 {
 		if err := encodeContentGERANNetworkSharingSupport(w, v.GERANNetworkSharingSupport); err != nil {
 			return err
 		}
+	}
+	if limit <= 52 && !runtime.IsZero(v.EUTRAWidebandRSRQMeasurementsSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRAWidebandRSRQMeasurementsSupport")
 	}
 	if limit > 52 {
 		if err := encodeContentEUTRAWidebandRSRQMeasurementsSupport(w, v.EUTRAWidebandRSRQMeasurementsSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 53 && !runtime.IsZero(v.UTRAMultipleFrequencyBandIndicatorsSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UTRAMultipleFrequencyBandIndicatorsSupport")
+	}
 	if limit > 53 {
 		if err := encodeContentUTRAMultipleFrequencyBandIndicatorsSupport(w, v.UTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
 			return err
 		}
+	}
+	if limit <= 54 && !runtime.IsZero(v.EUTRAMultipleFrequencyBandIndicatorsSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRAMultipleFrequencyBandIndicatorsSupport")
 	}
 	if limit > 54 {
 		if err := encodeContentEUTRAMultipleFrequencyBandIndicatorsSupport(w, v.EUTRAMultipleFrequencyBandIndicatorsSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 55 && !runtime.IsZero(v.DLMCCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCCapability")
+	}
 	if limit > 55 {
 		if err := encodeContentDLMCCapabilitySelector(w, v.DLMCCapability); err != nil {
 			return err
 		}
+	}
+	if limit <= 56 && !runtime.IsZero(v.ExtendedTSCSetCapabilitySupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedTSCSetCapabilitySupport")
 	}
 	if limit > 56 {
 		if err := encodeContentExtendedTSCSetCapabilitySupport(w, v.ExtendedTSCSetCapabilitySupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 57 && !runtime.IsZero(v.ExtendedEARFCNValueRange) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedEARFCNValueRange")
+	}
 	if limit > 57 {
 		if err := encodeContentExtendedEARFCNValueRange(w, v.ExtendedEARFCNValueRange); err != nil {
 			return err
 		}
+	}
+	if limit <= 58 && !runtime.IsZero(v.ECPCHMonitoringSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ECPCHMonitoringSupport")
 	}
 	if limit > 58 {
 		if err := encodeContentECPCHMonitoringSupport(w, v.ECPCHMonitoringSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 59 && !runtime.IsZero(v.MSSyncAccuracy) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MSSyncAccuracy")
+	}
 	if limit > 59 {
 		if err := encodeContentMSSyncAccuracySelector(w, v.MSSyncAccuracy); err != nil {
 			return err
 		}
+	}
+	if limit <= 60 && !runtime.IsZero(v.ECUplinkCoverageEnhancementSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ECUplinkCoverageEnhancementSupport")
 	}
 	if limit > 60 {
 		if err := encodeContentECUplinkCoverageEnhancementSupport(w, v.ECUplinkCoverageEnhancementSupport); err != nil {
 			return err
 		}
 	}
+	if limit <= 61 && !runtime.IsZero(v.MTAAccessSecuritySupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MTAAccessSecuritySupport")
+	}
 	if limit > 61 {
 		if err := encodeContentMTAAccessSecuritySupport(w, v.MTAAccessSecuritySupport); err != nil {
 			return err
 		}
+	}
+	if limit <= 62 && !runtime.IsZero(v.ECPagingIndicationChannelMonitoringSupport) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ECPagingIndicationChannelMonitoringSupport")
 	}
 	if limit > 62 {
 		if err := encodeContentECPagingIndicationChannelMonitoringSupport(w, v.ECPagingIndicationChannelMonitoringSupport); err != nil {
@@ -4237,10 +4486,16 @@ func encodeMultislotCapabilityStructGPRSMultislotClassGroup(w *runtime.Writer, v
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.GPRSMultislotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GPRSMultislotClass")
+	}
 	if limit > 0 {
 		if err := encodeMultislotCapabilityStructGPRSMultislotClassGroupGPRSMultislotClass(w, v.GPRSMultislotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.GPRSExtendedDynamicAllocationCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GPRSExtendedDynamicAllocationCapability")
 	}
 	if limit > 1 {
 		if err := encodeMultislotCapabilityStructGPRSMultislotClassGroupGPRSExtendedDynamicAllocationCapability(w, v.GPRSExtendedDynamicAllocationCapability); err != nil {
@@ -4367,10 +4622,16 @@ func encodeMultislotCapabilityStructSMSVALUEGroup(w *runtime.Writer, v Multislot
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.SMSVALUE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SMSVALUE")
+	}
 	if limit > 0 {
 		if err := encodeMultislotCapabilityStructSMSVALUEGroupSMSVALUE(w, v.SMSVALUE); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.SMVALUE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SMVALUE")
 	}
 	if limit > 1 {
 		if err := encodeMultislotCapabilityStructSMSVALUEGroupSMVALUE(w, v.SMVALUE); err != nil {
@@ -4554,10 +4815,16 @@ func encodeMultislotCapabilityStructEGPRSMultislotClassGroup(w *runtime.Writer, 
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSMultislotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSMultislotClass")
+	}
 	if limit > 0 {
 		if err := encodeMultislotCapabilityStructEGPRSMultislotClassGroupEGPRSMultislotClass(w, v.EGPRSMultislotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EGPRSExtendedDynamicAllocationCapability) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSExtendedDynamicAllocationCapability")
 	}
 	if limit > 1 {
 		if err := encodeMultislotCapabilityStructEGPRSMultislotClassGroupEGPRSExtendedDynamicAllocationCapability(w, v.EGPRSExtendedDynamicAllocationCapability); err != nil {
@@ -4746,15 +5013,24 @@ func encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroup(w *runtime.Writer
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DTMGPRSMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMGPRSMultiSlotClass")
+	}
 	if limit > 0 {
 		if err := encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(w, v.DTMGPRSMultiSlotClass); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.SingleSlotDTM) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SingleSlotDTM")
+	}
 	if limit > 1 {
 		if err := encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupSingleSlotDTM(w, v.SingleSlotDTM); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.DTMEGPRSMultiSlotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMEGPRSMultiSlotClass")
 	}
 	if limit > 2 {
 		if err := encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(w, v.DTMEGPRSMultiSlotClass); err != nil {
@@ -4839,30 +5115,48 @@ func encodeMultislotCapabilityStruct(w *runtime.Writer, v MultislotCapabilityStr
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.HSCSDMultislotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: HSCSDMultislotClass")
+	}
 	if limit > 0 {
 		if err := encodeMultislotCapabilityStructHSCSDMultislotClassSelector(w, v.HSCSDMultislotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.GPRSMultislotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GPRSMultislotClassGroup")
 	}
 	if limit > 1 {
 		if err := encodeMultislotCapabilityStructGPRSMultislotClassGroupSelector(w, v.GPRSMultislotClassGroup); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.SMSVALUEGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: SMSVALUEGroup")
+	}
 	if limit > 2 {
 		if err := encodeMultislotCapabilityStructSMSVALUEGroupSelector(w, v.SMSVALUEGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.ECSDMultislotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ECSDMultislotClass")
 	}
 	if limit > 3 {
 		if err := encodeMultislotCapabilityStructECSDMultislotClassSelector(w, v.ECSDMultislotClass); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.EGPRSMultislotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSMultislotClassGroup")
+	}
 	if limit > 4 {
 		if err := encodeMultislotCapabilityStructEGPRSMultislotClassGroupSelector(w, v.EGPRSMultislotClassGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 5 && !runtime.IsZero(v.DTMGPRSMultiSlotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMGPRSMultiSlotClassGroup")
 	}
 	if limit > 5 {
 		if err := encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupSelector(w, v.DTMGPRSMultiSlotClassGroup); err != nil {
@@ -5143,35 +5437,56 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.A51) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A51")
+	}
 	if limit > 0 {
 		if err := encodeA5BitsA51(w, v.A51); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.A52) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A52")
 	}
 	if limit > 1 {
 		if err := encodeA5BitsA52(w, v.A52); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.A53) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A53")
+	}
 	if limit > 2 {
 		if err := encodeA5BitsA53(w, v.A53); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.A54) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A54")
 	}
 	if limit > 3 {
 		if err := encodeA5BitsA54(w, v.A54); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.A55) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A55")
+	}
 	if limit > 4 {
 		if err := encodeA5BitsA55(w, v.A55); err != nil {
 			return err
 		}
 	}
+	if limit <= 5 && !runtime.IsZero(v.A56) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A56")
+	}
 	if limit > 5 {
 		if err := encodeA5BitsA56(w, v.A56); err != nil {
 			return err
 		}
+	}
+	if limit <= 6 && !runtime.IsZero(v.A57) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: A57")
 	}
 	if limit > 6 {
 		if err := encodeA5BitsA57(w, v.A57); err != nil {
@@ -5272,10 +5587,16 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.AlternativeEFTAMultislotClass) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AlternativeEFTAMultislotClass")
+	}
 	if limit > 0 {
 		if err := encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupAlternativeEFTAMultislotClass(w, v.AlternativeEFTAMultislotClass); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EFTAMultislotCapabilityReductionForDownlinkDualCarrier) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EFTAMultislotCapabilityReductionForDownlinkDualCarrier")
 	}
 	if limit > 1 {
 		if err := encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupEFTAMultislotCapabilityReductionForDownlinkDualCarrier(w, v.EFTAMultislotCapabilityReductionForDownlinkDualCarrier); err != nil {
@@ -5334,6 +5655,9 @@ func encodeEnhancedFlexibleTimeslotAssignmentStruct(w *runtime.Writer, v Enhance
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.AlternativeEFTAMultislotClassGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AlternativeEFTAMultislotClassGroup")
 	}
 	if limit > 0 {
 		if err := encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupSelector(w, v.AlternativeEFTAMultislotClassGroup); err != nil {
@@ -5434,10 +5758,16 @@ func encodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup(w *runti
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DLMCNonContiguousIntraBandReception) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCNonContiguousIntraBandReception")
+	}
 	if limit > 0 {
 		if err := encodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroupDLMCNonContiguousIntraBandReception(w, v.DLMCNonContiguousIntraBandReception); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DLMCInterBandReception) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCInterBandReception")
 	}
 	if limit > 1 {
 		if err := encodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroupDLMCInterBandReception(w, v.DLMCInterBandReception); err != nil {
@@ -5605,20 +5935,32 @@ func encodeDLMCCapabilityStruct(w *runtime.Writer, v DLMCCapabilityStruct) error
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DLMCNonContiguousIntraBandReceptionGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCNonContiguousIntraBandReceptionGroup")
+	}
 	if limit > 0 {
 		if err := encodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroupSelector(w, v.DLMCNonContiguousIntraBandReceptionGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DLMCMaximumBandwidth) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCMaximumBandwidth")
 	}
 	if limit > 1 {
 		if err := encodeDLMCCapabilityStructDLMCMaximumBandwidth(w, v.DLMCMaximumBandwidth); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.DLMCMaximumNumberOfDownlinkTimeslots) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCMaximumNumberOfDownlinkTimeslots")
+	}
 	if limit > 2 {
 		if err := encodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots(w, v.DLMCMaximumNumberOfDownlinkTimeslots); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.DLMCMaximumNumberOfDownlinkCarriers) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLMCMaximumNumberOfDownlinkCarriers")
 	}
 	if limit > 3 {
 		if err := encodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkCarriers(w, v.DLMCMaximumNumberOfDownlinkCarriers); err != nil {
@@ -5658,9 +6000,6 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 
 // EncodeMSRACapabilityValuePart encodes an edited or newly constructed value through direct bit operations.
 func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMSRACapabilityValuePart(w, v); err != nil {
@@ -5693,9 +6032,6 @@ func DecodeMSRACapabilityValuePartStruct(data []byte) (runtime.Decoded[MSRACapab
 
 // EncodeMSRACapabilityValuePartStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeMSRACapabilityValuePartStruct(v MSRACapabilityValuePartStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMSRACapabilityValuePartStruct(w, v); err != nil {
@@ -5728,9 +6064,6 @@ func DecodeAdditionalAccessTechnologiesStruct(data []byte) (runtime.Decoded[Addi
 
 // EncodeAdditionalAccessTechnologiesStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeAdditionalAccessTechnologiesStruct(v AdditionalAccessTechnologiesStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeAdditionalAccessTechnologiesStruct(w, v); err != nil {
@@ -5763,9 +6096,6 @@ func DecodeAccessCapabilitiesStruct(data []byte) (runtime.Decoded[AccessCapabili
 
 // EncodeAccessCapabilitiesStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeAccessCapabilitiesStruct(v AccessCapabilitiesStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeAccessCapabilitiesStruct(w, v); err != nil {
@@ -5794,9 +6124,6 @@ func DecodeContent(data []byte) (runtime.Decoded[Content], error) {
 
 // EncodeContent encodes an edited or newly constructed value through direct bit operations.
 func EncodeContent(v Content) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeContent(w, v); err != nil {
@@ -5829,9 +6156,6 @@ func DecodeMultislotCapabilityStruct(data []byte) (runtime.Decoded[MultislotCapa
 
 // EncodeMultislotCapabilityStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeMultislotCapabilityStruct(v MultislotCapabilityStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMultislotCapabilityStruct(w, v); err != nil {
@@ -5860,9 +6184,6 @@ func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 
 // EncodeA5Bits encodes an edited or newly constructed value through direct bit operations.
 func EncodeA5Bits(v A5Bits) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeA5Bits(w, v); err != nil {
@@ -5895,9 +6216,6 @@ func DecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (runtime.Decode
 
 // EncodeEnhancedFlexibleTimeslotAssignmentStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeEnhancedFlexibleTimeslotAssignmentStruct(v EnhancedFlexibleTimeslotAssignmentStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEnhancedFlexibleTimeslotAssignmentStruct(w, v); err != nil {
@@ -5930,9 +6248,6 @@ func DecodeDLMCCapabilityStruct(data []byte) (runtime.Decoded[DLMCCapabilityStru
 
 // EncodeDLMCCapabilityStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeDLMCCapabilityStruct(v DLMCCapabilityStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeDLMCCapabilityStruct(w, v); err != nil {
@@ -5945,7 +6260,7 @@ func Definitions() []string {
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePart(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePart(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSRACapabilityValuePartFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSRACapabilityValuePart:
 				return EncodeMSRACapabilityValuePart(v)
@@ -5955,7 +6270,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSRACapabilityValuePart")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePartStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePartStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSRACapabilityValuePartStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSRACapabilityValuePartStruct:
 				return EncodeMSRACapabilityValuePartStruct(v)
@@ -5965,7 +6280,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSRACapabilityValuePartStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAdditionalAccessTechnologiesStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AdditionalAccessTechnologiesStruct:
 				return EncodeAdditionalAccessTechnologiesStruct(v)
@@ -5975,7 +6290,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for AdditionalAccessTechnologiesStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", Decode: func(data []byte) (any, error) { return DecodeAccessCapabilitiesStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", Decode: func(data []byte) (any, error) { return DecodeAccessCapabilitiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAccessCapabilitiesStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AccessCapabilitiesStruct:
 				return EncodeAccessCapabilitiesStruct(v)
@@ -5985,7 +6300,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for AccessCapabilitiesStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", Decode: func(data []byte) (any, error) { return DecodeContent(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", Decode: func(data []byte) (any, error) { return DecodeContent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeContentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Content:
 				return EncodeContent(v)
@@ -5995,7 +6310,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for Content")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMultislotCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MultislotCapabilityStruct:
 				return EncodeMultislotCapabilityStruct(v)
@@ -6005,7 +6320,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MultislotCapabilityStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeA5BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case A5Bits:
 				return EncodeA5Bits(v)
@@ -6015,7 +6330,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for A5Bits")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedFlexibleTimeslotAssignmentStruct:
 				return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v)
@@ -6025,7 +6340,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EnhancedFlexibleTimeslotAssignmentStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDLMCCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DLMCCapabilityStruct:
 				return EncodeDLMCCapabilityStruct(v)

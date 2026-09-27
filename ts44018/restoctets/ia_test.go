@@ -39,7 +39,6 @@ func TestIAEmptyValueAndBranches(t *testing.T) {
 		if decoded.BitsConsumed != len(wire)*8 || decoded.Tail.BitLength != 0 {
 			t.Fatalf("%x consumed %d bits with tail %d", wire, decoded.BitsConsumed, decoded.Tail.BitLength)
 		}
-		decoded.Value.Wire.Original = nil // exercise direct encoder, not raw replay
 		encoded, err := EncodeIARestOctets(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, wire) {
 			t.Fatalf("direct re-encode %x -> %x: %v", wire, encoded, err)
@@ -165,9 +164,9 @@ func TestIARAndIAXRestOctets(t *testing.T) {
 func FuzzIADefinitions(f *testing.F) {
 	// TS 44.018 V19.0.0 §§10.5.2.37g–i: nonempty SI18/SI19/SI20
 	// seeds reach their repeat termination and interpreted-count branches.
-	f.Add(append([]byte{0,0x32},bytes.Repeat([]byte{0xaa},18)...))
-	f.Add(append([]byte{0x03,0},bytes.Repeat([]byte{0x2b},18)...))
-	f.Add(append([]byte{0x02,0x00,0x80,0x00,0x01},bytes.Repeat([]byte{0x2b},15)...))
+	f.Add(append([]byte{0, 0x32}, bytes.Repeat([]byte{0xaa}, 18)...))
+	f.Add(append([]byte{0x03, 0}, bytes.Repeat([]byte{0x2b}, 18)...))
+	f.Add(append([]byte{0x02, 0x00, 0x80, 0x00, 0x01}, bytes.Repeat([]byte{0x2b}, 15)...))
 	for _, seed := range [][]byte{{}, {0x00}, {0x20}, {0x0b}, {0x0b, 0x2b, 0x2b}, {0x50, 0x00, 0x00, 0x0b}, {0x50, 0, 0, 0x80, 0, 0, 0x09}, {0x50, 0, 0, 0xc0, 0, 0, 0, 0x20, 0x0b}, {0x40, 0x20, 0, 0, 0, 0x09}, {0x80, 0x00}, {0x82, 0x00, 0x00, 0x00}, {0xd0, 0, 0, 0, 0, 0, 0x0b}, {0xe8, 0x2b}, {0xff}} {
 		f.Add(seed)
 	}

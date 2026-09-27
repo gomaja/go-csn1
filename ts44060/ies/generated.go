@@ -563,25 +563,40 @@ func encodeUTRANCSGMeasurementReportIE(w *runtime.Writer, v UTRANCSGMeasurementR
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.UTRANCGI) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANCGI")
+	}
 	if limit > 0 {
 		if err := encodeUTRANCSGMeasurementReportIEUTRANCGI(w, v.UTRANCGI); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.PLMNID) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PLMNID")
 	}
 	if limit > 1 {
 		if err := encodeUTRANCSGMeasurementReportIEPLMNIDSelector(w, v.PLMNID); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.CSGID) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CSGID")
+	}
 	if limit > 2 {
 		if err := encodeUTRANCSGMeasurementReportIECSGID(w, v.CSGID); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.AccessMode) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: AccessMode")
+	}
 	if limit > 3 {
 		if err := encodeUTRANCSGMeasurementReportIEAccessMode(w, v.AccessMode); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.REPORTINGQUANTITY) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: REPORTINGQUANTITY")
 	}
 	if limit > 4 {
 		if err := encodeUTRANCSGMeasurementReportIEREPORTINGQUANTITY(w, v.REPORTINGQUANTITY); err != nil {
@@ -682,10 +697,16 @@ func encodePLMNIDStruct(w *runtime.Writer, v PLMNIDStruct) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MCC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MCC")
+	}
 	if limit > 0 {
 		if err := encodePLMNIDStructMCC(w, v.MCC); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MNC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MNC")
 	}
 	if limit > 1 {
 		if err := encodePLMNIDStructMNC(w, v.MNC); err != nil {
@@ -769,6 +790,9 @@ func encodePSCGroupIEPSCListEntry(w *runtime.Writer, v PSCGroupIEPSCListEntry) e
 		if err := encodePSCGroupIEPSCListEntryAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.PSC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSC")
 	}
 	if limit > 1 {
 		if err := encodePSCGroupIEPSCListEntryPSC(w, v.PSC); err != nil {
@@ -957,15 +981,24 @@ func encodePSCGroupIEPSCPatternLengthGroupListEntry(w *runtime.Writer, v PSCGrou
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.PSCPatternLength) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSCPatternLength")
+	}
 	if limit > 1 {
 		if err := encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternLength(w, v.PSCPatternLength); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.PSCPattern) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSCPattern")
+	}
 	if limit > 2 {
 		if err := encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPattern(w, v.PSCPattern); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.PSCPatternSense) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSCPatternSense")
 	}
 	if limit > 3 {
 		if err := encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternSense(w, v.PSCPatternSense); err != nil {
@@ -1038,10 +1071,16 @@ func encodePSCGroupIE(w *runtime.Writer, v PSCGroupIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.PSCList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSCList")
+	}
 	if limit > 0 {
 		if err := encodePSCGroupIEPSCList(w, v.PSCList); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.PSCPatternLengthGroupList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PSCPatternLengthGroupList")
 	}
 	if limit > 1 {
 		if err := encodePSCGroupIEPSCPatternLengthGroupList(w, v.PSCPatternLengthGroupList); err != nil {
@@ -1102,10 +1141,16 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelD
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MBMSPTMChannelDescription) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSPTMChannelDescription")
+	}
 	if limit > 0 {
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroupMBMSPTMChannelDescription(w, v.MBMSPTMChannelDescription); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MBMSSessionParametersList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSSessionParametersList")
 	}
 	if limit > 1 {
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroupMBMSSessionParametersList(w, v.MBMSSessionParametersList); err != nil {
@@ -1174,6 +1219,9 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelD
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionAlt0(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MBMSPTMChannelDescriptionGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSPTMChannelDescriptionGroup")
 	}
 	if limit > 1 {
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroupSelector(w, v.MBMSPTMChannelDescriptionGroup); err != nil {
@@ -1258,6 +1306,9 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescripti
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescriptionAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MPRACHDescription) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MPRACHDescription")
 	}
 	if limit > 1 {
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescriptionMPRACHDescriptionSelector(w, v.MPRACHDescription); err != nil {
@@ -1348,6 +1399,9 @@ func encodeMBMSChannelParametersIE(w *runtime.Writer, v MBMSChannelParametersIE)
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.MBMSPTMChannelDescriptionChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSPTMChannelDescriptionChoice")
 	}
 	if limit > 0 {
 		if err := encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(w, v.MBMSPTMChannelDescriptionChoice); err != nil {
@@ -1449,10 +1503,16 @@ func encodeMBMSPTMChannelDescriptionIE(w *runtime.Writer, v MBMSPTMChannelDescri
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.FrequencyParameters) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: FrequencyParameters")
+	}
 	if limit > 0 {
 		if err := encodeMBMSPTMChannelDescriptionIEFrequencyParametersSelector(w, v.FrequencyParameters); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DLTIMESLOTALLOCATION) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DLTIMESLOTALLOCATION")
 	}
 	if limit > 1 {
 		if err := encodeMBMSPTMChannelDescriptionIEDLTIMESLOTALLOCATION(w, v.DLTIMESLOTALLOCATION); err != nil {
@@ -1627,20 +1687,32 @@ func encodeMPRACHDescriptionIE(w *runtime.Writer, v MPRACHDescriptionIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.FrequencyParameters) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: FrequencyParameters")
+	}
 	if limit > 0 {
 		if err := encodeMPRACHDescriptionIEFrequencyParametersSelector(w, v.FrequencyParameters); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MPRACHTIMESLOTNUMBER) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MPRACHTIMESLOTNUMBER")
 	}
 	if limit > 1 {
 		if err := encodeMPRACHDescriptionIEMPRACHTIMESLOTNUMBER(w, v.MPRACHTIMESLOTNUMBER); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.USF) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: USF")
+	}
 	if limit > 2 {
 		if err := encodeMPRACHDescriptionIEUSF(w, v.USF); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.MPRACHControlParameters) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MPRACHControlParameters")
 	}
 	if limit > 3 {
 		if err := encodeMPRACHDescriptionIEMPRACHControlParametersSelector(w, v.MPRACHControlParameters); err != nil {
@@ -1762,10 +1834,16 @@ func encodeMBMSSessionListIETMGIGroupListEntry(w *runtime.Writer, v MBMSSessionL
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.TMGI) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TMGI")
+	}
 	if limit > 1 {
 		if err := encodeMBMSSessionListIETMGIGroupListEntryTMGI(w, v.TMGI); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.MBMSSessionIdentity) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSSessionIdentity")
 	}
 	if limit > 2 {
 		if err := encodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentitySelector(w, v.MBMSSessionIdentity); err != nil {
@@ -1832,6 +1910,9 @@ func encodeMBMSSessionListIE(w *runtime.Writer, v MBMSSessionListIE) error {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.TMGIGroupList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TMGIGroupList")
 	}
 	if limit > 0 {
 		if err := encodeMBMSSessionListIETMGIGroupList(w, v.TMGIGroupList); err != nil {
@@ -2147,30 +2228,48 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry(w
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.LengthOfMBMSBearerIdentity) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: LengthOfMBMSBearerIdentity")
+	}
 	if limit > 1 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity(w, v.LengthOfMBMSBearerIdentity); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.MBMSBearerIdentity) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSBearerIdentity")
 	}
 	if limit > 2 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSBearerIdentity(w, v.MBMSBearerIdentity); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.EstimatedSessionDuration) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EstimatedSessionDuration")
+	}
 	if limit > 3 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEstimatedSessionDuration(w, v.EstimatedSessionDuration); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.MBMSRadioBearerStartingTime) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSRadioBearerStartingTime")
 	}
 	if limit > 4 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSRadioBearerStartingTimeSelector(w, v.MBMSRadioBearerStartingTime); err != nil {
 			return err
 		}
 	}
+	if limit <= 5 && !runtime.IsZero(v.EGPRSWindowSize) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSWindowSize")
+	}
 	if limit > 5 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEGPRSWindowSizeSelector(w, v.EGPRSWindowSize); err != nil {
 			return err
 		}
+	}
+	if limit <= 6 && !runtime.IsZero(v.NPMTransferTime) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NPMTransferTime")
 	}
 	if limit > 6 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeSelector(w, v.NPMTransferTime); err != nil {
@@ -2237,6 +2336,9 @@ func encodeMBMSSessionParametersListIE(w *runtime.Writer, v MBMSSessionParameter
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.LengthOfMBMSBearerIdentityGroupList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: LengthOfMBMSBearerIdentityGroupList")
 	}
 	if limit > 0 {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(w, v.LengthOfMBMSBearerIdentityGroupList); err != nil {
@@ -2549,25 +2651,40 @@ func encodeMPRACHControlParametersIE(w *runtime.Writer, v MPRACHControlParameter
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.ACCCONTRCLASS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ACCCONTRCLASS")
+	}
 	if limit > 0 {
 		if err := encodeMPRACHControlParametersIEACCCONTRCLASSSelector(w, v.ACCCONTRCLASS); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MAXRETRANS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MAXRETRANS")
 	}
 	if limit > 1 {
 		if err := encodeMPRACHControlParametersIEMAXRETRANSSelector(w, v.MAXRETRANS); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.S) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: S")
+	}
 	if limit > 2 {
 		if err := encodeMPRACHControlParametersIES(w, v.S); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.TXINT) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TXINT")
+	}
 	if limit > 3 {
 		if err := encodeMPRACHControlParametersIETXINTSelector(w, v.TXINT); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.PERSISTENCELEVEL) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PERSISTENCELEVEL")
 	}
 	if limit > 4 {
 		if err := encodeMPRACHControlParametersIEPERSISTENCELEVELSelector(w, v.PERSISTENCELEVEL); err != nil {
@@ -2776,25 +2893,40 @@ func encodeGPRSPowerControlParametersIE(w *runtime.Writer, v GPRSPowerControlPar
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.ALPHA) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ALPHA")
+	}
 	if limit > 0 {
 		if err := encodeGPRSPowerControlParametersIEALPHA(w, v.ALPHA); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.TAVGW) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TAVGW")
 	}
 	if limit > 1 {
 		if err := encodeGPRSPowerControlParametersIETAVGW(w, v.TAVGW); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.TAVGT) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TAVGT")
+	}
 	if limit > 2 {
 		if err := encodeGPRSPowerControlParametersIETAVGT(w, v.TAVGT); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.PCMEASCHAN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCMEASCHAN")
+	}
 	if limit > 3 {
 		if err := encodeGPRSPowerControlParametersIEPCMEASCHAN(w, v.PCMEASCHAN); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.NAVGI) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NAVGI")
 	}
 	if limit > 4 {
 		if err := encodeGPRSPowerControlParametersIENAVGI(w, v.NAVGI); err != nil {
@@ -3148,15 +3280,24 @@ func encodeGPRSCellOptionsIEPANDECGroup(w *runtime.Writer, v GPRSCellOptionsIEPA
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.PANDEC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PANDEC")
+	}
 	if limit > 0 {
 		if err := encodeGPRSCellOptionsIEPANDECGroupPANDEC(w, v.PANDEC); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.PANINC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PANINC")
+	}
 	if limit > 1 {
 		if err := encodeGPRSCellOptionsIEPANDECGroupPANINC(w, v.PANINC); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.PANMAX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PANMAX")
 	}
 	if limit > 2 {
 		if err := encodeGPRSCellOptionsIEPANDECGroupPANMAX(w, v.PANMAX); err != nil {
@@ -3330,10 +3471,16 @@ func encodeGPRSCellOptionsIEExtensionLengthGroup(w *runtime.Writer, v GPRSCellOp
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.ExtensionLength) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtensionLength")
+	}
 	if limit > 0 {
 		if err := encodeGPRSCellOptionsIEExtensionLengthGroupExtensionLength(w, v.ExtensionLength); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.Content) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Content")
 	}
 	if limit > 1 {
 		if err := encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformation(w, v.Content); err != nil {
@@ -3433,45 +3580,72 @@ func encodeGPRSCellOptionsIE(w *runtime.Writer, v GPRSCellOptionsIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.NMO) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NMO")
+	}
 	if limit > 0 {
 		if err := encodeGPRSCellOptionsIENMO(w, v.NMO); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.T3168) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: T3168")
 	}
 	if limit > 1 {
 		if err := encodeGPRSCellOptionsIET3168(w, v.T3168); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.T3192) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: T3192")
+	}
 	if limit > 2 {
 		if err := encodeGPRSCellOptionsIET3192(w, v.T3192); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.DRXTIMERMAX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DRXTIMERMAX")
 	}
 	if limit > 3 {
 		if err := encodeGPRSCellOptionsIEDRXTIMERMAX(w, v.DRXTIMERMAX); err != nil {
 			return err
 		}
 	}
+	if limit <= 4 && !runtime.IsZero(v.ACCESSBURSTTYPE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ACCESSBURSTTYPE")
+	}
 	if limit > 4 {
 		if err := encodeGPRSCellOptionsIEACCESSBURSTTYPE(w, v.ACCESSBURSTTYPE); err != nil {
 			return err
 		}
+	}
+	if limit <= 5 && !runtime.IsZero(v.CONTROLACKTYPE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CONTROLACKTYPE")
 	}
 	if limit > 5 {
 		if err := encodeGPRSCellOptionsIECONTROLACKTYPE(w, v.CONTROLACKTYPE); err != nil {
 			return err
 		}
 	}
+	if limit <= 6 && !runtime.IsZero(v.BSCVMAX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BSCVMAX")
+	}
 	if limit > 6 {
 		if err := encodeGPRSCellOptionsIEBSCVMAX(w, v.BSCVMAX); err != nil {
 			return err
 		}
 	}
+	if limit <= 7 && !runtime.IsZero(v.PANDECGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PANDECGroup")
+	}
 	if limit > 7 {
 		if err := encodeGPRSCellOptionsIEPANDECGroupSelector(w, v.PANDECGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 8 && !runtime.IsZero(v.ExtensionLengthGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ExtensionLengthGroup")
 	}
 	if limit > 8 {
 		if err := encodeGPRSCellOptionsIEExtensionLengthGroupSelector(w, v.ExtensionLengthGroup); err != nil {
@@ -3572,10 +3746,16 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSPACKETCHANNELREQUEST) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSPACKETCHANNELREQUEST")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUEST(w, v.EGPRSPACKETCHANNELREQUEST); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.BEPPERIOD) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BEPPERIOD")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD(w, v.BEPPERIOD); err != nil {
@@ -3743,20 +3923,32 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroup(w *runtime.Writer,
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSPACKETCHANNELREQUESTGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSPACKETCHANNELREQUESTGroup")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupSelector(w, v.EGPRSPACKETCHANNELREQUESTGroup); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.PFCFEATUREMODE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PFCFEATUREMODE")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupPFCFEATUREMODE(w, v.PFCFEATUREMODE); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.DTMSUPPORT) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMSUPPORT")
+	}
 	if limit > 2 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupDTMSUPPORT(w, v.DTMSUPPORT); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.BSSPAGINGCOORDINATION) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: BSSPAGINGCOORDINATION")
 	}
 	if limit > 3 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATION(w, v.BSSPAGINGCOORDINATION); err != nil {
@@ -3857,10 +4049,16 @@ func encodeExtensionInformationCCNACTIVEGroup(w *runtime.Writer, v ExtensionInfo
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.CCNACTIVE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CCNACTIVE")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationCCNACTIVEGroupCCNACTIVE(w, v.CCNACTIVE); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.NWEXTUTBF) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NWEXTUTBF")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationCCNACTIVEGroupNWEXTUTBF(w, v.NWEXTUTBF); err != nil {
@@ -4054,10 +4252,16 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.DEDICATEDMODEMBMSNOTIFICATIONSUPPORT) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DEDICATEDMODEMBMSNOTIFICATIONSUPPORT")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORT(w, v.DEDICATEDMODEMBMSNOTIFICATIONSUPPORT); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MNCISUPPORT) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MNCISUPPORT")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupMNCISUPPORT(w, v.MNCISUPPORT); err != nil {
@@ -4132,20 +4336,32 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroup(w *runtime.Writer, v E
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MULTIPLETBFCAPABILITY) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MULTIPLETBFCAPABILITY")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupMULTIPLETBFCAPABILITY(w, v.MULTIPLETBFCAPABILITY); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EXTUTBFNODATA) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EXTUTBFNODATA")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupEXTUTBFNODATA(w, v.EXTUTBFNODATA); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.DTMENHANCEMENTSCAPABILITY) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DTMENHANCEMENTSCAPABILITY")
+	}
 	if limit > 2 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDTMENHANCEMENTSCAPABILITY(w, v.DTMENHANCEMENTSCAPABILITY); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.DEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup")
 	}
 	if limit > 3 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupSelector(w, v.DEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup); err != nil {
@@ -4317,25 +4533,40 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.Group) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Group")
+	}
 	if limit > 0 {
 		if err := encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroup(w, v.Group); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.Group2) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Group2")
 	}
 	if limit > 1 {
 		if err := encodeExtensionInformationCCNACTIVEGroup(w, v.Group2); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.Group3) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: Group3")
+	}
 	if limit > 2 {
 		if err := encodeExtensionInformationMULTIPLETBFCAPABILITYGroup(w, v.Group3); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.REDUCEDLATENCYACCESS) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: REDUCEDLATENCYACCESS")
+	}
 	if limit > 3 {
 		if err := encodeExtensionInformationREDUCEDLATENCYACCESS(w, v.REDUCEDLATENCYACCESS); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.NMOIALTERNATE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: NMOIALTERNATE")
 	}
 	if limit > 4 {
 		if err := encodeExtensionInformationNMOIALTERNATE(w, v.NMOIALTERNATE); err != nil {
@@ -4456,6 +4687,9 @@ func encodeFrequencyParametersIEARFCNChoiceARFCN(w *runtime.Writer, v FrequencyP
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.ARFCN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ARFCN")
+	}
 	if limit > 1 {
 		if err := encodeFrequencyParametersIEARFCNChoiceARFCNARFCN(w, v.ARFCN); err != nil {
 			return err
@@ -4513,6 +4747,9 @@ func encodeFrequencyParametersIEARFCNChoiceIndirectEncoding(w *runtime.Writer, v
 		if err := encodeFrequencyParametersIEARFCNChoiceIndirectEncodingAlt01(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.IndirectEncoding) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: IndirectEncoding")
 	}
 	if limit > 1 {
 		if err := encodeFrequencyParametersIEARFCNChoiceIndirectEncodingIndirectEncoding(w, v.IndirectEncoding); err != nil {
@@ -4572,6 +4809,9 @@ func encodeFrequencyParametersIEARFCNChoiceDirectEncoding1(w *runtime.Writer, v 
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.DirectEncoding1) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DirectEncoding1")
+	}
 	if limit > 1 {
 		if err := encodeFrequencyParametersIEARFCNChoiceDirectEncoding1DirectEncoding1(w, v.DirectEncoding1); err != nil {
 			return err
@@ -4629,6 +4869,9 @@ func encodeFrequencyParametersIEARFCNChoiceDirectEncoding2(w *runtime.Writer, v 
 		if err := encodeFrequencyParametersIEARFCNChoiceDirectEncoding2Alt11(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.DirectEncoding2) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: DirectEncoding2")
 	}
 	if limit > 1 {
 		if err := encodeFrequencyParametersIEARFCNChoiceDirectEncoding2DirectEncoding2(w, v.DirectEncoding2); err != nil {
@@ -4763,10 +5006,16 @@ func encodeFrequencyParametersIE(w *runtime.Writer, v FrequencyParametersIE) err
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.TSC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TSC")
+	}
 	if limit > 0 {
 		if err := encodeFrequencyParametersIETSC(w, v.TSC); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.ARFCNChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ARFCNChoice")
 	}
 	if limit > 1 {
 		if err := encodeFrequencyParametersIEARFCNChoice(w, v.ARFCNChoice); err != nil {
@@ -4955,10 +5204,16 @@ func encodeIndirectEncodingStructCHANGEMARK1Group(w *runtime.Writer, v IndirectE
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.CHANGEMARK1) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CHANGEMARK1")
+	}
 	if limit > 0 {
 		if err := encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK1(w, v.CHANGEMARK1); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.CHANGEMARK2) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CHANGEMARK2")
 	}
 	if limit > 1 {
 		if err := encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Selector(w, v.CHANGEMARK2); err != nil {
@@ -5028,15 +5283,24 @@ func encodeIndirectEncodingStruct(w *runtime.Writer, v IndirectEncodingStruct) e
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MAIO) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MAIO")
+	}
 	if limit > 0 {
 		if err := encodeIndirectEncodingStructMAIO(w, v.MAIO); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.MANUMBER) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MANUMBER")
+	}
 	if limit > 1 {
 		if err := encodeIndirectEncodingStructMANUMBER(w, v.MANUMBER); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.CHANGEMARK1Group) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: CHANGEMARK1Group")
 	}
 	if limit > 2 {
 		if err := encodeIndirectEncodingStructCHANGEMARK1GroupSelector(w, v.CHANGEMARK1Group); err != nil {
@@ -5112,10 +5376,16 @@ func encodeDirectEncoding1Struct(w *runtime.Writer, v DirectEncoding1Struct) err
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MAIO) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MAIO")
+	}
 	if limit > 0 {
 		if err := encodeDirectEncoding1StructMAIO(w, v.MAIO); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.GPRSMobileAllocation) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: GPRSMobileAllocation")
 	}
 	if limit > 1 {
 		if err := encodeDirectEncoding1StructGPRSMobileAllocation(w, v.GPRSMobileAllocation); err != nil {
@@ -5286,20 +5556,32 @@ func encodeDirectEncoding2Struct(w *runtime.Writer, v DirectEncoding2Struct) err
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MAIO) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MAIO")
+	}
 	if limit > 0 {
 		if err := encodeDirectEncoding2StructMAIO(w, v.MAIO); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.HSN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: HSN")
 	}
 	if limit > 1 {
 		if err := encodeDirectEncoding2StructHSN(w, v.HSN); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.LengthOfMAFrequencyListContents) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: LengthOfMAFrequencyListContents")
+	}
 	if limit > 2 {
 		if err := encodeDirectEncoding2StructLengthOfMAFrequencyListContents(w, v.LengthOfMAFrequencyListContents); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.MAFrequencyListContents) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MAFrequencyListContents")
 	}
 	if limit > 3 {
 		if err := encodeDirectEncoding2StructMAFrequencyListContents(w, v.MAFrequencyListContents); err != nil {
@@ -5481,10 +5763,16 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTH(w *runtime.Writer, v GPR
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.MALENGTH) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MALENGTH")
+	}
 	if limit > 1 {
 		if err := encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMALENGTH(w, v.MALENGTH); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.MABITMAP) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MABITMAP")
 	}
 	if limit > 2 {
 		if err := encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMABITMAP(w, v.MABITMAP); err != nil {
@@ -5569,6 +5857,9 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList(w *runtime.Writer,
 		if err := encodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexListAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.ARFCNIndexList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ARFCNIndexList")
 	}
 	if limit > 1 {
 		if err := encodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexListARFCNIndexListSelector(w, v.ARFCNIndexList); err != nil {
@@ -5670,15 +5961,24 @@ func encodeGPRSMobileAllocationIE(w *runtime.Writer, v GPRSMobileAllocationIE) e
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.HSN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: HSN")
+	}
 	if limit > 0 {
 		if err := encodeGPRSMobileAllocationIEHSN(w, v.HSN); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.RFLNumberList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RFLNumberList")
+	}
 	if limit > 1 {
 		if err := encodeGPRSMobileAllocationIERFLNumberListSelector(w, v.RFLNumberList); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.MALENGTHChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MALENGTHChoice")
 	}
 	if limit > 2 {
 		if err := encodeGPRSMobileAllocationIEMALENGTHChoice(w, v.MALENGTHChoice); err != nil {
@@ -5742,6 +6042,9 @@ func encodeRFLNumberListStructElement(w *runtime.Writer, v RFLNumberListStructEl
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.RFLNUMBER) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RFLNUMBER")
 	}
 	if limit > 0 {
 		if err := encodeRFLNumberListStructElementRFLNUMBER(w, v.RFLNUMBER); err != nil {
@@ -5853,6 +6156,9 @@ func encodeARFCNIndexListStructElement(w *runtime.Writer, v ARFCNIndexListStruct
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.ARFCNINDEX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: ARFCNINDEX")
 	}
 	if limit > 0 {
 		if err := encodeARFCNIndexListStructElementARFCNINDEX(w, v.ARFCNINDEX); err != nil {
@@ -5984,6 +6290,9 @@ func encodePCIDGroupIEPCIDListEntry(w *runtime.Writer, v PCIDGroupIEPCIDListEntr
 		if err := encodePCIDGroupIEPCIDListEntryAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.PCID) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCID")
 	}
 	if limit > 1 {
 		if err := encodePCIDGroupIEPCIDListEntryPCID(w, v.PCID); err != nil {
@@ -6229,15 +6538,24 @@ func encodePCIDGroupIEPCIDPatternLengthGroupListEntry(w *runtime.Writer, v PCIDG
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.PCIDPatternLength) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDPatternLength")
+	}
 	if limit > 1 {
 		if err := encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternLength(w, v.PCIDPatternLength); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.PCIDPattern) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDPattern")
+	}
 	if limit > 2 {
 		if err := encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPattern(w, v.PCIDPattern); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.PCIDPatternSense) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDPatternSense")
 	}
 	if limit > 3 {
 		if err := encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternSense(w, v.PCIDPatternSense); err != nil {
@@ -6315,15 +6633,24 @@ func encodePCIDGroupIE(w *runtime.Writer, v PCIDGroupIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.PCIDList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDList")
+	}
 	if limit > 0 {
 		if err := encodePCIDGroupIEPCIDList(w, v.PCIDList); err != nil {
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.PCIDBITMAPGROUP) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDBITMAPGROUP")
+	}
 	if limit > 1 {
 		if err := encodePCIDGroupIEPCIDBITMAPGROUPSelector(w, v.PCIDBITMAPGROUP); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.PCIDPatternLengthGroupList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: PCIDPatternLengthGroupList")
 	}
 	if limit > 2 {
 		if err := encodePCIDGroupIEPCIDPatternLengthGroupList(w, v.PCIDPatternLengthGroupList); err != nil {
@@ -6382,6 +6709,9 @@ func encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 		if err := encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntryAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.RepeatedEUTRANEnhancedCellReselectionParameters) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RepeatedEUTRANEnhancedCellReselectionParameters")
 	}
 	if limit > 1 {
 		if err := encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntryRepeatedEUTRANEnhancedCellReselectionParameters(w, v.RepeatedEUTRANEnhancedCellReselectionParameters); err != nil {
@@ -6448,6 +6778,9 @@ func encodeEnhancedCellReselectionParametersIE(w *runtime.Writer, v EnhancedCell
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.RepeatedEUTRANEnhancedCellReselectionParametersList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: RepeatedEUTRANEnhancedCellReselectionParametersList")
 	}
 	if limit > 0 {
 		if err := encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList(w, v.RepeatedEUTRANEnhancedCellReselectionParametersList); err != nil {
@@ -6531,6 +6864,9 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntryAlt1(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EUTRANFREQUENCYINDEX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANFREQUENCYINDEX")
 	}
 	if limit > 1 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntryEUTRANFREQUENCYINDEX(w, v.EUTRANFREQUENCYINDEX); err != nil {
@@ -6648,6 +6984,9 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQminAlt0(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EUTRANQmin) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANQmin")
 	}
 	if limit > 1 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQminEUTRANQmin(w, v.EUTRANQmin); err != nil {
@@ -6918,20 +7257,32 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.THRESHEUTRANHighQ) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: THRESHEUTRANHighQ")
+	}
 	if limit > 1 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANHighQ(w, v.THRESHEUTRANHighQ); err != nil {
 			return err
 		}
+	}
+	if limit <= 2 && !runtime.IsZero(v.THRESHEUTRANLowQ) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: THRESHEUTRANLowQ")
 	}
 	if limit > 2 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANLowQSelector(w, v.THRESHEUTRANLowQ); err != nil {
 			return err
 		}
 	}
+	if limit <= 3 && !runtime.IsZero(v.EUTRANQQUALMIN) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANQQUALMIN")
+	}
 	if limit > 3 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANQQUALMINSelector(w, v.EUTRANQQUALMIN); err != nil {
 			return err
 		}
+	}
+	if limit <= 4 && !runtime.IsZero(v.EUTRANRSRPmin) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANRSRPmin")
 	}
 	if limit > 4 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANRSRPminSelector(w, v.EUTRANRSRPmin); err != nil {
@@ -7028,10 +7379,16 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(w *runtime.Writ
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EUTRANFREQUENCYINDEXList) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANFREQUENCYINDEXList")
+	}
 	if limit > 0 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList(w, v.EUTRANFREQUENCYINDEXList); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.EUTRANQminChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANQminChoice")
 	}
 	if limit > 1 {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice(w, v.EUTRANQminChoice); err != nil {
@@ -7102,6 +7459,9 @@ func encodeEGPRSWindowSizeIE(w *runtime.Writer, v EGPRSWindowSizeIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSWindowSize) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSWindowSize")
+	}
 	if limit > 0 {
 		if err := encodeEGPRSWindowSizeIEEGPRSWindowSize(w, v.EGPRSWindowSize); err != nil {
 			return err
@@ -7171,6 +7531,9 @@ func encodeEGPRSModulationAndCodingIE(w *runtime.Writer, v EGPRSModulationAndCod
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSModulationAndCodingScheme) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSModulationAndCodingScheme")
+	}
 	if limit > 0 {
 		if err := encodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(w, v.EGPRSModulationAndCodingScheme); err != nil {
 			return err
@@ -7239,6 +7602,9 @@ func encodeEGPRSLevelIE(w *runtime.Writer, v EGPRSLevelIE) error {
 			return fmt.Errorf("invalid truncation point")
 		}
 		limit = n
+	}
+	if limit <= 0 && !runtime.IsZero(v.EGPRSLevel) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: EGPRSLevel")
 	}
 	if limit > 0 {
 		if err := encodeEGPRSLevelIEEGPRSLevel(w, v.EGPRSLevel); err != nil {
@@ -7396,10 +7762,16 @@ func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroup(w *runtime.Writer, v Pac
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.TIMINGADVANCEINDEX) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TIMINGADVANCEINDEX")
+	}
 	if limit > 0 {
 		if err := encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCEINDEX(w, v.TIMINGADVANCEINDEX); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.TIMINGADVANCETIMESLOTNUMBER) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TIMINGADVANCETIMESLOTNUMBER")
 	}
 	if limit > 1 {
 		if err := encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCETIMESLOTNUMBER(w, v.TIMINGADVANCETIMESLOTNUMBER); err != nil {
@@ -7464,10 +7836,16 @@ func encodePacketTimingAdvanceIE(w *runtime.Writer, v PacketTimingAdvanceIE) err
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.TIMINGADVANCEVALUE) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TIMINGADVANCEVALUE")
+	}
 	if limit > 0 {
 		if err := encodePacketTimingAdvanceIETIMINGADVANCEVALUESelector(w, v.TIMINGADVANCEVALUE); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.TIMINGADVANCEINDEXGroup) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: TIMINGADVANCEINDEXGroup")
 	}
 	if limit > 1 {
 		if err := encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupSelector(w, v.TIMINGADVANCEINDEXGroup); err != nil {
@@ -7551,6 +7929,9 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(w *runtime.Writer, v TMGIIEMBM
 		if err := encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEIDAlt0(w, struct{}{}); err != nil {
 			return err
 		}
+	}
+	if limit <= 1 && !runtime.IsZero(v.MBMSSERVICEID) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSSERVICEID")
 	}
 	if limit > 1 {
 		if err := encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEIDMBMSSERVICEID(w, v.MBMSSERVICEID); err != nil {
@@ -7707,15 +8088,24 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMCC(w *runtime.Writer, v TMGIIEMBMSSERVICEID
 			return err
 		}
 	}
+	if limit <= 1 && !runtime.IsZero(v.MBMSSERVICEID) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSSERVICEID")
+	}
 	if limit > 1 {
 		if err := encodeTMGIIEMBMSSERVICEIDChoiceMCCMBMSSERVICEID(w, v.MBMSSERVICEID); err != nil {
 			return err
 		}
 	}
+	if limit <= 2 && !runtime.IsZero(v.MCC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MCC")
+	}
 	if limit > 2 {
 		if err := encodeTMGIIEMBMSSERVICEIDChoiceMCCMCC(w, v.MCC); err != nil {
 			return err
 		}
+	}
+	if limit <= 3 && !runtime.IsZero(v.MNC) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MNC")
 	}
 	if limit > 3 {
 		if err := encodeTMGIIEMBMSSERVICEIDChoiceMCCMNC(w, v.MNC); err != nil {
@@ -7807,6 +8197,9 @@ func encodeTMGIIE(w *runtime.Writer, v TMGIIE) error {
 		}
 		limit = n
 	}
+	if limit <= 0 && !runtime.IsZero(v.MBMSSERVICEIDChoice) {
+		return fmt.Errorf("edit to field beyond transmitted truncation: MBMSSERVICEIDChoice")
+	}
 	if limit > 0 {
 		if err := encodeTMGIIEMBMSSERVICEIDChoice(w, v.MBMSSERVICEIDChoice); err != nil {
 			return err
@@ -7839,9 +8232,6 @@ func DecodeUTRANCSGMeasurementReportIE(data []byte) (runtime.Decoded[UTRANCSGMea
 
 // EncodeUTRANCSGMeasurementReportIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeUTRANCSGMeasurementReportIE(v UTRANCSGMeasurementReportIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeUTRANCSGMeasurementReportIE(w, v); err != nil {
@@ -7870,9 +8260,6 @@ func DecodePLMNIDStruct(data []byte) (runtime.Decoded[PLMNIDStruct], error) {
 
 // EncodePLMNIDStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodePLMNIDStruct(v PLMNIDStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodePLMNIDStruct(w, v); err != nil {
@@ -7901,9 +8288,6 @@ func DecodePSCGroupIE(data []byte) (runtime.Decoded[PSCGroupIE], error) {
 
 // EncodePSCGroupIE encodes an edited or newly constructed value through direct bit operations.
 func EncodePSCGroupIE(v PSCGroupIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodePSCGroupIE(w, v); err != nil {
@@ -7936,9 +8320,6 @@ func DecodeMBMSChannelParametersIE(data []byte) (runtime.Decoded[MBMSChannelPara
 
 // EncodeMBMSChannelParametersIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMBMSChannelParametersIE(v MBMSChannelParametersIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMBMSChannelParametersIE(w, v); err != nil {
@@ -7971,9 +8352,6 @@ func DecodeMBMSPTMChannelDescriptionIE(data []byte) (runtime.Decoded[MBMSPTMChan
 
 // EncodeMBMSPTMChannelDescriptionIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMBMSPTMChannelDescriptionIE(v MBMSPTMChannelDescriptionIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMBMSPTMChannelDescriptionIE(w, v); err != nil {
@@ -8006,9 +8384,6 @@ func DecodeMPRACHDescriptionIE(data []byte) (runtime.Decoded[MPRACHDescriptionIE
 
 // EncodeMPRACHDescriptionIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMPRACHDescriptionIE(v MPRACHDescriptionIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMPRACHDescriptionIE(w, v); err != nil {
@@ -8041,9 +8416,6 @@ func DecodeMBMSSessionListIE(data []byte) (runtime.Decoded[MBMSSessionListIE], e
 
 // EncodeMBMSSessionListIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMBMSSessionListIE(v MBMSSessionListIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMBMSSessionListIE(w, v); err != nil {
@@ -8076,9 +8448,6 @@ func DecodeMBMSSessionParametersListIE(data []byte) (runtime.Decoded[MBMSSession
 
 // EncodeMBMSSessionParametersListIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMBMSSessionParametersListIE(v MBMSSessionParametersListIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMBMSSessionParametersListIE(w, v); err != nil {
@@ -8111,9 +8480,6 @@ func DecodeMPRACHControlParametersIE(data []byte) (runtime.Decoded[MPRACHControl
 
 // EncodeMPRACHControlParametersIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeMPRACHControlParametersIE(v MPRACHControlParametersIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeMPRACHControlParametersIE(w, v); err != nil {
@@ -8146,9 +8512,6 @@ func DecodeGPRSPowerControlParametersIE(data []byte) (runtime.Decoded[GPRSPowerC
 
 // EncodeGPRSPowerControlParametersIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeGPRSPowerControlParametersIE(v GPRSPowerControlParametersIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeGPRSPowerControlParametersIE(w, v); err != nil {
@@ -8181,9 +8544,6 @@ func DecodeGPRSCellOptionsIE(data []byte) (runtime.Decoded[GPRSCellOptionsIE], e
 
 // EncodeGPRSCellOptionsIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeGPRSCellOptionsIE(v GPRSCellOptionsIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeGPRSCellOptionsIE(w, v); err != nil {
@@ -8216,9 +8576,6 @@ func DecodeExtensionInformation(data []byte) (runtime.Decoded[ExtensionInformati
 
 // EncodeExtensionInformation encodes an edited or newly constructed value through direct bit operations.
 func EncodeExtensionInformation(v ExtensionInformation) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeExtensionInformation(w, v); err != nil {
@@ -8251,9 +8608,6 @@ func DecodeFrequencyParametersIE(data []byte) (runtime.Decoded[FrequencyParamete
 
 // EncodeFrequencyParametersIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeFrequencyParametersIE(v FrequencyParametersIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeFrequencyParametersIE(w, v); err != nil {
@@ -8286,9 +8640,6 @@ func DecodeIndirectEncodingStruct(data []byte) (runtime.Decoded[IndirectEncoding
 
 // EncodeIndirectEncodingStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeIndirectEncodingStruct(v IndirectEncodingStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeIndirectEncodingStruct(w, v); err != nil {
@@ -8321,9 +8672,6 @@ func DecodeDirectEncoding1Struct(data []byte) (runtime.Decoded[DirectEncoding1St
 
 // EncodeDirectEncoding1Struct encodes an edited or newly constructed value through direct bit operations.
 func EncodeDirectEncoding1Struct(v DirectEncoding1Struct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeDirectEncoding1Struct(w, v); err != nil {
@@ -8356,9 +8704,6 @@ func DecodeDirectEncoding2Struct(data []byte) (runtime.Decoded[DirectEncoding2St
 
 // EncodeDirectEncoding2Struct encodes an edited or newly constructed value through direct bit operations.
 func EncodeDirectEncoding2Struct(v DirectEncoding2Struct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeDirectEncoding2Struct(w, v); err != nil {
@@ -8391,9 +8736,6 @@ func DecodeGPRSMobileAllocationIE(data []byte) (runtime.Decoded[GPRSMobileAlloca
 
 // EncodeGPRSMobileAllocationIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeGPRSMobileAllocationIE(v GPRSMobileAllocationIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeGPRSMobileAllocationIE(w, v); err != nil {
@@ -8426,9 +8768,6 @@ func DecodeRFLNumberListStruct(data []byte) (runtime.Decoded[RFLNumberListStruct
 
 // EncodeRFLNumberListStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeRFLNumberListStruct(v RFLNumberListStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeRFLNumberListStruct(w, v); err != nil {
@@ -8461,9 +8800,6 @@ func DecodeARFCNIndexListStruct(data []byte) (runtime.Decoded[ARFCNIndexListStru
 
 // EncodeARFCNIndexListStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeARFCNIndexListStruct(v ARFCNIndexListStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeARFCNIndexListStruct(w, v); err != nil {
@@ -8492,9 +8828,6 @@ func DecodePCIDGroupIE(data []byte) (runtime.Decoded[PCIDGroupIE], error) {
 
 // EncodePCIDGroupIE encodes an edited or newly constructed value through direct bit operations.
 func EncodePCIDGroupIE(v PCIDGroupIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodePCIDGroupIE(w, v); err != nil {
@@ -8527,9 +8860,6 @@ func DecodeEnhancedCellReselectionParametersIE(data []byte) (runtime.Decoded[Enh
 
 // EncodeEnhancedCellReselectionParametersIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeEnhancedCellReselectionParametersIE(v EnhancedCellReselectionParametersIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEnhancedCellReselectionParametersIE(w, v); err != nil {
@@ -8562,9 +8892,6 @@ func DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data []byte) (r
 
 // EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct encodes an edited or newly constructed value through direct bit operations.
 func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v RepeatedEUTRANEnhancedCellReselectionParametersStruct) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(w, v); err != nil {
@@ -8597,9 +8924,6 @@ func DecodeEGPRSWindowSizeIE(data []byte) (runtime.Decoded[EGPRSWindowSizeIE], e
 
 // EncodeEGPRSWindowSizeIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeEGPRSWindowSizeIE(v EGPRSWindowSizeIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEGPRSWindowSizeIE(w, v); err != nil {
@@ -8632,9 +8956,6 @@ func DecodeEGPRSModulationAndCodingIE(data []byte) (runtime.Decoded[EGPRSModulat
 
 // EncodeEGPRSModulationAndCodingIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeEGPRSModulationAndCodingIE(v EGPRSModulationAndCodingIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEGPRSModulationAndCodingIE(w, v); err != nil {
@@ -8663,9 +8984,6 @@ func DecodeEGPRSLevelIE(data []byte) (runtime.Decoded[EGPRSLevelIE], error) {
 
 // EncodeEGPRSLevelIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeEGPRSLevelIE(v EGPRSLevelIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEGPRSLevelIE(w, v); err != nil {
@@ -8698,9 +9016,6 @@ func DecodePacketTimingAdvanceIE(data []byte) (runtime.Decoded[PacketTimingAdvan
 
 // EncodePacketTimingAdvanceIE encodes an edited or newly constructed value through direct bit operations.
 func EncodePacketTimingAdvanceIE(v PacketTimingAdvanceIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodePacketTimingAdvanceIE(w, v); err != nil {
@@ -8729,9 +9044,6 @@ func DecodeTMGIIE(data []byte) (runtime.Decoded[TMGIIE], error) {
 
 // EncodeTMGIIE encodes an edited or newly constructed value through direct bit operations.
 func EncodeTMGIIE(v TMGIIE) ([]byte, error) {
-	if raw, ok := runtime.OriginalIfUnchanged(v, v.Wire); ok {
-		return raw, nil
-	}
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeTMGIIE(w, v); err != nil {
@@ -8744,7 +9056,7 @@ func Definitions() []string {
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", Decode: func(data []byte) (any, error) { return DecodeUTRANCSGMeasurementReportIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", Decode: func(data []byte) (any, error) { return DecodeUTRANCSGMeasurementReportIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANCSGMeasurementReportIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANCSGMeasurementReportIE:
 				return EncodeUTRANCSGMeasurementReportIE(v)
@@ -8754,7 +9066,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANCSGMeasurementReportIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", Decode: func(data []byte) (any, error) { return DecodePLMNIDStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", Decode: func(data []byte) (any, error) { return DecodePLMNIDStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePLMNIDStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PLMNIDStruct:
 				return EncodePLMNIDStruct(v)
@@ -8764,7 +9076,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PLMNIDStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", Decode: func(data []byte) (any, error) { return DecodePSCGroupIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", Decode: func(data []byte) (any, error) { return DecodePSCGroupIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePSCGroupIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PSCGroupIE:
 				return EncodePSCGroupIE(v)
@@ -8774,7 +9086,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PSCGroupIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", Decode: func(data []byte) (any, error) { return DecodeMBMSChannelParametersIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", Decode: func(data []byte) (any, error) { return DecodeMBMSChannelParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSChannelParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSChannelParametersIE:
 				return EncodeMBMSChannelParametersIE(v)
@@ -8784,7 +9096,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSChannelParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", Decode: func(data []byte) (any, error) { return DecodeMBMSPTMChannelDescriptionIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", Decode: func(data []byte) (any, error) { return DecodeMBMSPTMChannelDescriptionIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSPTMChannelDescriptionIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSPTMChannelDescriptionIE:
 				return EncodeMBMSPTMChannelDescriptionIE(v)
@@ -8794,7 +9106,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSPTMChannelDescriptionIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", Decode: func(data []byte) (any, error) { return DecodeMPRACHDescriptionIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", Decode: func(data []byte) (any, error) { return DecodeMPRACHDescriptionIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMPRACHDescriptionIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MPRACHDescriptionIE:
 				return EncodeMPRACHDescriptionIE(v)
@@ -8804,7 +9116,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MPRACHDescriptionIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", Decode: func(data []byte) (any, error) { return DecodeMBMSSessionListIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", Decode: func(data []byte) (any, error) { return DecodeMBMSSessionListIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSSessionListIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSSessionListIE:
 				return EncodeMBMSSessionListIE(v)
@@ -8814,7 +9126,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSSessionListIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", Decode: func(data []byte) (any, error) { return DecodeMBMSSessionParametersListIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", Decode: func(data []byte) (any, error) { return DecodeMBMSSessionParametersListIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSSessionParametersListIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSSessionParametersListIE:
 				return EncodeMBMSSessionParametersListIE(v)
@@ -8824,7 +9136,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSSessionParametersListIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", Decode: func(data []byte) (any, error) { return DecodeMPRACHControlParametersIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", Decode: func(data []byte) (any, error) { return DecodeMPRACHControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMPRACHControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MPRACHControlParametersIE:
 				return EncodeMPRACHControlParametersIE(v)
@@ -8834,7 +9146,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MPRACHControlParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", Decode: func(data []byte) (any, error) { return DecodeGPRSPowerControlParametersIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", Decode: func(data []byte) (any, error) { return DecodeGPRSPowerControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSPowerControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSPowerControlParametersIE:
 				return EncodeGPRSPowerControlParametersIE(v)
@@ -8844,7 +9156,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSPowerControlParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", Decode: func(data []byte) (any, error) { return DecodeGPRSCellOptionsIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", Decode: func(data []byte) (any, error) { return DecodeGPRSCellOptionsIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSCellOptionsIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSCellOptionsIE:
 				return EncodeGPRSCellOptionsIE(v)
@@ -8854,7 +9166,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSCellOptionsIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", Decode: func(data []byte) (any, error) { return DecodeExtensionInformation(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", Decode: func(data []byte) (any, error) { return DecodeExtensionInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtensionInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtensionInformation:
 				return EncodeExtensionInformation(v)
@@ -8864,7 +9176,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ExtensionInformation")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", Decode: func(data []byte) (any, error) { return DecodeFrequencyParametersIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", Decode: func(data []byte) (any, error) { return DecodeFrequencyParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFrequencyParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FrequencyParametersIE:
 				return EncodeFrequencyParametersIE(v)
@@ -8874,7 +9186,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for FrequencyParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", Decode: func(data []byte) (any, error) { return DecodeIndirectEncodingStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", Decode: func(data []byte) (any, error) { return DecodeIndirectEncodingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIndirectEncodingStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IndirectEncodingStruct:
 				return EncodeIndirectEncodingStruct(v)
@@ -8884,7 +9196,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IndirectEncodingStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", Decode: func(data []byte) (any, error) { return DecodeDirectEncoding1Struct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", Decode: func(data []byte) (any, error) { return DecodeDirectEncoding1Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDirectEncoding1StructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DirectEncoding1Struct:
 				return EncodeDirectEncoding1Struct(v)
@@ -8894,7 +9206,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DirectEncoding1Struct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", Decode: func(data []byte) (any, error) { return DecodeDirectEncoding2Struct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", Decode: func(data []byte) (any, error) { return DecodeDirectEncoding2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDirectEncoding2StructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DirectEncoding2Struct:
 				return EncodeDirectEncoding2Struct(v)
@@ -8904,7 +9216,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DirectEncoding2Struct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", Decode: func(data []byte) (any, error) { return DecodeGPRSMobileAllocationIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", Decode: func(data []byte) (any, error) { return DecodeGPRSMobileAllocationIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSMobileAllocationIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSMobileAllocationIE:
 				return EncodeGPRSMobileAllocationIE(v)
@@ -8914,7 +9226,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSMobileAllocationIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", Decode: func(data []byte) (any, error) { return DecodeRFLNumberListStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", Decode: func(data []byte) (any, error) { return DecodeRFLNumberListStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRFLNumberListStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RFLNumberListStruct:
 				return EncodeRFLNumberListStruct(v)
@@ -8924,7 +9236,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RFLNumberListStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", Decode: func(data []byte) (any, error) { return DecodeARFCNIndexListStruct(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", Decode: func(data []byte) (any, error) { return DecodeARFCNIndexListStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeARFCNIndexListStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ARFCNIndexListStruct:
 				return EncodeARFCNIndexListStruct(v)
@@ -8934,7 +9246,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ARFCNIndexListStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", Decode: func(data []byte) (any, error) { return DecodePCIDGroupIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", Decode: func(data []byte) (any, error) { return DecodePCIDGroupIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePCIDGroupIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PCIDGroupIE:
 				return EncodePCIDGroupIE(v)
@@ -8944,7 +9256,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PCIDGroupIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", Decode: func(data []byte) (any, error) { return DecodeEnhancedCellReselectionParametersIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", Decode: func(data []byte) (any, error) { return DecodeEnhancedCellReselectionParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedCellReselectionParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedCellReselectionParametersIE:
 				return EncodeEnhancedCellReselectionParametersIE(v)
@@ -8956,6 +9268,8 @@ func Descriptors() []runtime.Descriptor {
 		}},
 		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", Decode: func(data []byte) (any, error) {
 			return DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data)
+		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
+			return DecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r)
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANEnhancedCellReselectionParametersStruct:
@@ -8966,7 +9280,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANEnhancedCellReselectionParametersStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSWindowSizeIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSWindowSizeIE:
 				return EncodeEGPRSWindowSizeIE(v)
@@ -8976,7 +9290,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSWindowSizeIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSModulationAndCodingIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSModulationAndCodingIE:
 				return EncodeEGPRSModulationAndCodingIE(v)
@@ -8986,7 +9300,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSModulationAndCodingIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSLevelIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSLevelIE:
 				return EncodeEGPRSLevelIE(v)
@@ -8996,7 +9310,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSLevelIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketTimingAdvanceIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketTimingAdvanceIE:
 				return EncodePacketTimingAdvanceIE(v)
@@ -9006,7 +9320,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PacketTimingAdvanceIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeTMGIIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case TMGIIE:
 				return EncodeTMGIIE(v)

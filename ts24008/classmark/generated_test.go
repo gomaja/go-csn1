@@ -108,6 +108,22 @@ func TestClassmark3ImplicitZeroExtensionPreservesPrefix(t *testing.T) {
 	}
 }
 
+func TestClassmark3EditedTransmittedBitKeepsOneOctetBoundary(t *testing.T) {
+	decoded, err := DecodeClassmark3ValuePart([]byte{0})
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoded.Value.MultibandSupportedChoice.A5Bits.A5Bits.A57 = 1
+	encoded, err := EncodeClassmark3ValuePart(decoded.Value)
+	if err != nil || len(encoded) != 1 || encoded[0] != 0x08 {
+		t.Fatalf("transmitted A5 edit: %x, %v", encoded, err)
+	}
+	decoded.Value.UCS2Treatment = 1
+	if _, err := EncodeClassmark3ValuePart(decoded.Value); err == nil {
+		t.Fatal("accepted edit to receiver-inferred bit")
+	}
+}
+
 func TestClassmark3AllOptionalGroupsPresent(t *testing.T) {
 	v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{}}}
 	setAllOptionalPointers(reflect.ValueOf(&v))
