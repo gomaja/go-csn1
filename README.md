@@ -2,6 +2,15 @@
 
 Go decoders and byte-exact encoders for CSN.1 definitions extracted from current 3GPP specifications. The compiler and authenticated source lock live in `github.com/gomaja/asn1-go-compiler`.
 
+## Installation
+
+```bash
+go get github.com/gomaja/go-csn1@main
+```
+
+No tagged releases are published. Depend on the `main` branch and update with
+`go get github.com/gomaja/go-csn1@main`.
+
 ## Usage
 
 ```go
@@ -88,3 +97,8 @@ Packages marked **[compiled]** contain generated Go bindings. Planned packages a
 | `ts44060/rlcmac` | TS 44.060 V19.0.0 §11 | RLC/MAC control messages | planned |
 
 The module has no tags or releases. Consumers track `main` at a pinned commit.
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE). See [NOTICE](NOTICE) for the
+attribution of the 3GPP specifications from which the packages are generated.

@@ -1,0 +1,12 @@
+go-csn1
+Copyright 2026 gomaja
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The Go packages in this repository are generated from CSN.1 definitions and
+field tables published in 3GPP Technical Specifications (TS 24.008, TS 36.331,
+TS 44.018 and TS 44.060) by the 3GPP Organizational Partners (ARIB, ATIS,
+CCSA, ETSI, TSDSI, TTA, TTC). Those specifications remain the property of
+their respective copyright holders and are subject to their terms of use. The
+specification editions, archive hashes and typed source corrections used for
+generation are recorded in the source lock of github.com/gomaja/asn1-go-compiler.
