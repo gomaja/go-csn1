@@ -40,13 +40,27 @@ func TestClauseQualifiedLookup(t *testing.T) {
 	}
 }
 
+func TestOneVersionPerStandard(t *testing.T) {
+	entries := descriptors()
+	if err := validateVersions(entries); err != nil {
+		t.Fatal(err)
+	}
+	first := entries[0]
+	entries = append(entries, runtime.Descriptor{Standard: first.Standard, Version: first.Version + ".other"})
+	if err := validateVersions(entries); err == nil {
+		t.Fatal("accepted a second version for one standard")
+	}
+}
+
 func TestSI7ContextRegistry(t *testing.T) {
 	data := make([]byte, 20)
 	if _, err := Decode("TS 44.018", "SI7 Rest Octets", data); !errors.Is(err, runtime.ErrContextRequired) {
 		t.Fatalf("missing context error: %v", err)
 	} else {
 		var required *runtime.ContextRequiredError
-		if !errors.As(err,&required)||required.Clause!="10.5.2.36"||required.Name!="SI7 Rest Octets"{t.Fatalf("missing typed context details: %v",err)}
+		if !errors.As(err, &required) || required.Clause != "10.5.2.36" || required.Name != "SI7 Rest Octets" {
+			t.Fatalf("missing typed context details: %v", err)
+		}
 	}
 	if _, err := DecodeWithContext("TS 44.018", "SI7 Rest Octets", data, runtime.SI4ACSOne); err != nil {
 		t.Fatal(err)

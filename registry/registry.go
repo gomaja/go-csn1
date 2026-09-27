@@ -1,4 +1,7 @@
 // Package registry resolves published CSN.1 definition names and clauses.
+// Each module carries one version per standard; version is descriptor metadata,
+// not part of a lookup key. Consumers update with main rather than select a
+// historical version through this registry.
 package registry
 
 import (
@@ -54,11 +57,29 @@ func descriptors() []runtime.Descriptor {
 	return out
 }
 
+func validateVersions(entries []runtime.Descriptor) error {
+	versions := make(map[string]string)
+	for _, entry := range entries {
+		if entry.Standard == "" || entry.Version == "" {
+			return fmt.Errorf("CSN.1 descriptor lacks standard or version")
+		}
+		if prior, ok := versions[entry.Standard]; ok && prior != entry.Version {
+			return fmt.Errorf("multiple versions of %s: %s and %s", entry.Standard, prior, entry.Version)
+		}
+		versions[entry.Standard] = entry.Version
+	}
+	return nil
+}
+
 // Lookup accepts the definition name exactly as printed. A name with multiple
 // clause-qualified definitions is rejected with the candidate clauses.
 func Lookup(standard, name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
-	for _, d := range descriptors() {
+	entries := descriptors()
+	if err := validateVersions(entries); err != nil {
+		return runtime.Descriptor{}, err
+	}
+	for _, d := range entries {
 		if d.Standard == standard && d.Name == name {
 			matches = append(matches, d)
 		}
@@ -79,7 +100,11 @@ func Lookup(standard, name string) (runtime.Descriptor, error) {
 
 // LookupClause resolves the exact specification, clause and printed name.
 func LookupClause(standard, clause, name string) (runtime.Descriptor, error) {
-	for _, d := range descriptors() {
+	entries := descriptors()
+	if err := validateVersions(entries); err != nil {
+		return runtime.Descriptor{}, err
+	}
+	for _, d := range entries {
 		if d.Standard == standard && d.Clause == clause && d.Name == name {
 			return d, nil
 		}
