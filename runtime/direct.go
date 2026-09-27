@@ -16,6 +16,7 @@ type WireInfo struct {
 	Tail          BitString
 	Spare         []BitString
 	Padding       []BitString
+	Terminal      []BitString
 	TruncatedAt   map[string]int
 	SpareCounts   map[string][]int
 	ImplicitZeros int
@@ -126,6 +127,7 @@ func (r *Reader) Fork() *Reader {
 	copy.vars = cloneVars(r.vars)
 	copy.wire.Spare = append([]BitString(nil), r.wire.Spare...)
 	copy.wire.Padding = append([]BitString(nil), r.wire.Padding...)
+	copy.wire.Terminal = append([]BitString(nil), r.wire.Terminal...)
 	copy.wire.TruncatedAt = make(map[string]int, len(r.wire.TruncatedAt))
 	for k, v := range r.wire.TruncatedAt {
 		copy.wire.TruncatedAt[k] = v
@@ -254,6 +256,12 @@ func (r *Reader) PopLimit(old int) error {
 	return nil
 }
 func (r *Reader) RecordTruncation(path string, child int) { r.wire.TruncatedAt[path] = child }
+
+// RecordTerminal preserves the nonsemantic zero-length stop record printed
+// in TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.1.
+func (r *Reader) RecordTerminal(start int) {
+	r.wire.Terminal = append(r.wire.Terminal, bitsAt(r.data, start, r.pos-start))
+}
 func (r *Reader) RecordSpareCount(path string, count int) {
 	if r.wire.SpareCounts == nil {
 		r.wire.SpareCounts = make(map[string][]int)
@@ -263,14 +271,14 @@ func (r *Reader) RecordSpareCount(path string, count int) {
 
 // Writer uses the same MSB-first bit order and expression rules as Reader.
 type Writer struct {
-	bytes           []byte
-	bits            int
-	vars            map[string]uint64
-	path            string
-	depth           int
-	spare, padding  int
-	spareCountIndex map[string]int
-	wire            WireInfo
+	bytes                    []byte
+	bits                     int
+	vars                     map[string]uint64
+	path                     string
+	depth                    int
+	spare, padding, terminal int
+	spareCountIndex          map[string]int
+	wire                     WireInfo
 }
 
 func NewWriter() *Writer                             { return &Writer{vars: make(map[string]uint64)} }
@@ -377,6 +385,48 @@ func (w *Writer) WritePadding() error {
 		}
 	}
 	return nil
+}
+
+// WritePaddingTo fills a fixed-size rest-octet value with the GSM 0x2b
+// L/H pattern. TS 44.018 V19.0.0 §§10.5.2.37h–i specify 20 octets;
+// TS 44.060 V19.0.0 §11 defines the padding pattern. A decoded value's
+// received padding is retained when its width still fits after editing.
+func (w *Writer) WritePaddingTo(bits int) error {
+	if bits < w.bits || bits > maxBits {
+		return fmt.Errorf("padding target outside bounded value")
+	}
+	if w.wire.Tail.BitLength == bits-w.bits && w.wire.Tail.BitLength > 0 {
+		return w.WriteBitString(w.wire.Tail, w.wire.Tail.BitLength)
+	}
+	if w.padding < len(w.wire.Padding) {
+		v := w.wire.Padding[w.padding]
+		w.padding++
+		if v.BitLength == bits-w.bits {
+			return w.WriteBitString(v, v.BitLength)
+		}
+	}
+	for w.bits < bits {
+		if err := w.put(literalBit('L', w.bits)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// WriteZeroLengthTerminal emits the SI18/SI20 list stop record. Its
+// discriminator bits are retained from the received wire when available;
+// the canonical newly constructed record is zero (TS 44.018 V19.0.0
+// §10.5.2.37h table 10.5.2.37h.1, zero container-octet count).
+func (w *Writer) WriteZeroLengthTerminal() error {
+	if w.terminal < len(w.wire.Terminal) {
+		v := w.wire.Terminal[w.terminal]
+		w.terminal++
+		if v.BitLength != 8 || len(v.Bytes) < 1 || v.Bytes[0]&0x1f != 0 {
+			return fmt.Errorf("invalid zero-length SI terminal record")
+		}
+		return w.WriteBitString(v, 8)
+	}
+	return w.WriteUint(0, 8)
 }
 
 // WriteIgnored emits exactly the received or supplied fallback bits, without

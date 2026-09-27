@@ -16,6 +16,29 @@ var ErrEmptyValue = errors.New("empty CSN.1 value")
 // selected from its bytes without information outside that value.
 var ErrUnsupported = errors.New("unsupported CSN.1 value")
 
+// ErrContextRequired identifies a value whose alternatives are selected by
+// a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35).
+var ErrContextRequired = errors.New("CSN.1 context required")
+
+type ContextRequiredError struct{ Standard, Clause, Name string }
+
+func (e *ContextRequiredError) Error() string {
+	return fmt.Sprintf("%s §%s <%s>: %s", e.Standard, e.Clause, e.Name, ErrContextRequired)
+}
+
+func (e *ContextRequiredError) Unwrap() error { return ErrContextRequired }
+
+// SI4ACS is the ACS bit in the containing SI4 message. TS 44.018 V19.0.0
+// §10.5.2.35 selects SI7/SI8's O+S layout for one and S-only for zero.
+type SI4ACS uint8
+
+const (
+	SI4ACSZero SI4ACS = 0
+	SI4ACSOne  SI4ACS = 1
+)
+
+func (c SI4ACS) Valid() bool { return c == SI4ACSZero || c == SI4ACSOne }
+
 // BitString is an MSB-first bit sequence. Unused low bits in the last byte
 // are ignored; BitLength is the exact number of significant bits.
 type BitString struct {
@@ -35,6 +58,8 @@ type Descriptor struct {
 	Standard, Version, Clause, Name string
 	Decode                          func([]byte) (any, error)
 	Encode                          func(any) ([]byte, error)
+	DecodeWithContext               func([]byte, SI4ACS) (any, error)
+	EncodeWithContext               func(any, SI4ACS) ([]byte, error)
 }
 
 type ErrorKind string

@@ -1,8 +1,11 @@
 package registry
 
 import (
+	"errors"
 	"strings"
 	"testing"
+
+	"github.com/gomaja/go-csn1/runtime"
 )
 
 func TestClauseQualifiedLookup(t *testing.T) {
@@ -34,5 +37,18 @@ func TestClauseQualifiedLookup(t *testing.T) {
 	}
 	if _, err := Lookup("TS 44.018", "PEO IMM Cell Group Details struct"); err == nil || !strings.Contains(err.Error(), "10.5.2.18") {
 		t.Fatalf("clause ambiguity was lost: %v", err)
+	}
+}
+
+func TestSI7ContextRegistry(t *testing.T) {
+	data := make([]byte, 20)
+	if _, err := Decode("TS 44.018", "SI7 Rest Octets", data); !errors.Is(err, runtime.ErrContextRequired) {
+		t.Fatalf("missing context error: %v", err)
+	} else {
+		var required *runtime.ContextRequiredError
+		if !errors.As(err,&required)||required.Clause!="10.5.2.36"||required.Name!="SI7 Rest Octets"{t.Fatalf("missing typed context details: %v",err)}
+	}
+	if _, err := DecodeWithContext("TS 44.018", "SI7 Rest Octets", data, runtime.SI4ACSOne); err != nil {
+		t.Fatal(err)
 	}
 }

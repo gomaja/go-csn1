@@ -47,7 +47,6 @@ type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1Multib
 type Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1 struct {
 	MultibandSupported         Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	A5Bits                     A5Bits
-	SpareBitList               []runtime.BitString
 	AssociatedRadioCapability1 uint8
 }
 type Classmark3ValuePartMultibandSupportedChoiceAlternative uint8
@@ -599,11 +598,11 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	return w.WriteSpare()
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(r *runtime.Reader) ([]runtime.BitString, error) {
-	var out []runtime.BitString
 	count, err := r.Eval("4")
 	if err != nil {
 		return nil, err
 	}
+	var out []runtime.BitString
 	for i := 0; i < count; i++ {
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r)
 		if err != nil {
@@ -613,16 +612,13 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	}
 	return out, nil
 }
-func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w *runtime.Writer, v []runtime.BitString) error {
+func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, err := w.Eval("4")
 	if err != nil {
 		return err
 	}
-	if len(v) != count {
-		return fmt.Errorf("repeat count mismatch")
-	}
-	for _, item := range v {
-		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w, item); err != nil {
+	for i := 0; i < count; i++ {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w, runtime.BitString{}); err != nil {
 			return err
 		}
 	}
@@ -679,7 +675,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	if err != nil {
 		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
 	}
-	v.SpareBitList = x2
+	_ = x2
 	x3, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(r)
 	if err != nil {
 		return Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{}, err
@@ -710,7 +706,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		}
 	}
 	if limit > 2 {
-		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w, v.SpareBitList); err != nil {
+		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w, nil); err != nil {
 			return err
 		}
 	}

@@ -2,7 +2,6 @@ package classmark
 
 import (
 	"bytes"
-	"github.com/gomaja/go-csn1/runtime"
 	"reflect"
 	"testing"
 )
@@ -22,7 +21,7 @@ func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 		}},
 		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1, AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{
 			MultibandSupported: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported{Alternative: Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010, Alt010: &struct{}{}},
-			A5Bits:             A5Bits{A56: 1}, SpareBitList: make([]runtime.BitString, 4), AssociatedRadioCapability1: 4,
+			A5Bits:             A5Bits{A56: 1}, AssociatedRadioCapability1: 4,
 		}},
 	}
 	for i, choice := range branches {
@@ -37,6 +36,9 @@ func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 		}
 		if decoded.Value.MultibandSupportedChoice.Alternative != choice.Alternative {
 			t.Fatalf("branch %d selected %d", i, decoded.Value.MultibandSupportedChoice.Alternative)
+		}
+		if i == 2 && len(decoded.Value.Wire.Spare) != 6 {
+			t.Fatalf("fixed and surrounding spare bits missing from wire state: %d", len(decoded.Value.Wire.Spare))
 		}
 		reencoded, err := EncodeClassmark3ValuePart(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, reencoded) {
@@ -209,7 +211,7 @@ func TestClassmark3MultibandSubchoices(t *testing.T) {
 			band.Alt100 = &struct{}{}
 		}
 		v := Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1,
-			AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{MultibandSupported: band, SpareBitList: make([]runtime.BitString, 4)}}}
+			AssociatedRadioCapability1: &Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1{MultibandSupported: band}}}
 		encoded, err := EncodeClassmark3ValuePart(v)
 		if err != nil {
 			t.Fatal(err)

@@ -86,3 +86,26 @@ func LookupClause(standard, clause, name string) (runtime.Descriptor, error) {
 	}
 	return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q in %s §%s", name, standard, clause)
 }
+
+// Decode resolves a printed definition name. SI7/SI8 return a typed
+// context-required error because TS 44.018 V19.0.0 §10.5.2.35 selects
+// their layout from the ACS bit in the containing SI4 message.
+func Decode(standard, name string, data []byte) (any, error) {
+	d, err := Lookup(standard, name)
+	if err != nil {
+		return nil, err
+	}
+	return d.Decode(data)
+}
+
+// DecodeWithContext supplies the containing SI4 ACS bit for SI7/SI8.
+func DecodeWithContext(standard, name string, data []byte, acs runtime.SI4ACS) (any, error) {
+	d, err := Lookup(standard, name)
+	if err != nil {
+		return nil, err
+	}
+	if d.DecodeWithContext == nil {
+		return nil, fmt.Errorf("%w: %s §%s <%s> has no ACS context", runtime.ErrUnsupported, d.Standard, d.Clause, d.Name)
+	}
+	return d.DecodeWithContext(data, acs)
+}

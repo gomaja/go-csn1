@@ -307,42 +307,238 @@ func TestSI7AndSI8RequireACSContext(t *testing.T) {
 		if _, err := d.Decode(nil); err == nil || errors.Is(err, runtime.ErrUnsupported) {
 			t.Fatalf("zero length must fail the fixed 20 octet length: %v", err)
 		}
-		if _, err := d.Decode(make([]byte, 20)); !errors.Is(err, runtime.ErrUnsupported) {
-			t.Fatalf("missing ACS conflict: %v", err)
+		if _, err := d.Decode(make([]byte, 20)); !errors.Is(err, runtime.ErrContextRequired) {
+			t.Fatalf("missing typed ACS context error: %v", err)
+		}
+		if d.DecodeWithContext == nil || d.EncodeWithContext == nil {
+			t.Fatalf("%s lacks registry context API", tc.name)
 		}
 	}
 }
 
-func TestSI18AndSI20FailClosedOnTerminatorConflict(t *testing.T) {
-	// TS 44.018 V19.0.0 §§10.5.2.37h–i: the source's
-	// zero-length Non-GSM Message terminator is disputed by the
-	// independent pycrate decoder; the standalone values stay closed.
+func TestSI7SI8ExplicitACSLayouts(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.35, paragraph after the CSN.1 grammar:
+	// ACS=1 includes both O and S; ACS=0 includes only S.
+	for _, tc := range []struct {
+		name   string
+		decode func([]byte, runtime.SI4ACS) (any, error)
+		encode func(any, runtime.SI4ACS) ([]byte, error)
+	}{
+		{"SI7", func(b []byte, c runtime.SI4ACS) (any, error) { return DecodeSI7RestOctetsWithContext(b, c) }, func(v any, c runtime.SI4ACS) ([]byte, error) {
+			return EncodeSI7RestOctetsWithContext(v.(SI7RestOctets), c)
+		}},
+		{"SI8", func(b []byte, c runtime.SI4ACS) (any, error) { return DecodeSI8RestOctetsWithContext(b, c) }, func(v any, c runtime.SI4ACS) ([]byte, error) {
+			return EncodeSI8RestOctetsWithContext(v.(SI8RestOctets), c)
+		}},
+	} {
+		for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
+			wire := bytes.Repeat([]byte{0x2b}, 20)
+			got, err := tc.decode(wire, acs)
+			if err != nil {
+				t.Fatalf("%s ACS=%d: %v", tc.name, acs, err)
+			}
+			var value any
+			switch d := got.(type) {
+			case runtime.Decoded[SI7RestOctets]:
+				value = d.Value
+				if (d.Value.SI4RestOctetsO != nil) != (acs == runtime.SI4ACSOne) {
+					t.Fatalf("SI7 wrong layout")
+				}
+			case runtime.Decoded[SI8RestOctets]:
+				value = d.Value
+				if (d.Value.SI4RestOctetsO != nil) != (acs == runtime.SI4ACSOne) {
+					t.Fatalf("SI8 wrong layout")
+				}
+			}
+			encoded, err := tc.encode(value, acs)
+			if err != nil || !bytes.Equal(encoded, wire) {
+				t.Fatalf("%s ACS=%d round trip: %x %v", tc.name, acs, encoded, err)
+			}
+			switch v := value.(type) {
+			case SI7RestOctets:
+				v.Wire = runtime.WireInfo{}
+				encoded, err = EncodeSI7RestOctetsWithContext(v, acs)
+			case SI8RestOctets:
+				v.Wire = runtime.WireInfo{}
+				encoded, err = EncodeSI8RestOctetsWithContext(v, acs)
+			}
+			if err != nil || len(encoded) != 20 {
+				t.Fatalf("%s ACS=%d new value: %x %v", tc.name, acs, encoded, err)
+			}
+			if _, err := tc.encode(value, 1-acs); err == nil {
+				t.Fatalf("%s accepted mismatched ACS", tc.name)
+			}
+		}
+		if _, err := tc.decode(make([]byte, 20), runtime.SI4ACS(2)); err == nil {
+			t.Fatalf("%s accepted invalid ACS", tc.name)
+		}
+	}
+}
+
+func TestSI18AndSI20ZeroLengthTerminator(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.1 ends
+	// the Non-GSM list when NR_OF_CONTAINER_OCTETS=0; §.37i reuses it.
 	for _, tc := range []struct{ clause, name string }{{"10.5.2.37h", "SI 18 Rest Octets"}, {"10.5.2.37i", "SI 20 Rest Octets"}} {
 		d, err := LookupClause(tc.clause, tc.name)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if _, err := d.Decode(nil); err == nil || errors.Is(err, runtime.ErrUnsupported) {
+		if _, err := d.Decode(nil); !errors.Is(err, runtime.ErrEmptyValue) {
 			t.Fatalf("zero length must fail the fixed 20 octet length: %v", err)
 		}
 		wire := append([]byte{0x03, 0x00}, bytes.Repeat([]byte{0x2b}, 18)...)
-		if _, err := d.Decode(wire); !errors.Is(err, runtime.ErrUnsupported) {
-			t.Fatalf("missing terminator conflict: %v", err)
+		decoded, err := d.Decode(wire)
+		if err != nil {
+			t.Fatalf("%s: %v", tc.name, err)
+		}
+		encoded, err := d.Encode(decoded)
+		if err != nil || !bytes.Equal(encoded, wire) {
+			t.Fatalf("%s round trip %x: %v", tc.name, encoded, err)
+		}
+		switch v := decoded.(type) {
+		case runtime.Decoded[SI18RestOctets]:
+			if len(v.Value.NonGSMMessageList) != 0 || len(v.Value.Wire.Terminal) != 1 || v.Value.Wire.Terminal[0].BitLength != 8 {
+				t.Fatalf("SI18 terminator: %+v", v.Value)
+			}
+		case runtime.Decoded[SI20RestOctets]:
+			if len(v.Value.NonGSMMessageList) != 0 || len(v.Value.Wire.Terminal) != 1 || v.Value.Wire.Terminal[0].BitLength != 8 {
+				t.Fatalf("SI20 terminator: %+v", v.Value)
+			}
+		}
+		// The discriminator bits of the zero-length stop record are wire
+		// state. Editing a semantic field keeps that record byte-exact.
+		altTerminal := append([]byte{0x03, 0x20}, bytes.Repeat([]byte{0x2b}, 18)...)
+		alt, err := d.Decode(altTerminal)
+		if err != nil {
+			t.Fatalf("%s alternate terminal: %v", tc.name, err)
+		}
+		switch v := alt.(type) {
+		case runtime.Decoded[SI18RestOctets]:
+			v.Value.SI18INDEX = 1
+			encoded, err = EncodeSI18RestOctets(v.Value)
+		case runtime.Decoded[SI20RestOctets]:
+			v.Value.SI18INDEX = 1
+			encoded, err = EncodeSI20RestOctets(v.Value)
+		}
+		if err != nil || len(encoded) != 20 || encoded[1] != 0x20 {
+			t.Fatalf("%s edited terminal: %x %v", tc.name, encoded, err)
+		}
+		if _, err := d.Decode(append([]byte{0x03, 0x21}, bytes.Repeat([]byte{0x2b}, 18)...)); err == nil {
+			t.Fatalf("%s accepted missing terminator", tc.name)
+		}
+		// A record with 18 container octets fills the 20-octet IE, so the
+		// second stop condition needs no zero-length terminator.
+		full := append([]byte{0x00, 0x32}, bytes.Repeat([]byte{0xaa}, 18)...)
+		decoded, err = d.Decode(full)
+		if err != nil {
+			t.Fatalf("%s full IE: %v", tc.name, err)
+		}
+		switch v := decoded.(type) {
+		case runtime.Decoded[SI18RestOctets]:
+			if len(v.Value.NonGSMMessageList) != 1 || v.Value.NonGSMMessageList[0].NonGSMProtocolDiscriminator != 1 || v.Value.NonGSMMessageList[0].NROFCONTAINEROCTETS != 18 || len(v.Value.NonGSMMessageList[0].CONTAINERList) != 18 {
+				t.Fatalf("SI18 full message: %+v", v.Value)
+			}
+		case runtime.Decoded[SI20RestOctets]:
+			if len(v.Value.NonGSMMessageList) != 1 || v.Value.NonGSMMessageList[0].NonGSMProtocolDiscriminator != 1 || v.Value.NonGSMMessageList[0].NROFCONTAINEROCTETS != 18 || len(v.Value.NonGSMMessageList[0].CONTAINERList) != 18 {
+				t.Fatalf("SI20 full message: %+v", v.Value)
+			}
+		}
+		encoded, err = d.Encode(decoded)
+		if err != nil || !bytes.Equal(encoded, full) {
+			t.Fatalf("%s full IE round trip: %x %v", tc.name, encoded, err)
+		}
+		messages := []NonGSMMessageStruct{{NonGSMProtocolDiscriminator: 1, NROFCONTAINEROCTETS: 1, CONTAINERList: []uint8{0xaa}}}
+		var constructed any
+		if tc.name == "SI 18 Rest Octets" {
+			constructed = SI18RestOctets{NonGSMMessageList: messages}
+		} else {
+			constructed = SI20RestOctets{NonGSMMessageList: messages}
+		}
+		encoded, err = d.Encode(constructed)
+		if err != nil || len(encoded) != 20 {
+			t.Fatalf("%s constructed: %x %v", tc.name, encoded, err)
+		}
+		if _, err = d.Decode(encoded); err != nil {
+			t.Fatalf("%s constructed decode: %v", tc.name, err)
 		}
 	}
 }
 
-func TestSI19FailsClosedOnCountConflict(t *testing.T) {
-	// TS 44.018 V19.0.0 §10.5.2.37g gives contradictory
-	// NR_OF_REMAINING_CELLS count and range text.
-	d, err := LookupClause("10.5.2.37g", "SI 19 Rest Octets")
+func TestSI19PrintedRepeatAndInterpretedRanges(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.37g tables 10.5.2.37g.1–2:
+	// printed repeat uses the raw 4-bit count, while the exposed count and
+	// frequency difference width have table interpretations 1..16, 1..8.
+	cell := COMPACTCellSelectionStruct{BCCChoice: COMPACTCellSelectionStructBCCChoice{
+		Alternative: COMPACTCellSelectionStructBCCChoiceAlternativeBCC,
+		BCC:         &COMPACTCellSelectionStructBCCChoiceBCC{},
+	}}
+	v := SI19RestOctets{COMPACTNeighbourCellParameters: COMPACTNeighbourCellParamsStruct{
+		STARTFREQUENCYGroupList: []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry{{
+			STARTFREQUENCY: 1, COMPACTCellSelectionParams: cell,
+			NROFREMAININGCELLS: 1, FREQDIFFLENGTH: 1,
+		}},
+	}}
+	wire, err := EncodeSI19RestOctets(v)
+	if err != nil || len(wire) != 20 {
+		t.Fatalf("encode SI19: %x %v", wire, err)
+	}
+	decoded, err := DecodeSI19RestOctets(wire)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := d.Decode(nil); err == nil || errors.Is(err, runtime.ErrUnsupported) {
-		t.Fatalf("zero length must fail the fixed 20 octet length: %v", err)
+	groups := decoded.Value.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList
+	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 1 || groups[0].FREQDIFFLENGTH != 1 || len(groups[0].FREQUENCYDIFFGroupList) != 0 {
+		t.Fatalf("interpreted count/width: %+v", groups)
 	}
-	if _, err := d.Decode(bytes.Repeat([]byte{0x2b}, 20)); !errors.Is(err, runtime.ErrUnsupported) {
-		t.Fatalf("missing count conflict: %v", err)
+	again, err := EncodeSI19RestOctets(decoded.Value)
+	if err != nil || !bytes.Equal(again, wire) {
+		t.Fatalf("round trip %x: %v", again, err)
 	}
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 0
+	if _, err := EncodeSI19RestOctets(v); err == nil {
+		t.Fatal("accepted count below range")
+	}
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 17
+	if _, err := EncodeSI19RestOctets(v); err == nil {
+		t.Fatal("accepted count above range")
+	}
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].NROFREMAININGCELLS = 2
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].FREQDIFFLENGTH = 2
+	v.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList[0].FREQUENCYDIFFGroupList = []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry{{
+		FREQUENCYDIFF: runtime.BitString{Bytes: []byte{0x80}, BitLength: 2}, COMPACTCellSelectionStruct: cell,
+	}}
+	wire, err = EncodeSI19RestOctets(v)
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoded, err = DecodeSI19RestOctets(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	groups = decoded.Value.COMPACTNeighbourCellParameters.STARTFREQUENCYGroupList
+	if len(groups) != 1 || groups[0].NROFREMAININGCELLS != 2 || groups[0].FREQDIFFLENGTH != 2 || len(groups[0].FREQUENCYDIFFGroupList) != 1 || groups[0].FREQUENCYDIFFGroupList[0].FREQUENCYDIFF.BitLength != 2 {
+		t.Fatalf("one repeated cell: %+v", groups)
+	}
+}
+
+func FuzzSI7SI8WithACS(f *testing.F) {
+	f.Add(bytes.Repeat([]byte{0x2b}, 20))
+	f.Add(bytes.Repeat([]byte{0}, 20))
+	f.Add([]byte{})
+	f.Fuzz(func(t *testing.T, data []byte) {
+		for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
+			if d, err := DecodeSI7RestOctetsWithContext(data, acs); err == nil {
+				out, err := EncodeSI7RestOctetsWithContext(d.Value, acs)
+				if err != nil || !bytes.Equal(out, data) {
+					t.Fatalf("SI7 ACS=%d: %x -> %x: %v", acs, data, out, err)
+				}
+			}
+			if d, err := DecodeSI8RestOctetsWithContext(data, acs); err == nil {
+				out, err := EncodeSI8RestOctetsWithContext(d.Value, acs)
+				if err != nil || !bytes.Equal(out, data) {
+					t.Fatalf("SI8 ACS=%d: %x -> %x: %v", acs, data, out, err)
+				}
+			}
+		}
+	})
 }
