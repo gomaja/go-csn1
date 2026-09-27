@@ -12,6 +12,10 @@ import (
 // while its printed CSN.1 grammar begins with a required discriminator.
 var ErrEmptyValue = errors.New("empty CSN.1 value")
 
+// ErrUnsupported identifies a named value whose printed grammar cannot be
+// selected from its bytes without information outside that value.
+var ErrUnsupported = errors.New("unsupported CSN.1 value")
+
 // BitString is an MSB-first bit sequence. Unused low bits in the last byte
 // are ignored; BitLength is the exact number of significant bits.
 type BitString struct {

@@ -381,6 +381,11 @@ func (w *Writer) Bytes() ([]byte, error) {
 	return append([]byte(nil), w.bytes...), nil
 }
 
+// LHBit returns the L/H value at the absolute bit position. TS 24.007
+// V20.0.0 Annex B §B.1.2.2 and TS 44.018 V19.0.0 §10.5.2.32 use the
+// octet-aligned 0x2b pattern for position-relative L/H constraints.
+func LHBit(symbol rune, position int) uint8 { return literalBit(symbol, position) }
+
 func literalBit(symbol rune, position int) uint8 {
 	// TS 24.007 V20.0.0 Annex B §B.1.2.2 and TS 44.060 V19.0.0
 	// §11: L is the bit in octet-aligned 0x2b; H is its complement.

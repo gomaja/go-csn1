@@ -6,6 +6,9 @@ import (
 )
 
 func TestDirectBitIOBoundsAndPaddingOrigin(t *testing.T) {
+	if LHBit('L', 0) != 0 || LHBit('H', 0) != 1 || LHBit('L', 2) != 1 || LHBit('H', 2) != 0 {
+		t.Fatal("L/H constraint must follow the absolute padding-pattern position")
+	}
 	r := NewReader([]byte{0x2b})
 	for _, symbol := range []string{"L", "L", "L", "L", "L", "L", "L", "L"} {
 		if err := r.Expect(symbol); err != nil {

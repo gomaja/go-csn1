@@ -5005,67 +5005,94 @@ func Definitions() []string {
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", Decode: func(data []byte) (any, error) { return DecodeClassmark3ValuePart(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(Classmark3ValuePart)
-			if !ok {
+			switch v := value.(type) {
+			case Classmark3ValuePart:
+				return EncodeClassmark3ValuePart(v)
+			case runtime.Decoded[Classmark3ValuePart]:
+				return EncodeClassmark3ValuePart(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for Classmark3ValuePart")
 			}
-			return EncodeClassmark3ValuePart(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(A5Bits)
-			if !ok {
+			switch v := value.(type) {
+			case A5Bits:
+				return EncodeA5Bits(v)
+			case runtime.Decoded[A5Bits]:
+				return EncodeA5Bits(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for A5Bits")
 			}
-			return EncodeA5Bits(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", Decode: func(data []byte) (any, error) { return DecodeRSupport(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(RSupport)
-			if !ok {
+			switch v := value.(type) {
+			case RSupport:
+				return EncodeRSupport(v)
+			case runtime.Decoded[RSupport]:
+				return EncodeRSupport(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for RSupport")
 			}
-			return EncodeRSupport(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", Decode: func(data []byte) (any, error) { return DecodeHSCSDMultiSlotCapability(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(HSCSDMultiSlotCapability)
-			if !ok {
+			switch v := value.(type) {
+			case HSCSDMultiSlotCapability:
+				return EncodeHSCSDMultiSlotCapability(v)
+			case runtime.Decoded[HSCSDMultiSlotCapability]:
+				return EncodeHSCSDMultiSlotCapability(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for HSCSDMultiSlotCapability")
 			}
-			return EncodeHSCSDMultiSlotCapability(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", Decode: func(data []byte) (any, error) { return DecodeMSMeasurementCapability(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(MSMeasurementCapability)
-			if !ok {
+			switch v := value.(type) {
+			case MSMeasurementCapability:
+				return EncodeMSMeasurementCapability(v)
+			case runtime.Decoded[MSMeasurementCapability]:
+				return EncodeMSMeasurementCapability(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for MSMeasurementCapability")
 			}
-			return EncodeMSMeasurementCapability(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", Decode: func(data []byte) (any, error) { return DecodeMSPositioningMethodCapability(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(MSPositioningMethodCapability)
-			if !ok {
+			switch v := value.(type) {
+			case MSPositioningMethodCapability:
+				return EncodeMSPositioningMethodCapability(v)
+			case runtime.Decoded[MSPositioningMethodCapability]:
+				return EncodeMSPositioningMethodCapability(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for MSPositioningMethodCapability")
 			}
-			return EncodeMSPositioningMethodCapability(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", Decode: func(data []byte) (any, error) { return DecodeECSDMultiSlotCapability(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(ECSDMultiSlotCapability)
-			if !ok {
+			switch v := value.(type) {
+			case ECSDMultiSlotCapability:
+				return EncodeECSDMultiSlotCapability(v)
+			case runtime.Decoded[ECSDMultiSlotCapability]:
+				return EncodeECSDMultiSlotCapability(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for ECSDMultiSlotCapability")
 			}
-			return EncodeECSDMultiSlotCapability(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", Decode: func(data []byte) (any, error) { return DecodeN8PSKStruct(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(N8PSKStruct)
-			if !ok {
+			switch v := value.(type) {
+			case N8PSKStruct:
+				return EncodeN8PSKStruct(v)
+			case runtime.Decoded[N8PSKStruct]:
+				return EncodeN8PSKStruct(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for N8PSKStruct")
 			}
-			return EncodeN8PSKStruct(v)
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", Decode: func(data []byte) (any, error) { return DecodeSingleBandSupport(data) }, Encode: func(value any) ([]byte, error) {
-			v, ok := value.(SingleBandSupport)
-			if !ok {
+			switch v := value.(type) {
+			case SingleBandSupport:
+				return EncodeSingleBandSupport(v)
+			case runtime.Decoded[SingleBandSupport]:
+				return EncodeSingleBandSupport(v.Value)
+			default:
 				return nil, fmt.Errorf("wrong value type for SingleBandSupport")
 			}
-			return EncodeSingleBandSupport(v)
 		}},
 	}
 }
