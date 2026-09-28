@@ -13,6 +13,21 @@ import (
 	"github.com/gomaja/go-csn1/ts44018/measurement"
 )
 
+func TestEveryGeneratedDescriptorRejectsMalformedReader(t *testing.T) {
+	oversized := runtime.NewReader(make([]byte, (1<<20)/8+1))
+	for _, descriptor := range descriptors() {
+		if descriptor.DecodeFrom == nil {
+			continue // Framing wrappers expose only byte-slice entry points.
+		}
+		if _, err := descriptor.DecodeFrom(oversized); err == nil {
+			t.Fatalf("%s §%s %s accepted oversized reader", descriptor.Standard, descriptor.Clause, descriptor.Name)
+		}
+		if _, err := descriptor.DecodeFrom(nil); err == nil {
+			t.Fatalf("%s §%s %s accepted nil reader", descriptor.Standard, descriptor.Clause, descriptor.Name)
+		}
+	}
+}
+
 // Every generated descriptor must round-trip through its direct encoder.
 // The fixed corpus covers short truncations, padding, and random branches.
 func TestDirectEncoderCorpus(t *testing.T) {

@@ -68548,8 +68548,13 @@ func encodeSI10bisNeighbourCellInfo(w *runtime.Writer, v SI10bisNeighbourCellInf
 }
 
 // DecodeIARestOctets decodes TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>.
-func DecodeIARestOctetsFrom(r *runtime.Reader) (IARestOctets, error) { return decodeIARestOctets(r) }
-func EncodeIARestOctetsTo(w *runtime.Writer, v IARestOctets) error   { return encodeIARestOctets(w, v) }
+func DecodeIARestOctetsFrom(r *runtime.Reader) (IARestOctets, error) {
+	if err := r.Check(); err != nil {
+		return IARestOctets{}, err
+	}
+	return decodeIARestOctets(r)
+}
+func EncodeIARestOctetsTo(w *runtime.Writer, v IARestOctets) error { return encodeIARestOctets(w, v) }
 func DecodeIARestOctets(data []byte) (runtime.Decoded[IARestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IARestOctets]{}, err
@@ -68557,7 +68562,7 @@ func DecodeIARestOctets(data []byte) (runtime.Decoded[IARestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[IARestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.16", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 > 88 {
+	if len(data) > 11 {
 		return runtime.Decoded[IARestOctets]{}, fmt.Errorf("IARestOctets exceeds 88 bits")
 	}
 	r := runtime.NewReader(data)
@@ -68583,6 +68588,9 @@ func EncodeIARestOctets(v IARestOctets) ([]byte, error) {
 
 // DecodeEGPRSPacketUplinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <EGPRS Packet Uplink Assignment>.
 func DecodeEGPRSPacketUplinkAssignmentFrom(r *runtime.Reader) (EGPRSPacketUplinkAssignment, error) {
+	if err := r.Check(); err != nil {
+		return EGPRSPacketUplinkAssignment{}, err
+	}
 	return decodeEGPRSPacketUplinkAssignment(r)
 }
 func EncodeEGPRSPacketUplinkAssignmentTo(w *runtime.Writer, v EGPRSPacketUplinkAssignment) error {
@@ -68615,6 +68623,9 @@ func EncodeEGPRSPacketUplinkAssignment(v EGPRSPacketUplinkAssignment) ([]byte, e
 
 // DecodeAccessTechnologiesRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.16 <Access Technologies Request struct>.
 func DecodeAccessTechnologiesRequestStructFrom(r *runtime.Reader) (AccessTechnologiesRequestStruct, error) {
+	if err := r.Check(); err != nil {
+		return AccessTechnologiesRequestStruct{}, err
+	}
 	return decodeAccessTechnologiesRequestStruct(r)
 }
 func EncodeAccessTechnologiesRequestStructTo(w *runtime.Writer, v AccessTechnologiesRequestStruct) error {
@@ -68647,6 +68658,9 @@ func EncodeAccessTechnologiesRequestStruct(v AccessTechnologiesRequestStruct) ([
 
 // DecodePacketUplinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Uplink Assignment>.
 func DecodePacketUplinkAssignmentFrom(r *runtime.Reader) (PacketUplinkAssignment, error) {
+	if err := r.Check(); err != nil {
+		return PacketUplinkAssignment{}, err
+	}
 	return decodePacketUplinkAssignment(r)
 }
 func EncodePacketUplinkAssignmentTo(w *runtime.Writer, v PacketUplinkAssignment) error {
@@ -68679,6 +68693,9 @@ func EncodePacketUplinkAssignment(v PacketUplinkAssignment) ([]byte, error) {
 
 // DecodePacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>.
 func DecodePacketDownlinkAssignmentFrom(r *runtime.Reader) (PacketDownlinkAssignment, error) {
+	if err := r.Check(); err != nil {
+		return PacketDownlinkAssignment{}, err
+	}
 	return decodePacketDownlinkAssignment(r)
 }
 func EncodePacketDownlinkAssignmentTo(w *runtime.Writer, v PacketDownlinkAssignment) error {
@@ -68711,6 +68728,9 @@ func EncodePacketDownlinkAssignment(v PacketDownlinkAssignment) ([]byte, error) 
 
 // DecodeFrequencyParametersBeforeTime decodes TS 44.018 V19.0.0 §10.5.2.16 <Frequency Parameters, before time>.
 func DecodeFrequencyParametersBeforeTimeFrom(r *runtime.Reader) (FrequencyParametersBeforeTime, error) {
+	if err := r.Check(); err != nil {
+		return FrequencyParametersBeforeTime{}, err
+	}
 	return decodeFrequencyParametersBeforeTime(r)
 }
 func EncodeFrequencyParametersBeforeTimeTo(w *runtime.Writer, v FrequencyParametersBeforeTime) error {
@@ -68743,6 +68763,9 @@ func EncodeFrequencyParametersBeforeTime(v FrequencyParametersBeforeTime) ([]byt
 
 // DecodeSecondPartPacketAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Second Part Packet Assignment>.
 func DecodeSecondPartPacketAssignmentFrom(r *runtime.Reader) (SecondPartPacketAssignment, error) {
+	if err := r.Check(); err != nil {
+		return SecondPartPacketAssignment{}, err
+	}
 	return decodeSecondPartPacketAssignment(r)
 }
 func EncodeSecondPartPacketAssignmentTo(w *runtime.Writer, v SecondPartPacketAssignment) error {
@@ -68775,6 +68798,9 @@ func EncodeSecondPartPacketAssignment(v SecondPartPacketAssignment) ([]byte, err
 
 // DecodeMultipleBlocksPacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Multiple Blocks Packet Downlink Assignment>.
 func DecodeMultipleBlocksPacketDownlinkAssignmentFrom(r *runtime.Reader) (MultipleBlocksPacketDownlinkAssignment, error) {
+	if err := r.Check(); err != nil {
+		return MultipleBlocksPacketDownlinkAssignment{}, err
+	}
 	return decodeMultipleBlocksPacketDownlinkAssignment(r)
 }
 func EncodeMultipleBlocksPacketDownlinkAssignmentTo(w *runtime.Writer, v MultipleBlocksPacketDownlinkAssignment) error {
@@ -68807,6 +68833,9 @@ func EncodeMultipleBlocksPacketDownlinkAssignment(v MultipleBlocksPacketDownlink
 
 // DecodePEOIMMCellGroupDetailsStructClause105216 decodes TS 44.018 V19.0.0 §10.5.2.16 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105216From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105216, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105216{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105216(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105216To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105216) error {
@@ -68838,7 +68867,12 @@ func EncodePEOIMMCellGroupDetailsStructClause105216(v PEOIMMCellGroupDetailsStru
 }
 
 // DecodeIARRestOctets decodes TS 44.018 V19.0.0 §10.5.2.17 <IAR Rest Octets>.
-func DecodeIARRestOctetsFrom(r *runtime.Reader) (IARRestOctets, error) { return decodeIARRestOctets(r) }
+func DecodeIARRestOctetsFrom(r *runtime.Reader) (IARRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return IARRestOctets{}, err
+	}
+	return decodeIARRestOctets(r)
+}
 func EncodeIARRestOctetsTo(w *runtime.Writer, v IARRestOctets) error {
 	return encodeIARRestOctets(w, v)
 }
@@ -68849,10 +68883,10 @@ func DecodeIARRestOctets(data []byte) (runtime.Decoded[IARRestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[IARRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.17", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 24 {
+	if len(data) < 3 {
 		return runtime.Decoded[IARRestOctets]{}, fmt.Errorf("IARRestOctets requires at least 24 bits")
 	}
-	if len(data)*8 > 24 {
+	if len(data) > 3 {
 		return runtime.Decoded[IARRestOctets]{}, fmt.Errorf("IARRestOctets exceeds 24 bits")
 	}
 	r := runtime.NewReader(data)
@@ -68878,6 +68912,9 @@ func EncodeIARRestOctets(v IARRestOctets) ([]byte, error) {
 
 // DecodePEOIMMCellGroupDetailsStructClause105217 decodes TS 44.018 V19.0.0 §10.5.2.17 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105217From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105217, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105217{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105217(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105217To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105217) error {
@@ -68909,7 +68946,12 @@ func EncodePEOIMMCellGroupDetailsStructClause105217(v PEOIMMCellGroupDetailsStru
 }
 
 // DecodeIAXRestOctets decodes TS 44.018 V19.0.0 §10.5.2.18 <IAX Rest Octets>.
-func DecodeIAXRestOctetsFrom(r *runtime.Reader) (IAXRestOctets, error) { return decodeIAXRestOctets(r) }
+func DecodeIAXRestOctetsFrom(r *runtime.Reader) (IAXRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return IAXRestOctets{}, err
+	}
+	return decodeIAXRestOctets(r)
+}
 func EncodeIAXRestOctetsTo(w *runtime.Writer, v IAXRestOctets) error {
 	return encodeIAXRestOctets(w, v)
 }
@@ -68920,7 +68962,7 @@ func DecodeIAXRestOctets(data []byte) (runtime.Decoded[IAXRestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[IAXRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.18", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 > 32 {
+	if len(data) > 4 {
 		return runtime.Decoded[IAXRestOctets]{}, fmt.Errorf("IAXRestOctets exceeds 32 bits")
 	}
 	r := runtime.NewReader(data)
@@ -68946,6 +68988,9 @@ func EncodeIAXRestOctets(v IAXRestOctets) ([]byte, error) {
 
 // DecodePEOIMMCellGroupDetailsStructClause105218 decodes TS 44.018 V19.0.0 §10.5.2.18 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105218From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105218, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105218{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105218(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105218To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105218) error {
@@ -68977,7 +69022,12 @@ func EncodePEOIMMCellGroupDetailsStructClause105218(v PEOIMMCellGroupDetailsStru
 }
 
 // DecodeSI1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.32 <SI1 Rest Octets>.
-func DecodeSI1RestOctetsFrom(r *runtime.Reader) (SI1RestOctets, error) { return decodeSI1RestOctets(r) }
+func DecodeSI1RestOctetsFrom(r *runtime.Reader) (SI1RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI1RestOctets{}, err
+	}
+	return decodeSI1RestOctets(r)
+}
 func EncodeSI1RestOctetsTo(w *runtime.Writer, v SI1RestOctets) error {
 	return encodeSI1RestOctets(w, v)
 }
@@ -68988,10 +69038,10 @@ func DecodeSI1RestOctets(data []byte) (runtime.Decoded[SI1RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[SI1RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.32", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 8 {
+	if len(data) < 1 {
 		return runtime.Decoded[SI1RestOctets]{}, fmt.Errorf("SI1RestOctets requires at least 8 bits")
 	}
-	if len(data)*8 > 8 {
+	if len(data) > 1 {
 		return runtime.Decoded[SI1RestOctets]{}, fmt.Errorf("SI1RestOctets exceeds 8 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69017,6 +69067,9 @@ func EncodeSI1RestOctets(v SI1RestOctets) ([]byte, error) {
 
 // DecodeBandIndicatorClause105232 decodes TS 44.018 V19.0.0 §10.5.2.32 <Band indicator>.
 func DecodeBandIndicatorClause105232From(r *runtime.Reader) (BandIndicatorClause105232, error) {
+	if err := r.Check(); err != nil {
+		return BandIndicatorClause105232{}, err
+	}
 	return decodeBandIndicatorClause105232(r)
 }
 func EncodeBandIndicatorClause105232To(w *runtime.Writer, v BandIndicatorClause105232) error {
@@ -69049,6 +69102,9 @@ func EncodeBandIndicatorClause105232(v BandIndicatorClause105232) ([]byte, error
 
 // DecodeSI2bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33 <SI2bis Rest Octets>.
 func DecodeSI2bisRestOctetsFrom(r *runtime.Reader) (SI2bisRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI2bisRestOctets{}, err
+	}
 	return decodeSI2bisRestOctets(r)
 }
 func EncodeSI2bisRestOctetsTo(w *runtime.Writer, v SI2bisRestOctets) error {
@@ -69061,10 +69117,10 @@ func DecodeSI2bisRestOctets(data []byte) (runtime.Decoded[SI2bisRestOctets], err
 	if len(data) == 0 {
 		return runtime.Decoded[SI2bisRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.33", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 8 {
+	if len(data) < 1 {
 		return runtime.Decoded[SI2bisRestOctets]{}, fmt.Errorf("SI2bisRestOctets requires at least 8 bits")
 	}
-	if len(data)*8 > 8 {
+	if len(data) > 1 {
 		return runtime.Decoded[SI2bisRestOctets]{}, fmt.Errorf("SI2bisRestOctets exceeds 8 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69090,6 +69146,9 @@ func EncodeSI2bisRestOctets(v SI2bisRestOctets) ([]byte, error) {
 
 // DecodeSI2nRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33c <SI2n Rest Octets>.
 func DecodeSI2nRestOctetsFrom(r *runtime.Reader) (SI2nRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI2nRestOctets{}, err
+	}
 	return decodeSI2nRestOctets(r)
 }
 func EncodeSI2nRestOctetsTo(w *runtime.Writer, v SI2nRestOctets) error {
@@ -69102,10 +69161,10 @@ func DecodeSI2nRestOctets(data []byte) (runtime.Decoded[SI2nRestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI2nRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.33c", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI2nRestOctets]{}, fmt.Errorf("SI2nRestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI2nRestOctets]{}, fmt.Errorf("SI2nRestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69131,6 +69190,9 @@ func EncodeSI2nRestOctets(v SI2nRestOctets) ([]byte, error) {
 
 // DecodeGSMNeighbourCellSelectionParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GSM Neighbour Cell Selection params struct>.
 func DecodeGSMNeighbourCellSelectionParamsStructFrom(r *runtime.Reader) (GSMNeighbourCellSelectionParamsStruct, error) {
+	if err := r.Check(); err != nil {
+		return GSMNeighbourCellSelectionParamsStruct{}, err
+	}
 	return decodeGSMNeighbourCellSelectionParamsStruct(r)
 }
 func EncodeGSMNeighbourCellSelectionParamsStructTo(w *runtime.Writer, v GSMNeighbourCellSelectionParamsStruct) error {
@@ -69163,6 +69225,9 @@ func EncodeGSMNeighbourCellSelectionParamsStruct(v GSMNeighbourCellSelectionPara
 
 // DecodeGPRSSupportIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GPRS Support Indicator struct>.
 func DecodeGPRSSupportIndicatorStructFrom(r *runtime.Reader) (GPRSSupportIndicatorStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSSupportIndicatorStruct{}, err
+	}
 	return decodeGPRSSupportIndicatorStruct(r)
 }
 func EncodeGPRSSupportIndicatorStructTo(w *runtime.Writer, v GPRSSupportIndicatorStruct) error {
@@ -69194,8 +69259,13 @@ func EncodeGPRSSupportIndicatorStruct(v GPRSSupportIndicatorStruct) ([]byte, err
 }
 
 // DecodeSI3RestOctet decodes TS 44.018 V19.0.0 §10.5.2.34 <SI3 Rest Octet>.
-func DecodeSI3RestOctetFrom(r *runtime.Reader) (SI3RestOctet, error) { return decodeSI3RestOctet(r) }
-func EncodeSI3RestOctetTo(w *runtime.Writer, v SI3RestOctet) error   { return encodeSI3RestOctet(w, v) }
+func DecodeSI3RestOctetFrom(r *runtime.Reader) (SI3RestOctet, error) {
+	if err := r.Check(); err != nil {
+		return SI3RestOctet{}, err
+	}
+	return decodeSI3RestOctet(r)
+}
+func EncodeSI3RestOctetTo(w *runtime.Writer, v SI3RestOctet) error { return encodeSI3RestOctet(w, v) }
 func DecodeSI3RestOctet(data []byte) (runtime.Decoded[SI3RestOctet], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SI3RestOctet]{}, err
@@ -69203,10 +69273,10 @@ func DecodeSI3RestOctet(data []byte) (runtime.Decoded[SI3RestOctet], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[SI3RestOctet]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.34", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 32 {
+	if len(data) < 4 {
 		return runtime.Decoded[SI3RestOctet]{}, fmt.Errorf("SI3RestOctet requires at least 32 bits")
 	}
-	if len(data)*8 > 32 {
+	if len(data) > 4 {
 		return runtime.Decoded[SI3RestOctet]{}, fmt.Errorf("SI3RestOctet exceeds 32 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69232,6 +69302,9 @@ func EncodeSI3RestOctet(v SI3RestOctet) ([]byte, error) {
 
 // DecodeOptionalSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Selection Parameters>.
 func DecodeOptionalSelectionParametersClause105234From(r *runtime.Reader) (OptionalSelectionParametersClause105234, error) {
+	if err := r.Check(); err != nil {
+		return OptionalSelectionParametersClause105234{}, err
+	}
 	return decodeOptionalSelectionParametersClause105234(r)
 }
 func EncodeOptionalSelectionParametersClause105234To(w *runtime.Writer, v OptionalSelectionParametersClause105234) error {
@@ -69264,6 +69337,9 @@ func EncodeOptionalSelectionParametersClause105234(v OptionalSelectionParameters
 
 // DecodeSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Selection Parameters>.
 func DecodeSelectionParametersClause105234From(r *runtime.Reader) (SelectionParametersClause105234, error) {
+	if err := r.Check(); err != nil {
+		return SelectionParametersClause105234{}, err
+	}
 	return decodeSelectionParametersClause105234(r)
 }
 func EncodeSelectionParametersClause105234To(w *runtime.Writer, v SelectionParametersClause105234) error {
@@ -69296,6 +69372,9 @@ func EncodeSelectionParametersClause105234(v SelectionParametersClause105234) ([
 
 // DecodeOptionalPowerOffsetClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Power Offset>.
 func DecodeOptionalPowerOffsetClause105234From(r *runtime.Reader) (OptionalPowerOffsetClause105234, error) {
+	if err := r.Check(); err != nil {
+		return OptionalPowerOffsetClause105234{}, err
+	}
 	return decodeOptionalPowerOffsetClause105234(r)
 }
 func EncodeOptionalPowerOffsetClause105234To(w *runtime.Writer, v OptionalPowerOffsetClause105234) error {
@@ -69328,6 +69407,9 @@ func EncodeOptionalPowerOffsetClause105234(v OptionalPowerOffsetClause105234) ([
 
 // DecodeSystemInformation2terIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 2ter Indicator>.
 func DecodeSystemInformation2terIndicatorFrom(r *runtime.Reader) (SystemInformation2terIndicator, error) {
+	if err := r.Check(); err != nil {
+		return SystemInformation2terIndicator{}, err
+	}
 	return decodeSystemInformation2terIndicator(r)
 }
 func EncodeSystemInformation2terIndicatorTo(w *runtime.Writer, v SystemInformation2terIndicator) error {
@@ -69360,6 +69442,9 @@ func EncodeSystemInformation2terIndicator(v SystemInformation2terIndicator) ([]b
 
 // DecodeEarlyClassmarkSendingControl decodes TS 44.018 V19.0.0 §10.5.2.34 <Early Classmark Sending Control>.
 func DecodeEarlyClassmarkSendingControlFrom(r *runtime.Reader) (EarlyClassmarkSendingControl, error) {
+	if err := r.Check(); err != nil {
+		return EarlyClassmarkSendingControl{}, err
+	}
 	return decodeEarlyClassmarkSendingControl(r)
 }
 func EncodeEarlyClassmarkSendingControlTo(w *runtime.Writer, v EarlyClassmarkSendingControl) error {
@@ -69392,6 +69477,9 @@ func EncodeEarlyClassmarkSendingControl(v EarlyClassmarkSendingControl) ([]byte,
 
 // DecodeSchedulingIfAndWhere decodes TS 44.018 V19.0.0 §10.5.2.34 <Scheduling if and where>.
 func DecodeSchedulingIfAndWhereFrom(r *runtime.Reader) (SchedulingIfAndWhere, error) {
+	if err := r.Check(); err != nil {
+		return SchedulingIfAndWhere{}, err
+	}
 	return decodeSchedulingIfAndWhere(r)
 }
 func EncodeSchedulingIfAndWhereTo(w *runtime.Writer, v SchedulingIfAndWhere) error {
@@ -69424,6 +69512,9 @@ func EncodeSchedulingIfAndWhere(v SchedulingIfAndWhere) ([]byte, error) {
 
 // DecodeGPRSIndicatorClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <GPRS Indicator>.
 func DecodeGPRSIndicatorClause105234From(r *runtime.Reader) (GPRSIndicatorClause105234, error) {
+	if err := r.Check(); err != nil {
+		return GPRSIndicatorClause105234{}, err
+	}
 	return decodeGPRSIndicatorClause105234(r)
 }
 func EncodeGPRSIndicatorClause105234To(w *runtime.Writer, v GPRSIndicatorClause105234) error {
@@ -69456,6 +69547,9 @@ func EncodeGPRSIndicatorClause105234(v GPRSIndicatorClause105234) ([]byte, error
 
 // DecodeN3GEarlyClassmarkSendingRestriction decodes TS 44.018 V19.0.0 §10.5.2.34 <3G Early Classmark Sending Restriction>.
 func DecodeN3GEarlyClassmarkSendingRestrictionFrom(r *runtime.Reader) (N3GEarlyClassmarkSendingRestriction, error) {
+	if err := r.Check(); err != nil {
+		return N3GEarlyClassmarkSendingRestriction{}, err
+	}
 	return decodeN3GEarlyClassmarkSendingRestriction(r)
 }
 func EncodeN3GEarlyClassmarkSendingRestrictionTo(w *runtime.Writer, v N3GEarlyClassmarkSendingRestriction) error {
@@ -69488,6 +69582,9 @@ func EncodeN3GEarlyClassmarkSendingRestriction(v N3GEarlyClassmarkSendingRestric
 
 // DecodeSI2quaterIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.34 <SI2quater Indicator struct>.
 func DecodeSI2quaterIndicatorStructFrom(r *runtime.Reader) (SI2quaterIndicatorStruct, error) {
+	if err := r.Check(); err != nil {
+		return SI2quaterIndicatorStruct{}, err
+	}
 	return decodeSI2quaterIndicatorStruct(r)
 }
 func EncodeSI2quaterIndicatorStructTo(w *runtime.Writer, v SI2quaterIndicatorStruct) error {
@@ -69519,8 +69616,13 @@ func EncodeSI2quaterIndicatorStruct(v SI2quaterIndicatorStruct) ([]byte, error) 
 }
 
 // DecodeIuIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <Iu Indicator>.
-func DecodeIuIndicatorFrom(r *runtime.Reader) (IuIndicator, error) { return decodeIuIndicator(r) }
-func EncodeIuIndicatorTo(w *runtime.Writer, v IuIndicator) error   { return encodeIuIndicator(w, v) }
+func DecodeIuIndicatorFrom(r *runtime.Reader) (IuIndicator, error) {
+	if err := r.Check(); err != nil {
+		return IuIndicator{}, err
+	}
+	return decodeIuIndicator(r)
+}
+func EncodeIuIndicatorTo(w *runtime.Writer, v IuIndicator) error { return encodeIuIndicator(w, v) }
 func DecodeIuIndicator(data []byte) (runtime.Decoded[IuIndicator], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IuIndicator]{}, err
@@ -69548,6 +69650,9 @@ func EncodeIuIndicator(v IuIndicator) ([]byte, error) {
 
 // DecodeSystemInformation21Indicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 21 Indicator>.
 func DecodeSystemInformation21IndicatorFrom(r *runtime.Reader) (SystemInformation21Indicator, error) {
+	if err := r.Check(); err != nil {
+		return SystemInformation21Indicator{}, err
+	}
 	return decodeSystemInformation21Indicator(r)
 }
 func EncodeSystemInformation21IndicatorTo(w *runtime.Writer, v SystemInformation21Indicator) error {
@@ -69580,6 +69685,9 @@ func EncodeSystemInformation21Indicator(v SystemInformation21Indicator) ([]byte,
 
 // DecodeSI16RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37e <SI16 Rest Octets>.
 func DecodeSI16RestOctetsFrom(r *runtime.Reader) (SI16RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI16RestOctets{}, err
+	}
 	return decodeSI16RestOctets(r)
 }
 func EncodeSI16RestOctetsTo(w *runtime.Writer, v SI16RestOctets) error {
@@ -69592,10 +69700,10 @@ func DecodeSI16RestOctets(data []byte) (runtime.Decoded[SI16RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI16RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37e", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI16RestOctets]{}, fmt.Errorf("SI16RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI16RestOctets]{}, fmt.Errorf("SI16RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69621,6 +69729,9 @@ func EncodeSI16RestOctets(v SI16RestOctets) ([]byte, error) {
 
 // DecodeSI17RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37f <SI17 Rest Octets>.
 func DecodeSI17RestOctetsFrom(r *runtime.Reader) (SI17RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI17RestOctets{}, err
+	}
 	return decodeSI17RestOctets(r)
 }
 func EncodeSI17RestOctetsTo(w *runtime.Writer, v SI17RestOctets) error {
@@ -69633,10 +69744,10 @@ func DecodeSI17RestOctets(data []byte) (runtime.Decoded[SI17RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI17RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37f", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI17RestOctets]{}, fmt.Errorf("SI17RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI17RestOctets]{}, fmt.Errorf("SI17RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69662,6 +69773,9 @@ func EncodeSI17RestOctets(v SI17RestOctets) ([]byte, error) {
 
 // DecodeLSAParametersClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA Parameters>.
 func DecodeLSAParametersClause105237eFrom(r *runtime.Reader) (LSAParametersClause105237e, error) {
+	if err := r.Check(); err != nil {
+		return LSAParametersClause105237e{}, err
+	}
 	return decodeLSAParametersClause105237e(r)
 }
 func EncodeLSAParametersClause105237eTo(w *runtime.Writer, v LSAParametersClause105237e) error {
@@ -69694,6 +69808,9 @@ func EncodeLSAParametersClause105237e(v LSAParametersClause105237e) ([]byte, err
 
 // DecodeLSAIDInformationClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA ID information>.
 func DecodeLSAIDInformationClause105237eFrom(r *runtime.Reader) (LSAIDInformationClause105237e, error) {
+	if err := r.Check(); err != nil {
+		return LSAIDInformationClause105237e{}, err
+	}
 	return decodeLSAIDInformationClause105237e(r)
 }
 func EncodeLSAIDInformationClause105237eTo(w *runtime.Writer, v LSAIDInformationClause105237e) error {
@@ -69726,6 +69843,9 @@ func EncodeLSAIDInformationClause105237e(v LSAIDInformationClause105237e) ([]byt
 
 // DecodeLSAIdentityClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA identity>.
 func DecodeLSAIdentityClause105237eFrom(r *runtime.Reader) (LSAIdentityClause105237e, error) {
+	if err := r.Check(); err != nil {
+		return LSAIdentityClause105237e{}, err
+	}
 	return decodeLSAIdentityClause105237e(r)
 }
 func EncodeLSAIdentityClause105237eTo(w *runtime.Writer, v LSAIdentityClause105237e) error {
@@ -69758,6 +69878,9 @@ func EncodeLSAIdentityClause105237e(v LSAIdentityClause105237e) ([]byte, error) 
 
 // DecodeSI14RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37j <SI14 Rest Octets>.
 func DecodeSI14RestOctetsFrom(r *runtime.Reader) (SI14RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI14RestOctets{}, err
+	}
 	return decodeSI14RestOctets(r)
 }
 func EncodeSI14RestOctetsTo(w *runtime.Writer, v SI14RestOctets) error {
@@ -69770,10 +69893,10 @@ func DecodeSI14RestOctets(data []byte) (runtime.Decoded[SI14RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI14RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37j", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 128 {
+	if len(data) < 16 {
 		return runtime.Decoded[SI14RestOctets]{}, fmt.Errorf("SI14RestOctets requires at least 128 bits")
 	}
-	if len(data)*8 > 128 {
+	if len(data) > 16 {
 		return runtime.Decoded[SI14RestOctets]{}, fmt.Errorf("SI14RestOctets exceeds 128 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69799,6 +69922,9 @@ func EncodeSI14RestOctets(v SI14RestOctets) ([]byte, error) {
 
 // DecodeDYNAMICARFCNMAPPINGClause105237j decodes TS 44.018 V19.0.0 §10.5.2.37j <DYNAMIC ARFCN MAPPING>.
 func DecodeDYNAMICARFCNMAPPINGClause105237jFrom(r *runtime.Reader) (DYNAMICARFCNMAPPINGClause105237j, error) {
+	if err := r.Check(); err != nil {
+		return DYNAMICARFCNMAPPINGClause105237j{}, err
+	}
 	return decodeDYNAMICARFCNMAPPINGClause105237j(r)
 }
 func EncodeDYNAMICARFCNMAPPINGClause105237jTo(w *runtime.Writer, v DYNAMICARFCNMAPPINGClause105237j) error {
@@ -69831,6 +69957,9 @@ func EncodeDYNAMICARFCNMAPPINGClause105237j(v DYNAMICARFCNMAPPINGClause105237j) 
 
 // DecodeSI15RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37k <SI15 Rest Octets>.
 func DecodeSI15RestOctetsFrom(r *runtime.Reader) (SI15RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI15RestOctets{}, err
+	}
 	return decodeSI15RestOctets(r)
 }
 func EncodeSI15RestOctetsTo(w *runtime.Writer, v SI15RestOctets) error {
@@ -69843,10 +69972,10 @@ func DecodeSI15RestOctets(data []byte) (runtime.Decoded[SI15RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI15RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37k", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI15RestOctets]{}, fmt.Errorf("SI15RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI15RestOctets]{}, fmt.Errorf("SI15RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69872,6 +70001,9 @@ func EncodeSI15RestOctets(v SI15RestOctets) ([]byte, error) {
 
 // DecodeDYNAMICARFCNMAPPINGClause105237k decodes TS 44.018 V19.0.0 §10.5.2.37k <DYNAMIC ARFCN MAPPING>.
 func DecodeDYNAMICARFCNMAPPINGClause105237kFrom(r *runtime.Reader) (DYNAMICARFCNMAPPINGClause105237k, error) {
+	if err := r.Check(); err != nil {
+		return DYNAMICARFCNMAPPINGClause105237k{}, err
+	}
 	return decodeDYNAMICARFCNMAPPINGClause105237k(r)
 }
 func EncodeDYNAMICARFCNMAPPINGClause105237kTo(w *runtime.Writer, v DYNAMICARFCNMAPPINGClause105237k) error {
@@ -69904,6 +70036,9 @@ func EncodeDYNAMICARFCNMAPPINGClause105237k(v DYNAMICARFCNMAPPINGClause105237k) 
 
 // DecodeSI21RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37m <SI 21 Rest Octets>.
 func DecodeSI21RestOctetsFrom(r *runtime.Reader) (SI21RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI21RestOctets{}, err
+	}
 	return decodeSI21RestOctets(r)
 }
 func EncodeSI21RestOctetsTo(w *runtime.Writer, v SI21RestOctets) error {
@@ -69916,10 +70051,10 @@ func DecodeSI21RestOctets(data []byte) (runtime.Decoded[SI21RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI21RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37m", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI21RestOctets]{}, fmt.Errorf("SI21RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI21RestOctets]{}, fmt.Errorf("SI21RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -69945,6 +70080,9 @@ func EncodeSI21RestOctets(v SI21RestOctets) ([]byte, error) {
 
 // DecodeNetworkSharingEABInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37m <Network Sharing EAB Information struct>.
 func DecodeNetworkSharingEABInformationStructFrom(r *runtime.Reader) (NetworkSharingEABInformationStruct, error) {
+	if err := r.Check(); err != nil {
+		return NetworkSharingEABInformationStruct{}, err
+	}
 	return decodeNetworkSharingEABInformationStruct(r)
 }
 func EncodeNetworkSharingEABInformationStructTo(w *runtime.Writer, v NetworkSharingEABInformationStruct) error {
@@ -69977,6 +70115,9 @@ func EncodeNetworkSharingEABInformationStruct(v NetworkSharingEABInformationStru
 
 // DecodeSI22RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37n <SI 22 Rest Octets>.
 func DecodeSI22RestOctetsFrom(r *runtime.Reader) (SI22RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI22RestOctets{}, err
+	}
 	return decodeSI22RestOctets(r)
 }
 func EncodeSI22RestOctetsTo(w *runtime.Writer, v SI22RestOctets) error {
@@ -69989,10 +70130,10 @@ func DecodeSI22RestOctets(data []byte) (runtime.Decoded[SI22RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI22RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37n", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI22RestOctets]{}, fmt.Errorf("SI22RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI22RestOctets]{}, fmt.Errorf("SI22RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -70018,6 +70159,9 @@ func EncodeSI22RestOctets(v SI22RestOctets) ([]byte, error) {
 
 // DecodeNetworkSharingInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37n <Network Sharing Information struct>.
 func DecodeNetworkSharingInformationStructFrom(r *runtime.Reader) (NetworkSharingInformationStruct, error) {
+	if err := r.Check(); err != nil {
+		return NetworkSharingInformationStruct{}, err
+	}
 	return decodeNetworkSharingInformationStruct(r)
 }
 func EncodeNetworkSharingInformationStructTo(w *runtime.Writer, v NetworkSharingInformationStruct) error {
@@ -70050,6 +70194,9 @@ func EncodeNetworkSharingInformationStruct(v NetworkSharingInformationStruct) ([
 
 // DecodeSI23RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37o <SI 23 Rest Octets>.
 func DecodeSI23RestOctetsFrom(r *runtime.Reader) (SI23RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI23RestOctets{}, err
+	}
 	return decodeSI23RestOctets(r)
 }
 func EncodeSI23RestOctetsTo(w *runtime.Writer, v SI23RestOctets) error {
@@ -70062,10 +70209,10 @@ func DecodeSI23RestOctets(data []byte) (runtime.Decoded[SI23RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI23RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37o", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI23RestOctets]{}, fmt.Errorf("SI23RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI23RestOctets]{}, fmt.Errorf("SI23RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -70091,6 +70238,9 @@ func EncodeSI23RestOctets(v SI23RestOctets) ([]byte, error) {
 
 // DecodeIRATCellReselectionInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <IRAT Cell Reselection Information struct>.
 func DecodeIRATCellReselectionInformationStructFrom(r *runtime.Reader) (IRATCellReselectionInformationStruct, error) {
+	if err := r.Check(); err != nil {
+		return IRATCellReselectionInformationStruct{}, err
+	}
 	return decodeIRATCellReselectionInformationStruct(r)
 }
 func EncodeIRATCellReselectionInformationStructTo(w *runtime.Writer, v IRATCellReselectionInformationStruct) error {
@@ -70123,6 +70273,9 @@ func EncodeIRATCellReselectionInformationStruct(v IRATCellReselectionInformation
 
 // DecodePriorityAndUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and UTRAN Parameters Description struct>.
 func DecodePriorityAndUTRANParametersDescriptionStructFrom(r *runtime.Reader) (PriorityAndUTRANParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return PriorityAndUTRANParametersDescriptionStruct{}, err
+	}
 	return decodePriorityAndUTRANParametersDescriptionStruct(r)
 }
 func EncodePriorityAndUTRANParametersDescriptionStructTo(w *runtime.Writer, v PriorityAndUTRANParametersDescriptionStruct) error {
@@ -70155,6 +70308,9 @@ func EncodePriorityAndUTRANParametersDescriptionStruct(v PriorityAndUTRANParamet
 
 // DecodeUTRANFDDTDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <UTRAN FDD/TDD Description struct>.
 func DecodeUTRANFDDTDDDescriptionStructFrom(r *runtime.Reader) (UTRANFDDTDDDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return UTRANFDDTDDDescriptionStruct{}, err
+	}
 	return decodeUTRANFDDTDDDescriptionStruct(r)
 }
 func EncodeUTRANFDDTDDDescriptionStructTo(w *runtime.Writer, v UTRANFDDTDDDescriptionStruct) error {
@@ -70187,6 +70343,9 @@ func EncodeUTRANFDDTDDDescriptionStruct(v UTRANFDDTDDDescriptionStruct) ([]byte,
 
 // DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct>.
 func DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom(r *runtime.Reader) (RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct{}, err
+	}
 	return decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(r)
 }
 func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructTo(w *runtime.Writer, v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct) error {
@@ -70219,6 +70378,9 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(v RepeatedUTRA
 
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105237o decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and E-UTRAN Parameters Description struct>.
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom(r *runtime.Reader) (PriorityAndEUTRANParametersDescriptionStructClause105237o, error) {
+	if err := r.Check(); err != nil {
+		return PriorityAndEUTRANParametersDescriptionStructClause105237o{}, err
+	}
 	return decodePriorityAndEUTRANParametersDescriptionStructClause105237o(r)
 }
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oTo(w *runtime.Writer, v PriorityAndEUTRANParametersDescriptionStructClause105237o) error {
@@ -70251,6 +70413,9 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237o(v PriorityA
 
 // DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated E-UTRAN Neighbour Frequency and Priority struct>.
 func DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom(r *runtime.Reader) (RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedEUTRANNeighbourFrequencyAndPriorityStruct{}, err
+	}
 	return decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(r)
 }
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructTo(w *runtime.Writer, v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct) error {
@@ -70283,6 +70448,9 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(v RepeatedEUTRANNei
 
 // DecodeSI10RestOctets decodes TS 44.018 V19.0.0 §10.5.2.44 <SI10 rest octets>.
 func DecodeSI10RestOctetsFrom(r *runtime.Reader) (SI10RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI10RestOctets{}, err
+	}
 	return decodeSI10RestOctets(r)
 }
 func EncodeSI10RestOctetsTo(w *runtime.Writer, v SI10RestOctets) error {
@@ -70295,10 +70463,10 @@ func DecodeSI10RestOctets(data []byte) (runtime.Decoded[SI10RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI10RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.44", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI10RestOctets]{}, fmt.Errorf("SI10RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI10RestOctets]{}, fmt.Errorf("SI10RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -70324,6 +70492,9 @@ func EncodeSI10RestOctets(v SI10RestOctets) ([]byte, error) {
 
 // DecodeNeighbourInformation decodes TS 44.018 V19.0.0 §10.5.2.44 <neighbour information>.
 func DecodeNeighbourInformationFrom(r *runtime.Reader) (NeighbourInformation, error) {
+	if err := r.Check(); err != nil {
+		return NeighbourInformation{}, err
+	}
 	return decodeNeighbourInformation(r)
 }
 func EncodeNeighbourInformationTo(w *runtime.Writer, v NeighbourInformation) error {
@@ -70355,8 +70526,13 @@ func EncodeNeighbourInformation(v NeighbourInformation) ([]byte, error) {
 }
 
 // DecodeCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <cell info>.
-func DecodeCellInfoFrom(r *runtime.Reader) (CellInfo, error) { return decodeCellInfo(r) }
-func EncodeCellInfoTo(w *runtime.Writer, v CellInfo) error   { return encodeCellInfo(w, v) }
+func DecodeCellInfoFrom(r *runtime.Reader) (CellInfo, error) {
+	if err := r.Check(); err != nil {
+		return CellInfo{}, err
+	}
+	return decodeCellInfo(r)
+}
+func EncodeCellInfoTo(w *runtime.Writer, v CellInfo) error { return encodeCellInfo(w, v) }
 func DecodeCellInfo(data []byte) (runtime.Decoded[CellInfo], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[CellInfo]{}, err
@@ -70384,6 +70560,9 @@ func EncodeCellInfo(v CellInfo) ([]byte, error) {
 
 // DecodeCellParameters decodes TS 44.018 V19.0.0 §10.5.2.44 <cell parameters>.
 func DecodeCellParametersFrom(r *runtime.Reader) (CellParameters, error) {
+	if err := r.Check(); err != nil {
+		return CellParameters{}, err
+	}
 	return decodeCellParameters(r)
 }
 func EncodeCellParametersTo(w *runtime.Writer, v CellParameters) error {
@@ -70415,8 +70594,13 @@ func EncodeCellParameters(v CellParameters) ([]byte, error) {
 }
 
 // DecodeCellBarred decodes TS 44.018 V19.0.0 §10.5.2.44 <cell barred>.
-func DecodeCellBarredFrom(r *runtime.Reader) (CellBarred, error) { return decodeCellBarred(r) }
-func EncodeCellBarredTo(w *runtime.Writer, v CellBarred) error   { return encodeCellBarred(w, v) }
+func DecodeCellBarredFrom(r *runtime.Reader) (CellBarred, error) {
+	if err := r.Check(); err != nil {
+		return CellBarred{}, err
+	}
+	return decodeCellBarred(r)
+}
+func EncodeCellBarredTo(w *runtime.Writer, v CellBarred) error { return encodeCellBarred(w, v) }
 func DecodeCellBarred(data []byte) (runtime.Decoded[CellBarred], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[CellBarred]{}, err
@@ -70444,6 +70628,9 @@ func EncodeCellBarred(v CellBarred) ([]byte, error) {
 
 // DecodeFurtherCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further cell info>.
 func DecodeFurtherCellInfoFrom(r *runtime.Reader) (FurtherCellInfo, error) {
+	if err := r.Check(); err != nil {
+		return FurtherCellInfo{}, err
+	}
 	return decodeFurtherCellInfo(r)
 }
 func EncodeFurtherCellInfoTo(w *runtime.Writer, v FurtherCellInfo) error {
@@ -70475,8 +70662,13 @@ func EncodeFurtherCellInfo(v FurtherCellInfo) ([]byte, error) {
 }
 
 // DecodeLaDifferent decodes TS 44.018 V19.0.0 §10.5.2.44 <la different>.
-func DecodeLaDifferentFrom(r *runtime.Reader) (LaDifferent, error) { return decodeLaDifferent(r) }
-func EncodeLaDifferentTo(w *runtime.Writer, v LaDifferent) error   { return encodeLaDifferent(w, v) }
+func DecodeLaDifferentFrom(r *runtime.Reader) (LaDifferent, error) {
+	if err := r.Check(); err != nil {
+		return LaDifferent{}, err
+	}
+	return decodeLaDifferent(r)
+}
+func EncodeLaDifferentTo(w *runtime.Writer, v LaDifferent) error { return encodeLaDifferent(w, v) }
 func DecodeLaDifferent(data []byte) (runtime.Decoded[LaDifferent], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[LaDifferent]{}, err
@@ -70503,8 +70695,13 @@ func EncodeLaDifferent(v LaDifferent) ([]byte, error) {
 }
 
 // DecodeInfoField decodes TS 44.018 V19.0.0 §10.5.2.44 <info field>.
-func DecodeInfoFieldFrom(r *runtime.Reader) (InfoField, error) { return decodeInfoField(r) }
-func EncodeInfoFieldTo(w *runtime.Writer, v InfoField) error   { return encodeInfoField(w, v) }
+func DecodeInfoFieldFrom(r *runtime.Reader) (InfoField, error) {
+	if err := r.Check(); err != nil {
+		return InfoField{}, err
+	}
+	return decodeInfoField(r)
+}
+func EncodeInfoFieldTo(w *runtime.Writer, v InfoField) error { return encodeInfoField(w, v) }
 func DecodeInfoField(data []byte) (runtime.Decoded[InfoField], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[InfoField]{}, err
@@ -70531,7 +70728,12 @@ func EncodeInfoField(v InfoField) ([]byte, error) {
 }
 
 // DecodeNextFrequency decodes TS 44.018 V19.0.0 §10.5.2.44 <next frequency>.
-func DecodeNextFrequencyFrom(r *runtime.Reader) (NextFrequency, error) { return decodeNextFrequency(r) }
+func DecodeNextFrequencyFrom(r *runtime.Reader) (NextFrequency, error) {
+	if err := r.Check(); err != nil {
+		return NextFrequency{}, err
+	}
+	return decodeNextFrequency(r)
+}
 func EncodeNextFrequencyTo(w *runtime.Writer, v NextFrequency) error {
 	return encodeNextFrequency(w, v)
 }
@@ -70562,6 +70764,9 @@ func EncodeNextFrequency(v NextFrequency) ([]byte, error) {
 
 // DecodeDifferentialCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <differential cell info>.
 func DecodeDifferentialCellInfoFrom(r *runtime.Reader) (DifferentialCellInfo, error) {
+	if err := r.Check(); err != nil {
+		return DifferentialCellInfo{}, err
+	}
 	return decodeDifferentialCellInfo(r)
 }
 func EncodeDifferentialCellInfoTo(w *runtime.Writer, v DifferentialCellInfo) error {
@@ -70593,8 +70798,13 @@ func EncodeDifferentialCellInfo(v DifferentialCellInfo) ([]byte, error) {
 }
 
 // DecodeDiffCellPars decodes TS 44.018 V19.0.0 §10.5.2.44 <diff cell pars>.
-func DecodeDiffCellParsFrom(r *runtime.Reader) (DiffCellPars, error) { return decodeDiffCellPars(r) }
-func EncodeDiffCellParsTo(w *runtime.Writer, v DiffCellPars) error   { return encodeDiffCellPars(w, v) }
+func DecodeDiffCellParsFrom(r *runtime.Reader) (DiffCellPars, error) {
+	if err := r.Check(); err != nil {
+		return DiffCellPars{}, err
+	}
+	return decodeDiffCellPars(r)
+}
+func EncodeDiffCellParsTo(w *runtime.Writer, v DiffCellPars) error { return encodeDiffCellPars(w, v) }
 func DecodeDiffCellPars(data []byte) (runtime.Decoded[DiffCellPars], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[DiffCellPars]{}, err
@@ -70622,6 +70832,9 @@ func EncodeDiffCellPars(v DiffCellPars) ([]byte, error) {
 
 // DecodeFurtherDiffCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further diff cell info>.
 func DecodeFurtherDiffCellInfoFrom(r *runtime.Reader) (FurtherDiffCellInfo, error) {
+	if err := r.Check(); err != nil {
+		return FurtherDiffCellInfo{}, err
+	}
 	return decodeFurtherDiffCellInfo(r)
 }
 func EncodeFurtherDiffCellInfoTo(w *runtime.Writer, v FurtherDiffCellInfo) error {
@@ -70654,6 +70867,9 @@ func EncodeFurtherDiffCellInfo(v FurtherDiffCellInfo) ([]byte, error) {
 
 // DecodeSI10terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.71 <SI10ter Rest Octets>.
 func DecodeSI10terRestOctetsFrom(r *runtime.Reader) (SI10terRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI10terRestOctets{}, err
+	}
 	return decodeSI10terRestOctets(r)
 }
 func EncodeSI10terRestOctetsTo(w *runtime.Writer, v SI10terRestOctets) error {
@@ -70688,7 +70904,12 @@ func EncodeSI10terRestOctets(v SI10terRestOctets) ([]byte, error) {
 }
 
 // DecodeSI9RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37a <SI9 rest octets>.
-func DecodeSI9RestOctetsFrom(r *runtime.Reader) (SI9RestOctets, error) { return decodeSI9RestOctets(r) }
+func DecodeSI9RestOctetsFrom(r *runtime.Reader) (SI9RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI9RestOctets{}, err
+	}
+	return decodeSI9RestOctets(r)
+}
 func EncodeSI9RestOctetsTo(w *runtime.Writer, v SI9RestOctets) error {
 	return encodeSI9RestOctets(w, v)
 }
@@ -70699,10 +70920,10 @@ func DecodeSI9RestOctets(data []byte) (runtime.Decoded[SI9RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[SI9RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37a", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 136 {
+	if len(data) < 17 {
 		return runtime.Decoded[SI9RestOctets]{}, fmt.Errorf("SI9RestOctets requires at least 136 bits")
 	}
-	if len(data)*8 > 136 {
+	if len(data) > 17 {
 		return runtime.Decoded[SI9RestOctets]{}, fmt.Errorf("SI9RestOctets exceeds 136 bits")
 	}
 	r := runtime.NewReader(data)
@@ -70728,6 +70949,9 @@ func EncodeSI9RestOctets(v SI9RestOctets) ([]byte, error) {
 
 // DecodeSchedulingInfo decodes TS 44.018 V19.0.0 §10.5.2.37a <Scheduling info>.
 func DecodeSchedulingInfoFrom(r *runtime.Reader) (SchedulingInfo, error) {
+	if err := r.Check(); err != nil {
+		return SchedulingInfo{}, err
+	}
 	return decodeSchedulingInfo(r)
 }
 func EncodeSchedulingInfoTo(w *runtime.Writer, v SchedulingInfo) error {
@@ -70759,8 +70983,13 @@ func EncodeSchedulingInfo(v SchedulingInfo) ([]byte, error) {
 }
 
 // DecodeInfoType decodes TS 44.018 V19.0.0 §10.5.2.37a <Info type>.
-func DecodeInfoTypeFrom(r *runtime.Reader) (InfoType, error) { return decodeInfoType(r) }
-func EncodeInfoTypeTo(w *runtime.Writer, v InfoType) error   { return encodeInfoType(w, v) }
+func DecodeInfoTypeFrom(r *runtime.Reader) (InfoType, error) {
+	if err := r.Check(); err != nil {
+		return InfoType{}, err
+	}
+	return decodeInfoType(r)
+}
+func EncodeInfoTypeTo(w *runtime.Writer, v InfoType) error { return encodeInfoType(w, v) }
 func DecodeInfoType(data []byte) (runtime.Decoded[InfoType], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[InfoType]{}, err
@@ -70787,8 +71016,13 @@ func EncodeInfoType(v InfoType) ([]byte, error) {
 }
 
 // DecodePositions decodes TS 44.018 V19.0.0 §10.5.2.37a <Positions>.
-func DecodePositionsFrom(r *runtime.Reader) (Positions, error) { return decodePositions(r) }
-func EncodePositionsTo(w *runtime.Writer, v Positions) error   { return encodePositions(w, v) }
+func DecodePositionsFrom(r *runtime.Reader) (Positions, error) {
+	if err := r.Check(); err != nil {
+		return Positions{}, err
+	}
+	return decodePositions(r)
+}
+func EncodePositionsTo(w *runtime.Writer, v Positions) error { return encodePositions(w, v) }
 func DecodePositions(data []byte) (runtime.Decoded[Positions], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Positions]{}, err
@@ -70815,8 +71049,13 @@ func EncodePositions(v Positions) ([]byte, error) {
 }
 
 // DecodePosition decodes TS 44.018 V19.0.0 §10.5.2.37a <Position>.
-func DecodePositionFrom(r *runtime.Reader) (Position, error) { return decodePosition(r) }
-func EncodePositionTo(w *runtime.Writer, v Position) error   { return encodePosition(w, v) }
+func DecodePositionFrom(r *runtime.Reader) (Position, error) {
+	if err := r.Check(); err != nil {
+		return Position{}, err
+	}
+	return decodePosition(r)
+}
+func EncodePositionTo(w *runtime.Writer, v Position) error { return encodePosition(w, v) }
 func DecodePosition(data []byte) (runtime.Decoded[Position], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Position]{}, err
@@ -70844,6 +71083,9 @@ func EncodePosition(v Position) ([]byte, error) {
 
 // DecodeSI2terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33a <SI2ter Rest Octets>.
 func DecodeSI2terRestOctetsFrom(r *runtime.Reader) (SI2terRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI2terRestOctets{}, err
+	}
 	return decodeSI2terRestOctets(r)
 }
 func EncodeSI2terRestOctetsTo(w *runtime.Writer, v SI2terRestOctets) error {
@@ -70856,10 +71098,10 @@ func DecodeSI2terRestOctets(data []byte) (runtime.Decoded[SI2terRestOctets], err
 	if len(data) == 0 {
 		return runtime.Decoded[SI2terRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.33a", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 32 {
+	if len(data) < 4 {
 		return runtime.Decoded[SI2terRestOctets]{}, fmt.Errorf("SI2terRestOctets requires at least 32 bits")
 	}
-	if len(data)*8 > 32 {
+	if len(data) > 4 {
 		return runtime.Decoded[SI2terRestOctets]{}, fmt.Errorf("SI2terRestOctets exceeds 32 bits")
 	}
 	r := runtime.NewReader(data)
@@ -70885,6 +71127,9 @@ func EncodeSI2terRestOctets(v SI2terRestOctets) ([]byte, error) {
 
 // DecodeUTRANFDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN FDD Description struct>.
 func DecodeUTRANFDDDescriptionStructClause105233aFrom(r *runtime.Reader) (UTRANFDDDescriptionStructClause105233a, error) {
+	if err := r.Check(); err != nil {
+		return UTRANFDDDescriptionStructClause105233a{}, err
+	}
 	return decodeUTRANFDDDescriptionStructClause105233a(r)
 }
 func EncodeUTRANFDDDescriptionStructClause105233aTo(w *runtime.Writer, v UTRANFDDDescriptionStructClause105233a) error {
@@ -70917,6 +71162,9 @@ func EncodeUTRANFDDDescriptionStructClause105233a(v UTRANFDDDescriptionStructCla
 
 // DecodeUTRANTDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN TDD Description struct>.
 func DecodeUTRANTDDDescriptionStructClause105233aFrom(r *runtime.Reader) (UTRANTDDDescriptionStructClause105233a, error) {
+	if err := r.Check(); err != nil {
+		return UTRANTDDDescriptionStructClause105233a{}, err
+	}
 	return decodeUTRANTDDDescriptionStructClause105233a(r)
 }
 func EncodeUTRANTDDDescriptionStructClause105233aTo(w *runtime.Writer, v UTRANTDDDescriptionStructClause105233a) error {
@@ -70949,6 +71197,9 @@ func EncodeUTRANTDDDescriptionStructClause105233a(v UTRANTDDDescriptionStructCla
 
 // DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G MEASUREMENT Parameters Description struct>.
 func DecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (N3GMEASUREMENTParametersDescriptionStructClause105233a, error) {
+	if err := r.Check(); err != nil {
+		return N3GMEASUREMENTParametersDescriptionStructClause105233a{}, err
+	}
 	return decodeN3GMEASUREMENTParametersDescriptionStructClause105233a(r)
 }
 func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aTo(w *runtime.Writer, v N3GMEASUREMENTParametersDescriptionStructClause105233a) error {
@@ -70981,6 +71232,9 @@ func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a(v N3GMEASUREME
 
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G Additional Measurement Parameters Description struct>.
 func DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (N3GAdditionalMeasurementParametersDescriptionStructClause105233a, error) {
+	if err := r.Check(); err != nil {
+		return N3GAdditionalMeasurementParametersDescriptionStructClause105233a{}, err
+	}
 	return decodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(r)
 }
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aTo(w *runtime.Writer, v N3GAdditionalMeasurementParametersDescriptionStructClause105233a) error {
@@ -71012,7 +71266,12 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(v N3
 }
 
 // DecodeSI4RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets>.
-func DecodeSI4RestOctetsFrom(r *runtime.Reader) (SI4RestOctets, error) { return decodeSI4RestOctets(r) }
+func DecodeSI4RestOctetsFrom(r *runtime.Reader) (SI4RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI4RestOctets{}, err
+	}
+	return decodeSI4RestOctets(r)
+}
 func EncodeSI4RestOctetsTo(w *runtime.Writer, v SI4RestOctets) error {
 	return encodeSI4RestOctets(w, v)
 }
@@ -71023,7 +71282,7 @@ func DecodeSI4RestOctets(data []byte) (runtime.Decoded[SI4RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[SI4RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.35", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 > 80 {
+	if len(data) > 10 {
 		return runtime.Decoded[SI4RestOctets]{}, fmt.Errorf("SI4RestOctets exceeds 80 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71049,6 +71308,9 @@ func EncodeSI4RestOctets(v SI4RestOctets) ([]byte, error) {
 
 // DecodeSI4RestOctetsO decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets_O>.
 func DecodeSI4RestOctetsOFrom(r *runtime.Reader) (SI4RestOctetsO, error) {
+	if err := r.Check(); err != nil {
+		return SI4RestOctetsO{}, err
+	}
 	return decodeSI4RestOctetsO(r)
 }
 func EncodeSI4RestOctetsOTo(w *runtime.Writer, v SI4RestOctetsO) error {
@@ -71084,6 +71346,9 @@ func EncodeSI4RestOctetsO(v SI4RestOctetsO) ([]byte, error) {
 
 // DecodeSI4RestOctetsS decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets_S>.
 func DecodeSI4RestOctetsSFrom(r *runtime.Reader) (SI4RestOctetsS, error) {
+	if err := r.Check(); err != nil {
+		return SI4RestOctetsS{}, err
+	}
 	return decodeSI4RestOctetsS(r)
 }
 func EncodeSI4RestOctetsSTo(w *runtime.Writer, v SI4RestOctetsS) error {
@@ -71119,6 +71384,9 @@ func EncodeSI4RestOctetsS(v SI4RestOctetsS) ([]byte, error) {
 
 // DecodeBreakIndicator decodes TS 44.018 V19.0.0 §10.5.2.35 <Break Indicator>.
 func DecodeBreakIndicatorFrom(r *runtime.Reader) (BreakIndicator, error) {
+	if err := r.Check(); err != nil {
+		return BreakIndicator{}, err
+	}
 	return decodeBreakIndicator(r)
 }
 func EncodeBreakIndicatorTo(w *runtime.Writer, v BreakIndicator) error {
@@ -71151,6 +71419,9 @@ func EncodeBreakIndicator(v BreakIndicator) ([]byte, error) {
 
 // DecodeSI7RestOctets decodes TS 44.018 V19.0.0 §10.5.2.36 <SI7 Rest Octets>.
 func DecodeSI7RestOctetsFrom(r *runtime.Reader) (SI7RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI7RestOctets{}, err
+	}
 	return SI7RestOctets{}, &runtime.ContextRequiredError{Standard: "TS 44.018", Clause: "10.5.2.36", Name: "SI7 Rest Octets"}
 }
 func EncodeSI7RestOctetsTo(w *runtime.Writer, v SI7RestOctets) error {
@@ -71180,10 +71451,10 @@ func DecodeSI7RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Deco
 	if len(data) == 0 {
 		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.36", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("SI7RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("SI7RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71197,6 +71468,9 @@ func DecodeSI7RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Deco
 }
 func DecodeSI7RestOctetsFromWithContext(r *runtime.Reader, c runtime.SI4ACS) (SI7RestOctets, error) {
 	var v SI7RestOctets
+	if err := r.Check(); err != nil {
+		return v, err
+	}
 	if !c.Valid() {
 		return v, fmt.Errorf("invalid SI4 ACS %d", c)
 	}
@@ -71250,6 +71524,9 @@ func EncodeSI7RestOctetsToWithContext(w *runtime.Writer, v SI7RestOctets, c runt
 
 // DecodeSI8RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37 <SI8 Rest Octets>.
 func DecodeSI8RestOctetsFrom(r *runtime.Reader) (SI8RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI8RestOctets{}, err
+	}
 	return SI8RestOctets{}, &runtime.ContextRequiredError{Standard: "TS 44.018", Clause: "10.5.2.37", Name: "SI8 Rest Octets"}
 }
 func EncodeSI8RestOctetsTo(w *runtime.Writer, v SI8RestOctets) error {
@@ -71279,10 +71556,10 @@ func DecodeSI8RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Deco
 	if len(data) == 0 {
 		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("SI8RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("SI8RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71296,6 +71573,9 @@ func DecodeSI8RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Deco
 }
 func DecodeSI8RestOctetsFromWithContext(r *runtime.Reader, c runtime.SI4ACS) (SI8RestOctets, error) {
 	var v SI8RestOctets
+	if err := r.Check(); err != nil {
+		return v, err
+	}
 	if !c.Valid() {
 		return v, fmt.Errorf("invalid SI4 ACS %d", c)
 	}
@@ -71349,6 +71629,9 @@ func EncodeSI8RestOctetsToWithContext(w *runtime.Writer, v SI8RestOctets, c runt
 
 // DecodeOptionalSelectionParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Optional Selection Parameters>.
 func DecodeOptionalSelectionParametersClause105235From(r *runtime.Reader) (OptionalSelectionParametersClause105235, error) {
+	if err := r.Check(); err != nil {
+		return OptionalSelectionParametersClause105235{}, err
+	}
 	return decodeOptionalSelectionParametersClause105235(r)
 }
 func EncodeOptionalSelectionParametersClause105235To(w *runtime.Writer, v OptionalSelectionParametersClause105235) error {
@@ -71381,6 +71664,9 @@ func EncodeOptionalSelectionParametersClause105235(v OptionalSelectionParameters
 
 // DecodeSelectionParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Selection Parameters>.
 func DecodeSelectionParametersClause105235From(r *runtime.Reader) (SelectionParametersClause105235, error) {
+	if err := r.Check(); err != nil {
+		return SelectionParametersClause105235{}, err
+	}
 	return decodeSelectionParametersClause105235(r)
 }
 func EncodeSelectionParametersClause105235To(w *runtime.Writer, v SelectionParametersClause105235) error {
@@ -71413,6 +71699,9 @@ func EncodeSelectionParametersClause105235(v SelectionParametersClause105235) ([
 
 // DecodeOptionalPowerOffsetClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Optional Power Offset>.
 func DecodeOptionalPowerOffsetClause105235From(r *runtime.Reader) (OptionalPowerOffsetClause105235, error) {
+	if err := r.Check(); err != nil {
+		return OptionalPowerOffsetClause105235{}, err
+	}
 	return decodeOptionalPowerOffsetClause105235(r)
 }
 func EncodeOptionalPowerOffsetClause105235To(w *runtime.Writer, v OptionalPowerOffsetClause105235) error {
@@ -71445,6 +71734,9 @@ func EncodeOptionalPowerOffsetClause105235(v OptionalPowerOffsetClause105235) ([
 
 // DecodeGPRSIndicatorClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <GPRS Indicator>.
 func DecodeGPRSIndicatorClause105235From(r *runtime.Reader) (GPRSIndicatorClause105235, error) {
+	if err := r.Check(); err != nil {
+		return GPRSIndicatorClause105235{}, err
+	}
 	return decodeGPRSIndicatorClause105235(r)
 }
 func EncodeGPRSIndicatorClause105235To(w *runtime.Writer, v GPRSIndicatorClause105235) error {
@@ -71477,6 +71769,9 @@ func EncodeGPRSIndicatorClause105235(v GPRSIndicatorClause105235) ([]byte, error
 
 // DecodeLSAParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA Parameters>.
 func DecodeLSAParametersClause105235From(r *runtime.Reader) (LSAParametersClause105235, error) {
+	if err := r.Check(); err != nil {
+		return LSAParametersClause105235{}, err
+	}
 	return decodeLSAParametersClause105235(r)
 }
 func EncodeLSAParametersClause105235To(w *runtime.Writer, v LSAParametersClause105235) error {
@@ -71509,6 +71804,9 @@ func EncodeLSAParametersClause105235(v LSAParametersClause105235) ([]byte, error
 
 // DecodeLSAIDInformationClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA ID information>.
 func DecodeLSAIDInformationClause105235From(r *runtime.Reader) (LSAIDInformationClause105235, error) {
+	if err := r.Check(); err != nil {
+		return LSAIDInformationClause105235{}, err
+	}
 	return decodeLSAIDInformationClause105235(r)
 }
 func EncodeLSAIDInformationClause105235To(w *runtime.Writer, v LSAIDInformationClause105235) error {
@@ -71541,6 +71839,9 @@ func EncodeLSAIDInformationClause105235(v LSAIDInformationClause105235) ([]byte,
 
 // DecodeLSAIdentityClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA identity>.
 func DecodeLSAIdentityClause105235From(r *runtime.Reader) (LSAIdentityClause105235, error) {
+	if err := r.Check(); err != nil {
+		return LSAIdentityClause105235{}, err
+	}
 	return decodeLSAIdentityClause105235(r)
 }
 func EncodeLSAIdentityClause105235To(w *runtime.Writer, v LSAIdentityClause105235) error {
@@ -71573,6 +71874,9 @@ func EncodeLSAIdentityClause105235(v LSAIdentityClause105235) ([]byte, error) {
 
 // DecodeSI13altRestOctets decodes TS 44.018 V19.0.0 §10.5.2.37l <SI 13alt Rest Octets>.
 func DecodeSI13altRestOctetsFrom(r *runtime.Reader) (SI13altRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI13altRestOctets{}, err
+	}
 	return decodeSI13altRestOctets(r)
 }
 func EncodeSI13altRestOctetsTo(w *runtime.Writer, v SI13altRestOctets) error {
@@ -71585,10 +71889,10 @@ func DecodeSI13altRestOctets(data []byte) (runtime.Decoded[SI13altRestOctets], e
 	if len(data) == 0 {
 		return runtime.Decoded[SI13altRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37l", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI13altRestOctets]{}, fmt.Errorf("SI13altRestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI13altRestOctets]{}, fmt.Errorf("SI13altRestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71614,6 +71918,9 @@ func EncodeSI13altRestOctets(v SI13altRestOctets) ([]byte, error) {
 
 // DecodePBCCHDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.37l <PBCCH Description 2 struct>.
 func DecodePBCCHDescription2StructFrom(r *runtime.Reader) (PBCCHDescription2Struct, error) {
+	if err := r.Check(); err != nil {
+		return PBCCHDescription2Struct{}, err
+	}
 	return decodePBCCHDescription2Struct(r)
 }
 func EncodePBCCHDescription2StructTo(w *runtime.Writer, v PBCCHDescription2Struct) error {
@@ -71645,8 +71952,13 @@ func EncodePBCCHDescription2Struct(v PBCCHDescription2Struct) ([]byte, error) {
 }
 
 // DecodeP2RestOctets decodes TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>.
-func DecodeP2RestOctetsFrom(r *runtime.Reader) (P2RestOctets, error) { return decodeP2RestOctets(r) }
-func EncodeP2RestOctetsTo(w *runtime.Writer, v P2RestOctets) error   { return encodeP2RestOctets(w, v) }
+func DecodeP2RestOctetsFrom(r *runtime.Reader) (P2RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return P2RestOctets{}, err
+	}
+	return decodeP2RestOctets(r)
+}
+func EncodeP2RestOctetsTo(w *runtime.Writer, v P2RestOctets) error { return encodeP2RestOctets(w, v) }
 func DecodeP2RestOctets(data []byte) (runtime.Decoded[P2RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[P2RestOctets]{}, err
@@ -71654,10 +71966,10 @@ func DecodeP2RestOctets(data []byte) (runtime.Decoded[P2RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[P2RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.24", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 8 {
+	if len(data) < 1 {
 		return runtime.Decoded[P2RestOctets]{}, fmt.Errorf("P2RestOctets requires at least 8 bits")
 	}
-	if len(data)*8 > 88 {
+	if len(data) > 11 {
 		return runtime.Decoded[P2RestOctets]{}, fmt.Errorf("P2RestOctets exceeds 88 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71683,6 +71995,9 @@ func EncodeP2RestOctets(v P2RestOctets) ([]byte, error) {
 
 // DecodePriorityClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <Priority>.
 func DecodePriorityClause105224From(r *runtime.Reader) (PriorityClause105224, error) {
+	if err := r.Check(); err != nil {
+		return PriorityClause105224{}, err
+	}
 	return decodePriorityClause105224(r)
 }
 func EncodePriorityClause105224To(w *runtime.Writer, v PriorityClause105224) error {
@@ -71715,6 +72030,9 @@ func EncodePriorityClause105224(v PriorityClause105224) ([]byte, error) {
 
 // DecodeMBMSInformationClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <MBMS Information>.
 func DecodeMBMSInformationClause105224From(r *runtime.Reader) (MBMSInformationClause105224, error) {
+	if err := r.Check(); err != nil {
+		return MBMSInformationClause105224{}, err
+	}
 	return decodeMBMSInformationClause105224(r)
 }
 func EncodeMBMSInformationClause105224To(w *runtime.Writer, v MBMSInformationClause105224) error {
@@ -71747,6 +72065,9 @@ func EncodeMBMSInformationClause105224(v MBMSInformationClause105224) ([]byte, e
 
 // DecodePEOIMMCellGroupDetailsStructClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105224From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105224, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105224{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105224(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105224To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105224) error {
@@ -71778,8 +72099,13 @@ func EncodePEOIMMCellGroupDetailsStructClause105224(v PEOIMMCellGroupDetailsStru
 }
 
 // DecodeP3RestOctets decodes TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>.
-func DecodeP3RestOctetsFrom(r *runtime.Reader) (P3RestOctets, error) { return decodeP3RestOctets(r) }
-func EncodeP3RestOctetsTo(w *runtime.Writer, v P3RestOctets) error   { return encodeP3RestOctets(w, v) }
+func DecodeP3RestOctetsFrom(r *runtime.Reader) (P3RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return P3RestOctets{}, err
+	}
+	return decodeP3RestOctets(r)
+}
+func EncodeP3RestOctetsTo(w *runtime.Writer, v P3RestOctets) error { return encodeP3RestOctets(w, v) }
 func DecodeP3RestOctets(data []byte) (runtime.Decoded[P3RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[P3RestOctets]{}, err
@@ -71787,10 +72113,10 @@ func DecodeP3RestOctets(data []byte) (runtime.Decoded[P3RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[P3RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.25", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 24 {
+	if len(data) < 3 {
 		return runtime.Decoded[P3RestOctets]{}, fmt.Errorf("P3RestOctets requires at least 24 bits")
 	}
-	if len(data)*8 > 24 {
+	if len(data) > 3 {
 		return runtime.Decoded[P3RestOctets]{}, fmt.Errorf("P3RestOctets exceeds 24 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71816,6 +72142,9 @@ func EncodeP3RestOctets(v P3RestOctets) ([]byte, error) {
 
 // DecodePriorityClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <Priority>.
 func DecodePriorityClause105225From(r *runtime.Reader) (PriorityClause105225, error) {
+	if err := r.Check(); err != nil {
+		return PriorityClause105225{}, err
+	}
 	return decodePriorityClause105225(r)
 }
 func EncodePriorityClause105225To(w *runtime.Writer, v PriorityClause105225) error {
@@ -71848,6 +72177,9 @@ func EncodePriorityClause105225(v PriorityClause105225) ([]byte, error) {
 
 // DecodePEOIMMCellGroupDetailsStructClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105225From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105225, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105225{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105225(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105225To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105225) error {
@@ -71880,6 +72212,9 @@ func EncodePEOIMMCellGroupDetailsStructClause105225(v PEOIMMCellGroupDetailsStru
 
 // DecodeSI2quaterRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>.
 func DecodeSI2quaterRestOctetsFrom(r *runtime.Reader) (SI2quaterRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI2quaterRestOctets{}, err
+	}
 	return decodeSI2quaterRestOctets(r)
 }
 func EncodeSI2quaterRestOctetsTo(w *runtime.Writer, v SI2quaterRestOctets) error {
@@ -71892,10 +72227,10 @@ func DecodeSI2quaterRestOctets(data []byte) (runtime.Decoded[SI2quaterRestOctets
 	if len(data) == 0 {
 		return runtime.Decoded[SI2quaterRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.33b", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI2quaterRestOctets]{}, fmt.Errorf("SI2quaterRestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI2quaterRestOctets]{}, fmt.Errorf("SI2quaterRestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -71921,6 +72256,9 @@ func EncodeSI2quaterRestOctets(v SI2quaterRestOctets) ([]byte, error) {
 
 // DecodeN3GNeighbourCellDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Neighbour Cell Description struct>.
 func DecodeN3GNeighbourCellDescriptionStructFrom(r *runtime.Reader) (N3GNeighbourCellDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return N3GNeighbourCellDescriptionStruct{}, err
+	}
 	return decodeN3GNeighbourCellDescriptionStruct(r)
 }
 func EncodeN3GNeighbourCellDescriptionStructTo(w *runtime.Writer, v N3GNeighbourCellDescriptionStruct) error {
@@ -71953,6 +72291,9 @@ func EncodeN3GNeighbourCellDescriptionStruct(v N3GNeighbourCellDescriptionStruct
 
 // DecodeUTRANFDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN FDD Description struct>.
 func DecodeUTRANFDDDescriptionStructClause105233bFrom(r *runtime.Reader) (UTRANFDDDescriptionStructClause105233b, error) {
+	if err := r.Check(); err != nil {
+		return UTRANFDDDescriptionStructClause105233b{}, err
+	}
 	return decodeUTRANFDDDescriptionStructClause105233b(r)
 }
 func EncodeUTRANFDDDescriptionStructClause105233bTo(w *runtime.Writer, v UTRANFDDDescriptionStructClause105233b) error {
@@ -71985,6 +72326,9 @@ func EncodeUTRANFDDDescriptionStructClause105233b(v UTRANFDDDescriptionStructCla
 
 // DecodeRepeatedUTRANFDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN FDD Neighbour Cells struct>.
 func DecodeRepeatedUTRANFDDNeighbourCellsStructFrom(r *runtime.Reader) (RepeatedUTRANFDDNeighbourCellsStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedUTRANFDDNeighbourCellsStruct{}, err
+	}
 	return decodeRepeatedUTRANFDDNeighbourCellsStruct(r)
 }
 func EncodeRepeatedUTRANFDDNeighbourCellsStructTo(w *runtime.Writer, v RepeatedUTRANFDDNeighbourCellsStruct) error {
@@ -72017,6 +72361,9 @@ func EncodeRepeatedUTRANFDDNeighbourCellsStruct(v RepeatedUTRANFDDNeighbourCells
 
 // DecodeUTRANTDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN TDD Description struct>.
 func DecodeUTRANTDDDescriptionStructClause105233bFrom(r *runtime.Reader) (UTRANTDDDescriptionStructClause105233b, error) {
+	if err := r.Check(); err != nil {
+		return UTRANTDDDescriptionStructClause105233b{}, err
+	}
 	return decodeUTRANTDDDescriptionStructClause105233b(r)
 }
 func EncodeUTRANTDDDescriptionStructClause105233bTo(w *runtime.Writer, v UTRANTDDDescriptionStructClause105233b) error {
@@ -72049,6 +72396,9 @@ func EncodeUTRANTDDDescriptionStructClause105233b(v UTRANTDDDescriptionStructCla
 
 // DecodeRepeatedUTRANTDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN TDD Neighbour Cells struct>.
 func DecodeRepeatedUTRANTDDNeighbourCellsStructFrom(r *runtime.Reader) (RepeatedUTRANTDDNeighbourCellsStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedUTRANTDDNeighbourCellsStruct{}, err
+	}
 	return decodeRepeatedUTRANTDDNeighbourCellsStruct(r)
 }
 func EncodeRepeatedUTRANTDDNeighbourCellsStructTo(w *runtime.Writer, v RepeatedUTRANTDDNeighbourCellsStruct) error {
@@ -72081,6 +72431,9 @@ func EncodeRepeatedUTRANTDDNeighbourCellsStruct(v RepeatedUTRANTDDNeighbourCells
 
 // DecodeMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <MEASUREMENT PARAMETERS Description Struct>.
 func DecodeMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (MEASUREMENTPARAMETERSDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return MEASUREMENTPARAMETERSDescriptionStruct{}, err
+	}
 	return decodeMEASUREMENTPARAMETERSDescriptionStruct(r)
 }
 func EncodeMEASUREMENTPARAMETERSDescriptionStructTo(w *runtime.Writer, v MEASUREMENTPARAMETERSDescriptionStruct) error {
@@ -72113,6 +72466,9 @@ func EncodeMEASUREMENTPARAMETERSDescriptionStruct(v MEASUREMENTPARAMETERSDescrip
 
 // DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G MEASUREMENT PARAMETERS Description struct>.
 func DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom(r *runtime.Reader) (N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, error) {
+	if err := r.Check(); err != nil {
+		return N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b{}, err
+	}
 	return decodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(r)
 }
 func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bTo(w *runtime.Writer, v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b) error {
@@ -72145,6 +72501,9 @@ func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(v N3GMEASUREME
 
 // DecodeGPRSRealTimeDifferenceDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS Real Time Difference Description struct>.
 func DecodeGPRSRealTimeDifferenceDescriptionStructFrom(r *runtime.Reader) (GPRSRealTimeDifferenceDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSRealTimeDifferenceDescriptionStruct{}, err
+	}
 	return decodeGPRSRealTimeDifferenceDescriptionStruct(r)
 }
 func EncodeGPRSRealTimeDifferenceDescriptionStructTo(w *runtime.Writer, v GPRSRealTimeDifferenceDescriptionStruct) error {
@@ -72176,8 +72535,13 @@ func EncodeGPRSRealTimeDifferenceDescriptionStruct(v GPRSRealTimeDifferenceDescr
 }
 
 // DecodeRTD6Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD6 Struct>.
-func DecodeRTD6StructFrom(r *runtime.Reader) (RTD6Struct, error) { return decodeRTD6Struct(r) }
-func EncodeRTD6StructTo(w *runtime.Writer, v RTD6Struct) error   { return encodeRTD6Struct(w, v) }
+func DecodeRTD6StructFrom(r *runtime.Reader) (RTD6Struct, error) {
+	if err := r.Check(); err != nil {
+		return RTD6Struct{}, err
+	}
+	return decodeRTD6Struct(r)
+}
+func EncodeRTD6StructTo(w *runtime.Writer, v RTD6Struct) error { return encodeRTD6Struct(w, v) }
 func DecodeRTD6Struct(data []byte) (runtime.Decoded[RTD6Struct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RTD6Struct]{}, err
@@ -72204,8 +72568,13 @@ func EncodeRTD6Struct(v RTD6Struct) ([]byte, error) {
 }
 
 // DecodeRTD12Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD12 Struct>.
-func DecodeRTD12StructFrom(r *runtime.Reader) (RTD12Struct, error) { return decodeRTD12Struct(r) }
-func EncodeRTD12StructTo(w *runtime.Writer, v RTD12Struct) error   { return encodeRTD12Struct(w, v) }
+func DecodeRTD12StructFrom(r *runtime.Reader) (RTD12Struct, error) {
+	if err := r.Check(); err != nil {
+		return RTD12Struct{}, err
+	}
+	return decodeRTD12Struct(r)
+}
+func EncodeRTD12StructTo(w *runtime.Writer, v RTD12Struct) error { return encodeRTD12Struct(w, v) }
 func DecodeRTD12Struct(data []byte) (runtime.Decoded[RTD12Struct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RTD12Struct]{}, err
@@ -72233,6 +72602,9 @@ func EncodeRTD12Struct(v RTD12Struct) ([]byte, error) {
 
 // DecodeGPRSBSICDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS BSIC Description struct>.
 func DecodeGPRSBSICDescriptionStructFrom(r *runtime.Reader) (GPRSBSICDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSBSICDescriptionStruct{}, err
+	}
 	return decodeGPRSBSICDescriptionStruct(r)
 }
 func EncodeGPRSBSICDescriptionStructTo(w *runtime.Writer, v GPRSBSICDescriptionStruct) error {
@@ -72265,6 +72637,9 @@ func EncodeGPRSBSICDescriptionStruct(v GPRSBSICDescriptionStruct) ([]byte, error
 
 // DecodeGPRSREPORTPRIORITYDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS REPORT PRIORITY Description struct>.
 func DecodeGPRSREPORTPRIORITYDescriptionStructFrom(r *runtime.Reader) (GPRSREPORTPRIORITYDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSREPORTPRIORITYDescriptionStruct{}, err
+	}
 	return decodeGPRSREPORTPRIORITYDescriptionStruct(r)
 }
 func EncodeGPRSREPORTPRIORITYDescriptionStructTo(w *runtime.Writer, v GPRSREPORTPRIORITYDescriptionStruct) error {
@@ -72297,6 +72672,9 @@ func EncodeGPRSREPORTPRIORITYDescriptionStruct(v GPRSREPORTPRIORITYDescriptionSt
 
 // DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS MEASUREMENT PARAMETERS Description struct>.
 func DecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (GPRSMEASUREMENTPARAMETERSDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSMEASUREMENTPARAMETERSDescriptionStruct{}, err
+	}
 	return decodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(r)
 }
 func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructTo(w *runtime.Writer, v GPRSMEASUREMENTPARAMETERSDescriptionStruct) error {
@@ -72329,6 +72707,9 @@ func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(v GPRSMEASUREMENTPARAMETER
 
 // DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS 3G MEASUREMENT PARAMETERS Description struct>.
 func DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (GPRS3GMEASUREMENTPARAMETERSDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRS3GMEASUREMENTPARAMETERSDescriptionStruct{}, err
+	}
 	return decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(r)
 }
 func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructTo(w *runtime.Writer, v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct) error {
@@ -72361,6 +72742,9 @@ func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(v GPRS3GMEASUREMENTPARAM
 
 // DecodeNCMeasurementParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <NC Measurement Parameters struct>.
 func DecodeNCMeasurementParametersStructFrom(r *runtime.Reader) (NCMeasurementParametersStruct, error) {
+	if err := r.Check(); err != nil {
+		return NCMeasurementParametersStruct{}, err
+	}
 	return decodeNCMeasurementParametersStruct(r)
 }
 func EncodeNCMeasurementParametersStructTo(w *runtime.Writer, v NCMeasurementParametersStruct) error {
@@ -72393,6 +72777,9 @@ func EncodeNCMeasurementParametersStruct(v NCMeasurementParametersStruct) ([]byt
 
 // DecodeSI2qExtensionInformation decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2q Extension Information>.
 func DecodeSI2qExtensionInformationFrom(r *runtime.Reader) (SI2qExtensionInformation, error) {
+	if err := r.Check(); err != nil {
+		return SI2qExtensionInformation{}, err
+	}
 	return decodeSI2qExtensionInformation(r)
 }
 func EncodeSI2qExtensionInformationTo(w *runtime.Writer, v SI2qExtensionInformation) error {
@@ -72425,6 +72812,9 @@ func EncodeSI2qExtensionInformation(v SI2qExtensionInformation) ([]byte, error) 
 
 // DecodeCCNSupportDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CCN Support Description struct>.
 func DecodeCCNSupportDescriptionStructFrom(r *runtime.Reader) (CCNSupportDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return CCNSupportDescriptionStruct{}, err
+	}
 	return decodeCCNSupportDescriptionStruct(r)
 }
 func EncodeCCNSupportDescriptionStructTo(w *runtime.Writer, v CCNSupportDescriptionStruct) error {
@@ -72457,6 +72847,9 @@ func EncodeCCNSupportDescriptionStruct(v CCNSupportDescriptionStruct) ([]byte, e
 
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description struct>.
 func DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (N3GAdditionalMeasurementParametersDescriptionStructClause105233b, error) {
+	if err := r.Check(); err != nil {
+		return N3GAdditionalMeasurementParametersDescriptionStructClause105233b{}, err
+	}
 	return decodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(r)
 }
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bTo(w *runtime.Writer, v N3GAdditionalMeasurementParametersDescriptionStructClause105233b) error {
@@ -72489,6 +72882,9 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(v N3
 
 // DecodeN3GAdditionalMeasurementParametersDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description 2 struct>.
 func DecodeN3GAdditionalMeasurementParametersDescription2StructFrom(r *runtime.Reader) (N3GAdditionalMeasurementParametersDescription2Struct, error) {
+	if err := r.Check(); err != nil {
+		return N3GAdditionalMeasurementParametersDescription2Struct{}, err
+	}
 	return decodeN3GAdditionalMeasurementParametersDescription2Struct(r)
 }
 func EncodeN3GAdditionalMeasurementParametersDescription2StructTo(w *runtime.Writer, v N3GAdditionalMeasurementParametersDescription2Struct) error {
@@ -72521,6 +72917,9 @@ func EncodeN3GAdditionalMeasurementParametersDescription2Struct(v N3GAdditionalM
 
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <Priority and E-UTRAN Parameters Description struct>.
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (PriorityAndEUTRANParametersDescriptionStructClause105233b, error) {
+	if err := r.Check(); err != nil {
+		return PriorityAndEUTRANParametersDescriptionStructClause105233b{}, err
+	}
 	return decodePriorityAndEUTRANParametersDescriptionStructClause105233b(r)
 }
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bTo(w *runtime.Writer, v PriorityAndEUTRANParametersDescriptionStructClause105233b) error {
@@ -72553,6 +72952,9 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233b(v PriorityA
 
 // DecodeServingCellPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Serving Cell Priority Parameters Description struct>.
 func DecodeServingCellPriorityParametersDescriptionStructFrom(r *runtime.Reader) (ServingCellPriorityParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return ServingCellPriorityParametersDescriptionStruct{}, err
+	}
 	return decodeServingCellPriorityParametersDescriptionStruct(r)
 }
 func EncodeServingCellPriorityParametersDescriptionStructTo(w *runtime.Writer, v ServingCellPriorityParametersDescriptionStruct) error {
@@ -72585,6 +72987,9 @@ func EncodeServingCellPriorityParametersDescriptionStruct(v ServingCellPriorityP
 
 // DecodeN3GPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Priority Parameters Description struct>.
 func DecodeN3GPriorityParametersDescriptionStructFrom(r *runtime.Reader) (N3GPriorityParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return N3GPriorityParametersDescriptionStruct{}, err
+	}
 	return decodeN3GPriorityParametersDescriptionStruct(r)
 }
 func EncodeN3GPriorityParametersDescriptionStructTo(w *runtime.Writer, v N3GPriorityParametersDescriptionStruct) error {
@@ -72617,6 +73022,9 @@ func EncodeN3GPriorityParametersDescriptionStruct(v N3GPriorityParametersDescrip
 
 // DecodeRepeatedUTRANPriorityParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN Priority Parameters struct>.
 func DecodeRepeatedUTRANPriorityParametersStructFrom(r *runtime.Reader) (RepeatedUTRANPriorityParametersStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedUTRANPriorityParametersStruct{}, err
+	}
 	return decodeRepeatedUTRANPriorityParametersStruct(r)
 }
 func EncodeRepeatedUTRANPriorityParametersStructTo(w *runtime.Writer, v RepeatedUTRANPriorityParametersStruct) error {
@@ -72649,6 +73057,9 @@ func EncodeRepeatedUTRANPriorityParametersStruct(v RepeatedUTRANPriorityParamete
 
 // DecodeEUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Parameters Description struct>.
 func DecodeEUTRANParametersDescriptionStructFrom(r *runtime.Reader) (EUTRANParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return EUTRANParametersDescriptionStruct{}, err
+	}
 	return decodeEUTRANParametersDescriptionStruct(r)
 }
 func EncodeEUTRANParametersDescriptionStructTo(w *runtime.Writer, v EUTRANParametersDescriptionStruct) error {
@@ -72681,6 +73092,9 @@ func EncodeEUTRANParametersDescriptionStruct(v EUTRANParametersDescriptionStruct
 
 // DecodeEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Measurement Parameters Description struct>.
 func DecodeEUTRANMeasurementParametersDescriptionStructFrom(r *runtime.Reader) (EUTRANMeasurementParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return EUTRANMeasurementParametersDescriptionStruct{}, err
+	}
 	return decodeEUTRANMeasurementParametersDescriptionStruct(r)
 }
 func EncodeEUTRANMeasurementParametersDescriptionStructTo(w *runtime.Writer, v EUTRANMeasurementParametersDescriptionStruct) error {
@@ -72713,6 +73127,9 @@ func EncodeEUTRANMeasurementParametersDescriptionStruct(v EUTRANMeasurementParam
 
 // DecodeGPRSEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS E-UTRAN Measurement Parameters Description struct>.
 func DecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom(r *runtime.Reader) (GPRSEUTRANMeasurementParametersDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return GPRSEUTRANMeasurementParametersDescriptionStruct{}, err
+	}
 	return decodeGPRSEUTRANMeasurementParametersDescriptionStruct(r)
 }
 func EncodeGPRSEUTRANMeasurementParametersDescriptionStructTo(w *runtime.Writer, v GPRSEUTRANMeasurementParametersDescriptionStruct) error {
@@ -72745,6 +73162,9 @@ func EncodeGPRSEUTRANMeasurementParametersDescriptionStruct(v GPRSEUTRANMeasurem
 
 // DecodeRepeatedEUTRANNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Neighbour Cells struct>.
 func DecodeRepeatedEUTRANNeighbourCellsStructFrom(r *runtime.Reader) (RepeatedEUTRANNeighbourCellsStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedEUTRANNeighbourCellsStruct{}, err
+	}
 	return decodeRepeatedEUTRANNeighbourCellsStruct(r)
 }
 func EncodeRepeatedEUTRANNeighbourCellsStructTo(w *runtime.Writer, v RepeatedEUTRANNeighbourCellsStruct) error {
@@ -72777,6 +73197,9 @@ func EncodeRepeatedEUTRANNeighbourCellsStruct(v RepeatedEUTRANNeighbourCellsStru
 
 // DecodeRepeatedEUTRANNotAllowedCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Not Allowed Cells struct>.
 func DecodeRepeatedEUTRANNotAllowedCellsStructFrom(r *runtime.Reader) (RepeatedEUTRANNotAllowedCellsStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedEUTRANNotAllowedCellsStruct{}, err
+	}
 	return decodeRepeatedEUTRANNotAllowedCellsStruct(r)
 }
 func EncodeRepeatedEUTRANNotAllowedCellsStructTo(w *runtime.Writer, v RepeatedEUTRANNotAllowedCellsStruct) error {
@@ -72809,6 +73232,9 @@ func EncodeRepeatedEUTRANNotAllowedCellsStruct(v RepeatedEUTRANNotAllowedCellsSt
 
 // DecodeRepeatedEUTRANPCIDToTAMappingStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN PCID to TA mapping struct>.
 func DecodeRepeatedEUTRANPCIDToTAMappingStructFrom(r *runtime.Reader) (RepeatedEUTRANPCIDToTAMappingStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedEUTRANPCIDToTAMappingStruct{}, err
+	}
 	return decodeRepeatedEUTRANPCIDToTAMappingStruct(r)
 }
 func EncodeRepeatedEUTRANPCIDToTAMappingStructTo(w *runtime.Writer, v RepeatedEUTRANPCIDToTAMappingStruct) error {
@@ -72841,6 +73267,9 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStruct(v RepeatedEUTRANPCIDToTAMappingSt
 
 // DecodeN3GCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G CSG Description struct>.
 func DecodeN3GCSGDescriptionStructFrom(r *runtime.Reader) (N3GCSGDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return N3GCSGDescriptionStruct{}, err
+	}
 	return decodeN3GCSGDescriptionStruct(r)
 }
 func EncodeN3GCSGDescriptionStructTo(w *runtime.Writer, v N3GCSGDescriptionStruct) error {
@@ -72873,6 +73302,9 @@ func EncodeN3GCSGDescriptionStruct(v N3GCSGDescriptionStruct) ([]byte, error) {
 
 // DecodeEUTRANCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Description struct>.
 func DecodeEUTRANCSGDescriptionStructFrom(r *runtime.Reader) (EUTRANCSGDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return EUTRANCSGDescriptionStruct{}, err
+	}
 	return decodeEUTRANCSGDescriptionStruct(r)
 }
 func EncodeEUTRANCSGDescriptionStructTo(w *runtime.Writer, v EUTRANCSGDescriptionStruct) error {
@@ -72905,6 +73337,9 @@ func EncodeEUTRANCSGDescriptionStruct(v EUTRANCSGDescriptionStruct) ([]byte, err
 
 // DecodeCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CSG Cells Reporting Description struct>.
 func DecodeCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (CSGCellsReportingDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return CSGCellsReportingDescriptionStruct{}, err
+	}
 	return decodeCSGCellsReportingDescriptionStruct(r)
 }
 func EncodeCSGCellsReportingDescriptionStructTo(w *runtime.Writer, v CSGCellsReportingDescriptionStruct) error {
@@ -72937,6 +73372,9 @@ func EncodeCSGCellsReportingDescriptionStruct(v CSGCellsReportingDescriptionStru
 
 // DecodeUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN CSG Cells Reporting Description struct>.
 func DecodeUTRANCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (UTRANCSGCellsReportingDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return UTRANCSGCellsReportingDescriptionStruct{}, err
+	}
 	return decodeUTRANCSGCellsReportingDescriptionStruct(r)
 }
 func EncodeUTRANCSGCellsReportingDescriptionStructTo(w *runtime.Writer, v UTRANCSGCellsReportingDescriptionStruct) error {
@@ -72969,6 +73407,9 @@ func EncodeUTRANCSGCellsReportingDescriptionStruct(v UTRANCSGCellsReportingDescr
 
 // DecodeEUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Cells Reporting Description struct>.
 func DecodeEUTRANCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (EUTRANCSGCellsReportingDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return EUTRANCSGCellsReportingDescriptionStruct{}, err
+	}
 	return decodeEUTRANCSGCellsReportingDescriptionStruct(r)
 }
 func EncodeEUTRANCSGCellsReportingDescriptionStructTo(w *runtime.Writer, v EUTRANCSGCellsReportingDescriptionStruct) error {
@@ -73001,6 +73442,9 @@ func EncodeEUTRANCSGCellsReportingDescriptionStruct(v EUTRANCSGCellsReportingDes
 
 // DecodeExtendedEARFCNsDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description struct>.
 func DecodeExtendedEARFCNsDescriptionStructFrom(r *runtime.Reader) (ExtendedEARFCNsDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return ExtendedEARFCNsDescriptionStruct{}, err
+	}
 	return decodeExtendedEARFCNsDescriptionStruct(r)
 }
 func EncodeExtendedEARFCNsDescriptionStructTo(w *runtime.Writer, v ExtendedEARFCNsDescriptionStruct) error {
@@ -73033,6 +73477,9 @@ func EncodeExtendedEARFCNsDescriptionStruct(v ExtendedEARFCNsDescriptionStruct) 
 
 // DecodeExtendedEARFCNsDescriptionForCSGCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description for CSG Cells struct>.
 func DecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom(r *runtime.Reader) (ExtendedEARFCNsDescriptionForCSGCellsStruct, error) {
+	if err := r.Check(); err != nil {
+		return ExtendedEARFCNsDescriptionForCSGCellsStruct{}, err
+	}
 	return decodeExtendedEARFCNsDescriptionForCSGCellsStruct(r)
 }
 func EncodeExtendedEARFCNsDescriptionForCSGCellsStructTo(w *runtime.Writer, v ExtendedEARFCNsDescriptionForCSGCellsStruct) error {
@@ -73064,7 +73511,12 @@ func EncodeExtendedEARFCNsDescriptionForCSGCellsStruct(v ExtendedEARFCNsDescript
 }
 
 // DecodeSI6RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35a <SI6 rest octets>.
-func DecodeSI6RestOctetsFrom(r *runtime.Reader) (SI6RestOctets, error) { return decodeSI6RestOctets(r) }
+func DecodeSI6RestOctetsFrom(r *runtime.Reader) (SI6RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI6RestOctets{}, err
+	}
+	return decodeSI6RestOctets(r)
+}
 func EncodeSI6RestOctetsTo(w *runtime.Writer, v SI6RestOctets) error {
 	return encodeSI6RestOctets(w, v)
 }
@@ -73075,10 +73527,10 @@ func DecodeSI6RestOctets(data []byte) (runtime.Decoded[SI6RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[SI6RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.35a", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 56 {
+	if len(data) < 7 {
 		return runtime.Decoded[SI6RestOctets]{}, fmt.Errorf("SI6RestOctets requires at least 56 bits")
 	}
-	if len(data)*8 > 56 {
+	if len(data) > 7 {
 		return runtime.Decoded[SI6RestOctets]{}, fmt.Errorf("SI6RestOctets exceeds 56 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73103,7 +73555,12 @@ func EncodeSI6RestOctets(v SI6RestOctets) ([]byte, error) {
 }
 
 // DecodePCHAndNCHInfo decodes TS 44.018 V19.0.0 §10.5.2.35a <PCH and NCH info>.
-func DecodePCHAndNCHInfoFrom(r *runtime.Reader) (PCHAndNCHInfo, error) { return decodePCHAndNCHInfo(r) }
+func DecodePCHAndNCHInfoFrom(r *runtime.Reader) (PCHAndNCHInfo, error) {
+	if err := r.Check(); err != nil {
+		return PCHAndNCHInfo{}, err
+	}
+	return decodePCHAndNCHInfo(r)
+}
 func EncodePCHAndNCHInfoTo(w *runtime.Writer, v PCHAndNCHInfo) error {
 	return encodePCHAndNCHInfo(w, v)
 }
@@ -73134,6 +73591,9 @@ func EncodePCHAndNCHInfo(v PCHAndNCHInfo) ([]byte, error) {
 
 // DecodePagingChannelRestructuring decodes TS 44.018 V19.0.0 §10.5.2.35a <paging channel restructuring>.
 func DecodePagingChannelRestructuringFrom(r *runtime.Reader) (PagingChannelRestructuring, error) {
+	if err := r.Check(); err != nil {
+		return PagingChannelRestructuring{}, err
+	}
 	return decodePagingChannelRestructuring(r)
 }
 func EncodePagingChannelRestructuringTo(w *runtime.Writer, v PagingChannelRestructuring) error {
@@ -73166,6 +73626,9 @@ func EncodePagingChannelRestructuring(v PagingChannelRestructuring) ([]byte, err
 
 // DecodeVBSVGCSOptions decodes TS 44.018 V19.0.0 §10.5.2.35a <VBS/VGCS options>.
 func DecodeVBSVGCSOptionsFrom(r *runtime.Reader) (VBSVGCSOptions, error) {
+	if err := r.Check(); err != nil {
+		return VBSVGCSOptions{}, err
+	}
 	return decodeVBSVGCSOptions(r)
 }
 func EncodeVBSVGCSOptionsTo(w *runtime.Writer, v VBSVGCSOptions) error {
@@ -73198,6 +73661,9 @@ func EncodeVBSVGCSOptions(v VBSVGCSOptions) ([]byte, error) {
 
 // DecodeInbandNotifications decodes TS 44.018 V19.0.0 §10.5.2.35a <inband notifications>.
 func DecodeInbandNotificationsFrom(r *runtime.Reader) (InbandNotifications, error) {
+	if err := r.Check(); err != nil {
+		return InbandNotifications{}, err
+	}
 	return decodeInbandNotifications(r)
 }
 func EncodeInbandNotificationsTo(w *runtime.Writer, v InbandNotifications) error {
@@ -73229,7 +73695,12 @@ func EncodeInbandNotifications(v InbandNotifications) ([]byte, error) {
 }
 
 // DecodeInbandPagings decodes TS 44.018 V19.0.0 §10.5.2.35a <inband pagings>.
-func DecodeInbandPagingsFrom(r *runtime.Reader) (InbandPagings, error) { return decodeInbandPagings(r) }
+func DecodeInbandPagingsFrom(r *runtime.Reader) (InbandPagings, error) {
+	if err := r.Check(); err != nil {
+		return InbandPagings{}, err
+	}
+	return decodeInbandPagings(r)
+}
 func EncodeInbandPagingsTo(w *runtime.Writer, v InbandPagings) error {
 	return encodeInbandPagings(w, v)
 }
@@ -73260,6 +73731,9 @@ func EncodeInbandPagings(v InbandPagings) ([]byte, error) {
 
 // DecodeBandIndicatorClause105235a decodes TS 44.018 V19.0.0 §10.5.2.35a <Band indicator>.
 func DecodeBandIndicatorClause105235aFrom(r *runtime.Reader) (BandIndicatorClause105235a, error) {
+	if err := r.Check(); err != nil {
+		return BandIndicatorClause105235a{}, err
+	}
 	return decodeBandIndicatorClause105235a(r)
 }
 func EncodeBandIndicatorClause105235aTo(w *runtime.Writer, v BandIndicatorClause105235a) error {
@@ -73292,6 +73766,9 @@ func EncodeBandIndicatorClause105235a(v BandIndicatorClause105235a) ([]byte, err
 
 // DecodeSI13RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>.
 func DecodeSI13RestOctetsFrom(r *runtime.Reader) (SI13RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI13RestOctets{}, err
+	}
 	return decodeSI13RestOctets(r)
 }
 func EncodeSI13RestOctetsTo(w *runtime.Writer, v SI13RestOctets) error {
@@ -73304,10 +73781,10 @@ func DecodeSI13RestOctets(data []byte) (runtime.Decoded[SI13RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI13RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37b", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI13RestOctets]{}, fmt.Errorf("SI13RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI13RestOctets]{}, fmt.Errorf("SI13RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73333,6 +73810,9 @@ func EncodeSI13RestOctets(v SI13RestOctets) ([]byte, error) {
 
 // DecodePBCCHDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PBCCH Description struct>.
 func DecodePBCCHDescriptionStructFrom(r *runtime.Reader) (PBCCHDescriptionStruct, error) {
+	if err := r.Check(); err != nil {
+		return PBCCHDescriptionStruct{}, err
+	}
 	return decodePBCCHDescriptionStruct(r)
 }
 func EncodePBCCHDescriptionStructTo(w *runtime.Writer, v PBCCHDescriptionStruct) error {
@@ -73364,8 +73844,13 @@ func EncodePBCCHDescriptionStruct(v PBCCHDescriptionStruct) ([]byte, error) {
 }
 
 // DecodeSICHANGEALT decodes TS 44.018 V19.0.0 §10.5.2.37b <SI_CHANGE_ALT>.
-func DecodeSICHANGEALTFrom(r *runtime.Reader) (SICHANGEALT, error) { return decodeSICHANGEALT(r) }
-func EncodeSICHANGEALTTo(w *runtime.Writer, v SICHANGEALT) error   { return encodeSICHANGEALT(w, v) }
+func DecodeSICHANGEALTFrom(r *runtime.Reader) (SICHANGEALT, error) {
+	if err := r.Check(); err != nil {
+		return SICHANGEALT{}, err
+	}
+	return decodeSICHANGEALT(r)
+}
+func EncodeSICHANGEALTTo(w *runtime.Writer, v SICHANGEALT) error { return encodeSICHANGEALT(w, v) }
 func DecodeSICHANGEALT(data []byte) (runtime.Decoded[SICHANGEALT], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SICHANGEALT]{}, err
@@ -73393,6 +73878,9 @@ func EncodeSICHANGEALT(v SICHANGEALT) ([]byte, error) {
 
 // DecodePEOIMMCellGroupDefinitionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Definition struct>.
 func DecodePEOIMMCellGroupDefinitionStructFrom(r *runtime.Reader) (PEOIMMCellGroupDefinitionStruct, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDefinitionStruct{}, err
+	}
 	return decodePEOIMMCellGroupDefinitionStruct(r)
 }
 func EncodePEOIMMCellGroupDefinitionStructTo(w *runtime.Writer, v PEOIMMCellGroupDefinitionStruct) error {
@@ -73425,6 +73913,9 @@ func EncodePEOIMMCellGroupDefinitionStruct(v PEOIMMCellGroupDefinitionStruct) ([
 
 // DecodePEOIMMCellGroupSpecificParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Specific Parameters struct>.
 func DecodePEOIMMCellGroupSpecificParametersStructFrom(r *runtime.Reader) (PEOIMMCellGroupSpecificParametersStruct, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupSpecificParametersStruct{}, err
+	}
 	return decodePEOIMMCellGroupSpecificParametersStruct(r)
 }
 func EncodePEOIMMCellGroupSpecificParametersStructTo(w *runtime.Writer, v PEOIMMCellGroupSpecificParametersStruct) error {
@@ -73457,6 +73948,9 @@ func EncodePEOIMMCellGroupSpecificParametersStruct(v PEOIMMCellGroupSpecificPara
 
 // DecodeSI19RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37g <SI 19 Rest Octets>.
 func DecodeSI19RestOctetsFrom(r *runtime.Reader) (SI19RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI19RestOctets{}, err
+	}
 	return decodeSI19RestOctets(r)
 }
 func EncodeSI19RestOctetsTo(w *runtime.Writer, v SI19RestOctets) error {
@@ -73469,10 +73963,10 @@ func DecodeSI19RestOctets(data []byte) (runtime.Decoded[SI19RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI19RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37g", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI19RestOctets]{}, fmt.Errorf("SI19RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI19RestOctets]{}, fmt.Errorf("SI19RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73498,6 +73992,9 @@ func EncodeSI19RestOctets(v SI19RestOctets) ([]byte, error) {
 
 // DecodeCOMPACTNeighbourCellParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Neighbour Cell params struct>.
 func DecodeCOMPACTNeighbourCellParamsStructFrom(r *runtime.Reader) (COMPACTNeighbourCellParamsStruct, error) {
+	if err := r.Check(); err != nil {
+		return COMPACTNeighbourCellParamsStruct{}, err
+	}
 	return decodeCOMPACTNeighbourCellParamsStruct(r)
 }
 func EncodeCOMPACTNeighbourCellParamsStructTo(w *runtime.Writer, v COMPACTNeighbourCellParamsStruct) error {
@@ -73530,6 +74027,9 @@ func EncodeCOMPACTNeighbourCellParamsStruct(v COMPACTNeighbourCellParamsStruct) 
 
 // DecodeCOMPACTCellSelectionStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Cell Selection struct>.
 func DecodeCOMPACTCellSelectionStructFrom(r *runtime.Reader) (COMPACTCellSelectionStruct, error) {
+	if err := r.Check(); err != nil {
+		return COMPACTCellSelectionStruct{}, err
+	}
 	return decodeCOMPACTCellSelectionStruct(r)
 }
 func EncodeCOMPACTCellSelectionStructTo(w *runtime.Writer, v COMPACTCellSelectionStruct) error {
@@ -73562,6 +74062,9 @@ func EncodeCOMPACTCellSelectionStruct(v COMPACTCellSelectionStruct) ([]byte, err
 
 // DecodeLADifferentStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <LA Different struct>.
 func DecodeLADifferentStructFrom(r *runtime.Reader) (LADifferentStruct, error) {
+	if err := r.Check(); err != nil {
+		return LADifferentStruct{}, err
+	}
 	return decodeLADifferentStruct(r)
 }
 func EncodeLADifferentStructTo(w *runtime.Writer, v LADifferentStruct) error {
@@ -73594,6 +74097,9 @@ func EncodeLADifferentStruct(v LADifferentStruct) ([]byte, error) {
 
 // DecodeSI18RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37h <SI 18 Rest Octets>.
 func DecodeSI18RestOctetsFrom(r *runtime.Reader) (SI18RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI18RestOctets{}, err
+	}
 	return decodeSI18RestOctets(r)
 }
 func EncodeSI18RestOctetsTo(w *runtime.Writer, v SI18RestOctets) error {
@@ -73606,10 +74112,10 @@ func DecodeSI18RestOctets(data []byte) (runtime.Decoded[SI18RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI18RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37h", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI18RestOctets]{}, fmt.Errorf("SI18RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI18RestOctets]{}, fmt.Errorf("SI18RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73635,6 +74141,9 @@ func EncodeSI18RestOctets(v SI18RestOctets) ([]byte, error) {
 
 // DecodeNonGSMMessageStruct decodes TS 44.018 V19.0.0 §10.5.2.37h <Non-GSM Message struct>.
 func DecodeNonGSMMessageStructFrom(r *runtime.Reader) (NonGSMMessageStruct, error) {
+	if err := r.Check(); err != nil {
+		return NonGSMMessageStruct{}, err
+	}
 	return decodeNonGSMMessageStruct(r)
 }
 func EncodeNonGSMMessageStructTo(w *runtime.Writer, v NonGSMMessageStruct) error {
@@ -73666,7 +74175,12 @@ func EncodeNonGSMMessageStruct(v NonGSMMessageStruct) ([]byte, error) {
 }
 
 // DecodeIPARestOctets decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>.
-func DecodeIPARestOctetsFrom(r *runtime.Reader) (IPARestOctets, error) { return decodeIPARestOctets(r) }
+func DecodeIPARestOctetsFrom(r *runtime.Reader) (IPARestOctets, error) {
+	if err := r.Check(); err != nil {
+		return IPARestOctets{}, err
+	}
+	return decodeIPARestOctets(r)
+}
 func EncodeIPARestOctetsTo(w *runtime.Writer, v IPARestOctets) error {
 	return encodeIPARestOctets(w, v)
 }
@@ -73677,10 +74191,10 @@ func DecodeIPARestOctets(data []byte) (runtime.Decoded[IPARestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[IPARestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.78", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 152 {
+	if len(data) < 19 {
 		return runtime.Decoded[IPARestOctets]{}, fmt.Errorf("IPARestOctets requires at least 152 bits")
 	}
-	if len(data)*8 > 152 {
+	if len(data) > 19 {
 		return runtime.Decoded[IPARestOctets]{}, fmt.Errorf("IPARestOctets exceeds 152 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73706,6 +74220,9 @@ func EncodeIPARestOctets(v IPARestOctets) ([]byte, error) {
 
 // DecodeIPAUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Uplink Assignment struct>.
 func DecodeIPAUplinkAssignmentStructFrom(r *runtime.Reader) (IPAUplinkAssignmentStruct, error) {
+	if err := r.Check(); err != nil {
+		return IPAUplinkAssignmentStruct{}, err
+	}
 	return decodeIPAUplinkAssignmentStruct(r)
 }
 func EncodeIPAUplinkAssignmentStructTo(w *runtime.Writer, v IPAUplinkAssignmentStruct) error {
@@ -73738,6 +74255,9 @@ func EncodeIPAUplinkAssignmentStruct(v IPAUplinkAssignmentStruct) ([]byte, error
 
 // DecodeIPADownlinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Downlink Assignment struct>.
 func DecodeIPADownlinkAssignmentStructFrom(r *runtime.Reader) (IPADownlinkAssignmentStruct, error) {
+	if err := r.Check(); err != nil {
+		return IPADownlinkAssignmentStruct{}, err
+	}
 	return decodeIPADownlinkAssignmentStruct(r)
 }
 func EncodeIPADownlinkAssignmentStructTo(w *runtime.Writer, v IPADownlinkAssignmentStruct) error {
@@ -73770,6 +74290,9 @@ func EncodeIPADownlinkAssignmentStruct(v IPADownlinkAssignmentStruct) ([]byte, e
 
 // DecodeIPASingleBlockUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Single Block Uplink Assignment struct>.
 func DecodeIPASingleBlockUplinkAssignmentStructFrom(r *runtime.Reader) (IPASingleBlockUplinkAssignmentStruct, error) {
+	if err := r.Check(); err != nil {
+		return IPASingleBlockUplinkAssignmentStruct{}, err
+	}
 	return decodeIPASingleBlockUplinkAssignmentStruct(r)
 }
 func EncodeIPASingleBlockUplinkAssignmentStructTo(w *runtime.Writer, v IPASingleBlockUplinkAssignmentStruct) error {
@@ -73802,6 +74325,9 @@ func EncodeIPASingleBlockUplinkAssignmentStruct(v IPASingleBlockUplinkAssignment
 
 // DecodeAcknowledgedAccessRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <Acknowledged Access Request struct>.
 func DecodeAcknowledgedAccessRequestStructFrom(r *runtime.Reader) (AcknowledgedAccessRequestStruct, error) {
+	if err := r.Check(); err != nil {
+		return AcknowledgedAccessRequestStruct{}, err
+	}
 	return decodeAcknowledgedAccessRequestStruct(r)
 }
 func EncodeAcknowledgedAccessRequestStructTo(w *runtime.Writer, v AcknowledgedAccessRequestStruct) error {
@@ -73834,6 +74360,9 @@ func EncodeAcknowledgedAccessRequestStruct(v AcknowledgedAccessRequestStruct) ([
 
 // DecodePEOIMMCellGroupDetailsStructClause105278 decodes TS 44.018 V19.0.0 §10.5.2.78 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105278From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105278, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105278{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105278(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105278To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105278) error {
@@ -73866,6 +74395,9 @@ func EncodePEOIMMCellGroupDetailsStructClause105278(v PEOIMMCellGroupDetailsStru
 
 // DecodeSI20RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37i <SI 20 Rest Octets>.
 func DecodeSI20RestOctetsFrom(r *runtime.Reader) (SI20RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI20RestOctets{}, err
+	}
 	return decodeSI20RestOctets(r)
 }
 func EncodeSI20RestOctetsTo(w *runtime.Writer, v SI20RestOctets) error {
@@ -73878,10 +74410,10 @@ func DecodeSI20RestOctets(data []byte) (runtime.Decoded[SI20RestOctets], error) 
 	if len(data) == 0 {
 		return runtime.Decoded[SI20RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37i", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[SI20RestOctets]{}, fmt.Errorf("SI20RestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI20RestOctets]{}, fmt.Errorf("SI20RestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -73907,6 +74439,9 @@ func EncodeSI20RestOctets(v SI20RestOctets) ([]byte, error) {
 
 // DecodeGroupCallInformation decodes TS 44.018 V19.0.0 §9.1.21a <Group Call information>.
 func DecodeGroupCallInformationFrom(r *runtime.Reader) (GroupCallInformation, error) {
+	if err := r.Check(); err != nil {
+		return GroupCallInformation{}, err
+	}
 	return decodeGroupCallInformation(r)
 }
 func EncodeGroupCallInformationTo(w *runtime.Writer, v GroupCallInformation) error {
@@ -73938,8 +74473,13 @@ func EncodeGroupCallInformation(v GroupCallInformation) ([]byte, error) {
 }
 
 // DecodeEmergencyInd decodes TS 44.018 V19.0.0 §9.1.21a <Emergency_Ind>.
-func DecodeEmergencyIndFrom(r *runtime.Reader) (EmergencyInd, error) { return decodeEmergencyInd(r) }
-func EncodeEmergencyIndTo(w *runtime.Writer, v EmergencyInd) error   { return encodeEmergencyInd(w, v) }
+func DecodeEmergencyIndFrom(r *runtime.Reader) (EmergencyInd, error) {
+	if err := r.Check(); err != nil {
+		return EmergencyInd{}, err
+	}
+	return decodeEmergencyInd(r)
+}
+func EncodeEmergencyIndTo(w *runtime.Writer, v EmergencyInd) error { return encodeEmergencyInd(w, v) }
 func DecodeEmergencyInd(data []byte) (runtime.Decoded[EmergencyInd], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EmergencyInd]{}, err
@@ -73967,6 +74507,9 @@ func EncodeEmergencyInd(v EmergencyInd) ([]byte, error) {
 
 // DecodeGroupChannelDescription decodes TS 44.018 V19.0.0 §9.1.21a <Group Channel Description>.
 func DecodeGroupChannelDescriptionFrom(r *runtime.Reader) (GroupChannelDescription, error) {
+	if err := r.Check(); err != nil {
+		return GroupChannelDescription{}, err
+	}
 	return decodeGroupChannelDescription(r)
 }
 func EncodeGroupChannelDescriptionTo(w *runtime.Writer, v GroupChannelDescription) error {
@@ -73998,8 +74541,13 @@ func EncodeGroupChannelDescription(v GroupChannelDescription) ([]byte, error) {
 }
 
 // DecodeBitString decodes TS 44.018 V19.0.0 §9.1.21a <bit string>.
-func DecodeBitStringFrom(r *runtime.Reader) (BitString, error) { return decodeBitString(r) }
-func EncodeBitStringTo(w *runtime.Writer, v BitString) error   { return encodeBitString(w, v) }
+func DecodeBitStringFrom(r *runtime.Reader) (BitString, error) {
+	if err := r.Check(); err != nil {
+		return BitString{}, err
+	}
+	return decodeBitString(r)
+}
+func EncodeBitStringTo(w *runtime.Writer, v BitString) error { return encodeBitString(w, v) }
 func DecodeBitString(data []byte) (runtime.Decoded[BitString], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[BitString]{}, err
@@ -74026,7 +74574,12 @@ func EncodeBitString(v BitString) ([]byte, error) {
 }
 
 // DecodeNTNRestOctets decodes TS 44.018 V19.0.0 §10.5.2.22c <NT/N Rest Octets>.
-func DecodeNTNRestOctetsFrom(r *runtime.Reader) (NTNRestOctets, error) { return decodeNTNRestOctets(r) }
+func DecodeNTNRestOctetsFrom(r *runtime.Reader) (NTNRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return NTNRestOctets{}, err
+	}
+	return decodeNTNRestOctets(r)
+}
 func EncodeNTNRestOctetsTo(w *runtime.Writer, v NTNRestOctets) error {
 	return encodeNTNRestOctets(w, v)
 }
@@ -74037,10 +74590,10 @@ func DecodeNTNRestOctets(data []byte) (runtime.Decoded[NTNRestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[NTNRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.22c", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 < 160 {
+	if len(data) < 20 {
 		return runtime.Decoded[NTNRestOctets]{}, fmt.Errorf("NTNRestOctets requires at least 160 bits")
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[NTNRestOctets]{}, fmt.Errorf("NTNRestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -74066,6 +74619,9 @@ func EncodeNTNRestOctets(v NTNRestOctets) ([]byte, error) {
 
 // DecodeListOfGroupCallNCHInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Group Call NCH information>.
 func DecodeListOfGroupCallNCHInformationFrom(r *runtime.Reader) (ListOfGroupCallNCHInformation, error) {
+	if err := r.Check(); err != nil {
+		return ListOfGroupCallNCHInformation{}, err
+	}
 	return decodeListOfGroupCallNCHInformation(r)
 }
 func EncodeListOfGroupCallNCHInformationTo(w *runtime.Writer, v ListOfGroupCallNCHInformation) error {
@@ -74098,6 +74654,9 @@ func EncodeListOfGroupCallNCHInformation(v ListOfGroupCallNCHInformation) ([]byt
 
 // DecodeListOfEmergencyInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Emergency information>.
 func DecodeListOfEmergencyInformationFrom(r *runtime.Reader) (ListOfEmergencyInformation, error) {
+	if err := r.Check(); err != nil {
+		return ListOfEmergencyInformation{}, err
+	}
 	return decodeListOfEmergencyInformation(r)
 }
 func EncodeListOfEmergencyInformationTo(w *runtime.Writer, v ListOfEmergencyInformation) error {
@@ -74130,6 +74689,9 @@ func EncodeListOfEmergencyInformation(v ListOfEmergencyInformation) ([]byte, err
 
 // DecodeListOfVSTKRANDInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of VSTK_RAND information>.
 func DecodeListOfVSTKRANDInformationFrom(r *runtime.Reader) (ListOfVSTKRANDInformation, error) {
+	if err := r.Check(); err != nil {
+		return ListOfVSTKRANDInformation{}, err
+	}
 	return decodeListOfVSTKRANDInformation(r)
 }
 func EncodeListOfVSTKRANDInformationTo(w *runtime.Writer, v ListOfVSTKRANDInformation) error {
@@ -74162,6 +74724,9 @@ func EncodeListOfVSTKRANDInformation(v ListOfVSTKRANDInformation) ([]byte, error
 
 // DecodeListOfReducedGCR decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Reduced GCR>.
 func DecodeListOfReducedGCRFrom(r *runtime.Reader) (ListOfReducedGCR, error) {
+	if err := r.Check(); err != nil {
+		return ListOfReducedGCR{}, err
+	}
 	return decodeListOfReducedGCR(r)
 }
 func EncodeListOfReducedGCRTo(w *runtime.Writer, v ListOfReducedGCR) error {
@@ -74193,8 +74758,13 @@ func EncodeListOfReducedGCR(v ListOfReducedGCR) ([]byte, error) {
 }
 
 // DecodeP1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>.
-func DecodeP1RestOctetsFrom(r *runtime.Reader) (P1RestOctets, error) { return decodeP1RestOctets(r) }
-func EncodeP1RestOctetsTo(w *runtime.Writer, v P1RestOctets) error   { return encodeP1RestOctets(w, v) }
+func DecodeP1RestOctetsFrom(r *runtime.Reader) (P1RestOctets, error) {
+	if err := r.Check(); err != nil {
+		return P1RestOctets{}, err
+	}
+	return decodeP1RestOctets(r)
+}
+func EncodeP1RestOctetsTo(w *runtime.Writer, v P1RestOctets) error { return encodeP1RestOctets(w, v) }
 func DecodeP1RestOctets(data []byte) (runtime.Decoded[P1RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[P1RestOctets]{}, err
@@ -74202,7 +74772,7 @@ func DecodeP1RestOctets(data []byte) (runtime.Decoded[P1RestOctets], error) {
 	if len(data) == 0 {
 		return runtime.Decoded[P1RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.23", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 > 136 {
+	if len(data) > 17 {
 		return runtime.Decoded[P1RestOctets]{}, fmt.Errorf("P1RestOctets exceeds 136 bits")
 	}
 	r := runtime.NewReader(data)
@@ -74228,6 +74798,9 @@ func EncodeP1RestOctets(v P1RestOctets) ([]byte, error) {
 
 // DecodePriorityClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <Priority>.
 func DecodePriorityClause105223From(r *runtime.Reader) (PriorityClause105223, error) {
+	if err := r.Check(); err != nil {
+		return PriorityClause105223{}, err
+	}
 	return decodePriorityClause105223(r)
 }
 func EncodePriorityClause105223To(w *runtime.Writer, v PriorityClause105223) error {
@@ -74260,6 +74833,9 @@ func EncodePriorityClause105223(v PriorityClause105223) ([]byte, error) {
 
 // DecodeMBMSInformationClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <MBMS Information>.
 func DecodeMBMSInformationClause105223From(r *runtime.Reader) (MBMSInformationClause105223, error) {
+	if err := r.Check(); err != nil {
+		return MBMSInformationClause105223{}, err
+	}
 	return decodeMBMSInformationClause105223(r)
 }
 func EncodeMBMSInformationClause105223To(w *runtime.Writer, v MBMSInformationClause105223) error {
@@ -74292,6 +74868,9 @@ func EncodeMBMSInformationClause105223(v MBMSInformationClause105223) ([]byte, e
 
 // DecodeETWSPrimaryNotificationStruct decodes TS 44.018 V19.0.0 §10.5.2.23 <ETWS Primary Notification struct>.
 func DecodeETWSPrimaryNotificationStructFrom(r *runtime.Reader) (ETWSPrimaryNotificationStruct, error) {
+	if err := r.Check(); err != nil {
+		return ETWSPrimaryNotificationStruct{}, err
+	}
 	return decodeETWSPrimaryNotificationStruct(r)
 }
 func EncodeETWSPrimaryNotificationStructTo(w *runtime.Writer, v ETWSPrimaryNotificationStruct) error {
@@ -74324,6 +74903,9 @@ func EncodeETWSPrimaryNotificationStruct(v ETWSPrimaryNotificationStruct) ([]byt
 
 // DecodePEOIMMCellGroupDetailsStructClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105223From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105223, error) {
+	if err := r.Check(); err != nil {
+		return PEOIMMCellGroupDetailsStructClause105223{}, err
+	}
 	return decodePEOIMMCellGroupDetailsStructClause105223(r)
 }
 func EncodePEOIMMCellGroupDetailsStructClause105223To(w *runtime.Writer, v PEOIMMCellGroupDetailsStructClause105223) error {
@@ -74356,6 +74938,9 @@ func EncodePEOIMMCellGroupDetailsStructClause105223(v PEOIMMCellGroupDetailsStru
 
 // DecodeSI10bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.70 <SI10bis Rest Octets>.
 func DecodeSI10bisRestOctetsFrom(r *runtime.Reader) (SI10bisRestOctets, error) {
+	if err := r.Check(); err != nil {
+		return SI10bisRestOctets{}, err
+	}
 	return decodeSI10bisRestOctets(r)
 }
 func EncodeSI10bisRestOctetsTo(w *runtime.Writer, v SI10bisRestOctets) error {
@@ -74368,7 +74953,7 @@ func DecodeSI10bisRestOctets(data []byte) (runtime.Decoded[SI10bisRestOctets], e
 	if len(data) == 0 {
 		return runtime.Decoded[SI10bisRestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.70", runtime.ErrEmptyValue)
 	}
-	if len(data)*8 > 160 {
+	if len(data) > 20 {
 		return runtime.Decoded[SI10bisRestOctets]{}, fmt.Errorf("SI10bisRestOctets exceeds 160 bits")
 	}
 	r := runtime.NewReader(data)
@@ -74394,6 +74979,9 @@ func EncodeSI10bisRestOctets(v SI10bisRestOctets) ([]byte, error) {
 
 // DecodeSI10bisNeighbourCellInfo decodes TS 44.018 V19.0.0 §10.5.2.70 <SI10bis Neighbour Cell Info>.
 func DecodeSI10bisNeighbourCellInfoFrom(r *runtime.Reader) (SI10bisNeighbourCellInfo, error) {
+	if err := r.Check(); err != nil {
+		return SI10bisNeighbourCellInfo{}, err
+	}
 	return decodeSI10bisNeighbourCellInfo(r)
 }
 func EncodeSI10bisNeighbourCellInfoTo(w *runtime.Writer, v SI10bisNeighbourCellInfo) error {

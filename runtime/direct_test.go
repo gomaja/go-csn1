@@ -2,8 +2,49 @@ package runtime
 
 import (
 	"bytes"
+	"math"
 	"testing"
 )
+
+func TestWireStateRejectsArchitectureEdgeLengths(t *testing.T) {
+	edge := uint64(1 << 31)
+	for _, boundary := range []int{int(^uint(0) >> 1), int(edge)} {
+		wire := Seal(struct{}{}, []byte{0}, 8, BitString{}, WireInfo{})
+		wire.ImplicitSpans = []ImplicitSpan{{At: boundary, Count: 1}}
+		wire.ImplicitZeros = 1
+		writer := NewWriter()
+		writer.WithWire(wire)
+		if err := writer.validateState(); err == nil {
+			t.Fatalf("accepted inferred span at %d", boundary)
+		}
+	}
+	for _, boundary := range []uint64{1 << 31, 1 << 32, math.MaxUint64} {
+		for _, expr := range []string{"Count", "Count+1", "Count*2"} {
+			if _, err := eval(expr, map[string]uint64{"count": boundary}); err == nil {
+				t.Fatalf("accepted %s=%d", expr, boundary)
+			}
+		}
+	}
+}
+
+func TestReaderRejectsOversizedInputBeforeBitArithmetic(t *testing.T) {
+	r := NewReader(make([]byte, maxBits/8+1))
+	if err := r.Check(); err == nil {
+		t.Fatal("accepted oversized reader input")
+	}
+	if _, err := r.ReadUint(1); err == nil {
+		t.Fatal("read from oversized input")
+	}
+	if err := (*Reader)(nil).Check(); err == nil {
+		t.Fatal("accepted nil reader")
+	}
+	r = NewReader(nil)
+	r.SetZeroExtension(true)
+	r.virtual = maxBits
+	if _, err := r.ReadUint(1); err == nil {
+		t.Fatal("accepted bit past virtual-input bound")
+	}
+}
 
 func TestDirectBitIOBoundsAndPaddingOrigin(t *testing.T) {
 	if LHBit('L', 0) != 0 || LHBit('H', 0) != 1 || LHBit('L', 2) != 1 || LHBit('H', 2) != 0 {

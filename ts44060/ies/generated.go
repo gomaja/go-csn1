@@ -8210,6 +8210,9 @@ func encodeTMGIIE(w *runtime.Writer, v TMGIIE) error {
 
 // DecodeUTRANCSGMeasurementReportIE decodes TS 44.060 V19.0.0 §12.61 <UTRAN CSG Measurement Report IE>.
 func DecodeUTRANCSGMeasurementReportIEFrom(r *runtime.Reader) (UTRANCSGMeasurementReportIE, error) {
+	if err := r.Check(); err != nil {
+		return UTRANCSGMeasurementReportIE{}, err
+	}
 	return decodeUTRANCSGMeasurementReportIE(r)
 }
 func EncodeUTRANCSGMeasurementReportIETo(w *runtime.Writer, v UTRANCSGMeasurementReportIE) error {
@@ -8241,8 +8244,13 @@ func EncodeUTRANCSGMeasurementReportIE(v UTRANCSGMeasurementReportIE) ([]byte, e
 }
 
 // DecodePLMNIDStruct decodes TS 44.060 V19.0.0 §12.61 <PLMN-ID struct>.
-func DecodePLMNIDStructFrom(r *runtime.Reader) (PLMNIDStruct, error) { return decodePLMNIDStruct(r) }
-func EncodePLMNIDStructTo(w *runtime.Writer, v PLMNIDStruct) error   { return encodePLMNIDStruct(w, v) }
+func DecodePLMNIDStructFrom(r *runtime.Reader) (PLMNIDStruct, error) {
+	if err := r.Check(); err != nil {
+		return PLMNIDStruct{}, err
+	}
+	return decodePLMNIDStruct(r)
+}
+func EncodePLMNIDStructTo(w *runtime.Writer, v PLMNIDStruct) error { return encodePLMNIDStruct(w, v) }
 func DecodePLMNIDStruct(data []byte) (runtime.Decoded[PLMNIDStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PLMNIDStruct]{}, err
@@ -8269,8 +8277,13 @@ func EncodePLMNIDStruct(v PLMNIDStruct) ([]byte, error) {
 }
 
 // DecodePSCGroupIE decodes TS 44.060 V19.0.0 §12.58 <PSC Group IE>.
-func DecodePSCGroupIEFrom(r *runtime.Reader) (PSCGroupIE, error) { return decodePSCGroupIE(r) }
-func EncodePSCGroupIETo(w *runtime.Writer, v PSCGroupIE) error   { return encodePSCGroupIE(w, v) }
+func DecodePSCGroupIEFrom(r *runtime.Reader) (PSCGroupIE, error) {
+	if err := r.Check(); err != nil {
+		return PSCGroupIE{}, err
+	}
+	return decodePSCGroupIE(r)
+}
+func EncodePSCGroupIETo(w *runtime.Writer, v PSCGroupIE) error { return encodePSCGroupIE(w, v) }
 func DecodePSCGroupIE(data []byte) (runtime.Decoded[PSCGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PSCGroupIE]{}, err
@@ -8298,6 +8311,9 @@ func EncodePSCGroupIE(v PSCGroupIE) ([]byte, error) {
 
 // DecodeMBMSChannelParametersIE decodes TS 44.060 V19.0.0 §12.36 <MBMS Channel Parameters IE>.
 func DecodeMBMSChannelParametersIEFrom(r *runtime.Reader) (MBMSChannelParametersIE, error) {
+	if err := r.Check(); err != nil {
+		return MBMSChannelParametersIE{}, err
+	}
 	return decodeMBMSChannelParametersIE(r)
 }
 func EncodeMBMSChannelParametersIETo(w *runtime.Writer, v MBMSChannelParametersIE) error {
@@ -8330,6 +8346,9 @@ func EncodeMBMSChannelParametersIE(v MBMSChannelParametersIE) ([]byte, error) {
 
 // DecodeMBMSPTMChannelDescriptionIE decodes TS 44.060 V19.0.0 §12.37 <MBMS p-t-m channel description IE>.
 func DecodeMBMSPTMChannelDescriptionIEFrom(r *runtime.Reader) (MBMSPTMChannelDescriptionIE, error) {
+	if err := r.Check(); err != nil {
+		return MBMSPTMChannelDescriptionIE{}, err
+	}
 	return decodeMBMSPTMChannelDescriptionIE(r)
 }
 func EncodeMBMSPTMChannelDescriptionIETo(w *runtime.Writer, v MBMSPTMChannelDescriptionIE) error {
@@ -8362,6 +8381,9 @@ func EncodeMBMSPTMChannelDescriptionIE(v MBMSPTMChannelDescriptionIE) ([]byte, e
 
 // DecodeMPRACHDescriptionIE decodes TS 44.060 V19.0.0 §12.38 <MPRACH description IE>.
 func DecodeMPRACHDescriptionIEFrom(r *runtime.Reader) (MPRACHDescriptionIE, error) {
+	if err := r.Check(); err != nil {
+		return MPRACHDescriptionIE{}, err
+	}
 	return decodeMPRACHDescriptionIE(r)
 }
 func EncodeMPRACHDescriptionIETo(w *runtime.Writer, v MPRACHDescriptionIE) error {
@@ -8394,6 +8416,9 @@ func EncodeMPRACHDescriptionIE(v MPRACHDescriptionIE) ([]byte, error) {
 
 // DecodeMBMSSessionListIE decodes TS 44.060 V19.0.0 §12.39 <MBMS Session List IE>.
 func DecodeMBMSSessionListIEFrom(r *runtime.Reader) (MBMSSessionListIE, error) {
+	if err := r.Check(); err != nil {
+		return MBMSSessionListIE{}, err
+	}
 	return decodeMBMSSessionListIE(r)
 }
 func EncodeMBMSSessionListIETo(w *runtime.Writer, v MBMSSessionListIE) error {
@@ -8426,6 +8451,9 @@ func EncodeMBMSSessionListIE(v MBMSSessionListIE) ([]byte, error) {
 
 // DecodeMBMSSessionParametersListIE decodes TS 44.060 V19.0.0 §12.40 <MBMS Session Parameters List IE>.
 func DecodeMBMSSessionParametersListIEFrom(r *runtime.Reader) (MBMSSessionParametersListIE, error) {
+	if err := r.Check(); err != nil {
+		return MBMSSessionParametersListIE{}, err
+	}
 	return decodeMBMSSessionParametersListIE(r)
 }
 func EncodeMBMSSessionParametersListIETo(w *runtime.Writer, v MBMSSessionParametersListIE) error {
@@ -8458,6 +8486,9 @@ func EncodeMBMSSessionParametersListIE(v MBMSSessionParametersListIE) ([]byte, e
 
 // DecodeMPRACHControlParametersIE decodes TS 44.060 V19.0.0 §12.41 <MPRACH Control Parameters IE>.
 func DecodeMPRACHControlParametersIEFrom(r *runtime.Reader) (MPRACHControlParametersIE, error) {
+	if err := r.Check(); err != nil {
+		return MPRACHControlParametersIE{}, err
+	}
 	return decodeMPRACHControlParametersIE(r)
 }
 func EncodeMPRACHControlParametersIETo(w *runtime.Writer, v MPRACHControlParametersIE) error {
@@ -8490,6 +8521,9 @@ func EncodeMPRACHControlParametersIE(v MPRACHControlParametersIE) ([]byte, error
 
 // DecodeGPRSPowerControlParametersIE decodes TS 44.060 V19.0.0 §12.9a <GPRS Power Control Parameters IE>.
 func DecodeGPRSPowerControlParametersIEFrom(r *runtime.Reader) (GPRSPowerControlParametersIE, error) {
+	if err := r.Check(); err != nil {
+		return GPRSPowerControlParametersIE{}, err
+	}
 	return decodeGPRSPowerControlParametersIE(r)
 }
 func EncodeGPRSPowerControlParametersIETo(w *runtime.Writer, v GPRSPowerControlParametersIE) error {
@@ -8522,6 +8556,9 @@ func EncodeGPRSPowerControlParametersIE(v GPRSPowerControlParametersIE) ([]byte,
 
 // DecodeGPRSCellOptionsIE decodes TS 44.060 V19.0.0 §12.24 <GPRS Cell Options IE>.
 func DecodeGPRSCellOptionsIEFrom(r *runtime.Reader) (GPRSCellOptionsIE, error) {
+	if err := r.Check(); err != nil {
+		return GPRSCellOptionsIE{}, err
+	}
 	return decodeGPRSCellOptionsIE(r)
 }
 func EncodeGPRSCellOptionsIETo(w *runtime.Writer, v GPRSCellOptionsIE) error {
@@ -8554,6 +8591,9 @@ func EncodeGPRSCellOptionsIE(v GPRSCellOptionsIE) ([]byte, error) {
 
 // DecodeExtensionInformation decodes TS 44.060 V19.0.0 §12.24 <Extension Information>.
 func DecodeExtensionInformationFrom(r *runtime.Reader) (ExtensionInformation, error) {
+	if err := r.Check(); err != nil {
+		return ExtensionInformation{}, err
+	}
 	return decodeExtensionInformation(r)
 }
 func EncodeExtensionInformationTo(w *runtime.Writer, v ExtensionInformation) error {
@@ -8586,6 +8626,9 @@ func EncodeExtensionInformation(v ExtensionInformation) ([]byte, error) {
 
 // DecodeFrequencyParametersIE decodes TS 44.060 V19.0.0 §12.8 <Frequency Parameters IE>.
 func DecodeFrequencyParametersIEFrom(r *runtime.Reader) (FrequencyParametersIE, error) {
+	if err := r.Check(); err != nil {
+		return FrequencyParametersIE{}, err
+	}
 	return decodeFrequencyParametersIE(r)
 }
 func EncodeFrequencyParametersIETo(w *runtime.Writer, v FrequencyParametersIE) error {
@@ -8618,6 +8661,9 @@ func EncodeFrequencyParametersIE(v FrequencyParametersIE) ([]byte, error) {
 
 // DecodeIndirectEncodingStruct decodes TS 44.060 V19.0.0 §12.8 <Indirect encoding struct>.
 func DecodeIndirectEncodingStructFrom(r *runtime.Reader) (IndirectEncodingStruct, error) {
+	if err := r.Check(); err != nil {
+		return IndirectEncodingStruct{}, err
+	}
 	return decodeIndirectEncodingStruct(r)
 }
 func EncodeIndirectEncodingStructTo(w *runtime.Writer, v IndirectEncodingStruct) error {
@@ -8650,6 +8696,9 @@ func EncodeIndirectEncodingStruct(v IndirectEncodingStruct) ([]byte, error) {
 
 // DecodeDirectEncoding1Struct decodes TS 44.060 V19.0.0 §12.8 <Direct encoding 1 struct>.
 func DecodeDirectEncoding1StructFrom(r *runtime.Reader) (DirectEncoding1Struct, error) {
+	if err := r.Check(); err != nil {
+		return DirectEncoding1Struct{}, err
+	}
 	return decodeDirectEncoding1Struct(r)
 }
 func EncodeDirectEncoding1StructTo(w *runtime.Writer, v DirectEncoding1Struct) error {
@@ -8682,6 +8731,9 @@ func EncodeDirectEncoding1Struct(v DirectEncoding1Struct) ([]byte, error) {
 
 // DecodeDirectEncoding2Struct decodes TS 44.060 V19.0.0 §12.8 <Direct encoding 2 struct>.
 func DecodeDirectEncoding2StructFrom(r *runtime.Reader) (DirectEncoding2Struct, error) {
+	if err := r.Check(); err != nil {
+		return DirectEncoding2Struct{}, err
+	}
 	return decodeDirectEncoding2Struct(r)
 }
 func EncodeDirectEncoding2StructTo(w *runtime.Writer, v DirectEncoding2Struct) error {
@@ -8714,6 +8766,9 @@ func EncodeDirectEncoding2Struct(v DirectEncoding2Struct) ([]byte, error) {
 
 // DecodeGPRSMobileAllocationIE decodes TS 44.060 V19.0.0 §12.10a <GPRS Mobile Allocation IE>.
 func DecodeGPRSMobileAllocationIEFrom(r *runtime.Reader) (GPRSMobileAllocationIE, error) {
+	if err := r.Check(); err != nil {
+		return GPRSMobileAllocationIE{}, err
+	}
 	return decodeGPRSMobileAllocationIE(r)
 }
 func EncodeGPRSMobileAllocationIETo(w *runtime.Writer, v GPRSMobileAllocationIE) error {
@@ -8746,6 +8801,9 @@ func EncodeGPRSMobileAllocationIE(v GPRSMobileAllocationIE) ([]byte, error) {
 
 // DecodeRFLNumberListStruct decodes TS 44.060 V19.0.0 §12.10a <RFL number list struct>.
 func DecodeRFLNumberListStructFrom(r *runtime.Reader) (RFLNumberListStruct, error) {
+	if err := r.Check(); err != nil {
+		return RFLNumberListStruct{}, err
+	}
 	return decodeRFLNumberListStruct(r)
 }
 func EncodeRFLNumberListStructTo(w *runtime.Writer, v RFLNumberListStruct) error {
@@ -8778,6 +8836,9 @@ func EncodeRFLNumberListStruct(v RFLNumberListStruct) ([]byte, error) {
 
 // DecodeARFCNIndexListStruct decodes TS 44.060 V19.0.0 §12.10a <ARFCN index list struct>.
 func DecodeARFCNIndexListStructFrom(r *runtime.Reader) (ARFCNIndexListStruct, error) {
+	if err := r.Check(); err != nil {
+		return ARFCNIndexListStruct{}, err
+	}
 	return decodeARFCNIndexListStruct(r)
 }
 func EncodeARFCNIndexListStructTo(w *runtime.Writer, v ARFCNIndexListStruct) error {
@@ -8809,8 +8870,13 @@ func EncodeARFCNIndexListStruct(v ARFCNIndexListStruct) ([]byte, error) {
 }
 
 // DecodePCIDGroupIE decodes TS 44.060 V19.0.0 §12.57 <PCID Group IE>.
-func DecodePCIDGroupIEFrom(r *runtime.Reader) (PCIDGroupIE, error) { return decodePCIDGroupIE(r) }
-func EncodePCIDGroupIETo(w *runtime.Writer, v PCIDGroupIE) error   { return encodePCIDGroupIE(w, v) }
+func DecodePCIDGroupIEFrom(r *runtime.Reader) (PCIDGroupIE, error) {
+	if err := r.Check(); err != nil {
+		return PCIDGroupIE{}, err
+	}
+	return decodePCIDGroupIE(r)
+}
+func EncodePCIDGroupIETo(w *runtime.Writer, v PCIDGroupIE) error { return encodePCIDGroupIE(w, v) }
 func DecodePCIDGroupIE(data []byte) (runtime.Decoded[PCIDGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PCIDGroupIE]{}, err
@@ -8838,6 +8904,9 @@ func EncodePCIDGroupIE(v PCIDGroupIE) ([]byte, error) {
 
 // DecodeEnhancedCellReselectionParametersIE decodes TS 44.060 V19.0.0 §12.59 <Enhanced Cell Reselection Parameters IE>.
 func DecodeEnhancedCellReselectionParametersIEFrom(r *runtime.Reader) (EnhancedCellReselectionParametersIE, error) {
+	if err := r.Check(); err != nil {
+		return EnhancedCellReselectionParametersIE{}, err
+	}
 	return decodeEnhancedCellReselectionParametersIE(r)
 }
 func EncodeEnhancedCellReselectionParametersIETo(w *runtime.Writer, v EnhancedCellReselectionParametersIE) error {
@@ -8870,6 +8939,9 @@ func EncodeEnhancedCellReselectionParametersIE(v EnhancedCellReselectionParamete
 
 // DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct decodes TS 44.060 V19.0.0 §12.59 <Repeated E-UTRAN Enhanced Cell Reselection Parameters struct>.
 func DecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r *runtime.Reader) (RepeatedEUTRANEnhancedCellReselectionParametersStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedEUTRANEnhancedCellReselectionParametersStruct{}, err
+	}
 	return decodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(r)
 }
 func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructTo(w *runtime.Writer, v RepeatedEUTRANEnhancedCellReselectionParametersStruct) error {
@@ -8902,6 +8974,9 @@ func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v RepeatedEUTRA
 
 // DecodeEGPRSWindowSizeIE decodes TS 44.060 V19.0.0 §12.5.2 <EGPRS Window Size IE>.
 func DecodeEGPRSWindowSizeIEFrom(r *runtime.Reader) (EGPRSWindowSizeIE, error) {
+	if err := r.Check(); err != nil {
+		return EGPRSWindowSizeIE{}, err
+	}
 	return decodeEGPRSWindowSizeIE(r)
 }
 func EncodeEGPRSWindowSizeIETo(w *runtime.Writer, v EGPRSWindowSizeIE) error {
@@ -8934,6 +9009,9 @@ func EncodeEGPRSWindowSizeIE(v EGPRSWindowSizeIE) ([]byte, error) {
 
 // DecodeEGPRSModulationAndCodingIE decodes TS 44.060 V19.0.0 §12.10d <EGPRS Modulation and Coding IE>.
 func DecodeEGPRSModulationAndCodingIEFrom(r *runtime.Reader) (EGPRSModulationAndCodingIE, error) {
+	if err := r.Check(); err != nil {
+		return EGPRSModulationAndCodingIE{}, err
+	}
 	return decodeEGPRSModulationAndCodingIE(r)
 }
 func EncodeEGPRSModulationAndCodingIETo(w *runtime.Writer, v EGPRSModulationAndCodingIE) error {
@@ -8965,8 +9043,13 @@ func EncodeEGPRSModulationAndCodingIE(v EGPRSModulationAndCodingIE) ([]byte, err
 }
 
 // DecodeEGPRSLevelIE decodes TS 44.060 V19.0.0 §12.10f <EGPRS Level IE>.
-func DecodeEGPRSLevelIEFrom(r *runtime.Reader) (EGPRSLevelIE, error) { return decodeEGPRSLevelIE(r) }
-func EncodeEGPRSLevelIETo(w *runtime.Writer, v EGPRSLevelIE) error   { return encodeEGPRSLevelIE(w, v) }
+func DecodeEGPRSLevelIEFrom(r *runtime.Reader) (EGPRSLevelIE, error) {
+	if err := r.Check(); err != nil {
+		return EGPRSLevelIE{}, err
+	}
+	return decodeEGPRSLevelIE(r)
+}
+func EncodeEGPRSLevelIETo(w *runtime.Writer, v EGPRSLevelIE) error { return encodeEGPRSLevelIE(w, v) }
 func DecodeEGPRSLevelIE(data []byte) (runtime.Decoded[EGPRSLevelIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EGPRSLevelIE]{}, err
@@ -8994,6 +9077,9 @@ func EncodeEGPRSLevelIE(v EGPRSLevelIE) ([]byte, error) {
 
 // DecodePacketTimingAdvanceIE decodes TS 44.060 V19.0.0 §12.12 <Packet Timing Advance IE>.
 func DecodePacketTimingAdvanceIEFrom(r *runtime.Reader) (PacketTimingAdvanceIE, error) {
+	if err := r.Check(); err != nil {
+		return PacketTimingAdvanceIE{}, err
+	}
 	return decodePacketTimingAdvanceIE(r)
 }
 func EncodePacketTimingAdvanceIETo(w *runtime.Writer, v PacketTimingAdvanceIE) error {
@@ -9025,8 +9111,13 @@ func EncodePacketTimingAdvanceIE(v PacketTimingAdvanceIE) ([]byte, error) {
 }
 
 // DecodeTMGIIE decodes TS 44.060 V19.0.0 §12.33 <TMGI IE>.
-func DecodeTMGIIEFrom(r *runtime.Reader) (TMGIIE, error) { return decodeTMGIIE(r) }
-func EncodeTMGIIETo(w *runtime.Writer, v TMGIIE) error   { return encodeTMGIIE(w, v) }
+func DecodeTMGIIEFrom(r *runtime.Reader) (TMGIIE, error) {
+	if err := r.Check(); err != nil {
+		return TMGIIE{}, err
+	}
+	return decodeTMGIIE(r)
+}
+func EncodeTMGIIETo(w *runtime.Writer, v TMGIIE) error { return encodeTMGIIE(w, v) }
 func DecodeTMGIIE(data []byte) (runtime.Decoded[TMGIIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[TMGIIE]{}, err

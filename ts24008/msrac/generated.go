@@ -5972,6 +5972,9 @@ func encodeDLMCCapabilityStruct(w *runtime.Writer, v DLMCCapabilityStruct) error
 
 // DecodeMSRACapabilityValuePart decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part>.
 func DecodeMSRACapabilityValuePartFrom(r *runtime.Reader) (MSRACapabilityValuePart, error) {
+	if err := r.Check(); err != nil {
+		return MSRACapabilityValuePart{}, err
+	}
 	return decodeMSRACapabilityValuePart(r)
 }
 func EncodeMSRACapabilityValuePartTo(w *runtime.Writer, v MSRACapabilityValuePart) error {
@@ -5981,10 +5984,10 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSRACapabilityValuePart]{}, err
 	}
-	if len(data)*8 < 16 {
+	if len(data) < 2 {
 		return runtime.Decoded[MSRACapabilityValuePart]{}, fmt.Errorf("MSRACapabilityValuePart requires at least 16 bits")
 	}
-	if len(data)*8 > 400 {
+	if len(data) > 50 {
 		return runtime.Decoded[MSRACapabilityValuePart]{}, fmt.Errorf("MSRACapabilityValuePart exceeds 400 bits")
 	}
 	r := runtime.NewReader(data)
@@ -6010,6 +6013,9 @@ func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
 
 // DecodeMSRACapabilityValuePartStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part struct>.
 func DecodeMSRACapabilityValuePartStructFrom(r *runtime.Reader) (MSRACapabilityValuePartStruct, error) {
+	if err := r.Check(); err != nil {
+		return MSRACapabilityValuePartStruct{}, err
+	}
 	return decodeMSRACapabilityValuePartStruct(r)
 }
 func EncodeMSRACapabilityValuePartStructTo(w *runtime.Writer, v MSRACapabilityValuePartStruct) error {
@@ -6042,6 +6048,9 @@ func EncodeMSRACapabilityValuePartStruct(v MSRACapabilityValuePartStruct) ([]byt
 
 // DecodeAdditionalAccessTechnologiesStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Additional access technologies struct>.
 func DecodeAdditionalAccessTechnologiesStructFrom(r *runtime.Reader) (AdditionalAccessTechnologiesStruct, error) {
+	if err := r.Check(); err != nil {
+		return AdditionalAccessTechnologiesStruct{}, err
+	}
 	return decodeAdditionalAccessTechnologiesStruct(r)
 }
 func EncodeAdditionalAccessTechnologiesStructTo(w *runtime.Writer, v AdditionalAccessTechnologiesStruct) error {
@@ -6074,6 +6083,9 @@ func EncodeAdditionalAccessTechnologiesStruct(v AdditionalAccessTechnologiesStru
 
 // DecodeAccessCapabilitiesStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Access capabilities struct>.
 func DecodeAccessCapabilitiesStructFrom(r *runtime.Reader) (AccessCapabilitiesStruct, error) {
+	if err := r.Check(); err != nil {
+		return AccessCapabilitiesStruct{}, err
+	}
 	return decodeAccessCapabilitiesStruct(r)
 }
 func EncodeAccessCapabilitiesStructTo(w *runtime.Writer, v AccessCapabilitiesStruct) error {
@@ -6105,8 +6117,13 @@ func EncodeAccessCapabilitiesStruct(v AccessCapabilitiesStruct) ([]byte, error) 
 }
 
 // DecodeContent decodes TS 24.008 V20.1.0 §10.5.5.12a <Content>.
-func DecodeContentFrom(r *runtime.Reader) (Content, error) { return decodeContent(r) }
-func EncodeContentTo(w *runtime.Writer, v Content) error   { return encodeContent(w, v) }
+func DecodeContentFrom(r *runtime.Reader) (Content, error) {
+	if err := r.Check(); err != nil {
+		return Content{}, err
+	}
+	return decodeContent(r)
+}
+func EncodeContentTo(w *runtime.Writer, v Content) error { return encodeContent(w, v) }
 func DecodeContent(data []byte) (runtime.Decoded[Content], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Content]{}, err
@@ -6134,6 +6151,9 @@ func EncodeContent(v Content) ([]byte, error) {
 
 // DecodeMultislotCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Multislot capability struct>.
 func DecodeMultislotCapabilityStructFrom(r *runtime.Reader) (MultislotCapabilityStruct, error) {
+	if err := r.Check(); err != nil {
+		return MultislotCapabilityStruct{}, err
+	}
 	return decodeMultislotCapabilityStruct(r)
 }
 func EncodeMultislotCapabilityStructTo(w *runtime.Writer, v MultislotCapabilityStruct) error {
@@ -6165,8 +6185,13 @@ func EncodeMultislotCapabilityStruct(v MultislotCapabilityStruct) ([]byte, error
 }
 
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.5.12a <A5 bits>.
-func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) { return decodeA5Bits(r) }
-func EncodeA5BitsTo(w *runtime.Writer, v A5Bits) error   { return encodeA5Bits(w, v) }
+func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) {
+	if err := r.Check(); err != nil {
+		return A5Bits{}, err
+	}
+	return decodeA5Bits(r)
+}
+func EncodeA5BitsTo(w *runtime.Writer, v A5Bits) error { return encodeA5Bits(w, v) }
 func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[A5Bits]{}, err
@@ -6194,6 +6219,9 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 
 // DecodeEnhancedFlexibleTimeslotAssignmentStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Enhanced Flexible Timeslot Assignment struct>.
 func DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r *runtime.Reader) (EnhancedFlexibleTimeslotAssignmentStruct, error) {
+	if err := r.Check(); err != nil {
+		return EnhancedFlexibleTimeslotAssignmentStruct{}, err
+	}
 	return decodeEnhancedFlexibleTimeslotAssignmentStruct(r)
 }
 func EncodeEnhancedFlexibleTimeslotAssignmentStructTo(w *runtime.Writer, v EnhancedFlexibleTimeslotAssignmentStruct) error {
@@ -6226,6 +6254,9 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStruct(v EnhancedFlexibleTimeslotAs
 
 // DecodeDLMCCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <DLMC Capability struct>.
 func DecodeDLMCCapabilityStructFrom(r *runtime.Reader) (DLMCCapabilityStruct, error) {
+	if err := r.Check(); err != nil {
+		return DLMCCapabilityStruct{}, err
+	}
 	return decodeDLMCCapabilityStruct(r)
 }
 func EncodeDLMCCapabilityStructTo(w *runtime.Writer, v DLMCCapabilityStruct) error {

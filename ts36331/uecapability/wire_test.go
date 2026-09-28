@@ -37,3 +37,14 @@ func TestGERANWrapperWireState(t *testing.T) {
 		t.Fatal("accepted invented GERAN PS tail")
 	}
 }
+
+func TestGERANWrapperRejectsOversizedInput(t *testing.T) {
+	oversized := make([]byte, 1<<17+1)
+	oversized[0], oversized[1] = 0x33, 3
+	if _, err := DecodeClassmark2ValuePart(oversized); err == nil {
+		t.Fatal("Classmark 2 accepted oversized input")
+	}
+	if _, err := DecodeGERANCS(oversized); err == nil {
+		t.Fatal("GERAN CS accepted oversized input")
+	}
+}

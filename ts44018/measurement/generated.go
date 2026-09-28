@@ -2434,6 +2434,9 @@ func encodeEUTRANMeasurementReportStruct(w *runtime.Writer, v EUTRANMeasurementR
 
 // DecodeEnhancedMeasurementReport decodes TS 44.018 V19.0.0 §9.1.55 <Enhanced Measurement report>.
 func DecodeEnhancedMeasurementReportFrom(r *runtime.Reader) (EnhancedMeasurementReport, error) {
+	if err := r.Check(); err != nil {
+		return EnhancedMeasurementReport{}, err
+	}
 	return decodeEnhancedMeasurementReport(r)
 }
 func EncodeEnhancedMeasurementReportTo(w *runtime.Writer, v EnhancedMeasurementReport) error {
@@ -2466,6 +2469,9 @@ func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error
 
 // DecodeServingCellDataStruct decodes TS 44.018 V19.0.0 §9.1.55 <Serving cell data struct>.
 func DecodeServingCellDataStructFrom(r *runtime.Reader) (ServingCellDataStruct, error) {
+	if err := r.Check(); err != nil {
+		return ServingCellDataStruct{}, err
+	}
 	return decodeServingCellDataStruct(r)
 }
 func EncodeServingCellDataStructTo(w *runtime.Writer, v ServingCellDataStruct) error {
@@ -2498,6 +2504,9 @@ func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
 
 // DecodeRepeatedInvalidBSICInformationStruct decodes TS 44.018 V19.0.0 §9.1.55 <Repeated Invalid_BSIC_Information struct>.
 func DecodeRepeatedInvalidBSICInformationStructFrom(r *runtime.Reader) (RepeatedInvalidBSICInformationStruct, error) {
+	if err := r.Check(); err != nil {
+		return RepeatedInvalidBSICInformationStruct{}, err
+	}
 	return decodeRepeatedInvalidBSICInformationStruct(r)
 }
 func EncodeRepeatedInvalidBSICInformationStructTo(w *runtime.Writer, v RepeatedInvalidBSICInformationStruct) error {
@@ -2530,6 +2539,9 @@ func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformation
 
 // DecodeEUTRANMeasurementReportStruct decodes TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>.
 func DecodeEUTRANMeasurementReportStructFrom(r *runtime.Reader) (EUTRANMeasurementReportStruct, error) {
+	if err := r.Check(); err != nil {
+		return EUTRANMeasurementReportStruct{}, err
+	}
 	return decodeEUTRANMeasurementReportStruct(r)
 }
 func EncodeEUTRANMeasurementReportStructTo(w *runtime.Writer, v EUTRANMeasurementReportStruct) error {

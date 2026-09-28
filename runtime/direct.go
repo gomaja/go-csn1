@@ -37,7 +37,10 @@ func IsZero[T any](value T) bool { var zero T; return reflect.DeepEqual(value, z
 // extension; the received bytes themselves are never retained for replay.
 func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) WireInfo {
 	wire.BitsConsumed = consumed
-	wire.TransmittedBits = len(raw) * 8
+	wire.TransmittedBits = maxBits + 8
+	if len(raw) <= maxBits/8 {
+		wire.TransmittedBits = len(raw) * 8
+	}
 	wire.Tail = tail
 	wire.sealed = true
 	return wire
@@ -59,7 +62,11 @@ type Reader struct {
 
 func NewReader(data []byte) *Reader {
 	steps := 0
-	return &Reader{data: data, end: len(data) * 8, vars: make(map[string]uint64), steps: &steps,
+	end := 0
+	if len(data) <= maxBits/8 {
+		end = len(data) * 8
+	}
+	return &Reader{data: data, end: end, vars: make(map[string]uint64), steps: &steps,
 		wire: WireInfo{TruncatedAt: make(map[string]int)}}
 }
 
@@ -70,6 +77,13 @@ func CheckInput(data []byte) error {
 	return nil
 }
 
+func (r *Reader) Check() error {
+	if r == nil {
+		return &DecodeError{Kind: InvalidValue, Detail: "nil reader"}
+	}
+	return CheckInput(r.data)
+}
+
 func (r *Reader) Position() int  { return r.pos }
 func (r *Reader) Remaining() int { return r.end - r.pos }
 func (r *Reader) BoundedRemaining() int {
@@ -78,9 +92,14 @@ func (r *Reader) BoundedRemaining() int {
 	}
 	return r.Remaining()
 }
-func (r *Reader) VirtualBits() int              { return r.virtual }
-func (r *Reader) Wire() WireInfo                { r.wire.ImplicitZeros = r.virtual; return r.wire }
-func (r *Reader) Tail() BitString               { return bitsAt(r.data, r.pos, len(r.data)*8-r.pos) }
+func (r *Reader) VirtualBits() int { return r.virtual }
+func (r *Reader) Wire() WireInfo   { r.wire.ImplicitZeros = r.virtual; return r.wire }
+func (r *Reader) Tail() BitString {
+	if r.Check() != nil {
+		return BitString{}
+	}
+	return bitsAt(r.data, r.pos, len(r.data)*8-r.pos)
+}
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) { r.vars[key(name)] = value }
@@ -139,6 +158,12 @@ func (r *Reader) Fork() *Reader {
 }
 func (r *Reader) Commit(other *Reader) { *r = *other }
 func (r *Reader) bit() (uint8, bool, error) {
+	if err := r.Check(); err != nil {
+		return 0, false, err
+	}
+	if r.pos > maxBits || r.virtual >= maxBits-r.pos {
+		return 0, false, r.fail(Limit, "decoder bit limit exceeded")
+	}
 	if r.pos < r.end {
 		b := (r.data[r.pos/8] >> (7 - uint(r.pos%8))) & 1
 		r.pos++
@@ -198,7 +223,7 @@ func (r *Reader) Expect(pattern string) error {
 	return nil
 }
 func (r *Reader) Matches(pattern string) bool {
-	if r.pos+len(pattern) > r.end {
+	if len(pattern) > r.Remaining() {
 		return false
 	}
 	for i, symbol := range pattern {
@@ -417,7 +442,7 @@ func (w *Writer) WriteUint(value uint64, width int) error {
 	return nil
 }
 func (w *Writer) WriteBitString(value BitString, width int) error {
-	if width < 0 || width != value.BitLength || width > len(value.Bytes)*8 || width > maxBits {
+	if width < 0 || width != value.BitLength || width > maxBits || len(value.Bytes) < (width+7)/8 {
 		return fmt.Errorf("invalid bit string width at %s", w.path)
 	}
 	for i := 0; i < width; i++ {
@@ -591,12 +616,12 @@ func (w *Writer) validateSemantic() error {
 }
 
 func (w *Writer) validateState() error {
-	if w.wire.BitsConsumed < 0 || w.wire.TransmittedBits < 0 || w.wire.TransmittedBits > maxBits || w.wire.TransmittedBits%8 != 0 || w.wire.ImplicitZeros < 0 || w.wire.BitsConsumed+w.wire.Tail.BitLength != w.wire.TransmittedBits || w.wire.Tail.BitLength < 0 || w.wire.Tail.BitLength > len(w.wire.Tail.Bytes)*8 {
+	if w.wire.TransmittedBits < 0 || w.wire.TransmittedBits > maxBits || w.wire.TransmittedBits%8 != 0 || w.wire.BitsConsumed < 0 || w.wire.BitsConsumed > w.wire.TransmittedBits || w.wire.ImplicitZeros < 0 || w.wire.ImplicitZeros > maxBits || w.wire.Tail.BitLength < 0 || w.wire.Tail.BitLength != w.wire.TransmittedBits-w.wire.BitsConsumed || len(w.wire.Tail.Bytes) < (w.wire.Tail.BitLength+7)/8 {
 		return fmt.Errorf("inconsistent received wire boundary or tail")
 	}
 	count, end := 0, 0
 	for _, span := range w.wire.ImplicitSpans {
-		if span.Count <= 0 || span.At < end || span.At+span.Count > maxBits {
+		if span.Count <= 0 || span.Count > maxBits || span.At < end || span.At > maxBits-span.Count || count > maxBits-span.Count {
 			return fmt.Errorf("inconsistent inferred-zero span")
 		}
 		count += span.Count
@@ -629,7 +654,7 @@ func (wire WireInfo) ValidateOutput(encoded []byte, consumed int) error {
 	}
 	w := NewWriter()
 	w.WithWire(wire)
-	if wire.BitsConsumed < 0 || wire.TransmittedBits != len(encoded)*8 || consumed != wire.BitsConsumed || wire.BitsConsumed+wire.Tail.BitLength != wire.TransmittedBits || wire.Tail.BitLength < 0 || wire.Tail.BitLength > len(wire.Tail.Bytes)*8 {
+	if len(encoded) > maxBits/8 || wire.TransmittedBits != len(encoded)*8 || consumed != wire.BitsConsumed {
 		return fmt.Errorf("inconsistent wrapper wire boundary or tail")
 	}
 	if len(wire.Spare) != 0 || len(wire.Padding) != 0 || len(wire.Terminal) != 0 || len(wire.TruncatedAt) != 0 || len(wire.SpareCounts) != 0 || wire.ImplicitZeros != 0 || len(wire.ImplicitSpans) != 0 {

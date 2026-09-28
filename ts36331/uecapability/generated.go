@@ -39,6 +39,9 @@ type Classmark2ValuePart struct {
 }
 
 func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
+	if err := runtime.CheckInput(data); err != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, err
+	}
 	if len(data) < 3 {
 		return runtime.Decoded[Classmark2ValuePart]{}, fmt.Errorf("classmark 2 value part requires 3 octets")
 	}
@@ -57,7 +60,10 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 	if v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3 {
 		return nil, fmt.Errorf("invalid Classmark 2 field")
 	}
-	if v.Wire.Tail.BitLength < 0 || v.Wire.Tail.BitLength != len(v.Wire.Tail.Bytes)*8 {
+	if err := runtime.CheckInput(v.Wire.Tail.Bytes); err != nil {
+		return nil, err
+	}
+	if v.Wire.Tail.BitLength < 0 || v.Wire.Tail.BitLength%8 != 0 || v.Wire.Tail.BitLength/8 != len(v.Wire.Tail.Bytes) {
 		return nil, fmt.Errorf("classmark 2 tail must be whole octets")
 	}
 	var a, b, c byte
@@ -133,6 +139,9 @@ type GERANCS struct {
 // 0x33, length 3, the three Classmark 2 value octets, then the Classmark 3
 // value part. The CSN.1 bit string is MSB first with final octet padding.
 func DecodeGERANCS(data []byte) (runtime.Decoded[GERANCS], error) {
+	if err := runtime.CheckInput(data); err != nil {
+		return runtime.Decoded[GERANCS]{}, err
+	}
 	if len(data) < 6 || data[0] != 0x33 || data[1] != 3 {
 		return runtime.Decoded[GERANCS]{}, fmt.Errorf("invalid GERAN CS Classmark 2 TLV")
 	}
