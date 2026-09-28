@@ -71,6 +71,142 @@ func TestReaderBoundsNestedFixedValueDepth(t *testing.T) {
 	}
 }
 
+func TestReaderWorkCounterRejectsHostBoundaryBeforeIncrement(t *testing.T) {
+	for _, steps := range []int{maxBits, math.MaxInt} {
+		r := NewReader([]byte{0})
+		*r.steps = steps
+		if err := r.Enter("boundary"); err == nil {
+			t.Fatalf("accepted work counter %d", steps)
+		}
+		if *r.steps != steps {
+			t.Fatalf("work counter changed from %d to %d", steps, *r.steps)
+		}
+	}
+	if err := (&Reader{}).Enter("uninitialized"); err == nil {
+		t.Fatal("accepted uninitialized reader")
+	}
+}
+
+func TestWriterRejectsHostBoundaryBeforeCounterArithmetic(t *testing.T) {
+	for _, tc := range []struct{ bits, virtual int }{
+		{math.MaxInt, 1},
+		{1, math.MaxInt},
+		{maxBits, 0},
+		{-1, 0},
+		{0, -1},
+	} {
+		w := NewWriter()
+		w.bits, w.virtual = tc.bits, tc.virtual
+		if err := w.put(0); err == nil {
+			t.Fatalf("accepted counters bits=%d virtual=%d", tc.bits, tc.virtual)
+		}
+	}
+	for _, bits := range []int{-1, math.MinInt, math.MaxInt} {
+		w := NewWriter()
+		w.bits = bits
+		if _, err := w.PushLimit(0); err == nil {
+			t.Fatalf("accepted limit at bit position %d", bits)
+		}
+	}
+}
+
+func TestBitsAtRejectsHostBoundaryRanges(t *testing.T) {
+	for _, tc := range []struct{ start, count int }{
+		{-1, 1}, {0, -1}, {0, math.MaxInt}, {math.MaxInt, 1},
+		{math.MaxInt - 1, math.MaxInt}, {8, 1},
+	} {
+		if got := bitsAt([]byte{0xaa}, tc.start, tc.count); got.BitLength != 0 || len(got.Bytes) != 0 {
+			t.Fatalf("accepted range start=%d count=%d: %+v", tc.start, tc.count, got)
+		}
+	}
+}
+
+func TestWriterRejectsOutOfRangeSpareRepeatCounts(t *testing.T) {
+	for _, count := range []int{-1, maxBits + 1, math.MaxInt} {
+		w := NewWriter()
+		w.WithWire(WireInfo{SpareCounts: map[string][]int{"bits": {count}}})
+		if got, ok := w.SpareCount("bits"); ok || got != 0 {
+			t.Fatalf("accepted spare count %d as %d, %t", count, got, ok)
+		}
+		if _, err := w.Bytes(); err == nil {
+			t.Fatalf("silently ignored spare count %d", count)
+		}
+	}
+}
+
+func TestReaderRejectsOverflowingImplicitSpanBeforeAppend(t *testing.T) {
+	r := NewReader(nil)
+	r.SetZeroExtension(true)
+	r.wire.ImplicitSpans = []ImplicitSpan{{At: math.MaxInt, Count: 1}}
+	if _, err := r.ReadUint(1); err == nil {
+		t.Fatal("accepted an overflowing prior implicit span")
+	}
+}
+
+func TestReaderRejectsImplicitSpanAtBitBudget(t *testing.T) {
+	r := NewReader(nil)
+	r.SetZeroExtension(true)
+	r.wire.ImplicitSpans = []ImplicitSpan{{At: 0, Count: maxBits}}
+	if _, err := r.ReadUint(1); err == nil {
+		t.Fatal("accepted an inferred span that cannot grow")
+	}
+}
+
+func TestPublicReaderStateQueriesRejectUninitializedReader(t *testing.T) {
+	r := &Reader{}
+	if got := r.Remaining(); got != -1 {
+		t.Fatalf("uninitialized remaining=%d", got)
+	}
+	if r.Matches("") {
+		t.Fatal("uninitialized reader matched empty pattern")
+	}
+	if err := r.Expect(""); err == nil {
+		t.Fatal("uninitialized reader accepted empty literal")
+	}
+	if _, err := r.PushLimit(0); err == nil {
+		t.Fatal("uninitialized reader accepted fixed limit")
+	}
+}
+
+func TestReaderCheckRejectsCombinedBitBudget(t *testing.T) {
+	r := NewReader(make([]byte, maxBits/8))
+	r.pos = maxBits
+	r.virtual = 1
+	if err := r.Check(); err == nil {
+		t.Fatal("accepted combined transmitted and virtual bits beyond limit")
+	}
+}
+
+func TestWriterRemainingLimitRejectsInvalidState(t *testing.T) {
+	w := NewWriter()
+	w.bounded, w.limit, w.bits = true, 0, 2
+	if got := w.RemainingLimit(); got != -1 {
+		t.Fatalf("invalid remaining limit=%d", got)
+	}
+	for _, limit := range []int{-1, math.MaxInt} {
+		w := NewWriter()
+		w.bounded, w.limit = true, limit
+		if _, err := w.PushLimit(0); err == nil {
+			t.Fatalf("accepted invalid enclosing limit %d", limit)
+		}
+	}
+}
+
+func TestWriterLogicalPositionChecksHostBoundary(t *testing.T) {
+	for _, tc := range []struct{ bits, virtual int }{{math.MaxInt, 1}, {1, math.MaxInt}, {-1, 0}, {maxBits, 1}} {
+		w := NewWriter()
+		w.bits, w.virtual = tc.bits, tc.virtual
+		if _, err := w.logicalPosition(); err == nil {
+			t.Fatalf("accepted logical position %d+%d", tc.bits, tc.virtual)
+		}
+	}
+	w := NewWriter()
+	w.bits, w.virtual = maxBits-2, 1
+	if got, err := w.logicalPosition(); err != nil || got != maxBits-1 {
+		t.Fatalf("logical position=%d err=%v", got, err)
+	}
+}
+
 func TestWriterRejectsOverflowedImplicitSpanBeforeWriting(t *testing.T) {
 	w := NewWriter()
 	if err := w.WriteUint(0, 1); err != nil {

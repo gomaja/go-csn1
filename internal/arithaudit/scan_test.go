@@ -114,3 +114,43 @@ func TestGeneratedUint64ConversionsRequireUnsignedSource(t *testing.T) {
 		})
 	}
 }
+
+func TestGeneratedChoiceCountersStayOutsideLoops(t *testing.T) {
+	good := []byte(`package sample
+func decode() int { matches := 0; if true { matches++ }; if false { matches++ }; return matches }
+func encode() int { count := 0; if true { count++ }; return count }
+`)
+	if n, err := CheckGeneratedChoiceCounters("generated.go", good); err != nil || n != 3 {
+		t.Fatalf("choice counter proof: count=%d err=%v", n, err)
+	}
+	bad := []byte(`package sample
+func decode(n int) int { matches := 0; for i:=0; i<n; i++ { matches++ }; return matches }
+`)
+	if _, err := CheckGeneratedChoiceCounters("generated.go", bad); err == nil {
+		t.Fatal("accepted unbounded choice counter")
+	}
+}
+
+func TestGeneratedLoopArithmeticRequiresBoundedSource(t *testing.T) {
+	good := []byte(`package sample
+type reader struct{}
+func (r *reader) Eval(string) (int,error) { return 2,nil }
+func decode(r *reader) { count,_ := r.Eval("2"); for i:=0;i<count;i++ {} }
+func encode(entries []int) { for i := range entries { if i+1<len(entries) {} } }
+`)
+	incs, next, err := CheckGeneratedLoopArithmetic("generated.go", good)
+	if err != nil || incs != 1 || next != 1 {
+		t.Fatalf("bounded loops: incs=%d next=%d err=%v", incs, next, err)
+	}
+	for _, bad := range []string{
+		`package sample; func decode(count int) { for i:=0;i<count;i++ {} }`,
+		`package sample; type reader struct{}; func (r *reader) Eval(string)(int,error){return 1,nil}; func decode(r *reader,n int) { count,_:=r.Eval("1"); count=n; for i:=0;i<count;i++ {} }`,
+		`package sample; func decode(remaining int) { count:=remaining/8; for i:=0;i<count;i++ {} }`,
+		`package sample; type reader struct{}; func (r *reader) Eval(string)(int,error){return 1,nil}; func decode(r *reader) { count,_:=r.Eval("1"); for i:=0;i<count;i++ { count++ } }`,
+		`package sample; func encode(entries []int) { i:=0; if i+1<len(entries) {} }`,
+	} {
+		if _, _, err := CheckGeneratedLoopArithmetic("generated.go", []byte(bad)); err == nil {
+			t.Fatalf("accepted unbounded loop arithmetic: %s", bad)
+		}
+	}
+}

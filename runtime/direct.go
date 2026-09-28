@@ -81,11 +81,22 @@ func (r *Reader) Check() error {
 	if r == nil {
 		return &DecodeError{Kind: InvalidValue, Detail: "nil reader"}
 	}
-	return CheckInput(r.data)
+	if err := CheckInput(r.data); err != nil {
+		return err
+	}
+	if r.steps == nil || *r.steps < 0 || r.pos < 0 || r.end < r.pos || r.end > len(r.data)*8 || r.virtual < 0 || r.virtual > maxBits-r.pos || r.boundDepth < 0 || r.boundDepth > 128 || r.depth < 0 || r.depth > 128 {
+		return r.fail(InvalidValue, "invalid reader state")
+	}
+	return nil
 }
 
-func (r *Reader) Position() int  { return r.pos }
-func (r *Reader) Remaining() int { return r.end - r.pos }
+func (r *Reader) Position() int { return r.pos }
+func (r *Reader) Remaining() int {
+	if r.Check() != nil {
+		return -1
+	}
+	return r.end - r.pos
+}
 func (r *Reader) BoundedRemaining() int {
 	if r.boundDepth == 0 {
 		return -1
@@ -115,10 +126,13 @@ func (r *Reader) fail(kind ErrorKind, detail string) error {
 }
 func (r *Reader) Error(kind ErrorKind, detail string) error { return r.fail(kind, detail) }
 func (r *Reader) Enter(name string) error {
-	*r.steps++
-	if *r.steps > maxBits || r.depth >= 128 {
+	if err := r.Check(); err != nil {
+		return err
+	}
+	if *r.steps >= maxBits || r.depth >= 128 {
 		return r.fail(Limit, "decoder work or nesting limit")
 	}
+	*r.steps++
 	r.depth++
 	if r.path == "" {
 		r.path = name
@@ -161,7 +175,7 @@ func (r *Reader) bit() (uint8, bool, error) {
 	if err := r.Check(); err != nil {
 		return 0, false, err
 	}
-	if r.pos > maxBits || r.virtual >= maxBits-r.pos {
+	if r.pos < 0 || r.virtual < 0 || r.pos > maxBits || r.virtual >= maxBits-r.pos {
 		return 0, false, r.fail(Limit, "decoder bit limit exceeded")
 	}
 	if r.pos < r.end {
@@ -172,6 +186,12 @@ func (r *Reader) bit() (uint8, bool, error) {
 	if r.allowZero {
 		at := r.pos + r.virtual
 		spans := r.wire.ImplicitSpans
+		if len(spans) != 0 {
+			last := spans[len(spans)-1]
+			if last.Count <= 0 || last.Count >= maxBits || last.At < 0 || last.At > maxBits-last.Count {
+				return 0, false, r.fail(InvalidValue, "invalid receiver-inferred span")
+			}
+		}
 		if len(spans) == 0 || spans[len(spans)-1].At+spans[len(spans)-1].Count != at {
 			r.wire.ImplicitSpans = append(spans, ImplicitSpan{At: at})
 		}
@@ -210,6 +230,9 @@ func (r *Reader) ReadBitString(width int) (BitString, error) {
 	return out, nil
 }
 func (r *Reader) Expect(pattern string) error {
+	if err := r.Check(); err != nil {
+		return err
+	}
 	for _, symbol := range pattern {
 		at := r.pos + r.virtual
 		bit, _, err := r.bit()
@@ -223,7 +246,7 @@ func (r *Reader) Expect(pattern string) error {
 	return nil
 }
 func (r *Reader) Matches(pattern string) bool {
-	if len(pattern) > r.Remaining() {
+	if r.Check() != nil || len(pattern) > r.Remaining() {
 		return false
 	}
 	for i, symbol := range pattern {
@@ -248,6 +271,9 @@ func (r *Reader) ReadSpare() (BitString, error) {
 	return value, nil
 }
 func (r *Reader) ReadPadding() BitString {
+	if r.Check() != nil {
+		return BitString{}
+	}
 	value := bitsAt(r.data, r.pos, r.end-r.pos)
 	r.pos = r.end
 	r.wire.Padding = append(r.wire.Padding, value)
@@ -271,6 +297,9 @@ func (r *Reader) ReadIgnoredFixed(width int) (BitString, error) {
 	return value, nil
 }
 func (r *Reader) PushLimit(width int) (int, error) {
+	if err := r.Check(); err != nil {
+		return 0, err
+	}
 	if r.boundDepth >= 128 {
 		return 0, r.fail(Limit, "fixed-value nesting limit")
 	}
@@ -334,6 +363,7 @@ type Writer struct {
 	truncationUsed           map[string]bool
 	wire                     WireInfo
 	implicitSpan             int
+	stateErr                 error
 }
 
 func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
@@ -341,6 +371,7 @@ func (w *Writer) WithWire(wire WireInfo) {
 	w.wire = wire
 	w.spareCountIndex = make(map[string]int)
 	w.truncationUsed = make(map[string]bool)
+	w.stateErr = nil
 }
 func (w *Writer) Truncation(path string) (int, bool) {
 	n, ok := w.wire.TruncatedAt[path]
@@ -355,12 +386,19 @@ func (w *Writer) SpareCount(path string) (int, bool) {
 	if i >= len(counts) {
 		return 0, false
 	}
+	if counts[i] < 0 || counts[i] > maxBits {
+		w.stateErr = fmt.Errorf("spare repeat count outside bit limit at %s", path)
+		return 0, false
+	}
 	w.spareCountIndex[path] = i + 1
 	return counts[i], true
 }
 func (w *Writer) Position() int { return w.bits }
 func (w *Writer) RemainingLimit() int {
 	if !w.bounded {
+		return -1
+	}
+	if w.bits < 0 || w.bits > maxBits || w.limit < w.bits || w.limit > maxBits {
 		return -1
 	}
 	return w.limit - w.bits
@@ -372,7 +410,7 @@ func (w *Writer) BoundEndOr(unbounded int) int {
 	return unbounded
 }
 func (w *Writer) PushLimit(width int) (int, error) {
-	if width < 0 || width > maxBits-w.bits || w.bounded && width > w.limit-w.bits {
+	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits || width > w.limit-w.bits) {
 		return 0, fmt.Errorf("fixed value exceeds enclosing limit at %s", w.path)
 	}
 	old := -1
@@ -420,19 +458,29 @@ func (w *Writer) Leave() {
 	}
 	w.path = ""
 }
+func (w *Writer) logicalPosition() (int, error) {
+	if w.bits < 0 || w.virtual < 0 || w.bits > maxBits || w.virtual > maxBits-w.bits {
+		return 0, fmt.Errorf("encoded bit limit exceeded at %s", w.path)
+	}
+	return w.bits + w.virtual, nil
+}
 func (w *Writer) put(bit uint8) error {
+	position, err := w.logicalPosition()
+	if err != nil {
+		return err
+	}
+	if position >= maxBits {
+		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
+	}
 	if w.bounded && w.bits >= w.limit {
 		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
-	}
-	if w.bits+w.virtual >= maxBits {
-		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
 	}
 	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
 		span, end, err := w.currentImplicitSpan()
 		if err != nil {
 			return err
 		}
-		if at := w.bits + w.virtual; at >= span.At && at < end {
+		if at := position; at >= span.At && at < end {
 			if bit != 0 {
 				return fmt.Errorf("edit to receiver-inferred bit at %s bit %d", w.path, at)
 			}
@@ -487,7 +535,11 @@ func (w *Writer) WriteBitString(value BitString, width int) error {
 }
 func (w *Writer) WriteLiteral(pattern string) error {
 	for _, symbol := range pattern {
-		if err := w.put(literalBit(symbol, w.bits+w.virtual)); err != nil {
+		position, err := w.logicalPosition()
+		if err != nil {
+			return err
+		}
+		if err := w.put(literalBit(symbol, position)); err != nil {
 			return err
 		}
 	}
@@ -508,7 +560,11 @@ func (w *Writer) WriteSpare() error {
 			if err != nil {
 				return err
 			}
-			if at := w.bits + w.virtual; at < span.At || at >= end {
+			at, err := w.logicalPosition()
+			if err != nil {
+				return err
+			}
+			if at < span.At || at >= end {
 				return fmt.Errorf("inferred spare bit is outside its zero span")
 			}
 		}
@@ -630,6 +686,9 @@ func (w *Writer) Finish(tail BitString) ([]byte, error) {
 	return w.Bytes()
 }
 func (w *Writer) Bytes() ([]byte, error) {
+	if w.stateErr != nil {
+		return nil, w.stateErr
+	}
 	if w.wire.sealed {
 		if err := w.validateState(); err != nil {
 			return nil, err
@@ -737,7 +796,7 @@ func literalBit(symbol rune, position int) uint8 {
 }
 
 func bitsAt(data []byte, start, count int) BitString {
-	if count <= 0 {
+	if len(data) > maxBits/8 || start < 0 || count <= 0 || start > len(data)*8 || count > len(data)*8-start {
 		return BitString{}
 	}
 	bytes := make([]byte, (count+7)/8)
