@@ -46,6 +46,42 @@ func TestReaderRejectsOversizedInputBeforeBitArithmetic(t *testing.T) {
 	}
 }
 
+func TestReaderRejectsInvalidRestoredLimitAndTerminalStart(t *testing.T) {
+	r := NewReader([]byte{0})
+	if _, err := r.PushLimit(0); err != nil {
+		t.Fatal(err)
+	}
+	if err := r.PopLimit(math.MaxInt); err == nil {
+		t.Fatal("accepted restored limit beyond input")
+	}
+	if err := r.RecordTerminal(math.MinInt); err == nil {
+		t.Fatal("accepted terminal start before input")
+	}
+}
+
+func TestReaderBoundsNestedFixedValueDepth(t *testing.T) {
+	r := NewReader([]byte{0})
+	for i := 0; i < 128; i++ {
+		if _, err := r.PushLimit(0); err != nil {
+			t.Fatalf("depth %d: %v", i, err)
+		}
+	}
+	if _, err := r.PushLimit(0); err == nil {
+		t.Fatal("accepted unbounded nested fixed-value depth")
+	}
+}
+
+func TestWriterRejectsOverflowedImplicitSpanBeforeWriting(t *testing.T) {
+	w := NewWriter()
+	if err := w.WriteUint(0, 1); err != nil {
+		t.Fatal(err)
+	}
+	w.WithWire(WireInfo{ImplicitSpans: []ImplicitSpan{{At: 1, Count: math.MaxInt}}, sealed: true})
+	if err := w.WriteUint(0, 1); err == nil {
+		t.Fatal("accepted overflowing receiver-inferred span")
+	}
+}
+
 func TestDirectBitIOBoundsAndPaddingOrigin(t *testing.T) {
 	if LHBit('L', 0) != 0 || LHBit('H', 0) != 1 || LHBit('L', 2) != 1 || LHBit('H', 2) != 0 {
 		t.Fatal("L/H constraint must follow the absolute padding-pattern position")

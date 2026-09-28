@@ -170,9 +170,21 @@ func EncodeGERANCS(v GERANCS) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err := runtime.CheckInput(cm3); err != nil {
+		return nil, err
+	}
+	// TS 36.331 V19.4.0 UE-CapabilityRAT-ContainerList places five framing
+	// octets before TS 24.008 V20.1.0 §10.5.1.7 Classmark 3 bits.
+	// Bound the nested count before adding that framing offset on 32-bit hosts.
+	if v.Classmark3.Wire.BitsConsumed < 0 || v.Classmark3.Wire.BitsConsumed > len(cm3)*8 {
+		return nil, fmt.Errorf("classmark 3 consumed bit count exceeds encoded length")
+	}
 	out := []byte{0x33, 3}
 	out = append(out, cm2...)
 	out = append(out, cm3...)
+	if err := runtime.CheckInput(out); err != nil {
+		return nil, err
+	}
 	if err := v.Wire.ValidateOutput(out, 40+v.Classmark3.Wire.BitsConsumed); err != nil {
 		return nil, err
 	}

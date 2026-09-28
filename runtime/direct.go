@@ -271,6 +271,9 @@ func (r *Reader) ReadIgnoredFixed(width int) (BitString, error) {
 	return value, nil
 }
 func (r *Reader) PushLimit(width int) (int, error) {
+	if r.boundDepth >= 128 {
+		return 0, r.fail(Limit, "fixed-value nesting limit")
+	}
 	if width < 0 || width > r.Remaining() {
 		return 0, r.fail(Truncated, "length exceeds enclosing input")
 	}
@@ -280,11 +283,17 @@ func (r *Reader) PushLimit(width int) (int, error) {
 	return old, nil
 }
 func (r *Reader) PopLimit(old int) error {
+	if err := r.Check(); err != nil {
+		return err
+	}
 	if r.boundDepth == 0 {
 		return r.fail(InvalidValue, "no enclosing length limit")
 	}
 	if r.pos != r.end {
 		return r.fail(InvalidValue, "length-delimited content leaves unparsed bits")
+	}
+	if old < r.end || old > len(r.data)*8 {
+		return r.fail(InvalidValue, "restored length limit outside input")
 	}
 	r.end = old
 	r.boundDepth--
@@ -294,8 +303,15 @@ func (r *Reader) RecordTruncation(path string, child int) { r.wire.TruncatedAt[p
 
 // RecordTerminal preserves the nonsemantic zero-length stop record printed
 // in TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.1.
-func (r *Reader) RecordTerminal(start int) {
+func (r *Reader) RecordTerminal(start int) error {
+	if err := r.Check(); err != nil {
+		return err
+	}
+	if start < 0 || start > r.pos || r.pos > r.end {
+		return r.fail(InvalidValue, "terminal start outside input")
+	}
 	r.wire.Terminal = append(r.wire.Terminal, bitsAt(r.data, start, r.pos-start))
+	return nil
 }
 func (r *Reader) RecordSpareCount(path string, count int) {
 	if r.wire.SpareCounts == nil {
@@ -411,15 +427,21 @@ func (w *Writer) put(bit uint8) error {
 	if w.bits+w.virtual >= maxBits {
 		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
 	}
-	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) && w.bits+w.virtual >= w.wire.ImplicitSpans[w.implicitSpan].At && w.bits+w.virtual < w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count {
-		if bit != 0 {
-			return fmt.Errorf("edit to receiver-inferred bit at %s bit %d", w.path, w.bits+w.virtual)
+	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
+		span, end, err := w.currentImplicitSpan()
+		if err != nil {
+			return err
 		}
-		w.virtual++
-		if w.bits+w.virtual == w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count {
-			w.implicitSpan++
+		if at := w.bits + w.virtual; at >= span.At && at < end {
+			if bit != 0 {
+				return fmt.Errorf("edit to receiver-inferred bit at %s bit %d", w.path, at)
+			}
+			w.virtual++
+			if w.bits+w.virtual == end {
+				w.implicitSpan++
+			}
+			return nil
 		}
-		return nil
 	}
 	if w.bits%8 == 0 {
 		w.bytes = append(w.bytes, 0)
@@ -429,6 +451,17 @@ func (w *Writer) put(bit uint8) error {
 	}
 	w.bits++
 	return nil
+}
+
+func (w *Writer) currentImplicitSpan() (ImplicitSpan, int, error) {
+	if w.implicitSpan >= len(w.wire.ImplicitSpans) {
+		return ImplicitSpan{}, 0, fmt.Errorf("receiver-inferred span is missing")
+	}
+	span := w.wire.ImplicitSpans[w.implicitSpan]
+	if span.Count <= 0 || span.Count > maxBits || span.At < 0 || span.At > maxBits-span.Count {
+		return ImplicitSpan{}, 0, fmt.Errorf("receiver-inferred span outside bit limit")
+	}
+	return span, span.At + span.Count, nil
 }
 func (w *Writer) WriteUint(value uint64, width int) error {
 	if width < 0 || width > 64 || width < 64 && value >= uint64(1)<<uint(width) {
@@ -470,8 +503,14 @@ func (w *Writer) WriteSpare() error {
 		if v.BitLength != 0 {
 			return fmt.Errorf("invalid received spare-bit width")
 		}
-		if w.wire.sealed && (w.implicitSpan >= len(w.wire.ImplicitSpans) || w.bits+w.virtual < w.wire.ImplicitSpans[w.implicitSpan].At || w.bits+w.virtual >= w.wire.ImplicitSpans[w.implicitSpan].At+w.wire.ImplicitSpans[w.implicitSpan].Count) {
-			return fmt.Errorf("inferred spare bit is outside its zero span")
+		if w.wire.sealed {
+			span, end, err := w.currentImplicitSpan()
+			if err != nil {
+				return err
+			}
+			if at := w.bits + w.virtual; at < span.At || at >= end {
+				return fmt.Errorf("inferred spare bit is outside its zero span")
+			}
 		}
 	} else if w.wire.sealed {
 		return fmt.Errorf("received spare-bit state exhausted")

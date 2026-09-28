@@ -80,6 +80,10 @@ The same printed `PEO IMM Cell Group Details struct` appears in TS 44.018 §§10
 
 The compiler turns a printed CSN.1 name into a Go identifier by joining runs of letters and digits, capitalizing each run, preserving existing uppercase runs, and prefixing `N` when the result begins with a digit. Anonymous optionals with one labeled value become pointers named after that value, such as `A5Bits *A5Bits`. An optional with several values becomes a pointer to a content-named `Group` struct. Multi-way choices use a content-named type and alternative fields named from labels unique to each branch; unlabeled branches use their bit pattern, such as `Alt01`. Repetitions contain element structs. Repeated labels in the same parent receive `Variant2`, `Variant3`, and so on; inserting a field with a different label does not rename existing public types. Repeated printed names across clauses receive deterministic clause suffixes in Go; an unresolved identifier collision stops generation.
 
+## Arithmetic audit
+
+`go test ./internal/arithaudit -count=1` scans production Go syntax for arithmetic and conversions involving decoder state. [arithmetic-allowlist.tsv](arithmetic-allowlist.tsv) classifies each file and expression with its expected occurrence count and the bound that makes it safe. The test fails when an expression appears, disappears, or changes count without review. Separate AST checks verify that every generated `uint8`, `uint16`, and `uint32` conversion from a decoded field fits its literal bit width and interpretation offset, and that every generated `uint64(v)` conversion has an unsigned source.
+
 ## Specification coverage
 
 Packages marked **[compiled]** contain generated Go bindings. Planned packages are placeholders for CSN.1 content identified in the cited current specifications.

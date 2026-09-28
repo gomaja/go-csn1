@@ -1,0 +1,150 @@
+# AST/go-types arithmetic inventory for go-csn1 production Go files.
+# Key: file:kind:expression; count pins every occurrence, including repeated generated patterns.
+# BOUNDED and FIXED reasons cite bounds that apply on 32-bit targets.
+registry/registry.go:arithmetic:len(classmark.Definitions()) + len(msrac.Definitions())	1	BOUNDED: finite generated descriptor tables total 226 definitions at registry/registry.go:22
+registry/registry.go:arithmetic:len(classmark.Definitions()) + len(msrac.Definitions()) + len(measurement.Definitions())	1	BOUNDED: finite generated descriptor tables total 226 definitions at registry/registry.go:22
+registry/registry.go:arithmetic:len(classmark.Definitions()) + len(msrac.Definitions()) + len(measurement.Definitions()) + len(restoctets.Definitions())	1	BOUNDED: finite generated descriptor tables total 226 definitions at registry/registry.go:22
+registry/registry.go:arithmetic:len(classmark.Definitions()) + len(msrac.Definitions()) + len(measurement.Definitions()) + len(restoctets.Definitions()) + len(ies.Definitions())	1	BOUNDED: finite generated descriptor tables total 226 definitions at registry/registry.go:22
+registry/registry.go:arithmetic:len(classmark.Definitions()) + len(msrac.Definitions()) + len(measurement.Definitions()) + len(restoctets.Definitions()) + len(ies.Definitions()) + 3	1	BOUNDED: finite generated descriptor tables total 226 definitions at registry/registry.go:22
+runtime/direct.go:arithmetic:*r.steps++	1	BOUNDED: Reader.Check, bit and PushLimit cap input, work and nesting at runtime/direct.go:74 and runtime/direct.go:164; runtime/direct.go:118
+runtime/direct.go:arithmetic:1 << (7 - uint((start+i)%8))	1	BOUNDED: bitsAt callers pass checked input ranges at runtime/direct.go:310 and runtime/direct.go:739
+runtime/direct.go:arithmetic:1 << (7 - uint(i%8))	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:746
+runtime/direct.go:arithmetic:1 << (7 - uint(w.bits%8))	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:450
+runtime/direct.go:arithmetic:7 - uint((consumed+i)%8)	1	BOUNDED: ValidateOutput validates consumed and tail before its loop at runtime/direct.go:696
+runtime/direct.go:arithmetic:7 - uint((r.pos+i)%8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:230
+runtime/direct.go:arithmetic:7 - uint((start+i)%8)	1	BOUNDED: bitsAt callers pass checked input ranges at runtime/direct.go:310 and runtime/direct.go:739
+runtime/direct.go:arithmetic:7 - uint(i%8)	4	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:208
+runtime/direct.go:arithmetic:7 - uint(position%8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:724
+runtime/direct.go:arithmetic:7 - uint(r.pos%8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:168
+runtime/direct.go:arithmetic:7 - uint(w.bits%8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:450
+runtime/direct.go:arithmetic:b << (7 - uint(i%8))	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:208
+runtime/direct.go:arithmetic:bits - w.bits	2	BOUNDED: WritePaddingTo requires bits >= w.bits and bits <= maxBits at runtime/direct.go:542
+runtime/direct.go:arithmetic:consumed + i	2	BOUNDED: ValidateOutput validates consumed and tail before its loop at runtime/direct.go:696
+runtime/direct.go:arithmetic:count + 7	1	BOUNDED: bitsAt callers pass checked input ranges at runtime/direct.go:310 and runtime/direct.go:739
+runtime/direct.go:arithmetic:count += span.Count	1	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:461 and runtime/direct.go:663
+runtime/direct.go:arithmetic:i + 1	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:358
+runtime/direct.go:arithmetic:i++	5	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:189
+runtime/direct.go:arithmetic:i--	3	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:134
+runtime/direct.go:arithmetic:len(data) * 8	1	BOUNDED: input/output length is checked against maxBits/8 before octet-to-bit arithmetic at runtime/direct.go:74 and runtime/direct.go:696
+runtime/direct.go:arithmetic:len(encoded) * 8	1	BOUNDED: input/output length is checked against maxBits/8 before octet-to-bit arithmetic at runtime/direct.go:74 and runtime/direct.go:696
+runtime/direct.go:arithmetic:len(r.data) * 8	2	BOUNDED: input/output length is checked against maxBits/8 before octet-to-bit arithmetic at runtime/direct.go:74 and runtime/direct.go:696
+runtime/direct.go:arithmetic:len(r.data)*8 - r.pos	1	BOUNDED: input/output length is checked against maxBits/8 before octet-to-bit arithmetic at runtime/direct.go:74 and runtime/direct.go:696
+runtime/direct.go:arithmetic:len(r.path) - 1	1	BOUNDED: slice index begins at len-1 and is used only while nonnegative or after append at runtime/direct.go:134
+runtime/direct.go:arithmetic:len(r.wire.ImplicitSpans) - 1	1	BOUNDED: Reader.bit limits pos+virtual to maxBits; Writer.currentImplicitSpan checks At and Count at runtime/direct.go:164 and runtime/direct.go:461
+runtime/direct.go:arithmetic:len(raw) * 8	1	BOUNDED: Seal checks raw length against maxBits/8; sentinel is a constant at runtime/direct.go:40
+runtime/direct.go:arithmetic:len(spans) - 1	2	BOUNDED: Reader.bit limits pos+virtual to maxBits; Writer.currentImplicitSpan checks At and Count at runtime/direct.go:164 and runtime/direct.go:461
+runtime/direct.go:arithmetic:len(w.bytes) - 1	1	BOUNDED: slice index begins at len-1 and is used only while nonnegative or after append at runtime/direct.go:450
+runtime/direct.go:arithmetic:len(w.path) - 1	1	BOUNDED: slice index begins at len-1 and is used only while nonnegative or after append at runtime/direct.go:415
+runtime/direct.go:arithmetic:maxBits + 8	1	BOUNDED: Seal checks raw length against maxBits/8; sentinel is a constant at runtime/direct.go:40
+runtime/direct.go:arithmetic:maxBits - r.pos	1	BOUNDED: Reader.bit checks pos and virtual against maxBits before increment at runtime/direct.go:163
+runtime/direct.go:arithmetic:maxBits - span.Count	3	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:461 and runtime/direct.go:663
+runtime/direct.go:arithmetic:maxBits - w.bits	1	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:375
+runtime/direct.go:arithmetic:r.boundDepth++	1	FIXED: PushLimit rejects depth 128 before increment at runtime/direct.go:274
+runtime/direct.go:arithmetic:r.boundDepth--	1	BOUNDED: PopLimit requires positive boundDepth before decrement at runtime/direct.go:289
+runtime/direct.go:arithmetic:r.depth++	1	BOUNDED: Reader.Check, bit and PushLimit cap input, work and nesting at runtime/direct.go:74 and runtime/direct.go:164; runtime/direct.go:122
+runtime/direct.go:arithmetic:r.depth--	1	BOUNDED: depth is decremented only when positive at runtime/direct.go:132
+runtime/direct.go:arithmetic:r.end - r.pos	2	BOUNDED: Reader.bit never advances pos beyond end and PopLimit checks restored end at runtime/direct.go:164 and runtime/direct.go:282
+runtime/direct.go:arithmetic:r.pos + i	3	BOUNDED: Matches checks len(pattern) <= Remaining before loop at runtime/direct.go:225
+runtime/direct.go:arithmetic:r.pos + r.virtual	2	BOUNDED: Reader.Check, bit and PushLimit cap input, work and nesting at runtime/direct.go:74 and runtime/direct.go:164; runtime/direct.go:173
+runtime/direct.go:arithmetic:r.pos + width	1	BOUNDED: PushLimit checks width <= Remaining before addition at runtime/direct.go:276
+runtime/direct.go:arithmetic:r.pos - start	1	FIXED: RecordTerminal checks 0 <= start <= pos before subtraction at runtime/direct.go:310
+runtime/direct.go:arithmetic:r.pos++	1	BOUNDED: Reader.bit checks pos and virtual against maxBits before increment at runtime/direct.go:163
+runtime/direct.go:arithmetic:r.virtual++	1	BOUNDED: Reader.bit checks pos and virtual against maxBits before increment at runtime/direct.go:163
+runtime/direct.go:arithmetic:r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++	1	BOUNDED: Reader.bit limits pos+virtual to maxBits; Writer.currentImplicitSpan checks At and Count at runtime/direct.go:164 and runtime/direct.go:461
+runtime/direct.go:arithmetic:span.At + span.Count	2	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:461 and runtime/direct.go:663
+runtime/direct.go:arithmetic:spans[len(spans)-1].At + spans[len(spans)-1].Count	1	BOUNDED: Reader.bit limits pos+virtual to maxBits; Writer.currentImplicitSpan checks At and Count at runtime/direct.go:164 and runtime/direct.go:461
+runtime/direct.go:arithmetic:start + i	2	BOUNDED: bitsAt callers pass checked input ranges at runtime/direct.go:310 and runtime/direct.go:739
+runtime/direct.go:arithmetic:uint64(1) << uint(width)	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:467
+runtime/direct.go:arithmetic:value << 1	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:194
+runtime/direct.go:arithmetic:w.bits + w.virtual	5	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:427
+runtime/direct.go:arithmetic:w.bits + width	1	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:382
+runtime/direct.go:arithmetic:w.bits++	1	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:452
+runtime/direct.go:arithmetic:w.depth++	1	BOUNDED: Writer.Enter checks depth <128 before increment at runtime/direct.go:400
+runtime/direct.go:arithmetic:w.depth--	1	BOUNDED: depth is decremented only when positive at runtime/direct.go:413
+runtime/direct.go:arithmetic:w.implicitSpan++	1	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:441
+runtime/direct.go:arithmetic:w.limit - w.bits	2	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:366
+runtime/direct.go:arithmetic:w.padding++	4	BOUNDED: wire-state index is checked below slice length before increment at runtime/direct.go:523
+runtime/direct.go:arithmetic:w.spare++	1	BOUNDED: wire-state index is checked below slice length before increment at runtime/direct.go:499
+runtime/direct.go:arithmetic:w.terminal++	1	BOUNDED: wire-state index is checked below slice length before increment at runtime/direct.go:576
+runtime/direct.go:arithmetic:w.virtual++	1	BOUNDED: Writer.put caps emitted and virtual bits at maxBits; index and fixed-width guards at runtime/direct.go:375 and runtime/direct.go:427; runtime/direct.go:439
+runtime/direct.go:arithmetic:w.wire.Tail.BitLength + 7	1	BOUNDED: validateState checks transmitted and consumed bit counts within 0..maxBits at runtime/direct.go:658
+runtime/direct.go:arithmetic:w.wire.TransmittedBits - w.wire.BitsConsumed	1	BOUNDED: validateState checks transmitted and consumed bit counts within 0..maxBits at runtime/direct.go:658
+runtime/direct.go:arithmetic:width + 7	2	BOUNDED: width is 0..maxBits before allocation at runtime/direct.go:199 and runtime/direct.go:478; runtime/direct.go:202
+runtime/direct.go:arithmetic:width - 1	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:470
+runtime/direct.go:conversion:uint((consumed + i) % 8)	1	BOUNDED: ValidateOutput validates consumed and tail before its loop at runtime/direct.go:696
+runtime/direct.go:conversion:uint((r.pos + i) % 8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:230
+runtime/direct.go:conversion:uint((start + i) % 8)	1	BOUNDED: bitsAt callers pass checked input ranges at runtime/direct.go:310 and runtime/direct.go:739
+runtime/direct.go:conversion:uint(i % 8)	4	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:208
+runtime/direct.go:conversion:uint(i)	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:471
+runtime/direct.go:conversion:uint(position % 8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:724
+runtime/direct.go:conversion:uint(r.pos % 8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:168
+runtime/direct.go:conversion:uint(w.bits % 8)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:450
+runtime/direct.go:conversion:uint(width)	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:467
+runtime/direct.go:conversion:uint64(b)	1	BOUNDED: index is slice-bounded or width is limited to 64 bits at runtime/direct.go:185 and runtime/direct.go:467; runtime/direct.go:194
+runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: modulo 8 limits bit shifts to 0..7 and masks yield at most one bit at runtime/direct.go:467 and runtime/direct.go:724; runtime/direct.go:724
+runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: WriteUint loops i over 0..63 and masks shifted value to one bit at runtime/direct.go:467
+runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:93
+runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:88
+runtime/expr.go:arithmetic:i + 1	1	BOUNDED: parser position stays within token slice at runtime/expr.go:67 and runtime/expr.go:216
+runtime/expr.go:arithmetic:i++	4	BOUNDED: tokenizer index stays below len(raw) at runtime/expr.go:28; runtime/expr.go:205
+runtime/expr.go:arithmetic:maxBits + v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:93
+runtime/expr.go:arithmetic:maxBits - v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:88
+runtime/expr.go:arithmetic:n *= v	1	BOUNDED: each operand is within +/-maxBits, so product fits int64 at runtime/expr.go:110 and runtime/expr.go:120
+runtime/expr.go:arithmetic:n += v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:91
+runtime/expr.go:arithmetic:n -= v	1	BOUNDED: signed operands stay within +/-maxBits before add/subtract at runtime/expr.go:83 and runtime/expr.go:96
+runtime/expr.go:arithmetic:p.position++	1	BOUNDED: parser position stays within token slice at runtime/expr.go:67 and runtime/expr.go:71
+runtime/expr.go:conversion:int(n)	1	BOUNDED: eval checks result against maxBits before int conversion at runtime/expr.go:56
+runtime/expr.go:conversion:int64(len(table))	1	BOUNDED: p/q tables have at most 21 entries at runtime/expr.go:19
+runtime/expr.go:conversion:int64(value)	1	BOUNDED: variable value is checked <= maxBits before int64 conversion at runtime/expr.go:221
+runtime/expr.go:conversion:rune(raw[i])	3	BOUNDED: tokenizer index stays below len(raw) at runtime/expr.go:28; runtime/expr.go:29
+ts24008/classmark/generated.go:arithmetic:count++	14	BOUNDED: generated choice has at most four static arms at ts24008/classmark/generated.go:1151
+ts24008/classmark/generated.go:arithmetic:i++	2	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts24008/classmark/generated.go:621
+ts24008/classmark/generated.go:arithmetic:matches++	14	BOUNDED: generated choice has at most four static arms at ts24008/classmark/generated.go:1113
+ts24008/classmark/generated.go:conversion:uint64(v)	130	BOUNDED: AST gate verifies v is an unsigned parameter or ReadUint result at internal/arithaudit/widening.go:13
+ts24008/classmark/generated.go:conversion:uint8(v)	65	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts24008/msrac/generated.go:arithmetic:count++	2	BOUNDED: generated choice has at most four static arms at ts24008/msrac/generated.go:727
+ts24008/msrac/generated.go:arithmetic:i + 1	1	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts24008/msrac/generated.go:824
+ts24008/msrac/generated.go:arithmetic:i++	3	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts24008/msrac/generated.go:1047
+ts24008/msrac/generated.go:arithmetic:matches++	2	BOUNDED: generated choice has at most four static arms at ts24008/msrac/generated.go:700
+ts24008/msrac/generated.go:arithmetic:w.Position() - before	4	BOUNDED: writer position advances monotonically and is maxBits-limited at runtime/direct.go:427 and ts24008/msrac/generated.go:1126
+ts24008/msrac/generated.go:conversion:uint64(v)	188	BOUNDED: AST gate verifies v is an unsigned parameter or ReadUint result at internal/arithaudit/widening.go:13
+ts24008/msrac/generated.go:conversion:uint8(v)	93	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts36331/uecapability/generated.go:arithmetic:(len(data) - 3) * 8	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:42 and ts36331/uecapability/generated.go:45
+ts36331/uecapability/generated.go:arithmetic:40 + cm3.BitsConsumed	2	BOUNDED: nested decode consumed bits fit checked input after five-byte wrapper at ts36331/uecapability/generated.go:142 and ts36331/uecapability/generated.go:152
+ts36331/uecapability/generated.go:arithmetic:40 + v.Classmark3.Wire.BitsConsumed	1	FIXED: encoder checks nested count <= len(cm3)*8 before addition at ts36331/uecapability/generated.go:179
+ts36331/uecapability/generated.go:arithmetic:len(cm3) * 8	1	FIXED: runtime.CheckInput(cm3) limits length before octet-to-bit conversion at ts36331/uecapability/generated.go:173
+ts36331/uecapability/generated.go:arithmetic:len(data) - 3	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:42 and ts36331/uecapability/generated.go:45
+ts36331/uecapability/generated.go:arithmetic:v.RevisionLevel << 5	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
+ts36331/uecapability/generated.go:arithmetic:v.SSScreeningIndicator << 4	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
+ts44018/measurement/generated.go:arithmetic:count++	9	BOUNDED: generated choice has at most four static arms at ts44018/measurement/generated.go:1219
+ts44018/measurement/generated.go:arithmetic:i++	2	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts44018/measurement/generated.go:2362
+ts44018/measurement/generated.go:arithmetic:matches++	9	BOUNDED: generated choice has at most four static arms at ts44018/measurement/generated.go:1180
+ts44018/measurement/generated.go:conversion:uint16(v)	1	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44018/measurement/generated.go:conversion:uint64(v)	49	BOUNDED: AST gate verifies v is an unsigned parameter or ReadUint result at internal/arithaudit/widening.go:13
+ts44018/measurement/generated.go:conversion:uint8(v)	23	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44018/restoctets/generated.go:arithmetic:^uint64(0) - 1	1	BOUNDED: compile-time uint64 constant subtraction at ts44018/restoctets/generated.go:55884
+ts44018/restoctets/generated.go:arithmetic:count++	270	BOUNDED: generated choice has at most four static arms at ts44018/restoctets/generated.go:10045
+ts44018/restoctets/generated.go:arithmetic:i + 1	4	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts44018/restoctets/generated.go:18096
+ts44018/restoctets/generated.go:arithmetic:i++	16	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts44018/restoctets/generated.go:20248
+ts44018/restoctets/generated.go:arithmetic:matches++	270	BOUNDED: generated choice has at most four static arms at ts44018/restoctets/generated.go:10006
+ts44018/restoctets/generated.go:arithmetic:r.Position() - 1	8	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14741
+ts44018/restoctets/generated.go:arithmetic:uint64(v) - 1	1	BOUNDED: encoder checks interpreted value >= 1 before subtraction at ts44018/restoctets/generated.go:55899
+ts44018/restoctets/generated.go:arithmetic:v += 1	1	BOUNDED: three-bit code plus one fits uint8, checked by AST gate at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106
+ts44018/restoctets/generated.go:arithmetic:w.Position() - before	2	BOUNDED: writer position advances monotonically and is maxBits-limited at runtime/direct.go:427 and ts44018/restoctets/generated.go:36450
+ts44018/restoctets/generated.go:conversion:uint16(v)	44	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44018/restoctets/generated.go:conversion:uint32(v)	13	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', r.Position()-1))	4	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14778
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:427 and ts44018/restoctets/generated.go:14793
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', r.Position()-1))	4	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14741
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:427 and ts44018/restoctets/generated.go:14756
+ts44018/restoctets/generated.go:conversion:uint64(v)	1198	BOUNDED: AST gate verifies v is an unsigned parameter or ReadUint result at internal/arithaudit/widening.go:13
+ts44018/restoctets/generated.go:conversion:uint8(v)	528	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44060/ies/generated.go:arithmetic:count++	12	BOUNDED: generated choice has at most four static arms at ts44060/ies/generated.go:1355
+ts44060/ies/generated.go:arithmetic:i + 1	2	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts44060/ies/generated.go:6095
+ts44060/ies/generated.go:arithmetic:i++	1	BOUNDED: Eval count is <= maxBits or index comes from a slice range at runtime/expr.go:56 and ts44060/ies/generated.go:4455
+ts44060/ies/generated.go:arithmetic:matches++	12	BOUNDED: generated choice has at most four static arms at ts44060/ies/generated.go:1328
+ts44060/ies/generated.go:arithmetic:w.Position() - before	2	BOUNDED: writer position advances monotonically and is maxBits-limited at runtime/direct.go:427 and ts44060/ies/generated.go:3439
+ts44060/ies/generated.go:conversion:uint16(v)	9	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44060/ies/generated.go:conversion:uint32(v)	4	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185
+ts44060/ies/generated.go:conversion:uint64(v)	176	BOUNDED: AST gate verifies v is an unsigned parameter or ReadUint result at internal/arithaudit/widening.go:13
+ts44060/ies/generated.go:conversion:uint8(v)	73	BOUNDED: AST gate proves fixed ReadUint width plus offset fits target at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106; Reader checks width at runtime/direct.go:185

@@ -57288,7 +57288,9 @@ func decodeSI18RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 			return nil, r.Error(runtime.Limit, "non-progressing repetition")
 		}
 		if v.NROFCONTAINEROCTETS == 0 {
-			r.RecordTerminal(before)
+			if err := r.RecordTerminal(before); err != nil {
+				return nil, err
+			}
 			break
 		}
 		if v.NonGSMProtocolDiscriminator != 1 {
@@ -60669,7 +60671,9 @@ func decodeSI20RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 			return nil, r.Error(runtime.Limit, "non-progressing repetition")
 		}
 		if v.NROFCONTAINEROCTETS == 0 {
-			r.RecordTerminal(before)
+			if err := r.RecordTerminal(before); err != nil {
+				return nil, err
+			}
 			break
 		}
 		if v.NonGSMProtocolDiscriminator != 1 {

@@ -2,6 +2,7 @@ package uecapability
 
 import (
 	"bytes"
+	"math"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
@@ -35,6 +36,19 @@ func TestGERANWrapperWireState(t *testing.T) {
 	ps.Value.Wire.Tail = runtime.BitString{Bytes: []byte{0xaa}, BitLength: 8}
 	if _, err := EncodeGERANPS(ps.Value); err == nil {
 		t.Fatal("accepted invented GERAN PS tail")
+	}
+}
+
+func TestGERANCSRejectsOverflowedNestedBitCount(t *testing.T) {
+	decoded, err := DecodeGERANCS([]byte{0x33, 3, 0, 0, 0, 0})
+	if err != nil {
+		t.Fatal(err)
+	}
+	value := decoded.Value
+	value.Wire = runtime.WireInfo{}
+	value.Classmark3.Wire = runtime.WireInfo{BitsConsumed: math.MaxInt}
+	if _, err := EncodeGERANCS(value); err == nil {
+		t.Fatal("accepted nested bit count that overflows the wrapper offset")
 	}
 }
 
