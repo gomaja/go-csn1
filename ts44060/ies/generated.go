@@ -1321,6 +1321,7 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 	var result MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription(candidate)
@@ -1330,6 +1331,8 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			_ = v
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMBMSPTMChannelDescription
 			result.MBMSPTMChannelDescription = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -1341,7 +1344,12 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			_ = v
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMPRACHDescription
 			result.MPRACHDescription = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -3432,14 +3440,14 @@ func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformation(w *runtime.
 	if err != nil {
 		return err
 	}
-	before := w.Position()
+	old, err := w.PushLimit(length)
+	if err != nil {
+		return err
+	}
 	if err := encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback(w, v); err != nil {
 		return err
 	}
-	if w.Position()-before != length {
-		return fmt.Errorf("length-delimited content has %d bits, want %d", w.Position()-before, length)
-	}
-	return nil
+	return w.PopLimit(old)
 }
 func decodeGPRSCellOptionsIEExtensionLengthGroup(r *runtime.Reader) (GPRSCellOptionsIEExtensionLengthGroup, error) {
 	if err := r.Enter("GPRSCellOptionsIEExtensionLengthGroup"); err != nil {
@@ -4451,7 +4459,10 @@ func decodeExtensionInformationSpareBitList(r *runtime.Reader) ([]runtime.BitStr
 	return out, nil
 }
 func encodeExtensionInformationSpareBitList(w *runtime.Writer, _ []runtime.BitString) error {
-	count, _ := w.SpareCount("ExtensionInformationSpareBitList")
+	count, recorded := w.SpareCount("ExtensionInformationSpareBitList")
+	if !recorded {
+		count = w.SpareFillCount()
+	}
 	for i := 0; i < count; i++ {
 		if err := encodeExtensionInformationSpareBitListEntry(w, runtime.BitString{}); err != nil {
 			return err
@@ -4884,6 +4895,7 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 	var result FrequencyParametersIEARFCNChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeFrequencyParametersIEARFCNChoiceARFCN(candidate)
@@ -4893,6 +4905,8 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeARFCN
 			result.ARFCN = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -4904,6 +4918,8 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeIndirectEncoding
 			result.IndirectEncoding = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -4915,6 +4931,8 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding1
 			result.DirectEncoding1 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -4926,7 +4944,12 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding2
 			result.DirectEncoding2 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -5872,6 +5895,7 @@ func decodeGPRSMobileAllocationIEMALENGTHChoice(r *runtime.Reader) (GPRSMobileAl
 	var result GPRSMobileAllocationIEMALENGTHChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTH(candidate)
@@ -5881,6 +5905,8 @@ func decodeGPRSMobileAllocationIEMALENGTHChoice(r *runtime.Reader) (GPRSMobileAl
 			_ = v
 			result.Alternative = GPRSMobileAllocationIEMALENGTHChoiceAlternativeMALENGTH
 			result.MALENGTH = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -5892,7 +5918,12 @@ func decodeGPRSMobileAllocationIEMALENGTHChoice(r *runtime.Reader) (GPRSMobileAl
 			_ = v
 			result.Alternative = GPRSMobileAllocationIEMALENGTHChoiceAlternativeARFCNIndexList
 			result.ARFCNIndexList = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -7295,6 +7326,7 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 	var result RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin(candidate)
@@ -7304,6 +7336,8 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 			_ = v
 			result.Alternative = RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeEUTRANQmin
 			result.EUTRANQmin = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -7315,7 +7349,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 			_ = v
 			result.Alternative = RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeTHRESHEUTRANHighQ
 			result.THRESHEUTRANHighQ = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -8118,6 +8157,7 @@ func decodeTMGIIEMBMSSERVICEIDChoice(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoi
 	var result TMGIIEMBMSSERVICEIDChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(candidate)
@@ -8127,6 +8167,8 @@ func decodeTMGIIEMBMSSERVICEIDChoice(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoi
 			_ = v
 			result.Alternative = TMGIIEMBMSSERVICEIDChoiceAlternativeMBMSSERVICEID
 			result.MBMSSERVICEID = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -8138,7 +8180,12 @@ func decodeTMGIIEMBMSSERVICEIDChoice(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoi
 			_ = v
 			result.Alternative = TMGIIEMBMSSERVICEIDChoiceAlternativeMCC
 			result.MCC = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -8222,13 +8269,14 @@ func DecodeUTRANCSGMeasurementReportIE(data []byte) (runtime.Decoded[UTRANCSGMea
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[UTRANCSGMeasurementReportIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeUTRANCSGMeasurementReportIE(r)
 	if err != nil {
 		return runtime.Decoded[UTRANCSGMeasurementReportIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[UTRANCSGMeasurementReportIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8255,13 +8303,14 @@ func DecodePLMNIDStruct(data []byte) (runtime.Decoded[PLMNIDStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PLMNIDStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodePLMNIDStruct(r)
 	if err != nil {
 		return runtime.Decoded[PLMNIDStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[PLMNIDStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8288,13 +8337,14 @@ func DecodePSCGroupIE(data []byte) (runtime.Decoded[PSCGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PSCGroupIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodePSCGroupIE(r)
 	if err != nil {
 		return runtime.Decoded[PSCGroupIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[PSCGroupIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8323,13 +8373,14 @@ func DecodeMBMSChannelParametersIE(data []byte) (runtime.Decoded[MBMSChannelPara
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSChannelParametersIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSChannelParametersIE(r)
 	if err != nil {
 		return runtime.Decoded[MBMSChannelParametersIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MBMSChannelParametersIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8358,13 +8409,14 @@ func DecodeMBMSPTMChannelDescriptionIE(data []byte) (runtime.Decoded[MBMSPTMChan
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSPTMChannelDescriptionIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSPTMChannelDescriptionIE(r)
 	if err != nil {
 		return runtime.Decoded[MBMSPTMChannelDescriptionIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MBMSPTMChannelDescriptionIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8393,13 +8445,14 @@ func DecodeMPRACHDescriptionIE(data []byte) (runtime.Decoded[MPRACHDescriptionIE
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MPRACHDescriptionIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMPRACHDescriptionIE(r)
 	if err != nil {
 		return runtime.Decoded[MPRACHDescriptionIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MPRACHDescriptionIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8428,13 +8481,14 @@ func DecodeMBMSSessionListIE(data []byte) (runtime.Decoded[MBMSSessionListIE], e
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSSessionListIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSSessionListIE(r)
 	if err != nil {
 		return runtime.Decoded[MBMSSessionListIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MBMSSessionListIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8463,13 +8517,14 @@ func DecodeMBMSSessionParametersListIE(data []byte) (runtime.Decoded[MBMSSession
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSSessionParametersListIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSSessionParametersListIE(r)
 	if err != nil {
 		return runtime.Decoded[MBMSSessionParametersListIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MBMSSessionParametersListIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8498,13 +8553,14 @@ func DecodeMPRACHControlParametersIE(data []byte) (runtime.Decoded[MPRACHControl
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MPRACHControlParametersIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMPRACHControlParametersIE(r)
 	if err != nil {
 		return runtime.Decoded[MPRACHControlParametersIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MPRACHControlParametersIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8533,13 +8589,14 @@ func DecodeGPRSPowerControlParametersIE(data []byte) (runtime.Decoded[GPRSPowerC
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[GPRSPowerControlParametersIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeGPRSPowerControlParametersIE(r)
 	if err != nil {
 		return runtime.Decoded[GPRSPowerControlParametersIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[GPRSPowerControlParametersIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8568,13 +8625,14 @@ func DecodeGPRSCellOptionsIE(data []byte) (runtime.Decoded[GPRSCellOptionsIE], e
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[GPRSCellOptionsIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeGPRSCellOptionsIE(r)
 	if err != nil {
 		return runtime.Decoded[GPRSCellOptionsIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[GPRSCellOptionsIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8603,13 +8661,14 @@ func DecodeExtensionInformation(data []byte) (runtime.Decoded[ExtensionInformati
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[ExtensionInformation]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeExtensionInformation(r)
 	if err != nil {
 		return runtime.Decoded[ExtensionInformation]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[ExtensionInformation]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8638,13 +8697,14 @@ func DecodeFrequencyParametersIE(data []byte) (runtime.Decoded[FrequencyParamete
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[FrequencyParametersIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeFrequencyParametersIE(r)
 	if err != nil {
 		return runtime.Decoded[FrequencyParametersIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[FrequencyParametersIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8673,13 +8733,14 @@ func DecodeIndirectEncodingStruct(data []byte) (runtime.Decoded[IndirectEncoding
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IndirectEncodingStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeIndirectEncodingStruct(r)
 	if err != nil {
 		return runtime.Decoded[IndirectEncodingStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[IndirectEncodingStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8708,13 +8769,14 @@ func DecodeDirectEncoding1Struct(data []byte) (runtime.Decoded[DirectEncoding1St
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[DirectEncoding1Struct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeDirectEncoding1Struct(r)
 	if err != nil {
 		return runtime.Decoded[DirectEncoding1Struct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[DirectEncoding1Struct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8743,13 +8805,14 @@ func DecodeDirectEncoding2Struct(data []byte) (runtime.Decoded[DirectEncoding2St
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[DirectEncoding2Struct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeDirectEncoding2Struct(r)
 	if err != nil {
 		return runtime.Decoded[DirectEncoding2Struct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[DirectEncoding2Struct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8778,13 +8841,14 @@ func DecodeGPRSMobileAllocationIE(data []byte) (runtime.Decoded[GPRSMobileAlloca
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[GPRSMobileAllocationIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeGPRSMobileAllocationIE(r)
 	if err != nil {
 		return runtime.Decoded[GPRSMobileAllocationIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[GPRSMobileAllocationIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8813,13 +8877,14 @@ func DecodeRFLNumberListStruct(data []byte) (runtime.Decoded[RFLNumberListStruct
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RFLNumberListStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeRFLNumberListStruct(r)
 	if err != nil {
 		return runtime.Decoded[RFLNumberListStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[RFLNumberListStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8848,13 +8913,14 @@ func DecodeARFCNIndexListStruct(data []byte) (runtime.Decoded[ARFCNIndexListStru
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[ARFCNIndexListStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeARFCNIndexListStruct(r)
 	if err != nil {
 		return runtime.Decoded[ARFCNIndexListStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[ARFCNIndexListStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8881,13 +8947,14 @@ func DecodePCIDGroupIE(data []byte) (runtime.Decoded[PCIDGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PCIDGroupIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodePCIDGroupIE(r)
 	if err != nil {
 		return runtime.Decoded[PCIDGroupIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[PCIDGroupIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8916,13 +8983,14 @@ func DecodeEnhancedCellReselectionParametersIE(data []byte) (runtime.Decoded[Enh
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EnhancedCellReselectionParametersIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedCellReselectionParametersIE(r)
 	if err != nil {
 		return runtime.Decoded[EnhancedCellReselectionParametersIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[EnhancedCellReselectionParametersIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8951,13 +9019,14 @@ func DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data []byte) (r
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(r)
 	if err != nil {
 		return runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -8986,13 +9055,14 @@ func DecodeEGPRSWindowSizeIE(data []byte) (runtime.Decoded[EGPRSWindowSizeIE], e
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EGPRSWindowSizeIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEGPRSWindowSizeIE(r)
 	if err != nil {
 		return runtime.Decoded[EGPRSWindowSizeIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[EGPRSWindowSizeIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -9021,13 +9091,14 @@ func DecodeEGPRSModulationAndCodingIE(data []byte) (runtime.Decoded[EGPRSModulat
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EGPRSModulationAndCodingIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEGPRSModulationAndCodingIE(r)
 	if err != nil {
 		return runtime.Decoded[EGPRSModulationAndCodingIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[EGPRSModulationAndCodingIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -9054,13 +9125,14 @@ func DecodeEGPRSLevelIE(data []byte) (runtime.Decoded[EGPRSLevelIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EGPRSLevelIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEGPRSLevelIE(r)
 	if err != nil {
 		return runtime.Decoded[EGPRSLevelIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[EGPRSLevelIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -9089,13 +9161,14 @@ func DecodePacketTimingAdvanceIE(data []byte) (runtime.Decoded[PacketTimingAdvan
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PacketTimingAdvanceIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodePacketTimingAdvanceIE(r)
 	if err != nil {
 		return runtime.Decoded[PacketTimingAdvanceIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[PacketTimingAdvanceIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -9122,13 +9195,14 @@ func DecodeTMGIIE(data []byte) (runtime.Decoded[TMGIIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[TMGIIE]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeTMGIIE(r)
 	if err != nil {
 		return runtime.Decoded[TMGIIE]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[TMGIIE]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }

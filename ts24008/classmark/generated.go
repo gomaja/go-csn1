@@ -297,6 +297,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(candidate)
@@ -306,6 +307,8 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101
 			result.Alt101 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -317,7 +320,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110
 			result.Alt110 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -527,6 +535,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(candidate)
@@ -536,6 +545,8 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001
 			result.Alt001 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -547,6 +558,8 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010
 			result.Alt010 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -558,7 +571,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100
 			result.Alt100 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -745,6 +763,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 	var result Classmark3ValuePartMultibandSupportedChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(candidate)
@@ -754,6 +773,8 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits
 			result.A5Bits = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -765,6 +786,8 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2
 			result.AssociatedRadioCapability2 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -776,7 +799,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1
 			result.AssociatedRadioCapability1 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1106,6 +1134,7 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 	var result Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(candidate)
@@ -1115,6 +1144,8 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01
 			result.Alt01 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -1126,6 +1157,8 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10
 			result.Alt10 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -1137,7 +1170,12 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11
 			result.Alt11 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -2176,6 +2214,7 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 	var result Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(candidate)
@@ -2185,6 +2224,8 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01
 			result.Alt01 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -2196,6 +2237,8 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10
 			result.Alt10 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -2207,7 +2250,12 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11
 			result.Alt11 = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -3366,11 +3414,35 @@ func encodeClassmark3ValuePartExtendedEARFCNValueRange(w *runtime.Writer, v uint
 	w.Set("Extended EARFCN value range", uint64(v))
 	return nil
 }
-func decodeClassmark3ValuePartSpareBits(r *runtime.Reader) (runtime.BitString, error) {
+func decodeClassmark3ValuePartSpareBitsListEntry(r *runtime.Reader) (runtime.BitString, error) {
 	return r.ReadSpare()
 }
-func encodeClassmark3ValuePartSpareBits(w *runtime.Writer, _ runtime.BitString) error {
+func encodeClassmark3ValuePartSpareBitsListEntry(w *runtime.Writer, _ runtime.BitString) error {
 	return w.WriteSpare()
+}
+func decodeClassmark3ValuePartSpareBitsList(r *runtime.Reader) ([]runtime.BitString, error) {
+	var out []runtime.BitString
+	for r.Remaining() > 0 {
+		v, err := decodeClassmark3ValuePartSpareBitsListEntry(r)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, v)
+	}
+	r.RecordSpareCount("Classmark3ValuePartSpareBitsList", len(out))
+	return out, nil
+}
+func encodeClassmark3ValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
+	count, recorded := w.SpareCount("Classmark3ValuePartSpareBitsList")
+	if !recorded {
+		count = w.SpareFillCount()
+	}
+	for i := 0; i < count; i++ {
+		if err := encodeClassmark3ValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 func decodeClassmark3ValuePart(r *runtime.Reader) (Classmark3ValuePart, error) {
 	if err := r.Enter("Classmark3ValuePart"); err != nil {
@@ -3648,7 +3720,7 @@ func decodeClassmark3ValuePart(r *runtime.Reader) (Classmark3ValuePart, error) {
 		return Classmark3ValuePart{}, err
 	}
 	v.ExtendedEARFCNValueRange = x53
-	x54, err := decodeClassmark3ValuePartSpareBits(r)
+	x54, err := decodeClassmark3ValuePartSpareBitsList(r)
 	if err != nil {
 		return Classmark3ValuePart{}, err
 	}
@@ -4091,7 +4163,7 @@ func encodeClassmark3ValuePart(w *runtime.Writer, v Classmark3ValuePart) error {
 		}
 	}
 	if limit > 54 {
-		if err := encodeClassmark3ValuePartSpareBits(w, runtime.BitString{}); err != nil {
+		if err := encodeClassmark3ValuePartSpareBitsList(w, nil); err != nil {
 			return err
 		}
 	}
@@ -4957,18 +5029,19 @@ func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart
 		return runtime.Decoded[Classmark3ValuePart]{}, err
 	}
 	if len(data) < 1 {
-		return runtime.Decoded[Classmark3ValuePart]{}, fmt.Errorf("Classmark3ValuePart requires at least 8 bits")
+		return runtime.Decoded[Classmark3ValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "Classmark3ValuePart requires at least 8 bits"}
 	}
+	input := data
 	if len(data) > 34 {
-		return runtime.Decoded[Classmark3ValuePart]{}, fmt.Errorf("Classmark3ValuePart exceeds 272 bits")
+		return runtime.Decoded[Classmark3ValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 272, Detail: "Classmark3ValuePart exceeds 272 bits"}
 	}
-	r := runtime.NewReader(data)
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(true)
 	v, err := decodeClassmark3ValuePart(r)
 	if err != nil {
 		return runtime.Decoded[Classmark3ValuePart]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[Classmark3ValuePart]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -4980,7 +5053,14 @@ func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 	if err := encodeClassmark3ValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("Classmark3ValuePart requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.1.7 <A5 bits>.
@@ -4995,13 +5075,14 @@ func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[A5Bits]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeA5Bits(r)
 	if err != nil {
 		return runtime.Decoded[A5Bits]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[A5Bits]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5028,13 +5109,14 @@ func DecodeRSupport(data []byte) (runtime.Decoded[RSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RSupport]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeRSupport(r)
 	if err != nil {
 		return runtime.Decoded[RSupport]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[RSupport]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5063,13 +5145,14 @@ func DecodeHSCSDMultiSlotCapability(data []byte) (runtime.Decoded[HSCSDMultiSlot
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[HSCSDMultiSlotCapability]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeHSCSDMultiSlotCapability(r)
 	if err != nil {
 		return runtime.Decoded[HSCSDMultiSlotCapability]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[HSCSDMultiSlotCapability]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5098,13 +5181,14 @@ func DecodeMSMeasurementCapability(data []byte) (runtime.Decoded[MSMeasurementCa
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSMeasurementCapability]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSMeasurementCapability(r)
 	if err != nil {
 		return runtime.Decoded[MSMeasurementCapability]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MSMeasurementCapability]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5133,13 +5217,14 @@ func DecodeMSPositioningMethodCapability(data []byte) (runtime.Decoded[MSPositio
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSPositioningMethodCapability]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSPositioningMethodCapability(r)
 	if err != nil {
 		return runtime.Decoded[MSPositioningMethodCapability]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MSPositioningMethodCapability]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5168,13 +5253,14 @@ func DecodeECSDMultiSlotCapability(data []byte) (runtime.Decoded[ECSDMultiSlotCa
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[ECSDMultiSlotCapability]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeECSDMultiSlotCapability(r)
 	if err != nil {
 		return runtime.Decoded[ECSDMultiSlotCapability]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[ECSDMultiSlotCapability]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5201,13 +5287,14 @@ func DecodeN8PSKStruct(data []byte) (runtime.Decoded[N8PSKStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[N8PSKStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeN8PSKStruct(r)
 	if err != nil {
 		return runtime.Decoded[N8PSKStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[N8PSKStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -5236,13 +5323,14 @@ func DecodeSingleBandSupport(data []byte) (runtime.Decoded[SingleBandSupport], e
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SingleBandSupport]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeSingleBandSupport(r)
 	if err != nil {
 		return runtime.Decoded[SingleBandSupport]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[SingleBandSupport]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }

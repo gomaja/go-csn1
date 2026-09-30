@@ -11,17 +11,21 @@ import (
 
 	"github.com/gomaja/go-csn1/runtime"
 	"github.com/gomaja/go-csn1/ts24008/classmark"
+	"github.com/gomaja/go-csn1/ts24008/msnetcap"
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 	"github.com/gomaja/go-csn1/ts36331/uecapability"
+	"github.com/gomaja/go-csn1/ts44018/cellselection"
 	"github.com/gomaja/go-csn1/ts44018/measurement"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
 	"github.com/gomaja/go-csn1/ts44060/ies"
 )
 
 func descriptors() []runtime.Descriptor {
-	out := make([]runtime.Descriptor, 0, len(classmark.Definitions())+len(msrac.Definitions())+len(measurement.Definitions())+len(restoctets.Definitions())+len(ies.Definitions())+3)
+	var out []runtime.Descriptor
 	out = append(out, classmark.Descriptors()...)
 	out = append(out, msrac.Descriptors()...)
+	out = append(out, msnetcap.Descriptors()...)
+	out = append(out, cellselection.Descriptors()...)
 	out = append(out, measurement.Descriptors()...)
 	out = append(out, restoctets.Descriptors()...)
 	out = append(out, ies.Descriptors()...)

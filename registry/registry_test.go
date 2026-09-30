@@ -119,6 +119,8 @@ func TestClauseQualifiedLookup(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, tc := range []struct{ standard, clause, name string }{
+		{"TS 24.008", "10.5.5.12", "MS network capability value part"},
+		{"TS 44.018", "10.5.2.1e", "Cell Selection Indicator after release of all TCH and SDCCH value part"},
 		{"TS 44.018", "10.5.2.16", "IA Rest Octets"},
 		{"TS 44.018", "10.5.2.17", "IAR Rest Octets"},
 		{"TS 44.018", "10.5.2.18", "IAX Rest Octets"},

@@ -7,6 +7,7 @@ import (
 	"go/format"
 	"go/parser"
 	"go/token"
+	"strconv"
 )
 
 // CheckGeneratedLoopArithmetic verifies the two emitted index patterns:
@@ -72,7 +73,13 @@ func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextI
 
 func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.IncDecStmt) bool {
 	for _, loop := range loops {
-		if loop.Post != inc || !zeroLoopInit(loop.Init) || !countLoopCondition(loop.Cond) {
+		if loop.Post != inc {
+			continue
+		}
+		if fixedLoopCondition(loop.Cond) && (zeroLoopInit(loop.Init) || lengthLoopInit(loop.Init)) {
+			return true
+		}
+		if !zeroLoopInit(loop.Init) || !countLoopCondition(loop.Cond) {
 			continue
 		}
 		countMutated := false
@@ -105,7 +112,7 @@ func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.Inc
 			valid := false
 			call, ok := assign.Rhs[0].(*ast.CallExpr)
 			if ok {
-				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount") {
+				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount" || selector.Sel.Name == "SpareFillCount") {
 					valid = true
 				}
 			}
@@ -125,6 +132,43 @@ func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.Inc
 		}
 	}
 	return false
+}
+
+func lengthLoopInit(stmt ast.Stmt) bool {
+	assign, ok := stmt.(*ast.AssignStmt)
+	if !ok || len(assign.Lhs) != 1 || len(assign.Rhs) != 1 || assign.Tok != token.DEFINE {
+		return false
+	}
+	index, ok := assign.Lhs[0].(*ast.Ident)
+	if !ok || index.Name != "i" {
+		return false
+	}
+	call, ok := assign.Rhs[0].(*ast.CallExpr)
+	if !ok || len(call.Args) != 1 {
+		return false
+	}
+	fn, ok := call.Fun.(*ast.Ident)
+	return ok && fn.Name == "len"
+}
+
+func fixedLoopCondition(expr ast.Expr) bool {
+	if both, ok := expr.(*ast.BinaryExpr); ok && both.Op == token.LAND {
+		return fixedLoopCondition(both.X) || fixedLoopCondition(both.Y)
+	}
+	comparison, ok := expr.(*ast.BinaryExpr)
+	if !ok || comparison.Op != token.LSS {
+		return false
+	}
+	index, ok := comparison.X.(*ast.Ident)
+	if !ok || index.Name != "i" {
+		return false
+	}
+	bound, ok := comparison.Y.(*ast.BasicLit)
+	if !ok || bound.Kind != token.INT {
+		return false
+	}
+	value, err := strconv.ParseUint(bound.Value, 0, 32)
+	return err == nil && value <= 1<<20
 }
 
 func boundedRemainingAssignment(body *ast.BlockStmt, before token.Pos) bool {

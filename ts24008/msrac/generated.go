@@ -217,7 +217,10 @@ func decodeMSRACapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runtime.Bi
 	return out, nil
 }
 func encodeMSRACapabilityValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
-	count, _ := w.SpareCount("MSRACapabilityValuePartSpareBitsList")
+	count, recorded := w.SpareCount("MSRACapabilityValuePartSpareBitsList")
+	if !recorded {
+		count = w.SpareFillCount()
+	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
 			return err
@@ -543,7 +546,10 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	return out, nil
 }
 func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
-	count, _ := w.SpareCount("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList")
+	count, recorded := w.SpareCount("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList")
+	if !recorded {
+		count = w.SpareFillCount()
+	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
 			return err
@@ -619,14 +625,14 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	if err != nil {
 		return err
 	}
-	before := w.Position()
+	old, err := w.PushLimit(length)
+	if err != nil {
+		return err
+	}
 	if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies(w, v); err != nil {
 		return err
 	}
-	if w.Position()-before != length {
-		return fmt.Errorf("length-delimited content has %d bits, want %d", w.Position()-before, length)
-	}
-	return nil
+	return w.PopLimit(old)
 }
 func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength(r *runtime.Reader) (MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength, error) {
 	if err := r.Enter("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength"); err != nil {
@@ -693,6 +699,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 	var result MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice
 	matches := 0
 	var chosen *runtime.Reader
+	var truncatedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities(candidate)
@@ -702,6 +709,8 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			_ = v
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities
 			result.AccessCapabilities = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -713,7 +722,12 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			_ = v
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength
 			result.Length = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && truncatedErr != nil {
+		return result, truncatedErr
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1043,7 +1057,10 @@ func decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBits
 	return out, nil
 }
 func encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
-	count, _ := w.SpareCount("AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList")
+	count, recorded := w.SpareCount("AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList")
+	if !recorded {
+		count = w.SpareFillCount()
+	}
 	for i := 0; i < count; i++ {
 		if err := encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
 			return err
@@ -1119,14 +1136,14 @@ func encodeAccessCapabilitiesStructAccessCapabilities(w *runtime.Writer, v Acces
 	if err != nil {
 		return err
 	}
-	before := w.Position()
+	old, err := w.PushLimit(length)
+	if err != nil {
+		return err
+	}
 	if err := encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilities(w, v); err != nil {
 		return err
 	}
-	if w.Position()-before != length {
-		return fmt.Errorf("length-delimited content has %d bits, want %d", w.Position()-before, length)
-	}
-	return nil
+	return w.PopLimit(old)
 }
 func decodeAccessCapabilitiesStruct(r *runtime.Reader) (AccessCapabilitiesStruct, error) {
 	if err := r.Enter("AccessCapabilitiesStruct"); err != nil {
@@ -5985,18 +6002,24 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 		return runtime.Decoded[MSRACapabilityValuePart]{}, err
 	}
 	if len(data) < 2 {
-		return runtime.Decoded[MSRACapabilityValuePart]{}, fmt.Errorf("MSRACapabilityValuePart requires at least 16 bits")
+		return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "MSRACapabilityValuePart requires at least 16 bits"}
 	}
+	input := data
 	if len(data) > 50 {
-		return runtime.Decoded[MSRACapabilityValuePart]{}, fmt.Errorf("MSRACapabilityValuePart exceeds 400 bits")
+		for _, octet := range data[50:] {
+			if octet != 0x2b {
+				return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 400, Detail: "MSRACapabilityValuePart exceeds 400 bits with nonpadding data"}
+			}
+		}
+		input = data[:50]
 	}
-	r := runtime.NewReader(data)
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePart(r)
 	if err != nil {
 		return runtime.Decoded[MSRACapabilityValuePart]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MSRACapabilityValuePart]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6008,7 +6031,14 @@ func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
 	if err := encodeMSRACapabilityValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 2 {
+		return nil, fmt.Errorf("MSRACapabilityValuePart requires at least 16 bits")
+	}
+	return out, nil
 }
 
 // DecodeMSRACapabilityValuePartStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part struct>.
@@ -6025,13 +6055,14 @@ func DecodeMSRACapabilityValuePartStruct(data []byte) (runtime.Decoded[MSRACapab
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSRACapabilityValuePartStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePartStruct(r)
 	if err != nil {
 		return runtime.Decoded[MSRACapabilityValuePartStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MSRACapabilityValuePartStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6060,13 +6091,14 @@ func DecodeAdditionalAccessTechnologiesStruct(data []byte) (runtime.Decoded[Addi
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[AdditionalAccessTechnologiesStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeAdditionalAccessTechnologiesStruct(r)
 	if err != nil {
 		return runtime.Decoded[AdditionalAccessTechnologiesStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[AdditionalAccessTechnologiesStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6095,13 +6127,14 @@ func DecodeAccessCapabilitiesStruct(data []byte) (runtime.Decoded[AccessCapabili
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[AccessCapabilitiesStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeAccessCapabilitiesStruct(r)
 	if err != nil {
 		return runtime.Decoded[AccessCapabilitiesStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[AccessCapabilitiesStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6128,13 +6161,14 @@ func DecodeContent(data []byte) (runtime.Decoded[Content], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Content]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(true)
 	v, err := decodeContent(r)
 	if err != nil {
 		return runtime.Decoded[Content]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[Content]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6163,13 +6197,14 @@ func DecodeMultislotCapabilityStruct(data []byte) (runtime.Decoded[MultislotCapa
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MultislotCapabilityStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMultislotCapabilityStruct(r)
 	if err != nil {
 		return runtime.Decoded[MultislotCapabilityStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[MultislotCapabilityStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6196,13 +6231,14 @@ func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[A5Bits]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeA5Bits(r)
 	if err != nil {
 		return runtime.Decoded[A5Bits]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[A5Bits]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6231,13 +6267,14 @@ func DecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (runtime.Decode
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedFlexibleTimeslotAssignmentStruct(r)
 	if err != nil {
 		return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
@@ -6266,13 +6303,14 @@ func DecodeDLMCCapabilityStruct(data []byte) (runtime.Decoded[DLMCCapabilityStru
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[DLMCCapabilityStruct]{}, err
 	}
-	r := runtime.NewReader(data)
+	input := data
+	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeDLMCCapabilityStruct(r)
 	if err != nil {
 		return runtime.Decoded[DLMCCapabilityStruct]{}, err
 	}
-	tail := r.Tail()
+	tail := runtime.TrailingBits(data, r.Position())
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
 	return runtime.Decoded[DLMCCapabilityStruct]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }

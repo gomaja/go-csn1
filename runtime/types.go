@@ -79,6 +79,21 @@ type DecodeError struct {
 	Path, Detail string
 }
 
+// PreferTruncation retains the deepest truncated choice arm. TS 24.007
+// V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm
+// matches because input ends inside one, that boundary is the useful error.
+func PreferTruncation(current, candidate error) error {
+	var next *DecodeError
+	if !errors.As(candidate, &next) || next.Kind != Truncated {
+		return current
+	}
+	var previous *DecodeError
+	if !errors.As(current, &previous) || next.Offset > previous.Offset {
+		return candidate
+	}
+	return current
+}
+
 func (e *DecodeError) Error() string {
 	return fmt.Sprintf("CSN.1 %s at bit %d in %s: %s", e.Kind, e.Offset, e.Path, e.Detail)
 }
