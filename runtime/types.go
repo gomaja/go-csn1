@@ -56,14 +56,16 @@ type Decoded[T any] struct {
 // printed name. Version is metadata and never part of the lookup key.
 type Descriptor struct {
 	Standard, Version, Clause, Name string
-	Decode                          func([]byte) (any, error)
-	DecodeFrom                      func(*Reader) (any, error)
-	Encode                          func(any) ([]byte, error)
-	Canonical                       func(any) ([]byte, error)
-	CanonicalAtLength               func(any, int) ([]byte, error)
-	DecodeWithContext               func([]byte, SI4ACS) (any, error)
-	EncodeWithContext               func(any, SI4ACS) ([]byte, error)
-	CanonicalWithContext            func(any, SI4ACS) ([]byte, error)
+	// MaxOctets is zero when a definition has no standalone source bound.
+	MaxOctets            int
+	Decode               func([]byte) (any, error)
+	DecodeFrom           func(*Reader) (any, error)
+	Encode               func(any) ([]byte, error)
+	Canonical            func(any) ([]byte, error)
+	CanonicalAtLength    func(any, int) ([]byte, error)
+	DecodeWithContext    func([]byte, SI4ACS) (any, error)
+	EncodeWithContext    func(any, SI4ACS) ([]byte, error)
+	CanonicalWithContext func(any, SI4ACS) ([]byte, error)
 }
 
 type ErrorKind string
@@ -80,6 +82,21 @@ type DecodeError struct {
 	Kind         ErrorKind
 	Offset       int
 	Path, Detail string
+}
+
+// ExtentError reports a missing caller-supplied extent or an encoding that
+// does not fit its source-defined or caller-supplied octet extent. Maximum
+// zero means the source does not define a standalone maximum.
+type ExtentError struct {
+	Actual, Minimum, Maximum int
+	Required                 bool
+}
+
+func (e *ExtentError) Error() string {
+	if e.Required {
+		return "CSN.1 canonical encoding requires an explicit containing-message length"
+	}
+	return fmt.Sprintf("CSN.1 extent %d outside %d..%d octets", e.Actual, e.Minimum, e.Maximum)
 }
 
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007

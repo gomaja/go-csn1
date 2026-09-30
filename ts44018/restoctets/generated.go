@@ -125,7 +125,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
-// Package restoctets contains typed CSN.1 codecs. Plain Encode calls preserve received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical copies the value, discards received layout, and checks that fresh encoding decodes to equivalent typed fields. Source-defined truncation and minimum IE lengths determine its extent; externally framed rest octets use their minimum legal extent.
+// Package restoctets contains typed CSN.1 codecs. Plain Encode calls preserve received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical copies the value, discards received layout, and checks that fresh encoding decodes to equivalent typed fields within a source-defined maximum. Definitions without a standalone maximum require Encode<Type>CanonicalAtLength with the containing value length; the default fails with runtime.ExtentError.
 package restoctets
 
 import (
@@ -69729,10 +69729,17 @@ func EncodeIARestOctets(v IARestOctets) ([]byte, error) {
 	if err := encodeIARestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 11 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 11}
+	}
+	return out, nil
 }
 
-// EncodeIARestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIARestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIARestOctetsCanonical(v IARestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 11, false, EncodeIARestOctets, DecodeIARestOctets, nil)
 }
@@ -69776,17 +69783,21 @@ func EncodeEGPRSPacketUplinkAssignment(v EGPRSPacketUplinkAssignment) ([]byte, e
 	if err := encodeEGPRSPacketUplinkAssignment(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEGPRSPacketUplinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEGPRSPacketUplinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEGPRSPacketUplinkAssignmentCanonical(v EGPRSPacketUplinkAssignment) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEGPRSPacketUplinkAssignment, DecodeEGPRSPacketUplinkAssignment, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEGPRSPacketUplinkAssignment, DecodeEGPRSPacketUplinkAssignment, nil)
 }
 
 // EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength(v EGPRSPacketUplinkAssignment, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEGPRSPacketUplinkAssignment, DecodeEGPRSPacketUplinkAssignment, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEGPRSPacketUplinkAssignment, DecodeEGPRSPacketUplinkAssignment, nil)
 }
 
 // DecodeAccessTechnologiesRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.16 <Access Technologies Request struct>.
@@ -69823,17 +69834,21 @@ func EncodeAccessTechnologiesRequestStruct(v AccessTechnologiesRequestStruct) ([
 	if err := encodeAccessTechnologiesRequestStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeAccessTechnologiesRequestStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeAccessTechnologiesRequestStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeAccessTechnologiesRequestStructCanonical(v AccessTechnologiesRequestStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeAccessTechnologiesRequestStruct, DecodeAccessTechnologiesRequestStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeAccessTechnologiesRequestStruct, DecodeAccessTechnologiesRequestStruct, nil)
 }
 
 // EncodeAccessTechnologiesRequestStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeAccessTechnologiesRequestStructCanonicalAtLength(v AccessTechnologiesRequestStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeAccessTechnologiesRequestStruct, DecodeAccessTechnologiesRequestStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeAccessTechnologiesRequestStruct, DecodeAccessTechnologiesRequestStruct, nil)
 }
 
 // DecodePacketUplinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Uplink Assignment>.
@@ -69870,17 +69885,21 @@ func EncodePacketUplinkAssignment(v PacketUplinkAssignment) ([]byte, error) {
 	if err := encodePacketUplinkAssignment(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePacketUplinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePacketUplinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePacketUplinkAssignment, DecodePacketUplinkAssignment, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePacketUplinkAssignment, DecodePacketUplinkAssignment, nil)
 }
 
 // EncodePacketUplinkAssignmentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePacketUplinkAssignmentCanonicalAtLength(v PacketUplinkAssignment, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePacketUplinkAssignment, DecodePacketUplinkAssignment, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePacketUplinkAssignment, DecodePacketUplinkAssignment, nil)
 }
 
 // DecodePacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>.
@@ -69917,17 +69936,21 @@ func EncodePacketDownlinkAssignment(v PacketDownlinkAssignment) ([]byte, error) 
 	if err := encodePacketDownlinkAssignment(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePacketDownlinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePacketDownlinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePacketDownlinkAssignmentCanonical(v PacketDownlinkAssignment) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePacketDownlinkAssignment, DecodePacketDownlinkAssignment, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePacketDownlinkAssignment, DecodePacketDownlinkAssignment, nil)
 }
 
 // EncodePacketDownlinkAssignmentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePacketDownlinkAssignmentCanonicalAtLength(v PacketDownlinkAssignment, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePacketDownlinkAssignment, DecodePacketDownlinkAssignment, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePacketDownlinkAssignment, DecodePacketDownlinkAssignment, nil)
 }
 
 // DecodeFrequencyParametersBeforeTime decodes TS 44.018 V19.0.0 §10.5.2.16 <Frequency Parameters, before time>.
@@ -69964,17 +69987,21 @@ func EncodeFrequencyParametersBeforeTime(v FrequencyParametersBeforeTime) ([]byt
 	if err := encodeFrequencyParametersBeforeTime(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeFrequencyParametersBeforeTimeCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeFrequencyParametersBeforeTimeCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeFrequencyParametersBeforeTimeCanonical(v FrequencyParametersBeforeTime) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeFrequencyParametersBeforeTime, DecodeFrequencyParametersBeforeTime, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeFrequencyParametersBeforeTime, DecodeFrequencyParametersBeforeTime, nil)
 }
 
 // EncodeFrequencyParametersBeforeTimeCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeFrequencyParametersBeforeTimeCanonicalAtLength(v FrequencyParametersBeforeTime, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeFrequencyParametersBeforeTime, DecodeFrequencyParametersBeforeTime, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeFrequencyParametersBeforeTime, DecodeFrequencyParametersBeforeTime, nil)
 }
 
 // DecodeSecondPartPacketAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Second Part Packet Assignment>.
@@ -70011,17 +70038,21 @@ func EncodeSecondPartPacketAssignment(v SecondPartPacketAssignment) ([]byte, err
 	if err := encodeSecondPartPacketAssignment(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSecondPartPacketAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSecondPartPacketAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSecondPartPacketAssignmentCanonical(v SecondPartPacketAssignment) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSecondPartPacketAssignment, DecodeSecondPartPacketAssignment, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSecondPartPacketAssignment, DecodeSecondPartPacketAssignment, nil)
 }
 
 // EncodeSecondPartPacketAssignmentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSecondPartPacketAssignmentCanonicalAtLength(v SecondPartPacketAssignment, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSecondPartPacketAssignment, DecodeSecondPartPacketAssignment, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSecondPartPacketAssignment, DecodeSecondPartPacketAssignment, nil)
 }
 
 // DecodeMultipleBlocksPacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Multiple Blocks Packet Downlink Assignment>.
@@ -70058,17 +70089,21 @@ func EncodeMultipleBlocksPacketDownlinkAssignment(v MultipleBlocksPacketDownlink
 	if err := encodeMultipleBlocksPacketDownlinkAssignment(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeMultipleBlocksPacketDownlinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeMultipleBlocksPacketDownlinkAssignmentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacketDownlinkAssignment) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeMultipleBlocksPacketDownlinkAssignment, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeMultipleBlocksPacketDownlinkAssignment, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
 }
 
 // EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength(v MultipleBlocksPacketDownlinkAssignment, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeMultipleBlocksPacketDownlinkAssignment, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeMultipleBlocksPacketDownlinkAssignment, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105216 decodes TS 44.018 V19.0.0 §10.5.2.16 <PEO IMM Cell Group Details struct>.
@@ -70105,17 +70140,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105216(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105216(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105216Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105216Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105216Canonical(v PEOIMMCellGroupDetailsStructClause105216) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105216, DecodePEOIMMCellGroupDetailsStructClause105216, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105216, DecodePEOIMMCellGroupDetailsStructClause105216, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105216CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105216CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105216, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105216, DecodePEOIMMCellGroupDetailsStructClause105216, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105216, DecodePEOIMMCellGroupDetailsStructClause105216, nil)
 }
 
 // DecodeIARRestOctets decodes TS 44.018 V19.0.0 §10.5.2.17 <IAR Rest Octets>.
@@ -70171,10 +70210,13 @@ func EncodeIARRestOctets(v IARRestOctets) ([]byte, error) {
 	if len(out) < 3 {
 		return nil, fmt.Errorf("IARRestOctets requires at least 24 bits")
 	}
+	if len(out) > 3 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 3}
+	}
 	return out, nil
 }
 
-// EncodeIARRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIARRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIARRestOctetsCanonical(v IARRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 3, 3, false, EncodeIARRestOctets, DecodeIARRestOctets, nil)
 }
@@ -70218,17 +70260,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105217(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105217(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105217Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105217Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105217Canonical(v PEOIMMCellGroupDetailsStructClause105217) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105217, DecodePEOIMMCellGroupDetailsStructClause105217, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105217, DecodePEOIMMCellGroupDetailsStructClause105217, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105217CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105217CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105217, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105217, DecodePEOIMMCellGroupDetailsStructClause105217, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105217, DecodePEOIMMCellGroupDetailsStructClause105217, nil)
 }
 
 // DecodeIAXRestOctets decodes TS 44.018 V19.0.0 §10.5.2.18 <IAX Rest Octets>.
@@ -70271,10 +70317,17 @@ func EncodeIAXRestOctets(v IAXRestOctets) ([]byte, error) {
 	if err := encodeIAXRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 4 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 4}
+	}
+	return out, nil
 }
 
-// EncodeIAXRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIAXRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIAXRestOctetsCanonical(v IAXRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 4, false, EncodeIAXRestOctets, DecodeIAXRestOctets, nil)
 }
@@ -70318,17 +70371,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105218(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105218(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105218Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105218Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105218Canonical(v PEOIMMCellGroupDetailsStructClause105218) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105218, DecodePEOIMMCellGroupDetailsStructClause105218, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105218, DecodePEOIMMCellGroupDetailsStructClause105218, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105218CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105218CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105218, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105218, DecodePEOIMMCellGroupDetailsStructClause105218, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105218, DecodePEOIMMCellGroupDetailsStructClause105218, nil)
 }
 
 // DecodeSI1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.32 <SI1 Rest Octets>.
@@ -70384,10 +70441,13 @@ func EncodeSI1RestOctets(v SI1RestOctets) ([]byte, error) {
 	if len(out) < 1 {
 		return nil, fmt.Errorf("SI1RestOctets requires at least 8 bits")
 	}
+	if len(out) > 1 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 1}
+	}
 	return out, nil
 }
 
-// EncodeSI1RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI1RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI1RestOctetsCanonical(v SI1RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 1, false, EncodeSI1RestOctets, DecodeSI1RestOctets, nil)
 }
@@ -70431,17 +70491,21 @@ func EncodeBandIndicatorClause105232(v BandIndicatorClause105232) ([]byte, error
 	if err := encodeBandIndicatorClause105232(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeBandIndicatorClause105232Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeBandIndicatorClause105232Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeBandIndicatorClause105232Canonical(v BandIndicatorClause105232) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeBandIndicatorClause105232, DecodeBandIndicatorClause105232, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeBandIndicatorClause105232, DecodeBandIndicatorClause105232, nil)
 }
 
 // EncodeBandIndicatorClause105232CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeBandIndicatorClause105232CanonicalAtLength(v BandIndicatorClause105232, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeBandIndicatorClause105232, DecodeBandIndicatorClause105232, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeBandIndicatorClause105232, DecodeBandIndicatorClause105232, nil)
 }
 
 // DecodeSI2bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33 <SI2bis Rest Octets>.
@@ -70497,10 +70561,13 @@ func EncodeSI2bisRestOctets(v SI2bisRestOctets) ([]byte, error) {
 	if len(out) < 1 {
 		return nil, fmt.Errorf("SI2bisRestOctets requires at least 8 bits")
 	}
+	if len(out) > 1 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 1}
+	}
 	return out, nil
 }
 
-// EncodeSI2bisRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2bisRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2bisRestOctetsCanonical(v SI2bisRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 1, false, EncodeSI2bisRestOctets, DecodeSI2bisRestOctets, nil)
 }
@@ -70563,10 +70630,13 @@ func EncodeSI2nRestOctets(v SI2nRestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI2nRestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI2nRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2nRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2nRestOctetsCanonical(v SI2nRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI2nRestOctets, DecodeSI2nRestOctets, nil)
 }
@@ -70610,17 +70680,21 @@ func EncodeGSMNeighbourCellSelectionParamsStruct(v GSMNeighbourCellSelectionPara
 	if err := encodeGSMNeighbourCellSelectionParamsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGSMNeighbourCellSelectionParamsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGSMNeighbourCellSelectionParamsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGSMNeighbourCellSelectionParamsStructCanonical(v GSMNeighbourCellSelectionParamsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGSMNeighbourCellSelectionParamsStruct, DecodeGSMNeighbourCellSelectionParamsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGSMNeighbourCellSelectionParamsStruct, DecodeGSMNeighbourCellSelectionParamsStruct, nil)
 }
 
 // EncodeGSMNeighbourCellSelectionParamsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGSMNeighbourCellSelectionParamsStructCanonicalAtLength(v GSMNeighbourCellSelectionParamsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGSMNeighbourCellSelectionParamsStruct, DecodeGSMNeighbourCellSelectionParamsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGSMNeighbourCellSelectionParamsStruct, DecodeGSMNeighbourCellSelectionParamsStruct, nil)
 }
 
 // DecodeGPRSSupportIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GPRS Support Indicator struct>.
@@ -70657,17 +70731,21 @@ func EncodeGPRSSupportIndicatorStruct(v GPRSSupportIndicatorStruct) ([]byte, err
 	if err := encodeGPRSSupportIndicatorStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSSupportIndicatorStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSSupportIndicatorStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSSupportIndicatorStructCanonical(v GPRSSupportIndicatorStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSSupportIndicatorStruct, DecodeGPRSSupportIndicatorStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSSupportIndicatorStruct, DecodeGPRSSupportIndicatorStruct, nil)
 }
 
 // EncodeGPRSSupportIndicatorStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSSupportIndicatorStructCanonicalAtLength(v GPRSSupportIndicatorStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSSupportIndicatorStruct, DecodeGPRSSupportIndicatorStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSSupportIndicatorStruct, DecodeGPRSSupportIndicatorStruct, nil)
 }
 
 // DecodeSI3RestOctet decodes TS 44.018 V19.0.0 §10.5.2.34 <SI3 Rest Octet>.
@@ -70721,10 +70799,13 @@ func EncodeSI3RestOctet(v SI3RestOctet) ([]byte, error) {
 	if len(out) < 4 {
 		return nil, fmt.Errorf("SI3RestOctet requires at least 32 bits")
 	}
+	if len(out) > 4 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 4}
+	}
 	return out, nil
 }
 
-// EncodeSI3RestOctetCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI3RestOctetCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI3RestOctetCanonical(v SI3RestOctet) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 4, 4, false, EncodeSI3RestOctet, DecodeSI3RestOctet, nil)
 }
@@ -70768,17 +70849,21 @@ func EncodeOptionalSelectionParametersClause105234(v OptionalSelectionParameters
 	if err := encodeOptionalSelectionParametersClause105234(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeOptionalSelectionParametersClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeOptionalSelectionParametersClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeOptionalSelectionParametersClause105234Canonical(v OptionalSelectionParametersClause105234) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeOptionalSelectionParametersClause105234, DecodeOptionalSelectionParametersClause105234, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeOptionalSelectionParametersClause105234, DecodeOptionalSelectionParametersClause105234, nil)
 }
 
 // EncodeOptionalSelectionParametersClause105234CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeOptionalSelectionParametersClause105234CanonicalAtLength(v OptionalSelectionParametersClause105234, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeOptionalSelectionParametersClause105234, DecodeOptionalSelectionParametersClause105234, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeOptionalSelectionParametersClause105234, DecodeOptionalSelectionParametersClause105234, nil)
 }
 
 // DecodeSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Selection Parameters>.
@@ -70815,17 +70900,21 @@ func EncodeSelectionParametersClause105234(v SelectionParametersClause105234) ([
 	if err := encodeSelectionParametersClause105234(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSelectionParametersClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSelectionParametersClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSelectionParametersClause105234Canonical(v SelectionParametersClause105234) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSelectionParametersClause105234, DecodeSelectionParametersClause105234, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSelectionParametersClause105234, DecodeSelectionParametersClause105234, nil)
 }
 
 // EncodeSelectionParametersClause105234CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSelectionParametersClause105234CanonicalAtLength(v SelectionParametersClause105234, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSelectionParametersClause105234, DecodeSelectionParametersClause105234, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSelectionParametersClause105234, DecodeSelectionParametersClause105234, nil)
 }
 
 // DecodeOptionalPowerOffsetClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Power Offset>.
@@ -70862,17 +70951,21 @@ func EncodeOptionalPowerOffsetClause105234(v OptionalPowerOffsetClause105234) ([
 	if err := encodeOptionalPowerOffsetClause105234(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeOptionalPowerOffsetClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeOptionalPowerOffsetClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeOptionalPowerOffsetClause105234Canonical(v OptionalPowerOffsetClause105234) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeOptionalPowerOffsetClause105234, DecodeOptionalPowerOffsetClause105234, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeOptionalPowerOffsetClause105234, DecodeOptionalPowerOffsetClause105234, nil)
 }
 
 // EncodeOptionalPowerOffsetClause105234CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeOptionalPowerOffsetClause105234CanonicalAtLength(v OptionalPowerOffsetClause105234, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeOptionalPowerOffsetClause105234, DecodeOptionalPowerOffsetClause105234, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeOptionalPowerOffsetClause105234, DecodeOptionalPowerOffsetClause105234, nil)
 }
 
 // DecodeSystemInformation2terIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 2ter Indicator>.
@@ -70909,17 +71002,21 @@ func EncodeSystemInformation2terIndicator(v SystemInformation2terIndicator) ([]b
 	if err := encodeSystemInformation2terIndicator(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSystemInformation2terIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSystemInformation2terIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSystemInformation2terIndicatorCanonical(v SystemInformation2terIndicator) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSystemInformation2terIndicator, DecodeSystemInformation2terIndicator, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSystemInformation2terIndicator, DecodeSystemInformation2terIndicator, nil)
 }
 
 // EncodeSystemInformation2terIndicatorCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSystemInformation2terIndicatorCanonicalAtLength(v SystemInformation2terIndicator, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSystemInformation2terIndicator, DecodeSystemInformation2terIndicator, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSystemInformation2terIndicator, DecodeSystemInformation2terIndicator, nil)
 }
 
 // DecodeEarlyClassmarkSendingControl decodes TS 44.018 V19.0.0 §10.5.2.34 <Early Classmark Sending Control>.
@@ -70956,17 +71053,21 @@ func EncodeEarlyClassmarkSendingControl(v EarlyClassmarkSendingControl) ([]byte,
 	if err := encodeEarlyClassmarkSendingControl(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEarlyClassmarkSendingControlCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEarlyClassmarkSendingControlCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEarlyClassmarkSendingControlCanonical(v EarlyClassmarkSendingControl) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEarlyClassmarkSendingControl, DecodeEarlyClassmarkSendingControl, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEarlyClassmarkSendingControl, DecodeEarlyClassmarkSendingControl, nil)
 }
 
 // EncodeEarlyClassmarkSendingControlCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEarlyClassmarkSendingControlCanonicalAtLength(v EarlyClassmarkSendingControl, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEarlyClassmarkSendingControl, DecodeEarlyClassmarkSendingControl, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEarlyClassmarkSendingControl, DecodeEarlyClassmarkSendingControl, nil)
 }
 
 // DecodeSchedulingIfAndWhere decodes TS 44.018 V19.0.0 §10.5.2.34 <Scheduling if and where>.
@@ -71003,17 +71104,21 @@ func EncodeSchedulingIfAndWhere(v SchedulingIfAndWhere) ([]byte, error) {
 	if err := encodeSchedulingIfAndWhere(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSchedulingIfAndWhereCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSchedulingIfAndWhereCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSchedulingIfAndWhereCanonical(v SchedulingIfAndWhere) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSchedulingIfAndWhere, DecodeSchedulingIfAndWhere, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSchedulingIfAndWhere, DecodeSchedulingIfAndWhere, nil)
 }
 
 // EncodeSchedulingIfAndWhereCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSchedulingIfAndWhereCanonicalAtLength(v SchedulingIfAndWhere, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSchedulingIfAndWhere, DecodeSchedulingIfAndWhere, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSchedulingIfAndWhere, DecodeSchedulingIfAndWhere, nil)
 }
 
 // DecodeGPRSIndicatorClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <GPRS Indicator>.
@@ -71050,17 +71155,21 @@ func EncodeGPRSIndicatorClause105234(v GPRSIndicatorClause105234) ([]byte, error
 	if err := encodeGPRSIndicatorClause105234(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSIndicatorClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSIndicatorClause105234Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSIndicatorClause105234Canonical(v GPRSIndicatorClause105234) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSIndicatorClause105234, DecodeGPRSIndicatorClause105234, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSIndicatorClause105234, DecodeGPRSIndicatorClause105234, nil)
 }
 
 // EncodeGPRSIndicatorClause105234CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSIndicatorClause105234CanonicalAtLength(v GPRSIndicatorClause105234, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSIndicatorClause105234, DecodeGPRSIndicatorClause105234, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSIndicatorClause105234, DecodeGPRSIndicatorClause105234, nil)
 }
 
 // DecodeN3GEarlyClassmarkSendingRestriction decodes TS 44.018 V19.0.0 §10.5.2.34 <3G Early Classmark Sending Restriction>.
@@ -71097,17 +71206,21 @@ func EncodeN3GEarlyClassmarkSendingRestriction(v N3GEarlyClassmarkSendingRestric
 	if err := encodeN3GEarlyClassmarkSendingRestriction(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GEarlyClassmarkSendingRestrictionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GEarlyClassmarkSendingRestrictionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GEarlyClassmarkSendingRestrictionCanonical(v N3GEarlyClassmarkSendingRestriction) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GEarlyClassmarkSendingRestriction, DecodeN3GEarlyClassmarkSendingRestriction, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GEarlyClassmarkSendingRestriction, DecodeN3GEarlyClassmarkSendingRestriction, nil)
 }
 
 // EncodeN3GEarlyClassmarkSendingRestrictionCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GEarlyClassmarkSendingRestrictionCanonicalAtLength(v N3GEarlyClassmarkSendingRestriction, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GEarlyClassmarkSendingRestriction, DecodeN3GEarlyClassmarkSendingRestriction, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GEarlyClassmarkSendingRestriction, DecodeN3GEarlyClassmarkSendingRestriction, nil)
 }
 
 // DecodeSI2quaterIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.34 <SI2quater Indicator struct>.
@@ -71144,17 +71257,21 @@ func EncodeSI2quaterIndicatorStruct(v SI2quaterIndicatorStruct) ([]byte, error) 
 	if err := encodeSI2quaterIndicatorStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI2quaterIndicatorStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2quaterIndicatorStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2quaterIndicatorStructCanonical(v SI2quaterIndicatorStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSI2quaterIndicatorStruct, DecodeSI2quaterIndicatorStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSI2quaterIndicatorStruct, DecodeSI2quaterIndicatorStruct, nil)
 }
 
 // EncodeSI2quaterIndicatorStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI2quaterIndicatorStructCanonicalAtLength(v SI2quaterIndicatorStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSI2quaterIndicatorStruct, DecodeSI2quaterIndicatorStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSI2quaterIndicatorStruct, DecodeSI2quaterIndicatorStruct, nil)
 }
 
 // DecodeIuIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <Iu Indicator>.
@@ -71189,17 +71306,21 @@ func EncodeIuIndicator(v IuIndicator) ([]byte, error) {
 	if err := encodeIuIndicator(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeIuIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIuIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIuIndicatorCanonical(v IuIndicator) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeIuIndicator, DecodeIuIndicator, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIuIndicator, DecodeIuIndicator, nil)
 }
 
 // EncodeIuIndicatorCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIuIndicatorCanonicalAtLength(v IuIndicator, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeIuIndicator, DecodeIuIndicator, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIuIndicator, DecodeIuIndicator, nil)
 }
 
 // DecodeSystemInformation21Indicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 21 Indicator>.
@@ -71236,17 +71357,21 @@ func EncodeSystemInformation21Indicator(v SystemInformation21Indicator) ([]byte,
 	if err := encodeSystemInformation21Indicator(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSystemInformation21IndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSystemInformation21IndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSystemInformation21IndicatorCanonical(v SystemInformation21Indicator) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSystemInformation21Indicator, DecodeSystemInformation21Indicator, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSystemInformation21Indicator, DecodeSystemInformation21Indicator, nil)
 }
 
 // EncodeSystemInformation21IndicatorCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSystemInformation21IndicatorCanonicalAtLength(v SystemInformation21Indicator, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSystemInformation21Indicator, DecodeSystemInformation21Indicator, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSystemInformation21Indicator, DecodeSystemInformation21Indicator, nil)
 }
 
 // DecodeSI16RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37e <SI16 Rest Octets>.
@@ -71302,10 +71427,13 @@ func EncodeSI16RestOctets(v SI16RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI16RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI16RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI16RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI16RestOctetsCanonical(v SI16RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI16RestOctets, DecodeSI16RestOctets, nil)
 }
@@ -71368,10 +71496,13 @@ func EncodeSI17RestOctets(v SI17RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI17RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI17RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI17RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI17RestOctetsCanonical(v SI17RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI17RestOctets, DecodeSI17RestOctets, nil)
 }
@@ -71415,17 +71546,21 @@ func EncodeLSAParametersClause105237e(v LSAParametersClause105237e) ([]byte, err
 	if err := encodeLSAParametersClause105237e(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAParametersClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAParametersClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAParametersClause105237eCanonical(v LSAParametersClause105237e) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAParametersClause105237e, DecodeLSAParametersClause105237e, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAParametersClause105237e, DecodeLSAParametersClause105237e, nil)
 }
 
 // EncodeLSAParametersClause105237eCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAParametersClause105237eCanonicalAtLength(v LSAParametersClause105237e, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAParametersClause105237e, DecodeLSAParametersClause105237e, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAParametersClause105237e, DecodeLSAParametersClause105237e, nil)
 }
 
 // DecodeLSAIDInformationClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA ID information>.
@@ -71462,17 +71597,21 @@ func EncodeLSAIDInformationClause105237e(v LSAIDInformationClause105237e) ([]byt
 	if err := encodeLSAIDInformationClause105237e(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAIDInformationClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAIDInformationClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAIDInformationClause105237eCanonical(v LSAIDInformationClause105237e) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAIDInformationClause105237e, DecodeLSAIDInformationClause105237e, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAIDInformationClause105237e, DecodeLSAIDInformationClause105237e, nil)
 }
 
 // EncodeLSAIDInformationClause105237eCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAIDInformationClause105237eCanonicalAtLength(v LSAIDInformationClause105237e, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAIDInformationClause105237e, DecodeLSAIDInformationClause105237e, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAIDInformationClause105237e, DecodeLSAIDInformationClause105237e, nil)
 }
 
 // DecodeLSAIdentityClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA identity>.
@@ -71509,17 +71648,21 @@ func EncodeLSAIdentityClause105237e(v LSAIdentityClause105237e) ([]byte, error) 
 	if err := encodeLSAIdentityClause105237e(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAIdentityClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAIdentityClause105237eCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAIdentityClause105237eCanonical(v LSAIdentityClause105237e) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAIdentityClause105237e, DecodeLSAIdentityClause105237e, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAIdentityClause105237e, DecodeLSAIdentityClause105237e, nil)
 }
 
 // EncodeLSAIdentityClause105237eCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAIdentityClause105237eCanonicalAtLength(v LSAIdentityClause105237e, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAIdentityClause105237e, DecodeLSAIdentityClause105237e, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAIdentityClause105237e, DecodeLSAIdentityClause105237e, nil)
 }
 
 // DecodeSI14RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37j <SI14 Rest Octets>.
@@ -71575,10 +71718,13 @@ func EncodeSI14RestOctets(v SI14RestOctets) ([]byte, error) {
 	if len(out) < 16 {
 		return nil, fmt.Errorf("SI14RestOctets requires at least 128 bits")
 	}
+	if len(out) > 16 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 16}
+	}
 	return out, nil
 }
 
-// EncodeSI14RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI14RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI14RestOctetsCanonical(v SI14RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 16, 16, false, EncodeSI14RestOctets, DecodeSI14RestOctets, nil)
 }
@@ -71622,17 +71768,21 @@ func EncodeDYNAMICARFCNMAPPINGClause105237j(v DYNAMICARFCNMAPPINGClause105237j) 
 	if err := encodeDYNAMICARFCNMAPPINGClause105237j(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeDYNAMICARFCNMAPPINGClause105237jCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeDYNAMICARFCNMAPPINGClause105237jCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeDYNAMICARFCNMAPPINGClause105237jCanonical(v DYNAMICARFCNMAPPINGClause105237j) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeDYNAMICARFCNMAPPINGClause105237j, DecodeDYNAMICARFCNMAPPINGClause105237j, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeDYNAMICARFCNMAPPINGClause105237j, DecodeDYNAMICARFCNMAPPINGClause105237j, nil)
 }
 
 // EncodeDYNAMICARFCNMAPPINGClause105237jCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeDYNAMICARFCNMAPPINGClause105237jCanonicalAtLength(v DYNAMICARFCNMAPPINGClause105237j, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeDYNAMICARFCNMAPPINGClause105237j, DecodeDYNAMICARFCNMAPPINGClause105237j, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeDYNAMICARFCNMAPPINGClause105237j, DecodeDYNAMICARFCNMAPPINGClause105237j, nil)
 }
 
 // DecodeSI15RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37k <SI15 Rest Octets>.
@@ -71688,10 +71838,13 @@ func EncodeSI15RestOctets(v SI15RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI15RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI15RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI15RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI15RestOctetsCanonical(v SI15RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI15RestOctets, DecodeSI15RestOctets, nil)
 }
@@ -71735,17 +71888,21 @@ func EncodeDYNAMICARFCNMAPPINGClause105237k(v DYNAMICARFCNMAPPINGClause105237k) 
 	if err := encodeDYNAMICARFCNMAPPINGClause105237k(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeDYNAMICARFCNMAPPINGClause105237kCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeDYNAMICARFCNMAPPINGClause105237kCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeDYNAMICARFCNMAPPINGClause105237kCanonical(v DYNAMICARFCNMAPPINGClause105237k) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeDYNAMICARFCNMAPPINGClause105237k, DecodeDYNAMICARFCNMAPPINGClause105237k, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeDYNAMICARFCNMAPPINGClause105237k, DecodeDYNAMICARFCNMAPPINGClause105237k, nil)
 }
 
 // EncodeDYNAMICARFCNMAPPINGClause105237kCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeDYNAMICARFCNMAPPINGClause105237kCanonicalAtLength(v DYNAMICARFCNMAPPINGClause105237k, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeDYNAMICARFCNMAPPINGClause105237k, DecodeDYNAMICARFCNMAPPINGClause105237k, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeDYNAMICARFCNMAPPINGClause105237k, DecodeDYNAMICARFCNMAPPINGClause105237k, nil)
 }
 
 // DecodeSI21RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37m <SI 21 Rest Octets>.
@@ -71801,10 +71958,13 @@ func EncodeSI21RestOctets(v SI21RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI21RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI21RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI21RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI21RestOctetsCanonical(v SI21RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI21RestOctets, DecodeSI21RestOctets, nil)
 }
@@ -71848,17 +72008,21 @@ func EncodeNetworkSharingEABInformationStruct(v NetworkSharingEABInformationStru
 	if err := encodeNetworkSharingEABInformationStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNetworkSharingEABInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNetworkSharingEABInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNetworkSharingEABInformationStructCanonical(v NetworkSharingEABInformationStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNetworkSharingEABInformationStruct, DecodeNetworkSharingEABInformationStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNetworkSharingEABInformationStruct, DecodeNetworkSharingEABInformationStruct, nil)
 }
 
 // EncodeNetworkSharingEABInformationStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNetworkSharingEABInformationStructCanonicalAtLength(v NetworkSharingEABInformationStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNetworkSharingEABInformationStruct, DecodeNetworkSharingEABInformationStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNetworkSharingEABInformationStruct, DecodeNetworkSharingEABInformationStruct, nil)
 }
 
 // DecodeSI22RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37n <SI 22 Rest Octets>.
@@ -71914,10 +72078,13 @@ func EncodeSI22RestOctets(v SI22RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI22RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI22RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI22RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI22RestOctetsCanonical(v SI22RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI22RestOctets, DecodeSI22RestOctets, nil)
 }
@@ -71961,17 +72128,21 @@ func EncodeNetworkSharingInformationStruct(v NetworkSharingInformationStruct) ([
 	if err := encodeNetworkSharingInformationStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNetworkSharingInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNetworkSharingInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNetworkSharingInformationStructCanonical(v NetworkSharingInformationStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNetworkSharingInformationStruct, DecodeNetworkSharingInformationStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNetworkSharingInformationStruct, DecodeNetworkSharingInformationStruct, nil)
 }
 
 // EncodeNetworkSharingInformationStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNetworkSharingInformationStructCanonicalAtLength(v NetworkSharingInformationStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNetworkSharingInformationStruct, DecodeNetworkSharingInformationStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNetworkSharingInformationStruct, DecodeNetworkSharingInformationStruct, nil)
 }
 
 // DecodeSI23RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37o <SI 23 Rest Octets>.
@@ -72027,10 +72198,13 @@ func EncodeSI23RestOctets(v SI23RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI23RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI23RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI23RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI23RestOctetsCanonical(v SI23RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI23RestOctets, DecodeSI23RestOctets, nil)
 }
@@ -72074,17 +72248,21 @@ func EncodeIRATCellReselectionInformationStruct(v IRATCellReselectionInformation
 	if err := encodeIRATCellReselectionInformationStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeIRATCellReselectionInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIRATCellReselectionInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionInformationStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeIRATCellReselectionInformationStruct, DecodeIRATCellReselectionInformationStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIRATCellReselectionInformationStruct, DecodeIRATCellReselectionInformationStruct, nil)
 }
 
 // EncodeIRATCellReselectionInformationStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIRATCellReselectionInformationStructCanonicalAtLength(v IRATCellReselectionInformationStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeIRATCellReselectionInformationStruct, DecodeIRATCellReselectionInformationStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIRATCellReselectionInformationStruct, DecodeIRATCellReselectionInformationStruct, nil)
 }
 
 // DecodePriorityAndUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and UTRAN Parameters Description struct>.
@@ -72121,17 +72299,21 @@ func EncodePriorityAndUTRANParametersDescriptionStruct(v PriorityAndUTRANParamet
 	if err := encodePriorityAndUTRANParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityAndUTRANParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityAndUTRANParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityAndUTRANParametersDescriptionStructCanonical(v PriorityAndUTRANParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityAndUTRANParametersDescriptionStruct, DecodePriorityAndUTRANParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityAndUTRANParametersDescriptionStruct, DecodePriorityAndUTRANParametersDescriptionStruct, nil)
 }
 
 // EncodePriorityAndUTRANParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityAndUTRANParametersDescriptionStructCanonicalAtLength(v PriorityAndUTRANParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityAndUTRANParametersDescriptionStruct, DecodePriorityAndUTRANParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityAndUTRANParametersDescriptionStruct, DecodePriorityAndUTRANParametersDescriptionStruct, nil)
 }
 
 // DecodeUTRANFDDTDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <UTRAN FDD/TDD Description struct>.
@@ -72168,17 +72350,21 @@ func EncodeUTRANFDDTDDDescriptionStruct(v UTRANFDDTDDDescriptionStruct) ([]byte,
 	if err := encodeUTRANFDDTDDDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANFDDTDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANFDDTDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANFDDTDDDescriptionStructCanonical(v UTRANFDDTDDDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANFDDTDDDescriptionStruct, DecodeUTRANFDDTDDDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANFDDTDDDescriptionStruct, DecodeUTRANFDDTDDDescriptionStruct, nil)
 }
 
 // EncodeUTRANFDDTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANFDDTDDDescriptionStructCanonicalAtLength(v UTRANFDDTDDDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANFDDTDDDescriptionStruct, DecodeUTRANFDDTDDDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANFDDTDDDescriptionStruct, DecodeUTRANFDDTDDDescriptionStruct, nil)
 }
 
 // DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct>.
@@ -72215,17 +72401,21 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(v RepeatedUTRA
 	if err := encodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical(v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, nil)
 }
 
 // EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonicalAtLength(v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, nil)
 }
 
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105237o decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and E-UTRAN Parameters Description struct>.
@@ -72262,17 +72452,21 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237o(v PriorityA
 	if err := encodePriorityAndEUTRANParametersDescriptionStructClause105237o(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105237o) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
 }
 
 // EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105237o, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
 }
 
 // DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated E-UTRAN Neighbour Frequency and Priority struct>.
@@ -72309,17 +72503,21 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(v RepeatedEUTRANNei
 	if err := encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
 }
 
 // EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
 }
 
 // DecodeSI10RestOctets decodes TS 44.018 V19.0.0 §10.5.2.44 <SI10 rest octets>.
@@ -72375,10 +72573,13 @@ func EncodeSI10RestOctets(v SI10RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI10RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI10RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI10RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI10RestOctetsCanonical(v SI10RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI10RestOctets, DecodeSI10RestOctets, nil)
 }
@@ -72422,17 +72623,21 @@ func EncodeNeighbourInformation(v NeighbourInformation) ([]byte, error) {
 	if err := encodeNeighbourInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNeighbourInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNeighbourInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNeighbourInformationCanonical(v NeighbourInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNeighbourInformation, DecodeNeighbourInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNeighbourInformation, DecodeNeighbourInformation, nil)
 }
 
 // EncodeNeighbourInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNeighbourInformationCanonicalAtLength(v NeighbourInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNeighbourInformation, DecodeNeighbourInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNeighbourInformation, DecodeNeighbourInformation, nil)
 }
 
 // DecodeCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <cell info>.
@@ -72467,17 +72672,21 @@ func EncodeCellInfo(v CellInfo) ([]byte, error) {
 	if err := encodeCellInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCellInfoCanonical(v CellInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCellInfo, DecodeCellInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCellInfo, DecodeCellInfo, nil)
 }
 
 // EncodeCellInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCellInfoCanonicalAtLength(v CellInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCellInfo, DecodeCellInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCellInfo, DecodeCellInfo, nil)
 }
 
 // DecodeCellParameters decodes TS 44.018 V19.0.0 §10.5.2.44 <cell parameters>.
@@ -72514,17 +72723,21 @@ func EncodeCellParameters(v CellParameters) ([]byte, error) {
 	if err := encodeCellParameters(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCellParametersCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCellParametersCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCellParametersCanonical(v CellParameters) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCellParameters, DecodeCellParameters, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCellParameters, DecodeCellParameters, nil)
 }
 
 // EncodeCellParametersCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCellParametersCanonicalAtLength(v CellParameters, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCellParameters, DecodeCellParameters, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCellParameters, DecodeCellParameters, nil)
 }
 
 // DecodeCellBarred decodes TS 44.018 V19.0.0 §10.5.2.44 <cell barred>.
@@ -72559,17 +72772,21 @@ func EncodeCellBarred(v CellBarred) ([]byte, error) {
 	if err := encodeCellBarred(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCellBarredCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCellBarredCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCellBarredCanonical(v CellBarred) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCellBarred, DecodeCellBarred, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCellBarred, DecodeCellBarred, nil)
 }
 
 // EncodeCellBarredCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCellBarredCanonicalAtLength(v CellBarred, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCellBarred, DecodeCellBarred, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCellBarred, DecodeCellBarred, nil)
 }
 
 // DecodeFurtherCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further cell info>.
@@ -72606,17 +72823,21 @@ func EncodeFurtherCellInfo(v FurtherCellInfo) ([]byte, error) {
 	if err := encodeFurtherCellInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeFurtherCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeFurtherCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeFurtherCellInfoCanonical(v FurtherCellInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeFurtherCellInfo, DecodeFurtherCellInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeFurtherCellInfo, DecodeFurtherCellInfo, nil)
 }
 
 // EncodeFurtherCellInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeFurtherCellInfoCanonicalAtLength(v FurtherCellInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeFurtherCellInfo, DecodeFurtherCellInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeFurtherCellInfo, DecodeFurtherCellInfo, nil)
 }
 
 // DecodeLaDifferent decodes TS 44.018 V19.0.0 §10.5.2.44 <la different>.
@@ -72651,17 +72872,21 @@ func EncodeLaDifferent(v LaDifferent) ([]byte, error) {
 	if err := encodeLaDifferent(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLaDifferentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLaDifferentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLaDifferentCanonical(v LaDifferent) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLaDifferent, DecodeLaDifferent, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLaDifferent, DecodeLaDifferent, nil)
 }
 
 // EncodeLaDifferentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLaDifferentCanonicalAtLength(v LaDifferent, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLaDifferent, DecodeLaDifferent, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLaDifferent, DecodeLaDifferent, nil)
 }
 
 // DecodeInfoField decodes TS 44.018 V19.0.0 §10.5.2.44 <info field>.
@@ -72696,17 +72921,21 @@ func EncodeInfoField(v InfoField) ([]byte, error) {
 	if err := encodeInfoField(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeInfoFieldCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeInfoFieldCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeInfoFieldCanonical(v InfoField) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeInfoField, DecodeInfoField, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeInfoField, DecodeInfoField, nil)
 }
 
 // EncodeInfoFieldCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeInfoFieldCanonicalAtLength(v InfoField, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeInfoField, DecodeInfoField, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeInfoField, DecodeInfoField, nil)
 }
 
 // DecodeNextFrequency decodes TS 44.018 V19.0.0 §10.5.2.44 <next frequency>.
@@ -72743,17 +72972,21 @@ func EncodeNextFrequency(v NextFrequency) ([]byte, error) {
 	if err := encodeNextFrequency(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNextFrequencyCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNextFrequencyCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNextFrequencyCanonical(v NextFrequency) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNextFrequency, DecodeNextFrequency, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNextFrequency, DecodeNextFrequency, nil)
 }
 
 // EncodeNextFrequencyCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNextFrequencyCanonicalAtLength(v NextFrequency, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNextFrequency, DecodeNextFrequency, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNextFrequency, DecodeNextFrequency, nil)
 }
 
 // DecodeDifferentialCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <differential cell info>.
@@ -72790,17 +73023,21 @@ func EncodeDifferentialCellInfo(v DifferentialCellInfo) ([]byte, error) {
 	if err := encodeDifferentialCellInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeDifferentialCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeDifferentialCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeDifferentialCellInfoCanonical(v DifferentialCellInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeDifferentialCellInfo, DecodeDifferentialCellInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeDifferentialCellInfo, DecodeDifferentialCellInfo, nil)
 }
 
 // EncodeDifferentialCellInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeDifferentialCellInfoCanonicalAtLength(v DifferentialCellInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeDifferentialCellInfo, DecodeDifferentialCellInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeDifferentialCellInfo, DecodeDifferentialCellInfo, nil)
 }
 
 // DecodeDiffCellPars decodes TS 44.018 V19.0.0 §10.5.2.44 <diff cell pars>.
@@ -72835,17 +73072,21 @@ func EncodeDiffCellPars(v DiffCellPars) ([]byte, error) {
 	if err := encodeDiffCellPars(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeDiffCellParsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeDiffCellParsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeDiffCellParsCanonical(v DiffCellPars) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeDiffCellPars, DecodeDiffCellPars, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeDiffCellPars, DecodeDiffCellPars, nil)
 }
 
 // EncodeDiffCellParsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeDiffCellParsCanonicalAtLength(v DiffCellPars, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeDiffCellPars, DecodeDiffCellPars, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeDiffCellPars, DecodeDiffCellPars, nil)
 }
 
 // DecodeFurtherDiffCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further diff cell info>.
@@ -72882,17 +73123,21 @@ func EncodeFurtherDiffCellInfo(v FurtherDiffCellInfo) ([]byte, error) {
 	if err := encodeFurtherDiffCellInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeFurtherDiffCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeFurtherDiffCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeFurtherDiffCellInfoCanonical(v FurtherDiffCellInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeFurtherDiffCellInfo, DecodeFurtherDiffCellInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeFurtherDiffCellInfo, DecodeFurtherDiffCellInfo, nil)
 }
 
 // EncodeFurtherDiffCellInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeFurtherDiffCellInfoCanonicalAtLength(v FurtherDiffCellInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeFurtherDiffCellInfo, DecodeFurtherDiffCellInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeFurtherDiffCellInfo, DecodeFurtherDiffCellInfo, nil)
 }
 
 // DecodeSI10terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.71 <SI10ter Rest Octets>.
@@ -72932,17 +73177,21 @@ func EncodeSI10terRestOctets(v SI10terRestOctets) ([]byte, error) {
 	if err := encodeSI10terRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI10terRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI10terRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI10terRestOctetsCanonical(v SI10terRestOctets) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 1, 64, false, EncodeSI10terRestOctets, DecodeSI10terRestOctets, nil)
+	return runtime.CanonicalEncode(v, 1, 0, false, EncodeSI10terRestOctets, DecodeSI10terRestOctets, nil)
 }
 
 // EncodeSI10terRestOctetsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI10terRestOctetsCanonicalAtLength(v SI10terRestOctets, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 1, 64, EncodeSI10terRestOctets, DecodeSI10terRestOctets, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 1, 0, EncodeSI10terRestOctets, DecodeSI10terRestOctets, nil)
 }
 
 // DecodeSI9RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37a <SI9 rest octets>.
@@ -72998,10 +73247,13 @@ func EncodeSI9RestOctets(v SI9RestOctets) ([]byte, error) {
 	if len(out) < 17 {
 		return nil, fmt.Errorf("SI9RestOctets requires at least 136 bits")
 	}
+	if len(out) > 17 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 17}
+	}
 	return out, nil
 }
 
-// EncodeSI9RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI9RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI9RestOctetsCanonical(v SI9RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 17, 17, false, EncodeSI9RestOctets, DecodeSI9RestOctets, nil)
 }
@@ -73045,17 +73297,21 @@ func EncodeSchedulingInfo(v SchedulingInfo) ([]byte, error) {
 	if err := encodeSchedulingInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSchedulingInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSchedulingInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSchedulingInfoCanonical(v SchedulingInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSchedulingInfo, DecodeSchedulingInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSchedulingInfo, DecodeSchedulingInfo, nil)
 }
 
 // EncodeSchedulingInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSchedulingInfoCanonicalAtLength(v SchedulingInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSchedulingInfo, DecodeSchedulingInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSchedulingInfo, DecodeSchedulingInfo, nil)
 }
 
 // DecodeInfoType decodes TS 44.018 V19.0.0 §10.5.2.37a <Info type>.
@@ -73090,17 +73346,21 @@ func EncodeInfoType(v InfoType) ([]byte, error) {
 	if err := encodeInfoType(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeInfoTypeCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeInfoTypeCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeInfoTypeCanonical(v InfoType) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeInfoType, DecodeInfoType, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeInfoType, DecodeInfoType, nil)
 }
 
 // EncodeInfoTypeCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeInfoTypeCanonicalAtLength(v InfoType, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeInfoType, DecodeInfoType, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeInfoType, DecodeInfoType, nil)
 }
 
 // DecodePositions decodes TS 44.018 V19.0.0 §10.5.2.37a <Positions>.
@@ -73135,17 +73395,21 @@ func EncodePositions(v Positions) ([]byte, error) {
 	if err := encodePositions(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePositionsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePositionsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePositionsCanonical(v Positions) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePositions, DecodePositions, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePositions, DecodePositions, nil)
 }
 
 // EncodePositionsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePositionsCanonicalAtLength(v Positions, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePositions, DecodePositions, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePositions, DecodePositions, nil)
 }
 
 // DecodePosition decodes TS 44.018 V19.0.0 §10.5.2.37a <Position>.
@@ -73180,17 +73444,21 @@ func EncodePosition(v Position) ([]byte, error) {
 	if err := encodePosition(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePositionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePositionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePositionCanonical(v Position) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePosition, DecodePosition, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePosition, DecodePosition, nil)
 }
 
 // EncodePositionCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePositionCanonicalAtLength(v Position, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePosition, DecodePosition, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePosition, DecodePosition, nil)
 }
 
 // DecodeSI2terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33a <SI2ter Rest Octets>.
@@ -73246,10 +73514,13 @@ func EncodeSI2terRestOctets(v SI2terRestOctets) ([]byte, error) {
 	if len(out) < 4 {
 		return nil, fmt.Errorf("SI2terRestOctets requires at least 32 bits")
 	}
+	if len(out) > 4 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 4}
+	}
 	return out, nil
 }
 
-// EncodeSI2terRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2terRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2terRestOctetsCanonical(v SI2terRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 4, 4, false, EncodeSI2terRestOctets, DecodeSI2terRestOctets, nil)
 }
@@ -73293,17 +73564,21 @@ func EncodeUTRANFDDDescriptionStructClause105233a(v UTRANFDDDescriptionStructCla
 	if err := encodeUTRANFDDDescriptionStructClause105233a(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANFDDDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANFDDDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANFDDDescriptionStructClause105233aCanonical(v UTRANFDDDescriptionStructClause105233a) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANFDDDescriptionStructClause105233a, DecodeUTRANFDDDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANFDDDescriptionStructClause105233a, DecodeUTRANFDDDescriptionStructClause105233a, nil)
 }
 
 // EncodeUTRANFDDDescriptionStructClause105233aCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANFDDDescriptionStructClause105233aCanonicalAtLength(v UTRANFDDDescriptionStructClause105233a, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANFDDDescriptionStructClause105233a, DecodeUTRANFDDDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANFDDDescriptionStructClause105233a, DecodeUTRANFDDDescriptionStructClause105233a, nil)
 }
 
 // DecodeUTRANTDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN TDD Description struct>.
@@ -73340,17 +73615,21 @@ func EncodeUTRANTDDDescriptionStructClause105233a(v UTRANTDDDescriptionStructCla
 	if err := encodeUTRANTDDDescriptionStructClause105233a(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANTDDDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANTDDDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANTDDDescriptionStructClause105233aCanonical(v UTRANTDDDescriptionStructClause105233a) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANTDDDescriptionStructClause105233a, DecodeUTRANTDDDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANTDDDescriptionStructClause105233a, DecodeUTRANTDDDescriptionStructClause105233a, nil)
 }
 
 // EncodeUTRANTDDDescriptionStructClause105233aCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANTDDDescriptionStructClause105233aCanonicalAtLength(v UTRANTDDDescriptionStructClause105233a, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANTDDDescriptionStructClause105233a, DecodeUTRANTDDDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANTDDDescriptionStructClause105233a, DecodeUTRANTDDDescriptionStructClause105233a, nil)
 }
 
 // DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G MEASUREMENT Parameters Description struct>.
@@ -73387,17 +73666,21 @@ func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a(v N3GMEASUREME
 	if err := encodeN3GMEASUREMENTParametersDescriptionStructClause105233a(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonical(v N3GMEASUREMENTParametersDescriptionStructClause105233a) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, nil)
 }
 
 // EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonicalAtLength(v N3GMEASUREMENTParametersDescriptionStructClause105233a, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, nil)
 }
 
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G Additional Measurement Parameters Description struct>.
@@ -73434,17 +73717,21 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(v N3
 	if err := encodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonical(v N3GAdditionalMeasurementParametersDescriptionStructClause105233a) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, nil)
 }
 
 // EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonicalAtLength(v N3GAdditionalMeasurementParametersDescriptionStructClause105233a, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, nil)
 }
 
 // DecodeSI4RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets>.
@@ -73487,10 +73774,17 @@ func EncodeSI4RestOctets(v SI4RestOctets) ([]byte, error) {
 	if err := encodeSI4RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 10 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 10}
+	}
+	return out, nil
 }
 
-// EncodeSI4RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI4RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI4RestOctetsCanonical(v SI4RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 10, true, EncodeSI4RestOctets, DecodeSI4RestOctets, nil)
 }
@@ -73537,17 +73831,21 @@ func EncodeSI4RestOctetsO(v SI4RestOctetsO) ([]byte, error) {
 	if err := encodeSI4RestOctetsO(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI4RestOctetsOCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI4RestOctetsOCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI4RestOctetsOCanonical(v SI4RestOctetsO) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 1, 64, true, EncodeSI4RestOctetsO, DecodeSI4RestOctetsO, nil)
+	return runtime.CanonicalEncode(v, 1, 0, true, EncodeSI4RestOctetsO, DecodeSI4RestOctetsO, nil)
 }
 
 // EncodeSI4RestOctetsOCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI4RestOctetsOCanonicalAtLength(v SI4RestOctetsO, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 1, 64, EncodeSI4RestOctetsO, DecodeSI4RestOctetsO, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 1, 0, EncodeSI4RestOctetsO, DecodeSI4RestOctetsO, nil)
 }
 
 // DecodeSI4RestOctetsS decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets_S>.
@@ -73587,17 +73885,21 @@ func EncodeSI4RestOctetsS(v SI4RestOctetsS) ([]byte, error) {
 	if err := encodeSI4RestOctetsS(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI4RestOctetsSCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI4RestOctetsSCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI4RestOctetsSCanonical(v SI4RestOctetsS) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 1, 64, false, EncodeSI4RestOctetsS, DecodeSI4RestOctetsS, nil)
+	return runtime.CanonicalEncode(v, 1, 0, false, EncodeSI4RestOctetsS, DecodeSI4RestOctetsS, nil)
 }
 
 // EncodeSI4RestOctetsSCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI4RestOctetsSCanonicalAtLength(v SI4RestOctetsS, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 1, 64, EncodeSI4RestOctetsS, DecodeSI4RestOctetsS, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 1, 0, EncodeSI4RestOctetsS, DecodeSI4RestOctetsS, nil)
 }
 
 // DecodeBreakIndicator decodes TS 44.018 V19.0.0 §10.5.2.35 <Break Indicator>.
@@ -73634,17 +73936,21 @@ func EncodeBreakIndicator(v BreakIndicator) ([]byte, error) {
 	if err := encodeBreakIndicator(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeBreakIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeBreakIndicatorCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeBreakIndicatorCanonical(v BreakIndicator) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeBreakIndicator, DecodeBreakIndicator, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeBreakIndicator, DecodeBreakIndicator, nil)
 }
 
 // EncodeBreakIndicatorCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeBreakIndicatorCanonicalAtLength(v BreakIndicator, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeBreakIndicator, DecodeBreakIndicator, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeBreakIndicator, DecodeBreakIndicator, nil)
 }
 
 // DecodeSI7RestOctets decodes TS 44.018 V19.0.0 §10.5.2.36 <SI7 Rest Octets>.
@@ -73911,17 +74217,21 @@ func EncodeOptionalSelectionParametersClause105235(v OptionalSelectionParameters
 	if err := encodeOptionalSelectionParametersClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeOptionalSelectionParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeOptionalSelectionParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeOptionalSelectionParametersClause105235Canonical(v OptionalSelectionParametersClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeOptionalSelectionParametersClause105235, DecodeOptionalSelectionParametersClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeOptionalSelectionParametersClause105235, DecodeOptionalSelectionParametersClause105235, nil)
 }
 
 // EncodeOptionalSelectionParametersClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeOptionalSelectionParametersClause105235CanonicalAtLength(v OptionalSelectionParametersClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeOptionalSelectionParametersClause105235, DecodeOptionalSelectionParametersClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeOptionalSelectionParametersClause105235, DecodeOptionalSelectionParametersClause105235, nil)
 }
 
 // DecodeSelectionParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Selection Parameters>.
@@ -73958,17 +74268,21 @@ func EncodeSelectionParametersClause105235(v SelectionParametersClause105235) ([
 	if err := encodeSelectionParametersClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSelectionParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSelectionParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSelectionParametersClause105235Canonical(v SelectionParametersClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSelectionParametersClause105235, DecodeSelectionParametersClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSelectionParametersClause105235, DecodeSelectionParametersClause105235, nil)
 }
 
 // EncodeSelectionParametersClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSelectionParametersClause105235CanonicalAtLength(v SelectionParametersClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSelectionParametersClause105235, DecodeSelectionParametersClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSelectionParametersClause105235, DecodeSelectionParametersClause105235, nil)
 }
 
 // DecodeOptionalPowerOffsetClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Optional Power Offset>.
@@ -74005,17 +74319,21 @@ func EncodeOptionalPowerOffsetClause105235(v OptionalPowerOffsetClause105235) ([
 	if err := encodeOptionalPowerOffsetClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeOptionalPowerOffsetClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeOptionalPowerOffsetClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeOptionalPowerOffsetClause105235Canonical(v OptionalPowerOffsetClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeOptionalPowerOffsetClause105235, DecodeOptionalPowerOffsetClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeOptionalPowerOffsetClause105235, DecodeOptionalPowerOffsetClause105235, nil)
 }
 
 // EncodeOptionalPowerOffsetClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeOptionalPowerOffsetClause105235CanonicalAtLength(v OptionalPowerOffsetClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeOptionalPowerOffsetClause105235, DecodeOptionalPowerOffsetClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeOptionalPowerOffsetClause105235, DecodeOptionalPowerOffsetClause105235, nil)
 }
 
 // DecodeGPRSIndicatorClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <GPRS Indicator>.
@@ -74052,17 +74370,21 @@ func EncodeGPRSIndicatorClause105235(v GPRSIndicatorClause105235) ([]byte, error
 	if err := encodeGPRSIndicatorClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSIndicatorClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSIndicatorClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSIndicatorClause105235Canonical(v GPRSIndicatorClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSIndicatorClause105235, DecodeGPRSIndicatorClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSIndicatorClause105235, DecodeGPRSIndicatorClause105235, nil)
 }
 
 // EncodeGPRSIndicatorClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSIndicatorClause105235CanonicalAtLength(v GPRSIndicatorClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSIndicatorClause105235, DecodeGPRSIndicatorClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSIndicatorClause105235, DecodeGPRSIndicatorClause105235, nil)
 }
 
 // DecodeLSAParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA Parameters>.
@@ -74099,17 +74421,21 @@ func EncodeLSAParametersClause105235(v LSAParametersClause105235) ([]byte, error
 	if err := encodeLSAParametersClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAParametersClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAParametersClause105235Canonical(v LSAParametersClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAParametersClause105235, DecodeLSAParametersClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAParametersClause105235, DecodeLSAParametersClause105235, nil)
 }
 
 // EncodeLSAParametersClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAParametersClause105235CanonicalAtLength(v LSAParametersClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAParametersClause105235, DecodeLSAParametersClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAParametersClause105235, DecodeLSAParametersClause105235, nil)
 }
 
 // DecodeLSAIDInformationClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA ID information>.
@@ -74146,17 +74472,21 @@ func EncodeLSAIDInformationClause105235(v LSAIDInformationClause105235) ([]byte,
 	if err := encodeLSAIDInformationClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAIDInformationClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAIDInformationClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAIDInformationClause105235Canonical(v LSAIDInformationClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAIDInformationClause105235, DecodeLSAIDInformationClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAIDInformationClause105235, DecodeLSAIDInformationClause105235, nil)
 }
 
 // EncodeLSAIDInformationClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAIDInformationClause105235CanonicalAtLength(v LSAIDInformationClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAIDInformationClause105235, DecodeLSAIDInformationClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAIDInformationClause105235, DecodeLSAIDInformationClause105235, nil)
 }
 
 // DecodeLSAIdentityClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA identity>.
@@ -74193,17 +74523,21 @@ func EncodeLSAIdentityClause105235(v LSAIdentityClause105235) ([]byte, error) {
 	if err := encodeLSAIdentityClause105235(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLSAIdentityClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLSAIdentityClause105235Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLSAIdentityClause105235Canonical(v LSAIdentityClause105235) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLSAIdentityClause105235, DecodeLSAIdentityClause105235, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLSAIdentityClause105235, DecodeLSAIdentityClause105235, nil)
 }
 
 // EncodeLSAIdentityClause105235CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLSAIdentityClause105235CanonicalAtLength(v LSAIdentityClause105235, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLSAIdentityClause105235, DecodeLSAIdentityClause105235, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLSAIdentityClause105235, DecodeLSAIdentityClause105235, nil)
 }
 
 // DecodeSI13altRestOctets decodes TS 44.018 V19.0.0 §10.5.2.37l <SI 13alt Rest Octets>.
@@ -74259,10 +74593,13 @@ func EncodeSI13altRestOctets(v SI13altRestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI13altRestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI13altRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI13altRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI13altRestOctetsCanonical(v SI13altRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI13altRestOctets, DecodeSI13altRestOctets, nil)
 }
@@ -74306,17 +74643,21 @@ func EncodePBCCHDescription2Struct(v PBCCHDescription2Struct) ([]byte, error) {
 	if err := encodePBCCHDescription2Struct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePBCCHDescription2StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePBCCHDescription2StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePBCCHDescription2Struct, DecodePBCCHDescription2Struct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePBCCHDescription2Struct, DecodePBCCHDescription2Struct, nil)
 }
 
 // EncodePBCCHDescription2StructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePBCCHDescription2StructCanonicalAtLength(v PBCCHDescription2Struct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePBCCHDescription2Struct, DecodePBCCHDescription2Struct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePBCCHDescription2Struct, DecodePBCCHDescription2Struct, nil)
 }
 
 // DecodeP2RestOctets decodes TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>.
@@ -74370,10 +74711,13 @@ func EncodeP2RestOctets(v P2RestOctets) ([]byte, error) {
 	if len(out) < 1 {
 		return nil, fmt.Errorf("P2RestOctets requires at least 8 bits")
 	}
+	if len(out) > 11 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 11}
+	}
 	return out, nil
 }
 
-// EncodeP2RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeP2RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeP2RestOctetsCanonical(v P2RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 11, true, EncodeP2RestOctets, DecodeP2RestOctets, nil)
 }
@@ -74417,17 +74761,21 @@ func EncodePriorityClause105224(v PriorityClause105224) ([]byte, error) {
 	if err := encodePriorityClause105224(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityClause105224Canonical(v PriorityClause105224) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityClause105224, DecodePriorityClause105224, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityClause105224, DecodePriorityClause105224, nil)
 }
 
 // EncodePriorityClause105224CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityClause105224CanonicalAtLength(v PriorityClause105224, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityClause105224, DecodePriorityClause105224, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityClause105224, DecodePriorityClause105224, nil)
 }
 
 // DecodeMBMSInformationClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <MBMS Information>.
@@ -74464,17 +74812,21 @@ func EncodeMBMSInformationClause105224(v MBMSInformationClause105224) ([]byte, e
 	if err := encodeMBMSInformationClause105224(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeMBMSInformationClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeMBMSInformationClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeMBMSInformationClause105224, DecodeMBMSInformationClause105224, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeMBMSInformationClause105224, DecodeMBMSInformationClause105224, nil)
 }
 
 // EncodeMBMSInformationClause105224CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMBMSInformationClause105224CanonicalAtLength(v MBMSInformationClause105224, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeMBMSInformationClause105224, DecodeMBMSInformationClause105224, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeMBMSInformationClause105224, DecodeMBMSInformationClause105224, nil)
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <PEO IMM Cell Group Details struct>.
@@ -74511,17 +74863,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105224(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105224(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105224Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105224Canonical(v PEOIMMCellGroupDetailsStructClause105224) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105224, DecodePEOIMMCellGroupDetailsStructClause105224, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105224, DecodePEOIMMCellGroupDetailsStructClause105224, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105224CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105224CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105224, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105224, DecodePEOIMMCellGroupDetailsStructClause105224, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105224, DecodePEOIMMCellGroupDetailsStructClause105224, nil)
 }
 
 // DecodeP3RestOctets decodes TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>.
@@ -74575,10 +74931,13 @@ func EncodeP3RestOctets(v P3RestOctets) ([]byte, error) {
 	if len(out) < 3 {
 		return nil, fmt.Errorf("P3RestOctets requires at least 24 bits")
 	}
+	if len(out) > 3 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 3}
+	}
 	return out, nil
 }
 
-// EncodeP3RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeP3RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeP3RestOctetsCanonical(v P3RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 3, 3, true, EncodeP3RestOctets, DecodeP3RestOctets, nil)
 }
@@ -74622,17 +74981,21 @@ func EncodePriorityClause105225(v PriorityClause105225) ([]byte, error) {
 	if err := encodePriorityClause105225(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityClause105225Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityClause105225Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityClause105225Canonical(v PriorityClause105225) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityClause105225, DecodePriorityClause105225, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityClause105225, DecodePriorityClause105225, nil)
 }
 
 // EncodePriorityClause105225CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityClause105225CanonicalAtLength(v PriorityClause105225, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityClause105225, DecodePriorityClause105225, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityClause105225, DecodePriorityClause105225, nil)
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <PEO IMM Cell Group Details struct>.
@@ -74669,17 +75032,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105225(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105225(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105225Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105225Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105225Canonical(v PEOIMMCellGroupDetailsStructClause105225) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105225, DecodePEOIMMCellGroupDetailsStructClause105225, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105225, DecodePEOIMMCellGroupDetailsStructClause105225, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105225CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105225CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105225, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105225, DecodePEOIMMCellGroupDetailsStructClause105225, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105225, DecodePEOIMMCellGroupDetailsStructClause105225, nil)
 }
 
 // DecodeSI2quaterRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>.
@@ -74735,10 +75102,13 @@ func EncodeSI2quaterRestOctets(v SI2quaterRestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI2quaterRestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI2quaterRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2quaterRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI2quaterRestOctets, DecodeSI2quaterRestOctets, nil)
 }
@@ -74782,17 +75152,21 @@ func EncodeN3GNeighbourCellDescriptionStruct(v N3GNeighbourCellDescriptionStruct
 	if err := encodeN3GNeighbourCellDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GNeighbourCellDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GNeighbourCellDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GNeighbourCellDescriptionStructCanonical(v N3GNeighbourCellDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GNeighbourCellDescriptionStruct, DecodeN3GNeighbourCellDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GNeighbourCellDescriptionStruct, DecodeN3GNeighbourCellDescriptionStruct, nil)
 }
 
 // EncodeN3GNeighbourCellDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GNeighbourCellDescriptionStructCanonicalAtLength(v N3GNeighbourCellDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GNeighbourCellDescriptionStruct, DecodeN3GNeighbourCellDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GNeighbourCellDescriptionStruct, DecodeN3GNeighbourCellDescriptionStruct, nil)
 }
 
 // DecodeUTRANFDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN FDD Description struct>.
@@ -74829,17 +75203,21 @@ func EncodeUTRANFDDDescriptionStructClause105233b(v UTRANFDDDescriptionStructCla
 	if err := encodeUTRANFDDDescriptionStructClause105233b(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANFDDDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANFDDDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANFDDDescriptionStructClause105233bCanonical(v UTRANFDDDescriptionStructClause105233b) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANFDDDescriptionStructClause105233b, DecodeUTRANFDDDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANFDDDescriptionStructClause105233b, DecodeUTRANFDDDescriptionStructClause105233b, nil)
 }
 
 // EncodeUTRANFDDDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANFDDDescriptionStructClause105233bCanonicalAtLength(v UTRANFDDDescriptionStructClause105233b, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANFDDDescriptionStructClause105233b, DecodeUTRANFDDDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANFDDDescriptionStructClause105233b, DecodeUTRANFDDDescriptionStructClause105233b, nil)
 }
 
 // DecodeRepeatedUTRANFDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN FDD Neighbour Cells struct>.
@@ -74876,17 +75254,21 @@ func EncodeRepeatedUTRANFDDNeighbourCellsStruct(v RepeatedUTRANFDDNeighbourCells
 	if err := encodeRepeatedUTRANFDDNeighbourCellsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical(v RepeatedUTRANFDDNeighbourCellsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeRepeatedUTRANFDDNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeRepeatedUTRANFDDNeighbourCellsStruct, nil)
 }
 
 // EncodeRepeatedUTRANFDDNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonicalAtLength(v RepeatedUTRANFDDNeighbourCellsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeRepeatedUTRANFDDNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeRepeatedUTRANFDDNeighbourCellsStruct, nil)
 }
 
 // DecodeUTRANTDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN TDD Description struct>.
@@ -74923,17 +75305,21 @@ func EncodeUTRANTDDDescriptionStructClause105233b(v UTRANTDDDescriptionStructCla
 	if err := encodeUTRANTDDDescriptionStructClause105233b(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANTDDDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANTDDDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANTDDDescriptionStructClause105233bCanonical(v UTRANTDDDescriptionStructClause105233b) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANTDDDescriptionStructClause105233b, DecodeUTRANTDDDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANTDDDescriptionStructClause105233b, DecodeUTRANTDDDescriptionStructClause105233b, nil)
 }
 
 // EncodeUTRANTDDDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANTDDDescriptionStructClause105233bCanonicalAtLength(v UTRANTDDDescriptionStructClause105233b, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANTDDDescriptionStructClause105233b, DecodeUTRANTDDDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANTDDDescriptionStructClause105233b, DecodeUTRANTDDDescriptionStructClause105233b, nil)
 }
 
 // DecodeRepeatedUTRANTDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN TDD Neighbour Cells struct>.
@@ -74970,17 +75356,21 @@ func EncodeRepeatedUTRANTDDNeighbourCellsStruct(v RepeatedUTRANTDDNeighbourCells
 	if err := encodeRepeatedUTRANTDDNeighbourCellsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical(v RepeatedUTRANTDDNeighbourCellsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeRepeatedUTRANTDDNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeRepeatedUTRANTDDNeighbourCellsStruct, nil)
 }
 
 // EncodeRepeatedUTRANTDDNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonicalAtLength(v RepeatedUTRANTDDNeighbourCellsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeRepeatedUTRANTDDNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeRepeatedUTRANTDDNeighbourCellsStruct, nil)
 }
 
 // DecodeMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <MEASUREMENT PARAMETERS Description Struct>.
@@ -75017,17 +75407,21 @@ func EncodeMEASUREMENTPARAMETERSDescriptionStruct(v MEASUREMENTPARAMETERSDescrip
 	if err := encodeMEASUREMENTPARAMETERSDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMEASUREMENTPARAMETERSDescriptionStructCanonical(v MEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // EncodeMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength(v MEASUREMENTPARAMETERSDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G MEASUREMENT PARAMETERS Description struct>.
@@ -75064,17 +75458,21 @@ func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(v N3GMEASUREME
 	if err := encodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonical(v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, nil)
 }
 
 // EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonicalAtLength(v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, nil)
 }
 
 // DecodeGPRSRealTimeDifferenceDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS Real Time Difference Description struct>.
@@ -75111,17 +75509,21 @@ func EncodeGPRSRealTimeDifferenceDescriptionStruct(v GPRSRealTimeDifferenceDescr
 	if err := encodeGPRSRealTimeDifferenceDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSRealTimeDifferenceDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSRealTimeDifferenceDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSRealTimeDifferenceDescriptionStructCanonical(v GPRSRealTimeDifferenceDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSRealTimeDifferenceDescriptionStruct, DecodeGPRSRealTimeDifferenceDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSRealTimeDifferenceDescriptionStruct, DecodeGPRSRealTimeDifferenceDescriptionStruct, nil)
 }
 
 // EncodeGPRSRealTimeDifferenceDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSRealTimeDifferenceDescriptionStructCanonicalAtLength(v GPRSRealTimeDifferenceDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSRealTimeDifferenceDescriptionStruct, DecodeGPRSRealTimeDifferenceDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSRealTimeDifferenceDescriptionStruct, DecodeGPRSRealTimeDifferenceDescriptionStruct, nil)
 }
 
 // DecodeRTD6Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD6 Struct>.
@@ -75156,17 +75558,21 @@ func EncodeRTD6Struct(v RTD6Struct) ([]byte, error) {
 	if err := encodeRTD6Struct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRTD6StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRTD6StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRTD6StructCanonical(v RTD6Struct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRTD6Struct, DecodeRTD6Struct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRTD6Struct, DecodeRTD6Struct, nil)
 }
 
 // EncodeRTD6StructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRTD6StructCanonicalAtLength(v RTD6Struct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRTD6Struct, DecodeRTD6Struct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRTD6Struct, DecodeRTD6Struct, nil)
 }
 
 // DecodeRTD12Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD12 Struct>.
@@ -75201,17 +75607,21 @@ func EncodeRTD12Struct(v RTD12Struct) ([]byte, error) {
 	if err := encodeRTD12Struct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRTD12StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRTD12StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRTD12StructCanonical(v RTD12Struct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRTD12Struct, DecodeRTD12Struct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRTD12Struct, DecodeRTD12Struct, nil)
 }
 
 // EncodeRTD12StructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRTD12StructCanonicalAtLength(v RTD12Struct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRTD12Struct, DecodeRTD12Struct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRTD12Struct, DecodeRTD12Struct, nil)
 }
 
 // DecodeGPRSBSICDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS BSIC Description struct>.
@@ -75248,17 +75658,21 @@ func EncodeGPRSBSICDescriptionStruct(v GPRSBSICDescriptionStruct) ([]byte, error
 	if err := encodeGPRSBSICDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSBSICDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSBSICDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSBSICDescriptionStructCanonical(v GPRSBSICDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSBSICDescriptionStruct, DecodeGPRSBSICDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSBSICDescriptionStruct, DecodeGPRSBSICDescriptionStruct, nil)
 }
 
 // EncodeGPRSBSICDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSBSICDescriptionStructCanonicalAtLength(v GPRSBSICDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSBSICDescriptionStruct, DecodeGPRSBSICDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSBSICDescriptionStruct, DecodeGPRSBSICDescriptionStruct, nil)
 }
 
 // DecodeGPRSREPORTPRIORITYDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS REPORT PRIORITY Description struct>.
@@ -75295,17 +75709,21 @@ func EncodeGPRSREPORTPRIORITYDescriptionStruct(v GPRSREPORTPRIORITYDescriptionSt
 	if err := encodeGPRSREPORTPRIORITYDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSREPORTPRIORITYDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSREPORTPRIORITYDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSREPORTPRIORITYDescriptionStructCanonical(v GPRSREPORTPRIORITYDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSREPORTPRIORITYDescriptionStruct, DecodeGPRSREPORTPRIORITYDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSREPORTPRIORITYDescriptionStruct, DecodeGPRSREPORTPRIORITYDescriptionStruct, nil)
 }
 
 // EncodeGPRSREPORTPRIORITYDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSREPORTPRIORITYDescriptionStructCanonicalAtLength(v GPRSREPORTPRIORITYDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSREPORTPRIORITYDescriptionStruct, DecodeGPRSREPORTPRIORITYDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSREPORTPRIORITYDescriptionStruct, DecodeGPRSREPORTPRIORITYDescriptionStruct, nil)
 }
 
 // DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS MEASUREMENT PARAMETERS Description struct>.
@@ -75342,17 +75760,21 @@ func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(v GPRSMEASUREMENTPARAMETER
 	if err := encodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonical(v GPRSMEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength(v GPRSMEASUREMENTPARAMETERSDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS 3G MEASUREMENT PARAMETERS Description struct>.
@@ -75389,17 +75811,21 @@ func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(v GPRS3GMEASUREMENTPARAM
 	if err := encodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonical(v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonicalAtLength(v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, nil)
 }
 
 // DecodeNCMeasurementParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <NC Measurement Parameters struct>.
@@ -75436,17 +75862,21 @@ func EncodeNCMeasurementParametersStruct(v NCMeasurementParametersStruct) ([]byt
 	if err := encodeNCMeasurementParametersStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNCMeasurementParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNCMeasurementParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNCMeasurementParametersStructCanonical(v NCMeasurementParametersStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNCMeasurementParametersStruct, DecodeNCMeasurementParametersStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNCMeasurementParametersStruct, DecodeNCMeasurementParametersStruct, nil)
 }
 
 // EncodeNCMeasurementParametersStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNCMeasurementParametersStructCanonicalAtLength(v NCMeasurementParametersStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNCMeasurementParametersStruct, DecodeNCMeasurementParametersStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNCMeasurementParametersStruct, DecodeNCMeasurementParametersStruct, nil)
 }
 
 // DecodeSI2qExtensionInformation decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2q Extension Information>.
@@ -75483,17 +75913,21 @@ func EncodeSI2qExtensionInformation(v SI2qExtensionInformation) ([]byte, error) 
 	if err := encodeSI2qExtensionInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI2qExtensionInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI2qExtensionInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI2qExtensionInformationCanonical(v SI2qExtensionInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSI2qExtensionInformation, DecodeSI2qExtensionInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSI2qExtensionInformation, DecodeSI2qExtensionInformation, nil)
 }
 
 // EncodeSI2qExtensionInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI2qExtensionInformationCanonicalAtLength(v SI2qExtensionInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSI2qExtensionInformation, DecodeSI2qExtensionInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSI2qExtensionInformation, DecodeSI2qExtensionInformation, nil)
 }
 
 // DecodeCCNSupportDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CCN Support Description struct>.
@@ -75530,17 +75964,21 @@ func EncodeCCNSupportDescriptionStruct(v CCNSupportDescriptionStruct) ([]byte, e
 	if err := encodeCCNSupportDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCCNSupportDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCCNSupportDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCCNSupportDescriptionStructCanonical(v CCNSupportDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCCNSupportDescriptionStruct, DecodeCCNSupportDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCCNSupportDescriptionStruct, DecodeCCNSupportDescriptionStruct, nil)
 }
 
 // EncodeCCNSupportDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCCNSupportDescriptionStructCanonicalAtLength(v CCNSupportDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCCNSupportDescriptionStruct, DecodeCCNSupportDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCCNSupportDescriptionStruct, DecodeCCNSupportDescriptionStruct, nil)
 }
 
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description struct>.
@@ -75577,17 +76015,21 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(v N3
 	if err := encodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonical(v N3GAdditionalMeasurementParametersDescriptionStructClause105233b) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, nil)
 }
 
 // EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonicalAtLength(v N3GAdditionalMeasurementParametersDescriptionStructClause105233b, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, nil)
 }
 
 // DecodeN3GAdditionalMeasurementParametersDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description 2 struct>.
@@ -75624,17 +76066,21 @@ func EncodeN3GAdditionalMeasurementParametersDescription2Struct(v N3GAdditionalM
 	if err := encodeN3GAdditionalMeasurementParametersDescription2Struct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GAdditionalMeasurementParametersDescription2StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GAdditionalMeasurementParametersDescription2StructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GAdditionalMeasurementParametersDescription2StructCanonical(v N3GAdditionalMeasurementParametersDescription2Struct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeN3GAdditionalMeasurementParametersDescription2Struct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeN3GAdditionalMeasurementParametersDescription2Struct, nil)
 }
 
 // EncodeN3GAdditionalMeasurementParametersDescription2StructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GAdditionalMeasurementParametersDescription2StructCanonicalAtLength(v N3GAdditionalMeasurementParametersDescription2Struct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeN3GAdditionalMeasurementParametersDescription2Struct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeN3GAdditionalMeasurementParametersDescription2Struct, nil)
 }
 
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <Priority and E-UTRAN Parameters Description struct>.
@@ -75671,17 +76117,21 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233b(v PriorityA
 	if err := encodePriorityAndEUTRANParametersDescriptionStructClause105233b(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105233b) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
 }
 
 // EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105233b, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
 }
 
 // DecodeServingCellPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Serving Cell Priority Parameters Description struct>.
@@ -75718,17 +76168,21 @@ func EncodeServingCellPriorityParametersDescriptionStruct(v ServingCellPriorityP
 	if err := encodeServingCellPriorityParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeServingCellPriorityParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeServingCellPriorityParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeServingCellPriorityParametersDescriptionStructCanonical(v ServingCellPriorityParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeServingCellPriorityParametersDescriptionStruct, DecodeServingCellPriorityParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeServingCellPriorityParametersDescriptionStruct, DecodeServingCellPriorityParametersDescriptionStruct, nil)
 }
 
 // EncodeServingCellPriorityParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeServingCellPriorityParametersDescriptionStructCanonicalAtLength(v ServingCellPriorityParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeServingCellPriorityParametersDescriptionStruct, DecodeServingCellPriorityParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeServingCellPriorityParametersDescriptionStruct, DecodeServingCellPriorityParametersDescriptionStruct, nil)
 }
 
 // DecodeN3GPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Priority Parameters Description struct>.
@@ -75765,17 +76219,21 @@ func EncodeN3GPriorityParametersDescriptionStruct(v N3GPriorityParametersDescrip
 	if err := encodeN3GPriorityParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GPriorityParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GPriorityParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GPriorityParametersDescriptionStructCanonical(v N3GPriorityParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GPriorityParametersDescriptionStruct, DecodeN3GPriorityParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GPriorityParametersDescriptionStruct, DecodeN3GPriorityParametersDescriptionStruct, nil)
 }
 
 // EncodeN3GPriorityParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GPriorityParametersDescriptionStructCanonicalAtLength(v N3GPriorityParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GPriorityParametersDescriptionStruct, DecodeN3GPriorityParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GPriorityParametersDescriptionStruct, DecodeN3GPriorityParametersDescriptionStruct, nil)
 }
 
 // DecodeRepeatedUTRANPriorityParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN Priority Parameters struct>.
@@ -75812,17 +76270,21 @@ func EncodeRepeatedUTRANPriorityParametersStruct(v RepeatedUTRANPriorityParamete
 	if err := encodeRepeatedUTRANPriorityParametersStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedUTRANPriorityParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedUTRANPriorityParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedUTRANPriorityParametersStructCanonical(v RepeatedUTRANPriorityParametersStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedUTRANPriorityParametersStruct, DecodeRepeatedUTRANPriorityParametersStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedUTRANPriorityParametersStruct, DecodeRepeatedUTRANPriorityParametersStruct, nil)
 }
 
 // EncodeRepeatedUTRANPriorityParametersStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedUTRANPriorityParametersStructCanonicalAtLength(v RepeatedUTRANPriorityParametersStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedUTRANPriorityParametersStruct, DecodeRepeatedUTRANPriorityParametersStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedUTRANPriorityParametersStruct, DecodeRepeatedUTRANPriorityParametersStruct, nil)
 }
 
 // DecodeEUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Parameters Description struct>.
@@ -75859,17 +76321,21 @@ func EncodeEUTRANParametersDescriptionStruct(v EUTRANParametersDescriptionStruct
 	if err := encodeEUTRANParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEUTRANParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEUTRANParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEUTRANParametersDescriptionStruct, DecodeEUTRANParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANParametersDescriptionStruct, DecodeEUTRANParametersDescriptionStruct, nil)
 }
 
 // EncodeEUTRANParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEUTRANParametersDescriptionStructCanonicalAtLength(v EUTRANParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEUTRANParametersDescriptionStruct, DecodeEUTRANParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANParametersDescriptionStruct, DecodeEUTRANParametersDescriptionStruct, nil)
 }
 
 // DecodeEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Measurement Parameters Description struct>.
@@ -75906,17 +76372,21 @@ func EncodeEUTRANMeasurementParametersDescriptionStruct(v EUTRANMeasurementParam
 	if err := encodeEUTRANMeasurementParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEUTRANMeasurementParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEUTRANMeasurementParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEUTRANMeasurementParametersDescriptionStructCanonical(v EUTRANMeasurementParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEUTRANMeasurementParametersDescriptionStruct, DecodeEUTRANMeasurementParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANMeasurementParametersDescriptionStruct, DecodeEUTRANMeasurementParametersDescriptionStruct, nil)
 }
 
 // EncodeEUTRANMeasurementParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEUTRANMeasurementParametersDescriptionStructCanonicalAtLength(v EUTRANMeasurementParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEUTRANMeasurementParametersDescriptionStruct, DecodeEUTRANMeasurementParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANMeasurementParametersDescriptionStruct, DecodeEUTRANMeasurementParametersDescriptionStruct, nil)
 }
 
 // DecodeGPRSEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS E-UTRAN Measurement Parameters Description struct>.
@@ -75953,17 +76423,21 @@ func EncodeGPRSEUTRANMeasurementParametersDescriptionStruct(v GPRSEUTRANMeasurem
 	if err := encodeGPRSEUTRANMeasurementParametersDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonical(v GPRSEUTRANMeasurementParametersDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeGPRSEUTRANMeasurementParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeGPRSEUTRANMeasurementParametersDescriptionStruct, nil)
 }
 
 // EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonicalAtLength(v GPRSEUTRANMeasurementParametersDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeGPRSEUTRANMeasurementParametersDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeGPRSEUTRANMeasurementParametersDescriptionStruct, nil)
 }
 
 // DecodeRepeatedEUTRANNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Neighbour Cells struct>.
@@ -76000,17 +76474,21 @@ func EncodeRepeatedEUTRANNeighbourCellsStruct(v RepeatedEUTRANNeighbourCellsStru
 	if err := encodeRepeatedEUTRANNeighbourCellsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedEUTRANNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedEUTRANNeighbourCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbourCellsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedEUTRANNeighbourCellsStruct, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedEUTRANNeighbourCellsStruct, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
 }
 
 // EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength(v RepeatedEUTRANNeighbourCellsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedEUTRANNeighbourCellsStruct, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedEUTRANNeighbourCellsStruct, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
 }
 
 // DecodeRepeatedEUTRANNotAllowedCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Not Allowed Cells struct>.
@@ -76047,17 +76525,21 @@ func EncodeRepeatedEUTRANNotAllowedCellsStruct(v RepeatedEUTRANNotAllowedCellsSt
 	if err := encodeRepeatedEUTRANNotAllowedCellsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedEUTRANNotAllowedCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedEUTRANNotAllowedCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllowedCellsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedEUTRANNotAllowedCellsStruct, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedEUTRANNotAllowedCellsStruct, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
 }
 
 // EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength(v RepeatedEUTRANNotAllowedCellsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedEUTRANNotAllowedCellsStruct, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedEUTRANNotAllowedCellsStruct, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
 }
 
 // DecodeRepeatedEUTRANPCIDToTAMappingStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN PCID to TA mapping struct>.
@@ -76094,17 +76576,21 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStruct(v RepeatedEUTRANPCIDToTAMappingSt
 	if err := encodeRepeatedEUTRANPCIDToTAMappingStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTAMappingStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
 }
 
 // EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength(v RepeatedEUTRANPCIDToTAMappingStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
 }
 
 // DecodeN3GCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G CSG Description struct>.
@@ -76141,17 +76627,21 @@ func EncodeN3GCSGDescriptionStruct(v N3GCSGDescriptionStruct) ([]byte, error) {
 	if err := encodeN3GCSGDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeN3GCSGDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeN3GCSGDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeN3GCSGDescriptionStruct, DecodeN3GCSGDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeN3GCSGDescriptionStruct, DecodeN3GCSGDescriptionStruct, nil)
 }
 
 // EncodeN3GCSGDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN3GCSGDescriptionStructCanonicalAtLength(v N3GCSGDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeN3GCSGDescriptionStruct, DecodeN3GCSGDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeN3GCSGDescriptionStruct, DecodeN3GCSGDescriptionStruct, nil)
 }
 
 // DecodeEUTRANCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Description struct>.
@@ -76188,17 +76678,21 @@ func EncodeEUTRANCSGDescriptionStruct(v EUTRANCSGDescriptionStruct) ([]byte, err
 	if err := encodeEUTRANCSGDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEUTRANCSGDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEUTRANCSGDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEUTRANCSGDescriptionStruct, DecodeEUTRANCSGDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANCSGDescriptionStruct, DecodeEUTRANCSGDescriptionStruct, nil)
 }
 
 // EncodeEUTRANCSGDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEUTRANCSGDescriptionStructCanonicalAtLength(v EUTRANCSGDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEUTRANCSGDescriptionStruct, DecodeEUTRANCSGDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANCSGDescriptionStruct, DecodeEUTRANCSGDescriptionStruct, nil)
 }
 
 // DecodeCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CSG Cells Reporting Description struct>.
@@ -76235,17 +76729,21 @@ func EncodeCSGCellsReportingDescriptionStruct(v CSGCellsReportingDescriptionStru
 	if err := encodeCSGCellsReportingDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCSGCellsReportingDescriptionStructCanonical(v CSGCellsReportingDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCSGCellsReportingDescriptionStruct, DecodeCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCSGCellsReportingDescriptionStruct, DecodeCSGCellsReportingDescriptionStruct, nil)
 }
 
 // EncodeCSGCellsReportingDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCSGCellsReportingDescriptionStructCanonicalAtLength(v CSGCellsReportingDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCSGCellsReportingDescriptionStruct, DecodeCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCSGCellsReportingDescriptionStruct, DecodeCSGCellsReportingDescriptionStruct, nil)
 }
 
 // DecodeUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN CSG Cells Reporting Description struct>.
@@ -76282,17 +76780,21 @@ func EncodeUTRANCSGCellsReportingDescriptionStruct(v UTRANCSGCellsReportingDescr
 	if err := encodeUTRANCSGCellsReportingDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeUTRANCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeUTRANCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANCSGCellsReportingDescriptionStructCanonical(v UTRANCSGCellsReportingDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeUTRANCSGCellsReportingDescriptionStruct, DecodeUTRANCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANCSGCellsReportingDescriptionStruct, DecodeUTRANCSGCellsReportingDescriptionStruct, nil)
 }
 
 // EncodeUTRANCSGCellsReportingDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANCSGCellsReportingDescriptionStructCanonicalAtLength(v UTRANCSGCellsReportingDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeUTRANCSGCellsReportingDescriptionStruct, DecodeUTRANCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANCSGCellsReportingDescriptionStruct, DecodeUTRANCSGCellsReportingDescriptionStruct, nil)
 }
 
 // DecodeEUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Cells Reporting Description struct>.
@@ -76329,17 +76831,21 @@ func EncodeEUTRANCSGCellsReportingDescriptionStruct(v EUTRANCSGCellsReportingDes
 	if err := encodeEUTRANCSGCellsReportingDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEUTRANCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEUTRANCSGCellsReportingDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEUTRANCSGCellsReportingDescriptionStructCanonical(v EUTRANCSGCellsReportingDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEUTRANCSGCellsReportingDescriptionStruct, DecodeEUTRANCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANCSGCellsReportingDescriptionStruct, DecodeEUTRANCSGCellsReportingDescriptionStruct, nil)
 }
 
 // EncodeEUTRANCSGCellsReportingDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEUTRANCSGCellsReportingDescriptionStructCanonicalAtLength(v EUTRANCSGCellsReportingDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEUTRANCSGCellsReportingDescriptionStruct, DecodeEUTRANCSGCellsReportingDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANCSGCellsReportingDescriptionStruct, DecodeEUTRANCSGCellsReportingDescriptionStruct, nil)
 }
 
 // DecodeExtendedEARFCNsDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description struct>.
@@ -76376,17 +76882,21 @@ func EncodeExtendedEARFCNsDescriptionStruct(v ExtendedEARFCNsDescriptionStruct) 
 	if err := encodeExtendedEARFCNsDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeExtendedEARFCNsDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeExtendedEARFCNsDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeExtendedEARFCNsDescriptionStructCanonical(v ExtendedEARFCNsDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeExtendedEARFCNsDescriptionStruct, DecodeExtendedEARFCNsDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeExtendedEARFCNsDescriptionStruct, DecodeExtendedEARFCNsDescriptionStruct, nil)
 }
 
 // EncodeExtendedEARFCNsDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeExtendedEARFCNsDescriptionStructCanonicalAtLength(v ExtendedEARFCNsDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeExtendedEARFCNsDescriptionStruct, DecodeExtendedEARFCNsDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeExtendedEARFCNsDescriptionStruct, DecodeExtendedEARFCNsDescriptionStruct, nil)
 }
 
 // DecodeExtendedEARFCNsDescriptionForCSGCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description for CSG Cells struct>.
@@ -76423,17 +76933,21 @@ func EncodeExtendedEARFCNsDescriptionForCSGCellsStruct(v ExtendedEARFCNsDescript
 	if err := encodeExtendedEARFCNsDescriptionForCSGCellsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical(v ExtendedEARFCNsDescriptionForCSGCellsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeExtendedEARFCNsDescriptionForCSGCellsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeExtendedEARFCNsDescriptionForCSGCellsStruct, nil)
 }
 
 // EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonicalAtLength(v ExtendedEARFCNsDescriptionForCSGCellsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeExtendedEARFCNsDescriptionForCSGCellsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeExtendedEARFCNsDescriptionForCSGCellsStruct, nil)
 }
 
 // DecodeSI6RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35a <SI6 rest octets>.
@@ -76489,10 +77003,13 @@ func EncodeSI6RestOctets(v SI6RestOctets) ([]byte, error) {
 	if len(out) < 7 {
 		return nil, fmt.Errorf("SI6RestOctets requires at least 56 bits")
 	}
+	if len(out) > 7 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 7}
+	}
 	return out, nil
 }
 
-// EncodeSI6RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI6RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI6RestOctetsCanonical(v SI6RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 7, 7, false, EncodeSI6RestOctets, DecodeSI6RestOctets, nil)
 }
@@ -76536,17 +77053,21 @@ func EncodePCHAndNCHInfo(v PCHAndNCHInfo) ([]byte, error) {
 	if err := encodePCHAndNCHInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePCHAndNCHInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePCHAndNCHInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePCHAndNCHInfoCanonical(v PCHAndNCHInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePCHAndNCHInfo, DecodePCHAndNCHInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePCHAndNCHInfo, DecodePCHAndNCHInfo, nil)
 }
 
 // EncodePCHAndNCHInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePCHAndNCHInfoCanonicalAtLength(v PCHAndNCHInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePCHAndNCHInfo, DecodePCHAndNCHInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePCHAndNCHInfo, DecodePCHAndNCHInfo, nil)
 }
 
 // DecodePagingChannelRestructuring decodes TS 44.018 V19.0.0 §10.5.2.35a <paging channel restructuring>.
@@ -76583,17 +77104,21 @@ func EncodePagingChannelRestructuring(v PagingChannelRestructuring) ([]byte, err
 	if err := encodePagingChannelRestructuring(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePagingChannelRestructuringCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePagingChannelRestructuringCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePagingChannelRestructuringCanonical(v PagingChannelRestructuring) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePagingChannelRestructuring, DecodePagingChannelRestructuring, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePagingChannelRestructuring, DecodePagingChannelRestructuring, nil)
 }
 
 // EncodePagingChannelRestructuringCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePagingChannelRestructuringCanonicalAtLength(v PagingChannelRestructuring, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePagingChannelRestructuring, DecodePagingChannelRestructuring, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePagingChannelRestructuring, DecodePagingChannelRestructuring, nil)
 }
 
 // DecodeVBSVGCSOptions decodes TS 44.018 V19.0.0 §10.5.2.35a <VBS/VGCS options>.
@@ -76630,17 +77155,21 @@ func EncodeVBSVGCSOptions(v VBSVGCSOptions) ([]byte, error) {
 	if err := encodeVBSVGCSOptions(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeVBSVGCSOptionsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeVBSVGCSOptionsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeVBSVGCSOptionsCanonical(v VBSVGCSOptions) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeVBSVGCSOptions, DecodeVBSVGCSOptions, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeVBSVGCSOptions, DecodeVBSVGCSOptions, nil)
 }
 
 // EncodeVBSVGCSOptionsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeVBSVGCSOptionsCanonicalAtLength(v VBSVGCSOptions, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeVBSVGCSOptions, DecodeVBSVGCSOptions, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeVBSVGCSOptions, DecodeVBSVGCSOptions, nil)
 }
 
 // DecodeInbandNotifications decodes TS 44.018 V19.0.0 §10.5.2.35a <inband notifications>.
@@ -76677,17 +77206,21 @@ func EncodeInbandNotifications(v InbandNotifications) ([]byte, error) {
 	if err := encodeInbandNotifications(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeInbandNotificationsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeInbandNotificationsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeInbandNotificationsCanonical(v InbandNotifications) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeInbandNotifications, DecodeInbandNotifications, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeInbandNotifications, DecodeInbandNotifications, nil)
 }
 
 // EncodeInbandNotificationsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeInbandNotificationsCanonicalAtLength(v InbandNotifications, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeInbandNotifications, DecodeInbandNotifications, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeInbandNotifications, DecodeInbandNotifications, nil)
 }
 
 // DecodeInbandPagings decodes TS 44.018 V19.0.0 §10.5.2.35a <inband pagings>.
@@ -76724,17 +77257,21 @@ func EncodeInbandPagings(v InbandPagings) ([]byte, error) {
 	if err := encodeInbandPagings(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeInbandPagingsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeInbandPagingsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeInbandPagingsCanonical(v InbandPagings) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeInbandPagings, DecodeInbandPagings, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeInbandPagings, DecodeInbandPagings, nil)
 }
 
 // EncodeInbandPagingsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeInbandPagingsCanonicalAtLength(v InbandPagings, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeInbandPagings, DecodeInbandPagings, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeInbandPagings, DecodeInbandPagings, nil)
 }
 
 // DecodeBandIndicatorClause105235a decodes TS 44.018 V19.0.0 §10.5.2.35a <Band indicator>.
@@ -76771,17 +77308,21 @@ func EncodeBandIndicatorClause105235a(v BandIndicatorClause105235a) ([]byte, err
 	if err := encodeBandIndicatorClause105235a(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeBandIndicatorClause105235aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeBandIndicatorClause105235aCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeBandIndicatorClause105235aCanonical(v BandIndicatorClause105235a) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeBandIndicatorClause105235a, DecodeBandIndicatorClause105235a, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeBandIndicatorClause105235a, DecodeBandIndicatorClause105235a, nil)
 }
 
 // EncodeBandIndicatorClause105235aCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeBandIndicatorClause105235aCanonicalAtLength(v BandIndicatorClause105235a, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeBandIndicatorClause105235a, DecodeBandIndicatorClause105235a, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeBandIndicatorClause105235a, DecodeBandIndicatorClause105235a, nil)
 }
 
 // DecodeSI13RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>.
@@ -76837,10 +77378,13 @@ func EncodeSI13RestOctets(v SI13RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI13RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI13RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI13RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI13RestOctets, DecodeSI13RestOctets, nil)
 }
@@ -76884,17 +77428,21 @@ func EncodePBCCHDescriptionStruct(v PBCCHDescriptionStruct) ([]byte, error) {
 	if err := encodePBCCHDescriptionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePBCCHDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePBCCHDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePBCCHDescriptionStructCanonical(v PBCCHDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePBCCHDescriptionStruct, DecodePBCCHDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePBCCHDescriptionStruct, DecodePBCCHDescriptionStruct, nil)
 }
 
 // EncodePBCCHDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePBCCHDescriptionStructCanonicalAtLength(v PBCCHDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePBCCHDescriptionStruct, DecodePBCCHDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePBCCHDescriptionStruct, DecodePBCCHDescriptionStruct, nil)
 }
 
 // DecodeSICHANGEALT decodes TS 44.018 V19.0.0 §10.5.2.37b <SI_CHANGE_ALT>.
@@ -76929,17 +77477,21 @@ func EncodeSICHANGEALT(v SICHANGEALT) ([]byte, error) {
 	if err := encodeSICHANGEALT(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSICHANGEALTCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSICHANGEALTCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSICHANGEALTCanonical(v SICHANGEALT) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSICHANGEALT, DecodeSICHANGEALT, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSICHANGEALT, DecodeSICHANGEALT, nil)
 }
 
 // EncodeSICHANGEALTCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSICHANGEALTCanonicalAtLength(v SICHANGEALT, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSICHANGEALT, DecodeSICHANGEALT, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSICHANGEALT, DecodeSICHANGEALT, nil)
 }
 
 // DecodePEOIMMCellGroupDefinitionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Definition struct>.
@@ -76976,17 +77528,21 @@ func EncodePEOIMMCellGroupDefinitionStruct(v PEOIMMCellGroupDefinitionStruct) ([
 	if err := encodePEOIMMCellGroupDefinitionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDefinitionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDefinitionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDefinitionStructCanonical(v PEOIMMCellGroupDefinitionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDefinitionStruct, DecodePEOIMMCellGroupDefinitionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDefinitionStruct, DecodePEOIMMCellGroupDefinitionStruct, nil)
 }
 
 // EncodePEOIMMCellGroupDefinitionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDefinitionStructCanonicalAtLength(v PEOIMMCellGroupDefinitionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDefinitionStruct, DecodePEOIMMCellGroupDefinitionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDefinitionStruct, DecodePEOIMMCellGroupDefinitionStruct, nil)
 }
 
 // DecodePEOIMMCellGroupSpecificParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Specific Parameters struct>.
@@ -77023,17 +77579,21 @@ func EncodePEOIMMCellGroupSpecificParametersStruct(v PEOIMMCellGroupSpecificPara
 	if err := encodePEOIMMCellGroupSpecificParametersStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupSpecificParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupSpecificParametersStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupSpecificParametersStructCanonical(v PEOIMMCellGroupSpecificParametersStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupSpecificParametersStruct, DecodePEOIMMCellGroupSpecificParametersStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupSpecificParametersStruct, DecodePEOIMMCellGroupSpecificParametersStruct, nil)
 }
 
 // EncodePEOIMMCellGroupSpecificParametersStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupSpecificParametersStructCanonicalAtLength(v PEOIMMCellGroupSpecificParametersStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupSpecificParametersStruct, DecodePEOIMMCellGroupSpecificParametersStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupSpecificParametersStruct, DecodePEOIMMCellGroupSpecificParametersStruct, nil)
 }
 
 // DecodeSI19RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37g <SI 19 Rest Octets>.
@@ -77089,10 +77649,13 @@ func EncodeSI19RestOctets(v SI19RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI19RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI19RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI19RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI19RestOctetsCanonical(v SI19RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI19RestOctets, DecodeSI19RestOctets, nil)
 }
@@ -77136,17 +77699,21 @@ func EncodeCOMPACTNeighbourCellParamsStruct(v COMPACTNeighbourCellParamsStruct) 
 	if err := encodeCOMPACTNeighbourCellParamsStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCOMPACTNeighbourCellParamsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCOMPACTNeighbourCellParamsStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCOMPACTNeighbourCellParamsStructCanonical(v COMPACTNeighbourCellParamsStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCOMPACTNeighbourCellParamsStruct, DecodeCOMPACTNeighbourCellParamsStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCOMPACTNeighbourCellParamsStruct, DecodeCOMPACTNeighbourCellParamsStruct, nil)
 }
 
 // EncodeCOMPACTNeighbourCellParamsStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCOMPACTNeighbourCellParamsStructCanonicalAtLength(v COMPACTNeighbourCellParamsStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCOMPACTNeighbourCellParamsStruct, DecodeCOMPACTNeighbourCellParamsStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCOMPACTNeighbourCellParamsStruct, DecodeCOMPACTNeighbourCellParamsStruct, nil)
 }
 
 // DecodeCOMPACTCellSelectionStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Cell Selection struct>.
@@ -77183,17 +77750,21 @@ func EncodeCOMPACTCellSelectionStruct(v COMPACTCellSelectionStruct) ([]byte, err
 	if err := encodeCOMPACTCellSelectionStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeCOMPACTCellSelectionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeCOMPACTCellSelectionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeCOMPACTCellSelectionStructCanonical(v COMPACTCellSelectionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeCOMPACTCellSelectionStruct, DecodeCOMPACTCellSelectionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeCOMPACTCellSelectionStruct, DecodeCOMPACTCellSelectionStruct, nil)
 }
 
 // EncodeCOMPACTCellSelectionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeCOMPACTCellSelectionStructCanonicalAtLength(v COMPACTCellSelectionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeCOMPACTCellSelectionStruct, DecodeCOMPACTCellSelectionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeCOMPACTCellSelectionStruct, DecodeCOMPACTCellSelectionStruct, nil)
 }
 
 // DecodeLADifferentStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <LA Different struct>.
@@ -77230,17 +77801,21 @@ func EncodeLADifferentStruct(v LADifferentStruct) ([]byte, error) {
 	if err := encodeLADifferentStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeLADifferentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeLADifferentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeLADifferentStructCanonical(v LADifferentStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeLADifferentStruct, DecodeLADifferentStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeLADifferentStruct, DecodeLADifferentStruct, nil)
 }
 
 // EncodeLADifferentStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeLADifferentStructCanonicalAtLength(v LADifferentStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeLADifferentStruct, DecodeLADifferentStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeLADifferentStruct, DecodeLADifferentStruct, nil)
 }
 
 // DecodeSI18RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37h <SI 18 Rest Octets>.
@@ -77296,10 +77871,13 @@ func EncodeSI18RestOctets(v SI18RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI18RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI18RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI18RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI18RestOctetsCanonical(v SI18RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI18RestOctets, DecodeSI18RestOctets, nil)
 }
@@ -77343,17 +77921,21 @@ func EncodeNonGSMMessageStruct(v NonGSMMessageStruct) ([]byte, error) {
 	if err := encodeNonGSMMessageStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeNonGSMMessageStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNonGSMMessageStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNonGSMMessageStructCanonical(v NonGSMMessageStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeNonGSMMessageStruct, DecodeNonGSMMessageStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeNonGSMMessageStruct, DecodeNonGSMMessageStruct, nil)
 }
 
 // EncodeNonGSMMessageStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeNonGSMMessageStructCanonicalAtLength(v NonGSMMessageStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeNonGSMMessageStruct, DecodeNonGSMMessageStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeNonGSMMessageStruct, DecodeNonGSMMessageStruct, nil)
 }
 
 // DecodeIPARestOctets decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>.
@@ -77409,10 +77991,13 @@ func EncodeIPARestOctets(v IPARestOctets) ([]byte, error) {
 	if len(out) < 19 {
 		return nil, fmt.Errorf("IPARestOctets requires at least 152 bits")
 	}
+	if len(out) > 19 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 19}
+	}
 	return out, nil
 }
 
-// EncodeIPARestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIPARestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIPARestOctetsCanonical(v IPARestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 19, 19, false, EncodeIPARestOctets, DecodeIPARestOctets, nil)
 }
@@ -77456,17 +78041,21 @@ func EncodeIPAUplinkAssignmentStruct(v IPAUplinkAssignmentStruct) ([]byte, error
 	if err := encodeIPAUplinkAssignmentStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeIPAUplinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIPAUplinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeIPAUplinkAssignmentStruct, DecodeIPAUplinkAssignmentStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIPAUplinkAssignmentStruct, DecodeIPAUplinkAssignmentStruct, nil)
 }
 
 // EncodeIPAUplinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIPAUplinkAssignmentStructCanonicalAtLength(v IPAUplinkAssignmentStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeIPAUplinkAssignmentStruct, DecodeIPAUplinkAssignmentStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIPAUplinkAssignmentStruct, DecodeIPAUplinkAssignmentStruct, nil)
 }
 
 // DecodeIPADownlinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Downlink Assignment struct>.
@@ -77503,17 +78092,21 @@ func EncodeIPADownlinkAssignmentStruct(v IPADownlinkAssignmentStruct) ([]byte, e
 	if err := encodeIPADownlinkAssignmentStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeIPADownlinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIPADownlinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeIPADownlinkAssignmentStruct, DecodeIPADownlinkAssignmentStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIPADownlinkAssignmentStruct, DecodeIPADownlinkAssignmentStruct, nil)
 }
 
 // EncodeIPADownlinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIPADownlinkAssignmentStructCanonicalAtLength(v IPADownlinkAssignmentStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeIPADownlinkAssignmentStruct, DecodeIPADownlinkAssignmentStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIPADownlinkAssignmentStruct, DecodeIPADownlinkAssignmentStruct, nil)
 }
 
 // DecodeIPASingleBlockUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Single Block Uplink Assignment struct>.
@@ -77550,17 +78143,21 @@ func EncodeIPASingleBlockUplinkAssignmentStruct(v IPASingleBlockUplinkAssignment
 	if err := encodeIPASingleBlockUplinkAssignmentStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeIPASingleBlockUplinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeIPASingleBlockUplinkAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkAssignmentStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeIPASingleBlockUplinkAssignmentStruct, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIPASingleBlockUplinkAssignmentStruct, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
 }
 
 // EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength(v IPASingleBlockUplinkAssignmentStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeIPASingleBlockUplinkAssignmentStruct, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIPASingleBlockUplinkAssignmentStruct, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
 }
 
 // DecodeAcknowledgedAccessRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <Acknowledged Access Request struct>.
@@ -77597,17 +78194,21 @@ func EncodeAcknowledgedAccessRequestStruct(v AcknowledgedAccessRequestStruct) ([
 	if err := encodeAcknowledgedAccessRequestStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeAcknowledgedAccessRequestStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeAcknowledgedAccessRequestStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeAcknowledgedAccessRequestStructCanonical(v AcknowledgedAccessRequestStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeAcknowledgedAccessRequestStruct, DecodeAcknowledgedAccessRequestStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeAcknowledgedAccessRequestStruct, DecodeAcknowledgedAccessRequestStruct, nil)
 }
 
 // EncodeAcknowledgedAccessRequestStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeAcknowledgedAccessRequestStructCanonicalAtLength(v AcknowledgedAccessRequestStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeAcknowledgedAccessRequestStruct, DecodeAcknowledgedAccessRequestStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeAcknowledgedAccessRequestStruct, DecodeAcknowledgedAccessRequestStruct, nil)
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105278 decodes TS 44.018 V19.0.0 §10.5.2.78 <PEO IMM Cell Group Details struct>.
@@ -77644,17 +78245,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105278(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105278(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105278Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105278Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105278Canonical(v PEOIMMCellGroupDetailsStructClause105278) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105278, DecodePEOIMMCellGroupDetailsStructClause105278, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105278, DecodePEOIMMCellGroupDetailsStructClause105278, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105278CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105278CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105278, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105278, DecodePEOIMMCellGroupDetailsStructClause105278, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105278, DecodePEOIMMCellGroupDetailsStructClause105278, nil)
 }
 
 // DecodeSI20RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37i <SI 20 Rest Octets>.
@@ -77710,10 +78315,13 @@ func EncodeSI20RestOctets(v SI20RestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("SI20RestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeSI20RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI20RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI20RestOctetsCanonical(v SI20RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeSI20RestOctets, DecodeSI20RestOctets, nil)
 }
@@ -77757,17 +78365,21 @@ func EncodeGroupCallInformation(v GroupCallInformation) ([]byte, error) {
 	if err := encodeGroupCallInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGroupCallInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGroupCallInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGroupCallInformationCanonical(v GroupCallInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGroupCallInformation, DecodeGroupCallInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGroupCallInformation, DecodeGroupCallInformation, nil)
 }
 
 // EncodeGroupCallInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGroupCallInformationCanonicalAtLength(v GroupCallInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGroupCallInformation, DecodeGroupCallInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGroupCallInformation, DecodeGroupCallInformation, nil)
 }
 
 // DecodeEmergencyInd decodes TS 44.018 V19.0.0 §9.1.21a <Emergency_Ind>.
@@ -77802,17 +78414,21 @@ func EncodeEmergencyInd(v EmergencyInd) ([]byte, error) {
 	if err := encodeEmergencyInd(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeEmergencyIndCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeEmergencyIndCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEmergencyIndCanonical(v EmergencyInd) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeEmergencyInd, DecodeEmergencyInd, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEmergencyInd, DecodeEmergencyInd, nil)
 }
 
 // EncodeEmergencyIndCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEmergencyIndCanonicalAtLength(v EmergencyInd, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeEmergencyInd, DecodeEmergencyInd, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEmergencyInd, DecodeEmergencyInd, nil)
 }
 
 // DecodeGroupChannelDescription decodes TS 44.018 V19.0.0 §9.1.21a <Group Channel Description>.
@@ -77849,17 +78465,21 @@ func EncodeGroupChannelDescription(v GroupChannelDescription) ([]byte, error) {
 	if err := encodeGroupChannelDescription(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeGroupChannelDescriptionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeGroupChannelDescriptionCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGroupChannelDescriptionCanonical(v GroupChannelDescription) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeGroupChannelDescription, DecodeGroupChannelDescription, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGroupChannelDescription, DecodeGroupChannelDescription, nil)
 }
 
 // EncodeGroupChannelDescriptionCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGroupChannelDescriptionCanonicalAtLength(v GroupChannelDescription, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeGroupChannelDescription, DecodeGroupChannelDescription, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGroupChannelDescription, DecodeGroupChannelDescription, nil)
 }
 
 // DecodeBitString decodes TS 44.018 V19.0.0 §9.1.21a <bit string>.
@@ -77894,17 +78514,21 @@ func EncodeBitString(v BitString) ([]byte, error) {
 	if err := encodeBitString(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeBitStringCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeBitStringCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeBitStringCanonical(v BitString) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeBitString, DecodeBitString, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeBitString, DecodeBitString, nil)
 }
 
 // EncodeBitStringCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeBitStringCanonicalAtLength(v BitString, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeBitString, DecodeBitString, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeBitString, DecodeBitString, nil)
 }
 
 // DecodeNTNRestOctets decodes TS 44.018 V19.0.0 §10.5.2.22c <NT/N Rest Octets>.
@@ -77960,10 +78584,13 @@ func EncodeNTNRestOctets(v NTNRestOctets) ([]byte, error) {
 	if len(out) < 20 {
 		return nil, fmt.Errorf("NTNRestOctets requires at least 160 bits")
 	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
 	return out, nil
 }
 
-// EncodeNTNRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeNTNRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeNTNRestOctetsCanonical(v NTNRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 20, 20, false, EncodeNTNRestOctets, DecodeNTNRestOctets, nil)
 }
@@ -78007,17 +78634,21 @@ func EncodeListOfGroupCallNCHInformation(v ListOfGroupCallNCHInformation) ([]byt
 	if err := encodeListOfGroupCallNCHInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeListOfGroupCallNCHInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeListOfGroupCallNCHInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeListOfGroupCallNCHInformationCanonical(v ListOfGroupCallNCHInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeListOfGroupCallNCHInformation, DecodeListOfGroupCallNCHInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeListOfGroupCallNCHInformation, DecodeListOfGroupCallNCHInformation, nil)
 }
 
 // EncodeListOfGroupCallNCHInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeListOfGroupCallNCHInformationCanonicalAtLength(v ListOfGroupCallNCHInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeListOfGroupCallNCHInformation, DecodeListOfGroupCallNCHInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeListOfGroupCallNCHInformation, DecodeListOfGroupCallNCHInformation, nil)
 }
 
 // DecodeListOfEmergencyInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Emergency information>.
@@ -78054,17 +78685,21 @@ func EncodeListOfEmergencyInformation(v ListOfEmergencyInformation) ([]byte, err
 	if err := encodeListOfEmergencyInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeListOfEmergencyInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeListOfEmergencyInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeListOfEmergencyInformationCanonical(v ListOfEmergencyInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeListOfEmergencyInformation, DecodeListOfEmergencyInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeListOfEmergencyInformation, DecodeListOfEmergencyInformation, nil)
 }
 
 // EncodeListOfEmergencyInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeListOfEmergencyInformationCanonicalAtLength(v ListOfEmergencyInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeListOfEmergencyInformation, DecodeListOfEmergencyInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeListOfEmergencyInformation, DecodeListOfEmergencyInformation, nil)
 }
 
 // DecodeListOfVSTKRANDInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of VSTK_RAND information>.
@@ -78101,17 +78736,21 @@ func EncodeListOfVSTKRANDInformation(v ListOfVSTKRANDInformation) ([]byte, error
 	if err := encodeListOfVSTKRANDInformation(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeListOfVSTKRANDInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeListOfVSTKRANDInformationCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeListOfVSTKRANDInformationCanonical(v ListOfVSTKRANDInformation) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeListOfVSTKRANDInformation, DecodeListOfVSTKRANDInformation, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeListOfVSTKRANDInformation, DecodeListOfVSTKRANDInformation, nil)
 }
 
 // EncodeListOfVSTKRANDInformationCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeListOfVSTKRANDInformationCanonicalAtLength(v ListOfVSTKRANDInformation, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeListOfVSTKRANDInformation, DecodeListOfVSTKRANDInformation, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeListOfVSTKRANDInformation, DecodeListOfVSTKRANDInformation, nil)
 }
 
 // DecodeListOfReducedGCR decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Reduced GCR>.
@@ -78148,17 +78787,21 @@ func EncodeListOfReducedGCR(v ListOfReducedGCR) ([]byte, error) {
 	if err := encodeListOfReducedGCR(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeListOfReducedGCRCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeListOfReducedGCRCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeListOfReducedGCRCanonical(v ListOfReducedGCR) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeListOfReducedGCR, DecodeListOfReducedGCR, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeListOfReducedGCR, DecodeListOfReducedGCR, nil)
 }
 
 // EncodeListOfReducedGCRCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeListOfReducedGCRCanonicalAtLength(v ListOfReducedGCR, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeListOfReducedGCR, DecodeListOfReducedGCR, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeListOfReducedGCR, DecodeListOfReducedGCR, nil)
 }
 
 // DecodeP1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>.
@@ -78199,10 +78842,17 @@ func EncodeP1RestOctets(v P1RestOctets) ([]byte, error) {
 	if err := encodeP1RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 17 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 17}
+	}
+	return out, nil
 }
 
-// EncodeP1RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeP1RestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeP1RestOctetsCanonical(v P1RestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 17, true, EncodeP1RestOctets, DecodeP1RestOctets, nil)
 }
@@ -78246,17 +78896,21 @@ func EncodePriorityClause105223(v PriorityClause105223) ([]byte, error) {
 	if err := encodePriorityClause105223(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePriorityClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePriorityClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePriorityClause105223Canonical(v PriorityClause105223) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePriorityClause105223, DecodePriorityClause105223, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePriorityClause105223, DecodePriorityClause105223, nil)
 }
 
 // EncodePriorityClause105223CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePriorityClause105223CanonicalAtLength(v PriorityClause105223, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePriorityClause105223, DecodePriorityClause105223, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePriorityClause105223, DecodePriorityClause105223, nil)
 }
 
 // DecodeMBMSInformationClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <MBMS Information>.
@@ -78293,17 +78947,21 @@ func EncodeMBMSInformationClause105223(v MBMSInformationClause105223) ([]byte, e
 	if err := encodeMBMSInformationClause105223(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeMBMSInformationClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeMBMSInformationClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeMBMSInformationClause105223, DecodeMBMSInformationClause105223, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeMBMSInformationClause105223, DecodeMBMSInformationClause105223, nil)
 }
 
 // EncodeMBMSInformationClause105223CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMBMSInformationClause105223CanonicalAtLength(v MBMSInformationClause105223, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeMBMSInformationClause105223, DecodeMBMSInformationClause105223, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeMBMSInformationClause105223, DecodeMBMSInformationClause105223, nil)
 }
 
 // DecodeETWSPrimaryNotificationStruct decodes TS 44.018 V19.0.0 §10.5.2.23 <ETWS Primary Notification struct>.
@@ -78340,17 +78998,21 @@ func EncodeETWSPrimaryNotificationStruct(v ETWSPrimaryNotificationStruct) ([]byt
 	if err := encodeETWSPrimaryNotificationStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeETWSPrimaryNotificationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeETWSPrimaryNotificationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeETWSPrimaryNotificationStructCanonical(v ETWSPrimaryNotificationStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeETWSPrimaryNotificationStruct, DecodeETWSPrimaryNotificationStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeETWSPrimaryNotificationStruct, DecodeETWSPrimaryNotificationStruct, nil)
 }
 
 // EncodeETWSPrimaryNotificationStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeETWSPrimaryNotificationStructCanonicalAtLength(v ETWSPrimaryNotificationStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeETWSPrimaryNotificationStruct, DecodeETWSPrimaryNotificationStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeETWSPrimaryNotificationStruct, DecodeETWSPrimaryNotificationStruct, nil)
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <PEO IMM Cell Group Details struct>.
@@ -78387,17 +79049,21 @@ func EncodePEOIMMCellGroupDetailsStructClause105223(v PEOIMMCellGroupDetailsStru
 	if err := encodePEOIMMCellGroupDetailsStructClause105223(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodePEOIMMCellGroupDetailsStructClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodePEOIMMCellGroupDetailsStructClause105223Canonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePEOIMMCellGroupDetailsStructClause105223Canonical(v PEOIMMCellGroupDetailsStructClause105223) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodePEOIMMCellGroupDetailsStructClause105223, DecodePEOIMMCellGroupDetailsStructClause105223, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodePEOIMMCellGroupDetailsStructClause105223, DecodePEOIMMCellGroupDetailsStructClause105223, nil)
 }
 
 // EncodePEOIMMCellGroupDetailsStructClause105223CanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePEOIMMCellGroupDetailsStructClause105223CanonicalAtLength(v PEOIMMCellGroupDetailsStructClause105223, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodePEOIMMCellGroupDetailsStructClause105223, DecodePEOIMMCellGroupDetailsStructClause105223, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePEOIMMCellGroupDetailsStructClause105223, DecodePEOIMMCellGroupDetailsStructClause105223, nil)
 }
 
 // DecodeSI10bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.70 <SI10bis Rest Octets>.
@@ -78440,10 +79106,17 @@ func EncodeSI10bisRestOctets(v SI10bisRestOctets) ([]byte, error) {
 	if err := encodeSI10bisRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 20 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 20}
+	}
+	return out, nil
 }
 
-// EncodeSI10bisRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI10bisRestOctetsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI10bisRestOctetsCanonical(v SI10bisRestOctets) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 20, false, EncodeSI10bisRestOctets, DecodeSI10bisRestOctets, nil)
 }
@@ -78487,24 +79160,28 @@ func EncodeSI10bisNeighbourCellInfo(v SI10bisNeighbourCellInfo) ([]byte, error) 
 	if err := encodeSI10bisNeighbourCellInfo(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// EncodeSI10bisNeighbourCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding.
+// EncodeSI10bisNeighbourCellInfoCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSI10bisNeighbourCellInfoCanonical(v SI10bisNeighbourCellInfo) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 64, false, EncodeSI10bisNeighbourCellInfo, DecodeSI10bisNeighbourCellInfo, nil)
+	return runtime.CanonicalEncode(v, 0, 0, false, EncodeSI10bisNeighbourCellInfo, DecodeSI10bisNeighbourCellInfo, nil)
 }
 
 // EncodeSI10bisNeighbourCellInfoCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSI10bisNeighbourCellInfoCanonicalAtLength(v SI10bisNeighbourCellInfo, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 64, EncodeSI10bisNeighbourCellInfo, DecodeSI10bisNeighbourCellInfo, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeSI10bisNeighbourCellInfo, DecodeSI10bisNeighbourCellInfo, nil)
 }
 func Definitions() []string {
 	return []string{"IA Rest Octets", "EGPRS Packet Uplink Assignment", "Access Technologies Request struct", "Packet Uplink Assignment", "Packet Downlink Assignment", "Frequency Parameters, before time", "Second Part Packet Assignment", "Multiple Blocks Packet Downlink Assignment", "PEO IMM Cell Group Details struct", "IAR Rest Octets", "PEO IMM Cell Group Details struct", "IAX Rest Octets", "PEO IMM Cell Group Details struct", "SI1 Rest Octets", "Band indicator", "SI2bis Rest Octets", "SI2n Rest Octets", "GSM Neighbour Cell Selection params struct", "GPRS Support Indicator struct", "SI3 Rest Octet", "Optional Selection Parameters", "Selection Parameters", "Optional Power Offset", "System Information 2ter Indicator", "Early Classmark Sending Control", "Scheduling if and where", "GPRS Indicator", "3G Early Classmark Sending Restriction", "SI2quater Indicator struct", "Iu Indicator", "System Information 21 Indicator", "SI16 Rest Octets", "SI17 Rest Octets", "LSA Parameters", "LSA ID information", "LSA identity", "SI14 Rest Octets", "DYNAMIC ARFCN MAPPING", "SI15 Rest Octets", "DYNAMIC ARFCN MAPPING", "SI 21 Rest Octets", "Network Sharing EAB Information struct", "SI 22 Rest Octets", "Network Sharing Information struct", "SI 23 Rest Octets", "IRAT Cell Reselection Information struct", "Priority and UTRAN Parameters Description struct", "UTRAN FDD/TDD Description struct", "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", "Priority and E-UTRAN Parameters Description struct", "Repeated E-UTRAN Neighbour Frequency and Priority struct", "SI10 rest octets", "neighbour information", "cell info", "cell parameters", "cell barred", "further cell info", "la different", "info field", "next frequency", "differential cell info", "diff cell pars", "further diff cell info", "SI10ter Rest Octets", "SI9 rest octets", "Scheduling info", "Info type", "Positions", "Position", "SI2ter Rest Octets", "UTRAN FDD Description struct", "UTRAN TDD Description struct", "3G MEASUREMENT Parameters Description struct", "3G Additional Measurement Parameters Description struct", "SI4 Rest Octets", "SI4 Rest Octets_O", "SI4 Rest Octets_S", "Break Indicator", "SI7 Rest Octets", "SI8 Rest Octets", "Optional Selection Parameters", "Selection Parameters", "Optional Power Offset", "GPRS Indicator", "LSA Parameters", "LSA ID information", "LSA identity", "SI 13alt Rest Octets", "PBCCH Description 2 struct", "P2 Rest Octets", "Priority", "MBMS Information", "PEO IMM Cell Group Details struct", "P3 Rest Octets", "Priority", "PEO IMM Cell Group Details struct", "SI2quater Rest Octets", "3G Neighbour Cell Description struct", "UTRAN FDD Description struct", "Repeated UTRAN FDD Neighbour Cells struct", "UTRAN TDD Description struct", "Repeated UTRAN TDD Neighbour Cells struct", "MEASUREMENT PARAMETERS Description Struct", "3G MEASUREMENT PARAMETERS Description struct", "GPRS Real Time Difference Description struct", "RTD6 Struct", "RTD12 Struct", "GPRS BSIC Description struct", "GPRS REPORT PRIORITY Description struct", "GPRS MEASUREMENT PARAMETERS Description struct", "GPRS 3G MEASUREMENT PARAMETERS Description struct", "NC Measurement Parameters struct", "SI2q Extension Information", "CCN Support Description struct", "3G Additional Measurement Parameters Description struct", "3G Additional Measurement Parameters Description 2 struct", "Priority and E-UTRAN Parameters Description struct", "Serving Cell Priority Parameters Description struct", "3G Priority Parameters Description struct", "Repeated UTRAN Priority Parameters struct", "E-UTRAN Parameters Description struct", "E-UTRAN Measurement Parameters Description struct", "GPRS E-UTRAN Measurement Parameters Description struct", "Repeated E-UTRAN Neighbour Cells struct", "Repeated E-UTRAN Not Allowed Cells struct", "Repeated E-UTRAN PCID to TA mapping struct", "3G CSG Description struct", "E-UTRAN CSG Description struct", "CSG Cells Reporting Description struct", "UTRAN CSG Cells Reporting Description struct", "E-UTRAN CSG Cells Reporting Description struct", "Extended EARFCNs Description struct", "Extended EARFCNs Description for CSG Cells struct", "SI6 rest octets", "PCH and NCH info", "paging channel restructuring", "VBS/VGCS options", "inband notifications", "inband pagings", "Band indicator", "SI 13 Rest Octets", "PBCCH Description struct", "SI_CHANGE_ALT", "PEO IMM Cell Group Definition struct", "PEO IMM Cell Group Specific Parameters struct", "SI 19 Rest Octets", "COMPACT Neighbour Cell params struct", "COMPACT Cell Selection struct", "LA Different struct", "SI 18 Rest Octets", "Non-GSM Message struct", "IPA Rest Octets", "IPA Uplink Assignment struct", "IPA Downlink Assignment struct", "IPA Single Block Uplink Assignment struct", "Acknowledged Access Request struct", "PEO IMM Cell Group Details struct", "SI 20 Rest Octets", "Group Call information", "Emergency_Ind", "Group Channel Description", "bit string", "NT/N Rest Octets", "List of Group Call NCH information", "List of Emergency information", "List of VSTK_RAND information", "List of Reduced GCR", "P1 Rest Octets", "Priority", "MBMS Information", "ETWS Primary Notification struct", "PEO IMM Cell Group Details struct", "SI10bis Rest Octets", "SI10bis Neighbour Cell Info"}
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", Decode: func(data []byte) (any, error) { return DecodeIARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIARestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", MaxOctets: 11, Decode: func(data []byte) (any, error) { return DecodeIARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIARestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IARestOctets:
 				return EncodeIARestOctets(v)
@@ -78532,7 +79209,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IARestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "EGPRS Packet Uplink Assignment", Decode: func(data []byte) (any, error) { return DecodeEGPRSPacketUplinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSPacketUplinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "EGPRS Packet Uplink Assignment", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEGPRSPacketUplinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSPacketUplinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSPacketUplinkAssignment:
 				return EncodeEGPRSPacketUplinkAssignment(v)
@@ -78560,7 +79237,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSPacketUplinkAssignment")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Access Technologies Request struct", Decode: func(data []byte) (any, error) { return DecodeAccessTechnologiesRequestStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAccessTechnologiesRequestStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Access Technologies Request struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeAccessTechnologiesRequestStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAccessTechnologiesRequestStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AccessTechnologiesRequestStruct:
 				return EncodeAccessTechnologiesRequestStruct(v)
@@ -78588,7 +79265,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for AccessTechnologiesRequestStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", Decode: func(data []byte) (any, error) { return DecodePacketUplinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketUplinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePacketUplinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketUplinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketUplinkAssignment:
 				return EncodePacketUplinkAssignment(v)
@@ -78616,7 +79293,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PacketUplinkAssignment")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Downlink Assignment", Decode: func(data []byte) (any, error) { return DecodePacketDownlinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketDownlinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Downlink Assignment", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePacketDownlinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketDownlinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketDownlinkAssignment:
 				return EncodePacketDownlinkAssignment(v)
@@ -78644,7 +79321,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PacketDownlinkAssignment")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Frequency Parameters, before time", Decode: func(data []byte) (any, error) { return DecodeFrequencyParametersBeforeTime(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFrequencyParametersBeforeTimeFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Frequency Parameters, before time", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeFrequencyParametersBeforeTime(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFrequencyParametersBeforeTimeFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FrequencyParametersBeforeTime:
 				return EncodeFrequencyParametersBeforeTime(v)
@@ -78672,7 +79349,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for FrequencyParametersBeforeTime")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", Decode: func(data []byte) (any, error) { return DecodeSecondPartPacketAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSecondPartPacketAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSecondPartPacketAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSecondPartPacketAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SecondPartPacketAssignment:
 				return EncodeSecondPartPacketAssignment(v)
@@ -78700,7 +79377,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SecondPartPacketAssignment")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Multiple Blocks Packet Downlink Assignment", Decode: func(data []byte) (any, error) { return DecodeMultipleBlocksPacketDownlinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMultipleBlocksPacketDownlinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Multiple Blocks Packet Downlink Assignment", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeMultipleBlocksPacketDownlinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMultipleBlocksPacketDownlinkAssignmentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MultipleBlocksPacketDownlinkAssignment:
 				return EncodeMultipleBlocksPacketDownlinkAssignment(v)
@@ -78728,7 +79405,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MultipleBlocksPacketDownlinkAssignment")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105216(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105216From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105216(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105216From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105216:
 				return EncodePEOIMMCellGroupDetailsStructClause105216(v)
@@ -78756,7 +79433,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105216")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", Decode: func(data []byte) (any, error) { return DecodeIARRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIARRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeIARRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIARRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IARRestOctets:
 				return EncodeIARRestOctets(v)
@@ -78784,7 +79461,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IARRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105217(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105217From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105217(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105217From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105217:
 				return EncodePEOIMMCellGroupDetailsStructClause105217(v)
@@ -78812,7 +79489,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105217")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "IAX Rest Octets", Decode: func(data []byte) (any, error) { return DecodeIAXRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIAXRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "IAX Rest Octets", MaxOctets: 4, Decode: func(data []byte) (any, error) { return DecodeIAXRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIAXRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IAXRestOctets:
 				return EncodeIAXRestOctets(v)
@@ -78840,7 +79517,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IAXRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105218(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105218From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105218(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105218From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105218:
 				return EncodePEOIMMCellGroupDetailsStructClause105218(v)
@@ -78868,7 +79545,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105218")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "SI1 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI1RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "SI1 Rest Octets", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeSI1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI1RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI1RestOctets:
 				return EncodeSI1RestOctets(v)
@@ -78896,7 +79573,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI1RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "Band indicator", Decode: func(data []byte) (any, error) { return DecodeBandIndicatorClause105232(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBandIndicatorClause105232From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "Band indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeBandIndicatorClause105232(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBandIndicatorClause105232From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BandIndicatorClause105232:
 				return EncodeBandIndicatorClause105232(v)
@@ -78924,7 +79601,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for BandIndicatorClause105232")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33", Name: "SI2bis Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI2bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2bisRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33", Name: "SI2bis Rest Octets", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeSI2bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2bisRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2bisRestOctets:
 				return EncodeSI2bisRestOctets(v)
@@ -78952,7 +79629,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2bisRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "SI2n Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI2nRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2nRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "SI2n Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI2nRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2nRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2nRestOctets:
 				return EncodeSI2nRestOctets(v)
@@ -78980,7 +79657,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2nRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GSM Neighbour Cell Selection params struct", Decode: func(data []byte) (any, error) { return DecodeGSMNeighbourCellSelectionParamsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGSMNeighbourCellSelectionParamsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GSM Neighbour Cell Selection params struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGSMNeighbourCellSelectionParamsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGSMNeighbourCellSelectionParamsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GSMNeighbourCellSelectionParamsStruct:
 				return EncodeGSMNeighbourCellSelectionParamsStruct(v)
@@ -79008,7 +79685,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GSMNeighbourCellSelectionParamsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GPRS Support Indicator struct", Decode: func(data []byte) (any, error) { return DecodeGPRSSupportIndicatorStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSSupportIndicatorStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GPRS Support Indicator struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSSupportIndicatorStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSSupportIndicatorStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSSupportIndicatorStruct:
 				return EncodeGPRSSupportIndicatorStruct(v)
@@ -79036,7 +79713,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSSupportIndicatorStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI3 Rest Octet", Decode: func(data []byte) (any, error) { return DecodeSI3RestOctet(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI3RestOctetFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI3 Rest Octet", MaxOctets: 4, Decode: func(data []byte) (any, error) { return DecodeSI3RestOctet(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI3RestOctetFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI3RestOctet:
 				return EncodeSI3RestOctet(v)
@@ -79064,7 +79741,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI3RestOctet")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Selection Parameters", Decode: func(data []byte) (any, error) { return DecodeOptionalSelectionParametersClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalSelectionParametersClause105234From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Selection Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeOptionalSelectionParametersClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalSelectionParametersClause105234From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalSelectionParametersClause105234:
 				return EncodeOptionalSelectionParametersClause105234(v)
@@ -79092,7 +79769,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for OptionalSelectionParametersClause105234")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Selection Parameters", Decode: func(data []byte) (any, error) { return DecodeSelectionParametersClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSelectionParametersClause105234From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Selection Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSelectionParametersClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSelectionParametersClause105234From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SelectionParametersClause105234:
 				return EncodeSelectionParametersClause105234(v)
@@ -79120,7 +79797,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SelectionParametersClause105234")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Power Offset", Decode: func(data []byte) (any, error) { return DecodeOptionalPowerOffsetClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalPowerOffsetClause105234From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Power Offset", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeOptionalPowerOffsetClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalPowerOffsetClause105234From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalPowerOffsetClause105234:
 				return EncodeOptionalPowerOffsetClause105234(v)
@@ -79148,7 +79825,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for OptionalPowerOffsetClause105234")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 2ter Indicator", Decode: func(data []byte) (any, error) { return DecodeSystemInformation2terIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSystemInformation2terIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 2ter Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSystemInformation2terIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSystemInformation2terIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SystemInformation2terIndicator:
 				return EncodeSystemInformation2terIndicator(v)
@@ -79176,7 +79853,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SystemInformation2terIndicator")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Early Classmark Sending Control", Decode: func(data []byte) (any, error) { return DecodeEarlyClassmarkSendingControl(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEarlyClassmarkSendingControlFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Early Classmark Sending Control", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEarlyClassmarkSendingControl(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEarlyClassmarkSendingControlFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EarlyClassmarkSendingControl:
 				return EncodeEarlyClassmarkSendingControl(v)
@@ -79204,7 +79881,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EarlyClassmarkSendingControl")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Scheduling if and where", Decode: func(data []byte) (any, error) { return DecodeSchedulingIfAndWhere(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSchedulingIfAndWhereFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Scheduling if and where", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSchedulingIfAndWhere(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSchedulingIfAndWhereFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SchedulingIfAndWhere:
 				return EncodeSchedulingIfAndWhere(v)
@@ -79232,7 +79909,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SchedulingIfAndWhere")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "GPRS Indicator", Decode: func(data []byte) (any, error) { return DecodeGPRSIndicatorClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSIndicatorClause105234From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "GPRS Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSIndicatorClause105234(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSIndicatorClause105234From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSIndicatorClause105234:
 				return EncodeGPRSIndicatorClause105234(v)
@@ -79260,7 +79937,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSIndicatorClause105234")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "3G Early Classmark Sending Restriction", Decode: func(data []byte) (any, error) { return DecodeN3GEarlyClassmarkSendingRestriction(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GEarlyClassmarkSendingRestrictionFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "3G Early Classmark Sending Restriction", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeN3GEarlyClassmarkSendingRestriction(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GEarlyClassmarkSendingRestrictionFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GEarlyClassmarkSendingRestriction:
 				return EncodeN3GEarlyClassmarkSendingRestriction(v)
@@ -79288,7 +79965,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GEarlyClassmarkSendingRestriction")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI2quater Indicator struct", Decode: func(data []byte) (any, error) { return DecodeSI2quaterIndicatorStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2quaterIndicatorStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI2quater Indicator struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI2quaterIndicatorStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2quaterIndicatorStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2quaterIndicatorStruct:
 				return EncodeSI2quaterIndicatorStruct(v)
@@ -79316,7 +79993,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2quaterIndicatorStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Iu Indicator", Decode: func(data []byte) (any, error) { return DecodeIuIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIuIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Iu Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIuIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIuIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IuIndicator:
 				return EncodeIuIndicator(v)
@@ -79344,7 +80021,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IuIndicator")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 21 Indicator", Decode: func(data []byte) (any, error) { return DecodeSystemInformation21Indicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSystemInformation21IndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 21 Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSystemInformation21Indicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSystemInformation21IndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SystemInformation21Indicator:
 				return EncodeSystemInformation21Indicator(v)
@@ -79372,7 +80049,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SystemInformation21Indicator")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "SI16 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI16RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI16RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "SI16 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI16RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI16RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI16RestOctets:
 				return EncodeSI16RestOctets(v)
@@ -79400,7 +80077,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI16RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f", Name: "SI17 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI17RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI17RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f", Name: "SI17 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI17RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI17RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI17RestOctets:
 				return EncodeSI17RestOctets(v)
@@ -79428,7 +80105,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI17RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA Parameters", Decode: func(data []byte) (any, error) { return DecodeLSAParametersClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAParametersClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAParametersClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAParametersClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAParametersClause105237e:
 				return EncodeLSAParametersClause105237e(v)
@@ -79456,7 +80133,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAParametersClause105237e")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA ID information", Decode: func(data []byte) (any, error) { return DecodeLSAIDInformationClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIDInformationClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA ID information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAIDInformationClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIDInformationClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIDInformationClause105237e:
 				return EncodeLSAIDInformationClause105237e(v)
@@ -79484,7 +80161,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAIDInformationClause105237e")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA identity", Decode: func(data []byte) (any, error) { return DecodeLSAIdentityClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIdentityClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA identity", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAIdentityClause105237e(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIdentityClause105237eFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIdentityClause105237e:
 				return EncodeLSAIdentityClause105237e(v)
@@ -79512,7 +80189,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAIdentityClause105237e")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "SI14 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI14RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI14RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "SI14 Rest Octets", MaxOctets: 16, Decode: func(data []byte) (any, error) { return DecodeSI14RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI14RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI14RestOctets:
 				return EncodeSI14RestOctets(v)
@@ -79540,7 +80217,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI14RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "DYNAMIC ARFCN MAPPING", Decode: func(data []byte) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237j(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237jFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237j(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237jFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DYNAMICARFCNMAPPINGClause105237j:
 				return EncodeDYNAMICARFCNMAPPINGClause105237j(v)
@@ -79568,7 +80245,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DYNAMICARFCNMAPPINGClause105237j")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "SI15 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI15RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI15RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "SI15 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI15RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI15RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI15RestOctets:
 				return EncodeSI15RestOctets(v)
@@ -79596,7 +80273,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI15RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "DYNAMIC ARFCN MAPPING", Decode: func(data []byte) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237k(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237kFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237k(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDYNAMICARFCNMAPPINGClause105237kFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DYNAMICARFCNMAPPINGClause105237k:
 				return EncodeDYNAMICARFCNMAPPINGClause105237k(v)
@@ -79624,7 +80301,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DYNAMICARFCNMAPPINGClause105237k")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "SI 21 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI21RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI21RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "SI 21 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI21RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI21RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI21RestOctets:
 				return EncodeSI21RestOctets(v)
@@ -79652,7 +80329,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI21RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "Network Sharing EAB Information struct", Decode: func(data []byte) (any, error) { return DecodeNetworkSharingEABInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNetworkSharingEABInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "Network Sharing EAB Information struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNetworkSharingEABInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNetworkSharingEABInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NetworkSharingEABInformationStruct:
 				return EncodeNetworkSharingEABInformationStruct(v)
@@ -79680,7 +80357,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NetworkSharingEABInformationStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "SI 22 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI22RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI22RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "SI 22 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI22RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI22RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI22RestOctets:
 				return EncodeSI22RestOctets(v)
@@ -79708,7 +80385,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI22RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "Network Sharing Information struct", Decode: func(data []byte) (any, error) { return DecodeNetworkSharingInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNetworkSharingInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "Network Sharing Information struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNetworkSharingInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNetworkSharingInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NetworkSharingInformationStruct:
 				return EncodeNetworkSharingInformationStruct(v)
@@ -79736,7 +80413,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NetworkSharingInformationStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "SI 23 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI23RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI23RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "SI 23 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI23RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI23RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI23RestOctets:
 				return EncodeSI23RestOctets(v)
@@ -79764,7 +80441,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI23RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "IRAT Cell Reselection Information struct", Decode: func(data []byte) (any, error) { return DecodeIRATCellReselectionInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIRATCellReselectionInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "IRAT Cell Reselection Information struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIRATCellReselectionInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIRATCellReselectionInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IRATCellReselectionInformationStruct:
 				return EncodeIRATCellReselectionInformationStruct(v)
@@ -79792,7 +80469,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IRATCellReselectionInformationStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and UTRAN Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodePriorityAndUTRANParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityAndUTRANParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and UTRAN Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePriorityAndUTRANParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityAndUTRANParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityAndUTRANParametersDescriptionStruct:
 				return EncodePriorityAndUTRANParametersDescriptionStruct(v)
@@ -79820,7 +80497,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityAndUTRANParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "UTRAN FDD/TDD Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANFDDTDDDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDTDDDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "UTRAN FDD/TDD Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANFDDTDDDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDTDDDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDTDDDescriptionStruct:
 				return EncodeUTRANFDDTDDDescriptionStruct(v)
@@ -79848,7 +80525,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANFDDTDDDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom(r)
@@ -79880,7 +80557,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and E-UTRAN Parameters Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodePriorityAndEUTRANParametersDescriptionStructClause105237o(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom(r)
@@ -79912,7 +80589,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityAndEUTRANParametersDescriptionStructClause105237o")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated E-UTRAN Neighbour Frequency and Priority struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated E-UTRAN Neighbour Frequency and Priority struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom(r)
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
@@ -79942,7 +80619,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANNeighbourFrequencyAndPriorityStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "SI10 rest octets", Decode: func(data []byte) (any, error) { return DecodeSI10RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "SI10 rest octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI10RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10RestOctets:
 				return EncodeSI10RestOctets(v)
@@ -79970,7 +80647,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI10RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "neighbour information", Decode: func(data []byte) (any, error) { return DecodeNeighbourInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNeighbourInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "neighbour information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNeighbourInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNeighbourInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NeighbourInformation:
 				return EncodeNeighbourInformation(v)
@@ -79998,7 +80675,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NeighbourInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell info", Decode: func(data []byte) (any, error) { return DecodeCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellInfo:
 				return EncodeCellInfo(v)
@@ -80026,7 +80703,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CellInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell parameters", Decode: func(data []byte) (any, error) { return DecodeCellParameters(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellParametersFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCellParameters(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellParametersFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellParameters:
 				return EncodeCellParameters(v)
@@ -80054,7 +80731,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CellParameters")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell barred", Decode: func(data []byte) (any, error) { return DecodeCellBarred(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellBarredFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell barred", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCellBarred(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCellBarredFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellBarred:
 				return EncodeCellBarred(v)
@@ -80082,7 +80759,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CellBarred")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further cell info", Decode: func(data []byte) (any, error) { return DecodeFurtherCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFurtherCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further cell info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeFurtherCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFurtherCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FurtherCellInfo:
 				return EncodeFurtherCellInfo(v)
@@ -80110,7 +80787,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for FurtherCellInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "la different", Decode: func(data []byte) (any, error) { return DecodeLaDifferent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLaDifferentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "la different", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLaDifferent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLaDifferentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LaDifferent:
 				return EncodeLaDifferent(v)
@@ -80138,7 +80815,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LaDifferent")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "info field", Decode: func(data []byte) (any, error) { return DecodeInfoField(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInfoFieldFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "info field", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeInfoField(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInfoFieldFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InfoField:
 				return EncodeInfoField(v)
@@ -80166,7 +80843,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for InfoField")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "next frequency", Decode: func(data []byte) (any, error) { return DecodeNextFrequency(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNextFrequencyFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "next frequency", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNextFrequency(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNextFrequencyFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NextFrequency:
 				return EncodeNextFrequency(v)
@@ -80194,7 +80871,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NextFrequency")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "differential cell info", Decode: func(data []byte) (any, error) { return DecodeDifferentialCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDifferentialCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "differential cell info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeDifferentialCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDifferentialCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DifferentialCellInfo:
 				return EncodeDifferentialCellInfo(v)
@@ -80222,7 +80899,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DifferentialCellInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "diff cell pars", Decode: func(data []byte) (any, error) { return DecodeDiffCellPars(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDiffCellParsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "diff cell pars", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeDiffCellPars(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDiffCellParsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DiffCellPars:
 				return EncodeDiffCellPars(v)
@@ -80250,7 +80927,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for DiffCellPars")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further diff cell info", Decode: func(data []byte) (any, error) { return DecodeFurtherDiffCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFurtherDiffCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further diff cell info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeFurtherDiffCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeFurtherDiffCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FurtherDiffCellInfo:
 				return EncodeFurtherDiffCellInfo(v)
@@ -80278,7 +80955,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for FurtherDiffCellInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71", Name: "SI10ter Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI10terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10terRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71", Name: "SI10ter Rest Octets", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI10terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10terRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10terRestOctets:
 				return EncodeSI10terRestOctets(v)
@@ -80306,7 +80983,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI10terRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "SI9 rest octets", Decode: func(data []byte) (any, error) { return DecodeSI9RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI9RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "SI9 rest octets", MaxOctets: 17, Decode: func(data []byte) (any, error) { return DecodeSI9RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI9RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI9RestOctets:
 				return EncodeSI9RestOctets(v)
@@ -80334,7 +81011,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI9RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Scheduling info", Decode: func(data []byte) (any, error) { return DecodeSchedulingInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSchedulingInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Scheduling info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSchedulingInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSchedulingInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SchedulingInfo:
 				return EncodeSchedulingInfo(v)
@@ -80362,7 +81039,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SchedulingInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Info type", Decode: func(data []byte) (any, error) { return DecodeInfoType(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInfoTypeFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Info type", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeInfoType(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInfoTypeFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InfoType:
 				return EncodeInfoType(v)
@@ -80390,7 +81067,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for InfoType")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Positions", Decode: func(data []byte) (any, error) { return DecodePositions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePositionsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Positions", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePositions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePositionsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Positions:
 				return EncodePositions(v)
@@ -80418,7 +81095,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for Positions")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Position", Decode: func(data []byte) (any, error) { return DecodePosition(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePositionFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Position", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePosition(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePositionFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Position:
 				return EncodePosition(v)
@@ -80446,7 +81123,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for Position")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "SI2ter Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI2terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2terRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "SI2ter Rest Octets", MaxOctets: 4, Decode: func(data []byte) (any, error) { return DecodeSI2terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2terRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2terRestOctets:
 				return EncodeSI2terRestOctets(v)
@@ -80474,7 +81151,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2terRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN FDD Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233aFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN FDD Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233aFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDDescriptionStructClause105233a:
 				return EncodeUTRANFDDDescriptionStructClause105233a(v)
@@ -80502,7 +81179,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANFDDDescriptionStructClause105233a")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN TDD Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233aFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN TDD Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233aFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANTDDDescriptionStructClause105233a:
 				return EncodeUTRANTDDDescriptionStructClause105233a(v)
@@ -80530,7 +81207,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANTDDDescriptionStructClause105233a")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G MEASUREMENT Parameters Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G MEASUREMENT Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom(r)
@@ -80562,7 +81239,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GMEASUREMENTParametersDescriptionStructClause105233a")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G Additional Measurement Parameters Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom(r)
@@ -80594,7 +81271,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GAdditionalMeasurementParametersDescriptionStructClause105233a")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI4RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets", MaxOctets: 10, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctets:
 				return EncodeSI4RestOctets(v)
@@ -80622,7 +81299,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI4RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_O", Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsO(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsOFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_O", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsO(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsOFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctetsO:
 				return EncodeSI4RestOctetsO(v)
@@ -80650,7 +81327,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI4RestOctetsO")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_S", Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsS(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsSFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_S", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsS(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI4RestOctetsSFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctetsS:
 				return EncodeSI4RestOctetsS(v)
@@ -80678,7 +81355,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI4RestOctetsS")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Break Indicator", Decode: func(data []byte) (any, error) { return DecodeBreakIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBreakIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Break Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeBreakIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBreakIndicatorFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BreakIndicator:
 				return EncodeBreakIndicator(v)
@@ -80706,7 +81383,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for BreakIndicator")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36", Name: "SI7 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI7RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI7RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36", Name: "SI7 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI7RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI7RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI7RestOctets:
 				return EncodeSI7RestOctets(v)
@@ -80743,7 +81420,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI7RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37", Name: "SI8 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI8RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI8RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37", Name: "SI8 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI8RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI8RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI8RestOctets:
 				return EncodeSI8RestOctets(v)
@@ -80780,7 +81457,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI8RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Selection Parameters", Decode: func(data []byte) (any, error) { return DecodeOptionalSelectionParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalSelectionParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Selection Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeOptionalSelectionParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalSelectionParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalSelectionParametersClause105235:
 				return EncodeOptionalSelectionParametersClause105235(v)
@@ -80808,7 +81485,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for OptionalSelectionParametersClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Selection Parameters", Decode: func(data []byte) (any, error) { return DecodeSelectionParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSelectionParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Selection Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSelectionParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSelectionParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SelectionParametersClause105235:
 				return EncodeSelectionParametersClause105235(v)
@@ -80836,7 +81513,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SelectionParametersClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Power Offset", Decode: func(data []byte) (any, error) { return DecodeOptionalPowerOffsetClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalPowerOffsetClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Power Offset", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeOptionalPowerOffsetClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeOptionalPowerOffsetClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalPowerOffsetClause105235:
 				return EncodeOptionalPowerOffsetClause105235(v)
@@ -80864,7 +81541,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for OptionalPowerOffsetClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "GPRS Indicator", Decode: func(data []byte) (any, error) { return DecodeGPRSIndicatorClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSIndicatorClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "GPRS Indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSIndicatorClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSIndicatorClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSIndicatorClause105235:
 				return EncodeGPRSIndicatorClause105235(v)
@@ -80892,7 +81569,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSIndicatorClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA Parameters", Decode: func(data []byte) (any, error) { return DecodeLSAParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA Parameters", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAParametersClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAParametersClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAParametersClause105235:
 				return EncodeLSAParametersClause105235(v)
@@ -80920,7 +81597,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAParametersClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA ID information", Decode: func(data []byte) (any, error) { return DecodeLSAIDInformationClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIDInformationClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA ID information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAIDInformationClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIDInformationClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIDInformationClause105235:
 				return EncodeLSAIDInformationClause105235(v)
@@ -80948,7 +81625,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAIDInformationClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA identity", Decode: func(data []byte) (any, error) { return DecodeLSAIdentityClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIdentityClause105235From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA identity", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLSAIdentityClause105235(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLSAIdentityClause105235From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIdentityClause105235:
 				return EncodeLSAIdentityClause105235(v)
@@ -80976,7 +81653,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LSAIdentityClause105235")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "SI 13alt Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI13altRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI13altRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "SI 13alt Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI13altRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI13altRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI13altRestOctets:
 				return EncodeSI13altRestOctets(v)
@@ -81004,7 +81681,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI13altRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "PBCCH Description 2 struct", Decode: func(data []byte) (any, error) { return DecodePBCCHDescription2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePBCCHDescription2StructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "PBCCH Description 2 struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePBCCHDescription2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePBCCHDescription2StructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PBCCHDescription2Struct:
 				return EncodePBCCHDescription2Struct(v)
@@ -81032,7 +81709,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PBCCHDescription2Struct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "P2 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeP2RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP2RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "P2 Rest Octets", MaxOctets: 11, Decode: func(data []byte) (any, error) { return DecodeP2RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP2RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P2RestOctets:
 				return EncodeP2RestOctets(v)
@@ -81060,7 +81737,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for P2RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "Priority", Decode: func(data []byte) (any, error) { return DecodePriorityClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105224From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "Priority", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePriorityClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105224From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105224:
 				return EncodePriorityClause105224(v)
@@ -81088,7 +81765,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityClause105224")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "MBMS Information", Decode: func(data []byte) (any, error) { return DecodeMBMSInformationClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSInformationClause105224From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "MBMS Information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeMBMSInformationClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSInformationClause105224From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSInformationClause105224:
 				return EncodeMBMSInformationClause105224(v)
@@ -81116,7 +81793,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSInformationClause105224")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105224From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105224From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105224:
 				return EncodePEOIMMCellGroupDetailsStructClause105224(v)
@@ -81144,7 +81821,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105224")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "P3 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeP3RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP3RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "P3 Rest Octets", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeP3RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP3RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P3RestOctets:
 				return EncodeP3RestOctets(v)
@@ -81172,7 +81849,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for P3RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "Priority", Decode: func(data []byte) (any, error) { return DecodePriorityClause105225(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105225From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "Priority", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePriorityClause105225(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105225From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105225:
 				return EncodePriorityClause105225(v)
@@ -81200,7 +81877,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityClause105225")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105225(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105225From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105225(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105225From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105225:
 				return EncodePEOIMMCellGroupDetailsStructClause105225(v)
@@ -81228,7 +81905,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105225")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2quater Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI2quaterRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2quaterRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2quater Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI2quaterRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2quaterRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2quaterRestOctets:
 				return EncodeSI2quaterRestOctets(v)
@@ -81256,7 +81933,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2quaterRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Neighbour Cell Description struct", Decode: func(data []byte) (any, error) { return DecodeN3GNeighbourCellDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GNeighbourCellDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Neighbour Cell Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeN3GNeighbourCellDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GNeighbourCellDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GNeighbourCellDescriptionStruct:
 				return EncodeN3GNeighbourCellDescriptionStruct(v)
@@ -81284,7 +81961,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GNeighbourCellDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN FDD Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233b(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233bFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN FDD Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233b(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANFDDDescriptionStructClause105233bFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDDescriptionStructClause105233b:
 				return EncodeUTRANFDDDescriptionStructClause105233b(v)
@@ -81312,7 +81989,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANFDDDescriptionStructClause105233b")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN FDD Neighbour Cells struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANFDDNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANFDDNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN FDD Neighbour Cells struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANFDDNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANFDDNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANFDDNeighbourCellsStruct:
 				return EncodeRepeatedUTRANFDDNeighbourCellsStruct(v)
@@ -81340,7 +82017,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedUTRANFDDNeighbourCellsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN TDD Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233b(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233bFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN TDD Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233b(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANTDDDescriptionStructClause105233bFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANTDDDescriptionStructClause105233b:
 				return EncodeUTRANTDDDescriptionStructClause105233b(v)
@@ -81368,7 +82045,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANTDDDescriptionStructClause105233b")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN TDD Neighbour Cells struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANTDDNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANTDDNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN TDD Neighbour Cells struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANTDDNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANTDDNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANTDDNeighbourCellsStruct:
 				return EncodeRepeatedUTRANTDDNeighbourCellsStruct(v)
@@ -81396,7 +82073,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedUTRANTDDNeighbourCellsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "MEASUREMENT PARAMETERS Description Struct", Decode: func(data []byte) (any, error) { return DecodeMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "MEASUREMENT PARAMETERS Description Struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MEASUREMENTPARAMETERSDescriptionStruct:
 				return EncodeMEASUREMENTPARAMETERSDescriptionStruct(v)
@@ -81424,7 +82101,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MEASUREMENTPARAMETERSDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G MEASUREMENT PARAMETERS Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom(r)
@@ -81456,7 +82133,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS Real Time Difference Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRSRealTimeDifferenceDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSRealTimeDifferenceDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS Real Time Difference Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSRealTimeDifferenceDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSRealTimeDifferenceDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSRealTimeDifferenceDescriptionStruct:
 				return EncodeGPRSRealTimeDifferenceDescriptionStruct(v)
@@ -81484,7 +82161,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSRealTimeDifferenceDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD6 Struct", Decode: func(data []byte) (any, error) { return DecodeRTD6Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRTD6StructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD6 Struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRTD6Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRTD6StructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RTD6Struct:
 				return EncodeRTD6Struct(v)
@@ -81512,7 +82189,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RTD6Struct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD12 Struct", Decode: func(data []byte) (any, error) { return DecodeRTD12Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRTD12StructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD12 Struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRTD12Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRTD12StructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RTD12Struct:
 				return EncodeRTD12Struct(v)
@@ -81540,7 +82217,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RTD12Struct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS BSIC Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRSBSICDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSBSICDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS BSIC Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSBSICDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSBSICDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSBSICDescriptionStruct:
 				return EncodeGPRSBSICDescriptionStruct(v)
@@ -81568,7 +82245,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSBSICDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS REPORT PRIORITY Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRSREPORTPRIORITYDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSREPORTPRIORITYDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS REPORT PRIORITY Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSREPORTPRIORITYDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSREPORTPRIORITYDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSREPORTPRIORITYDescriptionStruct:
 				return EncodeGPRSREPORTPRIORITYDescriptionStruct(v)
@@ -81596,7 +82273,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSREPORTPRIORITYDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS MEASUREMENT PARAMETERS Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS MEASUREMENT PARAMETERS Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSMEASUREMENTPARAMETERSDescriptionStruct:
 				return EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(v)
@@ -81624,7 +82301,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSMEASUREMENTPARAMETERSDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS 3G MEASUREMENT PARAMETERS Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS 3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRS3GMEASUREMENTPARAMETERSDescriptionStruct:
 				return EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(v)
@@ -81652,7 +82329,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRS3GMEASUREMENTPARAMETERSDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "NC Measurement Parameters struct", Decode: func(data []byte) (any, error) { return DecodeNCMeasurementParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNCMeasurementParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "NC Measurement Parameters struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNCMeasurementParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNCMeasurementParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NCMeasurementParametersStruct:
 				return EncodeNCMeasurementParametersStruct(v)
@@ -81680,7 +82357,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NCMeasurementParametersStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2q Extension Information", Decode: func(data []byte) (any, error) { return DecodeSI2qExtensionInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2qExtensionInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2q Extension Information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI2qExtensionInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI2qExtensionInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2qExtensionInformation:
 				return EncodeSI2qExtensionInformation(v)
@@ -81708,7 +82385,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI2qExtensionInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CCN Support Description struct", Decode: func(data []byte) (any, error) { return DecodeCCNSupportDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCCNSupportDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CCN Support Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCCNSupportDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCCNSupportDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CCNSupportDescriptionStruct:
 				return EncodeCCNSupportDescriptionStruct(v)
@@ -81736,7 +82413,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CCNSupportDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom(r)
@@ -81768,7 +82445,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GAdditionalMeasurementParametersDescriptionStructClause105233b")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description 2 struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description 2 struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescription2Struct(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeN3GAdditionalMeasurementParametersDescription2StructFrom(r)
@@ -81800,7 +82477,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GAdditionalMeasurementParametersDescription2Struct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Priority and E-UTRAN Parameters Description struct", Decode: func(data []byte) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) {
 			return DecodePriorityAndEUTRANParametersDescriptionStructClause105233b(data)
 		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom(r)
@@ -81832,7 +82509,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityAndEUTRANParametersDescriptionStructClause105233b")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Serving Cell Priority Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodeServingCellPriorityParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Serving Cell Priority Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeServingCellPriorityParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeServingCellPriorityParametersDescriptionStructFrom(r)
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
@@ -81862,7 +82539,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ServingCellPriorityParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Priority Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodeN3GPriorityParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GPriorityParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Priority Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeN3GPriorityParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GPriorityParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GPriorityParametersDescriptionStruct:
 				return EncodeN3GPriorityParametersDescriptionStruct(v)
@@ -81890,7 +82567,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GPriorityParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN Priority Parameters struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANPriorityParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANPriorityParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN Priority Parameters struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedUTRANPriorityParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedUTRANPriorityParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANPriorityParametersStruct:
 				return EncodeRepeatedUTRANPriorityParametersStruct(v)
@@ -81918,7 +82595,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedUTRANPriorityParametersStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEUTRANParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANParametersDescriptionStruct:
 				return EncodeEUTRANParametersDescriptionStruct(v)
@@ -81946,7 +82623,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EUTRANParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Measurement Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANMeasurementParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Measurement Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANMeasurementParametersDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANMeasurementParametersDescriptionStruct:
 				return EncodeEUTRANMeasurementParametersDescriptionStruct(v)
@@ -81974,7 +82651,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EUTRANMeasurementParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS E-UTRAN Measurement Parameters Description struct", Decode: func(data []byte) (any, error) { return DecodeGPRSEUTRANMeasurementParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS E-UTRAN Measurement Parameters Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSEUTRANMeasurementParametersDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return DecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom(r)
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
@@ -82004,7 +82681,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GPRSEUTRANMeasurementParametersDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Neighbour Cells struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Neighbour Cells struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNeighbourCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANNeighbourCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANNeighbourCellsStruct:
 				return EncodeRepeatedEUTRANNeighbourCellsStruct(v)
@@ -82032,7 +82709,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANNeighbourCellsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Not Allowed Cells struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNotAllowedCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANNotAllowedCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Not Allowed Cells struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANNotAllowedCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANNotAllowedCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANNotAllowedCellsStruct:
 				return EncodeRepeatedEUTRANNotAllowedCellsStruct(v)
@@ -82060,7 +82737,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANNotAllowedCellsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN PCID to TA mapping struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANPCIDToTAMappingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANPCIDToTAMappingStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN PCID to TA mapping struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeRepeatedEUTRANPCIDToTAMappingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedEUTRANPCIDToTAMappingStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANPCIDToTAMappingStruct:
 				return EncodeRepeatedEUTRANPCIDToTAMappingStruct(v)
@@ -82088,7 +82765,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANPCIDToTAMappingStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G CSG Description struct", Decode: func(data []byte) (any, error) { return DecodeN3GCSGDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GCSGDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G CSG Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeN3GCSGDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN3GCSGDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GCSGDescriptionStruct:
 				return EncodeN3GCSGDescriptionStruct(v)
@@ -82116,7 +82793,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N3GCSGDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Description struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANCSGDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANCSGDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEUTRANCSGDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANCSGDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANCSGDescriptionStruct:
 				return EncodeEUTRANCSGDescriptionStruct(v)
@@ -82144,7 +82821,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EUTRANCSGDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CSG Cells Reporting Description struct", Decode: func(data []byte) (any, error) { return DecodeCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CSG Cells Reporting Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CSGCellsReportingDescriptionStruct:
 				return EncodeCSGCellsReportingDescriptionStruct(v)
@@ -82172,7 +82849,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CSGCellsReportingDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN CSG Cells Reporting Description struct", Decode: func(data []byte) (any, error) { return DecodeUTRANCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN CSG Cells Reporting Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANCSGCellsReportingDescriptionStruct:
 				return EncodeUTRANCSGCellsReportingDescriptionStruct(v)
@@ -82200,7 +82877,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANCSGCellsReportingDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Cells Reporting Description struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Cells Reporting Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEUTRANCSGCellsReportingDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANCSGCellsReportingDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANCSGCellsReportingDescriptionStruct:
 				return EncodeEUTRANCSGCellsReportingDescriptionStruct(v)
@@ -82228,7 +82905,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EUTRANCSGCellsReportingDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description struct", Decode: func(data []byte) (any, error) { return DecodeExtendedEARFCNsDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedEARFCNsDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeExtendedEARFCNsDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedEARFCNsDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedEARFCNsDescriptionStruct:
 				return EncodeExtendedEARFCNsDescriptionStruct(v)
@@ -82256,7 +82933,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ExtendedEARFCNsDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description for CSG Cells struct", Decode: func(data []byte) (any, error) { return DecodeExtendedEARFCNsDescriptionForCSGCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description for CSG Cells struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeExtendedEARFCNsDescriptionForCSGCellsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedEARFCNsDescriptionForCSGCellsStruct:
 				return EncodeExtendedEARFCNsDescriptionForCSGCellsStruct(v)
@@ -82284,7 +82961,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ExtendedEARFCNsDescriptionForCSGCellsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "SI6 rest octets", Decode: func(data []byte) (any, error) { return DecodeSI6RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI6RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "SI6 rest octets", MaxOctets: 7, Decode: func(data []byte) (any, error) { return DecodeSI6RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI6RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI6RestOctets:
 				return EncodeSI6RestOctets(v)
@@ -82312,7 +82989,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI6RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "PCH and NCH info", Decode: func(data []byte) (any, error) { return DecodePCHAndNCHInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePCHAndNCHInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "PCH and NCH info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePCHAndNCHInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePCHAndNCHInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PCHAndNCHInfo:
 				return EncodePCHAndNCHInfo(v)
@@ -82340,7 +83017,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PCHAndNCHInfo")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "paging channel restructuring", Decode: func(data []byte) (any, error) { return DecodePagingChannelRestructuring(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePagingChannelRestructuringFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "paging channel restructuring", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePagingChannelRestructuring(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePagingChannelRestructuringFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PagingChannelRestructuring:
 				return EncodePagingChannelRestructuring(v)
@@ -82368,7 +83045,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PagingChannelRestructuring")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "VBS/VGCS options", Decode: func(data []byte) (any, error) { return DecodeVBSVGCSOptions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeVBSVGCSOptionsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "VBS/VGCS options", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeVBSVGCSOptions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeVBSVGCSOptionsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case VBSVGCSOptions:
 				return EncodeVBSVGCSOptions(v)
@@ -82396,7 +83073,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for VBSVGCSOptions")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband notifications", Decode: func(data []byte) (any, error) { return DecodeInbandNotifications(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInbandNotificationsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband notifications", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeInbandNotifications(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInbandNotificationsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InbandNotifications:
 				return EncodeInbandNotifications(v)
@@ -82424,7 +83101,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for InbandNotifications")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband pagings", Decode: func(data []byte) (any, error) { return DecodeInbandPagings(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInbandPagingsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband pagings", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeInbandPagings(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeInbandPagingsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InbandPagings:
 				return EncodeInbandPagings(v)
@@ -82452,7 +83129,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for InbandPagings")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "Band indicator", Decode: func(data []byte) (any, error) { return DecodeBandIndicatorClause105235a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBandIndicatorClause105235aFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "Band indicator", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeBandIndicatorClause105235a(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBandIndicatorClause105235aFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BandIndicatorClause105235a:
 				return EncodeBandIndicatorClause105235a(v)
@@ -82480,7 +83157,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for BandIndicatorClause105235a")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI 13 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI13RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI13RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI 13 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI13RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI13RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI13RestOctets:
 				return EncodeSI13RestOctets(v)
@@ -82508,7 +83185,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI13RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PBCCH Description struct", Decode: func(data []byte) (any, error) { return DecodePBCCHDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePBCCHDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PBCCH Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePBCCHDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePBCCHDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PBCCHDescriptionStruct:
 				return EncodePBCCHDescriptionStruct(v)
@@ -82536,7 +83213,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PBCCHDescriptionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI_CHANGE_ALT", Decode: func(data []byte) (any, error) { return DecodeSICHANGEALT(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSICHANGEALTFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI_CHANGE_ALT", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSICHANGEALT(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSICHANGEALTFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SICHANGEALT:
 				return EncodeSICHANGEALT(v)
@@ -82564,7 +83241,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SICHANGEALT")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Definition struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDefinitionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDefinitionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Definition struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDefinitionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDefinitionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDefinitionStruct:
 				return EncodePEOIMMCellGroupDefinitionStruct(v)
@@ -82592,7 +83269,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDefinitionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Specific Parameters struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupSpecificParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupSpecificParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Specific Parameters struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupSpecificParametersStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupSpecificParametersStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupSpecificParametersStruct:
 				return EncodePEOIMMCellGroupSpecificParametersStruct(v)
@@ -82620,7 +83297,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupSpecificParametersStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "SI 19 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI19RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI19RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "SI 19 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI19RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI19RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI19RestOctets:
 				return EncodeSI19RestOctets(v)
@@ -82648,7 +83325,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI19RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Neighbour Cell params struct", Decode: func(data []byte) (any, error) { return DecodeCOMPACTNeighbourCellParamsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCOMPACTNeighbourCellParamsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Neighbour Cell params struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCOMPACTNeighbourCellParamsStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCOMPACTNeighbourCellParamsStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case COMPACTNeighbourCellParamsStruct:
 				return EncodeCOMPACTNeighbourCellParamsStruct(v)
@@ -82676,7 +83353,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for COMPACTNeighbourCellParamsStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Cell Selection struct", Decode: func(data []byte) (any, error) { return DecodeCOMPACTCellSelectionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCOMPACTCellSelectionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Cell Selection struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeCOMPACTCellSelectionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeCOMPACTCellSelectionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case COMPACTCellSelectionStruct:
 				return EncodeCOMPACTCellSelectionStruct(v)
@@ -82704,7 +83381,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for COMPACTCellSelectionStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", Decode: func(data []byte) (any, error) { return DecodeLADifferentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLADifferentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeLADifferentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeLADifferentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LADifferentStruct:
 				return EncodeLADifferentStruct(v)
@@ -82732,7 +83409,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for LADifferentStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI18RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI18RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI18RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI18RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI18RestOctets:
 				return EncodeSI18RestOctets(v)
@@ -82760,7 +83437,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI18RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", Decode: func(data []byte) (any, error) { return DecodeNonGSMMessageStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNonGSMMessageStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeNonGSMMessageStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNonGSMMessageStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NonGSMMessageStruct:
 				return EncodeNonGSMMessageStruct(v)
@@ -82788,7 +83465,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NonGSMMessageStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", Decode: func(data []byte) (any, error) { return DecodeIPARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPARestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", MaxOctets: 19, Decode: func(data []byte) (any, error) { return DecodeIPARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPARestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPARestOctets:
 				return EncodeIPARestOctets(v)
@@ -82816,7 +83493,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IPARestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Uplink Assignment struct", Decode: func(data []byte) (any, error) { return DecodeIPAUplinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPAUplinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Uplink Assignment struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIPAUplinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPAUplinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPAUplinkAssignmentStruct:
 				return EncodeIPAUplinkAssignmentStruct(v)
@@ -82844,7 +83521,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IPAUplinkAssignmentStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Downlink Assignment struct", Decode: func(data []byte) (any, error) { return DecodeIPADownlinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPADownlinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Downlink Assignment struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIPADownlinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPADownlinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPADownlinkAssignmentStruct:
 				return EncodeIPADownlinkAssignmentStruct(v)
@@ -82872,7 +83549,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IPADownlinkAssignmentStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Single Block Uplink Assignment struct", Decode: func(data []byte) (any, error) { return DecodeIPASingleBlockUplinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPASingleBlockUplinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Single Block Uplink Assignment struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIPASingleBlockUplinkAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIPASingleBlockUplinkAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPASingleBlockUplinkAssignmentStruct:
 				return EncodeIPASingleBlockUplinkAssignmentStruct(v)
@@ -82900,7 +83577,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for IPASingleBlockUplinkAssignmentStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "Acknowledged Access Request struct", Decode: func(data []byte) (any, error) { return DecodeAcknowledgedAccessRequestStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAcknowledgedAccessRequestStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "Acknowledged Access Request struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeAcknowledgedAccessRequestStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAcknowledgedAccessRequestStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AcknowledgedAccessRequestStruct:
 				return EncodeAcknowledgedAccessRequestStruct(v)
@@ -82928,7 +83605,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for AcknowledgedAccessRequestStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105278(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105278From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105278(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105278From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105278:
 				return EncodePEOIMMCellGroupDetailsStructClause105278(v)
@@ -82956,7 +83633,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105278")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI20RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI20RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI20RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI20RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI20RestOctets:
 				return EncodeSI20RestOctets(v)
@@ -82984,7 +83661,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI20RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", Decode: func(data []byte) (any, error) { return DecodeGroupCallInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGroupCallInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGroupCallInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGroupCallInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GroupCallInformation:
 				return EncodeGroupCallInformation(v)
@@ -83012,7 +83689,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GroupCallInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", Decode: func(data []byte) (any, error) { return DecodeEmergencyInd(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEmergencyIndFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEmergencyInd(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEmergencyIndFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EmergencyInd:
 				return EncodeEmergencyInd(v)
@@ -83040,7 +83717,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EmergencyInd")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Channel Description", Decode: func(data []byte) (any, error) { return DecodeGroupChannelDescription(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGroupChannelDescriptionFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Channel Description", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGroupChannelDescription(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGroupChannelDescriptionFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GroupChannelDescription:
 				return EncodeGroupChannelDescription(v)
@@ -83068,7 +83745,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GroupChannelDescription")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "bit string", Decode: func(data []byte) (any, error) { return DecodeBitString(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBitStringFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "bit string", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeBitString(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeBitStringFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BitString:
 				return EncodeBitString(v)
@@ -83096,7 +83773,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for BitString")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "NT/N Rest Octets", Decode: func(data []byte) (any, error) { return DecodeNTNRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNTNRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "NT/N Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeNTNRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeNTNRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NTNRestOctets:
 				return EncodeNTNRestOctets(v)
@@ -83124,7 +83801,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for NTNRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Group Call NCH information", Decode: func(data []byte) (any, error) { return DecodeListOfGroupCallNCHInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfGroupCallNCHInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Group Call NCH information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeListOfGroupCallNCHInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfGroupCallNCHInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfGroupCallNCHInformation:
 				return EncodeListOfGroupCallNCHInformation(v)
@@ -83152,7 +83829,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ListOfGroupCallNCHInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Emergency information", Decode: func(data []byte) (any, error) { return DecodeListOfEmergencyInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfEmergencyInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Emergency information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeListOfEmergencyInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfEmergencyInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfEmergencyInformation:
 				return EncodeListOfEmergencyInformation(v)
@@ -83180,7 +83857,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ListOfEmergencyInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of VSTK_RAND information", Decode: func(data []byte) (any, error) { return DecodeListOfVSTKRANDInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfVSTKRANDInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of VSTK_RAND information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeListOfVSTKRANDInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfVSTKRANDInformationFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfVSTKRANDInformation:
 				return EncodeListOfVSTKRANDInformation(v)
@@ -83208,7 +83885,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ListOfVSTKRANDInformation")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Reduced GCR", Decode: func(data []byte) (any, error) { return DecodeListOfReducedGCR(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfReducedGCRFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Reduced GCR", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeListOfReducedGCR(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeListOfReducedGCRFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfReducedGCR:
 				return EncodeListOfReducedGCR(v)
@@ -83236,7 +83913,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ListOfReducedGCR")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "P1 Rest Octets", Decode: func(data []byte) (any, error) { return DecodeP1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP1RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "P1 Rest Octets", MaxOctets: 17, Decode: func(data []byte) (any, error) { return DecodeP1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeP1RestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P1RestOctets:
 				return EncodeP1RestOctets(v)
@@ -83264,7 +83941,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for P1RestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "Priority", Decode: func(data []byte) (any, error) { return DecodePriorityClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105223From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "Priority", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePriorityClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePriorityClause105223From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105223:
 				return EncodePriorityClause105223(v)
@@ -83292,7 +83969,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PriorityClause105223")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "MBMS Information", Decode: func(data []byte) (any, error) { return DecodeMBMSInformationClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSInformationClause105223From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "MBMS Information", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeMBMSInformationClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMBMSInformationClause105223From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSInformationClause105223:
 				return EncodeMBMSInformationClause105223(v)
@@ -83320,7 +83997,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSInformationClause105223")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "ETWS Primary Notification struct", Decode: func(data []byte) (any, error) { return DecodeETWSPrimaryNotificationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeETWSPrimaryNotificationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "ETWS Primary Notification struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeETWSPrimaryNotificationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeETWSPrimaryNotificationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ETWSPrimaryNotificationStruct:
 				return EncodeETWSPrimaryNotificationStruct(v)
@@ -83348,7 +84025,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ETWSPrimaryNotificationStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "PEO IMM Cell Group Details struct", Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105223From(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "PEO IMM Cell Group Details struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePEOIMMCellGroupDetailsStructClause105223From(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105223:
 				return EncodePEOIMMCellGroupDetailsStructClause105223(v)
@@ -83376,7 +84053,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PEOIMMCellGroupDetailsStructClause105223")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Rest Octets", Decode: func(data []byte) (any, error) { return DecodeSI10bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10bisRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Rest Octets", MaxOctets: 20, Decode: func(data []byte) (any, error) { return DecodeSI10bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10bisRestOctetsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10bisRestOctets:
 				return EncodeSI10bisRestOctets(v)
@@ -83404,7 +84081,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for SI10bisRestOctets")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Neighbour Cell Info", Decode: func(data []byte) (any, error) { return DecodeSI10bisNeighbourCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10bisNeighbourCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Neighbour Cell Info", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeSI10bisNeighbourCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSI10bisNeighbourCellInfoFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10bisNeighbourCellInfo:
 				return EncodeSI10bisNeighbourCellInfo(v)

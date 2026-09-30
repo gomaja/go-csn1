@@ -1,6 +1,9 @@
 package runtime
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 type canonicalChild struct {
 	Value uint8
@@ -37,5 +40,26 @@ func TestCanonicalNilInterface(t *testing.T) {
 	var value any
 	if Canonical(value) != nil {
 		t.Fatal("nil interface changed")
+	}
+}
+
+func TestCanonicalExtentIsRequiredAndEnforced(t *testing.T) {
+	encode := func(uint8) ([]byte, error) { return make([]byte, 22), nil }
+	decode := func([]byte) (Decoded[uint8], error) { return Decoded[uint8]{Value: 7}, nil }
+	for _, tc := range []struct {
+		name         string
+		run          func() error
+		wantRequired bool
+	}{
+		{"unspecified", func() error { _, err := CanonicalEncode(uint8(7), 0, 0, false, encode, decode, nil); return err }, true},
+		{"direct fresh candidate", func() error { _, err := CanonicalEncode(uint8(7), 0, 21, false, encode, decode, nil); return err }, false},
+		{"explicit overlong target", func() error { _, err := CanonicalEncodeAtLength(uint8(7), 22, 0, 21, encode, decode, nil); return err }, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var extent *ExtentError
+			if err := tc.run(); !errors.As(err, &extent) || extent.Required != tc.wantRequired {
+				t.Fatalf("want typed extent error with required=%t, got %v", tc.wantRequired, err)
+			}
+		})
 	}
 }

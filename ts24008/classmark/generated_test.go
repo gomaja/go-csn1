@@ -2,13 +2,31 @@ package classmark
 
 import (
 	"bytes"
+	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/gomaja/go-csn1/runtime"
 )
 
 func TestDecodeRejectsOversizedInput(t *testing.T) {
 	if _, err := DecodeA5Bits(make([]byte, 131073)); err == nil {
 		t.Fatal("unbounded input accepted")
+	}
+}
+
+func TestClassmark3ValuePartLimit(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.1.7: the type 4 IE is at most
+	// 34 octets including IEI and length, leaving 32 value octets.
+	for _, length := range []int{32, 33} {
+		_, err := DecodeClassmark3ValuePart(make([]byte, length))
+		var limit *runtime.DecodeError
+		if length == 32 && err != nil {
+			t.Fatalf("32-octet value: %v", err)
+		}
+		if length == 33 && (!errors.As(err, &limit) || limit.Kind != runtime.Limit) {
+			t.Fatalf("33-octet value: want typed limit, got %v", err)
+		}
 	}
 }
 

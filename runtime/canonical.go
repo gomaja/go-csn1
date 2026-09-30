@@ -46,8 +46,15 @@ func SemanticallyEqual[T any](a, b T) bool {
 
 // CanonicalEncode tries a fresh encoding, then the permitted octet extents
 // when source-defined truncation or inferred zeros require a shorter layout.
-// Each candidate must decode to the same typed semantic value.
+// Each candidate must fit the source-defined extent and decode to the same
+// typed semantic value. A zero maximum requires CanonicalEncodeAtLength.
 func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if maxOctets == 0 {
+		return nil, &ExtentError{Minimum: minOctets, Required: true}
+	}
+	if minOctets < 0 || maxOctets < minOctets || maxOctets > maxBits/8 {
+		return nil, fmt.Errorf("invalid canonical extent range")
+	}
 	if equivalent == nil {
 		equivalent = SemanticallyEqual[T]
 	}
@@ -55,6 +62,9 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 		out, err := encode(fresh)
 		if err != nil {
 			return nil, err
+		}
+		if len(out) < minOctets || len(out) > maxOctets {
+			return nil, &ExtentError{Actual: len(out), Minimum: minOctets, Maximum: maxOctets}
 		}
 		again, err := decode(out)
 		if err != nil {
@@ -64,9 +74,6 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 			return nil, fmt.Errorf("canonical bytes change typed semantics")
 		}
 		return out, nil
-	}
-	if minOctets < 0 || maxOctets < minOctets || maxOctets > maxBits/8 {
-		return nil, fmt.Errorf("invalid canonical extent range")
 	}
 	search := func() ([]byte, bool) {
 		for octets := minOctets; octets <= maxOctets; octets++ {
@@ -97,10 +104,15 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 // CanonicalEncodeAtLength uses an explicit containing-message value length.
 // A candidate is accepted only if it fills that extent and decodes to the
 // original typed value. The caller supplies the length prescribed by its
-// enclosing message (TS 44.018 V19.0.0 §8.9).
+// enclosing message (TS 44.018 V19.0.0 §8.9). A zero maximum means that
+// the definition has no standalone extent, so the supplied length is the
+// bound (subject to the runtime bit limit).
 func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if maxOctets == 0 {
+		maxOctets = maxBits / 8
+	}
 	if octets < minOctets || octets > maxOctets || maxOctets > maxBits/8 {
-		return nil, fmt.Errorf("canonical extent %d outside %d..%d octets", octets, minOctets, maxOctets)
+		return nil, &ExtentError{Actual: octets, Minimum: minOctets, Maximum: maxOctets}
 	}
 	if equivalent == nil {
 		equivalent = SemanticallyEqual[T]
@@ -110,7 +122,7 @@ func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, e
 		return nil, err
 	}
 	if len(out) != octets {
-		return nil, fmt.Errorf("canonical extent is %d, want %d octets", len(out), octets)
+		return nil, &ExtentError{Actual: len(out), Minimum: octets, Maximum: octets}
 	}
 	again, err := decode(out)
 	if err != nil {

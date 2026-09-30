@@ -15,7 +15,7 @@ func TestMSNetworkCapabilityValuePart(t *testing.T) {
 	for _, wire := range [][]byte{
 		{0},
 		{0xff, 0x12, 0x34, 0x56, 0x78, 0x90},
-		bytes.Repeat([]byte{0xff}, 10),
+		bytes.Repeat([]byte{0xff}, 8),
 	} {
 		d, err := DecodeMSNetworkCapabilityValuePart(wire)
 		if err != nil {
@@ -35,7 +35,7 @@ func TestMSNetworkCapabilityValuePart(t *testing.T) {
 	for _, tc := range []struct {
 		wire []byte
 		kind runtime.ErrorKind
-	}{{nil, runtime.Truncated}, {make([]byte, 11), runtime.Limit}} {
+	}{{nil, runtime.Truncated}, {make([]byte, 9), runtime.Limit}} {
 		_, err := DecodeMSNetworkCapabilityValuePart(tc.wire)
 		var de *runtime.DecodeError
 		if !errors.As(err, &de) || de.Kind != tc.kind {

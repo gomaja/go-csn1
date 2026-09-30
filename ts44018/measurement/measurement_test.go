@@ -83,6 +83,74 @@ func TestEnhancedMeasurementReportCanonicalAfterBitmapEdit(t *testing.T) {
 	}
 }
 
+func TestEnhancedMeasurementReportBterCarrierLimit(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 sends this message on SACCH.
+	// TS 44.006 V19.0.0 §§5.2, 8.8.3 count the short L2 header
+	// inside the 21-octet Bter information field.
+	wire := []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+	d, err := DecodeEnhancedMeasurementReport(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct {
+		present int
+		wantLen int
+	}{
+		{9, 21},
+		{10, 22},
+	} {
+		v := d.Value
+		list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+		for i := 0; i < tc.present; i++ {
+			zero := uint8(0)
+			list[i] = &zero
+		}
+		v.REPORTINGQUANTITYList = &list
+		out, err := EncodeEnhancedMeasurementReportCanonical(v)
+		if tc.wantLen == 21 {
+			if err != nil || len(out) != 21 {
+				t.Fatalf("%d present: len=%d, error=%v", tc.present, len(out), err)
+			}
+			continue
+		}
+		var extent *runtime.ExtentError
+		if !errors.As(err, &extent) || extent.Maximum != 21 {
+			t.Fatalf("%d present: wanted typed 21-octet extent error, got %d octets, %v", tc.present, len(out), err)
+		}
+		if _, err := EncodeEnhancedMeasurementReportCanonicalAtLength(v, 22); !errors.As(err, &extent) {
+			t.Fatalf("explicit 22-octet extent accepted: %v", err)
+		}
+		if _, err := EncodeEnhancedMeasurementReport(runtime.Canonical(v)); !errors.As(err, &extent) {
+			t.Fatalf("fresh overlong EMR accepted: %v", err)
+		}
+	}
+	var limit *runtime.DecodeError
+	if _, err := DecodeEnhancedMeasurementReport(make([]byte, 22)); !errors.As(err, &limit) || limit.Kind != runtime.Limit {
+		t.Fatalf("accepted an overlong Bter EMR: %v", err)
+	}
+	// The canonical bit target is octet-aligned. An extra bit after the
+	// 168-bit Bter boundary cannot be represented in this carrier.
+	v := d.Value
+	list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+	for i := 0; i < 9; i++ {
+		zero := uint8(0)
+		list[i] = &zero
+	}
+	v.REPORTINGQUANTITYList = &list
+	if _, err := EncodeEnhancedMeasurementReport(runtime.CanonicalTo(v, 169)); err == nil {
+		t.Fatal("accepted a canonical target one bit beyond the Bter boundary")
+	}
+	for i := range list {
+		zero := uint8(0)
+		list[i] = &zero
+	}
+	v.REPORTINGQUANTITYList = &list
+	var extent *runtime.ExtentError
+	if _, err := EncodeEnhancedMeasurementReportCanonical(v); !errors.As(err, &extent) || extent.Maximum != 21 {
+		t.Fatalf("96 reported positions escaped the carrier limit: %v", err)
+	}
+}
+
 func TestEnhancedMeasurementReportPreRel8WireBoundary(t *testing.T) {
 	// TS 44.018 V19.0.0 §9.1.55 permits omitted trailing no-report
 	// positions only when the message cannot hold them.
@@ -120,8 +188,8 @@ func FuzzEnhancedMeasurementReportBitmap(f *testing.F) {
 	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
 	f.Add([]byte{0x10, 0, 0, 0})
 	f.Fuzz(func(t *testing.T, wire []byte) {
-		// TS 44.006 V19.0.0 §8.8.3: Bter FACCH/SDCCH N201 is 23 octets.
-		if len(wire) > 23 {
+		// TS 44.006 V19.0.0 §8.8.3: Bter SACCH N201 is 21 octets.
+		if len(wire) > 21 {
 			return
 		}
 		decoded, err := DecodeEnhancedMeasurementReport(wire)
@@ -139,7 +207,7 @@ func FuzzEnhancedMeasurementReportCanonical(f *testing.F) {
 	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
 	f.Add([]byte{0x10, 0x90, 0x02, 0xc2})
 	f.Fuzz(func(t *testing.T, wire []byte) {
-		if len(wire) > 23 {
+		if len(wire) > 21 {
 			return
 		}
 		d, err := DecodeEnhancedMeasurementReport(wire)

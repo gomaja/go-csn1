@@ -2,6 +2,7 @@ package registry
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"reflect"
 	"testing"
@@ -34,7 +35,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 			continue
 		}
 		for index, vector := range vectors {
-			ok, err := probeCanonical(definition.Decode, definition.Canonical, vector)
+			ok, err := probeCanonical(definition.Decode, definition.Encode, definition.Canonical, definition.CanonicalAtLength, definition.MaxOctets, vector)
 			if err != nil {
 				t.Errorf("%s §%s <%s> vector %d: %v", definition.Standard, definition.Clause, definition.Name, index, err)
 				failures++
@@ -53,7 +54,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 			for _, context := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
 				decode := func(b []byte) (any, error) { return definition.DecodeWithContext(b, context) }
 				encode := func(v any) ([]byte, error) { return definition.CanonicalWithContext(v, context) }
-				ok, err := probeCanonical(decode, encode, bytes.Repeat([]byte{0x2b}, 20))
+				ok, err := probeCanonical(decode, nil, encode, nil, 20, bytes.Repeat([]byte{0x2b}, 20))
 				if err != nil || !ok {
 					t.Errorf("%s <%s> ACS=%d: accepted=%v error=%v", definition.Standard, definition.Name, context, ok, err)
 					failures++
@@ -69,7 +70,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 	}
 }
 
-func probeCanonical(decode func([]byte) (any, error), encode func(any) ([]byte, error), wire []byte) (accepted bool, err error) {
+func probeCanonical(decode func([]byte) (any, error), plain, encode func(any) ([]byte, error), atLength func(any, int) ([]byte, error), maxOctets int, wire []byte) (accepted bool, err error) {
 	defer func() {
 		if panicValue := recover(); panicValue != nil {
 			err = fmt.Errorf("panic: %v", panicValue)
@@ -81,8 +82,32 @@ func probeCanonical(decode func([]byte) (any, error), encode func(any) ([]byte, 
 	}
 	value := reflect.ValueOf(decoded).FieldByName("Value").Interface()
 	canonical, err := encode(value)
+	var extent *runtime.ExtentError
+	if errors.As(err, &extent) && extent.Required && atLength != nil {
+		// These component definitions have no standalone source maximum.
+		// Supply an extent explicitly, first using the fresh value's own
+		// length, then the caller's input extent as a search ceiling.
+		if plain != nil {
+			fresh, freshErr := plain(runtime.Canonical(value))
+			if freshErr == nil {
+				canonical, err = atLength(value, len(fresh))
+			}
+		}
+		if err != nil {
+			for octets := 0; octets <= len(wire); octets++ {
+				candidate, candidateErr := atLength(value, octets)
+				if candidateErr == nil {
+					canonical, err = candidate, nil
+					break
+				}
+			}
+		}
+	}
 	if err != nil {
 		return true, fmt.Errorf("encode: %w", err)
+	}
+	if maxOctets > 0 && len(canonical) > maxOctets {
+		return true, fmt.Errorf("canonical output %d exceeds source maximum %d octets", len(canonical), maxOctets)
 	}
 	again, err := decode(canonical)
 	if err != nil {
@@ -136,7 +161,7 @@ func FuzzCanonicalAllDefinitions(f *testing.F) {
 		if definition.Canonical == nil {
 			t.Fatalf("missing canonical entry point for %s", definition.Name)
 		}
-		_, err := probeCanonical(definition.Decode, definition.Canonical, wire)
+		_, err := probeCanonical(definition.Decode, definition.Encode, definition.Canonical, definition.CanonicalAtLength, definition.MaxOctets, wire)
 		if err != nil {
 			t.Fatalf("%s §%s <%s>: %v", definition.Standard, definition.Clause, definition.Name, err)
 		}
