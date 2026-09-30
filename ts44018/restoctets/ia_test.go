@@ -17,18 +17,18 @@ func TestIAEmptyValueAndBranches(t *testing.T) {
 	if _, err := DecodeIARestOctets(nil); !errors.Is(err, runtime.ErrEmptyValue) {
 		t.Fatalf("empty IA value: %v", err)
 	}
-	if _, err := DecodeIARestOctets([]byte{0x2b}); err == nil || errors.Is(err, runtime.ErrEmptyValue) {
+	if _, err := DecodeIARestOctets([]byte{0}); err == nil || errors.Is(err, runtime.ErrEmptyValue) {
 		t.Fatalf("nonempty truncated IA value: %v", err)
 	}
 	for _, wire := range [][]byte{
-		{0x00},                   // LL, noncanonical received spare padding
-		{0x20},                   // LL, compressed inter-RAT indication set
+		{0x2b},                   // LL, canonical spare padding
+		{0x0b},                   // LL, compressed inter-RAT indication set (H)
 		{0x50, 0x00, 0x00, 0x0b}, // LH, multiple blocks packet downlink assignment
-		{0x50, 0x00, 0x00, 0x80, 0x00, 0x00, 0x09},             // LH, TMGI IE
+		{0x50, 0x00, 0x00, 0x80, 0x00, 0x00, 0x2b},             // LH, TMGI IE
 		{0x50, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x00, 0x20, 0x0b}, // LH, packet timing advance IE
-		{0x40, 0x20, 0x00, 0x00, 0x00, 0x09},                   // LH, EGPRS uplink TFI with TS 44.060 MCS/window IEs
-		{0x80, 0x00},                                           // HL, zero-length frequency parameters
-		{0x82, 0x00, 0x00, 0x00},                               // HL, two-octet frequency parameters
+		{0x40, 0x20, 0x00, 0x00, 0x00, 0x09, 0x2b},             // LH, EGPRS uplink TFI with TS 44.060 MCS/window IEs
+		{0x80, 0x08},                                           // HL, zero-length frequency parameters
+		{0x82, 0x00, 0x00, 0x08},                               // HL, two-octet frequency parameters
 		{0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b},             // HH, EGPRS Level IE
 		{0xe8, 0x2b}, // HH, second part packet assignment
 	} {
@@ -47,21 +47,75 @@ func TestIAEmptyValueAndBranches(t *testing.T) {
 }
 
 func TestIACanonicalSparePadding(t *testing.T) {
-	decoded, err := DecodeIARestOctets([]byte{0x00})
+	decoded, err := DecodeIARestOctets([]byte{0x2b})
 	if err != nil {
 		t.Fatal(err)
 	}
 	decoded.Value.Wire = runtime.WireInfo{}
 	encoded, err := EncodeIARestOctets(decoded.Value)
-	if err != nil || !bytes.Equal(encoded, []byte{0x03}) {
-		t.Fatalf("canonical L padding = %x, %v; want 03", encoded, err)
+	if err != nil || !bytes.Equal(encoded, []byte{0x2b}) {
+		t.Fatalf("canonical L padding = %x, %v; want 2b", encoded, err)
+	}
+}
+
+func TestLateRestOctetAdditionsAbsentInPadding(t *testing.T) {
+	// TS 44.018 V19.0.0 §§10.5.2.16–18: the Rel-14/15 optional
+	// selectors are L/H relative to the 0x2b spare-padding pattern.
+	for _, tc := range []struct {
+		name   string
+		wire   []byte
+		decode func([]byte) (bool, error)
+	}{
+		{"IA", bytes.Repeat([]byte{0x2b}, 11), func(b []byte) (bool, error) {
+			d, err := DecodeIARestOctets(b)
+			return err == nil && d.Value.MultilaterationInformationRequest == nil && d.Value.PEOIMMCellGroupDetails == nil, err
+		}},
+		{"IAR", bytes.Repeat([]byte{0x2b}, 3), func(b []byte) (bool, error) {
+			d, err := DecodeIARRestOctets(b)
+			return err == nil && d.Value.PEOIMMCellGroupDetails == nil, err
+		}},
+		{"IAX", bytes.Repeat([]byte{0x2b}, 4), func(b []byte) (bool, error) {
+			d, err := DecodeIAXRestOctets(b)
+			return err == nil && d.Value.PEOIMMCellGroupDetails == nil, err
+		}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ok, err := tc.decode(tc.wire)
+			if err != nil || !ok {
+				t.Fatalf("late addition present in padding %x: %v", tc.wire, err)
+			}
+		})
+	}
+}
+
+func TestCompressedInterRATHOIndUsesLHMeaning(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.16 table 10.5.2.16.1 and
+	// §10.5.2.18 define L as not used and H as used.
+	for _, tc := range []struct {
+		first byte
+		want  uint8
+	}{{0x2b, 0}, {0x0b, 1}} {
+		wire := bytes.Repeat([]byte{0x2b}, 11)
+		wire[0] = tc.first
+		d, err := DecodeIARestOctets(wire)
+		if err != nil {
+			t.Fatal(err)
+		}
+		branch := d.Value.CompressedInterRATHOINFOINDChoice.RCC
+		if branch == nil || branch.CompressedInterRATHOINFOIND != tc.want {
+			t.Fatalf("IA %x: %+v", wire, branch)
+		}
+		encoded, err := EncodeIARestOctets(d.Value)
+		if err != nil || !bytes.Equal(encoded, wire) {
+			t.Fatalf("IA round trip %x -> %x: %v", wire, encoded, err)
+		}
 	}
 }
 
 func TestIAStructuralVectors(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.16 IA grammar: inspect fields within
 	// each discriminator branch, not only its decoded byte count.
-	ll, err := DecodeIARestOctets([]byte{0x20})
+	ll, err := DecodeIARestOctets([]byte{0x0b})
 	if err != nil || ll.Value.CompressedInterRATHOINFOINDChoice.RCC == nil || ll.Value.CompressedInterRATHOINFOINDChoice.RCC.CompressedInterRATHOINFOIND != 1 {
 		t.Fatalf("LL compressed indication: %+v, %v", ll.Value, err)
 	}
@@ -73,7 +127,7 @@ func TestIAStructuralVectors(t *testing.T) {
 	if lhBranch == nil || lhBranch.EGPRSPacketUplinkAssignmentChoice.MultipleBlocksPacketDownlinkAssignment == nil || lhBranch.EGPRSPacketUplinkAssignmentChoice.MultipleBlocksPacketDownlinkAssignment.MultipleBlocksPacketDownlinkAssignment.NUMBEROFALLOCATEDBLOCKS != 0 {
 		t.Fatalf("LH multiple blocks path: %+v", lhBranch)
 	}
-	egprs, err := DecodeIARestOctets([]byte{0x40, 0x20, 0, 0, 0, 0x09})
+	egprs, err := DecodeIARestOctets([]byte{0x40, 0x20, 0, 0, 0, 0x09, 0x2b})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +139,7 @@ func TestIAStructuralVectors(t *testing.T) {
 	if tfi == nil || tfi.EGPRSCHANNELCODINGCOMMAND.EGPRSModulationAndCodingScheme != 0 || tfi.EGPRSWindowSize.EGPRSWindowSize != 0 {
 		t.Fatalf("LH EGPRS MCS/window path: %+v", tfi)
 	}
-	hl, err := DecodeIARestOctets([]byte{0x82, 0, 0, 0})
+	hl, err := DecodeIARestOctets([]byte{0x82, 0, 0, 0x08})
 	if err != nil {
 		t.Fatal(err)
 	}

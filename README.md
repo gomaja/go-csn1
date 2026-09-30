@@ -93,7 +93,8 @@ Packages marked **[compiled]** contain generated Go bindings. Planned packages a
 | `ts24008/classmark` | TS 24.008 V20.1.0 §10.5.1.7 | Classmark 3 value part | **[compiled]** |
 | `ts24008/msrac` | TS 24.008 V20.1.0 §10.5.5.12a | MS RA capability value part | **[compiled]** |
 | `ts36331/uecapability` | TS 36.331 V19.4.0, UE-CapabilityRAT-ContainerList field descriptions; TS 24.008 V20.1.0 §10.5.1.6 | `geran-cs` and `geran-ps` containers, including Classmark 2 | **[compiled]** |
-| `ts24008/msnetcap` | TS 24.008 V20.1.0 §10.5.5.12 | MS Network Capability value part | planned |
+| `ts24008/msnetcap` | TS 24.008 V20.1.0 §10.5.5.12 | MS Network Capability value part | generated direct codec |
+| `ts44018/cellselection` | TS 44.018 V19.0.0 §10.5.2.1e | Cell selection indicator after release of all TCH and SDCCH | generated direct codec |
 | `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.16–18, .22c–25, .32–35a, .37a–b, .37e–f, .37j–o, .44, .70–71, .78 | IA, IAR, IAX, NT/N, P1–P3, SI1, SI2bis, SI2ter, SI2quater, SI2n, SI3, SI4, SI6, SI9, SI10, SI10bis, SI10ter, SI13, SI13alt, SI14–17, SI21–23 and IPA with local definitions | **[compiled]** |
 | `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.36–37, .37g–i | SI7 and SI8 with explicit SI4 ACS context; SI18, SI19 and SI20 direct codecs | **[compiled]** |
 | `ts44018/measurement` | TS 44.018 V19.0.0 §9.1.55 | Enhanced Measurement Report body and local definitions | **[compiled]** |

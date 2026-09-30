@@ -2,8 +2,11 @@ package msrac
 
 import (
 	"bytes"
+	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/gomaja/go-csn1/runtime"
 )
 
 func TestConstructedAccessTechnologyList(t *testing.T) {
@@ -29,6 +32,63 @@ func TestConstructedAccessTechnologyList(t *testing.T) {
 	reencoded, err := EncodeMSRACapabilityValuePart(decoded.Value)
 	if err != nil || !bytes.Equal(encoded, reencoded) {
 		t.Fatalf("reencode=%x err=%v", reencoded, err)
+	}
+}
+
+func TestFreshEncodingUsesZeroSpareBits(t *testing.T) {
+	// TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 requires emitted
+	// spare bits to be zero; TS 24.008 V20.1.0 §10.5.5.12a ends
+	// the MS RA capability with repeated spare bits.
+	want := []byte{0x19, 0x30, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	d, err := DecodeMSRACapabilityValuePart(want)
+	if err != nil {
+		t.Fatal(err)
+	}
+	d.Value.Wire = runtime.WireInfo{}
+	got, err := EncodeMSRACapabilityValuePart(d.Value)
+	if err != nil || !bytes.Equal(got, want) {
+		t.Fatalf("fresh spare bits %x, %v; want %x", got, err, want)
+	}
+}
+
+func TestTruncatedAccessTechnologyReportsTruncation(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.5.12a needs the first access
+	// technology entry in full before a branch can be selected.
+	_, err := DecodeMSRACapabilityValuePart([]byte{0x1a, 0x13})
+	var de *runtime.DecodeError
+	if !errors.As(err, &de) || de.Kind != runtime.Truncated || de.Offset < 8 {
+		t.Fatalf("short MS RA capability = %v; want truncation at input end", err)
+	}
+}
+
+func TestOversizedValueRetainsOnlyExcessPaddingAsTail(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.5.12a caps the value part at
+	// 50 octets. A nonconformant carrier can append whole 0x2b
+	// padding octets; keep them as tail without treating them as IE data.
+	for _, count := range []int{47, 48} {
+		wire := append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, count)...)
+		d, err := DecodeMSRACapabilityValuePart(wire)
+		if err != nil {
+			t.Fatalf("%d octets: %v", len(wire), err)
+		}
+		wantTail := 0
+		if len(wire) > 50 {
+			wantTail = (len(wire) - 50) * 8
+		}
+		if d.Tail.BitLength != wantTail {
+			t.Fatalf("%d octets: tail = %d, want %d", len(wire), d.Tail.BitLength, wantTail)
+		}
+		encoded, err := EncodeMSRACapabilityValuePart(d.Value)
+		if err != nil || !bytes.Equal(encoded, wire) {
+			t.Fatalf("%d octets round trip %x: %v", len(wire), encoded, err)
+		}
+	}
+	bad := append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, 47)...)
+	bad = append(bad, 0x00)
+	_, err := DecodeMSRACapabilityValuePart(bad)
+	var de *runtime.DecodeError
+	if !errors.As(err, &de) || de.Kind != runtime.Limit {
+		t.Fatalf("nonpadding excess = %v; want limit", err)
 	}
 }
 

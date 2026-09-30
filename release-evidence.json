@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "c2b0a7c4257351dbc9a45688f9e49e54bd8ccfcf",
+  "compiler_commit": "ed64bb2c648af82de851002f32ea125b832b23a6",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -45,6 +45,10 @@
       "sha256": "9e7354672d4b26f0d939394ad0ca199a2a4e25254082d593ccf8bd6a6db55744"
     },
     {
+      "path": "docs/csn1/ts24008/msnetcap.csn",
+      "sha256": "392a04d15b185c121a081e3a88b20d2831c87a96a7625a920bcab4d8edd8ce34"
+    },
+    {
       "path": "docs/csn1/ts24008/msrac.csn",
       "sha256": "d29c1dc404cc286173d03199bc321eb61e8cb3c91785b420c065a76ea2c1e1b2"
     },
@@ -55,6 +59,10 @@
     {
       "path": "docs/csn1/ts36331/geran-wrapper.txt",
       "sha256": "25aea756f06882c43c5483796ddd170c7ba87e187aba91108ed4c4eeff8ea825"
+    },
+    {
+      "path": "docs/csn1/ts44018/cell-selection-after-release.csn",
+      "sha256": "36d2cf44fcc55fae7f2acb2dc10bf6be3eb416a2256c83d78f3859c6bd3b7556"
     },
     {
       "path": "docs/csn1/ts44018/emergency-ind.csn",
@@ -78,15 +86,15 @@
     },
     {
       "path": "docs/csn1/ts44018/ia-rest-octets.csn",
-      "sha256": "2283e8365d82c26bbf3ace1aa43eb1330f91ece085a57b5e29a904f2a2cd4c88"
+      "sha256": "7772c772fbb60cd5e30f01080f48504b7273bd688bffcbf6b9e9b34a6d9b9cab"
     },
     {
       "path": "docs/csn1/ts44018/iar-rest-octets.csn",
-      "sha256": "bc2ed5d7074a3ea4106f7c122d01a1218144081de5e4487377cd7eb6c992ecba"
+      "sha256": "2bb2a9de5f6cd5112d49c9e90a747f3c27c30b613fb9cf7c5fc8f12a2e458178"
     },
     {
       "path": "docs/csn1/ts44018/iax-rest-octets.csn",
-      "sha256": "802cf3030ede3190356498aedd1c9890f044eff65f72e706d51c0af840910bfa"
+      "sha256": "d49e7702234f956ca5446ab8b6e33a71039361d838661c784666e8145299554b"
     },
     {
       "path": "docs/csn1/ts44018/ipa-rest-octets.csn",
@@ -341,6 +349,56 @@
       "replacement": "\u003c 8-PSK RF Power Capability 2: bit(2) \u003e } ;",
       "reason": "TS 24.008 V20.1.0 §10.5.1.7: missing 8-PSK Struct terminator before next assignment",
       "citation": "TS 24.008 V20.1.0 §10.5.1.7 paragraph 21818"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.1e",
+      "paragraph": 14033,
+      "expected": "\u003cGSM Description : \u003cGSM Description struct \u003e}",
+      "replacement": "\u003cGSM Description : \u003cGSM Description struct \u003e\u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.1e table 10.5.2.1e.1: close the GSM Description reference before the repeated-group brace",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.1e paragraph 14033"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16194,
+      "expected": "{ 0 | 1 \u003c Multilateration Information Request",
+      "replacement": "{ L | H \u003c Multilateration Information Request",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16194"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
+      "paragraph": 16196,
+      "expected": "{ 0 | 1 \u003c PEO IMM Cell Group Details",
+      "replacement": "{ L | H \u003c PEO IMM Cell Group Details",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16196"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.17",
+      "paragraph": 16537,
+      "expected": "{0 | 1 \u003c PEO IMM Cell Group Details",
+      "replacement": "{L | H \u003c PEO IMM Cell Group Details",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.17: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.17 paragraph 16537"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.18",
+      "paragraph": 16568,
+      "expected": "{0 | 1 \u003c PEO IMM Cell Group Details",
+      "replacement": "{L | H \u003c PEO IMM Cell Group Details",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.18: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.18 paragraph 16568"
     },
     {
       "standard": "TS 44.018",
@@ -1594,27 +1652,35 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "d0fc81a9fe889c21188f131596f075d755fcbd80694da816c4b95cafa44c1b17"
+      "sha256": "7474ecb52039b4c5015fee94cacc3613928d09d4ad2f850534850b71d3aa01b9"
+    },
+    {
+      "path": "ts24008/msnetcap/generated.go",
+      "sha256": "1707a0085bab2d8650fb35c5fcff6e5bc276902f4e445f3d95fb34bc43be7fce"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "ed6e90acaf18bfca4fa7477bb48effbd78103d87c18d66a19d91519185bdaf32"
+      "sha256": "5bbedb35b2654189b1cb5f1421669d3ec1e7c5d7b9b8c06ece608122a35c08a9"
     },
     {
       "path": "ts36331/uecapability/generated.go",
       "sha256": "9b48923b23a980749d8839b02ec7f6692f7b60f2a670ff5d2ab5cc7438e94988"
     },
     {
+      "path": "ts44018/cellselection/generated.go",
+      "sha256": "c003cd3203bef3239d230d4ab8f5c76e5363c54f6a2df159810e5d50da4b9d94"
+    },
+    {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "0237584f1eb6ba7866666f71fad5005da6a1cbc6fcae93d1665a4e4a6c47614b"
+      "sha256": "b479ff7063b5d635d35808cb62e58592cab417da50a4c99d4682482ea18b572b"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "5231e7eae7b7bf1c6bc57b77a68827623aea6b84ec557eef5cbcd758098ef776"
+      "sha256": "17818e149e1fcc4be8019e151a5b792a401ba5080190cf7c50d36ae749f9db7c"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "63086c4e13bcbd7710d938c22f5c7ccfa48e82e092c5137c7464f21031832000"
+      "sha256": "aea330bf61e4e5eae5a92ff54e80b36e464ae422391e60a068ea51c913dc7b6f"
     }
   ],
   "validation_commands": [

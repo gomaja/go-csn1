@@ -193,7 +193,7 @@ func (p *expression) primary() (int64, error) {
 	// TS 44.018 V19.0.0 §10.5.2.16 references printed field labels
 	// containing spaces inside val(...). Match the longest bound label so
 	// arithmetic after it remains a separate expression.
-	parts := []string{t}
+	name := t
 	last := p.position
 	var value uint64
 	found := false
@@ -204,11 +204,19 @@ func (p *expression) primary() (int64, error) {
 	}
 	for i := p.position; i < len(p.tokens); i++ {
 		part := p.tokens[i]
-		if part == "(" || part == ")" || part == "+" || part == "-" || part == "*" || part == "/" {
+		if part == "(" || part == ")" || part == "+" || part == "*" || part == "/" {
 			break
 		}
-		parts = append(parts, part)
-		n, ok, err := p.resolveVar(strings.Join(parts, " "))
+		if part == "-" {
+			if i+1 >= len(p.tokens) || p.tokens[i+1] == "(" || p.tokens[i+1] == ")" {
+				break
+			}
+			name += "-" + p.tokens[i+1]
+			i++
+		} else {
+			name += " " + part
+		}
+		n, ok, err := p.resolveVar(name)
 		if err != nil {
 			return 0, err
 		}

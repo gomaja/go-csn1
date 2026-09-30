@@ -12,6 +12,27 @@ func TestDecodeRejectsOversizedInput(t *testing.T) {
 	}
 }
 
+func TestClassmark3TerminalSpareBitsConsumed(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.1.7 ends the value part with
+	// <spare bits>; they belong to the value, not an undecoded tail.
+	for _, wire := range [][]byte{
+		{0x60, 0, 0, 0, 0, 0, 0, 0, 0, 0x20},
+		{0, 0, 0, 0, 0, 0, 0, 0, 0},
+	} {
+		d, err := DecodeClassmark3ValuePart(wire)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if d.BitsConsumed != len(wire)*8 || d.Tail.BitLength != 0 {
+			t.Fatalf("%x consumed %d with tail %d", wire, d.BitsConsumed, d.Tail.BitLength)
+		}
+		encoded, err := EncodeClassmark3ValuePart(d.Value)
+		if err != nil || !bytes.Equal(encoded, wire) {
+			t.Fatalf("round trip %x -> %x: %v", wire, encoded, err)
+		}
+	}
+}
+
 func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 	branches := []Classmark3ValuePartMultibandSupportedChoice{
 		{Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{A5Bits: A5Bits{A57: 1}}},
@@ -37,8 +58,8 @@ func TestConstructedClassmark3MultibandBranches(t *testing.T) {
 		if decoded.Value.MultibandSupportedChoice.Alternative != choice.Alternative {
 			t.Fatalf("branch %d selected %d", i, decoded.Value.MultibandSupportedChoice.Alternative)
 		}
-		if i == 2 && len(decoded.Value.Wire.Spare) != 6 {
-			t.Fatalf("fixed and surrounding spare bits missing from wire state: %d", len(decoded.Value.Wire.Spare))
+		if i == 2 && len(decoded.Value.Wire.Spare) != 10 {
+			t.Fatalf("fixed and trailing spare bits missing from wire state: %d", len(decoded.Value.Wire.Spare))
 		}
 		reencoded, err := EncodeClassmark3ValuePart(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, reencoded) {

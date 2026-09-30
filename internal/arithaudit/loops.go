@@ -105,7 +105,7 @@ func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.Inc
 			valid := false
 			call, ok := assign.Rhs[0].(*ast.CallExpr)
 			if ok {
-				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount") {
+				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount" || selector.Sel.Name == "SpareFillCount") {
 					valid = true
 				}
 			}

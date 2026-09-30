@@ -36,6 +36,9 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 				if len(value.Lhs) == 0 || !isName(value.Lhs[0], "v") {
 					break
 				}
+				if value.Tok == token.XOR_ASSIGN && len(value.Rhs) == 1 && readUint && readWidth == 1 && offset == 0 && isLHBitMask(value.Rhs[0]) {
+					break // one-bit L/H semantic conversion preserves the one-bit range
+				}
 				if len(value.Rhs) == 1 {
 					if call, ok := value.Rhs[0].(*ast.CallExpr); ok {
 						if selector, ok := call.Fun.(*ast.SelectorExpr); ok && isName(selector.X, "r") && selector.Sel.Name == "ReadUint" && len(call.Args) == 1 && isName(call.Args[0], "width") {
@@ -116,6 +119,35 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 		}
 	}
 	return checked, nil
+}
+
+func isLHBitMask(expr ast.Expr) bool {
+	outer, ok := expr.(*ast.CallExpr)
+	if !ok || len(outer.Args) != 1 || !isName(outer.Fun, "uint64") {
+		return false
+	}
+	inner, ok := outer.Args[0].(*ast.CallExpr)
+	if !ok || len(inner.Args) != 2 {
+		return false
+	}
+	selector, ok := inner.Fun.(*ast.SelectorExpr)
+	if !ok || !isName(selector.X, "runtime") || selector.Sel.Name != "LHBit" {
+		return false
+	}
+	literal, ok := inner.Args[0].(*ast.BasicLit)
+	if !ok || (literal.Value != "'L'" && literal.Value != "'H'") {
+		return false
+	}
+	position, ok := inner.Args[1].(*ast.BinaryExpr)
+	if !ok || position.Op != token.SUB || !isOneLiteral(position.Y) {
+		return false
+	}
+	call, ok := position.X.(*ast.CallExpr)
+	if !ok || len(call.Args) != 0 {
+		return false
+	}
+	method, ok := call.Fun.(*ast.SelectorExpr)
+	return ok && isName(method.X, "r") && method.Sel.Name == "Position"
 }
 
 func hasNarrowingCast(body *ast.BlockStmt) bool {

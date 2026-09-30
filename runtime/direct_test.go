@@ -256,6 +256,102 @@ func TestDirectReaderChoiceSnapshot(t *testing.T) {
 	}
 }
 
+func TestForkIsolatesBindingsPathAndWireState(t *testing.T) {
+	r := NewReader([]byte{0x00, 0x00})
+	r.Set("N_E-UTRAN", 1)
+	if err := r.Enter("Root"); err != nil {
+		t.Fatal(err)
+	}
+	a := r.Fork()
+	b := r.Fork()
+	a.Set("N_E-UTRAN", 2)
+	if err := a.Enter("A"); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := a.ReadSpare(); err != nil {
+		t.Fatal(err)
+	}
+	a.RecordTruncation("A", 1)
+	a.RecordSpareCount("A", 1)
+	if err := b.Enter("B"); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := b.ReadSpare(); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := r.Eval("N_E-UTRAN"); err != nil || got != 1 {
+		t.Fatalf("parent binding = %d, %v", got, err)
+	}
+	if got, err := b.Eval("N_E-UTRAN"); err != nil || got != 1 {
+		t.Fatalf("sibling binding = %d, %v", got, err)
+	}
+	if got := a.Error(InvalidValue, "test").(*DecodeError).Path; got != "Root/A" {
+		t.Fatalf("fork A path = %q", got)
+	}
+	if got := b.Error(InvalidValue, "test").(*DecodeError).Path; got != "Root/B" {
+		t.Fatalf("fork B path = %q", got)
+	}
+	if len(r.Wire().Spare) != 0 || len(r.Wire().TruncatedAt) != 0 || len(r.Wire().SpareCounts) != 0 {
+		t.Fatalf("fork changed parent wire: %+v", r.Wire())
+	}
+	if len(b.Wire().TruncatedAt) != 0 || len(b.Wire().SpareCounts) != 0 {
+		t.Fatalf("fork changed sibling wire: %+v", b.Wire())
+	}
+	r.Commit(a)
+	if got, err := r.Eval("N_E-UTRAN"); err != nil || got != 2 {
+		t.Fatalf("committed binding = %d, %v", got, err)
+	}
+	zero := NewReader(nil)
+	zero.SetZeroExtension(true)
+	left, right := zero.Fork(), zero.Fork()
+	if _, err := left.ReadUint(1); err != nil {
+		t.Fatal(err)
+	}
+	if len(zero.Wire().ImplicitSpans) != 0 || len(right.Wire().ImplicitSpans) != 0 || len(left.Wire().ImplicitSpans) != 1 {
+		t.Fatal("receiver-inferred bits leaked between forked candidates")
+	}
+}
+
+func TestFreshSpareRunCompletesOctetOrValue(t *testing.T) {
+	// TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7: a fresh
+	// <spare bits> run fills the remaining field or octet with zero.
+	for _, tc := range []struct {
+		limit int
+		want  []byte
+	}{{0, []byte{0xa0}}, {16, []byte{0xa0, 0}}} {
+		w := NewWriter()
+		old := -1
+		if tc.limit != 0 {
+			var err error
+			old, err = w.PushLimit(tc.limit)
+			if err != nil {
+				t.Fatal(err)
+			}
+		}
+		if err := w.WriteUint(5, 3); err != nil {
+			t.Fatal(err)
+		}
+		count := w.SpareFillCount()
+		if count != len(tc.want)*8-3 {
+			t.Fatalf("limit %d spare count %d", tc.limit, count)
+		}
+		for range count {
+			if err := w.WriteSpare(); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if tc.limit != 0 {
+			if err := w.PopLimit(old); err != nil {
+				t.Fatal(err)
+			}
+		}
+		got, err := w.Finish(BitString{})
+		if err != nil || !bytes.Equal(got, tc.want) {
+			t.Fatalf("limit %d spare bytes %x, %v", tc.limit, got, err)
+		}
+	}
+}
+
 func TestWriterFixedLimitIsRelativeToCurrentPosition(t *testing.T) {
 	zero := NewWriter()
 	zeroOld, err := zero.PushLimit(0)

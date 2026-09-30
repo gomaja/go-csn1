@@ -20,6 +20,40 @@ func TestEnhancedMeasurementReportWireTailEdit(t *testing.T) {
 	}
 }
 
+func TestEUTRANMeasurementReportHyphenatedCount(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 prints val(N_E-UTRAN+1).
+	// The complete field name is N_E-UTRAN, then the arithmetic adds one.
+	wire := []byte{0x04, 0x96, 0xed}
+	d, err := DecodeEUTRANMeasurementReportStruct(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if d.Value.NEUTRAN != 0 || len(d.Value.EUTRANFREQUENCYINDEXGroupList) != 1 {
+		t.Fatalf("wrong E-UTRAN count: %+v", d.Value)
+	}
+	encoded, err := EncodeEUTRANMeasurementReportStruct(d.Value)
+	if err != nil || !bytes.Equal(encoded, wire) {
+		t.Fatalf("E-UTRAN round trip %x -> %x: %v", wire, encoded, err)
+	}
+}
+
+func TestEnhancedMeasurementReportEUTRANSynthetic(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55. Wireshark 4.6.8 also dissects
+	// this synthetic E-UTRAN report inside an Enhanced Measurement Report.
+	wire := append([]byte{0x10, 0x90, 0x02, 0xc3, 0x54, 0xb6, 0xda, 0x11, 0x53}, bytes.Repeat([]byte{0x2b}, 12)...)
+	d, err := DecodeEnhancedMeasurementReport(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if d.BitsConsumed != len(wire)*8 || d.Tail.BitLength != 0 {
+		t.Fatalf("report boundary %d, tail %d", d.BitsConsumed, d.Tail.BitLength)
+	}
+	encoded, err := EncodeEnhancedMeasurementReport(d.Value)
+	if err != nil || !bytes.Equal(encoded, wire) {
+		t.Fatalf("report round trip %x -> %x: %v", wire, encoded, err)
+	}
+}
+
 func TestEnhancedMeasurementReportVectors(t *testing.T) {
 	// TS 44.018 V19.0.0 §9.1.55 and §10.4 table 10.4.2:
 	// Enhanced Measurement Report has uplink message type 00100.

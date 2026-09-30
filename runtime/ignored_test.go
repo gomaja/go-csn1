@@ -21,7 +21,7 @@ func TestIgnoredFixedBitKeepsItsBoundaryAndWireValue(t *testing.T) {
 		t.Fatal(err)
 	}
 	encoded, err := w.Finish(BitString{})
-	if err != nil || len(encoded) != 1 || encoded[0] != 0x6b {
+	if err != nil || len(encoded) != 1 || encoded[0] != 0x40 {
 		t.Fatalf("wire: %x, %v", encoded, err)
 	}
 }

@@ -3,6 +3,7 @@ package runtime
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 // WireInfo retains non-semantic received bits and the actual truncation point.
@@ -54,10 +55,15 @@ type Reader struct {
 	boundDepth        int
 	allowZero         bool
 	vars              map[string]uint64
+	varsShared        bool
 	steps             *int
-	path              string
+	path              []string
+	pathShared        bool
 	depth             int
 	wire              WireInfo
+	implicitShared    bool
+	truncShared       bool
+	spareCountsShared bool
 }
 
 func NewReader(data []byte) *Reader {
@@ -66,7 +72,7 @@ func NewReader(data []byte) *Reader {
 	if len(data) <= maxBits/8 {
 		end = len(data) * 8
 	}
-	return &Reader{data: data, end: end, vars: make(map[string]uint64), steps: &steps,
+	return &Reader{data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
 		wire: WireInfo{TruncatedAt: make(map[string]int)}}
 }
 
@@ -77,12 +83,23 @@ func CheckInput(data []byte) error {
 	return nil
 }
 
+// InputBits is the bounded input length for DecodeError offsets.
+func InputBits(data []byte) int {
+	if len(data) > maxBits/8 {
+		return maxBits
+	}
+	return len(data) * 8
+}
+
 func (r *Reader) Check() error {
 	if r == nil {
 		return &DecodeError{Kind: InvalidValue, Detail: "nil reader"}
 	}
 	if err := CheckInput(r.data); err != nil {
 		return err
+	}
+	if r.pos < 0 || r.pos > maxBits {
+		return r.fail(InvalidValue, "invalid reader position")
 	}
 	if r.steps == nil || *r.steps < 0 || r.pos < 0 || r.end < r.pos || r.end > len(r.data)*8 || r.virtual < 0 || r.virtual > maxBits-r.pos || r.boundDepth < 0 || r.boundDepth > 128 || r.depth < 0 || r.depth > 128 {
 		return r.fail(InvalidValue, "invalid reader state")
@@ -113,7 +130,13 @@ func (r *Reader) Tail() BitString {
 }
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
-func (r *Reader) Set(name string, value uint64) { r.vars[key(name)] = value }
+func (r *Reader) Set(name string, value uint64) {
+	if r.varsShared {
+		r.vars = cloneVars(r.vars)
+		r.varsShared = false
+	}
+	r.vars[key(name)] = value
+}
 func (r *Reader) Eval(expression string) (int, error) {
 	v, err := eval(expression, r.vars)
 	if err != nil {
@@ -122,7 +145,10 @@ func (r *Reader) Eval(expression string) (int, error) {
 	return v, nil
 }
 func (r *Reader) fail(kind ErrorKind, detail string) error {
-	return &DecodeError{Kind: kind, Offset: r.pos, Path: r.path, Detail: detail}
+	return &DecodeError{Kind: kind, Offset: r.pos, Path: strings.Join(r.path, "/"), Detail: detail}
+}
+func (r *Reader) failAt(kind ErrorKind, offset int, detail string) error {
+	return &DecodeError{Kind: kind, Offset: offset, Path: strings.Join(r.path, "/"), Detail: detail}
 }
 func (r *Reader) Error(kind ErrorKind, detail string) error { return r.fail(kind, detail) }
 func (r *Reader) Enter(name string) error {
@@ -134,41 +160,30 @@ func (r *Reader) Enter(name string) error {
 	}
 	*r.steps++
 	r.depth++
-	if r.path == "" {
-		r.path = name
-	} else {
-		r.path += "/" + name
+	if r.pathShared {
+		fresh := make([]string, len(r.path), max(16, len(r.path)))
+		copy(fresh, r.path)
+		r.path = fresh
+		r.pathShared = false
 	}
+	r.path = append(r.path, name)
 	return nil
 }
 func (r *Reader) Leave() {
 	if r.depth > 0 {
 		r.depth--
 	}
-	for i := len(r.path) - 1; i >= 0; i-- {
-		if r.path[i] == '/' {
-			r.path = r.path[:i]
-			return
-		}
+	if len(r.path) > 0 {
+		r.path = r.path[:len(r.path)-1]
 	}
-	r.path = ""
 }
 func (r *Reader) Fork() *Reader {
-	copy := *r
-	copy.vars = cloneVars(r.vars)
-	copy.wire.Spare = append([]BitString(nil), r.wire.Spare...)
-	copy.wire.Padding = append([]BitString(nil), r.wire.Padding...)
-	copy.wire.Terminal = append([]BitString(nil), r.wire.Terminal...)
-	copy.wire.ImplicitSpans = append([]ImplicitSpan(nil), r.wire.ImplicitSpans...)
-	copy.wire.TruncatedAt = make(map[string]int, len(r.wire.TruncatedAt))
-	for k, v := range r.wire.TruncatedAt {
-		copy.wire.TruncatedAt[k] = v
-	}
-	copy.wire.SpareCounts = make(map[string][]int, len(r.wire.SpareCounts))
-	for k, counts := range r.wire.SpareCounts {
-		copy.wire.SpareCounts[k] = append([]int(nil), counts...)
-	}
-	return &copy
+	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
+	fork := *r
+	fork.wire.Spare = fork.wire.Spare[:len(fork.wire.Spare):len(fork.wire.Spare)]
+	fork.wire.Padding = fork.wire.Padding[:len(fork.wire.Padding):len(fork.wire.Padding)]
+	fork.wire.Terminal = fork.wire.Terminal[:len(fork.wire.Terminal):len(fork.wire.Terminal)]
+	return &fork
 }
 func (r *Reader) Commit(other *Reader) { *r = *other }
 func (r *Reader) bit() (uint8, bool, error) {
@@ -185,6 +200,10 @@ func (r *Reader) bit() (uint8, bool, error) {
 	}
 	if r.allowZero {
 		at := r.pos + r.virtual
+		if r.implicitShared {
+			r.wire.ImplicitSpans = append([]ImplicitSpan(nil), r.wire.ImplicitSpans...)
+			r.implicitShared = false
+		}
 		spans := r.wire.ImplicitSpans
 		if len(spans) != 0 {
 			last := spans[len(spans)-1]
@@ -304,7 +323,7 @@ func (r *Reader) PushLimit(width int) (int, error) {
 		return 0, r.fail(Limit, "fixed-value nesting limit")
 	}
 	if width < 0 || width > r.Remaining() {
-		return 0, r.fail(Truncated, "length exceeds enclosing input")
+		return 0, r.failAt(Truncated, r.end, "length exceeds enclosing input")
 	}
 	old := r.end
 	r.end = r.pos + width
@@ -328,7 +347,17 @@ func (r *Reader) PopLimit(old int) error {
 	r.boundDepth--
 	return nil
 }
-func (r *Reader) RecordTruncation(path string, child int) { r.wire.TruncatedAt[path] = child }
+func (r *Reader) RecordTruncation(path string, child int) {
+	if r.truncShared {
+		copy := make(map[string]int, len(r.wire.TruncatedAt))
+		for k, v := range r.wire.TruncatedAt {
+			copy[k] = v
+		}
+		r.wire.TruncatedAt = copy
+		r.truncShared = false
+	}
+	r.wire.TruncatedAt[path] = child
+}
 
 // RecordTerminal preserves the nonsemantic zero-length stop record printed
 // in TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.1.
@@ -343,6 +372,14 @@ func (r *Reader) RecordTerminal(start int) error {
 	return nil
 }
 func (r *Reader) RecordSpareCount(path string, count int) {
+	if r.spareCountsShared {
+		copy := make(map[string][]int, len(r.wire.SpareCounts))
+		for k, v := range r.wire.SpareCounts {
+			copy[k] = append([]int(nil), v...)
+		}
+		r.wire.SpareCounts = copy
+		r.spareCountsShared = false
+	}
 	if r.wire.SpareCounts == nil {
 		r.wire.SpareCounts = make(map[string][]int)
 	}
@@ -402,6 +439,15 @@ func (w *Writer) RemainingLimit() int {
 		return -1
 	}
 	return w.limit - w.bits
+}
+
+// SpareFillCount completes a fresh <spare bits> run to its enclosing
+// value limit or octet boundary (TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7).
+func (w *Writer) SpareFillCount() int {
+	if remaining := w.RemainingLimit(); remaining >= 0 {
+		return remaining
+	}
+	return (8 - w.bits%8) % 8
 }
 func (w *Writer) BoundEndOr(unbounded int) int {
 	if w.bounded {
@@ -472,9 +518,6 @@ func (w *Writer) put(bit uint8) error {
 	if position >= maxBits {
 		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
 	}
-	if w.bounded && w.bits >= w.limit {
-		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
-	}
 	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
 		span, end, err := w.currentImplicitSpan()
 		if err != nil {
@@ -490,6 +533,9 @@ func (w *Writer) put(bit uint8) error {
 			}
 			return nil
 		}
+	}
+	if w.bounded && w.bits >= w.limit {
+		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
 	}
 	if w.bits%8 == 0 {
 		w.bytes = append(w.bytes, 0)
@@ -679,8 +725,13 @@ func (w *Writer) Finish(tail BitString) ([]byte, error) {
 		}
 	}
 	if w.bits%8 != 0 {
-		if err := w.WritePadding(); err != nil {
-			return nil, err
+		// TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7:
+		// octet completion outside an explicit <spare padding>
+		// construct uses zero bits. WritePadding alone emits L.
+		for w.bits%8 != 0 {
+			if err := w.put(0); err != nil {
+				return nil, err
+			}
 		}
 	}
 	return w.Bytes()
@@ -806,4 +857,14 @@ func bitsAt(data []byte, start, count int) BitString {
 		}
 	}
 	return BitString{Bytes: bytes, BitLength: count}
+}
+
+// TrailingBits retains received bits beyond a decoded value boundary.
+// TS 24.008 V20.1.0 §10.5.5.12a bounds MS RA capability at 50
+// octets; any accepted excess carrier padding is outside that value.
+func TrailingBits(data []byte, consumed int) BitString {
+	if len(data) > maxBits/8 || consumed < 0 || consumed > len(data)*8 {
+		return BitString{}
+	}
+	return bitsAt(data, consumed, len(data)*8-consumed)
 }
