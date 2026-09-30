@@ -32,6 +32,13 @@ func descriptors() []runtime.Descriptor {
 	out = append(out,
 		runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Name: "Mobile Station Classmark 2 value part",
 			Decode: func(b []byte) (any, error) { return uecapability.DecodeClassmark2ValuePart(b) },
+			Canonical: func(v any) ([]byte, error) {
+				typed, ok := v.(uecapability.Classmark2ValuePart)
+				if !ok {
+					return nil, fmt.Errorf("wrong Classmark 2 value type")
+				}
+				return uecapability.EncodeClassmark2ValuePartCanonical(typed)
+			},
 			Encode: func(v any) ([]byte, error) {
 				typed, ok := v.(uecapability.Classmark2ValuePart)
 				if !ok {
@@ -41,6 +48,13 @@ func descriptors() []runtime.Descriptor {
 			}},
 		runtime.Descriptor{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-cs",
 			Decode: func(b []byte) (any, error) { return uecapability.DecodeGERANCS(b) },
+			Canonical: func(v any) ([]byte, error) {
+				typed, ok := v.(uecapability.GERANCS)
+				if !ok {
+					return nil, fmt.Errorf("wrong geran-cs value type")
+				}
+				return uecapability.EncodeGERANCSCanonical(typed)
+			},
 			Encode: func(v any) ([]byte, error) {
 				typed, ok := v.(uecapability.GERANCS)
 				if !ok {
@@ -50,6 +64,13 @@ func descriptors() []runtime.Descriptor {
 			}},
 		runtime.Descriptor{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-ps",
 			Decode: func(b []byte) (any, error) { return uecapability.DecodeGERANPS(b) },
+			Canonical: func(v any) ([]byte, error) {
+				typed, ok := v.(uecapability.GERANPS)
+				if !ok {
+					return nil, fmt.Errorf("wrong geran-ps value type")
+				}
+				return uecapability.EncodeGERANPSCanonical(typed)
+			},
 			Encode: func(v any) ([]byte, error) {
 				typed, ok := v.(uecapability.GERANPS)
 				if !ok {

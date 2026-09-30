@@ -125,6 +125,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
+// Package measurement contains typed CSN.1 codecs. Plain Encode calls preserve received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical copies the value, discards received layout, and checks that fresh encoding decodes to equivalent typed fields within a source-defined maximum. Definitions without a standalone maximum require Encode<Type>CanonicalAtLength with the containing value length; the default fails with runtime.ExtentError.
 package measurement
 
 import (
@@ -671,6 +672,9 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer
 	}
 	if _, received := w.ReceivedBits(); !received {
 		for i := len(v); i < 96; i++ {
+			if w.CanonicalTargetReached() {
+				break
+			}
 			if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, nil); err != nil {
 				return err
 			}
@@ -2478,6 +2482,7 @@ func encodeEUTRANMeasurementReportStruct(w *runtime.Writer, v EUTRANMeasurementR
 	return nil
 }
 
+// Maximum encoded extent: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (Bter SACCH N201 = 21 octets, including the short L2 header).
 // DecodeEnhancedMeasurementReport decodes TS 44.018 V19.0.0 §9.1.55 <Enhanced Measurement report>.
 func DecodeEnhancedMeasurementReportFrom(r *runtime.Reader) (EnhancedMeasurementReport, error) {
 	if err := r.Check(); err != nil {
@@ -2493,6 +2498,9 @@ func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasu
 		return runtime.Decoded[EnhancedMeasurementReport]{}, err
 	}
 	input := data
+	if len(data) > 21 {
+		return runtime.Decoded[EnhancedMeasurementReport]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 168, Detail: "EnhancedMeasurementReport exceeds 168 bits"}
+	}
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedMeasurementReport(r)
@@ -2508,10 +2516,65 @@ func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasu
 func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error) {
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
+	w.SetZeroExtension(false)
 	if err := encodeEnhancedMeasurementReport(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) > 21 {
+		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 21}
+	}
+	return out, nil
+}
+
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (Bter SACCH N201 = 21 octets, including the short L2 header).
+// EncodeEnhancedMeasurementReportCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]byte, error) {
+	return runtime.CanonicalEncode(v, 0, 21, false, EncodeEnhancedMeasurementReport, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
+		a = runtime.Canonical(a)
+		b = runtime.Canonical(b)
+		if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
+			p := append([]*uint8(nil), (*a.REPORTINGQUANTITYList)...)
+			for len(p) < 96 {
+				p = append(p, nil)
+			}
+			a.REPORTINGQUANTITYList = &p
+		}
+		if b.REPORTINGQUANTITYList != nil && len(*b.REPORTINGQUANTITYList) < 96 {
+			p := append([]*uint8(nil), (*b.REPORTINGQUANTITYList)...)
+			for len(p) < 96 {
+				p = append(p, nil)
+			}
+			b.REPORTINGQUANTITYList = &p
+		}
+		return runtime.SemanticallyEqual(a, b)
+	})
+}
+
+// EncodeEnhancedMeasurementReportCanonicalAtLength encodes into the value length supplied by the containing message.
+func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementReport, octets int) ([]byte, error) {
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 21, EncodeEnhancedMeasurementReport, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
+		a = runtime.Canonical(a)
+		b = runtime.Canonical(b)
+		if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
+			p := append([]*uint8(nil), (*a.REPORTINGQUANTITYList)...)
+			for len(p) < 96 {
+				p = append(p, nil)
+			}
+			a.REPORTINGQUANTITYList = &p
+		}
+		if b.REPORTINGQUANTITYList != nil && len(*b.REPORTINGQUANTITYList) < 96 {
+			p := append([]*uint8(nil), (*b.REPORTINGQUANTITYList)...)
+			for len(p) < 96 {
+				p = append(p, nil)
+			}
+			b.REPORTINGQUANTITYList = &p
+		}
+		return runtime.SemanticallyEqual(a, b)
+	})
 }
 
 // DecodeServingCellDataStruct decodes TS 44.018 V19.0.0 §9.1.55 <Serving cell data struct>.
@@ -2544,10 +2607,26 @@ func DecodeServingCellDataStruct(data []byte) (runtime.Decoded[ServingCellDataSt
 func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
+	w.SetZeroExtension(false)
 	if err := encodeServingCellDataStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55 (finite maximum from the printed CSN.1 grammar).
+// EncodeServingCellDataStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+func EncodeServingCellDataStructCanonical(v ServingCellDataStruct) ([]byte, error) {
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
+}
+
+// EncodeServingCellDataStructCanonicalAtLength encodes into the value length supplied by the containing message.
+func EncodeServingCellDataStructCanonicalAtLength(v ServingCellDataStruct, octets int) ([]byte, error) {
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
 }
 
 // DecodeRepeatedInvalidBSICInformationStruct decodes TS 44.018 V19.0.0 §9.1.55 <Repeated Invalid_BSIC_Information struct>.
@@ -2580,10 +2659,26 @@ func DecodeRepeatedInvalidBSICInformationStruct(data []byte) (runtime.Decoded[Re
 func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
+	w.SetZeroExtension(false)
 	if err := encodeRepeatedInvalidBSICInformationStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55 (finite maximum from the printed CSN.1 grammar).
+// EncodeRepeatedInvalidBSICInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+func EncodeRepeatedInvalidBSICInformationStructCanonical(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
+}
+
+// EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength encodes into the value length supplied by the containing message.
+func EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v RepeatedInvalidBSICInformationStruct, octets int) ([]byte, error) {
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
 }
 
 // DecodeEUTRANMeasurementReportStruct decodes TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>.
@@ -2616,17 +2711,33 @@ func DecodeEUTRANMeasurementReportStruct(data []byte) (runtime.Decoded[EUTRANMea
 func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byte, error) {
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
+	w.SetZeroExtension(false)
 	if err := encodeEUTRANMeasurementReportStruct(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (EMR containing Bter SACCH field maximum 21 octets).
+// EncodeEUTRANMeasurementReportStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+func EncodeEUTRANMeasurementReportStructCanonical(v EUTRANMeasurementReportStruct) ([]byte, error) {
+	return runtime.CanonicalEncode(v, 0, 21, false, EncodeEUTRANMeasurementReportStruct, DecodeEUTRANMeasurementReportStruct, nil)
+}
+
+// EncodeEUTRANMeasurementReportStructCanonicalAtLength encodes into the value length supplied by the containing message.
+func EncodeEUTRANMeasurementReportStructCanonicalAtLength(v EUTRANMeasurementReportStruct, octets int) ([]byte, error) {
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 21, EncodeEUTRANMeasurementReportStruct, DecodeEUTRANMeasurementReportStruct, nil)
 }
 func Definitions() []string {
 	return []string{"Enhanced Measurement report", "Serving cell data struct", "Repeated Invalid_BSIC_Information struct", "E-UTRAN Measurement Report struct"}
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", Decode: func(data []byte) (any, error) { return DecodeEnhancedMeasurementReport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedMeasurementReportFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Decode: func(data []byte) (any, error) { return DecodeEnhancedMeasurementReport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedMeasurementReportFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedMeasurementReport:
 				return EncodeEnhancedMeasurementReport(v)
@@ -2635,8 +2746,26 @@ func Descriptors() []runtime.Descriptor {
 			default:
 				return nil, fmt.Errorf("wrong value type for EnhancedMeasurementReport")
 			}
+		}, Canonical: func(value any) ([]byte, error) {
+			switch v := value.(type) {
+			case EnhancedMeasurementReport:
+				return EncodeEnhancedMeasurementReportCanonical(v)
+			case runtime.Decoded[EnhancedMeasurementReport]:
+				return EncodeEnhancedMeasurementReportCanonical(v.Value)
+			default:
+				return nil, fmt.Errorf("wrong value type for EnhancedMeasurementReport")
+			}
+		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
+			switch v := value.(type) {
+			case EnhancedMeasurementReport:
+				return EncodeEnhancedMeasurementReportCanonicalAtLength(v, octets)
+			case runtime.Decoded[EnhancedMeasurementReport]:
+				return EncodeEnhancedMeasurementReportCanonicalAtLength(v.Value, octets)
+			default:
+				return nil, fmt.Errorf("wrong value type for EnhancedMeasurementReport")
+			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeServingCellDataStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeServingCellDataStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ServingCellDataStruct:
 				return EncodeServingCellDataStruct(v)
@@ -2645,8 +2774,26 @@ func Descriptors() []runtime.Descriptor {
 			default:
 				return nil, fmt.Errorf("wrong value type for ServingCellDataStruct")
 			}
+		}, Canonical: func(value any) ([]byte, error) {
+			switch v := value.(type) {
+			case ServingCellDataStruct:
+				return EncodeServingCellDataStructCanonical(v)
+			case runtime.Decoded[ServingCellDataStruct]:
+				return EncodeServingCellDataStructCanonical(v.Value)
+			default:
+				return nil, fmt.Errorf("wrong value type for ServingCellDataStruct")
+			}
+		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
+			switch v := value.(type) {
+			case ServingCellDataStruct:
+				return EncodeServingCellDataStructCanonicalAtLength(v, octets)
+			case runtime.Decoded[ServingCellDataStruct]:
+				return EncodeServingCellDataStructCanonicalAtLength(v.Value, octets)
+			default:
+				return nil, fmt.Errorf("wrong value type for ServingCellDataStruct")
+			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedInvalidBSICInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedInvalidBSICInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedInvalidBSICInformationStruct:
 				return EncodeRepeatedInvalidBSICInformationStruct(v)
@@ -2655,13 +2802,49 @@ func Descriptors() []runtime.Descriptor {
 			default:
 				return nil, fmt.Errorf("wrong value type for RepeatedInvalidBSICInformationStruct")
 			}
+		}, Canonical: func(value any) ([]byte, error) {
+			switch v := value.(type) {
+			case RepeatedInvalidBSICInformationStruct:
+				return EncodeRepeatedInvalidBSICInformationStructCanonical(v)
+			case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
+				return EncodeRepeatedInvalidBSICInformationStructCanonical(v.Value)
+			default:
+				return nil, fmt.Errorf("wrong value type for RepeatedInvalidBSICInformationStruct")
+			}
+		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
+			switch v := value.(type) {
+			case RepeatedInvalidBSICInformationStruct:
+				return EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v, octets)
+			case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
+				return EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v.Value, octets)
+			default:
+				return nil, fmt.Errorf("wrong value type for RepeatedInvalidBSICInformationStruct")
+			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANMeasurementReportStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEUTRANMeasurementReportStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANMeasurementReportStruct:
 				return EncodeEUTRANMeasurementReportStruct(v)
 			case runtime.Decoded[EUTRANMeasurementReportStruct]:
 				return EncodeEUTRANMeasurementReportStruct(v.Value)
+			default:
+				return nil, fmt.Errorf("wrong value type for EUTRANMeasurementReportStruct")
+			}
+		}, Canonical: func(value any) ([]byte, error) {
+			switch v := value.(type) {
+			case EUTRANMeasurementReportStruct:
+				return EncodeEUTRANMeasurementReportStructCanonical(v)
+			case runtime.Decoded[EUTRANMeasurementReportStruct]:
+				return EncodeEUTRANMeasurementReportStructCanonical(v.Value)
+			default:
+				return nil, fmt.Errorf("wrong value type for EUTRANMeasurementReportStruct")
+			}
+		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
+			switch v := value.(type) {
+			case EUTRANMeasurementReportStruct:
+				return EncodeEUTRANMeasurementReportStructCanonicalAtLength(v, octets)
+			case runtime.Decoded[EUTRANMeasurementReportStruct]:
+				return EncodeEUTRANMeasurementReportStructCanonicalAtLength(v.Value, octets)
 			default:
 				return nil, fmt.Errorf("wrong value type for EUTRANMeasurementReportStruct")
 			}

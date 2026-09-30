@@ -70,8 +70,9 @@ func TestCellSelectionAfterReleaseMinimumValueLength(t *testing.T) {
 		Alternative:    CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeGSMDescription,
 		GSMDescription: &CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription{},
 	}}
-	if _, err := EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value); err == nil {
-		t.Fatal("encoded a one-octet value part")
+	encoded, err := EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value)
+	if err != nil || !bytes.Equal(encoded, []byte{0, 0}) {
+		t.Fatalf("fresh minimum value part = %x, %v; want 0000", encoded, err)
 	}
 	if _, err := DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart([]byte{0, 0}); err != nil {
 		t.Fatalf("rejected a two-octet value part: %v", err)

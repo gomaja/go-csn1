@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
@@ -34,6 +35,119 @@ func TestEnhancedMeasurementReportPreRel8Bitmap(t *testing.T) {
 		if count == 2 && !bytes.Equal(wire, []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}) {
 			t.Fatalf("issue reproducer changed: %x", wire)
 		}
+	}
+}
+
+func TestEnhancedMeasurementReportCanonicalAfterBitmapEdit(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55: fresh pre-Rel-8 values fill all
+	// 96 bitmap positions with no-report bits, even when only two are set
+	// explicitly by the caller.
+	entries := make([]*uint8, 2)
+	fresh := EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries,
+		BITMAPLENGTHChoice: EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}}
+	want, err := EncodeEnhancedMeasurementReport(fresh)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(want, []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}) {
+		t.Fatalf("wrong canonical bitmap: %x", want)
+	}
+	decoded, err := DecodeEnhancedMeasurementReport(want)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Value.REPORTINGQUANTITYList == nil || len(*decoded.Value.REPORTINGQUANTITYList) != 96 {
+		t.Fatalf("decoded bitmap is not structurally complete: %+v", decoded.Value)
+	}
+	for i, report := range *decoded.Value.REPORTINGQUANTITYList {
+		if report != nil {
+			t.Fatalf("position %d is not no-report", i)
+		}
+	}
+	edited := decoded.Value
+	two := (*edited.REPORTINGQUANTITYList)[:2]
+	edited.REPORTINGQUANTITYList = &two
+	if _, err := EncodeEnhancedMeasurementReport(edited); err == nil || !strings.Contains(err.Error(), "encoded semantic boundary") {
+		t.Fatalf("plain re-encode did not reject changed semantic boundary: %v", err)
+	}
+	canonical, err := EncodeEnhancedMeasurementReportCanonical(edited)
+	if err != nil || !bytes.Equal(canonical, want) {
+		t.Fatalf("canonical re-encode %x: %v", canonical, err)
+	}
+	if edited.Wire.BitsConsumed != len(want)*8 || len(*edited.REPORTINGQUANTITYList) != 2 {
+		t.Fatal("canonical encoding modified the caller's value")
+	}
+	canonicalDecoded, err := DecodeEnhancedMeasurementReport(canonical)
+	if err != nil || !reflect.DeepEqual(canonicalDecoded.Value, decoded.Value) {
+		t.Fatalf("canonical result differs from expanded fresh value: %v", err)
+	}
+}
+
+func TestEnhancedMeasurementReportBterCarrierLimit(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 sends this message on SACCH.
+	// TS 44.006 V19.0.0 §§5.2, 8.8.3 count the short L2 header
+	// inside the 21-octet Bter information field.
+	wire := []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+	d, err := DecodeEnhancedMeasurementReport(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct {
+		present int
+		wantLen int
+	}{
+		{9, 21},
+		{10, 22},
+	} {
+		v := d.Value
+		list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+		for i := 0; i < tc.present; i++ {
+			zero := uint8(0)
+			list[i] = &zero
+		}
+		v.REPORTINGQUANTITYList = &list
+		out, err := EncodeEnhancedMeasurementReportCanonical(v)
+		if tc.wantLen == 21 {
+			if err != nil || len(out) != 21 {
+				t.Fatalf("%d present: len=%d, error=%v", tc.present, len(out), err)
+			}
+			continue
+		}
+		var extent *runtime.ExtentError
+		if !errors.As(err, &extent) || extent.Maximum != 21 {
+			t.Fatalf("%d present: wanted typed 21-octet extent error, got %d octets, %v", tc.present, len(out), err)
+		}
+		if _, err := EncodeEnhancedMeasurementReportCanonicalAtLength(v, 22); !errors.As(err, &extent) {
+			t.Fatalf("explicit 22-octet extent accepted: %v", err)
+		}
+		if _, err := EncodeEnhancedMeasurementReport(runtime.Canonical(v)); !errors.As(err, &extent) {
+			t.Fatalf("fresh overlong EMR accepted: %v", err)
+		}
+	}
+	var limit *runtime.DecodeError
+	if _, err := DecodeEnhancedMeasurementReport(make([]byte, 22)); !errors.As(err, &limit) || limit.Kind != runtime.Limit {
+		t.Fatalf("accepted an overlong Bter EMR: %v", err)
+	}
+	// The canonical bit target is octet-aligned. An extra bit after the
+	// 168-bit Bter boundary cannot be represented in this carrier.
+	v := d.Value
+	list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+	for i := 0; i < 9; i++ {
+		zero := uint8(0)
+		list[i] = &zero
+	}
+	v.REPORTINGQUANTITYList = &list
+	if _, err := EncodeEnhancedMeasurementReport(runtime.CanonicalTo(v, 169)); err == nil {
+		t.Fatal("accepted a canonical target one bit beyond the Bter boundary")
+	}
+	for i := range list {
+		zero := uint8(0)
+		list[i] = &zero
+	}
+	v.REPORTINGQUANTITYList = &list
+	var extent *runtime.ExtentError
+	if _, err := EncodeEnhancedMeasurementReportCanonical(v); !errors.As(err, &extent) || extent.Maximum != 21 {
+		t.Fatalf("96 reported positions escaped the carrier limit: %v", err)
 	}
 }
 
@@ -74,8 +188,8 @@ func FuzzEnhancedMeasurementReportBitmap(f *testing.F) {
 	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
 	f.Add([]byte{0x10, 0, 0, 0})
 	f.Fuzz(func(t *testing.T, wire []byte) {
-		// TS 44.006 V19.0.0 §8.8.3: Bter FACCH/SDCCH N201 is 23 octets.
-		if len(wire) > 23 {
+		// TS 44.006 V19.0.0 §8.8.3: Bter SACCH N201 is 21 octets.
+		if len(wire) > 21 {
 			return
 		}
 		decoded, err := DecodeEnhancedMeasurementReport(wire)
@@ -87,6 +201,89 @@ func FuzzEnhancedMeasurementReportBitmap(f *testing.F) {
 			t.Fatalf("%x -> %x: %v", wire, encoded, err)
 		}
 	})
+}
+
+func FuzzEnhancedMeasurementReportCanonical(f *testing.F) {
+	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+	f.Add([]byte{0x10, 0x90, 0x02, 0xc2})
+	f.Fuzz(func(t *testing.T, wire []byte) {
+		if len(wire) > 21 {
+			return
+		}
+		d, err := DecodeEnhancedMeasurementReport(wire)
+		if err != nil || d.Value.REPORTINGQUANTITYList == nil {
+			return
+		}
+		original := d.Value.REPORTINGQUANTITYList
+		entries := *original
+		if len(entries) > 2 {
+			for _, report := range entries[2:] {
+				if report != nil {
+					return
+				}
+			}
+			entries = entries[:2]
+		}
+		d.Value.REPORTINGQUANTITYList = &entries
+		canonical, err := EncodeEnhancedMeasurementReportCanonical(d.Value)
+		if err != nil {
+			t.Fatalf("canonical encode %x: %v", wire, err)
+		}
+		fresh, err := DecodeEnhancedMeasurementReport(canonical)
+		if err != nil || !equivalentCanonicalEMR(d.Value, fresh.Value) {
+			t.Fatalf("canonical decode %x: %v", canonical, err)
+		}
+		if len(*original) < len(entries) || len(*d.Value.REPORTINGQUANTITYList) != len(entries) {
+			t.Fatal("canonical encoder modified caller")
+		}
+	})
+}
+
+func equivalentCanonicalEMR(a, b EnhancedMeasurementReport) bool {
+	// TS 44.018 V19.0.0 §9.1.55: omitted redundant trailing
+	// no-report entries are equivalent to explicit zero entries.
+	normalize := func(v EnhancedMeasurementReport) EnhancedMeasurementReport {
+		v = runtime.Canonical(v)
+		if v.REPORTINGQUANTITYList != nil {
+			list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+			for len(list) < 96 {
+				list = append(list, nil)
+			}
+			v.REPORTINGQUANTITYList = &list
+		}
+		return v
+	}
+	return runtime.SemanticallyEqual(normalize(a), normalize(b))
+}
+
+func TestCanonicalEnhancedMeasurementReportAtBitmapBoundary(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 permits trailing no-report positions
+	// to be omitted when they do not fit. The absent following choice is
+	// part of the decoded value and must remain absent after canonicalization.
+	for _, wire := range [][]byte{{0x10, 0x02}, {0x10, 0x02, 0x00}} {
+		decoded, err := DecodeEnhancedMeasurementReport(wire)
+		if err != nil {
+			t.Fatalf("decode %x: %v", wire, err)
+		}
+		canonical, err := EncodeEnhancedMeasurementReportCanonical(decoded.Value)
+		if err != nil {
+			t.Fatalf("canonical encode %x: %v", wire, err)
+		}
+		again, err := DecodeEnhancedMeasurementReport(canonical)
+		if err != nil {
+			t.Fatalf("canonical decode %x: %v", canonical, err)
+		}
+		if !equivalentCanonicalEMR(decoded.Value, again.Value) {
+			t.Fatalf("canonical %x changes typed value of %x", canonical, wire)
+		}
+		framed, err := EncodeEnhancedMeasurementReportCanonicalAtLength(decoded.Value, len(wire))
+		if err != nil || len(framed) != len(wire) {
+			t.Fatalf("framed canonical %x: %v", framed, err)
+		}
+		if _, err := EncodeEnhancedMeasurementReportCanonicalAtLength(decoded.Value, 1); err == nil {
+			t.Fatal("framing too short for the typed value was accepted")
+		}
+	}
 }
 
 func TestEnhancedMeasurementReportWireTailEdit(t *testing.T) {
