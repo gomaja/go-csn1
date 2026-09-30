@@ -125,6 +125,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
+// Package measurement contains typed CSN.1 codecs. Plain Encode calls preserve a decoded value's received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical encodes an independent copy as a fresh value, discarding received wire layout, while keeping the caller's value intact.
 package measurement
 
 import (
@@ -2514,6 +2515,11 @@ func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeEnhancedMeasurementReportCanonical encodes a copy without received wire layout.
+func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]byte, error) {
+	return EncodeEnhancedMeasurementReport(runtime.Canonical(v))
+}
+
 // DecodeServingCellDataStruct decodes TS 44.018 V19.0.0 §9.1.55 <Serving cell data struct>.
 func DecodeServingCellDataStructFrom(r *runtime.Reader) (ServingCellDataStruct, error) {
 	if err := r.Check(); err != nil {
@@ -2548,6 +2554,11 @@ func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeServingCellDataStructCanonical encodes a copy without received wire layout.
+func EncodeServingCellDataStructCanonical(v ServingCellDataStruct) ([]byte, error) {
+	return EncodeServingCellDataStruct(runtime.Canonical(v))
 }
 
 // DecodeRepeatedInvalidBSICInformationStruct decodes TS 44.018 V19.0.0 §9.1.55 <Repeated Invalid_BSIC_Information struct>.
@@ -2586,6 +2597,11 @@ func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformation
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRepeatedInvalidBSICInformationStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedInvalidBSICInformationStructCanonical(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
+	return EncodeRepeatedInvalidBSICInformationStruct(runtime.Canonical(v))
+}
+
 // DecodeEUTRANMeasurementReportStruct decodes TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>.
 func DecodeEUTRANMeasurementReportStructFrom(r *runtime.Reader) (EUTRANMeasurementReportStruct, error) {
 	if err := r.Check(); err != nil {
@@ -2620,6 +2636,11 @@ func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEUTRANMeasurementReportStructCanonical encodes a copy without received wire layout.
+func EncodeEUTRANMeasurementReportStructCanonical(v EUTRANMeasurementReportStruct) ([]byte, error) {
+	return EncodeEUTRANMeasurementReportStruct(runtime.Canonical(v))
 }
 func Definitions() []string {
 	return []string{"Enhanced Measurement report", "Serving cell data struct", "Repeated Invalid_BSIC_Information struct", "E-UTRAN Measurement Report struct"}

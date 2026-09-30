@@ -125,6 +125,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
+// Package restoctets contains typed CSN.1 codecs. Plain Encode calls preserve a decoded value's received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical encodes an independent copy as a fresh value, discarding received wire layout, while keeping the caller's value intact.
 package restoctets
 
 import (
@@ -69571,6 +69572,11 @@ func EncodeIARestOctets(v IARestOctets) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeIARestOctetsCanonical encodes a copy without received wire layout.
+func EncodeIARestOctetsCanonical(v IARestOctets) ([]byte, error) {
+	return EncodeIARestOctets(runtime.Canonical(v))
+}
+
 // DecodeEGPRSPacketUplinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <EGPRS Packet Uplink Assignment>.
 func DecodeEGPRSPacketUplinkAssignmentFrom(r *runtime.Reader) (EGPRSPacketUplinkAssignment, error) {
 	if err := r.Check(); err != nil {
@@ -69605,6 +69611,11 @@ func EncodeEGPRSPacketUplinkAssignment(v EGPRSPacketUplinkAssignment) ([]byte, e
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEGPRSPacketUplinkAssignmentCanonical encodes a copy without received wire layout.
+func EncodeEGPRSPacketUplinkAssignmentCanonical(v EGPRSPacketUplinkAssignment) ([]byte, error) {
+	return EncodeEGPRSPacketUplinkAssignment(runtime.Canonical(v))
 }
 
 // DecodeAccessTechnologiesRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.16 <Access Technologies Request struct>.
@@ -69643,6 +69654,11 @@ func EncodeAccessTechnologiesRequestStruct(v AccessTechnologiesRequestStruct) ([
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeAccessTechnologiesRequestStructCanonical encodes a copy without received wire layout.
+func EncodeAccessTechnologiesRequestStructCanonical(v AccessTechnologiesRequestStruct) ([]byte, error) {
+	return EncodeAccessTechnologiesRequestStruct(runtime.Canonical(v))
+}
+
 // DecodePacketUplinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Uplink Assignment>.
 func DecodePacketUplinkAssignmentFrom(r *runtime.Reader) (PacketUplinkAssignment, error) {
 	if err := r.Check(); err != nil {
@@ -69677,6 +69693,11 @@ func EncodePacketUplinkAssignment(v PacketUplinkAssignment) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePacketUplinkAssignmentCanonical encodes a copy without received wire layout.
+func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, error) {
+	return EncodePacketUplinkAssignment(runtime.Canonical(v))
 }
 
 // DecodePacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>.
@@ -69715,6 +69736,11 @@ func EncodePacketDownlinkAssignment(v PacketDownlinkAssignment) ([]byte, error) 
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePacketDownlinkAssignmentCanonical encodes a copy without received wire layout.
+func EncodePacketDownlinkAssignmentCanonical(v PacketDownlinkAssignment) ([]byte, error) {
+	return EncodePacketDownlinkAssignment(runtime.Canonical(v))
+}
+
 // DecodeFrequencyParametersBeforeTime decodes TS 44.018 V19.0.0 §10.5.2.16 <Frequency Parameters, before time>.
 func DecodeFrequencyParametersBeforeTimeFrom(r *runtime.Reader) (FrequencyParametersBeforeTime, error) {
 	if err := r.Check(); err != nil {
@@ -69749,6 +69775,11 @@ func EncodeFrequencyParametersBeforeTime(v FrequencyParametersBeforeTime) ([]byt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeFrequencyParametersBeforeTimeCanonical encodes a copy without received wire layout.
+func EncodeFrequencyParametersBeforeTimeCanonical(v FrequencyParametersBeforeTime) ([]byte, error) {
+	return EncodeFrequencyParametersBeforeTime(runtime.Canonical(v))
 }
 
 // DecodeSecondPartPacketAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Second Part Packet Assignment>.
@@ -69787,6 +69818,11 @@ func EncodeSecondPartPacketAssignment(v SecondPartPacketAssignment) ([]byte, err
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSecondPartPacketAssignmentCanonical encodes a copy without received wire layout.
+func EncodeSecondPartPacketAssignmentCanonical(v SecondPartPacketAssignment) ([]byte, error) {
+	return EncodeSecondPartPacketAssignment(runtime.Canonical(v))
+}
+
 // DecodeMultipleBlocksPacketDownlinkAssignment decodes TS 44.018 V19.0.0 §10.5.2.16 <Multiple Blocks Packet Downlink Assignment>.
 func DecodeMultipleBlocksPacketDownlinkAssignmentFrom(r *runtime.Reader) (MultipleBlocksPacketDownlinkAssignment, error) {
 	if err := r.Check(); err != nil {
@@ -69823,6 +69859,11 @@ func EncodeMultipleBlocksPacketDownlinkAssignment(v MultipleBlocksPacketDownlink
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeMultipleBlocksPacketDownlinkAssignmentCanonical encodes a copy without received wire layout.
+func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacketDownlinkAssignment) ([]byte, error) {
+	return EncodeMultipleBlocksPacketDownlinkAssignment(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105216 decodes TS 44.018 V19.0.0 §10.5.2.16 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105216From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105216, error) {
 	if err := r.Check(); err != nil {
@@ -69857,6 +69898,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105216(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105216Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105216Canonical(v PEOIMMCellGroupDetailsStructClause105216) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105216(runtime.Canonical(v))
 }
 
 // DecodeIARRestOctets decodes TS 44.018 V19.0.0 §10.5.2.17 <IAR Rest Octets>.
@@ -69911,6 +69957,11 @@ func EncodeIARRestOctets(v IARRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeIARRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeIARRestOctetsCanonical(v IARRestOctets) ([]byte, error) {
+	return EncodeIARRestOctets(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105217 decodes TS 44.018 V19.0.0 §10.5.2.17 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105217From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105217, error) {
 	if err := r.Check(); err != nil {
@@ -69945,6 +69996,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105217(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105217Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105217Canonical(v PEOIMMCellGroupDetailsStructClause105217) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105217(runtime.Canonical(v))
 }
 
 // DecodeIAXRestOctets decodes TS 44.018 V19.0.0 §10.5.2.18 <IAX Rest Octets>.
@@ -69989,6 +70045,11 @@ func EncodeIAXRestOctets(v IAXRestOctets) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeIAXRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeIAXRestOctetsCanonical(v IAXRestOctets) ([]byte, error) {
+	return EncodeIAXRestOctets(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105218 decodes TS 44.018 V19.0.0 §10.5.2.18 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105218From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105218, error) {
 	if err := r.Check(); err != nil {
@@ -70023,6 +70084,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105218(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105218Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105218Canonical(v PEOIMMCellGroupDetailsStructClause105218) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105218(runtime.Canonical(v))
 }
 
 // DecodeSI1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.32 <SI1 Rest Octets>.
@@ -70077,6 +70143,11 @@ func EncodeSI1RestOctets(v SI1RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI1RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI1RestOctetsCanonical(v SI1RestOctets) ([]byte, error) {
+	return EncodeSI1RestOctets(runtime.Canonical(v))
+}
+
 // DecodeBandIndicatorClause105232 decodes TS 44.018 V19.0.0 §10.5.2.32 <Band indicator>.
 func DecodeBandIndicatorClause105232From(r *runtime.Reader) (BandIndicatorClause105232, error) {
 	if err := r.Check(); err != nil {
@@ -70111,6 +70182,11 @@ func EncodeBandIndicatorClause105232(v BandIndicatorClause105232) ([]byte, error
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeBandIndicatorClause105232Canonical encodes a copy without received wire layout.
+func EncodeBandIndicatorClause105232Canonical(v BandIndicatorClause105232) ([]byte, error) {
+	return EncodeBandIndicatorClause105232(runtime.Canonical(v))
 }
 
 // DecodeSI2bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33 <SI2bis Rest Octets>.
@@ -70165,6 +70241,11 @@ func EncodeSI2bisRestOctets(v SI2bisRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI2bisRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI2bisRestOctetsCanonical(v SI2bisRestOctets) ([]byte, error) {
+	return EncodeSI2bisRestOctets(runtime.Canonical(v))
+}
+
 // DecodeSI2nRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33c <SI2n Rest Octets>.
 func DecodeSI2nRestOctetsFrom(r *runtime.Reader) (SI2nRestOctets, error) {
 	if err := r.Check(); err != nil {
@@ -70217,6 +70298,11 @@ func EncodeSI2nRestOctets(v SI2nRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI2nRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI2nRestOctetsCanonical(v SI2nRestOctets) ([]byte, error) {
+	return EncodeSI2nRestOctets(runtime.Canonical(v))
+}
+
 // DecodeGSMNeighbourCellSelectionParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GSM Neighbour Cell Selection params struct>.
 func DecodeGSMNeighbourCellSelectionParamsStructFrom(r *runtime.Reader) (GSMNeighbourCellSelectionParamsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -70253,6 +70339,11 @@ func EncodeGSMNeighbourCellSelectionParamsStruct(v GSMNeighbourCellSelectionPara
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGSMNeighbourCellSelectionParamsStructCanonical encodes a copy without received wire layout.
+func EncodeGSMNeighbourCellSelectionParamsStructCanonical(v GSMNeighbourCellSelectionParamsStruct) ([]byte, error) {
+	return EncodeGSMNeighbourCellSelectionParamsStruct(runtime.Canonical(v))
+}
+
 // DecodeGPRSSupportIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GPRS Support Indicator struct>.
 func DecodeGPRSSupportIndicatorStructFrom(r *runtime.Reader) (GPRSSupportIndicatorStruct, error) {
 	if err := r.Check(); err != nil {
@@ -70287,6 +70378,11 @@ func EncodeGPRSSupportIndicatorStruct(v GPRSSupportIndicatorStruct) ([]byte, err
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRSSupportIndicatorStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSSupportIndicatorStructCanonical(v GPRSSupportIndicatorStruct) ([]byte, error) {
+	return EncodeGPRSSupportIndicatorStruct(runtime.Canonical(v))
 }
 
 // DecodeSI3RestOctet decodes TS 44.018 V19.0.0 §10.5.2.34 <SI3 Rest Octet>.
@@ -70339,6 +70435,11 @@ func EncodeSI3RestOctet(v SI3RestOctet) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI3RestOctetCanonical encodes a copy without received wire layout.
+func EncodeSI3RestOctetCanonical(v SI3RestOctet) ([]byte, error) {
+	return EncodeSI3RestOctet(runtime.Canonical(v))
+}
+
 // DecodeOptionalSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Selection Parameters>.
 func DecodeOptionalSelectionParametersClause105234From(r *runtime.Reader) (OptionalSelectionParametersClause105234, error) {
 	if err := r.Check(); err != nil {
@@ -70373,6 +70474,11 @@ func EncodeOptionalSelectionParametersClause105234(v OptionalSelectionParameters
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeOptionalSelectionParametersClause105234Canonical encodes a copy without received wire layout.
+func EncodeOptionalSelectionParametersClause105234Canonical(v OptionalSelectionParametersClause105234) ([]byte, error) {
+	return EncodeOptionalSelectionParametersClause105234(runtime.Canonical(v))
 }
 
 // DecodeSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Selection Parameters>.
@@ -70411,6 +70517,11 @@ func EncodeSelectionParametersClause105234(v SelectionParametersClause105234) ([
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSelectionParametersClause105234Canonical encodes a copy without received wire layout.
+func EncodeSelectionParametersClause105234Canonical(v SelectionParametersClause105234) ([]byte, error) {
+	return EncodeSelectionParametersClause105234(runtime.Canonical(v))
+}
+
 // DecodeOptionalPowerOffsetClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Power Offset>.
 func DecodeOptionalPowerOffsetClause105234From(r *runtime.Reader) (OptionalPowerOffsetClause105234, error) {
 	if err := r.Check(); err != nil {
@@ -70445,6 +70556,11 @@ func EncodeOptionalPowerOffsetClause105234(v OptionalPowerOffsetClause105234) ([
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeOptionalPowerOffsetClause105234Canonical encodes a copy without received wire layout.
+func EncodeOptionalPowerOffsetClause105234Canonical(v OptionalPowerOffsetClause105234) ([]byte, error) {
+	return EncodeOptionalPowerOffsetClause105234(runtime.Canonical(v))
 }
 
 // DecodeSystemInformation2terIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 2ter Indicator>.
@@ -70483,6 +70599,11 @@ func EncodeSystemInformation2terIndicator(v SystemInformation2terIndicator) ([]b
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSystemInformation2terIndicatorCanonical encodes a copy without received wire layout.
+func EncodeSystemInformation2terIndicatorCanonical(v SystemInformation2terIndicator) ([]byte, error) {
+	return EncodeSystemInformation2terIndicator(runtime.Canonical(v))
+}
+
 // DecodeEarlyClassmarkSendingControl decodes TS 44.018 V19.0.0 §10.5.2.34 <Early Classmark Sending Control>.
 func DecodeEarlyClassmarkSendingControlFrom(r *runtime.Reader) (EarlyClassmarkSendingControl, error) {
 	if err := r.Check(); err != nil {
@@ -70517,6 +70638,11 @@ func EncodeEarlyClassmarkSendingControl(v EarlyClassmarkSendingControl) ([]byte,
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEarlyClassmarkSendingControlCanonical encodes a copy without received wire layout.
+func EncodeEarlyClassmarkSendingControlCanonical(v EarlyClassmarkSendingControl) ([]byte, error) {
+	return EncodeEarlyClassmarkSendingControl(runtime.Canonical(v))
 }
 
 // DecodeSchedulingIfAndWhere decodes TS 44.018 V19.0.0 §10.5.2.34 <Scheduling if and where>.
@@ -70555,6 +70681,11 @@ func EncodeSchedulingIfAndWhere(v SchedulingIfAndWhere) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSchedulingIfAndWhereCanonical encodes a copy without received wire layout.
+func EncodeSchedulingIfAndWhereCanonical(v SchedulingIfAndWhere) ([]byte, error) {
+	return EncodeSchedulingIfAndWhere(runtime.Canonical(v))
+}
+
 // DecodeGPRSIndicatorClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <GPRS Indicator>.
 func DecodeGPRSIndicatorClause105234From(r *runtime.Reader) (GPRSIndicatorClause105234, error) {
 	if err := r.Check(); err != nil {
@@ -70589,6 +70720,11 @@ func EncodeGPRSIndicatorClause105234(v GPRSIndicatorClause105234) ([]byte, error
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRSIndicatorClause105234Canonical encodes a copy without received wire layout.
+func EncodeGPRSIndicatorClause105234Canonical(v GPRSIndicatorClause105234) ([]byte, error) {
+	return EncodeGPRSIndicatorClause105234(runtime.Canonical(v))
 }
 
 // DecodeN3GEarlyClassmarkSendingRestriction decodes TS 44.018 V19.0.0 §10.5.2.34 <3G Early Classmark Sending Restriction>.
@@ -70627,6 +70763,11 @@ func EncodeN3GEarlyClassmarkSendingRestriction(v N3GEarlyClassmarkSendingRestric
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeN3GEarlyClassmarkSendingRestrictionCanonical encodes a copy without received wire layout.
+func EncodeN3GEarlyClassmarkSendingRestrictionCanonical(v N3GEarlyClassmarkSendingRestriction) ([]byte, error) {
+	return EncodeN3GEarlyClassmarkSendingRestriction(runtime.Canonical(v))
+}
+
 // DecodeSI2quaterIndicatorStruct decodes TS 44.018 V19.0.0 §10.5.2.34 <SI2quater Indicator struct>.
 func DecodeSI2quaterIndicatorStructFrom(r *runtime.Reader) (SI2quaterIndicatorStruct, error) {
 	if err := r.Check(); err != nil {
@@ -70663,6 +70804,11 @@ func EncodeSI2quaterIndicatorStruct(v SI2quaterIndicatorStruct) ([]byte, error) 
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSI2quaterIndicatorStructCanonical encodes a copy without received wire layout.
+func EncodeSI2quaterIndicatorStructCanonical(v SI2quaterIndicatorStruct) ([]byte, error) {
+	return EncodeSI2quaterIndicatorStruct(runtime.Canonical(v))
+}
+
 // DecodeIuIndicator decodes TS 44.018 V19.0.0 §10.5.2.34 <Iu Indicator>.
 func DecodeIuIndicatorFrom(r *runtime.Reader) (IuIndicator, error) {
 	if err := r.Check(); err != nil {
@@ -70695,6 +70841,11 @@ func EncodeIuIndicator(v IuIndicator) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeIuIndicatorCanonical encodes a copy without received wire layout.
+func EncodeIuIndicatorCanonical(v IuIndicator) ([]byte, error) {
+	return EncodeIuIndicator(runtime.Canonical(v))
 }
 
 // DecodeSystemInformation21Indicator decodes TS 44.018 V19.0.0 §10.5.2.34 <System Information 21 Indicator>.
@@ -70731,6 +70882,11 @@ func EncodeSystemInformation21Indicator(v SystemInformation21Indicator) ([]byte,
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSystemInformation21IndicatorCanonical encodes a copy without received wire layout.
+func EncodeSystemInformation21IndicatorCanonical(v SystemInformation21Indicator) ([]byte, error) {
+	return EncodeSystemInformation21Indicator(runtime.Canonical(v))
 }
 
 // DecodeSI16RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37e <SI16 Rest Octets>.
@@ -70785,6 +70941,11 @@ func EncodeSI16RestOctets(v SI16RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI16RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI16RestOctetsCanonical(v SI16RestOctets) ([]byte, error) {
+	return EncodeSI16RestOctets(runtime.Canonical(v))
+}
+
 // DecodeSI17RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37f <SI17 Rest Octets>.
 func DecodeSI17RestOctetsFrom(r *runtime.Reader) (SI17RestOctets, error) {
 	if err := r.Check(); err != nil {
@@ -70837,6 +70998,11 @@ func EncodeSI17RestOctets(v SI17RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI17RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI17RestOctetsCanonical(v SI17RestOctets) ([]byte, error) {
+	return EncodeSI17RestOctets(runtime.Canonical(v))
+}
+
 // DecodeLSAParametersClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA Parameters>.
 func DecodeLSAParametersClause105237eFrom(r *runtime.Reader) (LSAParametersClause105237e, error) {
 	if err := r.Check(); err != nil {
@@ -70871,6 +71037,11 @@ func EncodeLSAParametersClause105237e(v LSAParametersClause105237e) ([]byte, err
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeLSAParametersClause105237eCanonical encodes a copy without received wire layout.
+func EncodeLSAParametersClause105237eCanonical(v LSAParametersClause105237e) ([]byte, error) {
+	return EncodeLSAParametersClause105237e(runtime.Canonical(v))
 }
 
 // DecodeLSAIDInformationClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA ID information>.
@@ -70909,6 +71080,11 @@ func EncodeLSAIDInformationClause105237e(v LSAIDInformationClause105237e) ([]byt
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeLSAIDInformationClause105237eCanonical encodes a copy without received wire layout.
+func EncodeLSAIDInformationClause105237eCanonical(v LSAIDInformationClause105237e) ([]byte, error) {
+	return EncodeLSAIDInformationClause105237e(runtime.Canonical(v))
+}
+
 // DecodeLSAIdentityClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA identity>.
 func DecodeLSAIdentityClause105237eFrom(r *runtime.Reader) (LSAIdentityClause105237e, error) {
 	if err := r.Check(); err != nil {
@@ -70943,6 +71119,11 @@ func EncodeLSAIdentityClause105237e(v LSAIdentityClause105237e) ([]byte, error) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeLSAIdentityClause105237eCanonical encodes a copy without received wire layout.
+func EncodeLSAIdentityClause105237eCanonical(v LSAIdentityClause105237e) ([]byte, error) {
+	return EncodeLSAIdentityClause105237e(runtime.Canonical(v))
 }
 
 // DecodeSI14RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37j <SI14 Rest Octets>.
@@ -70997,6 +71178,11 @@ func EncodeSI14RestOctets(v SI14RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI14RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI14RestOctetsCanonical(v SI14RestOctets) ([]byte, error) {
+	return EncodeSI14RestOctets(runtime.Canonical(v))
+}
+
 // DecodeDYNAMICARFCNMAPPINGClause105237j decodes TS 44.018 V19.0.0 §10.5.2.37j <DYNAMIC ARFCN MAPPING>.
 func DecodeDYNAMICARFCNMAPPINGClause105237jFrom(r *runtime.Reader) (DYNAMICARFCNMAPPINGClause105237j, error) {
 	if err := r.Check(); err != nil {
@@ -71031,6 +71217,11 @@ func EncodeDYNAMICARFCNMAPPINGClause105237j(v DYNAMICARFCNMAPPINGClause105237j) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeDYNAMICARFCNMAPPINGClause105237jCanonical encodes a copy without received wire layout.
+func EncodeDYNAMICARFCNMAPPINGClause105237jCanonical(v DYNAMICARFCNMAPPINGClause105237j) ([]byte, error) {
+	return EncodeDYNAMICARFCNMAPPINGClause105237j(runtime.Canonical(v))
 }
 
 // DecodeSI15RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37k <SI15 Rest Octets>.
@@ -71085,6 +71276,11 @@ func EncodeSI15RestOctets(v SI15RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI15RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI15RestOctetsCanonical(v SI15RestOctets) ([]byte, error) {
+	return EncodeSI15RestOctets(runtime.Canonical(v))
+}
+
 // DecodeDYNAMICARFCNMAPPINGClause105237k decodes TS 44.018 V19.0.0 §10.5.2.37k <DYNAMIC ARFCN MAPPING>.
 func DecodeDYNAMICARFCNMAPPINGClause105237kFrom(r *runtime.Reader) (DYNAMICARFCNMAPPINGClause105237k, error) {
 	if err := r.Check(); err != nil {
@@ -71119,6 +71315,11 @@ func EncodeDYNAMICARFCNMAPPINGClause105237k(v DYNAMICARFCNMAPPINGClause105237k) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeDYNAMICARFCNMAPPINGClause105237kCanonical encodes a copy without received wire layout.
+func EncodeDYNAMICARFCNMAPPINGClause105237kCanonical(v DYNAMICARFCNMAPPINGClause105237k) ([]byte, error) {
+	return EncodeDYNAMICARFCNMAPPINGClause105237k(runtime.Canonical(v))
 }
 
 // DecodeSI21RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37m <SI 21 Rest Octets>.
@@ -71173,6 +71374,11 @@ func EncodeSI21RestOctets(v SI21RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI21RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI21RestOctetsCanonical(v SI21RestOctets) ([]byte, error) {
+	return EncodeSI21RestOctets(runtime.Canonical(v))
+}
+
 // DecodeNetworkSharingEABInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37m <Network Sharing EAB Information struct>.
 func DecodeNetworkSharingEABInformationStructFrom(r *runtime.Reader) (NetworkSharingEABInformationStruct, error) {
 	if err := r.Check(); err != nil {
@@ -71207,6 +71413,11 @@ func EncodeNetworkSharingEABInformationStruct(v NetworkSharingEABInformationStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeNetworkSharingEABInformationStructCanonical encodes a copy without received wire layout.
+func EncodeNetworkSharingEABInformationStructCanonical(v NetworkSharingEABInformationStruct) ([]byte, error) {
+	return EncodeNetworkSharingEABInformationStruct(runtime.Canonical(v))
 }
 
 // DecodeSI22RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37n <SI 22 Rest Octets>.
@@ -71261,6 +71472,11 @@ func EncodeSI22RestOctets(v SI22RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI22RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI22RestOctetsCanonical(v SI22RestOctets) ([]byte, error) {
+	return EncodeSI22RestOctets(runtime.Canonical(v))
+}
+
 // DecodeNetworkSharingInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37n <Network Sharing Information struct>.
 func DecodeNetworkSharingInformationStructFrom(r *runtime.Reader) (NetworkSharingInformationStruct, error) {
 	if err := r.Check(); err != nil {
@@ -71295,6 +71511,11 @@ func EncodeNetworkSharingInformationStruct(v NetworkSharingInformationStruct) ([
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeNetworkSharingInformationStructCanonical encodes a copy without received wire layout.
+func EncodeNetworkSharingInformationStructCanonical(v NetworkSharingInformationStruct) ([]byte, error) {
+	return EncodeNetworkSharingInformationStruct(runtime.Canonical(v))
 }
 
 // DecodeSI23RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37o <SI 23 Rest Octets>.
@@ -71349,6 +71570,11 @@ func EncodeSI23RestOctets(v SI23RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI23RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI23RestOctetsCanonical(v SI23RestOctets) ([]byte, error) {
+	return EncodeSI23RestOctets(runtime.Canonical(v))
+}
+
 // DecodeIRATCellReselectionInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <IRAT Cell Reselection Information struct>.
 func DecodeIRATCellReselectionInformationStructFrom(r *runtime.Reader) (IRATCellReselectionInformationStruct, error) {
 	if err := r.Check(); err != nil {
@@ -71383,6 +71609,11 @@ func EncodeIRATCellReselectionInformationStruct(v IRATCellReselectionInformation
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeIRATCellReselectionInformationStructCanonical encodes a copy without received wire layout.
+func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionInformationStruct) ([]byte, error) {
+	return EncodeIRATCellReselectionInformationStruct(runtime.Canonical(v))
 }
 
 // DecodePriorityAndUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and UTRAN Parameters Description struct>.
@@ -71421,6 +71652,11 @@ func EncodePriorityAndUTRANParametersDescriptionStruct(v PriorityAndUTRANParamet
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePriorityAndUTRANParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodePriorityAndUTRANParametersDescriptionStructCanonical(v PriorityAndUTRANParametersDescriptionStruct) ([]byte, error) {
+	return EncodePriorityAndUTRANParametersDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeUTRANFDDTDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <UTRAN FDD/TDD Description struct>.
 func DecodeUTRANFDDTDDDescriptionStructFrom(r *runtime.Reader) (UTRANFDDTDDDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -71455,6 +71691,11 @@ func EncodeUTRANFDDTDDDescriptionStruct(v UTRANFDDTDDDescriptionStruct) ([]byte,
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeUTRANFDDTDDDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeUTRANFDDTDDDescriptionStructCanonical(v UTRANFDDTDDDescriptionStruct) ([]byte, error) {
+	return EncodeUTRANFDDTDDDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct>.
@@ -71493,6 +71734,11 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(v RepeatedUTRA
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical(v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct) ([]byte, error) {
+	return EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(runtime.Canonical(v))
+}
+
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105237o decodes TS 44.018 V19.0.0 §10.5.2.37o <Priority and E-UTRAN Parameters Description struct>.
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom(r *runtime.Reader) (PriorityAndEUTRANParametersDescriptionStructClause105237o, error) {
 	if err := r.Check(); err != nil {
@@ -71529,6 +71775,11 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237o(v PriorityA
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical encodes a copy without received wire layout.
+func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105237o) ([]byte, error) {
+	return EncodePriorityAndEUTRANParametersDescriptionStructClause105237o(runtime.Canonical(v))
+}
+
 // DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <Repeated E-UTRAN Neighbour Frequency and Priority struct>.
 func DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom(r *runtime.Reader) (RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, error) {
 	if err := r.Check(); err != nil {
@@ -71563,6 +71814,11 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(v RepeatedEUTRANNei
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct) ([]byte, error) {
+	return EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(runtime.Canonical(v))
 }
 
 // DecodeSI10RestOctets decodes TS 44.018 V19.0.0 §10.5.2.44 <SI10 rest octets>.
@@ -71617,6 +71873,11 @@ func EncodeSI10RestOctets(v SI10RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI10RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI10RestOctetsCanonical(v SI10RestOctets) ([]byte, error) {
+	return EncodeSI10RestOctets(runtime.Canonical(v))
+}
+
 // DecodeNeighbourInformation decodes TS 44.018 V19.0.0 §10.5.2.44 <neighbour information>.
 func DecodeNeighbourInformationFrom(r *runtime.Reader) (NeighbourInformation, error) {
 	if err := r.Check(); err != nil {
@@ -71653,6 +71914,11 @@ func EncodeNeighbourInformation(v NeighbourInformation) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeNeighbourInformationCanonical encodes a copy without received wire layout.
+func EncodeNeighbourInformationCanonical(v NeighbourInformation) ([]byte, error) {
+	return EncodeNeighbourInformation(runtime.Canonical(v))
+}
+
 // DecodeCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <cell info>.
 func DecodeCellInfoFrom(r *runtime.Reader) (CellInfo, error) {
 	if err := r.Check(); err != nil {
@@ -71686,6 +71952,9 @@ func EncodeCellInfo(v CellInfo) ([]byte, error) {
 	}
 	return w.Finish(v.Wire.Tail)
 }
+
+// EncodeCellInfoCanonical encodes a copy without received wire layout.
+func EncodeCellInfoCanonical(v CellInfo) ([]byte, error) { return EncodeCellInfo(runtime.Canonical(v)) }
 
 // DecodeCellParameters decodes TS 44.018 V19.0.0 §10.5.2.44 <cell parameters>.
 func DecodeCellParametersFrom(r *runtime.Reader) (CellParameters, error) {
@@ -71723,6 +71992,11 @@ func EncodeCellParameters(v CellParameters) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeCellParametersCanonical encodes a copy without received wire layout.
+func EncodeCellParametersCanonical(v CellParameters) ([]byte, error) {
+	return EncodeCellParameters(runtime.Canonical(v))
+}
+
 // DecodeCellBarred decodes TS 44.018 V19.0.0 §10.5.2.44 <cell barred>.
 func DecodeCellBarredFrom(r *runtime.Reader) (CellBarred, error) {
 	if err := r.Check(); err != nil {
@@ -71755,6 +72029,11 @@ func EncodeCellBarred(v CellBarred) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeCellBarredCanonical encodes a copy without received wire layout.
+func EncodeCellBarredCanonical(v CellBarred) ([]byte, error) {
+	return EncodeCellBarred(runtime.Canonical(v))
 }
 
 // DecodeFurtherCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further cell info>.
@@ -71793,6 +72072,11 @@ func EncodeFurtherCellInfo(v FurtherCellInfo) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeFurtherCellInfoCanonical encodes a copy without received wire layout.
+func EncodeFurtherCellInfoCanonical(v FurtherCellInfo) ([]byte, error) {
+	return EncodeFurtherCellInfo(runtime.Canonical(v))
+}
+
 // DecodeLaDifferent decodes TS 44.018 V19.0.0 §10.5.2.44 <la different>.
 func DecodeLaDifferentFrom(r *runtime.Reader) (LaDifferent, error) {
 	if err := r.Check(); err != nil {
@@ -71827,6 +72111,11 @@ func EncodeLaDifferent(v LaDifferent) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeLaDifferentCanonical encodes a copy without received wire layout.
+func EncodeLaDifferentCanonical(v LaDifferent) ([]byte, error) {
+	return EncodeLaDifferent(runtime.Canonical(v))
+}
+
 // DecodeInfoField decodes TS 44.018 V19.0.0 §10.5.2.44 <info field>.
 func DecodeInfoFieldFrom(r *runtime.Reader) (InfoField, error) {
 	if err := r.Check(); err != nil {
@@ -71859,6 +72148,11 @@ func EncodeInfoField(v InfoField) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeInfoFieldCanonical encodes a copy without received wire layout.
+func EncodeInfoFieldCanonical(v InfoField) ([]byte, error) {
+	return EncodeInfoField(runtime.Canonical(v))
 }
 
 // DecodeNextFrequency decodes TS 44.018 V19.0.0 §10.5.2.44 <next frequency>.
@@ -71897,6 +72191,11 @@ func EncodeNextFrequency(v NextFrequency) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeNextFrequencyCanonical encodes a copy without received wire layout.
+func EncodeNextFrequencyCanonical(v NextFrequency) ([]byte, error) {
+	return EncodeNextFrequency(runtime.Canonical(v))
+}
+
 // DecodeDifferentialCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <differential cell info>.
 func DecodeDifferentialCellInfoFrom(r *runtime.Reader) (DifferentialCellInfo, error) {
 	if err := r.Check(); err != nil {
@@ -71933,6 +72232,11 @@ func EncodeDifferentialCellInfo(v DifferentialCellInfo) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeDifferentialCellInfoCanonical encodes a copy without received wire layout.
+func EncodeDifferentialCellInfoCanonical(v DifferentialCellInfo) ([]byte, error) {
+	return EncodeDifferentialCellInfo(runtime.Canonical(v))
+}
+
 // DecodeDiffCellPars decodes TS 44.018 V19.0.0 §10.5.2.44 <diff cell pars>.
 func DecodeDiffCellParsFrom(r *runtime.Reader) (DiffCellPars, error) {
 	if err := r.Check(); err != nil {
@@ -71965,6 +72269,11 @@ func EncodeDiffCellPars(v DiffCellPars) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeDiffCellParsCanonical encodes a copy without received wire layout.
+func EncodeDiffCellParsCanonical(v DiffCellPars) ([]byte, error) {
+	return EncodeDiffCellPars(runtime.Canonical(v))
 }
 
 // DecodeFurtherDiffCellInfo decodes TS 44.018 V19.0.0 §10.5.2.44 <further diff cell info>.
@@ -72001,6 +72310,11 @@ func EncodeFurtherDiffCellInfo(v FurtherDiffCellInfo) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeFurtherDiffCellInfoCanonical encodes a copy without received wire layout.
+func EncodeFurtherDiffCellInfoCanonical(v FurtherDiffCellInfo) ([]byte, error) {
+	return EncodeFurtherDiffCellInfo(runtime.Canonical(v))
 }
 
 // DecodeSI10terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.71 <SI10ter Rest Octets>.
@@ -72040,6 +72354,11 @@ func EncodeSI10terRestOctets(v SI10terRestOctets) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSI10terRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI10terRestOctetsCanonical(v SI10terRestOctets) ([]byte, error) {
+	return EncodeSI10terRestOctets(runtime.Canonical(v))
 }
 
 // DecodeSI9RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37a <SI9 rest octets>.
@@ -72094,6 +72413,11 @@ func EncodeSI9RestOctets(v SI9RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI9RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI9RestOctetsCanonical(v SI9RestOctets) ([]byte, error) {
+	return EncodeSI9RestOctets(runtime.Canonical(v))
+}
+
 // DecodeSchedulingInfo decodes TS 44.018 V19.0.0 §10.5.2.37a <Scheduling info>.
 func DecodeSchedulingInfoFrom(r *runtime.Reader) (SchedulingInfo, error) {
 	if err := r.Check(); err != nil {
@@ -72130,6 +72454,11 @@ func EncodeSchedulingInfo(v SchedulingInfo) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSchedulingInfoCanonical encodes a copy without received wire layout.
+func EncodeSchedulingInfoCanonical(v SchedulingInfo) ([]byte, error) {
+	return EncodeSchedulingInfo(runtime.Canonical(v))
+}
+
 // DecodeInfoType decodes TS 44.018 V19.0.0 §10.5.2.37a <Info type>.
 func DecodeInfoTypeFrom(r *runtime.Reader) (InfoType, error) {
 	if err := r.Check(); err != nil {
@@ -72163,6 +72492,9 @@ func EncodeInfoType(v InfoType) ([]byte, error) {
 	}
 	return w.Finish(v.Wire.Tail)
 }
+
+// EncodeInfoTypeCanonical encodes a copy without received wire layout.
+func EncodeInfoTypeCanonical(v InfoType) ([]byte, error) { return EncodeInfoType(runtime.Canonical(v)) }
 
 // DecodePositions decodes TS 44.018 V19.0.0 §10.5.2.37a <Positions>.
 func DecodePositionsFrom(r *runtime.Reader) (Positions, error) {
@@ -72198,6 +72530,11 @@ func EncodePositions(v Positions) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePositionsCanonical encodes a copy without received wire layout.
+func EncodePositionsCanonical(v Positions) ([]byte, error) {
+	return EncodePositions(runtime.Canonical(v))
+}
+
 // DecodePosition decodes TS 44.018 V19.0.0 §10.5.2.37a <Position>.
 func DecodePositionFrom(r *runtime.Reader) (Position, error) {
 	if err := r.Check(); err != nil {
@@ -72231,6 +72568,9 @@ func EncodePosition(v Position) ([]byte, error) {
 	}
 	return w.Finish(v.Wire.Tail)
 }
+
+// EncodePositionCanonical encodes a copy without received wire layout.
+func EncodePositionCanonical(v Position) ([]byte, error) { return EncodePosition(runtime.Canonical(v)) }
 
 // DecodeSI2terRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33a <SI2ter Rest Octets>.
 func DecodeSI2terRestOctetsFrom(r *runtime.Reader) (SI2terRestOctets, error) {
@@ -72284,6 +72624,11 @@ func EncodeSI2terRestOctets(v SI2terRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI2terRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI2terRestOctetsCanonical(v SI2terRestOctets) ([]byte, error) {
+	return EncodeSI2terRestOctets(runtime.Canonical(v))
+}
+
 // DecodeUTRANFDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN FDD Description struct>.
 func DecodeUTRANFDDDescriptionStructClause105233aFrom(r *runtime.Reader) (UTRANFDDDescriptionStructClause105233a, error) {
 	if err := r.Check(); err != nil {
@@ -72318,6 +72663,11 @@ func EncodeUTRANFDDDescriptionStructClause105233a(v UTRANFDDDescriptionStructCla
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeUTRANFDDDescriptionStructClause105233aCanonical encodes a copy without received wire layout.
+func EncodeUTRANFDDDescriptionStructClause105233aCanonical(v UTRANFDDDescriptionStructClause105233a) ([]byte, error) {
+	return EncodeUTRANFDDDescriptionStructClause105233a(runtime.Canonical(v))
 }
 
 // DecodeUTRANTDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN TDD Description struct>.
@@ -72356,6 +72706,11 @@ func EncodeUTRANTDDDescriptionStructClause105233a(v UTRANTDDDescriptionStructCla
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeUTRANTDDDescriptionStructClause105233aCanonical encodes a copy without received wire layout.
+func EncodeUTRANTDDDescriptionStructClause105233aCanonical(v UTRANTDDDescriptionStructClause105233a) ([]byte, error) {
+	return EncodeUTRANTDDDescriptionStructClause105233a(runtime.Canonical(v))
+}
+
 // DecodeN3GMEASUREMENTParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G MEASUREMENT Parameters Description struct>.
 func DecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (N3GMEASUREMENTParametersDescriptionStructClause105233a, error) {
 	if err := r.Check(); err != nil {
@@ -72392,6 +72747,11 @@ func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a(v N3GMEASUREME
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonical encodes a copy without received wire layout.
+func EncodeN3GMEASUREMENTParametersDescriptionStructClause105233aCanonical(v N3GMEASUREMENTParametersDescriptionStructClause105233a) ([]byte, error) {
+	return EncodeN3GMEASUREMENTParametersDescriptionStructClause105233a(runtime.Canonical(v))
+}
+
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <3G Additional Measurement Parameters Description struct>.
 func DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (N3GAdditionalMeasurementParametersDescriptionStructClause105233a, error) {
 	if err := r.Check(); err != nil {
@@ -72426,6 +72786,11 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(v N3
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonical encodes a copy without received wire layout.
+func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aCanonical(v N3GAdditionalMeasurementParametersDescriptionStructClause105233a) ([]byte, error) {
+	return EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a(runtime.Canonical(v))
 }
 
 // DecodeSI4RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets>.
@@ -72470,6 +72835,11 @@ func EncodeSI4RestOctets(v SI4RestOctets) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSI4RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI4RestOctetsCanonical(v SI4RestOctets) ([]byte, error) {
+	return EncodeSI4RestOctets(runtime.Canonical(v))
+}
+
 // DecodeSI4RestOctetsO decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets_O>.
 func DecodeSI4RestOctetsOFrom(r *runtime.Reader) (SI4RestOctetsO, error) {
 	if err := r.Check(); err != nil {
@@ -72507,6 +72877,11 @@ func EncodeSI4RestOctetsO(v SI4RestOctetsO) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSI4RestOctetsOCanonical encodes a copy without received wire layout.
+func EncodeSI4RestOctetsOCanonical(v SI4RestOctetsO) ([]byte, error) {
+	return EncodeSI4RestOctetsO(runtime.Canonical(v))
 }
 
 // DecodeSI4RestOctetsS decodes TS 44.018 V19.0.0 §10.5.2.35 <SI4 Rest Octets_S>.
@@ -72548,6 +72923,11 @@ func EncodeSI4RestOctetsS(v SI4RestOctetsS) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSI4RestOctetsSCanonical encodes a copy without received wire layout.
+func EncodeSI4RestOctetsSCanonical(v SI4RestOctetsS) ([]byte, error) {
+	return EncodeSI4RestOctetsS(runtime.Canonical(v))
+}
+
 // DecodeBreakIndicator decodes TS 44.018 V19.0.0 §10.5.2.35 <Break Indicator>.
 func DecodeBreakIndicatorFrom(r *runtime.Reader) (BreakIndicator, error) {
 	if err := r.Check(); err != nil {
@@ -72584,6 +72964,11 @@ func EncodeBreakIndicator(v BreakIndicator) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeBreakIndicatorCanonical encodes a copy without received wire layout.
+func EncodeBreakIndicatorCanonical(v BreakIndicator) ([]byte, error) {
+	return EncodeBreakIndicator(runtime.Canonical(v))
+}
+
 // DecodeSI7RestOctets decodes TS 44.018 V19.0.0 §10.5.2.36 <SI7 Rest Octets>.
 func DecodeSI7RestOctetsFrom(r *runtime.Reader) (SI7RestOctets, error) {
 	if err := r.Check(); err != nil {
@@ -72605,6 +72990,11 @@ func DecodeSI7RestOctets(data []byte) (runtime.Decoded[SI7RestOctets], error) {
 }
 func EncodeSI7RestOctets(v SI7RestOctets) ([]byte, error) {
 	return nil, &runtime.ContextRequiredError{Standard: "TS 44.018", Clause: "10.5.2.36", Name: "SI7 Rest Octets"}
+}
+
+// EncodeSI7RestOctetsCanonical discards received wire layout before encoding.
+func EncodeSI7RestOctetsCanonical(v SI7RestOctets) ([]byte, error) {
+	return EncodeSI7RestOctets(runtime.Canonical(v))
 }
 
 // DecodeSI7RestOctetsWithContext selects the TS 44.018 V19.0.0 §10.5.2.35 layout using the containing SI4 ACS bit.
@@ -72674,6 +73064,11 @@ func EncodeSI7RestOctetsWithContext(v SI7RestOctets, c runtime.SI4ACS) ([]byte, 
 	}
 	return w.Bytes()
 }
+
+// EncodeSI7RestOctetsCanonicalWithContext encodes a copy without received wire layout using SI4 ACS.
+func EncodeSI7RestOctetsCanonicalWithContext(v SI7RestOctets, c runtime.SI4ACS) ([]byte, error) {
+	return EncodeSI7RestOctetsWithContext(runtime.Canonical(v), c)
+}
 func EncodeSI7RestOctetsToWithContext(w *runtime.Writer, v SI7RestOctets, c runtime.SI4ACS) error {
 	if !c.Valid() {
 		return fmt.Errorf("invalid SI4 ACS %d", c)
@@ -72710,6 +73105,11 @@ func DecodeSI8RestOctets(data []byte) (runtime.Decoded[SI8RestOctets], error) {
 }
 func EncodeSI8RestOctets(v SI8RestOctets) ([]byte, error) {
 	return nil, &runtime.ContextRequiredError{Standard: "TS 44.018", Clause: "10.5.2.37", Name: "SI8 Rest Octets"}
+}
+
+// EncodeSI8RestOctetsCanonical discards received wire layout before encoding.
+func EncodeSI8RestOctetsCanonical(v SI8RestOctets) ([]byte, error) {
+	return EncodeSI8RestOctets(runtime.Canonical(v))
 }
 
 // DecodeSI8RestOctetsWithContext selects the TS 44.018 V19.0.0 §10.5.2.35 layout using the containing SI4 ACS bit.
@@ -72779,6 +73179,11 @@ func EncodeSI8RestOctetsWithContext(v SI8RestOctets, c runtime.SI4ACS) ([]byte, 
 	}
 	return w.Bytes()
 }
+
+// EncodeSI8RestOctetsCanonicalWithContext encodes a copy without received wire layout using SI4 ACS.
+func EncodeSI8RestOctetsCanonicalWithContext(v SI8RestOctets, c runtime.SI4ACS) ([]byte, error) {
+	return EncodeSI8RestOctetsWithContext(runtime.Canonical(v), c)
+}
 func EncodeSI8RestOctetsToWithContext(w *runtime.Writer, v SI8RestOctets, c runtime.SI4ACS) error {
 	if !c.Valid() {
 		return fmt.Errorf("invalid SI4 ACS %d", c)
@@ -72830,6 +73235,11 @@ func EncodeOptionalSelectionParametersClause105235(v OptionalSelectionParameters
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeOptionalSelectionParametersClause105235Canonical encodes a copy without received wire layout.
+func EncodeOptionalSelectionParametersClause105235Canonical(v OptionalSelectionParametersClause105235) ([]byte, error) {
+	return EncodeOptionalSelectionParametersClause105235(runtime.Canonical(v))
+}
+
 // DecodeSelectionParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Selection Parameters>.
 func DecodeSelectionParametersClause105235From(r *runtime.Reader) (SelectionParametersClause105235, error) {
 	if err := r.Check(); err != nil {
@@ -72864,6 +73274,11 @@ func EncodeSelectionParametersClause105235(v SelectionParametersClause105235) ([
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSelectionParametersClause105235Canonical encodes a copy without received wire layout.
+func EncodeSelectionParametersClause105235Canonical(v SelectionParametersClause105235) ([]byte, error) {
+	return EncodeSelectionParametersClause105235(runtime.Canonical(v))
 }
 
 // DecodeOptionalPowerOffsetClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <Optional Power Offset>.
@@ -72902,6 +73317,11 @@ func EncodeOptionalPowerOffsetClause105235(v OptionalPowerOffsetClause105235) ([
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeOptionalPowerOffsetClause105235Canonical encodes a copy without received wire layout.
+func EncodeOptionalPowerOffsetClause105235Canonical(v OptionalPowerOffsetClause105235) ([]byte, error) {
+	return EncodeOptionalPowerOffsetClause105235(runtime.Canonical(v))
+}
+
 // DecodeGPRSIndicatorClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <GPRS Indicator>.
 func DecodeGPRSIndicatorClause105235From(r *runtime.Reader) (GPRSIndicatorClause105235, error) {
 	if err := r.Check(); err != nil {
@@ -72936,6 +73356,11 @@ func EncodeGPRSIndicatorClause105235(v GPRSIndicatorClause105235) ([]byte, error
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRSIndicatorClause105235Canonical encodes a copy without received wire layout.
+func EncodeGPRSIndicatorClause105235Canonical(v GPRSIndicatorClause105235) ([]byte, error) {
+	return EncodeGPRSIndicatorClause105235(runtime.Canonical(v))
 }
 
 // DecodeLSAParametersClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA Parameters>.
@@ -72974,6 +73399,11 @@ func EncodeLSAParametersClause105235(v LSAParametersClause105235) ([]byte, error
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeLSAParametersClause105235Canonical encodes a copy without received wire layout.
+func EncodeLSAParametersClause105235Canonical(v LSAParametersClause105235) ([]byte, error) {
+	return EncodeLSAParametersClause105235(runtime.Canonical(v))
+}
+
 // DecodeLSAIDInformationClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA ID information>.
 func DecodeLSAIDInformationClause105235From(r *runtime.Reader) (LSAIDInformationClause105235, error) {
 	if err := r.Check(); err != nil {
@@ -73010,6 +73440,11 @@ func EncodeLSAIDInformationClause105235(v LSAIDInformationClause105235) ([]byte,
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeLSAIDInformationClause105235Canonical encodes a copy without received wire layout.
+func EncodeLSAIDInformationClause105235Canonical(v LSAIDInformationClause105235) ([]byte, error) {
+	return EncodeLSAIDInformationClause105235(runtime.Canonical(v))
+}
+
 // DecodeLSAIdentityClause105235 decodes TS 44.018 V19.0.0 §10.5.2.35 <LSA identity>.
 func DecodeLSAIdentityClause105235From(r *runtime.Reader) (LSAIdentityClause105235, error) {
 	if err := r.Check(); err != nil {
@@ -73044,6 +73479,11 @@ func EncodeLSAIdentityClause105235(v LSAIdentityClause105235) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeLSAIdentityClause105235Canonical encodes a copy without received wire layout.
+func EncodeLSAIdentityClause105235Canonical(v LSAIdentityClause105235) ([]byte, error) {
+	return EncodeLSAIdentityClause105235(runtime.Canonical(v))
 }
 
 // DecodeSI13altRestOctets decodes TS 44.018 V19.0.0 §10.5.2.37l <SI 13alt Rest Octets>.
@@ -73098,6 +73538,11 @@ func EncodeSI13altRestOctets(v SI13altRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI13altRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI13altRestOctetsCanonical(v SI13altRestOctets) ([]byte, error) {
+	return EncodeSI13altRestOctets(runtime.Canonical(v))
+}
+
 // DecodePBCCHDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.37l <PBCCH Description 2 struct>.
 func DecodePBCCHDescription2StructFrom(r *runtime.Reader) (PBCCHDescription2Struct, error) {
 	if err := r.Check(); err != nil {
@@ -73132,6 +73577,11 @@ func EncodePBCCHDescription2Struct(v PBCCHDescription2Struct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePBCCHDescription2StructCanonical encodes a copy without received wire layout.
+func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, error) {
+	return EncodePBCCHDescription2Struct(runtime.Canonical(v))
 }
 
 // DecodeP2RestOctets decodes TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>.
@@ -73184,6 +73634,11 @@ func EncodeP2RestOctets(v P2RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeP2RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeP2RestOctetsCanonical(v P2RestOctets) ([]byte, error) {
+	return EncodeP2RestOctets(runtime.Canonical(v))
+}
+
 // DecodePriorityClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <Priority>.
 func DecodePriorityClause105224From(r *runtime.Reader) (PriorityClause105224, error) {
 	if err := r.Check(); err != nil {
@@ -73218,6 +73673,11 @@ func EncodePriorityClause105224(v PriorityClause105224) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePriorityClause105224Canonical encodes a copy without received wire layout.
+func EncodePriorityClause105224Canonical(v PriorityClause105224) ([]byte, error) {
+	return EncodePriorityClause105224(runtime.Canonical(v))
 }
 
 // DecodeMBMSInformationClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <MBMS Information>.
@@ -73256,6 +73716,11 @@ func EncodeMBMSInformationClause105224(v MBMSInformationClause105224) ([]byte, e
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeMBMSInformationClause105224Canonical encodes a copy without received wire layout.
+func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) ([]byte, error) {
+	return EncodeMBMSInformationClause105224(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105224From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105224, error) {
 	if err := r.Check(); err != nil {
@@ -73290,6 +73755,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105224(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105224Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105224Canonical(v PEOIMMCellGroupDetailsStructClause105224) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105224(runtime.Canonical(v))
 }
 
 // DecodeP3RestOctets decodes TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>.
@@ -73342,6 +73812,11 @@ func EncodeP3RestOctets(v P3RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeP3RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeP3RestOctetsCanonical(v P3RestOctets) ([]byte, error) {
+	return EncodeP3RestOctets(runtime.Canonical(v))
+}
+
 // DecodePriorityClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <Priority>.
 func DecodePriorityClause105225From(r *runtime.Reader) (PriorityClause105225, error) {
 	if err := r.Check(); err != nil {
@@ -73378,6 +73853,11 @@ func EncodePriorityClause105225(v PriorityClause105225) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePriorityClause105225Canonical encodes a copy without received wire layout.
+func EncodePriorityClause105225Canonical(v PriorityClause105225) ([]byte, error) {
+	return EncodePriorityClause105225(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105225From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105225, error) {
 	if err := r.Check(); err != nil {
@@ -73412,6 +73892,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105225(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105225Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105225Canonical(v PEOIMMCellGroupDetailsStructClause105225) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105225(runtime.Canonical(v))
 }
 
 // DecodeSI2quaterRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>.
@@ -73466,6 +73951,11 @@ func EncodeSI2quaterRestOctets(v SI2quaterRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI2quaterRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
+	return EncodeSI2quaterRestOctets(runtime.Canonical(v))
+}
+
 // DecodeN3GNeighbourCellDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Neighbour Cell Description struct>.
 func DecodeN3GNeighbourCellDescriptionStructFrom(r *runtime.Reader) (N3GNeighbourCellDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -73500,6 +73990,11 @@ func EncodeN3GNeighbourCellDescriptionStruct(v N3GNeighbourCellDescriptionStruct
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GNeighbourCellDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeN3GNeighbourCellDescriptionStructCanonical(v N3GNeighbourCellDescriptionStruct) ([]byte, error) {
+	return EncodeN3GNeighbourCellDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeUTRANFDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN FDD Description struct>.
@@ -73538,6 +74033,11 @@ func EncodeUTRANFDDDescriptionStructClause105233b(v UTRANFDDDescriptionStructCla
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeUTRANFDDDescriptionStructClause105233bCanonical encodes a copy without received wire layout.
+func EncodeUTRANFDDDescriptionStructClause105233bCanonical(v UTRANFDDDescriptionStructClause105233b) ([]byte, error) {
+	return EncodeUTRANFDDDescriptionStructClause105233b(runtime.Canonical(v))
+}
+
 // DecodeRepeatedUTRANFDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN FDD Neighbour Cells struct>.
 func DecodeRepeatedUTRANFDDNeighbourCellsStructFrom(r *runtime.Reader) (RepeatedUTRANFDDNeighbourCellsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -73572,6 +74072,11 @@ func EncodeRepeatedUTRANFDDNeighbourCellsStruct(v RepeatedUTRANFDDNeighbourCells
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical(v RepeatedUTRANFDDNeighbourCellsStruct) ([]byte, error) {
+	return EncodeRepeatedUTRANFDDNeighbourCellsStruct(runtime.Canonical(v))
 }
 
 // DecodeUTRANTDDDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN TDD Description struct>.
@@ -73610,6 +74115,11 @@ func EncodeUTRANTDDDescriptionStructClause105233b(v UTRANTDDDescriptionStructCla
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeUTRANTDDDescriptionStructClause105233bCanonical encodes a copy without received wire layout.
+func EncodeUTRANTDDDescriptionStructClause105233bCanonical(v UTRANTDDDescriptionStructClause105233b) ([]byte, error) {
+	return EncodeUTRANTDDDescriptionStructClause105233b(runtime.Canonical(v))
+}
+
 // DecodeRepeatedUTRANTDDNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN TDD Neighbour Cells struct>.
 func DecodeRepeatedUTRANTDDNeighbourCellsStructFrom(r *runtime.Reader) (RepeatedUTRANTDDNeighbourCellsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -73644,6 +74154,11 @@ func EncodeRepeatedUTRANTDDNeighbourCellsStruct(v RepeatedUTRANTDDNeighbourCells
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical(v RepeatedUTRANTDDNeighbourCellsStruct) ([]byte, error) {
+	return EncodeRepeatedUTRANTDDNeighbourCellsStruct(runtime.Canonical(v))
 }
 
 // DecodeMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <MEASUREMENT PARAMETERS Description Struct>.
@@ -73682,6 +74197,11 @@ func EncodeMEASUREMENTPARAMETERSDescriptionStruct(v MEASUREMENTPARAMETERSDescrip
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeMEASUREMENTPARAMETERSDescriptionStructCanonical(v MEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
+	return EncodeMEASUREMENTPARAMETERSDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G MEASUREMENT PARAMETERS Description struct>.
 func DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom(r *runtime.Reader) (N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, error) {
 	if err := r.Check(); err != nil {
@@ -73716,6 +74236,11 @@ func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(v N3GMEASUREME
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonical encodes a copy without received wire layout.
+func EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bCanonical(v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b) ([]byte, error) {
+	return EncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(runtime.Canonical(v))
 }
 
 // DecodeGPRSRealTimeDifferenceDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS Real Time Difference Description struct>.
@@ -73754,6 +74279,11 @@ func EncodeGPRSRealTimeDifferenceDescriptionStruct(v GPRSRealTimeDifferenceDescr
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGPRSRealTimeDifferenceDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSRealTimeDifferenceDescriptionStructCanonical(v GPRSRealTimeDifferenceDescriptionStruct) ([]byte, error) {
+	return EncodeGPRSRealTimeDifferenceDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeRTD6Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD6 Struct>.
 func DecodeRTD6StructFrom(r *runtime.Reader) (RTD6Struct, error) {
 	if err := r.Check(); err != nil {
@@ -73788,6 +74318,11 @@ func EncodeRTD6Struct(v RTD6Struct) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRTD6StructCanonical encodes a copy without received wire layout.
+func EncodeRTD6StructCanonical(v RTD6Struct) ([]byte, error) {
+	return EncodeRTD6Struct(runtime.Canonical(v))
+}
+
 // DecodeRTD12Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <RTD12 Struct>.
 func DecodeRTD12StructFrom(r *runtime.Reader) (RTD12Struct, error) {
 	if err := r.Check(); err != nil {
@@ -73820,6 +74355,11 @@ func EncodeRTD12Struct(v RTD12Struct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeRTD12StructCanonical encodes a copy without received wire layout.
+func EncodeRTD12StructCanonical(v RTD12Struct) ([]byte, error) {
+	return EncodeRTD12Struct(runtime.Canonical(v))
 }
 
 // DecodeGPRSBSICDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS BSIC Description struct>.
@@ -73858,6 +74398,11 @@ func EncodeGPRSBSICDescriptionStruct(v GPRSBSICDescriptionStruct) ([]byte, error
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGPRSBSICDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSBSICDescriptionStructCanonical(v GPRSBSICDescriptionStruct) ([]byte, error) {
+	return EncodeGPRSBSICDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeGPRSREPORTPRIORITYDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS REPORT PRIORITY Description struct>.
 func DecodeGPRSREPORTPRIORITYDescriptionStructFrom(r *runtime.Reader) (GPRSREPORTPRIORITYDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -73892,6 +74437,11 @@ func EncodeGPRSREPORTPRIORITYDescriptionStruct(v GPRSREPORTPRIORITYDescriptionSt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRSREPORTPRIORITYDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSREPORTPRIORITYDescriptionStructCanonical(v GPRSREPORTPRIORITYDescriptionStruct) ([]byte, error) {
+	return EncodeGPRSREPORTPRIORITYDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS MEASUREMENT PARAMETERS Description struct>.
@@ -73930,6 +74480,11 @@ func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(v GPRSMEASUREMENTPARAMETER
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSMEASUREMENTPARAMETERSDescriptionStructCanonical(v GPRSMEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
+	return EncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS 3G MEASUREMENT PARAMETERS Description struct>.
 func DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (GPRS3GMEASUREMENTPARAMETERSDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -73964,6 +74519,11 @@ func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(v GPRS3GMEASUREMENTPARAM
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructCanonical(v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct) ([]byte, error) {
+	return EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeNCMeasurementParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <NC Measurement Parameters struct>.
@@ -74002,6 +74562,11 @@ func EncodeNCMeasurementParametersStruct(v NCMeasurementParametersStruct) ([]byt
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeNCMeasurementParametersStructCanonical encodes a copy without received wire layout.
+func EncodeNCMeasurementParametersStructCanonical(v NCMeasurementParametersStruct) ([]byte, error) {
+	return EncodeNCMeasurementParametersStruct(runtime.Canonical(v))
+}
+
 // DecodeSI2qExtensionInformation decodes TS 44.018 V19.0.0 §10.5.2.33b <SI2q Extension Information>.
 func DecodeSI2qExtensionInformationFrom(r *runtime.Reader) (SI2qExtensionInformation, error) {
 	if err := r.Check(); err != nil {
@@ -74036,6 +74601,11 @@ func EncodeSI2qExtensionInformation(v SI2qExtensionInformation) ([]byte, error) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSI2qExtensionInformationCanonical encodes a copy without received wire layout.
+func EncodeSI2qExtensionInformationCanonical(v SI2qExtensionInformation) ([]byte, error) {
+	return EncodeSI2qExtensionInformation(runtime.Canonical(v))
 }
 
 // DecodeCCNSupportDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CCN Support Description struct>.
@@ -74074,6 +74644,11 @@ func EncodeCCNSupportDescriptionStruct(v CCNSupportDescriptionStruct) ([]byte, e
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeCCNSupportDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeCCNSupportDescriptionStructCanonical(v CCNSupportDescriptionStruct) ([]byte, error) {
+	return EncodeCCNSupportDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description struct>.
 func DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (N3GAdditionalMeasurementParametersDescriptionStructClause105233b, error) {
 	if err := r.Check(); err != nil {
@@ -74108,6 +74683,11 @@ func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(v N3
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonical encodes a copy without received wire layout.
+func EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bCanonical(v N3GAdditionalMeasurementParametersDescriptionStructClause105233b) ([]byte, error) {
+	return EncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b(runtime.Canonical(v))
 }
 
 // DecodeN3GAdditionalMeasurementParametersDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Additional Measurement Parameters Description 2 struct>.
@@ -74146,6 +74726,11 @@ func EncodeN3GAdditionalMeasurementParametersDescription2Struct(v N3GAdditionalM
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeN3GAdditionalMeasurementParametersDescription2StructCanonical encodes a copy without received wire layout.
+func EncodeN3GAdditionalMeasurementParametersDescription2StructCanonical(v N3GAdditionalMeasurementParametersDescription2Struct) ([]byte, error) {
+	return EncodeN3GAdditionalMeasurementParametersDescription2Struct(runtime.Canonical(v))
+}
+
 // DecodePriorityAndEUTRANParametersDescriptionStructClause105233b decodes TS 44.018 V19.0.0 §10.5.2.33b <Priority and E-UTRAN Parameters Description struct>.
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (PriorityAndEUTRANParametersDescriptionStructClause105233b, error) {
 	if err := r.Check(); err != nil {
@@ -74180,6 +74765,11 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233b(v PriorityA
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical encodes a copy without received wire layout.
+func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105233b) ([]byte, error) {
+	return EncodePriorityAndEUTRANParametersDescriptionStructClause105233b(runtime.Canonical(v))
 }
 
 // DecodeServingCellPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Serving Cell Priority Parameters Description struct>.
@@ -74218,6 +74808,11 @@ func EncodeServingCellPriorityParametersDescriptionStruct(v ServingCellPriorityP
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeServingCellPriorityParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeServingCellPriorityParametersDescriptionStructCanonical(v ServingCellPriorityParametersDescriptionStruct) ([]byte, error) {
+	return EncodeServingCellPriorityParametersDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeN3GPriorityParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Priority Parameters Description struct>.
 func DecodeN3GPriorityParametersDescriptionStructFrom(r *runtime.Reader) (N3GPriorityParametersDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74252,6 +74847,11 @@ func EncodeN3GPriorityParametersDescriptionStruct(v N3GPriorityParametersDescrip
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GPriorityParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeN3GPriorityParametersDescriptionStructCanonical(v N3GPriorityParametersDescriptionStruct) ([]byte, error) {
+	return EncodeN3GPriorityParametersDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeRepeatedUTRANPriorityParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated UTRAN Priority Parameters struct>.
@@ -74290,6 +74890,11 @@ func EncodeRepeatedUTRANPriorityParametersStruct(v RepeatedUTRANPriorityParamete
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRepeatedUTRANPriorityParametersStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedUTRANPriorityParametersStructCanonical(v RepeatedUTRANPriorityParametersStruct) ([]byte, error) {
+	return EncodeRepeatedUTRANPriorityParametersStruct(runtime.Canonical(v))
+}
+
 // DecodeEUTRANParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Parameters Description struct>.
 func DecodeEUTRANParametersDescriptionStructFrom(r *runtime.Reader) (EUTRANParametersDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74324,6 +74929,11 @@ func EncodeEUTRANParametersDescriptionStruct(v EUTRANParametersDescriptionStruct
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEUTRANParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescriptionStruct) ([]byte, error) {
+	return EncodeEUTRANParametersDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN Measurement Parameters Description struct>.
@@ -74362,6 +74972,11 @@ func EncodeEUTRANMeasurementParametersDescriptionStruct(v EUTRANMeasurementParam
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeEUTRANMeasurementParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeEUTRANMeasurementParametersDescriptionStructCanonical(v EUTRANMeasurementParametersDescriptionStruct) ([]byte, error) {
+	return EncodeEUTRANMeasurementParametersDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeGPRSEUTRANMeasurementParametersDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <GPRS E-UTRAN Measurement Parameters Description struct>.
 func DecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom(r *runtime.Reader) (GPRSEUTRANMeasurementParametersDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74396,6 +75011,11 @@ func EncodeGPRSEUTRANMeasurementParametersDescriptionStruct(v GPRSEUTRANMeasurem
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeGPRSEUTRANMeasurementParametersDescriptionStructCanonical(v GPRSEUTRANMeasurementParametersDescriptionStruct) ([]byte, error) {
+	return EncodeGPRSEUTRANMeasurementParametersDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeRepeatedEUTRANNeighbourCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Neighbour Cells struct>.
@@ -74434,6 +75054,11 @@ func EncodeRepeatedEUTRANNeighbourCellsStruct(v RepeatedEUTRANNeighbourCellsStru
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRepeatedEUTRANNeighbourCellsStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbourCellsStruct) ([]byte, error) {
+	return EncodeRepeatedEUTRANNeighbourCellsStruct(runtime.Canonical(v))
+}
+
 // DecodeRepeatedEUTRANNotAllowedCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN Not Allowed Cells struct>.
 func DecodeRepeatedEUTRANNotAllowedCellsStructFrom(r *runtime.Reader) (RepeatedEUTRANNotAllowedCellsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74468,6 +75093,11 @@ func EncodeRepeatedEUTRANNotAllowedCellsStruct(v RepeatedEUTRANNotAllowedCellsSt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeRepeatedEUTRANNotAllowedCellsStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllowedCellsStruct) ([]byte, error) {
+	return EncodeRepeatedEUTRANNotAllowedCellsStruct(runtime.Canonical(v))
 }
 
 // DecodeRepeatedEUTRANPCIDToTAMappingStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Repeated E-UTRAN PCID to TA mapping struct>.
@@ -74506,6 +75136,11 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStruct(v RepeatedEUTRANPCIDToTAMappingSt
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical encodes a copy without received wire layout.
+func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTAMappingStruct) ([]byte, error) {
+	return EncodeRepeatedEUTRANPCIDToTAMappingStruct(runtime.Canonical(v))
+}
+
 // DecodeN3GCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G CSG Description struct>.
 func DecodeN3GCSGDescriptionStructFrom(r *runtime.Reader) (N3GCSGDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74540,6 +75175,11 @@ func EncodeN3GCSGDescriptionStruct(v N3GCSGDescriptionStruct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN3GCSGDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, error) {
+	return EncodeN3GCSGDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeEUTRANCSGDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Description struct>.
@@ -74578,6 +75218,11 @@ func EncodeEUTRANCSGDescriptionStruct(v EUTRANCSGDescriptionStruct) ([]byte, err
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeEUTRANCSGDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]byte, error) {
+	return EncodeEUTRANCSGDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <CSG Cells Reporting Description struct>.
 func DecodeCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (CSGCellsReportingDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74612,6 +75257,11 @@ func EncodeCSGCellsReportingDescriptionStruct(v CSGCellsReportingDescriptionStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeCSGCellsReportingDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeCSGCellsReportingDescriptionStructCanonical(v CSGCellsReportingDescriptionStruct) ([]byte, error) {
+	return EncodeCSGCellsReportingDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <UTRAN CSG Cells Reporting Description struct>.
@@ -74650,6 +75300,11 @@ func EncodeUTRANCSGCellsReportingDescriptionStruct(v UTRANCSGCellsReportingDescr
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeUTRANCSGCellsReportingDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeUTRANCSGCellsReportingDescriptionStructCanonical(v UTRANCSGCellsReportingDescriptionStruct) ([]byte, error) {
+	return EncodeUTRANCSGCellsReportingDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeEUTRANCSGCellsReportingDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <E-UTRAN CSG Cells Reporting Description struct>.
 func DecodeEUTRANCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (EUTRANCSGCellsReportingDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74684,6 +75339,11 @@ func EncodeEUTRANCSGCellsReportingDescriptionStruct(v EUTRANCSGCellsReportingDes
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEUTRANCSGCellsReportingDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeEUTRANCSGCellsReportingDescriptionStructCanonical(v EUTRANCSGCellsReportingDescriptionStruct) ([]byte, error) {
+	return EncodeEUTRANCSGCellsReportingDescriptionStruct(runtime.Canonical(v))
 }
 
 // DecodeExtendedEARFCNsDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description struct>.
@@ -74722,6 +75382,11 @@ func EncodeExtendedEARFCNsDescriptionStruct(v ExtendedEARFCNsDescriptionStruct) 
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeExtendedEARFCNsDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodeExtendedEARFCNsDescriptionStructCanonical(v ExtendedEARFCNsDescriptionStruct) ([]byte, error) {
+	return EncodeExtendedEARFCNsDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeExtendedEARFCNsDescriptionForCSGCellsStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <Extended EARFCNs Description for CSG Cells struct>.
 func DecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom(r *runtime.Reader) (ExtendedEARFCNsDescriptionForCSGCellsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -74756,6 +75421,11 @@ func EncodeExtendedEARFCNsDescriptionForCSGCellsStruct(v ExtendedEARFCNsDescript
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical encodes a copy without received wire layout.
+func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical(v ExtendedEARFCNsDescriptionForCSGCellsStruct) ([]byte, error) {
+	return EncodeExtendedEARFCNsDescriptionForCSGCellsStruct(runtime.Canonical(v))
 }
 
 // DecodeSI6RestOctets decodes TS 44.018 V19.0.0 §10.5.2.35a <SI6 rest octets>.
@@ -74810,6 +75480,11 @@ func EncodeSI6RestOctets(v SI6RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI6RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI6RestOctetsCanonical(v SI6RestOctets) ([]byte, error) {
+	return EncodeSI6RestOctets(runtime.Canonical(v))
+}
+
 // DecodePCHAndNCHInfo decodes TS 44.018 V19.0.0 §10.5.2.35a <PCH and NCH info>.
 func DecodePCHAndNCHInfoFrom(r *runtime.Reader) (PCHAndNCHInfo, error) {
 	if err := r.Check(); err != nil {
@@ -74844,6 +75519,11 @@ func EncodePCHAndNCHInfo(v PCHAndNCHInfo) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePCHAndNCHInfoCanonical encodes a copy without received wire layout.
+func EncodePCHAndNCHInfoCanonical(v PCHAndNCHInfo) ([]byte, error) {
+	return EncodePCHAndNCHInfo(runtime.Canonical(v))
 }
 
 // DecodePagingChannelRestructuring decodes TS 44.018 V19.0.0 §10.5.2.35a <paging channel restructuring>.
@@ -74882,6 +75562,11 @@ func EncodePagingChannelRestructuring(v PagingChannelRestructuring) ([]byte, err
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePagingChannelRestructuringCanonical encodes a copy without received wire layout.
+func EncodePagingChannelRestructuringCanonical(v PagingChannelRestructuring) ([]byte, error) {
+	return EncodePagingChannelRestructuring(runtime.Canonical(v))
+}
+
 // DecodeVBSVGCSOptions decodes TS 44.018 V19.0.0 §10.5.2.35a <VBS/VGCS options>.
 func DecodeVBSVGCSOptionsFrom(r *runtime.Reader) (VBSVGCSOptions, error) {
 	if err := r.Check(); err != nil {
@@ -74916,6 +75601,11 @@ func EncodeVBSVGCSOptions(v VBSVGCSOptions) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeVBSVGCSOptionsCanonical encodes a copy without received wire layout.
+func EncodeVBSVGCSOptionsCanonical(v VBSVGCSOptions) ([]byte, error) {
+	return EncodeVBSVGCSOptions(runtime.Canonical(v))
 }
 
 // DecodeInbandNotifications decodes TS 44.018 V19.0.0 §10.5.2.35a <inband notifications>.
@@ -74954,6 +75644,11 @@ func EncodeInbandNotifications(v InbandNotifications) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeInbandNotificationsCanonical encodes a copy without received wire layout.
+func EncodeInbandNotificationsCanonical(v InbandNotifications) ([]byte, error) {
+	return EncodeInbandNotifications(runtime.Canonical(v))
+}
+
 // DecodeInbandPagings decodes TS 44.018 V19.0.0 §10.5.2.35a <inband pagings>.
 func DecodeInbandPagingsFrom(r *runtime.Reader) (InbandPagings, error) {
 	if err := r.Check(); err != nil {
@@ -74990,6 +75685,11 @@ func EncodeInbandPagings(v InbandPagings) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeInbandPagingsCanonical encodes a copy without received wire layout.
+func EncodeInbandPagingsCanonical(v InbandPagings) ([]byte, error) {
+	return EncodeInbandPagings(runtime.Canonical(v))
+}
+
 // DecodeBandIndicatorClause105235a decodes TS 44.018 V19.0.0 §10.5.2.35a <Band indicator>.
 func DecodeBandIndicatorClause105235aFrom(r *runtime.Reader) (BandIndicatorClause105235a, error) {
 	if err := r.Check(); err != nil {
@@ -75024,6 +75724,11 @@ func EncodeBandIndicatorClause105235a(v BandIndicatorClause105235a) ([]byte, err
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeBandIndicatorClause105235aCanonical encodes a copy without received wire layout.
+func EncodeBandIndicatorClause105235aCanonical(v BandIndicatorClause105235a) ([]byte, error) {
+	return EncodeBandIndicatorClause105235a(runtime.Canonical(v))
 }
 
 // DecodeSI13RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>.
@@ -75078,6 +75783,11 @@ func EncodeSI13RestOctets(v SI13RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI13RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
+	return EncodeSI13RestOctets(runtime.Canonical(v))
+}
+
 // DecodePBCCHDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PBCCH Description struct>.
 func DecodePBCCHDescriptionStructFrom(r *runtime.Reader) (PBCCHDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75114,6 +75824,11 @@ func EncodePBCCHDescriptionStruct(v PBCCHDescriptionStruct) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePBCCHDescriptionStructCanonical encodes a copy without received wire layout.
+func EncodePBCCHDescriptionStructCanonical(v PBCCHDescriptionStruct) ([]byte, error) {
+	return EncodePBCCHDescriptionStruct(runtime.Canonical(v))
+}
+
 // DecodeSICHANGEALT decodes TS 44.018 V19.0.0 §10.5.2.37b <SI_CHANGE_ALT>.
 func DecodeSICHANGEALTFrom(r *runtime.Reader) (SICHANGEALT, error) {
 	if err := r.Check(); err != nil {
@@ -75146,6 +75861,11 @@ func EncodeSICHANGEALT(v SICHANGEALT) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSICHANGEALTCanonical encodes a copy without received wire layout.
+func EncodeSICHANGEALTCanonical(v SICHANGEALT) ([]byte, error) {
+	return EncodeSICHANGEALT(runtime.Canonical(v))
 }
 
 // DecodePEOIMMCellGroupDefinitionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Definition struct>.
@@ -75184,6 +75904,11 @@ func EncodePEOIMMCellGroupDefinitionStruct(v PEOIMMCellGroupDefinitionStruct) ([
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodePEOIMMCellGroupDefinitionStructCanonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDefinitionStructCanonical(v PEOIMMCellGroupDefinitionStruct) ([]byte, error) {
+	return EncodePEOIMMCellGroupDefinitionStruct(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupSpecificParametersStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Specific Parameters struct>.
 func DecodePEOIMMCellGroupSpecificParametersStructFrom(r *runtime.Reader) (PEOIMMCellGroupSpecificParametersStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75218,6 +75943,11 @@ func EncodePEOIMMCellGroupSpecificParametersStruct(v PEOIMMCellGroupSpecificPara
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupSpecificParametersStructCanonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupSpecificParametersStructCanonical(v PEOIMMCellGroupSpecificParametersStruct) ([]byte, error) {
+	return EncodePEOIMMCellGroupSpecificParametersStruct(runtime.Canonical(v))
 }
 
 // DecodeSI19RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37g <SI 19 Rest Octets>.
@@ -75272,6 +76002,11 @@ func EncodeSI19RestOctets(v SI19RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI19RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI19RestOctetsCanonical(v SI19RestOctets) ([]byte, error) {
+	return EncodeSI19RestOctets(runtime.Canonical(v))
+}
+
 // DecodeCOMPACTNeighbourCellParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Neighbour Cell params struct>.
 func DecodeCOMPACTNeighbourCellParamsStructFrom(r *runtime.Reader) (COMPACTNeighbourCellParamsStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75306,6 +76041,11 @@ func EncodeCOMPACTNeighbourCellParamsStruct(v COMPACTNeighbourCellParamsStruct) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeCOMPACTNeighbourCellParamsStructCanonical encodes a copy without received wire layout.
+func EncodeCOMPACTNeighbourCellParamsStructCanonical(v COMPACTNeighbourCellParamsStruct) ([]byte, error) {
+	return EncodeCOMPACTNeighbourCellParamsStruct(runtime.Canonical(v))
 }
 
 // DecodeCOMPACTCellSelectionStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Cell Selection struct>.
@@ -75344,6 +76084,11 @@ func EncodeCOMPACTCellSelectionStruct(v COMPACTCellSelectionStruct) ([]byte, err
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeCOMPACTCellSelectionStructCanonical encodes a copy without received wire layout.
+func EncodeCOMPACTCellSelectionStructCanonical(v COMPACTCellSelectionStruct) ([]byte, error) {
+	return EncodeCOMPACTCellSelectionStruct(runtime.Canonical(v))
+}
+
 // DecodeLADifferentStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <LA Different struct>.
 func DecodeLADifferentStructFrom(r *runtime.Reader) (LADifferentStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75378,6 +76123,11 @@ func EncodeLADifferentStruct(v LADifferentStruct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeLADifferentStructCanonical encodes a copy without received wire layout.
+func EncodeLADifferentStructCanonical(v LADifferentStruct) ([]byte, error) {
+	return EncodeLADifferentStruct(runtime.Canonical(v))
 }
 
 // DecodeSI18RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37h <SI 18 Rest Octets>.
@@ -75432,6 +76182,11 @@ func EncodeSI18RestOctets(v SI18RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI18RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI18RestOctetsCanonical(v SI18RestOctets) ([]byte, error) {
+	return EncodeSI18RestOctets(runtime.Canonical(v))
+}
+
 // DecodeNonGSMMessageStruct decodes TS 44.018 V19.0.0 §10.5.2.37h <Non-GSM Message struct>.
 func DecodeNonGSMMessageStructFrom(r *runtime.Reader) (NonGSMMessageStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75466,6 +76221,11 @@ func EncodeNonGSMMessageStruct(v NonGSMMessageStruct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeNonGSMMessageStructCanonical encodes a copy without received wire layout.
+func EncodeNonGSMMessageStructCanonical(v NonGSMMessageStruct) ([]byte, error) {
+	return EncodeNonGSMMessageStruct(runtime.Canonical(v))
 }
 
 // DecodeIPARestOctets decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>.
@@ -75520,6 +76280,11 @@ func EncodeIPARestOctets(v IPARestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeIPARestOctetsCanonical encodes a copy without received wire layout.
+func EncodeIPARestOctetsCanonical(v IPARestOctets) ([]byte, error) {
+	return EncodeIPARestOctets(runtime.Canonical(v))
+}
+
 // DecodeIPAUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Uplink Assignment struct>.
 func DecodeIPAUplinkAssignmentStructFrom(r *runtime.Reader) (IPAUplinkAssignmentStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75554,6 +76319,11 @@ func EncodeIPAUplinkAssignmentStruct(v IPAUplinkAssignmentStruct) ([]byte, error
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeIPAUplinkAssignmentStructCanonical encodes a copy without received wire layout.
+func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]byte, error) {
+	return EncodeIPAUplinkAssignmentStruct(runtime.Canonical(v))
 }
 
 // DecodeIPADownlinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Downlink Assignment struct>.
@@ -75592,6 +76362,11 @@ func EncodeIPADownlinkAssignmentStruct(v IPADownlinkAssignmentStruct) ([]byte, e
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeIPADownlinkAssignmentStructCanonical encodes a copy without received wire layout.
+func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) ([]byte, error) {
+	return EncodeIPADownlinkAssignmentStruct(runtime.Canonical(v))
+}
+
 // DecodeIPASingleBlockUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Single Block Uplink Assignment struct>.
 func DecodeIPASingleBlockUplinkAssignmentStructFrom(r *runtime.Reader) (IPASingleBlockUplinkAssignmentStruct, error) {
 	if err := r.Check(); err != nil {
@@ -75626,6 +76401,11 @@ func EncodeIPASingleBlockUplinkAssignmentStruct(v IPASingleBlockUplinkAssignment
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeIPASingleBlockUplinkAssignmentStructCanonical encodes a copy without received wire layout.
+func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkAssignmentStruct) ([]byte, error) {
+	return EncodeIPASingleBlockUplinkAssignmentStruct(runtime.Canonical(v))
 }
 
 // DecodeAcknowledgedAccessRequestStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <Acknowledged Access Request struct>.
@@ -75664,6 +76444,11 @@ func EncodeAcknowledgedAccessRequestStruct(v AcknowledgedAccessRequestStruct) ([
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeAcknowledgedAccessRequestStructCanonical encodes a copy without received wire layout.
+func EncodeAcknowledgedAccessRequestStructCanonical(v AcknowledgedAccessRequestStruct) ([]byte, error) {
+	return EncodeAcknowledgedAccessRequestStruct(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105278 decodes TS 44.018 V19.0.0 §10.5.2.78 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105278From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105278, error) {
 	if err := r.Check(); err != nil {
@@ -75698,6 +76483,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105278(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105278Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105278Canonical(v PEOIMMCellGroupDetailsStructClause105278) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105278(runtime.Canonical(v))
 }
 
 // DecodeSI20RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37i <SI 20 Rest Octets>.
@@ -75752,6 +76542,11 @@ func EncodeSI20RestOctets(v SI20RestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeSI20RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI20RestOctetsCanonical(v SI20RestOctets) ([]byte, error) {
+	return EncodeSI20RestOctets(runtime.Canonical(v))
+}
+
 // DecodeGroupCallInformation decodes TS 44.018 V19.0.0 §9.1.21a <Group Call information>.
 func DecodeGroupCallInformationFrom(r *runtime.Reader) (GroupCallInformation, error) {
 	if err := r.Check(); err != nil {
@@ -75788,6 +76583,11 @@ func EncodeGroupCallInformation(v GroupCallInformation) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGroupCallInformationCanonical encodes a copy without received wire layout.
+func EncodeGroupCallInformationCanonical(v GroupCallInformation) ([]byte, error) {
+	return EncodeGroupCallInformation(runtime.Canonical(v))
+}
+
 // DecodeEmergencyInd decodes TS 44.018 V19.0.0 §9.1.21a <Emergency_Ind>.
 func DecodeEmergencyIndFrom(r *runtime.Reader) (EmergencyInd, error) {
 	if err := r.Check(); err != nil {
@@ -75820,6 +76620,11 @@ func EncodeEmergencyInd(v EmergencyInd) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeEmergencyIndCanonical encodes a copy without received wire layout.
+func EncodeEmergencyIndCanonical(v EmergencyInd) ([]byte, error) {
+	return EncodeEmergencyInd(runtime.Canonical(v))
 }
 
 // DecodeGroupChannelDescription decodes TS 44.018 V19.0.0 §9.1.21a <Group Channel Description>.
@@ -75858,6 +76663,11 @@ func EncodeGroupChannelDescription(v GroupChannelDescription) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeGroupChannelDescriptionCanonical encodes a copy without received wire layout.
+func EncodeGroupChannelDescriptionCanonical(v GroupChannelDescription) ([]byte, error) {
+	return EncodeGroupChannelDescription(runtime.Canonical(v))
+}
+
 // DecodeBitString decodes TS 44.018 V19.0.0 §9.1.21a <bit string>.
 func DecodeBitStringFrom(r *runtime.Reader) (BitString, error) {
 	if err := r.Check(); err != nil {
@@ -75890,6 +76700,11 @@ func EncodeBitString(v BitString) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeBitStringCanonical encodes a copy without received wire layout.
+func EncodeBitStringCanonical(v BitString) ([]byte, error) {
+	return EncodeBitString(runtime.Canonical(v))
 }
 
 // DecodeNTNRestOctets decodes TS 44.018 V19.0.0 §10.5.2.22c <NT/N Rest Octets>.
@@ -75944,6 +76759,11 @@ func EncodeNTNRestOctets(v NTNRestOctets) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeNTNRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeNTNRestOctetsCanonical(v NTNRestOctets) ([]byte, error) {
+	return EncodeNTNRestOctets(runtime.Canonical(v))
+}
+
 // DecodeListOfGroupCallNCHInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Group Call NCH information>.
 func DecodeListOfGroupCallNCHInformationFrom(r *runtime.Reader) (ListOfGroupCallNCHInformation, error) {
 	if err := r.Check(); err != nil {
@@ -75978,6 +76798,11 @@ func EncodeListOfGroupCallNCHInformation(v ListOfGroupCallNCHInformation) ([]byt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeListOfGroupCallNCHInformationCanonical encodes a copy without received wire layout.
+func EncodeListOfGroupCallNCHInformationCanonical(v ListOfGroupCallNCHInformation) ([]byte, error) {
+	return EncodeListOfGroupCallNCHInformation(runtime.Canonical(v))
 }
 
 // DecodeListOfEmergencyInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Emergency information>.
@@ -76016,6 +76841,11 @@ func EncodeListOfEmergencyInformation(v ListOfEmergencyInformation) ([]byte, err
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeListOfEmergencyInformationCanonical encodes a copy without received wire layout.
+func EncodeListOfEmergencyInformationCanonical(v ListOfEmergencyInformation) ([]byte, error) {
+	return EncodeListOfEmergencyInformation(runtime.Canonical(v))
+}
+
 // DecodeListOfVSTKRANDInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of VSTK_RAND information>.
 func DecodeListOfVSTKRANDInformationFrom(r *runtime.Reader) (ListOfVSTKRANDInformation, error) {
 	if err := r.Check(); err != nil {
@@ -76052,6 +76882,11 @@ func EncodeListOfVSTKRANDInformation(v ListOfVSTKRANDInformation) ([]byte, error
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeListOfVSTKRANDInformationCanonical encodes a copy without received wire layout.
+func EncodeListOfVSTKRANDInformationCanonical(v ListOfVSTKRANDInformation) ([]byte, error) {
+	return EncodeListOfVSTKRANDInformation(runtime.Canonical(v))
+}
+
 // DecodeListOfReducedGCR decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Reduced GCR>.
 func DecodeListOfReducedGCRFrom(r *runtime.Reader) (ListOfReducedGCR, error) {
 	if err := r.Check(); err != nil {
@@ -76086,6 +76921,11 @@ func EncodeListOfReducedGCR(v ListOfReducedGCR) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeListOfReducedGCRCanonical encodes a copy without received wire layout.
+func EncodeListOfReducedGCRCanonical(v ListOfReducedGCR) ([]byte, error) {
+	return EncodeListOfReducedGCR(runtime.Canonical(v))
 }
 
 // DecodeP1RestOctets decodes TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>.
@@ -76128,6 +76968,11 @@ func EncodeP1RestOctets(v P1RestOctets) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeP1RestOctetsCanonical encodes a copy without received wire layout.
+func EncodeP1RestOctetsCanonical(v P1RestOctets) ([]byte, error) {
+	return EncodeP1RestOctets(runtime.Canonical(v))
+}
+
 // DecodePriorityClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <Priority>.
 func DecodePriorityClause105223From(r *runtime.Reader) (PriorityClause105223, error) {
 	if err := r.Check(); err != nil {
@@ -76162,6 +77007,11 @@ func EncodePriorityClause105223(v PriorityClause105223) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePriorityClause105223Canonical encodes a copy without received wire layout.
+func EncodePriorityClause105223Canonical(v PriorityClause105223) ([]byte, error) {
+	return EncodePriorityClause105223(runtime.Canonical(v))
 }
 
 // DecodeMBMSInformationClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <MBMS Information>.
@@ -76200,6 +77050,11 @@ func EncodeMBMSInformationClause105223(v MBMSInformationClause105223) ([]byte, e
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeMBMSInformationClause105223Canonical encodes a copy without received wire layout.
+func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) ([]byte, error) {
+	return EncodeMBMSInformationClause105223(runtime.Canonical(v))
+}
+
 // DecodeETWSPrimaryNotificationStruct decodes TS 44.018 V19.0.0 §10.5.2.23 <ETWS Primary Notification struct>.
 func DecodeETWSPrimaryNotificationStructFrom(r *runtime.Reader) (ETWSPrimaryNotificationStruct, error) {
 	if err := r.Check(); err != nil {
@@ -76236,6 +77091,11 @@ func EncodeETWSPrimaryNotificationStruct(v ETWSPrimaryNotificationStruct) ([]byt
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeETWSPrimaryNotificationStructCanonical encodes a copy without received wire layout.
+func EncodeETWSPrimaryNotificationStructCanonical(v ETWSPrimaryNotificationStruct) ([]byte, error) {
+	return EncodeETWSPrimaryNotificationStruct(runtime.Canonical(v))
+}
+
 // DecodePEOIMMCellGroupDetailsStructClause105223 decodes TS 44.018 V19.0.0 §10.5.2.23 <PEO IMM Cell Group Details struct>.
 func DecodePEOIMMCellGroupDetailsStructClause105223From(r *runtime.Reader) (PEOIMMCellGroupDetailsStructClause105223, error) {
 	if err := r.Check(); err != nil {
@@ -76270,6 +77130,11 @@ func EncodePEOIMMCellGroupDetailsStructClause105223(v PEOIMMCellGroupDetailsStru
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodePEOIMMCellGroupDetailsStructClause105223Canonical encodes a copy without received wire layout.
+func EncodePEOIMMCellGroupDetailsStructClause105223Canonical(v PEOIMMCellGroupDetailsStructClause105223) ([]byte, error) {
+	return EncodePEOIMMCellGroupDetailsStructClause105223(runtime.Canonical(v))
 }
 
 // DecodeSI10bisRestOctets decodes TS 44.018 V19.0.0 §10.5.2.70 <SI10bis Rest Octets>.
@@ -76314,6 +77179,11 @@ func EncodeSI10bisRestOctets(v SI10bisRestOctets) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeSI10bisRestOctetsCanonical encodes a copy without received wire layout.
+func EncodeSI10bisRestOctetsCanonical(v SI10bisRestOctets) ([]byte, error) {
+	return EncodeSI10bisRestOctets(runtime.Canonical(v))
+}
+
 // DecodeSI10bisNeighbourCellInfo decodes TS 44.018 V19.0.0 §10.5.2.70 <SI10bis Neighbour Cell Info>.
 func DecodeSI10bisNeighbourCellInfoFrom(r *runtime.Reader) (SI10bisNeighbourCellInfo, error) {
 	if err := r.Check(); err != nil {
@@ -76348,6 +77218,11 @@ func EncodeSI10bisNeighbourCellInfo(v SI10bisNeighbourCellInfo) ([]byte, error) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSI10bisNeighbourCellInfoCanonical encodes a copy without received wire layout.
+func EncodeSI10bisNeighbourCellInfoCanonical(v SI10bisNeighbourCellInfo) ([]byte, error) {
+	return EncodeSI10bisNeighbourCellInfo(runtime.Canonical(v))
 }
 func Definitions() []string {
 	return []string{"IA Rest Octets", "EGPRS Packet Uplink Assignment", "Access Technologies Request struct", "Packet Uplink Assignment", "Packet Downlink Assignment", "Frequency Parameters, before time", "Second Part Packet Assignment", "Multiple Blocks Packet Downlink Assignment", "PEO IMM Cell Group Details struct", "IAR Rest Octets", "PEO IMM Cell Group Details struct", "IAX Rest Octets", "PEO IMM Cell Group Details struct", "SI1 Rest Octets", "Band indicator", "SI2bis Rest Octets", "SI2n Rest Octets", "GSM Neighbour Cell Selection params struct", "GPRS Support Indicator struct", "SI3 Rest Octet", "Optional Selection Parameters", "Selection Parameters", "Optional Power Offset", "System Information 2ter Indicator", "Early Classmark Sending Control", "Scheduling if and where", "GPRS Indicator", "3G Early Classmark Sending Restriction", "SI2quater Indicator struct", "Iu Indicator", "System Information 21 Indicator", "SI16 Rest Octets", "SI17 Rest Octets", "LSA Parameters", "LSA ID information", "LSA identity", "SI14 Rest Octets", "DYNAMIC ARFCN MAPPING", "SI15 Rest Octets", "DYNAMIC ARFCN MAPPING", "SI 21 Rest Octets", "Network Sharing EAB Information struct", "SI 22 Rest Octets", "Network Sharing Information struct", "SI 23 Rest Octets", "IRAT Cell Reselection Information struct", "Priority and UTRAN Parameters Description struct", "UTRAN FDD/TDD Description struct", "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", "Priority and E-UTRAN Parameters Description struct", "Repeated E-UTRAN Neighbour Frequency and Priority struct", "SI10 rest octets", "neighbour information", "cell info", "cell parameters", "cell barred", "further cell info", "la different", "info field", "next frequency", "differential cell info", "diff cell pars", "further diff cell info", "SI10ter Rest Octets", "SI9 rest octets", "Scheduling info", "Info type", "Positions", "Position", "SI2ter Rest Octets", "UTRAN FDD Description struct", "UTRAN TDD Description struct", "3G MEASUREMENT Parameters Description struct", "3G Additional Measurement Parameters Description struct", "SI4 Rest Octets", "SI4 Rest Octets_O", "SI4 Rest Octets_S", "Break Indicator", "SI7 Rest Octets", "SI8 Rest Octets", "Optional Selection Parameters", "Selection Parameters", "Optional Power Offset", "GPRS Indicator", "LSA Parameters", "LSA ID information", "LSA identity", "SI 13alt Rest Octets", "PBCCH Description 2 struct", "P2 Rest Octets", "Priority", "MBMS Information", "PEO IMM Cell Group Details struct", "P3 Rest Octets", "Priority", "PEO IMM Cell Group Details struct", "SI2quater Rest Octets", "3G Neighbour Cell Description struct", "UTRAN FDD Description struct", "Repeated UTRAN FDD Neighbour Cells struct", "UTRAN TDD Description struct", "Repeated UTRAN TDD Neighbour Cells struct", "MEASUREMENT PARAMETERS Description Struct", "3G MEASUREMENT PARAMETERS Description struct", "GPRS Real Time Difference Description struct", "RTD6 Struct", "RTD12 Struct", "GPRS BSIC Description struct", "GPRS REPORT PRIORITY Description struct", "GPRS MEASUREMENT PARAMETERS Description struct", "GPRS 3G MEASUREMENT PARAMETERS Description struct", "NC Measurement Parameters struct", "SI2q Extension Information", "CCN Support Description struct", "3G Additional Measurement Parameters Description struct", "3G Additional Measurement Parameters Description 2 struct", "Priority and E-UTRAN Parameters Description struct", "Serving Cell Priority Parameters Description struct", "3G Priority Parameters Description struct", "Repeated UTRAN Priority Parameters struct", "E-UTRAN Parameters Description struct", "E-UTRAN Measurement Parameters Description struct", "GPRS E-UTRAN Measurement Parameters Description struct", "Repeated E-UTRAN Neighbour Cells struct", "Repeated E-UTRAN Not Allowed Cells struct", "Repeated E-UTRAN PCID to TA mapping struct", "3G CSG Description struct", "E-UTRAN CSG Description struct", "CSG Cells Reporting Description struct", "UTRAN CSG Cells Reporting Description struct", "E-UTRAN CSG Cells Reporting Description struct", "Extended EARFCNs Description struct", "Extended EARFCNs Description for CSG Cells struct", "SI6 rest octets", "PCH and NCH info", "paging channel restructuring", "VBS/VGCS options", "inband notifications", "inband pagings", "Band indicator", "SI 13 Rest Octets", "PBCCH Description struct", "SI_CHANGE_ALT", "PEO IMM Cell Group Definition struct", "PEO IMM Cell Group Specific Parameters struct", "SI 19 Rest Octets", "COMPACT Neighbour Cell params struct", "COMPACT Cell Selection struct", "LA Different struct", "SI 18 Rest Octets", "Non-GSM Message struct", "IPA Rest Octets", "IPA Uplink Assignment struct", "IPA Downlink Assignment struct", "IPA Single Block Uplink Assignment struct", "Acknowledged Access Request struct", "PEO IMM Cell Group Details struct", "SI 20 Rest Octets", "Group Call information", "Emergency_Ind", "Group Channel Description", "bit string", "NT/N Rest Octets", "List of Group Call NCH information", "List of Emergency information", "List of VSTK_RAND information", "List of Reduced GCR", "P1 Rest Octets", "Priority", "MBMS Information", "ETWS Primary Notification struct", "PEO IMM Cell Group Details struct", "SI10bis Rest Octets", "SI10bis Neighbour Cell Info"}

@@ -2,6 +2,7 @@
 // Extracted source SHA-256: 9e7354672d4b26f0d939394ad0ca199a2a4e25254082d593ccf8bd6a6db55744.
 // Source correction: TS 24.008 V20.1.0 §10.5.1.7: malformed assignment separator for 8-PSK Struct.
 // Source correction: TS 24.008 V20.1.0 §10.5.1.7: missing 8-PSK Struct terminator before next assignment.
+// Package classmark contains typed CSN.1 codecs. Plain Encode calls preserve a decoded value's received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical encodes an independent copy as a fresh value, discarding received wire layout, while keeping the caller's value intact.
 package classmark
 
 import (
@@ -5063,6 +5064,11 @@ func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 	return out, nil
 }
 
+// EncodeClassmark3ValuePartCanonical encodes a copy without received wire layout.
+func EncodeClassmark3ValuePartCanonical(v Classmark3ValuePart) ([]byte, error) {
+	return EncodeClassmark3ValuePart(runtime.Canonical(v))
+}
+
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.1.7 <A5 bits>.
 func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) {
 	if err := r.Check(); err != nil {
@@ -5096,6 +5102,9 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	}
 	return w.Finish(v.Wire.Tail)
 }
+
+// EncodeA5BitsCanonical encodes a copy without received wire layout.
+func EncodeA5BitsCanonical(v A5Bits) ([]byte, error) { return EncodeA5Bits(runtime.Canonical(v)) }
 
 // DecodeRSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <R Support>.
 func DecodeRSupportFrom(r *runtime.Reader) (RSupport, error) {
@@ -5131,6 +5140,9 @@ func EncodeRSupport(v RSupport) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeRSupportCanonical encodes a copy without received wire layout.
+func EncodeRSupportCanonical(v RSupport) ([]byte, error) { return EncodeRSupport(runtime.Canonical(v)) }
+
 // DecodeHSCSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <HSCSD Multi Slot Capability>.
 func DecodeHSCSDMultiSlotCapabilityFrom(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
 	if err := r.Check(); err != nil {
@@ -5165,6 +5177,11 @@ func EncodeHSCSDMultiSlotCapability(v HSCSDMultiSlotCapability) ([]byte, error) 
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeHSCSDMultiSlotCapabilityCanonical encodes a copy without received wire layout.
+func EncodeHSCSDMultiSlotCapabilityCanonical(v HSCSDMultiSlotCapability) ([]byte, error) {
+	return EncodeHSCSDMultiSlotCapability(runtime.Canonical(v))
 }
 
 // DecodeMSMeasurementCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Measurement capability>.
@@ -5203,6 +5220,11 @@ func EncodeMSMeasurementCapability(v MSMeasurementCapability) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeMSMeasurementCapabilityCanonical encodes a copy without received wire layout.
+func EncodeMSMeasurementCapabilityCanonical(v MSMeasurementCapability) ([]byte, error) {
+	return EncodeMSMeasurementCapability(runtime.Canonical(v))
+}
+
 // DecodeMSPositioningMethodCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Positioning Method Capability>.
 func DecodeMSPositioningMethodCapabilityFrom(r *runtime.Reader) (MSPositioningMethodCapability, error) {
 	if err := r.Check(); err != nil {
@@ -5237,6 +5259,11 @@ func EncodeMSPositioningMethodCapability(v MSPositioningMethodCapability) ([]byt
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeMSPositioningMethodCapabilityCanonical encodes a copy without received wire layout.
+func EncodeMSPositioningMethodCapabilityCanonical(v MSPositioningMethodCapability) ([]byte, error) {
+	return EncodeMSPositioningMethodCapability(runtime.Canonical(v))
 }
 
 // DecodeECSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <ECSD Multi Slot Capability>.
@@ -5275,6 +5302,11 @@ func EncodeECSDMultiSlotCapability(v ECSDMultiSlotCapability) ([]byte, error) {
 	return w.Finish(v.Wire.Tail)
 }
 
+// EncodeECSDMultiSlotCapabilityCanonical encodes a copy without received wire layout.
+func EncodeECSDMultiSlotCapabilityCanonical(v ECSDMultiSlotCapability) ([]byte, error) {
+	return EncodeECSDMultiSlotCapability(runtime.Canonical(v))
+}
+
 // DecodeN8PSKStruct decodes TS 24.008 V20.1.0 §10.5.1.7 <8-PSK Struct>.
 func DecodeN8PSKStructFrom(r *runtime.Reader) (N8PSKStruct, error) {
 	if err := r.Check(); err != nil {
@@ -5307,6 +5339,11 @@ func EncodeN8PSKStruct(v N8PSKStruct) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeN8PSKStructCanonical encodes a copy without received wire layout.
+func EncodeN8PSKStructCanonical(v N8PSKStruct) ([]byte, error) {
+	return EncodeN8PSKStruct(runtime.Canonical(v))
 }
 
 // DecodeSingleBandSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <Single Band Support>.
@@ -5343,6 +5380,11 @@ func EncodeSingleBandSupport(v SingleBandSupport) ([]byte, error) {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeSingleBandSupportCanonical encodes a copy without received wire layout.
+func EncodeSingleBandSupportCanonical(v SingleBandSupport) ([]byte, error) {
+	return EncodeSingleBandSupport(runtime.Canonical(v))
 }
 func Definitions() []string {
 	return []string{"Classmark 3 Value part", "A5 bits", "R Support", "HSCSD Multi Slot Capability", "MS Measurement capability", "MS Positioning Method Capability", "ECSD Multi Slot Capability", "8-PSK Struct", "Single Band Support"}

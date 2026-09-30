@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
@@ -34,6 +35,51 @@ func TestEnhancedMeasurementReportPreRel8Bitmap(t *testing.T) {
 		if count == 2 && !bytes.Equal(wire, []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}) {
 			t.Fatalf("issue reproducer changed: %x", wire)
 		}
+	}
+}
+
+func TestEnhancedMeasurementReportCanonicalAfterBitmapEdit(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55: fresh pre-Rel-8 values fill all
+	// 96 bitmap positions with no-report bits, even when only two are set
+	// explicitly by the caller.
+	entries := make([]*uint8, 2)
+	fresh := EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries,
+		BITMAPLENGTHChoice: EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}}
+	want, err := EncodeEnhancedMeasurementReport(fresh)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(want, []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}) {
+		t.Fatalf("wrong canonical bitmap: %x", want)
+	}
+	decoded, err := DecodeEnhancedMeasurementReport(want)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Value.REPORTINGQUANTITYList == nil || len(*decoded.Value.REPORTINGQUANTITYList) != 96 {
+		t.Fatalf("decoded bitmap is not structurally complete: %+v", decoded.Value)
+	}
+	for i, report := range *decoded.Value.REPORTINGQUANTITYList {
+		if report != nil {
+			t.Fatalf("position %d is not no-report", i)
+		}
+	}
+	edited := decoded.Value
+	two := (*edited.REPORTINGQUANTITYList)[:2]
+	edited.REPORTINGQUANTITYList = &two
+	if _, err := EncodeEnhancedMeasurementReport(edited); err == nil || !strings.Contains(err.Error(), "encoded semantic boundary") {
+		t.Fatalf("plain re-encode did not reject changed semantic boundary: %v", err)
+	}
+	canonical, err := EncodeEnhancedMeasurementReportCanonical(edited)
+	if err != nil || !bytes.Equal(canonical, want) {
+		t.Fatalf("canonical re-encode %x: %v", canonical, err)
+	}
+	if edited.Wire.BitsConsumed != len(want)*8 || len(*edited.REPORTINGQUANTITYList) != 2 {
+		t.Fatal("canonical encoding modified the caller's value")
+	}
+	canonicalDecoded, err := DecodeEnhancedMeasurementReport(canonical)
+	if err != nil || !reflect.DeepEqual(canonicalDecoded.Value, decoded.Value) {
+		t.Fatalf("canonical result differs from expanded fresh value: %v", err)
 	}
 }
 
@@ -85,6 +131,37 @@ func FuzzEnhancedMeasurementReportBitmap(f *testing.F) {
 		encoded, err := EncodeEnhancedMeasurementReport(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, wire) {
 			t.Fatalf("%x -> %x: %v", wire, encoded, err)
+		}
+	})
+}
+
+func FuzzEnhancedMeasurementReportCanonical(f *testing.F) {
+	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+	f.Add([]byte{0x10, 0x90, 0x02, 0xc2})
+	f.Fuzz(func(t *testing.T, wire []byte) {
+		if len(wire) > 23 {
+			return
+		}
+		d, err := DecodeEnhancedMeasurementReport(wire)
+		if err != nil || d.Value.REPORTINGQUANTITYList == nil {
+			return
+		}
+		original := d.Value.REPORTINGQUANTITYList
+		entries := *original
+		if len(entries) > 2 {
+			entries = entries[:2]
+		}
+		d.Value.REPORTINGQUANTITYList = &entries
+		canonical, err := EncodeEnhancedMeasurementReportCanonical(d.Value)
+		if err != nil {
+			t.Fatalf("canonical encode %x: %v", wire, err)
+		}
+		fresh, err := DecodeEnhancedMeasurementReport(canonical)
+		if err != nil || fresh.Value.REPORTINGQUANTITYList == nil || len(*fresh.Value.REPORTINGQUANTITYList) != 96 {
+			t.Fatalf("canonical decode %x: %v", canonical, err)
+		}
+		if len(*original) < len(entries) || len(*d.Value.REPORTINGQUANTITYList) != len(entries) {
+			t.Fatal("canonical encoder modified caller")
 		}
 	})
 }
