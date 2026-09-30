@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "ed64bb2c648af82de851002f32ea125b832b23a6",
+  "compiler_commit": "61113b4c72f1725cdeef7bd25a46f248009c0b28",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1672,7 +1672,7 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "b479ff7063b5d635d35808cb62e58592cab417da50a4c99d4682482ea18b572b"
+      "sha256": "49a578925f705216f4ec9c4b786f92cbb9440264b85b67fb65648310d89a45f1"
     },
     {
       "path": "ts44018/restoctets/generated.go",

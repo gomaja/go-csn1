@@ -646,20 +646,23 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w *r
 }
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader) ([]*uint8, error) {
 	var out []*uint8
-	for r.Remaining() > 0 {
-		before := r.Position()
+	count, ok := r.NeighbourCellCount()
+	if !ok {
+		return nil, &runtime.NeighbourCellCountRequiredError{BitsConsumed: r.Position()}
+	}
+	for i := 0; i < count; i++ {
 		v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r)
 		if err != nil {
 			return nil, err
-		}
-		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
 		}
 		out = append(out, v)
 	}
 	return out, nil
 }
 func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer, v []*uint8) error {
+	if count, ok := w.NeighbourCellCount(); ok && len(v) != count {
+		return fmt.Errorf("neighbour cell count mismatch: got %d entries, want %d", len(v), count)
+	}
 	for _, item := range v {
 		if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, item); err != nil {
 			return err
@@ -2498,6 +2501,52 @@ func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
 	if err := encodeEnhancedMeasurementReport(w, v); err != nil {
+		return nil, err
+	}
+	return w.Finish(v.Wire.Tail)
+}
+func DecodeEnhancedMeasurementReportFromWithContext(r *runtime.Reader, count int) (EnhancedMeasurementReport, error) {
+	if err := r.Check(); err != nil {
+		return EnhancedMeasurementReport{}, err
+	}
+	if err := r.SetNeighbourCellCount(count); err != nil {
+		return EnhancedMeasurementReport{}, err
+	}
+	return decodeEnhancedMeasurementReport(r)
+}
+func EncodeEnhancedMeasurementReportToWithContext(w *runtime.Writer, v EnhancedMeasurementReport, count int) error {
+	if err := w.SetNeighbourCellCount(count); err != nil {
+		return err
+	}
+	return encodeEnhancedMeasurementReport(w, v)
+}
+
+// DecodeEnhancedMeasurementReportWithContext uses the serving cell Neighbour Cell list count for the pre-Rel-8 bitmap (TS 44.018 V19.0.0 §§3.4.1.2.1.3, 9.1.55).
+func DecodeEnhancedMeasurementReportWithContext(data []byte, count int) (runtime.Decoded[EnhancedMeasurementReport], error) {
+	if count < 0 || count > 96 {
+		return runtime.Decoded[EnhancedMeasurementReport]{}, fmt.Errorf("neighbour cell count outside 0..96: %d", count)
+	}
+	if err := runtime.CheckInput(data); err != nil {
+		return runtime.Decoded[EnhancedMeasurementReport]{}, err
+	}
+	r := runtime.NewReader(data)
+	v, err := DecodeEnhancedMeasurementReportFromWithContext(r, count)
+	if err != nil {
+		return runtime.Decoded[EnhancedMeasurementReport]{}, err
+	}
+	tail := runtime.TrailingBits(data, r.Position())
+	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
+	return runtime.Decoded[EnhancedMeasurementReport]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
+}
+
+// EncodeEnhancedMeasurementReportWithContext checks the pre-Rel-8 bitmap against the serving cell Neighbour Cell list count (TS 44.018 V19.0.0 §§3.4.1.2.1.3, 9.1.55).
+func EncodeEnhancedMeasurementReportWithContext(v EnhancedMeasurementReport, count int) ([]byte, error) {
+	if count < 0 || count > 96 {
+		return nil, fmt.Errorf("neighbour cell count outside 0..96: %d", count)
+	}
+	w := runtime.NewWriter()
+	w.WithWire(v.Wire)
+	if err := EncodeEnhancedMeasurementReportToWithContext(w, v, count); err != nil {
 		return nil, err
 	}
 	return w.Finish(v.Wire.Tail)

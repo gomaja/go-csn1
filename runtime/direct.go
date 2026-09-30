@@ -868,3 +868,37 @@ func TrailingBits(data []byte, consumed int) BitString {
 	}
 	return bitsAt(data, consumed, len(data)*8-consumed)
 }
+
+// SetNeighbourCellCount binds EMR's pre-Rel-8 bitmap to the serving cell's
+// Neighbour Cell list (TS 44.018 V19.0.0 §§3.4.1.2.1.3, 9.1.55).
+func (r *Reader) SetNeighbourCellCount(count int) error {
+	if count < 0 || count > 96 {
+		return fmt.Errorf("neighbour cell count outside 0..96: %d", count)
+	}
+	r.Set("NEIGHBOUR_CELL_COUNT", uint64(count))
+	return nil
+}
+
+func (r *Reader) NeighbourCellCount() (int, bool) {
+	v, ok := r.vars[key("NEIGHBOUR_CELL_COUNT")]
+	if !ok || v > 96 {
+		return 0, false
+	}
+	return int(v), true
+}
+
+func (w *Writer) SetNeighbourCellCount(count int) error {
+	if count < 0 || count > 96 {
+		return fmt.Errorf("neighbour cell count outside 0..96: %d", count)
+	}
+	w.Set("NEIGHBOUR_CELL_COUNT", uint64(count))
+	return nil
+}
+
+func (w *Writer) NeighbourCellCount() (int, bool) {
+	v, ok := w.vars[key("NEIGHBOUR_CELL_COUNT")]
+	if !ok || v > 96 {
+		return 0, false
+	}
+	return int(v), true
+}
