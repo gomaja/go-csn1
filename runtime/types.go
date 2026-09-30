@@ -59,8 +59,11 @@ type Descriptor struct {
 	Decode                          func([]byte) (any, error)
 	DecodeFrom                      func(*Reader) (any, error)
 	Encode                          func(any) ([]byte, error)
+	Canonical                       func(any) ([]byte, error)
+	CanonicalAtLength               func(any, int) ([]byte, error)
 	DecodeWithContext               func([]byte, SI4ACS) (any, error)
 	EncodeWithContext               func(any, SI4ACS) ([]byte, error)
+	CanonicalWithContext            func(any, SI4ACS) ([]byte, error)
 }
 
 type ErrorKind string

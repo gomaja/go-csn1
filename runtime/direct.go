@@ -2,7 +2,6 @@ package runtime
 
 import (
 	"fmt"
-	"reflect"
 	"strings"
 )
 
@@ -22,6 +21,9 @@ type WireInfo struct {
 	ImplicitZeros   int
 	ImplicitSpans   []ImplicitSpan
 	sealed          bool
+	canonical       bool
+	targetSet       bool
+	targetBits      int
 }
 
 // ImplicitSpan records a receiver-inferred zero run in logical bit order.
@@ -30,8 +32,9 @@ type WireInfo struct {
 type ImplicitSpan struct{ At, Count int }
 
 // IsZero reports whether a field omitted by a transmitted truncation remains
-// unedited. TS 44.018 V19.0.0 §8.9 permits omission only as an ordered prefix.
-func IsZero[T any](value T) bool { var zero T; return reflect.DeepEqual(value, zero) }
+// semantically unedited, ignoring nested wire state. TS 44.018 V19.0.0 §8.9
+// permits omission only as an ordered prefix.
+func IsZero[T any](value T) bool { var zero T; return SemanticallyEqual(value, zero) }
 
 // Seal records the transmitted boundary separately from inferred zero bits.
 // TS 24.008 V20.1.0 §§10.5.1.7, 10.5.5.12a permit receiver-side zero
@@ -401,6 +404,7 @@ type Writer struct {
 	wire                     WireInfo
 	implicitSpan             int
 	stateErr                 error
+	allowZero                bool
 }
 
 func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
@@ -410,6 +414,20 @@ func (w *Writer) WithWire(wire WireInfo) {
 	w.truncationUsed = make(map[string]bool)
 	w.stateErr = nil
 }
+
+// SetZeroExtension mirrors a printed TS 24.008 V20.1.0 §10.5.5.12a
+// capability reference: missing trailing bits are receiver-inferred zeros.
+func (w *Writer) SetZeroExtension(allow bool) (previous bool) {
+	previous, w.allowZero = w.allowZero, allow
+	return previous
+}
+
+// CanonicalTargetReached marks a complete component boundary for a
+// TS 44.018 V19.0.0 §8.9 truncated concatenation.
+func (w *Writer) CanonicalTargetReached() bool {
+	return w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits
+}
+func (w *Writer) Canonical() bool { return w.wire.canonical }
 func (w *Writer) Truncation(path string) (int, bool) {
 	n, ok := w.wire.TruncatedAt[path]
 	if ok {
@@ -517,6 +535,16 @@ func (w *Writer) put(bit uint8) error {
 	}
 	if position >= maxBits {
 		return fmt.Errorf("encoded bit limit exceeded at %s", w.path)
+	}
+	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
+		if bit != 0 {
+			return fmt.Errorf("nonzero bit beyond receiver-inferred boundary at %s", w.path)
+		}
+		w.virtual++
+		return nil
+	}
+	if w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits {
+		return fmt.Errorf("encoded bit exceeds canonical target at %s", w.path)
 	}
 	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
 		span, end, err := w.currentImplicitSpan()
@@ -628,6 +656,9 @@ func (w *Writer) WritePadding() error {
 	if w.wire.sealed {
 		return fmt.Errorf("received padding state exhausted")
 	}
+	if w.wire.canonical && w.wire.targetSet && !w.bounded {
+		return w.WritePaddingTo(w.wire.targetBits)
+	}
 	for w.bits%8 != 0 {
 		if err := w.put(literalBit('L', w.bits)); err != nil {
 			return err
@@ -662,6 +693,24 @@ func (w *Writer) WritePaddingTo(bits int) error {
 	}
 	for w.bits < bits {
 		if err := w.put(literalBit('L', w.bits)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// PadMinimum completes a fresh value to the minimum length of its containing
+// IE. Explicit <spare padding> uses L/H (TS 24.007 V20.0.0 Annex B
+// §B.1.2.2); otherwise the value uses zero completion bits.
+func (w *Writer) PadMinimum(bits int, sparePadding bool) error {
+	if w.wire.sealed || w.bits >= bits {
+		return nil
+	}
+	if sparePadding {
+		return w.WritePaddingTo(bits)
+	}
+	for w.bits < bits {
+		if err := w.put(0); err != nil {
 			return err
 		}
 	}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "e1d9f465506e6c134ea2dad8a2c9c800db502b00",
+  "compiler_commit": "3d2c64377fddcac46db498d9a6a1b25079d96342",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1652,35 +1652,35 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "3c1c80e66fe5d6ecb1af1274d1a877104e9c018ec192404d07219c204a39dc89"
+      "sha256": "154b64bdd11bc80dfe4433f52a862f39e861237aa127c9c5b09bfa9233ba4af9"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "a46f389fd0777369a6e16f07a3454c53ae33ee3c597537ac61e6b93deff1bfdd"
+      "sha256": "b604b067726f35c4198ad68b96a623c2f532defcdc6ce5a2d112a70cc33729a7"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "64955e8b3cdcfd0b8603834dd2faf6324195bd502fc82eeb9672b37f90e0ec18"
+      "sha256": "6b26a49f0206c6754d509732468d8217861c47af64734aae553ffe459d60b3f6"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "2ef84cb9171afed0e7df40f1e4e2dcdf698bae342e9715fbc09f41527f14ed85"
+      "sha256": "9c0d148619cf84cc77e36543ee8cabd98af894b7ec19a06138b597ac7ac26b75"
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "ad7adacede8263494ac481f4d13de54bb224c5eda9d66282610558fb7e1269fb"
+      "sha256": "91acbe25c06cc6bc3876d62b7fafbf33b89843252527b6cf30efd3d5c761f57b"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "74cb34a08f8036e98563c8adc6e4b8ad99e03d088aed26bcf8c2cb06ccd68346"
+      "sha256": "d6bcfb75d11e08939b4b29182ae02a0b88eca6ab2373c75f79288e8b9d81b82d"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "fe9025ed2830333199cc91c5df845d3d3a2e40b5494dacb14bf01e4a14f8a0be"
+      "sha256": "e5cb7d8c6d28d212cfc100c794e5434171ad1aeebd44f952a182f13a446765af"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "92606f595154e6ab60bc851ad6c9cf5c8da3ef212e90882a504d09bd03442e7f"
+      "sha256": "aa028009d77bd7a4bc68a4b8203ed6378c74b3c3f2911a41aae7336d1d9a63bf"
     }
   ],
   "validation_commands": [

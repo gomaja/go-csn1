@@ -1,6 +1,9 @@
 package runtime
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 var wireInfoType = reflect.TypeFor[WireInfo]()
 
@@ -22,12 +25,109 @@ func Canonical[T any](value T) T {
 	return copy.Interface().(T)
 }
 
+// CanonicalTo gives a fresh value an explicit transmitted length in bits.
+// Generated encoders use it for truncated rest octets and receiver-inferred
+// zero extensions. The target is independent of any received wire layout.
+func CanonicalTo[T any](value T, bits int) T {
+	copy := Canonical(value)
+	rv := reflect.ValueOf(&copy).Elem()
+	if rv.Kind() == reflect.Struct {
+		field := rv.FieldByName("Wire")
+		if field.IsValid() && field.CanSet() && field.Type() == wireInfoType {
+			field.Set(reflect.ValueOf(WireInfo{canonical: true, targetSet: true, targetBits: bits}))
+		}
+	}
+	return copy
+}
+
+func SemanticallyEqual[T any](a, b T) bool {
+	return reflect.DeepEqual(Canonical(a), Canonical(b))
+}
+
+// CanonicalEncode tries a fresh encoding, then the permitted octet extents
+// when source-defined truncation or inferred zeros require a shorter layout.
+// Each candidate must decode to the same typed semantic value.
+func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if equivalent == nil {
+		equivalent = SemanticallyEqual[T]
+	}
+	try := func(fresh T) ([]byte, error) {
+		out, err := encode(fresh)
+		if err != nil {
+			return nil, err
+		}
+		again, err := decode(out)
+		if err != nil {
+			return nil, fmt.Errorf("canonical bytes do not decode: %w", err)
+		}
+		if !equivalent(value, again.Value) {
+			return nil, fmt.Errorf("canonical bytes change typed semantics")
+		}
+		return out, nil
+	}
+	if minOctets < 0 || maxOctets < minOctets || maxOctets > maxBits/8 {
+		return nil, fmt.Errorf("invalid canonical extent range")
+	}
+	search := func() ([]byte, bool) {
+		for octets := minOctets; octets <= maxOctets; octets++ {
+			out, err := try(CanonicalTo(value, octets*8))
+			if err == nil && len(out) == octets {
+				return out, true
+			}
+		}
+		return nil, false
+	}
+	if shortest {
+		if out, ok := search(); ok {
+			return out, nil
+		}
+	}
+	out, firstErr := try(Canonical(value))
+	if firstErr == nil {
+		return out, nil
+	}
+	if !shortest {
+		if out, ok := search(); ok {
+			return out, nil
+		}
+	}
+	return nil, firstErr
+}
+
+// CanonicalEncodeAtLength uses an explicit containing-message value length.
+// A candidate is accepted only if it fills that extent and decodes to the
+// original typed value. The caller supplies the length prescribed by its
+// enclosing message (TS 44.018 V19.0.0 §8.9).
+func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if octets < minOctets || octets > maxOctets || maxOctets > maxBits/8 {
+		return nil, fmt.Errorf("canonical extent %d outside %d..%d octets", octets, minOctets, maxOctets)
+	}
+	if equivalent == nil {
+		equivalent = SemanticallyEqual[T]
+	}
+	out, err := encode(CanonicalTo(value, octets*8))
+	if err != nil {
+		return nil, err
+	}
+	if len(out) != octets {
+		return nil, fmt.Errorf("canonical extent is %d, want %d octets", len(out), octets)
+	}
+	again, err := decode(out)
+	if err != nil {
+		return nil, fmt.Errorf("canonical bytes do not decode: %w", err)
+	}
+	if !equivalent(value, again.Value) {
+		return nil, fmt.Errorf("canonical bytes change typed semantics")
+	}
+	return out, nil
+}
+
 func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value) reflect.Value {
 	if !value.IsValid() {
 		return value
 	}
 	if value.Type() == wireInfoType {
-		return reflect.Zero(wireInfoType)
+		return reflect.ValueOf(WireInfo{canonical: true})
 	}
 	switch value.Kind() {
 	case reflect.Pointer:

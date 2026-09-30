@@ -63,6 +63,7 @@ type geranResult struct {
 	tail                   int
 	encoded                []byte
 	err                    error
+	canonicalErr           error
 	spare3, spare4, spare5 bool
 	ia                     *restoctets.IARestOctets
 	iar                    *restoctets.IARRestOctets
@@ -164,6 +165,14 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 	if err != nil || !bytes.Equal(encoded, wire) || d.BitsConsumed != len(wire)*8 || d.Tail.BitLength != 0 {
 		return fmt.Sprintf("wire round trip or boundary: %x -> %x, bits=%d tail=%d: %v", wire, encoded, d.BitsConsumed, d.Tail.BitLength, err)
 	}
+	canonical, err := measurement.EncodeEnhancedMeasurementReportCanonical(d.Value)
+	if err != nil {
+		return fmt.Sprintf("canonical encode: %v", err)
+	}
+	again, err := measurement.DecodeEnhancedMeasurementReport(canonical)
+	if err != nil || !equivalentEMR(d.Value, again.Value) {
+		return fmt.Sprintf("canonical typed round trip: %v", err)
+	}
 	v := d.Value
 	switch row {
 	case 1:
@@ -208,6 +217,38 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 	return ""
 }
 
+func equivalentEMR(a, b measurement.EnhancedMeasurementReport) bool {
+	// TS 44.018 V19.0.0 §9.1.55: absent pre-Rel-8 no-report
+	// positions up to 96 are redundant when the bitmap is present.
+	normalize := func(v measurement.EnhancedMeasurementReport) measurement.EnhancedMeasurementReport {
+		v = runtime.Canonical(v)
+		if v.REPORTINGQUANTITYList != nil {
+			list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+			for len(list) < 96 {
+				list = append(list, nil)
+			}
+			v.REPORTINGQUANTITYList = &list
+		}
+		return v
+	}
+	return runtime.SemanticallyEqual(normalize(a), normalize(b))
+}
+
+func checkCanonical[T any](value T, encode func(T) ([]byte, error), decode func([]byte) (runtime.Decoded[T], error)) error {
+	canonical, err := encode(value)
+	if err != nil {
+		return err
+	}
+	again, err := decode(canonical)
+	if err != nil {
+		return err
+	}
+	if !runtime.SemanticallyEqual(value, again.Value) {
+		return fmt.Errorf("canonical encoding changed typed semantics")
+	}
+	return nil
+}
+
 func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 	var out geranResult
 	switch {
@@ -217,6 +258,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.encoded, out.err = uecapability.EncodeGERANCS(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeGERANCSCanonical, uecapability.DecodeGERANCS)
 		}
 	case strings.HasSuffix(name, "geran-ps.jsonl"):
 		d, err := uecapability.DecodeGERANPS(wire)
@@ -224,6 +266,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.encoded, out.err = uecapability.EncodeGERANPS(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeGERANPSCanonical, uecapability.DecodeGERANPS)
 		}
 	case strings.Contains(name, "classmark2"):
 		d, err := uecapability.DecodeClassmark2ValuePart(wire)
@@ -232,6 +275,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.spare3, out.spare4, out.spare5 = d.Value.Spare3, d.Value.Spare4, d.Value.Spare5
 			out.encoded, out.err = uecapability.EncodeClassmark2ValuePart(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.DecodeClassmark2ValuePart)
 		}
 	case strings.HasSuffix(name, "classmark3.jsonl"):
 		d, err := classmark.DecodeClassmark3ValuePart(wire)
@@ -239,6 +283,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.encoded, out.err = classmark.EncodeClassmark3ValuePart(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, classmark.EncodeClassmark3ValuePartCanonical, classmark.DecodeClassmark3ValuePart)
 		}
 	case strings.Contains(typ, "REJECT") || strings.Contains(typ, "IAR Rest"):
 		d, err := restoctets.DecodeIARRestOctets(wire)
@@ -247,6 +292,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.iar = &d.Value
 			out.encoded, out.err = restoctets.EncodeIARRestOctets(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, restoctets.EncodeIARRestOctetsCanonical, restoctets.DecodeIARRestOctets)
 		}
 	default:
 		d, err := restoctets.DecodeIARestOctets(wire)
@@ -255,6 +301,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.ia = &d.Value
 			out.encoded, out.err = restoctets.EncodeIARestOctets(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, restoctets.EncodeIARestOctetsCanonical, restoctets.DecodeIARestOctets)
 		}
 	}
 	return out
@@ -270,6 +317,9 @@ func compareGERANExpected(record geranRecord, wire []byte, got geranResult) stri
 	}
 	if got.err != nil {
 		return fmt.Sprintf("decode or encode: %v", got.err)
+	}
+	if got.canonicalErr != nil {
+		return fmt.Sprintf("canonical typed round trip: %v", got.canonicalErr)
 	}
 	if !bytes.Equal(got.encoded, wire) {
 		return "byte round trip differs"

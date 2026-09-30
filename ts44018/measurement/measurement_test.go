@@ -149,6 +149,11 @@ func FuzzEnhancedMeasurementReportCanonical(f *testing.F) {
 		original := d.Value.REPORTINGQUANTITYList
 		entries := *original
 		if len(entries) > 2 {
+			for _, report := range entries[2:] {
+				if report != nil {
+					return
+				}
+			}
 			entries = entries[:2]
 		}
 		d.Value.REPORTINGQUANTITYList = &entries
@@ -157,13 +162,60 @@ func FuzzEnhancedMeasurementReportCanonical(f *testing.F) {
 			t.Fatalf("canonical encode %x: %v", wire, err)
 		}
 		fresh, err := DecodeEnhancedMeasurementReport(canonical)
-		if err != nil || fresh.Value.REPORTINGQUANTITYList == nil || len(*fresh.Value.REPORTINGQUANTITYList) != 96 {
+		if err != nil || !equivalentCanonicalEMR(d.Value, fresh.Value) {
 			t.Fatalf("canonical decode %x: %v", canonical, err)
 		}
 		if len(*original) < len(entries) || len(*d.Value.REPORTINGQUANTITYList) != len(entries) {
 			t.Fatal("canonical encoder modified caller")
 		}
 	})
+}
+
+func equivalentCanonicalEMR(a, b EnhancedMeasurementReport) bool {
+	// TS 44.018 V19.0.0 §9.1.55: omitted redundant trailing
+	// no-report entries are equivalent to explicit zero entries.
+	normalize := func(v EnhancedMeasurementReport) EnhancedMeasurementReport {
+		v = runtime.Canonical(v)
+		if v.REPORTINGQUANTITYList != nil {
+			list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
+			for len(list) < 96 {
+				list = append(list, nil)
+			}
+			v.REPORTINGQUANTITYList = &list
+		}
+		return v
+	}
+	return runtime.SemanticallyEqual(normalize(a), normalize(b))
+}
+
+func TestCanonicalEnhancedMeasurementReportAtBitmapBoundary(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 permits trailing no-report positions
+	// to be omitted when they do not fit. The absent following choice is
+	// part of the decoded value and must remain absent after canonicalization.
+	for _, wire := range [][]byte{{0x10, 0x02}, {0x10, 0x02, 0x00}} {
+		decoded, err := DecodeEnhancedMeasurementReport(wire)
+		if err != nil {
+			t.Fatalf("decode %x: %v", wire, err)
+		}
+		canonical, err := EncodeEnhancedMeasurementReportCanonical(decoded.Value)
+		if err != nil {
+			t.Fatalf("canonical encode %x: %v", wire, err)
+		}
+		again, err := DecodeEnhancedMeasurementReport(canonical)
+		if err != nil {
+			t.Fatalf("canonical decode %x: %v", canonical, err)
+		}
+		if !equivalentCanonicalEMR(decoded.Value, again.Value) {
+			t.Fatalf("canonical %x changes typed value of %x", canonical, wire)
+		}
+		framed, err := EncodeEnhancedMeasurementReportCanonicalAtLength(decoded.Value, len(wire))
+		if err != nil || len(framed) != len(wire) {
+			t.Fatalf("framed canonical %x: %v", framed, err)
+		}
+		if _, err := EncodeEnhancedMeasurementReportCanonicalAtLength(decoded.Value, 1); err == nil {
+			t.Fatal("framing too short for the typed value was accepted")
+		}
+	}
 }
 
 func TestEnhancedMeasurementReportWireTailEdit(t *testing.T) {
