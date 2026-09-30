@@ -6153,15 +6153,15 @@ func EncodeAdditionalAccessTechnologiesStruct(v AdditionalAccessTechnologiesStru
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeAdditionalAccessTechnologiesStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeAdditionalAccessTechnologiesStructCanonical(v AdditionalAccessTechnologiesStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, false, EncodeAdditionalAccessTechnologiesStruct, DecodeAdditionalAccessTechnologiesStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 2, false, EncodeAdditionalAccessTechnologiesStruct, DecodeAdditionalAccessTechnologiesStruct, nil)
 }
 
 // EncodeAdditionalAccessTechnologiesStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v AdditionalAccessTechnologiesStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeAdditionalAccessTechnologiesStruct, DecodeAdditionalAccessTechnologiesStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 2, EncodeAdditionalAccessTechnologiesStruct, DecodeAdditionalAccessTechnologiesStruct, nil)
 }
 
 // DecodeAccessCapabilitiesStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Access capabilities struct>.
@@ -6255,15 +6255,15 @@ func EncodeContent(v Content) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeContentCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeContentCanonical(v Content) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, true, EncodeContent, DecodeContent, nil)
+	return runtime.CanonicalEncode(v, 0, 21, true, EncodeContent, DecodeContent, nil)
 }
 
 // EncodeContentCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeContentCanonicalAtLength(v Content, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeContent, DecodeContent, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 21, EncodeContent, DecodeContent, nil)
 }
 
 // DecodeMultislotCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Multislot capability struct>.
@@ -6307,15 +6307,15 @@ func EncodeMultislotCapabilityStruct(v MultislotCapabilityStruct) ([]byte, error
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeMultislotCapabilityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMultislotCapabilityStructCanonical(v MultislotCapabilityStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, false, EncodeMultislotCapabilityStruct, DecodeMultislotCapabilityStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 6, false, EncodeMultislotCapabilityStruct, DecodeMultislotCapabilityStruct, nil)
 }
 
 // EncodeMultislotCapabilityStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMultislotCapabilityStructCanonicalAtLength(v MultislotCapabilityStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeMultislotCapabilityStruct, DecodeMultislotCapabilityStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 6, EncodeMultislotCapabilityStruct, DecodeMultislotCapabilityStruct, nil)
 }
 
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.5.12a <A5 bits>.
@@ -6357,15 +6357,15 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeA5BitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeA5BitsCanonical(v A5Bits) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, false, EncodeA5Bits, DecodeA5Bits, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeA5Bits, DecodeA5Bits, nil)
 }
 
 // EncodeA5BitsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeA5Bits, DecodeA5Bits, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeA5Bits, DecodeA5Bits, nil)
 }
 
 // DecodeEnhancedFlexibleTimeslotAssignmentStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Enhanced Flexible Timeslot Assignment struct>.
@@ -6409,15 +6409,15 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStruct(v EnhancedFlexibleTimeslotAs
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v EnhancedFlexibleTimeslotAssignmentStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, false, EncodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
 }
 
 // EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v EnhancedFlexibleTimeslotAssignmentStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
 }
 
 // DecodeDLMCCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <DLMC Capability struct>.
@@ -6461,15 +6461,15 @@ func EncodeDLMCCapabilityStruct(v DLMCCapabilityStruct) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (MS RA capability value part maximum 50 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12a (finite maximum from the printed CSN.1 grammar).
 // EncodeDLMCCapabilityStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeDLMCCapabilityStructCanonical(v DLMCCapabilityStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 50, false, EncodeDLMCCapabilityStruct, DecodeDLMCCapabilityStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 2, false, EncodeDLMCCapabilityStruct, DecodeDLMCCapabilityStruct, nil)
 }
 
 // EncodeDLMCCapabilityStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeDLMCCapabilityStructCanonicalAtLength(v DLMCCapabilityStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 50, EncodeDLMCCapabilityStruct, DecodeDLMCCapabilityStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 2, EncodeDLMCCapabilityStruct, DecodeDLMCCapabilityStruct, nil)
 }
 func Definitions() []string {
 	return []string{"MS RA capability value part", "MS RA capability value part struct", "Additional access technologies struct", "Access capabilities struct", "Content", "Multislot capability struct", "A5 bits", "Enhanced Flexible Timeslot Assignment struct", "DLMC Capability struct"}
@@ -6532,7 +6532,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSRACapabilityValuePartStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAdditionalAccessTechnologiesStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeAdditionalAccessTechnologiesStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AdditionalAccessTechnologiesStruct:
 				return EncodeAdditionalAccessTechnologiesStruct(v)
@@ -6588,7 +6588,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for AccessCapabilitiesStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeContent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeContentFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Decode: func(data []byte) (any, error) { return DecodeContent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeContentFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Content:
 				return EncodeContent(v)
@@ -6616,7 +6616,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for Content")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMultislotCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMultislotCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MultislotCapabilityStruct:
 				return EncodeMultislotCapabilityStruct(v)
@@ -6644,7 +6644,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MultislotCapabilityStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeA5BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeA5BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case A5Bits:
 				return EncodeA5Bits(v)
@@ -6672,7 +6672,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for A5Bits")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedFlexibleTimeslotAssignmentStruct:
 				return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v)
@@ -6700,7 +6700,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EnhancedFlexibleTimeslotAssignmentStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 50, Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDLMCCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeDLMCCapabilityStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DLMCCapabilityStruct:
 				return EncodeDLMCCapabilityStruct(v)

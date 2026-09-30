@@ -5122,15 +5122,15 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeA5BitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeA5BitsCanonical(v A5Bits) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeA5Bits, DecodeA5Bits, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeA5Bits, DecodeA5Bits, nil)
 }
 
 // EncodeA5BitsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeA5Bits, DecodeA5Bits, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeA5Bits, DecodeA5Bits, nil)
 }
 
 // DecodeRSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <R Support>.
@@ -5172,15 +5172,15 @@ func EncodeRSupport(v RSupport) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeRSupportCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRSupportCanonical(v RSupport) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeRSupport, DecodeRSupport, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeRSupport, DecodeRSupport, nil)
 }
 
 // EncodeRSupportCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRSupportCanonicalAtLength(v RSupport, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeRSupport, DecodeRSupport, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeRSupport, DecodeRSupport, nil)
 }
 
 // DecodeHSCSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <HSCSD Multi Slot Capability>.
@@ -5224,15 +5224,15 @@ func EncodeHSCSDMultiSlotCapability(v HSCSDMultiSlotCapability) ([]byte, error) 
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeHSCSDMultiSlotCapabilityCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeHSCSDMultiSlotCapabilityCanonical(v HSCSDMultiSlotCapability) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeHSCSDMultiSlotCapability, DecodeHSCSDMultiSlotCapability, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeHSCSDMultiSlotCapability, DecodeHSCSDMultiSlotCapability, nil)
 }
 
 // EncodeHSCSDMultiSlotCapabilityCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v HSCSDMultiSlotCapability, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeHSCSDMultiSlotCapability, DecodeHSCSDMultiSlotCapability, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeHSCSDMultiSlotCapability, DecodeHSCSDMultiSlotCapability, nil)
 }
 
 // DecodeMSMeasurementCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Measurement capability>.
@@ -5276,15 +5276,15 @@ func EncodeMSMeasurementCapability(v MSMeasurementCapability) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeMSMeasurementCapabilityCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMSMeasurementCapabilityCanonical(v MSMeasurementCapability) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeMSMeasurementCapability, DecodeMSMeasurementCapability, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeMSMeasurementCapability, DecodeMSMeasurementCapability, nil)
 }
 
 // EncodeMSMeasurementCapabilityCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMSMeasurementCapabilityCanonicalAtLength(v MSMeasurementCapability, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeMSMeasurementCapability, DecodeMSMeasurementCapability, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeMSMeasurementCapability, DecodeMSMeasurementCapability, nil)
 }
 
 // DecodeMSPositioningMethodCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Positioning Method Capability>.
@@ -5328,15 +5328,15 @@ func EncodeMSPositioningMethodCapability(v MSPositioningMethodCapability) ([]byt
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeMSPositioningMethodCapabilityCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMSPositioningMethodCapabilityCanonical(v MSPositioningMethodCapability) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeMSPositioningMethodCapability, DecodeMSPositioningMethodCapability, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeMSPositioningMethodCapability, DecodeMSPositioningMethodCapability, nil)
 }
 
 // EncodeMSPositioningMethodCapabilityCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMSPositioningMethodCapabilityCanonicalAtLength(v MSPositioningMethodCapability, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeMSPositioningMethodCapability, DecodeMSPositioningMethodCapability, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeMSPositioningMethodCapability, DecodeMSPositioningMethodCapability, nil)
 }
 
 // DecodeECSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <ECSD Multi Slot Capability>.
@@ -5380,15 +5380,15 @@ func EncodeECSDMultiSlotCapability(v ECSDMultiSlotCapability) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeECSDMultiSlotCapabilityCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeECSDMultiSlotCapabilityCanonical(v ECSDMultiSlotCapability) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeECSDMultiSlotCapability, DecodeECSDMultiSlotCapability, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeECSDMultiSlotCapability, DecodeECSDMultiSlotCapability, nil)
 }
 
 // EncodeECSDMultiSlotCapabilityCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeECSDMultiSlotCapabilityCanonicalAtLength(v ECSDMultiSlotCapability, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeECSDMultiSlotCapability, DecodeECSDMultiSlotCapability, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeECSDMultiSlotCapability, DecodeECSDMultiSlotCapability, nil)
 }
 
 // DecodeN8PSKStruct decodes TS 24.008 V20.1.0 §10.5.1.7 <8-PSK Struct>.
@@ -5430,15 +5430,15 @@ func EncodeN8PSKStruct(v N8PSKStruct) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeN8PSKStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeN8PSKStructCanonical(v N8PSKStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeN8PSKStruct, DecodeN8PSKStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeN8PSKStruct, DecodeN8PSKStruct, nil)
 }
 
 // EncodeN8PSKStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeN8PSKStructCanonicalAtLength(v N8PSKStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeN8PSKStruct, DecodeN8PSKStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeN8PSKStruct, DecodeN8PSKStruct, nil)
 }
 
 // DecodeSingleBandSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <Single Band Support>.
@@ -5482,15 +5482,15 @@ func EncodeSingleBandSupport(v SingleBandSupport) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (Classmark 3 value part maximum 32 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.1.7 (finite maximum from the printed CSN.1 grammar).
 // EncodeSingleBandSupportCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeSingleBandSupportCanonical(v SingleBandSupport) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 32, false, EncodeSingleBandSupport, DecodeSingleBandSupport, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeSingleBandSupport, DecodeSingleBandSupport, nil)
 }
 
 // EncodeSingleBandSupportCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeSingleBandSupportCanonicalAtLength(v SingleBandSupport, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 32, EncodeSingleBandSupport, DecodeSingleBandSupport, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeSingleBandSupport, DecodeSingleBandSupport, nil)
 }
 func Definitions() []string {
 	return []string{"Classmark 3 Value part", "A5 bits", "R Support", "HSCSD Multi Slot Capability", "MS Measurement capability", "MS Positioning Method Capability", "ECSD Multi Slot Capability", "8-PSK Struct", "Single Band Support"}
@@ -5525,7 +5525,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for Classmark3ValuePart")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeA5BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeA5BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case A5Bits:
 				return EncodeA5Bits(v)
@@ -5553,7 +5553,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for A5Bits")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeRSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRSupportFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeRSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRSupportFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RSupport:
 				return EncodeRSupport(v)
@@ -5581,7 +5581,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RSupport")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeHSCSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeHSCSDMultiSlotCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeHSCSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeHSCSDMultiSlotCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case HSCSDMultiSlotCapability:
 				return EncodeHSCSDMultiSlotCapability(v)
@@ -5609,7 +5609,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for HSCSDMultiSlotCapability")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeMSMeasurementCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSMeasurementCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeMSMeasurementCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSMeasurementCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSMeasurementCapability:
 				return EncodeMSMeasurementCapability(v)
@@ -5637,7 +5637,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSMeasurementCapability")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeMSPositioningMethodCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSPositioningMethodCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeMSPositioningMethodCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMSPositioningMethodCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSPositioningMethodCapability:
 				return EncodeMSPositioningMethodCapability(v)
@@ -5665,7 +5665,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSPositioningMethodCapability")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeECSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeECSDMultiSlotCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeECSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeECSDMultiSlotCapabilityFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ECSDMultiSlotCapability:
 				return EncodeECSDMultiSlotCapability(v)
@@ -5693,7 +5693,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ECSDMultiSlotCapability")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeN8PSKStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN8PSKStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeN8PSKStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeN8PSKStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N8PSKStruct:
 				return EncodeN8PSKStruct(v)
@@ -5721,7 +5721,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for N8PSKStruct")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 32, Decode: func(data []byte) (any, error) { return DecodeSingleBandSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSingleBandSupportFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeSingleBandSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeSingleBandSupportFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SingleBandSupport:
 				return EncodeSingleBandSupport(v)

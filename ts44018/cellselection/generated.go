@@ -1993,14 +1993,15 @@ func EncodeGSMDescriptionStruct(v GSMDescriptionStruct) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.018 V19.0.0 §10.5.2.1e (finite maximum from the printed CSN.1 grammar).
 // EncodeGSMDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGSMDescriptionStructCanonical(v GSMDescriptionStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
 
 // EncodeGSMDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGSMDescriptionStructCanonicalAtLength(v GSMDescriptionStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
 
 // DecodeUTRANFDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <UTRAN FDD Description struct>.
@@ -2192,7 +2193,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGSMDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGSMDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeGSMDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGSMDescriptionStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GSMDescriptionStruct:
 				return EncodeGSMDescriptionStruct(v)

@@ -8315,14 +8315,15 @@ func EncodeUTRANCSGMeasurementReportIE(v UTRANCSGMeasurementReportIE) ([]byte, e
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.61 (finite maximum from the printed CSN.1 grammar).
 // EncodeUTRANCSGMeasurementReportIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeUTRANCSGMeasurementReportIECanonical(v UTRANCSGMeasurementReportIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANCSGMeasurementReportIE, DecodeUTRANCSGMeasurementReportIE, nil)
+	return runtime.CanonicalEncode(v, 0, 11, false, EncodeUTRANCSGMeasurementReportIE, DecodeUTRANCSGMeasurementReportIE, nil)
 }
 
 // EncodeUTRANCSGMeasurementReportIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v UTRANCSGMeasurementReportIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANCSGMeasurementReportIE, DecodeUTRANCSGMeasurementReportIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 11, EncodeUTRANCSGMeasurementReportIE, DecodeUTRANCSGMeasurementReportIE, nil)
 }
 
 // DecodePLMNIDStruct decodes TS 44.060 V19.0.0 §12.61 <PLMN-ID struct>.
@@ -8364,14 +8365,15 @@ func EncodePLMNIDStruct(v PLMNIDStruct) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.61 (finite maximum from the printed CSN.1 grammar).
 // EncodePLMNIDStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePLMNIDStructCanonical(v PLMNIDStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodePLMNIDStruct, DecodePLMNIDStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodePLMNIDStruct, DecodePLMNIDStruct, nil)
 }
 
 // EncodePLMNIDStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePLMNIDStructCanonicalAtLength(v PLMNIDStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePLMNIDStruct, DecodePLMNIDStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodePLMNIDStruct, DecodePLMNIDStruct, nil)
 }
 
 // DecodePSCGroupIE decodes TS 44.060 V19.0.0 §12.58 <PSC Group IE>.
@@ -8719,14 +8721,15 @@ func EncodeMPRACHControlParametersIE(v MPRACHControlParametersIE) ([]byte, error
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.41 (finite maximum from the printed CSN.1 grammar).
 // EncodeMPRACHControlParametersIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeMPRACHControlParametersIECanonical(v MPRACHControlParametersIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeMPRACHControlParametersIE, DecodeMPRACHControlParametersIE, nil)
+	return runtime.CanonicalEncode(v, 0, 5, false, EncodeMPRACHControlParametersIE, DecodeMPRACHControlParametersIE, nil)
 }
 
 // EncodeMPRACHControlParametersIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeMPRACHControlParametersIECanonicalAtLength(v MPRACHControlParametersIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeMPRACHControlParametersIE, DecodeMPRACHControlParametersIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 5, EncodeMPRACHControlParametersIE, DecodeMPRACHControlParametersIE, nil)
 }
 
 // DecodeGPRSPowerControlParametersIE decodes TS 44.060 V19.0.0 §12.9a <GPRS Power Control Parameters IE>.
@@ -8770,14 +8773,15 @@ func EncodeGPRSPowerControlParametersIE(v GPRSPowerControlParametersIE) ([]byte,
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.9a (finite maximum from the printed CSN.1 grammar).
 // EncodeGPRSPowerControlParametersIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGPRSPowerControlParametersIECanonical(v GPRSPowerControlParametersIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeGPRSPowerControlParametersIE, DecodeGPRSPowerControlParametersIE, nil)
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeGPRSPowerControlParametersIE, DecodeGPRSPowerControlParametersIE, nil)
 }
 
 // EncodeGPRSPowerControlParametersIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGPRSPowerControlParametersIECanonicalAtLength(v GPRSPowerControlParametersIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeGPRSPowerControlParametersIE, DecodeGPRSPowerControlParametersIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeGPRSPowerControlParametersIE, DecodeGPRSPowerControlParametersIE, nil)
 }
 
 // DecodeGPRSCellOptionsIE decodes TS 44.060 V19.0.0 §12.24 <GPRS Cell Options IE>.
@@ -8974,14 +8978,15 @@ func EncodeIndirectEncodingStruct(v IndirectEncodingStruct) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.8 (finite maximum from the printed CSN.1 grammar).
 // EncodeIndirectEncodingStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeIndirectEncodingStructCanonical(v IndirectEncodingStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeIndirectEncodingStruct, DecodeIndirectEncodingStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 2, false, EncodeIndirectEncodingStruct, DecodeIndirectEncodingStruct, nil)
 }
 
 // EncodeIndirectEncodingStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeIndirectEncodingStructCanonicalAtLength(v IndirectEncodingStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeIndirectEncodingStruct, DecodeIndirectEncodingStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 2, EncodeIndirectEncodingStruct, DecodeIndirectEncodingStruct, nil)
 }
 
 // DecodeDirectEncoding1Struct decodes TS 44.060 V19.0.0 §12.8 <Direct encoding 1 struct>.
@@ -9431,14 +9436,15 @@ func EncodeEGPRSWindowSizeIE(v EGPRSWindowSizeIE) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.5.2 (finite maximum from the printed CSN.1 grammar).
 // EncodeEGPRSWindowSizeIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEGPRSWindowSizeIECanonical(v EGPRSWindowSizeIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEGPRSWindowSizeIE, DecodeEGPRSWindowSizeIE, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeEGPRSWindowSizeIE, DecodeEGPRSWindowSizeIE, nil)
 }
 
 // EncodeEGPRSWindowSizeIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEGPRSWindowSizeIECanonicalAtLength(v EGPRSWindowSizeIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEGPRSWindowSizeIE, DecodeEGPRSWindowSizeIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeEGPRSWindowSizeIE, DecodeEGPRSWindowSizeIE, nil)
 }
 
 // DecodeEGPRSModulationAndCodingIE decodes TS 44.060 V19.0.0 §12.10d <EGPRS Modulation and Coding IE>.
@@ -9482,14 +9488,15 @@ func EncodeEGPRSModulationAndCodingIE(v EGPRSModulationAndCodingIE) ([]byte, err
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.10d (finite maximum from the printed CSN.1 grammar).
 // EncodeEGPRSModulationAndCodingIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEGPRSModulationAndCodingIECanonical(v EGPRSModulationAndCodingIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEGPRSModulationAndCodingIE, DecodeEGPRSModulationAndCodingIE, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeEGPRSModulationAndCodingIE, DecodeEGPRSModulationAndCodingIE, nil)
 }
 
 // EncodeEGPRSModulationAndCodingIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEGPRSModulationAndCodingIECanonicalAtLength(v EGPRSModulationAndCodingIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEGPRSModulationAndCodingIE, DecodeEGPRSModulationAndCodingIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeEGPRSModulationAndCodingIE, DecodeEGPRSModulationAndCodingIE, nil)
 }
 
 // DecodeEGPRSLevelIE decodes TS 44.060 V19.0.0 §12.10f <EGPRS Level IE>.
@@ -9531,14 +9538,15 @@ func EncodeEGPRSLevelIE(v EGPRSLevelIE) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.10f (finite maximum from the printed CSN.1 grammar).
 // EncodeEGPRSLevelIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeEGPRSLevelIECanonical(v EGPRSLevelIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEGPRSLevelIE, DecodeEGPRSLevelIE, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeEGPRSLevelIE, DecodeEGPRSLevelIE, nil)
 }
 
 // EncodeEGPRSLevelIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeEGPRSLevelIECanonicalAtLength(v EGPRSLevelIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEGPRSLevelIE, DecodeEGPRSLevelIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeEGPRSLevelIE, DecodeEGPRSLevelIE, nil)
 }
 
 // DecodePacketTimingAdvanceIE decodes TS 44.060 V19.0.0 §12.12 <Packet Timing Advance IE>.
@@ -9582,14 +9590,15 @@ func EncodePacketTimingAdvanceIE(v PacketTimingAdvanceIE) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.12 (finite maximum from the printed CSN.1 grammar).
 // EncodePacketTimingAdvanceIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodePacketTimingAdvanceIECanonical(v PacketTimingAdvanceIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodePacketTimingAdvanceIE, DecodePacketTimingAdvanceIE, nil)
+	return runtime.CanonicalEncode(v, 0, 2, false, EncodePacketTimingAdvanceIE, DecodePacketTimingAdvanceIE, nil)
 }
 
 // EncodePacketTimingAdvanceIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodePacketTimingAdvanceIECanonicalAtLength(v PacketTimingAdvanceIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodePacketTimingAdvanceIE, DecodePacketTimingAdvanceIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 2, EncodePacketTimingAdvanceIE, DecodePacketTimingAdvanceIE, nil)
 }
 
 // DecodeTMGIIE decodes TS 44.060 V19.0.0 §12.33 <TMGI IE>.
@@ -9631,21 +9640,22 @@ func EncodeTMGIIE(v TMGIIE) ([]byte, error) {
 	return out, nil
 }
 
+// Canonical maximum: TS 44.060 V19.0.0 §12.33 (finite maximum from the printed CSN.1 grammar).
 // EncodeTMGIIECanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeTMGIIECanonical(v TMGIIE) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 0, false, EncodeTMGIIE, DecodeTMGIIE, nil)
+	return runtime.CanonicalEncode(v, 0, 7, false, EncodeTMGIIE, DecodeTMGIIE, nil)
 }
 
 // EncodeTMGIIECanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeTMGIIECanonicalAtLength(v TMGIIE, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeTMGIIE, DecodeTMGIIE, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 7, EncodeTMGIIE, DecodeTMGIIE, nil)
 }
 func Definitions() []string {
 	return []string{"UTRAN CSG Measurement Report IE", "PLMN-ID struct", "PSC Group IE", "MBMS Channel Parameters IE", "MBMS p-t-m channel description IE", "MPRACH description IE", "MBMS Session List IE", "MBMS Session Parameters List IE", "MPRACH Control Parameters IE", "GPRS Power Control Parameters IE", "GPRS Cell Options IE", "Extension Information", "Frequency Parameters IE", "Indirect encoding struct", "Direct encoding 1 struct", "Direct encoding 2 struct", "GPRS Mobile Allocation IE", "RFL number list struct", "ARFCN index list struct", "PCID Group IE", "Enhanced Cell Reselection Parameters IE", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", "EGPRS Window Size IE", "EGPRS Modulation and Coding IE", "EGPRS Level IE", "Packet Timing Advance IE", "TMGI IE"}
 }
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeUTRANCSGMeasurementReportIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANCSGMeasurementReportIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 11, Decode: func(data []byte) (any, error) { return DecodeUTRANCSGMeasurementReportIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeUTRANCSGMeasurementReportIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANCSGMeasurementReportIE:
 				return EncodeUTRANCSGMeasurementReportIE(v)
@@ -9673,7 +9683,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for UTRANCSGMeasurementReportIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePLMNIDStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePLMNIDStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodePLMNIDStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePLMNIDStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PLMNIDStruct:
 				return EncodePLMNIDStruct(v)
@@ -9869,7 +9879,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MBMSSessionParametersListIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeMPRACHControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMPRACHControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 5, Decode: func(data []byte) (any, error) { return DecodeMPRACHControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeMPRACHControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MPRACHControlParametersIE:
 				return EncodeMPRACHControlParametersIE(v)
@@ -9897,7 +9907,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MPRACHControlParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeGPRSPowerControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSPowerControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeGPRSPowerControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGPRSPowerControlParametersIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSPowerControlParametersIE:
 				return EncodeGPRSPowerControlParametersIE(v)
@@ -10009,7 +10019,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for FrequencyParametersIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeIndirectEncodingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIndirectEncodingStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 2, Decode: func(data []byte) (any, error) { return DecodeIndirectEncodingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeIndirectEncodingStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IndirectEncodingStruct:
 				return EncodeIndirectEncodingStruct(v)
@@ -10265,7 +10275,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for RepeatedEUTRANEnhancedCellReselectionParametersStruct")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSWindowSizeIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSWindowSizeIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSWindowSizeIE:
 				return EncodeEGPRSWindowSizeIE(v)
@@ -10293,7 +10303,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSWindowSizeIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSModulationAndCodingIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSModulationAndCodingIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSModulationAndCodingIE:
 				return EncodeEGPRSModulationAndCodingIE(v)
@@ -10321,7 +10331,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSModulationAndCodingIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSLevelIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeEGPRSLevelIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSLevelIE:
 				return EncodeEGPRSLevelIE(v)
@@ -10349,7 +10359,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EGPRSLevelIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketTimingAdvanceIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 2, Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodePacketTimingAdvanceIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketTimingAdvanceIE:
 				return EncodePacketTimingAdvanceIE(v)
@@ -10377,7 +10387,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for PacketTimingAdvanceIE")
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 0, Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeTMGIIEFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 7, Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeTMGIIEFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case TMGIIE:
 				return EncodeTMGIIE(v)

@@ -1870,15 +1870,15 @@ func EncodeGEA1Bits(v GEA1Bits) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (MS network capability value part maximum 8 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
 // EncodeGEA1BitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeGEA1BitsCanonical(v GEA1Bits) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 8, false, EncodeGEA1Bits, DecodeGEA1Bits, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
 
 // EncodeGEA1BitsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeGEA1BitsCanonicalAtLength(v GEA1Bits, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 8, EncodeGEA1Bits, DecodeGEA1Bits, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
 
 // DecodeExtendedGEABits decodes TS 24.008 V20.1.0 §10.5.5.12 <Extended GEA bits>.
@@ -1922,15 +1922,15 @@ func EncodeExtendedGEABits(v ExtendedGEABits) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (MS network capability value part maximum 8 octets).
+// Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
 // EncodeExtendedGEABitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeExtendedGEABitsCanonical(v ExtendedGEABits) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 8, false, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
+	return runtime.CanonicalEncode(v, 0, 1, false, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
 
 // EncodeExtendedGEABitsCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeExtendedGEABitsCanonicalAtLength(v ExtendedGEABits, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 8, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
 
 // DecodeSpareBits decodes TS 24.008 V20.1.0 §10.5.5.12 <Spare bits>.
@@ -2015,7 +2015,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for MSNetworkCapabilityValuePart")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "GEA1 bits", MaxOctets: 8, Decode: func(data []byte) (any, error) { return DecodeGEA1Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGEA1BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "GEA1 bits", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeGEA1Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeGEA1BitsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GEA1Bits:
 				return EncodeGEA1Bits(v)
@@ -2043,7 +2043,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for GEA1Bits")
 			}
 		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Extended GEA bits", MaxOctets: 8, Decode: func(data []byte) (any, error) { return DecodeExtendedGEABits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedGEABitsFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Extended GEA bits", MaxOctets: 1, Decode: func(data []byte) (any, error) { return DecodeExtendedGEABits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeExtendedGEABitsFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedGEABits:
 				return EncodeExtendedGEABits(v)

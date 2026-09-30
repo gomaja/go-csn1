@@ -2618,15 +2618,15 @@ func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
 	return out, nil
 }
 
-// Canonical maximum: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (EMR containing Bter SACCH field maximum 21 octets).
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55 (finite maximum from the printed CSN.1 grammar).
 // EncodeServingCellDataStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeServingCellDataStructCanonical(v ServingCellDataStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 21, false, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
 }
 
 // EncodeServingCellDataStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeServingCellDataStructCanonicalAtLength(v ServingCellDataStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 21, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeServingCellDataStruct, DecodeServingCellDataStruct, nil)
 }
 
 // DecodeRepeatedInvalidBSICInformationStruct decodes TS 44.018 V19.0.0 §9.1.55 <Repeated Invalid_BSIC_Information struct>.
@@ -2670,15 +2670,15 @@ func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformation
 	return out, nil
 }
 
-// Canonical maximum: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (EMR containing Bter SACCH field maximum 21 octets).
+// Canonical maximum: TS 44.018 V19.0.0 §9.1.55 (finite maximum from the printed CSN.1 grammar).
 // EncodeRepeatedInvalidBSICInformationStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
 func EncodeRepeatedInvalidBSICInformationStructCanonical(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
-	return runtime.CanonicalEncode(v, 0, 21, false, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
+	return runtime.CanonicalEncode(v, 0, 3, false, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
 }
 
 // EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength encodes into the value length supplied by the containing message.
 func EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v RepeatedInvalidBSICInformationStruct, octets int) ([]byte, error) {
-	return runtime.CanonicalEncodeAtLength(v, octets, 0, 21, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
+	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeRepeatedInvalidBSICInformationStruct, DecodeRepeatedInvalidBSICInformationStruct, nil)
 }
 
 // DecodeEUTRANMeasurementReportStruct decodes TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>.
@@ -2765,7 +2765,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for EnhancedMeasurementReport")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 21, Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeServingCellDataStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeServingCellDataStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ServingCellDataStruct:
 				return EncodeServingCellDataStruct(v)
@@ -2793,7 +2793,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, fmt.Errorf("wrong value type for ServingCellDataStruct")
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 21, Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedInvalidBSICInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) { return DecodeRepeatedInvalidBSICInformationStructFrom(r) }, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedInvalidBSICInformationStruct:
 				return EncodeRepeatedInvalidBSICInformationStruct(v)
