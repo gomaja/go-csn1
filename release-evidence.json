@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "61113b4c72f1725cdeef7bd25a46f248009c0b28",
+  "compiler_commit": "fc7f7e966c5663c679debd2bfb5764cc5968daa6",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1652,15 +1652,15 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "7474ecb52039b4c5015fee94cacc3613928d09d4ad2f850534850b71d3aa01b9"
+      "sha256": "a3a2d2fd7fc0bf120f404313eda2f97f772bdb9b35b22684f95924319f21f004"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "1707a0085bab2d8650fb35c5fcff6e5bc276902f4e445f3d95fb34bc43be7fce"
+      "sha256": "4b3c174ebdbf5eb0d8095228c9bd0a35fc4b5e8431bece23ce82c34b32ecf51c"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "5bbedb35b2654189b1cb5f1421669d3ec1e7c5d7b9b8c06ece608122a35c08a9"
+      "sha256": "7cf81ae387dadfc6c9d81842a6e091955845ccfe7aacd7ed505b71b204ae7c0d"
     },
     {
       "path": "ts36331/uecapability/generated.go",
@@ -1668,15 +1668,15 @@
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "c003cd3203bef3239d230d4ab8f5c76e5363c54f6a2df159810e5d50da4b9d94"
+      "sha256": "898844406cc089d1b85be9207b6ceea6451b3839f7fe2e6b7aea1ac458bf7ac8"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "49a578925f705216f4ec9c4b786f92cbb9440264b85b67fb65648310d89a45f1"
+      "sha256": "573a0d86967f0ca334ba9ec6a5604a8b61cf7d9d9f24f88517b6f969cc6bf86c"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "17818e149e1fcc4be8019e151a5b792a401ba5080190cf7c50d36ae749f9db7c"
+      "sha256": "00c6372f1c1bbc7ba33767995827a42f88aba9454471fa3582906378eb4eaf83"
     },
     {
       "path": "ts44060/ies/generated.go",

@@ -9,76 +9,82 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
-func TestEnhancedMeasurementReportPreRel8NeighbourCount(t *testing.T) {
-	// TS 44.018 V19.0.0 §§3.4.1.2.1.3, 9.1.55: the pre-Rel-8
-	// bitmap's extent comes from the serving cell's Neighbour Cell list.
-	// The small counts here isolate the codec boundary; §9.1.55 requires
-	// at least 96 positions when a bitmap is transmitted by an MS.
+func TestEnhancedMeasurementReportPreRel8Bitmap(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55: redundant no-report positions
+	// remain typed bitmap positions, independent of the neighbour list size.
 	for _, count := range []int{0, 1, 2, 96} {
 		entries := make([]*uint8, count)
 		value := EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries,
 			BITMAPLENGTHChoice: EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}}
-		wire, err := EncodeEnhancedMeasurementReportWithContext(value, count)
+		wire, err := EncodeEnhancedMeasurementReport(value)
 		if err != nil {
 			t.Fatalf("count %d encode: %v", count, err)
 		}
-		decoded, err := DecodeEnhancedMeasurementReportWithContext(wire, count)
+		decoded, err := DecodeEnhancedMeasurementReport(wire)
 		if err != nil {
 			t.Fatalf("count %d decode %x: %v", count, wire, err)
 		}
-		if decoded.Value.REPORTINGQUANTITYList == nil || len(*decoded.Value.REPORTINGQUANTITYList) != count || decoded.BitsConsumed != len(wire)*8 || decoded.Tail.BitLength != 0 {
+		if decoded.Value.REPORTINGQUANTITYList == nil || len(*decoded.Value.REPORTINGQUANTITYList) != 96 || decoded.BitsConsumed != len(wire)*8 || decoded.Tail.BitLength != 0 {
 			t.Fatalf("count %d boundary: %+v", count, decoded)
 		}
-		again, err := EncodeEnhancedMeasurementReportWithContext(decoded.Value, count)
+		again, err := EncodeEnhancedMeasurementReport(decoded.Value)
 		if err != nil || !bytes.Equal(again, wire) {
 			t.Fatalf("count %d round trip %x -> %x: %v", count, wire, again, err)
 		}
-		if count == 2 && !bytes.Equal(wire, []byte{0x10, 0x02, 0x2b}) {
+		if count == 2 && !bytes.Equal(wire, []byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}) {
 			t.Fatalf("issue reproducer changed: %x", wire)
 		}
 	}
 }
 
-func TestEnhancedMeasurementReportPreRel8ContextErrors(t *testing.T) {
-	value := EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &[]*uint8{nil, nil},
-		BITMAPLENGTHChoice: EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}}
-	wire, err := EncodeEnhancedMeasurementReport(value)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var required *runtime.NeighbourCellCountRequiredError
-	if _, err := DecodeEnhancedMeasurementReport(wire); !errors.As(err, &required) || !errors.Is(err, runtime.ErrNeighbourCellCountRequired) || required.BitsConsumed <= 0 {
-		t.Fatalf("missing neighbour-count error with consumed position: %v", err)
-	}
-	if _, err := EncodeEnhancedMeasurementReportWithContext(value, 1); err == nil {
-		t.Fatal("accepted mismatched neighbour count")
-	}
-	for _, count := range []int{-1, 97} {
-		if _, err := DecodeEnhancedMeasurementReportWithContext(wire, count); err == nil {
-			t.Fatalf("accepted invalid neighbour count %d", count)
+func TestEnhancedMeasurementReportPreRel8WireBoundary(t *testing.T) {
+	// TS 44.018 V19.0.0 §9.1.55 permits omitted trailing no-report
+	// positions only when the message cannot hold them.
+	for _, tc := range []struct {
+		wire []byte
+		want int
+	}{
+		{[]byte{0x10, 0x02}, 1},
+		{[]byte{0x10, 0x02, 0}, 9},
+	} {
+		d, err := DecodeEnhancedMeasurementReport(tc.wire)
+		if err != nil || d.Value.REPORTINGQUANTITYList == nil || len(*d.Value.REPORTINGQUANTITYList) != tc.want {
+			t.Fatalf("%x: got %+v, %v", tc.wire, d, err)
+		}
+		reencoded, err := EncodeEnhancedMeasurementReport(d.Value)
+		if err != nil || !bytes.Equal(reencoded, tc.wire) {
+			t.Fatalf("%x -> %x: %v", tc.wire, reencoded, err)
 		}
 	}
-	// The Rel-8 bitmap carries its own BITMAP_LENGTH and needs no context.
-	if _, err := DecodeEnhancedMeasurementReport([]byte{0x10, 0, 0, 0}); err != nil {
-		t.Fatalf("Rel-8 context unexpectedly required: %v", err)
+	for _, wire := range [][]byte{{0x10, 0x03}, {0x10, 0x02, 0x2b}} {
+		_, err := DecodeEnhancedMeasurementReport(wire)
+		var decoded *runtime.DecodeError
+		if !errors.As(err, &decoded) || decoded.Kind != runtime.Truncated || decoded.Offset <= 15 {
+			t.Fatalf("truncated report %x: %v", wire, err)
+		}
+	}
+	entries := make([]*uint8, 97)
+	value := EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries}
+	if _, err := EncodeEnhancedMeasurementReport(value); err == nil {
+		t.Fatal("encoded more than 96 pre-Rel-8 bitmap positions")
 	}
 }
 
-func FuzzEnhancedMeasurementReportWithNeighbourCount(f *testing.F) {
-	f.Add([]byte{0x10, 0x02, 0x2b}, uint8(2))
-	f.Add([]byte{0x10, 0, 0, 0}, uint8(96))
-	f.Fuzz(func(t *testing.T, wire []byte, count uint8) {
+func FuzzEnhancedMeasurementReportBitmap(f *testing.F) {
+	f.Add([]byte{0x10, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+	f.Add([]byte{0x10, 0, 0, 0})
+	f.Fuzz(func(t *testing.T, wire []byte) {
 		// TS 44.006 V19.0.0 §8.8.3: Bter FACCH/SDCCH N201 is 23 octets.
 		if len(wire) > 23 {
 			return
 		}
-		decoded, err := DecodeEnhancedMeasurementReportWithContext(wire, int(count))
+		decoded, err := DecodeEnhancedMeasurementReport(wire)
 		if err != nil {
 			return
 		}
-		encoded, err := EncodeEnhancedMeasurementReportWithContext(decoded.Value, int(count))
+		encoded, err := EncodeEnhancedMeasurementReport(decoded.Value)
 		if err != nil || !bytes.Equal(encoded, wire) {
-			t.Fatalf("count %d: %x -> %x: %v", count, wire, encoded, err)
+			t.Fatalf("%x -> %x: %v", wire, encoded, err)
 		}
 	})
 }

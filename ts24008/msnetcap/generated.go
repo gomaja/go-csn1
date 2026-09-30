@@ -1801,7 +1801,14 @@ func EncodeMSNetworkCapabilityValuePart(v MSNetworkCapabilityValuePart) ([]byte,
 	if err := encodeMSNetworkCapabilityValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("MSNetworkCapabilityValuePart requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodeGEA1Bits decodes TS 24.008 V20.1.0 §10.5.5.12 <GEA1 bits>.

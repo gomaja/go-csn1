@@ -78,8 +78,6 @@ runtime/direct.go:conversion:uint(r.pos % 8)	1	BOUNDED: operand=r.pos intrinsic=
 runtime/direct.go:conversion:uint(w.bits % 8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:544
 runtime/direct.go:conversion:uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:561
 runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen guard=runtime/direct.go:233
-runtime/direct.go:conversion:uint64(count)	2	BOUNDED: operand=count guard=runtime/direct.go:875; operand=count guard=runtime/direct.go:891
-runtime/direct.go:conversion:int(v)	2	BOUNDED: operand=v guard=runtime/direct.go:884; operand=v guard=runtime/direct.go:900
 runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:834
 runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:565
 runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
@@ -115,7 +113,7 @@ ts36331/uecapability/generated.go:arithmetic:len(data) - 3	1	BOUNDED: Classmark 
 ts36331/uecapability/generated.go:arithmetic:v.RevisionLevel << 5	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
 ts36331/uecapability/generated.go:arithmetic:v.SSScreeningIndicator << 4	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
 ts44018/measurement/generated.go:arithmetic:count++	9	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/measurement/generated.go:arithmetic:i++	3	BOUNDED: generator emits i<count after Eval or SpareCount; pre-Rel-8 EMR count is bounded to 0..96 by runtime/direct.go:SetNeighbourCellCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
+ts44018/measurement/generated.go:arithmetic:i++	4	BOUNDED: pre-Rel-8 bitmap decode and fill loops use literal i<96; other generated loops use counts checked by Eval; AST source proof at internal/arithaudit/loops.go:79
 ts44018/measurement/generated.go:arithmetic:matches++	9	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
 ts44018/measurement/generated.go:conversion:uint16(v)	1	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
 ts44018/measurement/generated.go:conversion:uint64(v)	49	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25

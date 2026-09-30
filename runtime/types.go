@@ -20,19 +20,6 @@ var ErrUnsupported = errors.New("unsupported CSN.1 value")
 // a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35).
 var ErrContextRequired = errors.New("CSN.1 context required")
 
-// ErrNeighbourCellCountRequired means the pre-Rel-8 Enhanced Measurement
-// Report bitmap needs the serving cell's Neighbour Cell list size. TS 44.018
-// V19.0.0 §§3.4.1.2.1.3, 9.1.55 gives it no on-wire length field.
-var ErrNeighbourCellCountRequired = errors.New("neighbour cell count required")
-
-type NeighbourCellCountRequiredError struct{ BitsConsumed int }
-
-func (e *NeighbourCellCountRequiredError) Error() string {
-	return fmt.Sprintf("%s at bit %d", ErrNeighbourCellCountRequired, e.BitsConsumed)
-}
-
-func (e *NeighbourCellCountRequiredError) Unwrap() error { return ErrNeighbourCellCountRequired }
-
 type ContextRequiredError struct{ Standard, Clause, Name string }
 
 func (e *ContextRequiredError) Error() string {

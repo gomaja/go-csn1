@@ -136,14 +136,16 @@ func TestGeneratedLoopArithmeticRequiresBoundedSource(t *testing.T) {
 type reader struct{}
 func (r *reader) Eval(string) (int,error) { return 2,nil }
 func decode(r *reader) { count,_ := r.Eval("2"); for i:=0;i<count;i++ {} }
+func decodeBitmap(r *reader, entries []int) { for i:=0;i<96 && len(entries)>0;i++ {}; for i:=len(entries);i<96;i++ {} }
 func encode(entries []int) { for i := range entries { if i+1<len(entries) {} } }
 `)
 	incs, next, err := CheckGeneratedLoopArithmetic("generated.go", good)
-	if err != nil || incs != 1 || next != 1 {
+	if err != nil || incs != 3 || next != 1 {
 		t.Fatalf("bounded loops: incs=%d next=%d err=%v", incs, next, err)
 	}
 	for _, bad := range []string{
 		`package sample; func decode(count int) { for i:=0;i<count;i++ {} }`,
+		`package sample; func decode(entries []int) { for i:=len(entries);i<1<<63;i++ {} }`,
 		`package sample; type reader struct{}; func (r *reader) Eval(string)(int,error){return 1,nil}; func decode(r *reader,n int) { count,_:=r.Eval("1"); count=n; for i:=0;i<count;i++ {} }`,
 		`package sample; func decode(remaining int) { count:=remaining/8; for i:=0;i<count;i++ {} }`,
 		`package sample; type reader struct{}; func (r *reader) Eval(string)(int,error){return 1,nil}; func decode(r *reader) { count,_:=r.Eval("1"); for i:=0;i<count;i++ { count++ } }`,

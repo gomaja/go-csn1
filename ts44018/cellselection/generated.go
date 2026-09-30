@@ -1905,6 +1905,9 @@ func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []by
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, err
 	}
+	if len(data) < 2 {
+		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart requires at least 16 bits"}
+	}
 	input := data
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
@@ -1924,7 +1927,14 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v CellSel
 	if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 2 {
+		return nil, fmt.Errorf("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart requires at least 16 bits")
+	}
+	return out, nil
 }
 
 // DecodeGSMDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <GSM Description struct>.

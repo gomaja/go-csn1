@@ -69901,7 +69901,14 @@ func EncodeIARRestOctets(v IARRestOctets) ([]byte, error) {
 	if err := encodeIARRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 3 {
+		return nil, fmt.Errorf("IARRestOctets requires at least 24 bits")
+	}
+	return out, nil
 }
 
 // DecodePEOIMMCellGroupDetailsStructClause105217 decodes TS 44.018 V19.0.0 §10.5.2.17 <PEO IMM Cell Group Details struct>.
@@ -70060,7 +70067,14 @@ func EncodeSI1RestOctets(v SI1RestOctets) ([]byte, error) {
 	if err := encodeSI1RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("SI1RestOctets requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodeBandIndicatorClause105232 decodes TS 44.018 V19.0.0 §10.5.2.32 <Band indicator>.
@@ -70141,7 +70155,14 @@ func EncodeSI2bisRestOctets(v SI2bisRestOctets) ([]byte, error) {
 	if err := encodeSI2bisRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("SI2bisRestOctets requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodeSI2nRestOctets decodes TS 44.018 V19.0.0 §10.5.2.33c <SI2n Rest Octets>.
@@ -70186,7 +70207,14 @@ func EncodeSI2nRestOctets(v SI2nRestOctets) ([]byte, error) {
 	if err := encodeSI2nRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI2nRestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeGSMNeighbourCellSelectionParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.33c <GSM Neighbour Cell Selection params struct>.
@@ -70301,7 +70329,14 @@ func EncodeSI3RestOctet(v SI3RestOctet) ([]byte, error) {
 	if err := encodeSI3RestOctet(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 4 {
+		return nil, fmt.Errorf("SI3RestOctet requires at least 32 bits")
+	}
+	return out, nil
 }
 
 // DecodeOptionalSelectionParametersClause105234 decodes TS 44.018 V19.0.0 §10.5.2.34 <Optional Selection Parameters>.
@@ -70740,7 +70775,14 @@ func EncodeSI16RestOctets(v SI16RestOctets) ([]byte, error) {
 	if err := encodeSI16RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI16RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeSI17RestOctets decodes TS 44.018 V19.0.0 §10.5.2.37f <SI17 Rest Octets>.
@@ -70785,7 +70827,14 @@ func EncodeSI17RestOctets(v SI17RestOctets) ([]byte, error) {
 	if err := encodeSI17RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI17RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeLSAParametersClause105237e decodes TS 44.018 V19.0.0 §10.5.2.37e <LSA Parameters>.
@@ -70938,7 +70987,14 @@ func EncodeSI14RestOctets(v SI14RestOctets) ([]byte, error) {
 	if err := encodeSI14RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 16 {
+		return nil, fmt.Errorf("SI14RestOctets requires at least 128 bits")
+	}
+	return out, nil
 }
 
 // DecodeDYNAMICARFCNMAPPINGClause105237j decodes TS 44.018 V19.0.0 §10.5.2.37j <DYNAMIC ARFCN MAPPING>.
@@ -71019,7 +71075,14 @@ func EncodeSI15RestOctets(v SI15RestOctets) ([]byte, error) {
 	if err := encodeSI15RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI15RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeDYNAMICARFCNMAPPINGClause105237k decodes TS 44.018 V19.0.0 §10.5.2.37k <DYNAMIC ARFCN MAPPING>.
@@ -71100,7 +71163,14 @@ func EncodeSI21RestOctets(v SI21RestOctets) ([]byte, error) {
 	if err := encodeSI21RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI21RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeNetworkSharingEABInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37m <Network Sharing EAB Information struct>.
@@ -71181,7 +71251,14 @@ func EncodeSI22RestOctets(v SI22RestOctets) ([]byte, error) {
 	if err := encodeSI22RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI22RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeNetworkSharingInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37n <Network Sharing Information struct>.
@@ -71262,7 +71339,14 @@ func EncodeSI23RestOctets(v SI23RestOctets) ([]byte, error) {
 	if err := encodeSI23RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI23RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeIRATCellReselectionInformationStruct decodes TS 44.018 V19.0.0 §10.5.2.37o <IRAT Cell Reselection Information struct>.
@@ -71523,7 +71607,14 @@ func EncodeSI10RestOctets(v SI10RestOctets) ([]byte, error) {
 	if err := encodeSI10RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI10RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeNeighbourInformation decodes TS 44.018 V19.0.0 §10.5.2.44 <neighbour information>.
@@ -71993,7 +72084,14 @@ func EncodeSI9RestOctets(v SI9RestOctets) ([]byte, error) {
 	if err := encodeSI9RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 17 {
+		return nil, fmt.Errorf("SI9RestOctets requires at least 136 bits")
+	}
+	return out, nil
 }
 
 // DecodeSchedulingInfo decodes TS 44.018 V19.0.0 §10.5.2.37a <Scheduling info>.
@@ -72176,7 +72274,14 @@ func EncodeSI2terRestOctets(v SI2terRestOctets) ([]byte, error) {
 	if err := encodeSI2terRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 4 {
+		return nil, fmt.Errorf("SI2terRestOctets requires at least 32 bits")
+	}
+	return out, nil
 }
 
 // DecodeUTRANFDDDescriptionStructClause105233a decodes TS 44.018 V19.0.0 §10.5.2.33a <UTRAN FDD Description struct>.
@@ -72983,7 +73088,14 @@ func EncodeSI13altRestOctets(v SI13altRestOctets) ([]byte, error) {
 	if err := encodeSI13altRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI13altRestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodePBCCHDescription2Struct decodes TS 44.018 V19.0.0 §10.5.2.37l <PBCCH Description 2 struct>.
@@ -73062,7 +73174,14 @@ func EncodeP2RestOctets(v P2RestOctets) ([]byte, error) {
 	if err := encodeP2RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("P2RestOctets requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodePriorityClause105224 decodes TS 44.018 V19.0.0 §10.5.2.24 <Priority>.
@@ -73213,7 +73332,14 @@ func EncodeP3RestOctets(v P3RestOctets) ([]byte, error) {
 	if err := encodeP3RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 3 {
+		return nil, fmt.Errorf("P3RestOctets requires at least 24 bits")
+	}
+	return out, nil
 }
 
 // DecodePriorityClause105225 decodes TS 44.018 V19.0.0 §10.5.2.25 <Priority>.
@@ -73330,7 +73456,14 @@ func EncodeSI2quaterRestOctets(v SI2quaterRestOctets) ([]byte, error) {
 	if err := encodeSI2quaterRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI2quaterRestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeN3GNeighbourCellDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.33b <3G Neighbour Cell Description struct>.
@@ -74667,7 +74800,14 @@ func EncodeSI6RestOctets(v SI6RestOctets) ([]byte, error) {
 	if err := encodeSI6RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 7 {
+		return nil, fmt.Errorf("SI6RestOctets requires at least 56 bits")
+	}
+	return out, nil
 }
 
 // DecodePCHAndNCHInfo decodes TS 44.018 V19.0.0 §10.5.2.35a <PCH and NCH info>.
@@ -74928,7 +75068,14 @@ func EncodeSI13RestOctets(v SI13RestOctets) ([]byte, error) {
 	if err := encodeSI13RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI13RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodePBCCHDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.37b <PBCCH Description struct>.
@@ -75115,7 +75262,14 @@ func EncodeSI19RestOctets(v SI19RestOctets) ([]byte, error) {
 	if err := encodeSI19RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI19RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeCOMPACTNeighbourCellParamsStruct decodes TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Neighbour Cell params struct>.
@@ -75268,7 +75422,14 @@ func EncodeSI18RestOctets(v SI18RestOctets) ([]byte, error) {
 	if err := encodeSI18RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI18RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeNonGSMMessageStruct decodes TS 44.018 V19.0.0 §10.5.2.37h <Non-GSM Message struct>.
@@ -75349,7 +75510,14 @@ func EncodeIPARestOctets(v IPARestOctets) ([]byte, error) {
 	if err := encodeIPARestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 19 {
+		return nil, fmt.Errorf("IPARestOctets requires at least 152 bits")
+	}
+	return out, nil
 }
 
 // DecodeIPAUplinkAssignmentStruct decodes TS 44.018 V19.0.0 §10.5.2.78 <IPA Uplink Assignment struct>.
@@ -75574,7 +75742,14 @@ func EncodeSI20RestOctets(v SI20RestOctets) ([]byte, error) {
 	if err := encodeSI20RestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("SI20RestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeGroupCallInformation decodes TS 44.018 V19.0.0 §9.1.21a <Group Call information>.
@@ -75759,7 +75934,14 @@ func EncodeNTNRestOctets(v NTNRestOctets) ([]byte, error) {
 	if err := encodeNTNRestOctets(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 20 {
+		return nil, fmt.Errorf("NTNRestOctets requires at least 160 bits")
+	}
+	return out, nil
 }
 
 // DecodeListOfGroupCallNCHInformation decodes TS 44.018 V19.0.0 §10.5.2.22c <List of Group Call NCH information>.

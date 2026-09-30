@@ -6031,7 +6031,14 @@ func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
 	if err := encodeMSRACapabilityValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 2 {
+		return nil, fmt.Errorf("MSRACapabilityValuePart requires at least 16 bits")
+	}
+	return out, nil
 }
 
 // DecodeMSRACapabilityValuePartStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part struct>.

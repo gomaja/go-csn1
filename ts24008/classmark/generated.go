@@ -5053,7 +5053,14 @@ func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 	if err := encodeClassmark3ValuePart(w, v); err != nil {
 		return nil, err
 	}
-	return w.Finish(v.Wire.Tail)
+	out, err := w.Finish(v.Wire.Tail)
+	if err != nil {
+		return nil, err
+	}
+	if len(out) < 1 {
+		return nil, fmt.Errorf("Classmark3ValuePart requires at least 8 bits")
+	}
+	return out, nil
 }
 
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.1.7 <A5 bits>.

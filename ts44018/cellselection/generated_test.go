@@ -60,6 +60,24 @@ func TestCellSelectionAfterReleaseRATBranches(t *testing.T) {
 	}
 }
 
+func TestCellSelectionAfterReleaseMinimumValueLength(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.1e: four octets for the whole
+	// type 4 IE means at least two octets in this value-part API.
+	if _, err := DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart([]byte{0}); err == nil {
+		t.Fatal("accepted a one-octet value part")
+	}
+	value := CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart{GSMDescriptionChoice: CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice{
+		Alternative:    CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeGSMDescription,
+		GSMDescription: &CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription{},
+	}}
+	if _, err := EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value); err == nil {
+		t.Fatal("encoded a one-octet value part")
+	}
+	if _, err := DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart([]byte{0, 0}); err != nil {
+		t.Fatalf("rejected a two-octet value part: %v", err)
+	}
+}
+
 func FuzzCellSelectionAfterRelease(f *testing.F) {
 	f.Add([]byte{0x10, 0, 0})
 	f.Fuzz(func(t *testing.T, wire []byte) {
