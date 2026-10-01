@@ -135,9 +135,9 @@ func checkGERANFile(t *testing.T, path, name string) {
 }
 
 func compareEMRExpected(row int, record geranRecord, wire []byte) string {
-	// TS 44.018 V19.0.0 §9.1.55. The seventh file record (10022b)
-	// was produced by an old encoder with 0x2b inside the pre-Rel-8
-	// bitmap. It is truncated at bit 24, not a conforming round trip.
+	// TS 44.018 V19.0.0 §9.1.55: the pre-Rel-8 bitmap carries at least
+	// 96 neighbour cell entries, and unused positions are 0. The seventh
+	// record is the conforming encoding of a value with no reports.
 	expected := []struct{ name, result string }{
 		{"flags only", "valid: decodes, no reports"},
 		{"serving cell and invalid BSIC", "valid: decodes"},
@@ -145,19 +145,12 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 		{"release 8 bitmap", "valid: decodes"},
 		{"release 9 UTRAN CSG and release 11 SI23_BA_USED", "valid: decodes, including the release 9 and 11 additions"},
 		{"release 8 E-UTRAN measurement report", "valid: decodes to bitmap length 1 (report 33) and two E-UTRAN cells"},
-		{"encoder output of a two-entry absent bitmap", "must round-trip: the encoder's own output for a value with two absent bitmap positions should decode back to that value"},
+		{"bitmap present, 96 no-report positions", "valid; 96 no-report positions (TS 44.018 V19.0.0 §9.1.55: at least 96 neighbour cell entries shall be encoded in the bitmap; unused positions are 0)"},
 	}
 	if row < 1 || row > len(expected) || record.Name != expected[row-1].name || record.Expected != expected[row-1].result || record.Source != "synthetic" || !strings.Contains(record.Type, "TS 44.018 V19.0.0 §9.1.55") {
 		return "unexpected EMR training record or expectation"
 	}
 	d, err := measurement.DecodeEnhancedMeasurementReport(wire)
-	if row == 7 {
-		var decodeErr *runtime.DecodeError
-		if !errors.As(err, &decodeErr) || decodeErr.Kind != runtime.Truncated || decodeErr.Offset != 24 {
-			return fmt.Sprintf("obsolete encoder output: want Truncated at bit 24, got %v", err)
-		}
-		return ""
-	}
 	if err != nil {
 		return fmt.Sprintf("decode: %v", err)
 	}
@@ -188,6 +181,15 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 	case 3:
 		if v.REPORTINGQUANTITYList == nil || len(*v.REPORTINGQUANTITYList) != 96 || v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
 			return "pre-Rel-8 bitmap does not occupy 96 typed positions"
+		}
+	case 7:
+		if v.REPORTINGQUANTITYList == nil || len(*v.REPORTINGQUANTITYList) != 96 || v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+			return "pre-Rel-8 bitmap does not occupy 96 typed positions"
+		}
+		for i, q := range *v.REPORTINGQUANTITYList {
+			if q != nil {
+				return fmt.Sprintf("bitmap position %d reports a quantity; want no report", i)
+			}
 		}
 	case 4, 5, 6:
 		b := v.BITMAPLENGTHChoice.BITMAPLENGTH
