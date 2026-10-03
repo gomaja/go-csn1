@@ -3,11 +3,16 @@ package registry
 import (
 	"bytes"
 	"encoding/hex"
+	"errors"
 	"math/rand"
+	"os"
+	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts44060/ies"
 )
 
 // canonicalAtSomeExtent returns the first explicit extent that a definition
@@ -164,4 +169,97 @@ var boundedTruncationDefinitions = []struct {
 	{"TS 44.060", "12.24", "GPRS Cell Options IE", 40},
 	{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", 20},
 	{"TS 44.060", "12.24", "Extension Information", 40},
+}
+
+// TestBoundConflictIsTyped covers an Extension Length too short for the typed
+// Extension Information (TS 44.060 V19.0.0 §12.24). Encoding refuses it and
+// keeps the typed length; the refusal is a *runtime.BoundError naming the
+// bound, the encoder path and the conflicting field.
+func TestBoundConflictIsTyped(t *testing.T) {
+	wire, _ := hex.DecodeString("b0e1d5122d103fc76dfdb8ebeb652a")
+	decoded, err := ies.DecodeGPRSCellOptionsIE(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const extension = "GPRSCellOptionsIE/GPRSCellOptionsIEExtensionLengthGroup/ExtensionInformation"
+	for _, tc := range []struct {
+		name  string
+		edit  func(*ies.GPRSCellOptionsIE)
+		fresh bool
+		want  runtime.BoundError
+	}{
+		// The 9-bit extension ends at bit 43 after the R99 group; CCN_ACTIVE
+		// = 1 cannot be omitted, and the bound cannot carry it.
+		{"canonical nonzero omitted field", func(v *ies.GPRSCellOptionsIE) {
+			v.ExtensionLengthGroup.Content.Known.Group2.CCNACTIVE = 1
+		}, true, runtime.BoundError{Kind: runtime.LengthBound, Path: extension, Field: "Group2", Limit: 43, Position: 43}},
+		// The decoded value recorded its truncation after the R99 group.
+		{"decoded nonzero omitted field", func(v *ies.GPRSCellOptionsIE) {
+			v.ExtensionLengthGroup.Content.Known.Group2.CCNACTIVE = 1
+		}, false, runtime.BoundError{Kind: runtime.ReceivedTruncation, Path: extension, Field: "Group2", Limit: 43, Position: 43}},
+		// An 8-bit extension ends at bit 42, inside the 9-bit R99 group.
+		{"length inside a component", func(v *ies.GPRSCellOptionsIE) {
+			v.ExtensionLengthGroup.ExtensionLength = 7
+		}, true, runtime.BoundError{Kind: runtime.LengthBound, Field: "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATION", Limit: 42, Position: 42}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			value := runtime.Canonical(decoded.Value)
+			if !tc.fresh {
+				value = decoded.Value
+				known := *value.ExtensionLengthGroup.Content.Known
+				group := *value.ExtensionLengthGroup
+				group.Content.Known = &known
+				value.ExtensionLengthGroup = &group
+			}
+			tc.edit(&value)
+			var err error
+			if tc.fresh {
+				_, err = ies.EncodeGPRSCellOptionsIECanonicalAtLength(value, 6)
+			} else {
+				_, err = ies.EncodeGPRSCellOptionsIE(value)
+			}
+			var bound *runtime.BoundError
+			if !errors.As(err, &bound) || !errors.Is(err, runtime.ErrBoundConflict) {
+				t.Fatalf("error %v (%T) is not a typed bound conflict", err, err)
+			}
+			path := bound.Path == tc.want.Path
+			if tc.want.Path == "" {
+				// A conflict inside a component names that component's path.
+				path = strings.HasPrefix(bound.Path, extension+"/") && strings.HasSuffix(bound.Path, "/"+tc.want.Field)
+			}
+			if !path || bound.Kind != tc.want.Kind || bound.Field != tc.want.Field || bound.Limit != tc.want.Limit || bound.Position != tc.want.Position {
+				t.Fatalf("bound conflict %+v, want %+v", *bound, tc.want)
+			}
+			if decoded.Value.ExtensionLengthGroup.ExtensionLength != 8 || decoded.Value.ExtensionLengthGroup.Content.Known.Group2.CCNACTIVE != 0 {
+				t.Fatal("test edited the decoded value")
+			}
+		})
+	}
+}
+
+// TestGeneratedBoundConflictsAreTyped checks every generated codec: an
+// encoder that rejects content for its enclosing length, fixed size or
+// truncation point must return a typed runtime error, never fmt.Errorf.
+func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
+	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
+	if err != nil || len(files) != 8 {
+		t.Fatalf("generated files %v, %v", files, err)
+	}
+	var omitted, length int
+	for _, file := range files {
+		source, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, untyped := range []string{"beyond transmitted truncation", `fmt.Errorf("SI stop record`, `fmt.Errorf("continuation container`, `fmt.Errorf("empty alternative`, `fmt.Errorf("nonempty alternative`, `fmt.Errorf("fixed value`} {
+			if strings.Contains(string(source), untyped) {
+				t.Errorf("%s emits untyped %q", file, untyped)
+			}
+		}
+		omitted += strings.Count(string(source), "w.OmittedFieldError(")
+		length += strings.Count(string(source), "w.LengthBoundError(")
+	}
+	if omitted == 0 || length != 5 {
+		t.Fatalf("typed bound checks: %d omitted-field, %d length", omitted, length)
+	}
 }

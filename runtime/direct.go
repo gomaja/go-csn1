@@ -446,6 +446,39 @@ func (w *Writer) TruncationReached() bool {
 	}
 	return w.CanonicalTargetReached()
 }
+
+// OmittedFieldError reports a nonzero field after the point where a truncated
+// concatenation ends. Only zero components may be omitted (TS 44.060 V19.0.0
+// §12.24: "The receiver shall assume the value zero for any truncated bit";
+// TS 44.018 V19.0.0 §8.9). The bound is the one TruncationReached applied,
+// or the decoded value's recorded truncation point.
+func (w *Writer) OmittedFieldError(field string) error {
+	detail := "nonzero field omitted from a truncated concatenation; only zero components may be omitted"
+	switch {
+	case !w.wire.sealed && w.bounded && w.bits >= w.limit:
+		return w.boundError(LengthBound, w.limit, field, detail)
+	case w.CanonicalTargetReached():
+		return w.boundError(CanonicalTarget, w.wire.targetBits, field, detail)
+	default:
+		return w.boundError(ReceivedTruncation, w.bits, field, detail)
+	}
+}
+
+// LengthBoundError reports content that cannot fill or fit its enclosing
+// length-delimited or fixed-size value.
+func (w *Writer) LengthBoundError(detail string) error {
+	return w.boundError(LengthBound, w.BoundEndOr(-1), "", detail)
+}
+
+func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) error {
+	if field == "" {
+		field = w.path
+		if i := strings.LastIndexByte(w.path, '/'); i >= 0 {
+			field = strings.TrimPrefix(w.path[i:], "/")
+		}
+	}
+	return &BoundError{Kind: kind, Path: w.path, Field: field, Detail: detail, Limit: limit, Position: w.bits}
+}
 func (w *Writer) Canonical() bool { return w.wire.canonical }
 func (w *Writer) Truncation(path string) (int, bool) {
 	n, ok := w.wire.TruncatedAt[path]
@@ -493,8 +526,11 @@ func (w *Writer) BoundEndOr(unbounded int) int {
 	return unbounded
 }
 func (w *Writer) PushLimit(width int) (int, error) {
-	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits || width > w.limit-w.bits) {
-		return 0, fmt.Errorf("fixed value exceeds enclosing limit at %s", w.path)
+	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits) {
+		return 0, fmt.Errorf("fixed value outside encoded bit limit at %s", w.path)
+	}
+	if w.bounded && width > w.limit-w.bits {
+		return 0, w.boundError(LengthBound, w.limit, "", "length exceeds the enclosing length-delimited value")
 	}
 	old := -1
 	if w.bounded {
@@ -509,7 +545,7 @@ func (w *Writer) PopLimit(old int) error {
 		return fmt.Errorf("invalid enclosing fixed value at %s", w.path)
 	}
 	if w.bits != w.limit {
-		return fmt.Errorf("fixed value has %d bits, want %d at %s", w.bits, w.limit, w.path)
+		return w.boundError(LengthBound, w.limit, "", "content ends before the length-delimited value")
 	}
 	w.limit = old
 	w.bounded = old >= 0
@@ -557,13 +593,17 @@ func (w *Writer) put(bit uint8) error {
 	}
 	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 		if bit != 0 {
-			return fmt.Errorf("nonzero bit beyond receiver-inferred boundary at %s", w.path)
+			detail := "nonzero bit beyond the receiver-inferred zero extension"
+			if w.bounded && w.bits >= w.limit {
+				return w.boundError(LengthBound, w.limit, "", detail)
+			}
+			return w.boundError(CanonicalTarget, w.wire.targetBits, "", detail)
 		}
 		w.virtual++
 		return nil
 	}
 	if w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits {
-		return fmt.Errorf("encoded bit exceeds canonical target at %s", w.path)
+		return w.boundError(CanonicalTarget, w.wire.targetBits, "", "encoded bit exceeds the canonical target")
 	}
 	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
 		span, end, err := w.currentImplicitSpan()
@@ -582,7 +622,7 @@ func (w *Writer) put(bit uint8) error {
 		}
 	}
 	if w.bounded && w.bits >= w.limit {
-		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
+		return w.boundError(LengthBound, w.limit, "", "encoded bit exceeds the length-delimited value")
 	}
 	if w.bits%8 == 0 {
 		w.bytes = append(w.bytes, 0)
@@ -691,8 +731,11 @@ func (w *Writer) WritePadding() error {
 // TS 44.060 V19.0.0 §11 defines the padding pattern. A decoded value's
 // received padding is retained when its width still fits after editing.
 func (w *Writer) WritePaddingTo(bits int) error {
-	if bits < w.bits || bits > maxBits {
-		return fmt.Errorf("padding target outside bounded value")
+	if bits > maxBits {
+		return fmt.Errorf("padding target outside encoded bit limit")
+	}
+	if bits < w.bits {
+		return w.boundError(LengthBound, bits, "", "content exceeds the fixed-size value")
 	}
 	if w.wire.Tail.BitLength == bits-w.bits && w.wire.Tail.BitLength > 0 {
 		return w.WriteBitString(w.wire.Tail, w.wire.Tail.BitLength)

@@ -1011,7 +1011,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.GEA1Bits) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA1Bits")
+		return w.OmittedFieldError("GEA1Bits")
 	}
 	if limit > 0 {
 		if err := encodeMSNetworkCapabilityValuePartGEA1Bits(w, v.GEA1Bits); err != nil {
@@ -1019,7 +1019,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.SMCapabilitiesViaDedicatedChannels) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: SMCapabilitiesViaDedicatedChannels")
+		return w.OmittedFieldError("SMCapabilitiesViaDedicatedChannels")
 	}
 	if limit > 1 {
 		if err := encodeMSNetworkCapabilityValuePartSMCapabilitiesViaDedicatedChannels(w, v.SMCapabilitiesViaDedicatedChannels); err != nil {
@@ -1027,7 +1027,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.SMCapabilitiesViaGPRSChannels) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: SMCapabilitiesViaGPRSChannels")
+		return w.OmittedFieldError("SMCapabilitiesViaGPRSChannels")
 	}
 	if limit > 2 {
 		if err := encodeMSNetworkCapabilityValuePartSMCapabilitiesViaGPRSChannels(w, v.SMCapabilitiesViaGPRSChannels); err != nil {
@@ -1035,7 +1035,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 3 && !runtime.IsZero(v.UCS2Support) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UCS2Support")
+		return w.OmittedFieldError("UCS2Support")
 	}
 	if limit > 3 {
 		if err := encodeMSNetworkCapabilityValuePartUCS2Support(w, v.UCS2Support); err != nil {
@@ -1043,7 +1043,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 4 && !runtime.IsZero(v.SSScreeningIndicator) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: SSScreeningIndicator")
+		return w.OmittedFieldError("SSScreeningIndicator")
 	}
 	if limit > 4 {
 		if err := encodeMSNetworkCapabilityValuePartSSScreeningIndicator(w, v.SSScreeningIndicator); err != nil {
@@ -1051,7 +1051,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 5 && !runtime.IsZero(v.SoLSACapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: SoLSACapability")
+		return w.OmittedFieldError("SoLSACapability")
 	}
 	if limit > 5 {
 		if err := encodeMSNetworkCapabilityValuePartSoLSACapability(w, v.SoLSACapability); err != nil {
@@ -1059,7 +1059,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 6 && !runtime.IsZero(v.RevisionLevelIndicator) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: RevisionLevelIndicator")
+		return w.OmittedFieldError("RevisionLevelIndicator")
 	}
 	if limit > 6 {
 		if err := encodeMSNetworkCapabilityValuePartRevisionLevelIndicator(w, v.RevisionLevelIndicator); err != nil {
@@ -1067,7 +1067,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 7 && !runtime.IsZero(v.PFCFeatureMode) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: PFCFeatureMode")
+		return w.OmittedFieldError("PFCFeatureMode")
 	}
 	if limit > 7 {
 		if err := encodeMSNetworkCapabilityValuePartPFCFeatureMode(w, v.PFCFeatureMode); err != nil {
@@ -1075,7 +1075,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 8 && !runtime.IsZero(v.ExtendedGEABits) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: ExtendedGEABits")
+		return w.OmittedFieldError("ExtendedGEABits")
 	}
 	if limit > 8 {
 		if err := encodeMSNetworkCapabilityValuePartExtendedGEABits(w, v.ExtendedGEABits); err != nil {
@@ -1083,7 +1083,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 9 && !runtime.IsZero(v.LCSVACapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: LCSVACapability")
+		return w.OmittedFieldError("LCSVACapability")
 	}
 	if limit > 9 {
 		if err := encodeMSNetworkCapabilityValuePartLCSVACapability(w, v.LCSVACapability); err != nil {
@@ -1091,7 +1091,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 10 && !runtime.IsZero(v.PSInterRATHOFromGERANToUTRANIuModeCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: PSInterRATHOFromGERANToUTRANIuModeCapability")
+		return w.OmittedFieldError("PSInterRATHOFromGERANToUTRANIuModeCapability")
 	}
 	if limit > 10 {
 		if err := encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToUTRANIuModeCapability(w, v.PSInterRATHOFromGERANToUTRANIuModeCapability); err != nil {
@@ -1099,7 +1099,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 11 && !runtime.IsZero(v.PSInterRATHOFromGERANToEUTRANS1ModeCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: PSInterRATHOFromGERANToEUTRANS1ModeCapability")
+		return w.OmittedFieldError("PSInterRATHOFromGERANToEUTRANS1ModeCapability")
 	}
 	if limit > 11 {
 		if err := encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToEUTRANS1ModeCapability(w, v.PSInterRATHOFromGERANToEUTRANS1ModeCapability); err != nil {
@@ -1107,7 +1107,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 12 && !runtime.IsZero(v.EMMCombinedProceduresCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EMMCombinedProceduresCapability")
+		return w.OmittedFieldError("EMMCombinedProceduresCapability")
 	}
 	if limit > 12 {
 		if err := encodeMSNetworkCapabilityValuePartEMMCombinedProceduresCapability(w, v.EMMCombinedProceduresCapability); err != nil {
@@ -1115,7 +1115,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 13 && !runtime.IsZero(v.ISRSupport) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: ISRSupport")
+		return w.OmittedFieldError("ISRSupport")
 	}
 	if limit > 13 {
 		if err := encodeMSNetworkCapabilityValuePartISRSupport(w, v.ISRSupport); err != nil {
@@ -1123,7 +1123,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 14 && !runtime.IsZero(v.SRVCCToGERANUTRANCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: SRVCCToGERANUTRANCapability")
+		return w.OmittedFieldError("SRVCCToGERANUTRANCapability")
 	}
 	if limit > 14 {
 		if err := encodeMSNetworkCapabilityValuePartSRVCCToGERANUTRANCapability(w, v.SRVCCToGERANUTRANCapability); err != nil {
@@ -1131,7 +1131,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 15 && !runtime.IsZero(v.EPCCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EPCCapability")
+		return w.OmittedFieldError("EPCCapability")
 	}
 	if limit > 15 {
 		if err := encodeMSNetworkCapabilityValuePartEPCCapability(w, v.EPCCapability); err != nil {
@@ -1139,7 +1139,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 16 && !runtime.IsZero(v.NFCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: NFCapability")
+		return w.OmittedFieldError("NFCapability")
 	}
 	if limit > 16 {
 		if err := encodeMSNetworkCapabilityValuePartNFCapability(w, v.NFCapability); err != nil {
@@ -1147,7 +1147,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 17 && !runtime.IsZero(v.GERANNetworkSharingCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GERANNetworkSharingCapability")
+		return w.OmittedFieldError("GERANNetworkSharingCapability")
 	}
 	if limit > 17 {
 		if err := encodeMSNetworkCapabilityValuePartGERANNetworkSharingCapability(w, v.GERANNetworkSharingCapability); err != nil {
@@ -1155,7 +1155,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 18 && !runtime.IsZero(v.UserPlaneIntegrityProtectionSupport) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UserPlaneIntegrityProtectionSupport")
+		return w.OmittedFieldError("UserPlaneIntegrityProtectionSupport")
 	}
 	if limit > 18 {
 		if err := encodeMSNetworkCapabilityValuePartUserPlaneIntegrityProtectionSupport(w, v.UserPlaneIntegrityProtectionSupport); err != nil {
@@ -1163,7 +1163,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 19 && !runtime.IsZero(v.GIA4) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GIA4")
+		return w.OmittedFieldError("GIA4")
 	}
 	if limit > 19 {
 		if err := encodeMSNetworkCapabilityValuePartGIA4(w, v.GIA4); err != nil {
@@ -1171,7 +1171,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 20 && !runtime.IsZero(v.GIA5) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GIA5")
+		return w.OmittedFieldError("GIA5")
 	}
 	if limit > 20 {
 		if err := encodeMSNetworkCapabilityValuePartGIA5(w, v.GIA5); err != nil {
@@ -1179,7 +1179,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 21 && !runtime.IsZero(v.GIA6) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GIA6")
+		return w.OmittedFieldError("GIA6")
 	}
 	if limit > 21 {
 		if err := encodeMSNetworkCapabilityValuePartGIA6(w, v.GIA6); err != nil {
@@ -1187,7 +1187,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 22 && !runtime.IsZero(v.GIA7) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GIA7")
+		return w.OmittedFieldError("GIA7")
 	}
 	if limit > 22 {
 		if err := encodeMSNetworkCapabilityValuePartGIA7(w, v.GIA7); err != nil {
@@ -1195,7 +1195,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 23 && !runtime.IsZero(v.EPCOIEIndicator) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EPCOIEIndicator")
+		return w.OmittedFieldError("EPCOIEIndicator")
 	}
 	if limit > 23 {
 		if err := encodeMSNetworkCapabilityValuePartEPCOIEIndicator(w, v.EPCOIEIndicator); err != nil {
@@ -1203,7 +1203,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 24 && !runtime.IsZero(v.RestrictionOnUseOfEnhancedCoverageCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: RestrictionOnUseOfEnhancedCoverageCapability")
+		return w.OmittedFieldError("RestrictionOnUseOfEnhancedCoverageCapability")
 	}
 	if limit > 24 {
 		if err := encodeMSNetworkCapabilityValuePartRestrictionOnUseOfEnhancedCoverageCapability(w, v.RestrictionOnUseOfEnhancedCoverageCapability); err != nil {
@@ -1211,7 +1211,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 		}
 	}
 	if limit <= 25 && !runtime.IsZero(v.DualConnectivityOfEUTRAWithNRCapability) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: DualConnectivityOfEUTRAWithNRCapability")
+		return w.OmittedFieldError("DualConnectivityOfEUTRAWithNRCapability")
 	}
 	if limit > 25 {
 		if err := encodeMSNetworkCapabilityValuePartDualConnectivityOfEUTRAWithNRCapability(w, v.DualConnectivityOfEUTRAWithNRCapability); err != nil {
@@ -1282,7 +1282,7 @@ func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.GEA1) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA1")
+		return w.OmittedFieldError("GEA1")
 	}
 	if limit > 0 {
 		if err := encodeGEA1BitsGEA1(w, v.GEA1); err != nil {
@@ -1528,7 +1528,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.GEA2) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA2")
+		return w.OmittedFieldError("GEA2")
 	}
 	if limit > 0 {
 		if err := encodeExtendedGEABitsGEA2(w, v.GEA2); err != nil {
@@ -1536,7 +1536,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.GEA3) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA3")
+		return w.OmittedFieldError("GEA3")
 	}
 	if limit > 1 {
 		if err := encodeExtendedGEABitsGEA3(w, v.GEA3); err != nil {
@@ -1544,7 +1544,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.GEA4) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA4")
+		return w.OmittedFieldError("GEA4")
 	}
 	if limit > 2 {
 		if err := encodeExtendedGEABitsGEA4(w, v.GEA4); err != nil {
@@ -1552,7 +1552,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		}
 	}
 	if limit <= 3 && !runtime.IsZero(v.GEA5) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA5")
+		return w.OmittedFieldError("GEA5")
 	}
 	if limit > 3 {
 		if err := encodeExtendedGEABitsGEA5(w, v.GEA5); err != nil {
@@ -1560,7 +1560,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		}
 	}
 	if limit <= 4 && !runtime.IsZero(v.GEA6) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA6")
+		return w.OmittedFieldError("GEA6")
 	}
 	if limit > 4 {
 		if err := encodeExtendedGEABitsGEA6(w, v.GEA6); err != nil {
@@ -1568,7 +1568,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 		}
 	}
 	if limit <= 5 && !runtime.IsZero(v.GEA7) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GEA7")
+		return w.OmittedFieldError("GEA7")
 	}
 	if limit > 5 {
 		if err := encodeExtendedGEABitsGEA7(w, v.GEA7); err != nil {
@@ -1753,7 +1753,7 @@ func encodeSpareBits(w *runtime.Writer, v SpareBits) error {
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.Alternatives) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: Alternatives")
+		return w.OmittedFieldError("Alternatives")
 	}
 	if limit > 0 {
 		if err := encodeSpareBitsAlternatives(w, v.Alternatives); err != nil {
@@ -1812,18 +1812,18 @@ func EncodeMSNetworkCapabilityValuePart(v MSNetworkCapabilityValuePart) ([]byte,
 		return nil, err
 	}
 	if len(out) < 1 {
-		return nil, fmt.Errorf("MSNetworkCapabilityValuePart requires at least 8 bits")
+		return nil, &runtime.ExtentError{Actual: len(out), Minimum: 1}
 	}
 	return out, nil
 }
 
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (10-octet type 4 IE minus IEI and length = 8-octet value part).
-// EncodeMSNetworkCapabilityValuePartCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeMSNetworkCapabilityValuePartCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 8, true, EncodeMSNetworkCapabilityValuePart, DecodeMSNetworkCapabilityValuePart, nil)
 }
 
-// EncodeMSNetworkCapabilityValuePartCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeMSNetworkCapabilityValuePartCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeMSNetworkCapabilityValuePartCanonicalAtLength(v MSNetworkCapabilityValuePart, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 1, 8, EncodeMSNetworkCapabilityValuePart, DecodeMSNetworkCapabilityValuePart, nil)
 }
@@ -1868,12 +1868,12 @@ func EncodeGEA1Bits(v GEA1Bits) ([]byte, error) {
 }
 
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
-// EncodeGEA1BitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeGEA1BitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeGEA1BitsCanonical(v GEA1Bits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 1, false, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
 
-// EncodeGEA1BitsCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeGEA1BitsCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeGEA1BitsCanonicalAtLength(v GEA1Bits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
@@ -1920,12 +1920,12 @@ func EncodeExtendedGEABits(v ExtendedGEABits) ([]byte, error) {
 }
 
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
-// EncodeExtendedGEABitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeExtendedGEABitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeExtendedGEABitsCanonical(v ExtendedGEABits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 1, false, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
 
-// EncodeExtendedGEABitsCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeExtendedGEABitsCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeExtendedGEABitsCanonicalAtLength(v ExtendedGEABits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
@@ -1970,12 +1970,12 @@ func EncodeSpareBits(v SpareBits) ([]byte, error) {
 }
 
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (MS network capability value part maximum 8 octets).
-// EncodeSpareBitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeSpareBitsCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeSpareBitsCanonical(v SpareBits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 8, false, EncodeSpareBits, DecodeSpareBits, nil)
 }
 
-// EncodeSpareBitsCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeSpareBitsCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeSpareBitsCanonicalAtLength(v SpareBits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 8, EncodeSpareBits, DecodeSpareBits, nil)
 }

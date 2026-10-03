@@ -48,6 +48,8 @@ func SemanticallyEqual[T any](a, b T) bool {
 // when source-defined truncation or inferred zeros require a shorter layout.
 // Each candidate must fit the source-defined extent and decode to the same
 // typed semantic value. A zero maximum requires CanonicalEncodeAtLength.
+// Content that cannot fit a length-delimited or fixed-size value, a
+// candidate extent or a truncation point returns *BoundError.
 func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
 	if maxOctets == 0 {
 		return nil, &ExtentError{Minimum: minOctets, Required: true}
@@ -106,7 +108,9 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 // original typed value. The caller supplies the length prescribed by its
 // enclosing message (TS 44.018 V19.0.0 §8.9). A zero maximum means that
 // the definition has no standalone extent, so the supplied length is the
-// bound (subject to the runtime bit limit).
+// bound (subject to the runtime bit limit). A typed length within the value
+// keeps its value: content it cannot carry, such as a nonzero field after a
+// TS 44.060 V19.0.0 §12.24 Extension Length, returns *BoundError.
 func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
 	if maxOctets == 0 {
 		maxOctets = maxBits / 8

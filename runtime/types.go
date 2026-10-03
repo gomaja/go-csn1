@@ -99,6 +99,45 @@ func (e *ExtentError) Error() string {
 	return fmt.Sprintf("CSN.1 extent %d outside %d..%d octets", e.Actual, e.Minimum, e.Maximum)
 }
 
+// ErrBoundConflict identifies a typed value that cannot be encoded within a
+// bound enclosing it. Every *BoundError unwraps to it.
+var ErrBoundConflict = errors.New("CSN.1 value conflicts with its enclosing bound")
+
+// BoundKind names the bound that a typed value conflicts with.
+type BoundKind string
+
+const (
+	// LengthBound is a length-delimited value such as TS 44.060 V19.0.0
+	// §12.24 "< bit (val(Extension Length) + 1) & … >", or a fixed-size
+	// value such as the TS 44.018 V19.0.0 §10.5.2.37h 20-octet SI 18 value.
+	LengthBound BoundKind = "length"
+	// CanonicalTarget is the explicit extent of a canonical encoding.
+	CanonicalTarget BoundKind = "canonical-target"
+	// ReceivedTruncation is the truncation point recorded when a value was
+	// decoded (TS 44.060 V19.0.0 §11.1.4.4, TS 44.018 V19.0.0 §8.9).
+	ReceivedTruncation BoundKind = "received-truncation"
+)
+
+// BoundError reports a typed value that does not fit a bound enclosing it.
+// For example, a GPRS Cell Options Extension Length that is too short for a
+// nonzero later field (TS 44.060 V19.0.0 §12.24): the truncated
+// concatenation must end at the length, and only zero components may be
+// omitted. Path is the encoder path at the conflict, Field the conflicting
+// field or component, Limit the bound and Position the bits written so far,
+// both counted from the start of the encoding.
+type BoundError struct {
+	Kind            BoundKind
+	Path, Field     string
+	Detail          string
+	Limit, Position int
+}
+
+func (e *BoundError) Error() string {
+	return fmt.Sprintf("CSN.1 %s bound at bit %d conflicts with %s at %s (bit %d): %s", e.Kind, e.Limit, e.Field, e.Path, e.Position, e.Detail)
+}
+
+func (e *BoundError) Unwrap() error { return ErrBoundConflict }
+
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007
 // V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm
 // matches because input ends inside one, that boundary is the useful error.

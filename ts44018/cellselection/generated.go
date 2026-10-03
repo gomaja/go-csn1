@@ -151,7 +151,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.GSMDescription) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GSMDescription")
+		return w.OmittedFieldError("GSMDescription")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntryGSMDescription(w, v.GSMDescription); err != nil {
@@ -230,7 +230,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.GSMDescriptionList) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GSMDescriptionList")
+		return w.OmittedFieldError("GSMDescriptionList")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList(w, v.GSMDescriptionList); err != nil {
@@ -301,7 +301,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.UTRANFDDDescription) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANFDDDescription")
+		return w.OmittedFieldError("UTRANFDDDescription")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntryUTRANFDDDescription(w, v.UTRANFDDDescription); err != nil {
@@ -380,7 +380,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.UTRANFDDDescriptionList) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANFDDDescriptionList")
+		return w.OmittedFieldError("UTRANFDDDescriptionList")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList(w, v.UTRANFDDDescriptionList); err != nil {
@@ -451,7 +451,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.UTRANTDDDescription) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANTDDDescription")
+		return w.OmittedFieldError("UTRANTDDDescription")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntryUTRANTDDDescription(w, v.UTRANTDDDescription); err != nil {
@@ -530,7 +530,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.UTRANTDDDescriptionList) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: UTRANTDDDescriptionList")
+		return w.OmittedFieldError("UTRANTDDDescriptionList")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList(w, v.UTRANTDDDescriptionList); err != nil {
@@ -601,7 +601,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.EUTRANDescription) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANDescription")
+		return w.OmittedFieldError("EUTRANDescription")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntryEUTRANDescription(w, v.EUTRANDescription); err != nil {
@@ -680,7 +680,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.EUTRANDescriptionList) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EUTRANDescriptionList")
+		return w.OmittedFieldError("EUTRANDescriptionList")
 	}
 	if limit > 1 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList(w, v.EUTRANDescriptionList); err != nil {
@@ -823,7 +823,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w *runtim
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.GSMDescriptionChoice) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: GSMDescriptionChoice")
+		return w.OmittedFieldError("GSMDescriptionChoice")
 	}
 	if limit > 0 {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice(w, v.GSMDescriptionChoice); err != nil {
@@ -961,7 +961,7 @@ func encodeGSMDescriptionStruct(w *runtime.Writer, v GSMDescriptionStruct) error
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.BandIndicator) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: BandIndicator")
+		return w.OmittedFieldError("BandIndicator")
 	}
 	if limit > 0 {
 		if err := encodeGSMDescriptionStructBandIndicator(w, v.BandIndicator); err != nil {
@@ -969,7 +969,7 @@ func encodeGSMDescriptionStruct(w *runtime.Writer, v GSMDescriptionStruct) error
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.ARFCN) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: ARFCN")
+		return w.OmittedFieldError("ARFCN")
 	}
 	if limit > 1 {
 		if err := encodeGSMDescriptionStructARFCN(w, v.ARFCN); err != nil {
@@ -977,7 +977,7 @@ func encodeGSMDescriptionStruct(w *runtime.Writer, v GSMDescriptionStruct) error
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.BSIC) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: BSIC")
+		return w.OmittedFieldError("BSIC")
 	}
 	if limit > 2 {
 		if err := encodeGSMDescriptionStructBSIC(w, v.BSIC); err != nil {
@@ -1201,7 +1201,7 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.FDDIndic0) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: FDDIndic0")
+		return w.OmittedFieldError("FDDIndic0")
 	}
 	if limit > 0 {
 		if err := encodeUTRANFDDDescriptionStructFDDIndic0GroupFDDIndic0(w, v.FDDIndic0); err != nil {
@@ -1209,7 +1209,7 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.NROFFDDCELLS) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: NROFFDDCELLS")
+		return w.OmittedFieldError("NROFFDDCELLS")
 	}
 	if limit > 1 {
 		if err := encodeUTRANFDDDescriptionStructFDDIndic0GroupNROFFDDCELLS(w, v.NROFFDDCELLS); err != nil {
@@ -1217,7 +1217,7 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.FDDCELLINFORMATIONField) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: FDDCELLINFORMATIONField")
+		return w.OmittedFieldError("FDDCELLINFORMATIONField")
 	}
 	if limit > 2 {
 		if err := encodeUTRANFDDDescriptionStructFDDIndic0GroupFDDCELLINFORMATIONField(w, v.FDDCELLINFORMATIONField); err != nil {
@@ -1288,7 +1288,7 @@ func encodeUTRANFDDDescriptionStruct(w *runtime.Writer, v UTRANFDDDescriptionStr
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.BandwidthFDD) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: BandwidthFDD")
+		return w.OmittedFieldError("BandwidthFDD")
 	}
 	if limit > 0 {
 		if err := encodeUTRANFDDDescriptionStructBandwidthFDDSelector(w, v.BandwidthFDD); err != nil {
@@ -1296,7 +1296,7 @@ func encodeUTRANFDDDescriptionStruct(w *runtime.Writer, v UTRANFDDDescriptionStr
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.FDDARFCN) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: FDDARFCN")
+		return w.OmittedFieldError("FDDARFCN")
 	}
 	if limit > 1 {
 		if err := encodeUTRANFDDDescriptionStructFDDARFCN(w, v.FDDARFCN); err != nil {
@@ -1304,7 +1304,7 @@ func encodeUTRANFDDDescriptionStruct(w *runtime.Writer, v UTRANFDDDescriptionStr
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.FDDIndic0Group) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: FDDIndic0Group")
+		return w.OmittedFieldError("FDDIndic0Group")
 	}
 	if limit > 2 {
 		if err := encodeUTRANFDDDescriptionStructFDDIndic0GroupSelector(w, v.FDDIndic0Group); err != nil {
@@ -1528,7 +1528,7 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.TDDIndic0) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: TDDIndic0")
+		return w.OmittedFieldError("TDDIndic0")
 	}
 	if limit > 0 {
 		if err := encodeUTRANTDDDescriptionStructTDDIndic0GroupTDDIndic0(w, v.TDDIndic0); err != nil {
@@ -1536,7 +1536,7 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.NROFTDDCELLS) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: NROFTDDCELLS")
+		return w.OmittedFieldError("NROFTDDCELLS")
 	}
 	if limit > 1 {
 		if err := encodeUTRANTDDDescriptionStructTDDIndic0GroupNROFTDDCELLS(w, v.NROFTDDCELLS); err != nil {
@@ -1544,7 +1544,7 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.TDDCELLINFORMATIONField) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: TDDCELLINFORMATIONField")
+		return w.OmittedFieldError("TDDCELLINFORMATIONField")
 	}
 	if limit > 2 {
 		if err := encodeUTRANTDDDescriptionStructTDDIndic0GroupTDDCELLINFORMATIONField(w, v.TDDCELLINFORMATIONField); err != nil {
@@ -1615,7 +1615,7 @@ func encodeUTRANTDDDescriptionStruct(w *runtime.Writer, v UTRANTDDDescriptionStr
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.BandwidthTDD) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: BandwidthTDD")
+		return w.OmittedFieldError("BandwidthTDD")
 	}
 	if limit > 0 {
 		if err := encodeUTRANTDDDescriptionStructBandwidthTDDSelector(w, v.BandwidthTDD); err != nil {
@@ -1623,7 +1623,7 @@ func encodeUTRANTDDDescriptionStruct(w *runtime.Writer, v UTRANTDDDescriptionStr
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.TDDARFCN) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: TDDARFCN")
+		return w.OmittedFieldError("TDDARFCN")
 	}
 	if limit > 1 {
 		if err := encodeUTRANTDDDescriptionStructTDDARFCN(w, v.TDDARFCN); err != nil {
@@ -1631,7 +1631,7 @@ func encodeUTRANTDDDescriptionStruct(w *runtime.Writer, v UTRANTDDDescriptionStr
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.TDDIndic0Group) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: TDDIndic0Group")
+		return w.OmittedFieldError("TDDIndic0Group")
 	}
 	if limit > 2 {
 		if err := encodeUTRANTDDDescriptionStructTDDIndic0GroupSelector(w, v.TDDIndic0Group); err != nil {
@@ -1858,7 +1858,7 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 		limit = n
 	}
 	if limit <= 0 && !runtime.IsZero(v.EARFCN) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: EARFCN")
+		return w.OmittedFieldError("EARFCN")
 	}
 	if limit > 0 {
 		if err := encodeEUTRANDescriptionStructEARFCN(w, v.EARFCN); err != nil {
@@ -1866,7 +1866,7 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 		}
 	}
 	if limit <= 1 && !runtime.IsZero(v.MeasurementBandwidth) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: MeasurementBandwidth")
+		return w.OmittedFieldError("MeasurementBandwidth")
 	}
 	if limit > 1 {
 		if err := encodeEUTRANDescriptionStructMeasurementBandwidthSelector(w, v.MeasurementBandwidth); err != nil {
@@ -1874,7 +1874,7 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 		}
 	}
 	if limit <= 2 && !runtime.IsZero(v.NotAllowedCells) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: NotAllowedCells")
+		return w.OmittedFieldError("NotAllowedCells")
 	}
 	if limit > 2 {
 		if err := encodeEUTRANDescriptionStructNotAllowedCellsSelector(w, v.NotAllowedCells); err != nil {
@@ -1882,7 +1882,7 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 		}
 	}
 	if limit <= 3 && !runtime.IsZero(v.TARGETPCID) {
-		return fmt.Errorf("edit to field beyond transmitted truncation: TARGETPCID")
+		return w.OmittedFieldError("TARGETPCID")
 	}
 	if limit > 3 {
 		if err := encodeEUTRANDescriptionStructTARGETPCIDSelector(w, v.TARGETPCID); err != nil {
@@ -1937,17 +1937,17 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v CellSel
 		return nil, err
 	}
 	if len(out) < 2 {
-		return nil, fmt.Errorf("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart requires at least 16 bits")
+		return nil, &runtime.ExtentError{Actual: len(out), Minimum: 2}
 	}
 	return out, nil
 }
 
-// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 2, 0, false, EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 }
 
-// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 2, 0, EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 }
@@ -1994,12 +1994,12 @@ func EncodeGSMDescriptionStruct(v GSMDescriptionStruct) ([]byte, error) {
 }
 
 // Canonical maximum: TS 44.018 V19.0.0 §10.5.2.1e (finite maximum from the printed CSN.1 grammar).
-// EncodeGSMDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeGSMDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeGSMDescriptionStructCanonical(v GSMDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 3, false, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
 
-// EncodeGSMDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeGSMDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeGSMDescriptionStructCanonicalAtLength(v GSMDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
@@ -2045,12 +2045,12 @@ func EncodeUTRANFDDDescriptionStruct(v UTRANFDDDescriptionStruct) ([]byte, error
 	return out, nil
 }
 
-// EncodeUTRANFDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeUTRANFDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeUTRANFDDDescriptionStructCanonical(v UTRANFDDDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANFDDDescriptionStruct, DecodeUTRANFDDDescriptionStruct, nil)
 }
 
-// EncodeUTRANFDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeUTRANFDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeUTRANFDDDescriptionStructCanonicalAtLength(v UTRANFDDDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANFDDDescriptionStruct, DecodeUTRANFDDDescriptionStruct, nil)
 }
@@ -2096,12 +2096,12 @@ func EncodeUTRANTDDDescriptionStruct(v UTRANTDDDescriptionStruct) ([]byte, error
 	return out, nil
 }
 
-// EncodeUTRANTDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeUTRANTDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeUTRANTDDDescriptionStructCanonical(v UTRANTDDDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANTDDDescriptionStruct, DecodeUTRANTDDDescriptionStruct, nil)
 }
 
-// EncodeUTRANTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeUTRANTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeUTRANTDDDescriptionStructCanonicalAtLength(v UTRANTDDDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANTDDDescriptionStruct, DecodeUTRANTDDDescriptionStruct, nil)
 }
@@ -2147,12 +2147,12 @@ func EncodeEUTRANDescriptionStruct(v EUTRANDescriptionStruct) ([]byte, error) {
 	return out, nil
 }
 
-// EncodeEUTRANDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined.
+// EncodeEUTRANDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
 func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANDescriptionStruct, DecodeEUTRANDescriptionStruct, nil)
 }
 
-// EncodeEUTRANDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message.
+// EncodeEUTRANDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
 func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANDescriptionStruct, DecodeEUTRANDescriptionStruct, nil)
 }
