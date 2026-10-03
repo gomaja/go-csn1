@@ -240,8 +240,22 @@ func decodeMSRACapabilityValuePart(r *runtime.Reader) (MSRACapabilityValuePart, 
 		return MSRACapabilityValuePart{}, err
 	}
 	v.MSRACapabilityValuePartStruct = x0
+	knownEnd := r.Position() + r.Remaining()
+	if knownEnd > 400 {
+		knownEnd = 400
+	}
+	if knownEnd < r.Position() {
+		knownEnd = r.Position()
+	}
+	oldSpareBound, err := r.PushLimit(knownEnd - r.Position())
+	if err != nil {
+		return MSRACapabilityValuePart{}, err
+	}
 	x1, err := decodeMSRACapabilityValuePartSpareBitsList(r)
 	if err != nil {
+		return MSRACapabilityValuePart{}, err
+	}
+	if err := r.PopLimit(oldSpareBound); err != nil {
 		return MSRACapabilityValuePart{}, err
 	}
 	_ = x1
@@ -6009,9 +6023,6 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 		return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "MSRACapabilityValuePart requires at least 16 bits"}
 	}
 	input := data
-	if len(data) > 50 {
-		input = data[:50]
-	}
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePart(r)
