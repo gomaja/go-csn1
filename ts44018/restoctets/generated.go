@@ -19920,7 +19920,7 @@ func encodeSI21RestOctetsNetworkSharingEABInformation(w *runtime.Writer, v SI21R
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.NetworkSharingEABInformation) {
@@ -19931,7 +19931,7 @@ func encodeSI21RestOctetsNetworkSharingEABInformation(w *runtime.Writer, v SI21R
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit > 1 {
@@ -30383,7 +30383,7 @@ func encodeSI4RestOctets(w *runtime.Writer, v SI4RestOctets) error {
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.SI4RestOctetsO) {
@@ -30394,7 +30394,7 @@ func encodeSI4RestOctets(w *runtime.Writer, v SI4RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.BreakIndicatorChoice) {
@@ -30405,7 +30405,7 @@ func encodeSI4RestOctets(w *runtime.Writer, v SI4RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit > 2 {
@@ -30506,7 +30506,7 @@ func encodeSI4RestOctetsO(w *runtime.Writer, v SI4RestOctetsO) error {
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.OptionalSelectionParametersClause105235) {
@@ -30517,7 +30517,7 @@ func encodeSI4RestOctetsO(w *runtime.Writer, v SI4RestOctetsO) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.OptionalPowerOffsetClause105235) {
@@ -30528,7 +30528,7 @@ func encodeSI4RestOctetsO(w *runtime.Writer, v SI4RestOctetsO) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.GPRSIndicatorClause105235) {
@@ -34224,7 +34224,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.CN3) {
@@ -34235,7 +34235,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.NLNPCHGroup) {
@@ -34246,7 +34246,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.Priority1) {
@@ -34257,7 +34257,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 3 {
+	if w.TruncationReached() && limit > 3 {
 		limit = 3
 	}
 	if limit <= 3 && !runtime.IsZero(v.Priority2) {
@@ -34268,7 +34268,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 4 {
+	if w.TruncationReached() && limit > 4 {
 		limit = 4
 	}
 	if limit <= 4 && !runtime.IsZero(v.Priority3) {
@@ -34279,7 +34279,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 5 {
+	if w.TruncationReached() && limit > 5 {
 		limit = 5
 	}
 	if limit <= 5 && !runtime.IsZero(v.PacketPageIndication3) {
@@ -34290,7 +34290,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 6 {
+	if w.TruncationReached() && limit > 6 {
 		limit = 6
 	}
 	if limit <= 6 && !runtime.IsZero(v.MBMSNotification3Choice) {
@@ -34301,7 +34301,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 7 {
+	if w.TruncationReached() && limit > 7 {
 		limit = 7
 	}
 	if limit <= 7 && !runtime.IsZero(v.ImplicitRejectCSChoice) {
@@ -34312,7 +34312,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 8 {
+	if w.TruncationReached() && limit > 8 {
 		limit = 8
 	}
 	if limit <= 8 && !runtime.IsZero(v.IPASupportChoice) {
@@ -34323,7 +34323,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 9 {
+	if w.TruncationReached() && limit > 9 {
 		limit = 9
 	}
 	if limit <= 9 && !runtime.IsZero(v.PEOBCCHCHANGEMARKChoice) {
@@ -34334,7 +34334,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 10 {
+	if w.TruncationReached() && limit > 10 {
 		limit = 10
 	}
 	if limit <= 10 && !runtime.IsZero(v.PositioningEventPendingIndicatorChoice) {
@@ -34345,7 +34345,7 @@ func encodeP2RestOctets(w *runtime.Writer, v P2RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 11 {
+	if w.TruncationReached() && limit > 11 {
 		limit = 11
 	}
 	if limit <= 11 && !runtime.IsZero(v.PEOIMMCellGroupDetailsChoice) {
@@ -36365,7 +36365,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.CN3Group) {
@@ -36376,7 +36376,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.NLNPCHGroup) {
@@ -36387,7 +36387,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.Priority1) {
@@ -36398,7 +36398,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 3 {
+	if w.TruncationReached() && limit > 3 {
 		limit = 3
 	}
 	if limit <= 3 && !runtime.IsZero(v.Priority2) {
@@ -36409,7 +36409,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 4 {
+	if w.TruncationReached() && limit > 4 {
 		limit = 4
 	}
 	if limit <= 4 && !runtime.IsZero(v.Priority3) {
@@ -36420,7 +36420,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 5 {
+	if w.TruncationReached() && limit > 5 {
 		limit = 5
 	}
 	if limit <= 5 && !runtime.IsZero(v.Priority4) {
@@ -36431,7 +36431,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 6 {
+	if w.TruncationReached() && limit > 6 {
 		limit = 6
 	}
 	if limit <= 6 && !runtime.IsZero(v.ImplicitRejectCSChoice) {
@@ -36442,7 +36442,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 7 {
+	if w.TruncationReached() && limit > 7 {
 		limit = 7
 	}
 	if limit <= 7 && !runtime.IsZero(v.IPASupportChoice) {
@@ -36453,7 +36453,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 8 {
+	if w.TruncationReached() && limit > 8 {
 		limit = 8
 	}
 	if limit <= 8 && !runtime.IsZero(v.PEOBCCHCHANGEMARKChoice) {
@@ -36464,7 +36464,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 9 {
+	if w.TruncationReached() && limit > 9 {
 		limit = 9
 	}
 	if limit <= 9 && !runtime.IsZero(v.PositioningEventPendingIndicatorChoice) {
@@ -36475,7 +36475,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 10 {
+	if w.TruncationReached() && limit > 10 {
 		limit = 10
 	}
 	if limit <= 10 && !runtime.IsZero(v.PEOIMMCellGroupDetailsChoice) {
@@ -36486,7 +36486,7 @@ func encodeP3RestOctets(w *runtime.Writer, v P3RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 11 {
+	if w.TruncationReached() && limit > 11 {
 		limit = 11
 	}
 	if limit > 11 {
@@ -54700,7 +54700,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.SICHANGEALT) {
@@ -54711,7 +54711,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.PEODSCGroup) {
@@ -54722,7 +54722,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.C1DELTAMINGroup) {
@@ -54733,7 +54733,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 3 {
+	if w.TruncationReached() && limit > 3 {
 		limit = 3
 	}
 	if limit <= 3 && !runtime.IsZero(v.MTABITMAP) {
@@ -54744,7 +54744,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 4 {
+	if w.TruncationReached() && limit > 4 {
 		limit = 4
 	}
 	if limit <= 4 && !runtime.IsZero(v.MSASSISTEDDCN) {
@@ -54755,7 +54755,7 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 5 {
+	if w.TruncationReached() && limit > 5 {
 		limit = 5
 	}
 	if limit <= 5 && !runtime.IsZero(v.PEOIMMCellGroupDefinition) {
@@ -67249,7 +67249,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.NLNPCHGroup) {
@@ -67260,7 +67260,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.Priority1) {
@@ -67271,7 +67271,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.Priority2) {
@@ -67282,7 +67282,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 3 {
+	if w.TruncationReached() && limit > 3 {
 		limit = 3
 	}
 	if limit <= 3 && !runtime.IsZero(v.GroupCallInformation) {
@@ -67293,7 +67293,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 4 {
+	if w.TruncationReached() && limit > 4 {
 		limit = 4
 	}
 	if limit <= 4 && !runtime.IsZero(v.PacketPageIndication1) {
@@ -67304,7 +67304,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 5 {
+	if w.TruncationReached() && limit > 5 {
 		limit = 5
 	}
 	if limit <= 5 && !runtime.IsZero(v.PacketPageIndication2) {
@@ -67315,7 +67315,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 6 {
+	if w.TruncationReached() && limit > 6 {
 		limit = 6
 	}
 	if limit <= 6 && !runtime.IsZero(v.CELLGLOBALCOUNTChoice) {
@@ -67326,7 +67326,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 7 {
+	if w.TruncationReached() && limit > 7 {
 		limit = 7
 	}
 	if limit <= 7 && !runtime.IsZero(v.AMRConfigChoice) {
@@ -67337,7 +67337,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 8 {
+	if w.TruncationReached() && limit > 8 {
 		limit = 8
 	}
 	if limit <= 8 && !runtime.IsZero(v.PriorityUplinkAccessChoice) {
@@ -67348,7 +67348,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 9 {
+	if w.TruncationReached() && limit > 9 {
 		limit = 9
 	}
 	if limit <= 9 && !runtime.IsZero(v.ImplicitRejectCSChoice) {
@@ -67359,7 +67359,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 10 {
+	if w.TruncationReached() && limit > 10 {
 		limit = 10
 	}
 	if limit <= 10 && !runtime.IsZero(v.IPASupportChoice) {
@@ -67370,7 +67370,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 11 {
+	if w.TruncationReached() && limit > 11 {
 		limit = 11
 	}
 	if limit <= 11 && !runtime.IsZero(v.PEOBCCHCHANGEMARKChoice) {
@@ -67381,7 +67381,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 12 {
+	if w.TruncationReached() && limit > 12 {
 		limit = 12
 	}
 	if limit <= 12 && !runtime.IsZero(v.PositioningEventPendingIndicatorChoice) {
@@ -67392,7 +67392,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 13 {
+	if w.TruncationReached() && limit > 13 {
 		limit = 13
 	}
 	if limit <= 13 && !runtime.IsZero(v.PEOIMMCellGroupDetailsChoice) {
@@ -67403,7 +67403,7 @@ func encodeP1RestOctets(w *runtime.Writer, v P1RestOctets) error {
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 14 {
+	if w.TruncationReached() && limit > 14 {
 		limit = 14
 	}
 	if limit > 14 {

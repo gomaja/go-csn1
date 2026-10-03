@@ -452,3 +452,52 @@ func TestWireStateCannotBeSilentlyDropped(t *testing.T) {
 		})
 	}
 }
+
+// TS 44.060 V19.0.0 §11.1.4.4 and §12.24: a fresh truncated concatenation
+// stops at an exhausted length-delimited value, as the reader does; a
+// decoded value keeps its recorded truncation point instead.
+func TestTruncationReachedFollowsEnclosingLength(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		wire WireInfo
+	}{
+		{"canonical", WireInfo{canonical: true}},
+		{"canonical with larger target", WireInfo{canonical: true, targetSet: true, targetBits: 64}},
+		{"newly constructed", WireInfo{}},
+	} {
+		w := NewWriter()
+		w.WithWire(tc.wire)
+		old, err := w.PushLimit(3)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if w.TruncationReached() {
+			t.Fatalf("%s: truncated before the length was filled", tc.name)
+		}
+		if err := w.WriteUint(5, 3); err != nil {
+			t.Fatal(err)
+		}
+		if !w.TruncationReached() {
+			t.Fatalf("%s: continued past an exhausted length", tc.name)
+		}
+		if err := w.PopLimit(old); err != nil {
+			t.Fatal(err)
+		}
+		if w.TruncationReached() != (tc.wire.targetSet && w.Position() >= tc.wire.targetBits) {
+			t.Fatalf("%s: unbounded truncation ignores the canonical target", tc.name)
+		}
+	}
+	sealed := NewWriter()
+	sealed.WithWire(Seal(struct{}{}, []byte{0}, 3, BitString{Bytes: []byte{0}, BitLength: 5}, WireInfo{}))
+	if _, err := sealed.PushLimit(0); err != nil {
+		t.Fatal(err)
+	}
+	if sealed.TruncationReached() {
+		t.Fatal("decoded value ignored its recorded truncation point")
+	}
+	target := NewWriter()
+	target.WithWire(WireInfo{canonical: true, targetSet: true, targetBits: 0})
+	if !target.TruncationReached() {
+		t.Fatal("unbounded canonical value ignored its target")
+	}
+}

@@ -427,6 +427,25 @@ func (w *Writer) SetZeroExtension(allow bool) (previous bool) {
 func (w *Writer) CanonicalTargetReached() bool {
 	return w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits
 }
+
+// TruncationReached marks where a fresh value ends a truncated
+// concatenation. TS 44.060 V19.0.0 §11.1.4.4 and TS 44.018 V19.0.0 §8.9
+// make "{ <a> <b> <c> } //" any component prefix. Inside a length-delimited
+// value the prefix must fill that length exactly, so the writer stops where
+// the reader does, at the exhausted bound, and keeps the typed length
+// (§12.24 Extension Length). The omitted components must be zero: "The
+// receiver shall assume the value zero for any truncated bit" (§12.24).
+// Outside a bound, the canonical target applies. A decoded value follows its
+// recorded truncation point instead.
+func (w *Writer) TruncationReached() bool {
+	if w.wire.sealed {
+		return false
+	}
+	if w.bounded {
+		return w.bits >= w.limit
+	}
+	return w.CanonicalTargetReached()
+}
 func (w *Writer) Canonical() bool { return w.wire.canonical }
 func (w *Writer) Truncation(path string) (int, bool) {
 	n, ok := w.wire.TruncatedAt[path]

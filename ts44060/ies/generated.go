@@ -4545,7 +4545,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 		}
 		limit = n
 	}
-	if w.CanonicalTargetReached() && limit > 0 {
+	if w.TruncationReached() && limit > 0 {
 		limit = 0
 	}
 	if limit <= 0 && !runtime.IsZero(v.Group) {
@@ -4556,7 +4556,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 1 {
+	if w.TruncationReached() && limit > 1 {
 		limit = 1
 	}
 	if limit <= 1 && !runtime.IsZero(v.Group2) {
@@ -4567,7 +4567,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 2 {
+	if w.TruncationReached() && limit > 2 {
 		limit = 2
 	}
 	if limit <= 2 && !runtime.IsZero(v.Group3) {
@@ -4578,7 +4578,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 3 {
+	if w.TruncationReached() && limit > 3 {
 		limit = 3
 	}
 	if limit <= 3 && !runtime.IsZero(v.REDUCEDLATENCYACCESS) {
@@ -4589,7 +4589,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 4 {
+	if w.TruncationReached() && limit > 4 {
 		limit = 4
 	}
 	if limit <= 4 && !runtime.IsZero(v.NMOIALTERNATE) {
@@ -4600,7 +4600,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 			return err
 		}
 	}
-	if w.CanonicalTargetReached() && limit > 5 {
+	if w.TruncationReached() && limit > 5 {
 		limit = 5
 	}
 	if limit > 5 {
