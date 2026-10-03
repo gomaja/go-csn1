@@ -12543,7 +12543,7 @@ func encodeFrequencyParametersBeforeTimeMAIOChoice(w *runtime.Writer, v Frequenc
 			return fmt.Errorf("choice alternative mismatch")
 		}
 		if length != 0 {
-			return w.LengthBoundError("empty alternative requires zero length")
+			return w.LengthFieldError("AltUnlabeled", length, "empty alternative requires zero length")
 		}
 		return encodeFrequencyParametersBeforeTimeMAIOChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case FrequencyParametersBeforeTimeMAIOChoiceAlternativeMAIO:
@@ -12551,7 +12551,7 @@ func encodeFrequencyParametersBeforeTimeMAIOChoice(w *runtime.Writer, v Frequenc
 			return fmt.Errorf("choice alternative mismatch")
 		}
 		if length == 0 {
-			return w.LengthBoundError("nonempty alternative requires nonzero length")
+			return w.LengthFieldError("MAIO", length, "nonempty alternative requires nonzero length")
 		}
 		return encodeFrequencyParametersBeforeTimeMAIOChoiceMAIO(w, *v.MAIO)
 	default:
@@ -58471,7 +58471,10 @@ func encodeNonGSMMessageStructCONTAINERList(w *runtime.Writer, v []uint8) error 
 	}
 	if count == 31 {
 		remaining := w.RemainingLimit()
-		if remaining <= 0 || remaining%8 != 0 {
+		if remaining < 0 {
+			return fmt.Errorf("%w: continuation count requires enclosing SI value", runtime.ErrContextRequired)
+		}
+		if remaining == 0 || remaining%8 != 0 {
 			return w.LengthBoundError("continuation container does not fill whole remaining octets")
 		}
 		count = remaining / 8

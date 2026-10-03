@@ -581,3 +581,30 @@ func TestWriterBoundConflictsAreTyped(t *testing.T) {
 		}
 	}
 }
+
+// A BoundError always names a real bound: without an enclosing value, or
+// with an offset outside the bit limit, the writer reports a plain error.
+// TS 44.018 V19.0.0 §10.5.2.16 sets the length-field bound in octets.
+func TestBoundErrorRequiresRealBound(t *testing.T) {
+	var bound *BoundError
+	w := NewWriter()
+	w.WithWire(WireInfo{})
+	if err := w.LengthBoundError("stop record does not fit"); err == nil || errors.As(err, &bound) {
+		t.Fatalf("unbounded length conflict: %v", err)
+	}
+	for _, octets := range []int{-1, maxBits/8 + 1} {
+		if err := w.LengthFieldError("Arm", octets, "conflict"); err == nil || errors.As(err, &bound) {
+			t.Fatalf("length field of %d octets: %v", octets, err)
+		}
+	}
+	if err := w.boundError(LengthBound, -1, "Arm", "conflict"); err == nil || errors.As(err, &bound) {
+		t.Fatalf("negative limit: %v", err)
+	}
+	if err := w.WriteUint(0, 8); err != nil {
+		t.Fatal(err)
+	}
+	err := w.LengthFieldError("Arm", 2, "empty alternative requires zero length")
+	if !errors.As(err, &bound) || bound.Kind != LengthBound || bound.Field != "Arm" || bound.Limit != 24 || bound.Position != 8 {
+		t.Fatalf("length field bound: %v", err)
+	}
+}

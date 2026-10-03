@@ -17,7 +17,9 @@ var ErrEmptyValue = errors.New("empty CSN.1 value")
 var ErrUnsupported = errors.New("unsupported CSN.1 value")
 
 // ErrContextRequired identifies a value whose alternatives are selected by
-// a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35).
+// a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35), or whose
+// extent is the rest of the containing value: Non-GSM container length code
+// 31 fills the enclosing SI 18/SI 20 value (§10.5.2.37h table 10.5.2.37h.1).
 var ErrContextRequired = errors.New("CSN.1 context required")
 
 type ContextRequiredError struct{ Standard, Clause, Name string }
@@ -124,7 +126,9 @@ const (
 // concatenation must end at the length, and only zero components may be
 // omitted. Path is the encoder path at the conflict, Field the conflicting
 // field or component, Limit the bound and Position the bits written so far,
-// both counted from the start of the encoding.
+// both counted from the start of the encoding. Limit and Position are never
+// negative: a value that needs a containing message which is absent reports
+// ErrContextRequired instead, because there is no bound to name.
 type BoundError struct {
 	Kind            BoundKind
 	Path, Field     string

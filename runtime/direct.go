@@ -465,12 +465,34 @@ func (w *Writer) OmittedFieldError(field string) error {
 }
 
 // LengthBoundError reports content that cannot fill or fit its enclosing
-// length-delimited or fixed-size value.
+// length-delimited or fixed-size value. Generated code calls it only inside
+// such a value; without one there is no bound to report.
 func (w *Writer) LengthBoundError(detail string) error {
-	return w.boundError(LengthBound, w.BoundEndOr(-1), "", detail)
+	if !w.bounded {
+		return fmt.Errorf("%s at %s: no enclosing length-delimited value", detail, w.path)
+	}
+	return w.boundError(LengthBound, w.limit, "", detail)
 }
 
+// LengthFieldError reports an alternative that conflicts with the octet
+// length printed before it. TS 44.018 V19.0.0 §10.5.2.16: Length of
+// frequency parameters is "the number of octets occupied by the frequency
+// parameters, before time field. If this length is 0, the frequency
+// parameters, before time is not present." The bound starts at the
+// alternative, so Limit is the current position plus that many octets.
+func (w *Writer) LengthFieldError(field string, octets int, detail string) error {
+	if w.bits < 0 || w.bits > maxBits || octets < 0 || octets > (maxBits-w.bits)/8 {
+		return fmt.Errorf("length field of %d octets outside encoded bit limit at %s", octets, w.path)
+	}
+	return w.boundError(LengthBound, w.bits+octets*8, field, detail)
+}
+
+// boundError builds a BoundError. Limit and Position are always bit offsets
+// from the start of the encoding; an invalid offset is an internal error.
 func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) error {
+	if limit < 0 || limit > maxBits || w.bits < 0 || w.bits > maxBits {
+		return fmt.Errorf("invalid %s bound %d at bit %d in %s: %s", kind, limit, w.bits, w.path, detail)
+	}
 	if field == "" {
 		field = w.path
 		if i := strings.LastIndexByte(w.path, '/'); i >= 0 {

@@ -4,14 +4,17 @@ import (
 	"bytes"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime/debug"
 	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts44018/restoctets"
 	"github.com/gomaja/go-csn1/ts44060/ies"
 )
 
@@ -238,14 +241,15 @@ func TestBoundConflictIsTyped(t *testing.T) {
 }
 
 // TestGeneratedBoundConflictsAreTyped checks every generated codec: an
-// encoder that rejects content for its enclosing length, fixed size or
-// truncation point must return a typed runtime error, never fmt.Errorf.
+// encoder that rejects content for its enclosing length, fixed size, length
+// field or truncation point must return a typed runtime error, never a bare
+// fmt.Errorf; a missing enclosing value wraps runtime.ErrContextRequired.
 func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
 	if err != nil || len(files) != 8 {
 		t.Fatalf("generated files %v, %v", files, err)
 	}
-	var omitted, length int
+	var omitted, length, lengthField, context int
 	for _, file := range files {
 		source, err := os.ReadFile(file)
 		if err != nil {
@@ -258,8 +262,228 @@ func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 		}
 		omitted += strings.Count(string(source), "w.OmittedFieldError(")
 		length += strings.Count(string(source), "w.LengthBoundError(")
+		lengthField += strings.Count(string(source), "w.LengthFieldError(")
+		context += strings.Count(string(source), `fmt.Errorf("%w: continuation count requires enclosing SI value", runtime.ErrContextRequired)`)
 	}
-	if omitted == 0 || length != 5 {
-		t.Fatalf("typed bound checks: %d omitted-field, %d length", omitted, length)
+	// Two SI stop records and one continuation container sit inside the
+	// fixed SI 18/SI 20 value; the IA length field bounds both choice arms;
+	// a standalone continuation container has no enclosing value at all.
+	if omitted == 0 || length != 3 || lengthField != 2 || context != 1 {
+		t.Fatalf("typed bound checks: %d omitted-field, %d length, %d length-field, %d context", omitted, length, lengthField, context)
+	}
+}
+
+// TestLengthFieldAndContextErrors covers the length checks that have no
+// enclosing length-delimited value. TS 44.018 V19.0.0 §10.5.2.16 gives the
+// octets "occupied by the frequency parameters, before time field", so a
+// conflicting arm is reported against the bound that length implies. Non-GSM
+// container code 31 needs the enclosing SI 18/SI 20 value
+// (§10.5.2.37h); standalone, there is no extent and no bound. The IA inputs
+// are synthetic; pycrate 0.7.11 decodes 82000008 as HL, length 2, MAIO arm
+// and 8008 as HL, length 0, null arm.
+func TestLengthFieldAndContextErrors(t *testing.T) {
+	const parent = "IARestOctets/IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParameters/FrequencyParametersBeforeTime"
+	for _, tc := range []struct {
+		wire            string
+		length          uint8
+		field           string
+		limit, position int
+	}{
+		// Length 0: the frequency parameters end where they start (bit 8),
+		// so the MAIO arm cannot be present.
+		{"82000008", 0, "MAIO", 8, 8},
+		// Length 2: two octets from bit 8, which the null arm leaves empty.
+		{"8008", 2, "AltUnlabeled", 24, 8},
+	} {
+		wire, _ := hex.DecodeString(tc.wire)
+		decoded, err := restoctets.DecodeIARestOctets(wire)
+		if err != nil {
+			t.Fatal(err)
+		}
+		value := runtime.Canonical(decoded.Value)
+		value.CompressedInterRATHOINFOINDChoice.LengthOfFrequencyParameters.LengthOfFrequencyParameters = tc.length
+		_, err = restoctets.EncodeIARestOctets(value)
+		var bound *runtime.BoundError
+		if !errors.As(err, &bound) {
+			t.Fatalf("%s: error %v (%T) is not a typed bound conflict", tc.wire, err, err)
+		}
+		if bound.Kind != runtime.LengthBound || bound.Path != parent || bound.Field != tc.field || bound.Limit != tc.limit || bound.Position != tc.position {
+			t.Fatalf("%s: bound conflict %+v", tc.wire, *bound)
+		}
+	}
+	_, err := restoctets.EncodeNonGSMMessageStruct(restoctets.NonGSMMessageStruct{NonGSMProtocolDiscriminator: 1, NROFCONTAINEROCTETS: 31})
+	var bound *runtime.BoundError
+	if !errors.Is(err, runtime.ErrContextRequired) || errors.As(err, &bound) {
+		t.Fatalf("standalone container code 31: %v (%T)", err, err)
+	}
+}
+
+// TestBoundErrorOffsets is a property check over every definition: random
+// synthetic input is decoded, its typed value is randomly edited, and the
+// edited and fresh values are encoded plainly and canonically at several
+// extents. Every *runtime.BoundError returned must name a kind, path and
+// field, with Limit and Position nonnegative bit offsets.
+func TestBoundErrorOffsets(t *testing.T) {
+	rounds := 60
+	if testing.Short() {
+		rounds = 10
+	}
+	rng := rand.New(rand.NewSource(3536))
+	kinds := map[runtime.BoundKind]int{}
+	for _, d := range descriptors() {
+		for range rounds {
+			wire := make([]byte, rng.Intn(41))
+			rng.Read(wire)
+			if err := checkBoundErrors(d, wire, rng.Int63(), kinds); err != nil {
+				t.Fatalf("%s §%s <%s> %x: %v", d.Standard, d.Clause, d.Name, wire, err)
+			}
+		}
+	}
+	t.Logf("bound errors by kind: %v", kinds)
+	// The probe is seeded; the full run reaches every kind, and
+	// TestBoundConflictIsTyped pins each kind on a known value.
+	if kinds[runtime.LengthBound] == 0 || kinds[runtime.CanonicalTarget] == 0 || !testing.Short() && kinds[runtime.ReceivedTruncation] == 0 {
+		t.Fatalf("probe did not reach every bound kind: %v", kinds)
+	}
+}
+
+func FuzzBoundErrorOffsets(f *testing.F) {
+	f.Add(uint16(0), int64(1), []byte{0x82, 0, 0, 0x08})
+	f.Add(uint16(100), int64(2), bytes.Repeat([]byte{0x2b}, 20))
+	definitions := descriptors()
+	f.Fuzz(func(t *testing.T, index uint16, seed int64, wire []byte) {
+		if len(wire) > 50 {
+			return
+		}
+		d := definitions[int(index)%len(definitions)]
+		if err := checkBoundErrors(d, wire, seed, map[runtime.BoundKind]int{}); err != nil {
+			t.Fatalf("%s §%s <%s>: %v", d.Standard, d.Clause, d.Name, err)
+		}
+	})
+}
+
+func checkBoundErrors(d runtime.Descriptor, wire []byte, seed int64, kinds map[runtime.BoundKind]int) (err error) {
+	defer func() {
+		if p := recover(); p != nil {
+			err = fmt.Errorf("panic: %v\n%s", p, debug.Stack())
+		}
+	}()
+	rng := rand.New(rand.NewSource(seed))
+	check := func(encodeErr error) error {
+		var bound *runtime.BoundError
+		if !errors.As(encodeErr, &bound) {
+			return nil
+		}
+		kinds[bound.Kind]++
+		switch bound.Kind {
+		case runtime.LengthBound, runtime.CanonicalTarget, runtime.ReceivedTruncation:
+		default:
+			return fmt.Errorf("unknown bound kind in %v", encodeErr)
+		}
+		if bound.Limit < 0 || bound.Position < 0 || bound.Path == "" || bound.Field == "" || !errors.Is(encodeErr, runtime.ErrBoundConflict) {
+			return fmt.Errorf("bound conflict without valid offsets: %+v", *bound)
+		}
+		return nil
+	}
+	encodeAll := func(value any, extents int) error {
+		_, plain := d.Encode(value)
+		if err := check(plain); err != nil {
+			return err
+		}
+		if d.Canonical != nil {
+			_, canonical := d.Canonical(value)
+			if err := check(canonical); err != nil {
+				return err
+			}
+		}
+		for octets := 0; d.CanonicalAtLength != nil && octets <= extents; octets++ {
+			_, atLength := d.CanonicalAtLength(value, octets)
+			if err := check(atLength); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	var values []any
+	if decoded, decodeErr := d.Decode(wire); decodeErr == nil {
+		value := reflect.ValueOf(decoded).FieldByName("Value")
+		if err := encodeAll(value.Interface(), len(wire)+1); err != nil {
+			return err
+		}
+		// An edited decoded value keeps its wire state, so received
+		// truncation points apply; a canonical copy has none.
+		edited := reflect.New(value.Type()).Elem()
+		edited.Set(value)
+		mutateTyped(rng, edited, 0)
+		values = append(values, edited.Interface(), runtime.Canonical(edited.Interface()))
+	}
+	if typ, ok := freshType(d); ok {
+		fresh := reflect.New(typ)
+		mutateTyped(rng, fresh.Elem(), 0)
+		values = append(values, fresh.Elem().Interface())
+	}
+	for _, value := range values {
+		if err := encodeAll(value, 8); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// freshType recovers a definition's value type from a decode of empty input
+// or from its descriptor encode error, without hand-maintained tables.
+func freshType(d runtime.Descriptor) (reflect.Type, bool) {
+	for _, wire := range [][]byte{{}, {0}, bytes.Repeat([]byte{0x2b}, 20), bytes.Repeat([]byte{0}, 50)} {
+		if decoded, err := d.Decode(wire); err == nil {
+			return reflect.ValueOf(decoded).FieldByName("Value").Type(), true
+		}
+	}
+	return nil, false
+}
+
+// mutateTyped randomly edits unsigned fields, optional pointers and lists in
+// place, leaving received wire state untouched.
+func mutateTyped(rng *rand.Rand, v reflect.Value, depth int) {
+	if depth > 24 || !v.IsValid() || !v.CanSet() {
+		return
+	}
+	switch v.Kind() {
+	case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		if rng.Intn(3) == 0 {
+			v.SetUint(uint64(rng.Intn(64)))
+		}
+	case reflect.Pointer:
+		if v.IsNil() {
+			if rng.Intn(6) == 0 {
+				v.Set(reflect.New(v.Type().Elem()))
+				mutateTyped(rng, v.Elem(), depth+1)
+			}
+		} else if rng.Intn(6) == 0 {
+			v.Set(reflect.Zero(v.Type()))
+		} else {
+			copy := reflect.New(v.Type().Elem())
+			copy.Elem().Set(v.Elem())
+			v.Set(copy)
+			mutateTyped(rng, v.Elem(), depth+1)
+		}
+	case reflect.Struct:
+		if v.Type() == reflect.TypeFor[runtime.WireInfo]() || v.Type() == reflect.TypeFor[runtime.BitString]() {
+			return
+		}
+		for i := range v.NumField() {
+			mutateTyped(rng, v.Field(i), depth+1)
+		}
+	case reflect.Slice:
+		if v.Len() > 0 && rng.Intn(4) == 0 {
+			v.Set(v.Slice(0, rng.Intn(v.Len())))
+		}
+		if !v.IsNil() {
+			copy := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
+			reflect.Copy(copy, v)
+			v.Set(copy)
+			for i := range v.Len() {
+				mutateTyped(rng, v.Index(i), depth+1)
+			}
+		}
 	}
 }
