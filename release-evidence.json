@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "16ec9d473addf510842e139aecbfe315f7653c1a",
+  "compiler_commit": "803c39afcd89cdf195a5bf741d7815e19967231a",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1660,7 +1660,7 @@
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "02916566291e16069fc155b72190bd41406294a98157f5a653a67fcc54f43ac5"
+      "sha256": "5d5500d4c2c6967bc853115f8b2bc68d2842784484daab32cc95800773dca963"
     },
     {
       "path": "ts36331/uecapability/generated.go",

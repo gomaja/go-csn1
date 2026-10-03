@@ -235,14 +235,15 @@ func decodeMSRACapabilityValuePart(r *runtime.Reader) (MSRACapabilityValuePart, 
 	}
 	defer r.Leave()
 	var v MSRACapabilityValuePart
+	valueStart := r.Position()
 	x0, err := decodeMSRACapabilityValuePartMSRACapabilityValuePartStruct(r)
 	if err != nil {
 		return MSRACapabilityValuePart{}, err
 	}
 	v.MSRACapabilityValuePartStruct = x0
 	knownEnd := r.Position() + r.Remaining()
-	if knownEnd > 400 {
-		knownEnd = 400
+	if knownEnd-valueStart > 400 {
+		knownEnd = valueStart + 400
 	}
 	if knownEnd < r.Position() {
 		knownEnd = r.Position()
