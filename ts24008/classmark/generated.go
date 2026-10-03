@@ -5035,7 +5035,7 @@ func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart
 	}
 	input := data
 	if len(data) > 32 {
-		return runtime.Decoded[Classmark3ValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 256, Detail: "Classmark3ValuePart exceeds 256 bits"}
+		input = data[:32]
 	}
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(true)
@@ -5065,9 +5065,6 @@ func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 	}
 	if len(out) < 1 {
 		return nil, fmt.Errorf("Classmark3ValuePart requires at least 8 bits")
-	}
-	if len(out) > 32 {
-		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 32}
 	}
 	return out, nil
 }

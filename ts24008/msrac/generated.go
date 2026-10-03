@@ -6010,11 +6010,6 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 	}
 	input := data
 	if len(data) > 50 {
-		for _, octet := range data[50:] {
-			if octet != 0x2b {
-				return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 400, Detail: "MSRACapabilityValuePart exceeds 400 bits with nonpadding data"}
-			}
-		}
 		input = data[:50]
 	}
 	r := runtime.NewReader(input)

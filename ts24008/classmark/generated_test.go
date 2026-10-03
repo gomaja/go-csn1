@@ -2,11 +2,8 @@ package classmark
 
 import (
 	"bytes"
-	"errors"
 	"reflect"
 	"testing"
-
-	"github.com/gomaja/go-csn1/runtime"
 )
 
 func TestDecodeRejectsOversizedInput(t *testing.T) {
@@ -15,17 +12,30 @@ func TestDecodeRejectsOversizedInput(t *testing.T) {
 	}
 }
 
-func TestClassmark3ValuePartLimit(t *testing.T) {
-	// TS 24.008 V20.1.0 §10.5.1.7: the type 4 IE is at most
-	// 34 octets including IEI and length, leaving 32 value octets.
-	for _, length := range []int{32, 33} {
-		_, err := DecodeClassmark3ValuePart(make([]byte, length))
-		var limit *runtime.DecodeError
-		if length == 32 && err != nil {
-			t.Fatalf("32-octet value: %v", err)
+func TestClassmark3ValuePartExcessIgnoredAndPreserved(t *testing.T) {
+	// TS 24.007 V20.0.0 §11.4.2: excess type 4 value bits are ignored.
+	// TS 24.008 V20.1.0 §10.5.1.7 gives this value part 32 octets.
+	for _, extra := range []byte{0, 0x80, 0x2b} {
+		wire := make([]byte, 33)
+		wire[0] = 0x60
+		wire[32] = extra
+		d, err := DecodeClassmark3ValuePart(wire)
+		if err != nil {
+			t.Fatalf("excess %02x: %v", extra, err)
 		}
-		if length == 33 && (!errors.As(err, &limit) || limit.Kind != runtime.Limit) {
-			t.Fatalf("33-octet value: want typed limit, got %v", err)
+		if d.BitsConsumed != 256 || d.Tail.BitLength != 8 || d.Tail.Bytes[0] != extra {
+			t.Fatalf("excess %02x: consumed=%d tail=%+v", extra, d.BitsConsumed, d.Tail)
+		}
+		got, err := EncodeClassmark3ValuePart(d.Value)
+		if err != nil || !bytes.Equal(got, wire) {
+			t.Fatalf("excess %02x: re-encode=%x err=%v", extra, got, err)
+		}
+		canonical, err := EncodeClassmark3ValuePartCanonical(d.Value)
+		if err != nil || len(canonical) > 32 {
+			t.Fatalf("excess %02x: canonical length=%d err=%v", extra, len(canonical), err)
+		}
+		if _, err := EncodeClassmark3ValuePartCanonicalAtLength(d.Value, 33); err == nil {
+			t.Fatal("canonical-at-length accepted an extra octet")
 		}
 	}
 }
@@ -101,6 +111,7 @@ func FuzzClassmarkDefinitions(f *testing.F) {
 	f.Add([]byte{})
 	f.Add([]byte{0})
 	f.Add([]byte{0xff, 0x2b})
+	f.Add(append(append([]byte{0x60}, bytes.Repeat([]byte{0}, 31)...), 0x80))
 	minimal, err := EncodeClassmark3ValuePart(Classmark3ValuePart{MultibandSupportedChoice: Classmark3ValuePartMultibandSupportedChoice{
 		Alternative: Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits, A5Bits: &Classmark3ValuePartMultibandSupportedChoiceA5Bits{},
 	}})
