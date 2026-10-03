@@ -235,13 +235,28 @@ func decodeMSRACapabilityValuePart(r *runtime.Reader) (MSRACapabilityValuePart, 
 	}
 	defer r.Leave()
 	var v MSRACapabilityValuePart
+	valueStart := r.Position()
 	x0, err := decodeMSRACapabilityValuePartMSRACapabilityValuePartStruct(r)
 	if err != nil {
 		return MSRACapabilityValuePart{}, err
 	}
 	v.MSRACapabilityValuePartStruct = x0
+	knownEnd := r.Position() + r.Remaining()
+	if knownEnd-valueStart > 400 {
+		knownEnd = valueStart + 400
+	}
+	if knownEnd < r.Position() {
+		knownEnd = r.Position()
+	}
+	oldSpareBound, err := r.PushLimit(knownEnd - r.Position())
+	if err != nil {
+		return MSRACapabilityValuePart{}, err
+	}
 	x1, err := decodeMSRACapabilityValuePartSpareBitsList(r)
 	if err != nil {
+		return MSRACapabilityValuePart{}, err
+	}
+	if err := r.PopLimit(oldSpareBound); err != nil {
 		return MSRACapabilityValuePart{}, err
 	}
 	_ = x1
@@ -6009,14 +6024,6 @@ func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityV
 		return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "MSRACapabilityValuePart requires at least 16 bits"}
 	}
 	input := data
-	if len(data) > 50 {
-		for _, octet := range data[50:] {
-			if octet != 0x2b {
-				return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 400, Detail: "MSRACapabilityValuePart exceeds 400 bits with nonpadding data"}
-			}
-		}
-		input = data[:50]
-	}
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePart(r)

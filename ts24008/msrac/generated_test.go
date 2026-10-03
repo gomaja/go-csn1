@@ -2,6 +2,7 @@ package msrac
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"reflect"
 	"testing"
@@ -61,34 +62,101 @@ func TestTruncatedAccessTechnologyReportsTruncation(t *testing.T) {
 	}
 }
 
-func TestOversizedValueRetainsOnlyExcessPaddingAsTail(t *testing.T) {
-	// TS 24.008 V20.1.0 §10.5.5.12a caps the value part at
-	// 50 octets. A nonconformant carrier can append whole 0x2b
-	// padding octets; keep them as tail without treating them as IE data.
-	for _, count := range []int{47, 48} {
-		wire := append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, count)...)
+func TestOversizedValueRetainsAllExcessAsTail(t *testing.T) {
+	// TS 24.007 V20.0.0 §11.4.2 ignores excess type 4 value bits.
+	// TS 24.008 V20.1.0 §10.5.5.12a bounds the known part at 50 octets.
+	for _, extra := range []byte{0x2b, 0x00, 0x80} {
+		wire := append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, 47)...)
+		wire = append(wire, extra)
 		d, err := DecodeMSRACapabilityValuePart(wire)
 		if err != nil {
-			t.Fatalf("%d octets: %v", len(wire), err)
+			t.Fatalf("excess %02x: %v", extra, err)
 		}
-		wantTail := 0
-		if len(wire) > 50 {
-			wantTail = (len(wire) - 50) * 8
-		}
-		if d.Tail.BitLength != wantTail {
-			t.Fatalf("%d octets: tail = %d, want %d", len(wire), d.Tail.BitLength, wantTail)
+		if d.BitsConsumed != 400 || d.Tail.BitLength != 8 || d.Tail.Bytes[0] != extra {
+			t.Fatalf("excess %02x: consumed=%d tail=%+v", extra, d.BitsConsumed, d.Tail)
 		}
 		encoded, err := EncodeMSRACapabilityValuePart(d.Value)
 		if err != nil || !bytes.Equal(encoded, wire) {
-			t.Fatalf("%d octets round trip %x: %v", len(wire), encoded, err)
+			t.Fatalf("excess %02x round trip %x: %v", extra, encoded, err)
+		}
+		canonical, err := EncodeMSRACapabilityValuePartCanonical(d.Value)
+		if err != nil || len(canonical) > 50 {
+			t.Fatalf("excess %02x: canonical length=%d err=%v", extra, len(canonical), err)
+		}
+		if _, err := EncodeMSRACapabilityValuePartCanonicalAtLength(d.Value, 51); err == nil {
+			t.Fatal("canonical-at-length accepted an extra octet")
 		}
 	}
-	bad := append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, 47)...)
-	bad = append(bad, 0x00)
-	_, err := DecodeMSRACapabilityValuePart(bad)
-	var de *runtime.DecodeError
-	if !errors.As(err, &de) || de.Kind != runtime.Limit {
-		t.Fatalf("nonpadding excess = %v; want limit", err)
+}
+
+func TestLengthDelimitedStructCrossesValueMaximum(t *testing.T) {
+	// TS 24.008 V20.1.0 §10.5.5.12a gives each access-technology
+	// struct its own seven-bit length. The third complete struct crosses
+	// the current 50-octet value maximum (TS 24.007 V20.0.0 §11.4.2).
+	wire, err := hex.DecodeString("1fe000000000000000000000000000000023fc000000000000000000000000000000047f800000000000000000000000000000002b")
+	if err != nil {
+		t.Fatal(err)
+	}
+	d, err := DecodeMSRACapabilityValuePart(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := len(d.Value.MSRACapabilityValuePartStruct.Entries); got != 3 {
+		t.Fatalf("entries=%d, want 3", got)
+	}
+	if d.BitsConsumed != 417 || d.Tail.BitLength != 7 {
+		t.Fatalf("consumed=%d tail=%+v", d.BitsConsumed, d.Tail)
+	}
+	if !reflect.DeepEqual(d.Tail, d.Value.Wire.Tail) {
+		t.Fatalf("wire tail=%+v, decoded tail=%+v", d.Value.Wire.Tail, d.Tail)
+	}
+	encoded, err := EncodeMSRACapabilityValuePart(d.Value)
+	if err != nil || !bytes.Equal(encoded, wire) {
+		t.Fatalf("round trip %x: %v", encoded, err)
+	}
+	if _, err := EncodeMSRACapabilityValuePartCanonical(d.Value); err == nil {
+		t.Fatal("canonical encoding accepted three structs beyond the 50-octet maximum")
+	} else {
+		var extent *runtime.ExtentError
+		if !errors.As(err, &extent) {
+			t.Fatalf("canonical error %T: %v; want extent", err, err)
+		}
+	}
+	for _, suffix := range []byte{0x00, 0x7f} {
+		changed := append([]byte(nil), wire...)
+		changed[len(changed)-1] = suffix // the high bit ends the third struct
+		decoded, err := DecodeMSRACapabilityValuePart(changed)
+		if err != nil || decoded.BitsConsumed != 417 || decoded.Tail.BitLength != 7 {
+			t.Fatalf("suffix %02x: consumed=%d tail=%+v err=%v", suffix, decoded.BitsConsumed, decoded.Tail, err)
+		}
+		encoded, err := EncodeMSRACapabilityValuePart(decoded.Value)
+		if err != nil || !bytes.Equal(encoded, changed) {
+			t.Fatalf("suffix %02x: round trip %x: %v", suffix, encoded, err)
+		}
+	}
+	// The same boundary also occurs with distinct access technologies,
+	// satisfying TS 24.008 V20.1.0 §10.5.5.12a's band conditions.
+	distinct, err := hex.DecodeString("1fe000000000000000000000000000000027fc000000000000000000000000000000057f800000000000000000000000000000002b")
+	if err != nil {
+		t.Fatal(err)
+	}
+	parsed, err := DecodeMSRACapabilityValuePart(distinct)
+	if err != nil {
+		t.Fatal(err)
+	}
+	entries := parsed.Value.MSRACapabilityValuePartStruct.Entries
+	if len(entries) != 3 {
+		t.Fatalf("distinct access technologies: %d entries", len(entries))
+	}
+	for i, want := range []uint8{1, 3, 5} {
+		part := entries[i].AccessTechnologyTypeChoice.AccessCapabilities
+		if part == nil || part.AccessTechnologyType != want || part.AccessCapabilities.Length != 127 {
+			t.Fatalf("entry %d: %+v, want type %d length 127", i, part, want)
+		}
+	}
+	encoded, err = EncodeMSRACapabilityValuePart(parsed.Value)
+	if err != nil || !bytes.Equal(encoded, distinct) {
+		t.Fatalf("distinct access technologies round trip %x: %v", encoded, err)
 	}
 }
 
@@ -256,6 +324,7 @@ func FuzzMSRADefinitions(f *testing.F) {
 	f.Add([]byte{})
 	f.Add([]byte{0})
 	f.Add([]byte{0xff, 0x2b})
+	f.Add(append(append([]byte{0x10, 0xb1, 0}, bytes.Repeat([]byte{0x2b}, 47)...), 0))
 	entry := MSRACapabilityValuePartStructElement{AccessTechnologyTypeChoice: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice{
 		Alternative: MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength,
 		Length:      &MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength{AccessTechnologyType: 15, Length: 1},

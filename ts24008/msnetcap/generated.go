@@ -1783,7 +1783,7 @@ func DecodeMSNetworkCapabilityValuePart(data []byte) (runtime.Decoded[MSNetworkC
 	}
 	input := data
 	if len(data) > 8 {
-		return runtime.Decoded[MSNetworkCapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 64, Detail: "MSNetworkCapabilityValuePart exceeds 64 bits"}
+		input = data[:8]
 	}
 	r := runtime.NewReader(input)
 	r.SetZeroExtension(true)
@@ -1813,9 +1813,6 @@ func EncodeMSNetworkCapabilityValuePart(v MSNetworkCapabilityValuePart) ([]byte,
 	}
 	if len(out) < 1 {
 		return nil, fmt.Errorf("MSNetworkCapabilityValuePart requires at least 8 bits")
-	}
-	if len(out) > 8 {
-		return nil, &runtime.ExtentError{Actual: len(out), Maximum: 8}
 	}
 	return out, nil
 }

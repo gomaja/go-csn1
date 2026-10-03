@@ -3628,7 +3628,7 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCCompressedInterRATHOI
 	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
-	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v)^uint64(runtime.LHBit('L', w.Position())))
+	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v))
 	return nil
 }
 func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAltUnlabeled(_ *runtime.Reader) (struct{}, error) {
@@ -4613,7 +4613,7 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
-	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v)^uint64(runtime.LHBit('L', w.Position())))
+	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v))
 	return nil
 }
 func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAltUnlabeled(_ *runtime.Reader) (struct{}, error) {
@@ -14435,7 +14435,7 @@ func encodeIAXRestOctetsCompressedInterRATHOINFOIND(w *runtime.Writer, v uint8) 
 	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
-	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v)^uint64(runtime.LHBit('L', w.Position())))
+	w.Set("Compressed_Inter_RAT_HO_INFO_IND", uint64(v))
 	return nil
 }
 func decodeIAXRestOctetsRCCChoiceAltUnlabeled(_ *runtime.Reader) (struct{}, error) {
@@ -14989,6 +14989,7 @@ func decodeBandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR(r *runtime.
 	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("BAND_INDICATOR", v)
 	return uint8(v), nil
 }
@@ -15001,10 +15002,13 @@ func encodeBandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR(w *runtime.
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('L', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("BAND_INDICATOR", uint64(v))
@@ -15026,6 +15030,7 @@ func decodeBandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled(r *runtime.R
 	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("BAND_INDICATOR", v)
 	return uint8(v), nil
 }
@@ -15038,10 +15043,13 @@ func encodeBandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled(w *runtime.W
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('H', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("BAND_INDICATOR", uint64(v))
@@ -51725,6 +51733,7 @@ func decodeSI6RestOctetsDTMSupportChoiceDTMSupport(r *runtime.Reader) (uint8, er
 	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("DTM_support", v)
 	return uint8(v), nil
 }
@@ -51737,10 +51746,13 @@ func encodeSI6RestOctetsDTMSupportChoiceDTMSupport(w *runtime.Writer, v uint8) e
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('L', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("DTM_support", uint64(v))
@@ -51762,6 +51774,7 @@ func decodeSI6RestOctetsDTMSupportChoiceRACDTMSupport(r *runtime.Reader) (uint8,
 	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("DTM_support", v)
 	return uint8(v), nil
 }
@@ -51774,10 +51787,13 @@ func encodeSI6RestOctetsDTMSupportChoiceRACDTMSupport(w *runtime.Writer, v uint8
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('H', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("DTM_support", uint64(v))
@@ -53217,6 +53233,7 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR(r *runtime
 	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("BAND_INDICATOR", v)
 	return uint8(v), nil
 }
@@ -53229,10 +53246,13 @@ func encodeBandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR(w *runtime
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('L', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("BAND_INDICATOR", uint64(v))
@@ -53254,6 +53274,7 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled(r *runtime.
 	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("BAND_INDICATOR", v)
 	return uint8(v), nil
 }
@@ -53266,10 +53287,13 @@ func encodeBandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled(w *runtime.
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('H', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("BAND_INDICATOR", uint64(v))
@@ -61872,6 +61896,7 @@ func decodeEmergencyIndEmergencyIndChoiceEmergencyInd(r *runtime.Reader) (uint8,
 	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("Emergency_Ind", v)
 	return uint8(v), nil
 }
@@ -61884,10 +61909,13 @@ func encodeEmergencyIndEmergencyIndChoiceEmergencyInd(w *runtime.Writer, v uint8
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('L', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("Emergency_Ind", uint64(v))
@@ -61909,6 +61937,7 @@ func decodeEmergencyIndEmergencyIndChoiceAltUnlabeled(r *runtime.Reader) (uint8,
 	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
 		return 0, r.Error(runtime.InvalidValue, "equality constraint failed")
 	}
+	v ^= uint64(runtime.LHBit('L', r.Position()-1))
 	r.Set("Emergency_Ind", v)
 	return uint8(v), nil
 }
@@ -61921,10 +61950,13 @@ func encodeEmergencyIndEmergencyIndChoiceAltUnlabeled(w *runtime.Writer, v uint8
 	if err != nil {
 		return err
 	}
-	if uint64(v) != uint64(runtime.LHBit('H', w.Position())) {
+	if v > 1 {
+		return fmt.Errorf("L/H field outside 0..1")
+	}
+	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
 		return fmt.Errorf("equality constraint failed")
 	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
 		return err
 	}
 	w.Set("Emergency_Ind", uint64(v))

@@ -36,6 +36,14 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		ordered = []string{"runtime.CheckInput(data)", "iflen(data)<6", "classmark.DecodeClassmark3ValuePart(data[5:])", "40+cm3.BitsConsumed"}
 	case "40 + v.Classmark3.Wire.BitsConsumed":
 		ordered = []string{"runtime.CheckInput(cm3)", "v.Classmark3.Wire.BitsConsumed>len(cm3)*8", "runtime.CheckInput(out)", "40+v.Classmark3.Wire.BitsConsumed"}
+	case "r.Position() + r.Remaining()":
+		ordered = []string{"decodeMSRACapabilityValuePartMSRACapabilityValuePartStruct(r)", "iferr!=nil{return", "knownEnd:=r.Position()+r.Remaining()"}
+	case "knownEnd - valueStart":
+		ordered = []string{"valueStart:=r.Position()", "decodeMSRACapabilityValuePartMSRACapabilityValuePartStruct(r)", "iferr!=nil{return", "knownEnd:=r.Position()+r.Remaining()", "ifknownEnd-valueStart>400"}
+	case "valueStart + 400":
+		ordered = []string{"valueStart:=r.Position()", "knownEnd:=r.Position()+r.Remaining()", "ifknownEnd-valueStart>400{knownEnd=valueStart+400}"}
+	case "knownEnd - r.Position()":
+		ordered = []string{"knownEnd:=r.Position()+r.Remaining()", "ifknownEnd-valueStart>400{knownEnd=valueStart+400}", "ifknownEnd<r.Position(){knownEnd=r.Position()}", "r.PushLimit(knownEnd-r.Position())"}
 	case "len(cm3) * 8":
 		ordered = []string{"runtime.CheckInput(cm3)", "len(cm3)*8"}
 	case "v.RevisionLevel << 5", "v.SSScreeningIndicator << 4":
