@@ -1973,6 +1973,9 @@ const (
 	SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackAlternativeIgnored
 )
 
+// SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallback keeps Known when the known arm decodes and Ignored otherwise. Encoding
+// Ignored returns *runtime.FallbackError when its bits would decode through
+// the known arm.
 type SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallback struct {
 	Alternative SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackAlternative
 	Known       *SI2qExtensionInformation
@@ -2292,6 +2295,9 @@ const (
 	GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackAlternativeIgnored
 )
 
+// GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback keeps Known when the known arm decodes and Ignored otherwise. Encoding
+// Ignored returns *runtime.FallbackError when its bits would decode through
+// the known arm.
 type GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback struct {
 	Alternative GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackAlternative
 	Known       *struct{}
@@ -36959,7 +36965,14 @@ func encodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qEx
 		if v.Ignored == nil {
 			return fmt.Errorf("fallback arm mismatch")
 		}
-		return encodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackIgnored(w, *v.Ignored)
+		mark := w.MarkFallback()
+		if err := encodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackIgnored(w, *v.Ignored); err != nil {
+			return err
+		}
+		return w.CheckIgnoredFallback(mark, true, func(r *runtime.Reader) error {
+			_, err := decodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackKnown(r)
+			return err
+		})
 	default:
 		return fmt.Errorf("invalid fallback arm")
 	}
@@ -43550,7 +43563,14 @@ func encodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback(w *runtime.W
 		if v.Ignored == nil {
 			return fmt.Errorf("fallback arm mismatch")
 		}
-		return encodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackIgnored(w, *v.Ignored)
+		mark := w.MarkFallback()
+		if err := encodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackIgnored(w, *v.Ignored); err != nil {
+			return err
+		}
+		return w.CheckIgnoredFallback(mark, false, func(r *runtime.Reader) error {
+			_, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackKnown(r)
+			return err
+		})
 	default:
 		return fmt.Errorf("invalid fallback arm")
 	}
@@ -76228,6 +76248,8 @@ func EncodeSI2quaterRestOctets(v SI2quaterRestOctets) ([]byte, error) {
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited or fixed-size value, a length field, or a stop
 //     record or continuation container inside the value;
+//   - *runtime.FallbackError when ignored fallback bits would decode through
+//     the known arm;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
 // that do not decode to an equivalent typed value.
@@ -76244,6 +76266,8 @@ func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited or fixed-size value, a length field, or a stop
 //     record or continuation container inside the value;
+//   - *runtime.FallbackError when ignored fallback bits would decode through
+//     the known arm;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
 // that do not decode to an equivalent typed value.
@@ -79047,6 +79071,8 @@ func EncodeSI13RestOctets(v SI13RestOctets) ([]byte, error) {
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited or fixed-size value, a length field, or a stop
 //     record or continuation container inside the value;
+//   - *runtime.FallbackError when ignored fallback bits would decode through
+//     the known arm;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
 // that do not decode to an equivalent typed value.
@@ -79063,6 +79089,8 @@ func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited or fixed-size value, a length field, or a stop
 //     record or continuation container inside the value;
+//   - *runtime.FallbackError when ignored fallback bits would decode through
+//     the known arm;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
 // that do not decode to an equivalent typed value.

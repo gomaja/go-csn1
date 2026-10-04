@@ -830,6 +830,54 @@ func (w *Writer) WriteIgnored(value BitString) error {
 	return w.WriteBitString(value, value.BitLength)
 }
 
+// FallbackMark is the writer state where an ignored fallback arm starts.
+type FallbackMark struct {
+	bits, virtual int
+	allowZero     bool
+	vars          map[string]uint64
+}
+
+// MarkFallback records the state the decoder's known-arm trial starts from:
+// the bit position, the receiver-inferred zeros so far, zero extension and
+// the field bindings, which the writer binds as the reader does.
+func (w *Writer) MarkFallback() FallbackMark {
+	vars := make(map[string]uint64, len(w.vars))
+	for k, v := range w.vars {
+		vars[k] = v
+	}
+	return FallbackMark{bits: w.bits, virtual: w.virtual, allowZero: w.allowZero, vars: vars}
+}
+
+// CheckIgnoredFallback returns a *FallbackError when the bits written since
+// mark decode through known, which the decoder would then choose. The trial
+// reads exactly the bits the decoder's trial can read: with toBound, the
+// completed length-delimited value that the ignored arm fills; otherwise the
+// ignored bits alone, which the generator permits only when the known arm
+// cannot read past them. An ignored arm that leaves its bound unfilled is
+// not tried here, because PopLimit rejects it.
+func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known func(*Reader) error) error {
+	if toBound && (!w.bounded || w.bits != w.limit) {
+		return nil
+	}
+	if mark.bits < 0 || mark.bits > w.bits {
+		return fmt.Errorf("invalid fallback mark at %s", w.path)
+	}
+	r := NewReader(w.bytes)
+	// Reader.Check bounds the window by the written bytes; the shared
+	// bindings are copied before the trial binds anything.
+	r.pos, r.end, r.virtual, r.allowZero, r.vars, r.varsShared = mark.bits, w.bits, mark.virtual, mark.allowZero, mark.vars, true
+	if toBound {
+		r.boundDepth = 1
+	}
+	if err := r.Check(); err != nil {
+		return err
+	}
+	if known(r) == nil {
+		return &FallbackError{Path: w.path, Position: mark.bits}
+	}
+	return nil
+}
+
 // WriteIgnoredFixed re-emits a received ignored field or a zero-valued
 // field for a newly constructed value (TS 44.018 V19.0.0 §10.5.2.33b).
 func (w *Writer) WriteIgnoredFixed(width int) error {

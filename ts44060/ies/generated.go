@@ -120,6 +120,9 @@ const (
 	GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeIgnored
 )
 
+// GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback keeps Known when the known arm decodes and Ignored otherwise. Encoding
+// Ignored returns *runtime.FallbackError when its bits would decode through
+// the known arm.
 type GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback struct {
 	Alternative GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternative
 	Known       *ExtensionInformation
@@ -3413,7 +3416,14 @@ func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 		if v.Ignored == nil {
 			return fmt.Errorf("fallback arm mismatch")
 		}
-		return encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(w, *v.Ignored)
+		mark := w.MarkFallback()
+		if err := encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(w, *v.Ignored); err != nil {
+			return err
+		}
+		return w.CheckIgnoredFallback(mark, true, func(r *runtime.Reader) error {
+			_, err := decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackKnown(r)
+			return err
+		})
 	default:
 		return fmt.Errorf("invalid fallback arm")
 	}
@@ -8958,6 +8968,8 @@ func EncodeGPRSCellOptionsIECanonical(v GPRSCellOptionsIE) ([]byte, error) {
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited or fixed-size value, a length field, or a stop
 //     record or continuation container inside the value;
+//   - *runtime.FallbackError when ignored fallback bits would decode through
+//     the known arm;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
 // that do not decode to an equivalent typed value.

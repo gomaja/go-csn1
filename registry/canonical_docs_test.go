@@ -34,6 +34,7 @@ const (
 	classContext        = "context"           // wraps ErrContextRequired
 	classContextLayout  = "context-acs"       // *ContextRequiredError (SI4 ACS)
 	classDecode         = "decode"            // wraps a *DecodeError
+	classFallback       = "fallback-known"    // *FallbackError
 	entryCanonical      = "Canonical"         //
 	entryAtLength       = "CanonicalAtLength" //
 	entryWithContext    = "CanonicalWithContext"
@@ -88,6 +89,7 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 			add(classLength, strings.Contains(doc, "Kind runtime.LengthBound"))
 			add(classContext, strings.Contains(doc, "wrapping runtime.ErrContextRequired"))
 			add(classContextLayout, strings.Contains(doc, "*runtime.ContextRequiredError"))
+			add(classFallback, strings.Contains(doc, "*runtime.FallbackError"))
 			out[key] = classes
 			if _, delegated, ok := strings.Cut(doc, "returns the errors of "); ok {
 				delegations[key] = delegation{dir, delegated}
@@ -191,9 +193,12 @@ func classify(err error, octets int, entry string) string {
 	var extent *runtime.ExtentError
 	var layout *runtime.ContextRequiredError
 	var decode *runtime.DecodeError
+	var fallback *runtime.FallbackError
 	switch {
 	case err == nil:
 		return ""
+	case errors.As(err, &fallback):
+		return classFallback
 	case errors.As(err, &bound):
 		if bound.Kind == runtime.CanonicalTarget {
 			return classTarget
@@ -332,6 +337,34 @@ func variants(rng *rand.Rand, base any, leaves int, yield func(any)) {
 			for k := 0; list.Len() < size; k++ {
 				list.Set(reflect.Append(list, list.Index(k)))
 			}
+			yield(c.Interface())
+		}
+	}
+	// Switch each fallback to its ignored arm with random bits, and set the
+	// enclosing length to them: TS 44.060 V19.0.0 §12.24 and TS 44.018
+	// V19.0.0 §10.5.2.33b print < bit (val(<length>) + 1) & { <known> !
+	// <ignored> } >. The known arm then often decodes the bits.
+	var fallbacks []fallbackSite
+	fallbackFields(deepCopy(base), 0, &fallbacks)
+	for fi := range min(len(fallbacks), 4) {
+		for range 3 {
+			c := deepCopy(base)
+			var fs []fallbackSite
+			fallbackFields(c, 0, &fs)
+			if fi >= len(fs) {
+				break
+			}
+			site := fs[fi]
+			// 1..64 bits: Extension Length is 6 bits in §12.24, 8 in §10.5.2.33b.
+			n := 1 + rng.Intn(64)
+			raw := make([]byte, (n+7)/8)
+			rng.Read(raw)
+			bits := runtime.BitString{Bytes: raw, BitLength: n}
+			site.fallback.FieldByName("Alternative").SetUint(1)
+			known := site.fallback.FieldByName("Known")
+			known.Set(reflect.Zero(known.Type()))
+			site.fallback.FieldByName("Ignored").Set(reflect.ValueOf(&bits))
+			site.length.SetUint(uint64(n - 1))
 			yield(c.Interface())
 		}
 	}
@@ -721,6 +754,47 @@ func sliceFields(v reflect.Value, depth int, out *[]reflect.Value) {
 		}
 		for i := range v.Len() {
 			sliceFields(v.Index(i), depth+1, out)
+		}
+	}
+}
+
+// fallbackSite is a generated fallback (fields Alternative, Known and
+// Ignored) with the length field of the group that encloses it.
+type fallbackSite struct{ fallback, length reflect.Value }
+
+// fallbackFields collects settable fallbacks whose enclosing struct has an
+// unsigned field named ...Length, the printed val(<length>) + 1 bound.
+func fallbackFields(v reflect.Value, depth int, out *[]fallbackSite) {
+	if depth > 30 || !v.IsValid() {
+		return
+	}
+	switch v.Kind() {
+	case reflect.Pointer:
+		if !v.IsNil() {
+			fallbackFields(v.Elem(), depth+1, out)
+		}
+	case reflect.Struct:
+		if v.Type() == reflect.TypeFor[runtime.WireInfo]() || v.Type() == reflect.TypeFor[runtime.BitString]() {
+			return
+		}
+		var length reflect.Value
+		for i := range v.NumField() {
+			if f := v.Field(i); strings.HasSuffix(v.Type().Field(i).Name, "Length") && f.CanSet() && f.Kind() >= reflect.Uint8 && f.Kind() <= reflect.Uint64 {
+				length = f
+			}
+		}
+		for i := range v.NumField() {
+			f := v.Field(i)
+			if length.IsValid() && f.Kind() == reflect.Struct && f.CanSet() {
+				if g := f.FieldByName("Ignored"); g.IsValid() && g.Type() == reflect.TypeFor[*runtime.BitString]() && f.FieldByName("Known").IsValid() && f.FieldByName("Alternative").IsValid() {
+					*out = append(*out, fallbackSite{f, length})
+				}
+			}
+			fallbackFields(f, depth+1, out)
+		}
+	case reflect.Slice:
+		for i := range v.Len() {
+			fallbackFields(v.Index(i), depth+1, out)
 		}
 	}
 }

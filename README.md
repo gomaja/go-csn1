@@ -35,6 +35,12 @@ encoded, err := uecapability.EncodeGERANPS(decoded.Value)
 
 A `BoundError` always names a real bound. A value whose extent comes from an absent containing message returns an error wrapping `runtime.ErrContextRequired` instead: Non-GSM container length code 31 fills the enclosing SI 18/SI 20 value (§10.5.2.37h), so it cannot be encoded standalone.
 
+A fallback `{ <known> ! <ignored> }` decodes through its known arm whenever that arm decodes, and keeps the bits as `Ignored` only otherwise (TS 44.060 V19.0.0 §12.24 Extension Information, TS 44.018 V19.0.0 §10.5.2.33b). Plain and canonical encoders therefore reject an `Ignored` value whose bits the known arm would decode, with a `*runtime.FallbackError` (`errors.Is(err, runtime.ErrFallbackKnown)`): those bytes would decode to a different value. The encoder repeats the decoder's trial over exactly the bits that trial reads:
+- for `bit ** = <no string>`, the completed length-delimited value the ignored bits fill;
+- for a one-bit ignored field, that bit, because the generator accepts only a known arm that cannot read past it.
+
+Any other fallback shape stops generation. A newly constructed one-bit ignored field is written as 0, which the SI2quater known arm `1` never decodes.
+
 Value-constraint errors are untyped, even when the field is a count or a length, so callers can match them only by text:
 
 - a count that disagrees with the length of its list (`repeat count mismatch`), for example NR_OF_CONTAINER_OCTETS against its CONTAINER octets;

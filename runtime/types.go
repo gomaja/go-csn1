@@ -147,6 +147,28 @@ func (e *BoundError) Error() string {
 
 func (e *BoundError) Unwrap() error { return ErrBoundConflict }
 
+// ErrFallbackKnown identifies ignored fallback bits that the decoder would
+// read through the known arm. Every *FallbackError unwraps to it.
+var ErrFallbackKnown = errors.New("CSN.1 ignored fallback bits decode through the known arm")
+
+// FallbackError reports an ignored fallback value whose bits decode through
+// the known arm, so its encoding would not decode back to it. TS 44.060
+// V19.0.0 §12.24 and TS 44.018 V19.0.0 §10.5.2.33b print { <known> !
+// <ignored> }: the decoder tries the known arm first and keeps the bits as
+// ignored only when it fails. Path is the encoder path of the fallback and
+// Position the bit offset, from the start of the encoding, where the
+// ignored bits start.
+type FallbackError struct {
+	Path     string
+	Position int
+}
+
+func (e *FallbackError) Error() string {
+	return fmt.Sprintf("CSN.1 ignored fallback bits at %s (bit %d) decode through the known arm", e.Path, e.Position)
+}
+
+func (e *FallbackError) Unwrap() error { return ErrFallbackKnown }
+
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007
 // V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm
 // matches because input ends inside one, that boundary is the useful error.
