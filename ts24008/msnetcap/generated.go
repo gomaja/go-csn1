@@ -1820,17 +1820,9 @@ func EncodeMSNetworkCapabilityValuePart(v MSNetworkCapabilityValuePart) ([]byte,
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (10-octet type 4 IE minus IEI and length = 8-octet value part).
 // EncodeMSNetworkCapabilityValuePartCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns:
-//   - *runtime.ExtentError when the encoding falls outside 1..8 octets;
-//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
-//     fit a length-delimited or fixed-size value, a length field or a
-//     truncation point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
-//
-// Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// an equivalent typed value. It returns only untyped errors: a field value
+// the grammar cannot carry, or bytes that do not decode to an equivalent typed
+// value.
 func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 1, 8, true, EncodeMSNetworkCapabilityValuePart, DecodeMSNetworkCapabilityValuePart, nil)
 }
@@ -1841,15 +1833,10 @@ func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart)
 //   - *runtime.ExtentError when octets is outside 1..8 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
-//     length-delimited or fixed-size value, a length field or a truncation
-//     point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//     not fit in octets;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// that do not decode to an equivalent typed value.
 func EncodeMSNetworkCapabilityValuePartCanonicalAtLength(v MSNetworkCapabilityValuePart, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 1, 8, EncodeMSNetworkCapabilityValuePart, DecodeMSNetworkCapabilityValuePart, nil)
 }
@@ -1896,17 +1883,9 @@ func EncodeGEA1Bits(v GEA1Bits) ([]byte, error) {
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
 // EncodeGEA1BitsCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns:
-//   - *runtime.ExtentError when the encoding falls outside 0..1 octets;
-//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
-//     fit a length-delimited or fixed-size value, a length field or a
-//     truncation point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
-//
-// Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// an equivalent typed value. It returns only untyped errors: a field value
+// the grammar cannot carry, or bytes that do not decode to an equivalent typed
+// value.
 func EncodeGEA1BitsCanonical(v GEA1Bits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 1, false, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
@@ -1914,18 +1893,12 @@ func EncodeGEA1BitsCanonical(v GEA1Bits) ([]byte, error) {
 // EncodeGEA1BitsCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..1 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 0..1 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
-//     length-delimited or fixed-size value, a length field or a truncation
-//     point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//     not fit in octets;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// that do not decode to an equivalent typed value.
 func EncodeGEA1BitsCanonicalAtLength(v GEA1Bits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeGEA1Bits, DecodeGEA1Bits, nil)
 }
@@ -1974,17 +1947,9 @@ func EncodeExtendedGEABits(v ExtendedGEABits) ([]byte, error) {
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (finite maximum from the printed CSN.1 grammar).
 // EncodeExtendedGEABitsCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns:
-//   - *runtime.ExtentError when the encoding falls outside 0..1 octets;
-//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
-//     fit a length-delimited or fixed-size value, a length field or a
-//     truncation point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
-//
-// Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// an equivalent typed value. It returns only untyped errors: a field value
+// the grammar cannot carry, or bytes that do not decode to an equivalent typed
+// value.
 func EncodeExtendedGEABitsCanonical(v ExtendedGEABits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 1, false, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
@@ -1992,18 +1957,12 @@ func EncodeExtendedGEABitsCanonical(v ExtendedGEABits) ([]byte, error) {
 // EncodeExtendedGEABitsCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..1 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 0..1 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
-//     length-delimited or fixed-size value, a length field or a truncation
-//     point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//     not fit in octets;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// that do not decode to an equivalent typed value.
 func EncodeExtendedGEABitsCanonicalAtLength(v ExtendedGEABits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 1, EncodeExtendedGEABits, DecodeExtendedGEABits, nil)
 }
@@ -2050,17 +2009,9 @@ func EncodeSpareBits(v SpareBits) ([]byte, error) {
 // Canonical maximum: TS 24.008 V20.1.0 §10.5.5.12 (MS network capability value part maximum 8 octets).
 // EncodeSpareBitsCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns:
-//   - *runtime.ExtentError when the encoding falls outside 0..8 octets;
-//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
-//     fit a length-delimited or fixed-size value, a length field or a
-//     truncation point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
-//
-// Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// an equivalent typed value. It returns only untyped errors: a field value
+// the grammar cannot carry, or bytes that do not decode to an equivalent typed
+// value.
 func EncodeSpareBitsCanonical(v SpareBits) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 8, false, EncodeSpareBits, DecodeSpareBits, nil)
 }
@@ -2071,15 +2022,10 @@ func EncodeSpareBitsCanonical(v SpareBits) ([]byte, error) {
 //   - *runtime.ExtentError when octets is outside 0..8 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
-//     length-delimited or fixed-size value, a length field or a truncation
-//     point inside the value;
-//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
-//     an absent containing message;
-//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//     not fit in octets;
 //
 // Other errors are untyped: a field value the grammar cannot carry, or bytes
-// that decode to a different typed value.
+// that do not decode to an equivalent typed value.
 func EncodeSpareBitsCanonicalAtLength(v SpareBits, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 8, EncodeSpareBits, DecodeSpareBits, nil)
 }
