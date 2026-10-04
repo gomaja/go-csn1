@@ -10,6 +10,7 @@ import (
 	"go/parser"
 	"go/token"
 	"math/rand"
+	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -27,6 +28,7 @@ import (
 const (
 	classRequired       = "extent-required"   // *ExtentError with Required set
 	classLonger         = "extent-longer"     // encoding longer than the maximum
+	classShorter        = "extent-shorter"    // encoding shorter than the minimum
 	classRange          = "extent-range"      // requested octets outside the extent
 	classUnfilled       = "extent-unfilled"   // encoding shorter than requested
 	classTarget         = "bound-target"      // BoundError CanonicalTarget
@@ -41,16 +43,48 @@ const (
 	runtimeOctetMaximum = 1 << 17
 )
 
+// generatedFiles returns the generated.go of every codec package: a ts*/*
+// directory with Go files. A directory without Go files is a planned package
+// (see the README coverage table) and is skipped. It fails clearly on a
+// lookup error, on no codec package, or on a codec package without
+// generated code.
+func generatedFiles(t *testing.T) []string {
+	t.Helper()
+	dirs, err := filepath.Glob(filepath.Join("..", "ts*", "*"))
+	if err != nil {
+		t.Fatalf("listing codec packages: %v", err)
+	}
+	var files []string
+	for _, dir := range dirs {
+		if info, err := os.Stat(dir); err != nil || !info.IsDir() {
+			continue
+		}
+		sources, err := filepath.Glob(filepath.Join(dir, "*.go"))
+		if err != nil {
+			t.Fatalf("listing %s: %v", dir, err)
+		}
+		if len(sources) == 0 {
+			continue
+		}
+		file := filepath.Join(dir, "generated.go")
+		if _, err := os.Stat(file); err != nil {
+			t.Fatalf("codec package %s has no generated.go: %v", dir, err)
+		}
+		files = append(files, file)
+	}
+	if len(files) == 0 {
+		t.Fatal("no codec package with generated.go under ../ts*/*")
+	}
+	return files
+}
+
 // documentedClasses reads the classes each generated canonical entry point
 // documents, keyed by package directory and function name: two packages may
 // define the same function name. It also returns each package name's
 // directory, and fails on a duplicate key.
 func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]string) {
 	t.Helper()
-	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
-	if err != nil || len(files) != 8 {
-		t.Fatalf("generated files %v, %v", files, err)
-	}
+	files := generatedFiles(t)
 	out := map[string]map[string]bool{}
 	packages := map[string]string{}
 	type delegation struct{ dir, text string }
@@ -90,6 +124,9 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 			add(classContext, strings.Contains(doc, "wrapping runtime.ErrContextRequired"))
 			add(classContextLayout, strings.Contains(doc, "*runtime.ContextRequiredError"))
 			add(classFallback, strings.Contains(doc, "*runtime.FallbackError"))
+			// Generation keeps decode-back from failing, so no comment lists
+			// this class; a comment that did would be checked like the rest.
+			add(classDecode, strings.Contains(doc, "wrapping *runtime.DecodeError"))
 			out[key] = classes
 			if _, delegated, ok := strings.Cut(doc, "returns the errors of "); ok {
 				delegations[key] = delegation{dir, delegated}
@@ -123,8 +160,7 @@ var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Cano
 // descriptor key maps to two functions.
 func canonicalFunctions(t *testing.T, packages map[string]string) map[string]string {
 	t.Helper()
-	files, _ := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
-	files = append(files, "registry.go")
+	files := append(generatedFiles(t), "registry.go")
 	out := map[string]string{}
 	for _, file := range files {
 		parsed, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
@@ -217,8 +253,12 @@ func classify(err error, octets int, entry string) string {
 			return classUnfilled
 		case extent.Maximum > 0 && extent.Actual > extent.Maximum:
 			return classLonger
+		case extent.Actual < extent.Minimum:
+			// An encoding shorter than the definition's minimum; no comment
+			// lists it, because encoders pad to the minimum.
+			return classShorter
 		default:
-			return fmt.Sprintf("extent-other(%+v)", *extent)
+			return fmt.Sprintf("extent-other(Actual %d, Minimum %d, Maximum %d)", extent.Actual, extent.Minimum, extent.Maximum)
 		}
 	case errors.As(err, &layout):
 		return classContextLayout
@@ -893,3 +933,24 @@ func corpusDigest(values [][]any, harvested map[reflect.Type][]reflect.Value) []
 // pinned. It is empty. TS 44.018 V19.0.0 §10.5.2.37o, the last entry, was
 // resolved by a source correction (gomaja/go-csn1#20).
 var pendingAmbiguity = map[string]string{}
+
+// Every ExtentError shape classify can meet has its own class.
+func TestClassifyExtentErrors(t *testing.T) {
+	for _, tc := range []struct {
+		err    *runtime.ExtentError
+		octets int
+		entry  string
+		want   string
+	}{
+		{&runtime.ExtentError{Minimum: 1, Required: true}, 0, entryCanonical, classRequired},
+		{&runtime.ExtentError{Actual: 30, Minimum: 1, Maximum: 20}, 30, entryAtLength, classRange},
+		{&runtime.ExtentError{Actual: 2, Minimum: 4, Maximum: 4}, 4, entryAtLength, classUnfilled},
+		{&runtime.ExtentError{Actual: 22, Minimum: 0, Maximum: 21}, 0, entryCanonical, classLonger},
+		// Below the definition's minimum, as runtime.CanonicalEncode reports it.
+		{&runtime.ExtentError{Actual: 0, Minimum: 1, Maximum: 1}, 0, entryCanonical, classShorter},
+	} {
+		if got := classify(fmt.Errorf("wrapped: %w", tc.err), tc.octets, tc.entry); got != tc.want {
+			t.Errorf("classify(%+v, %d, %s) = %q, want %q", *tc.err, tc.octets, tc.entry, got, tc.want)
+		}
+	}
+}

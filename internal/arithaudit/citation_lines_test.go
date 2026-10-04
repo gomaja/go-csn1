@@ -61,7 +61,11 @@ func TestCitationsQuoteTheirLines(t *testing.T) {
 				continue
 			}
 			path := cited.text[match[2]:match[3]]
-			line, _ := strconv.Atoi(cited.text[match[4]:match[5]])
+			line, err := strconv.Atoi(cited.text[match[4]:match[5]])
+			if err != nil {
+				t.Errorf("%s: citation %s has an invalid line number %q: %v", cited.origin, path, cited.text[match[4]:match[5]], err)
+				continue
+			}
 			anchor := citationAnchor.FindStringSubmatch(cited.text[match[1]:])
 			if anchor == nil {
 				t.Errorf("%s: citation %s:%d lacks a backtick anchor", cited.origin, path, line)
@@ -136,6 +140,9 @@ func TestEveryGuardCitationPartHolds(t *testing.T) {
 			}
 			parts++
 		}
+	}
+	if parts == 0 {
+		t.Fatal("no guard citation parts checked")
 	}
 	t.Logf("checked %d guard citation parts", parts)
 }
