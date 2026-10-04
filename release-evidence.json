@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "0ff17d06a0fe6cf432f3485aace4141d952da817",
+  "compiler_commit": "1215f28e48b7e3ba383edef36b2723950edff34f",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -214,7 +214,7 @@
     },
     {
       "path": "docs/csn1/ts44018/si23-rest-octets.csn",
-      "sha256": "4147d194ec768e41088b6c9c88e217ab09a5b6008a8bae7b584facd996143fd0"
+      "sha256": "9065cda26d68a74c4d20b20f3d3a99144c3d28b7023004dc93ced7d46e242644"
     },
     {
       "path": "docs/csn1/ts44018/si2bis-rest-octets.csn",
@@ -1601,6 +1601,16 @@
       "citation": "TS 44.018 V19.0.0 §10.5.2.78 paragraph 21957"
     },
     {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.37o",
+      "paragraph": 20335,
+      "expected": "{{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e } | { 0 | 1 \u003c Bandwidth_TDD : bit (3) \u003e }}",
+      "replacement": "{ 0 | 1 \u003c Bandwidth_FDD_or_TDD : bit (3) \u003e }",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.37o table 10.5.2.37o.1 prints {{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e } | { 0 | 1 \u003c Bandwidth_TDD : bit (3) \u003e }} in UTRAN FDD/TDD Description struct; the two alternatives are bit-identical, so no decoder can select one (gomaja/go-csn1#20). Merge them into one optional 3-bit field carrying BANDWIDTH_FDD or BANDWIDTH_TDD (table 10.5.2.33b.2); FDD or TDD follows from the UTRAN ARFCNs in the same description, as the clause states: It is not allowed to mix FDD and TDD UTRAN ARFCNs within this description. pycrate 0.7.11 si_23_rest_octets prints one bandwidth field",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37o paragraph 20335"
+    },
+    {
       "standard": "TS 44.060",
       "version": "19.0.0",
       "clause": "12.24",
@@ -1672,11 +1682,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "7e656bb9f719f7ceb3e844284198c0c00bfb99ae8566e4c8ff54f24d7e35d6a4"
+      "sha256": "b1eb86a7979ed5b3d4b98abf5742bba7aedbf89b7b2f60e7bfa2ac989ddd1e90"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "24c19b3b65fd830d052d2aabc93d305e50bc82f7b4ebd072d47be7bdb1210f24"
+      "sha256": "da7f4aa756ae9f8b8e8c69825fe9b6a88a99c015bde2bce985eee63910d236cc"
     },
     {
       "path": "ts44060/ies/generated.go",

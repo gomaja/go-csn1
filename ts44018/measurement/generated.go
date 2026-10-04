@@ -125,6 +125,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.78 table 10.5.2.78.2 identifies this field as TS 44.060 V19.0.0 §12.8 Frequency Parameters IE.
+// Source correction: TS 44.018 V19.0.0 §10.5.2.37o table 10.5.2.37o.1 prints {{ 0 | 1 < Bandwidth_FDD : bit (3) > } | { 0 | 1 < Bandwidth_TDD : bit (3) > }} in UTRAN FDD/TDD Description struct; the two alternatives are bit-identical, so no decoder can select one (gomaja/go-csn1#20). Merge them into one optional 3-bit field carrying BANDWIDTH_FDD or BANDWIDTH_TDD (table 10.5.2.33b.2); FDD or TDD follows from the UTRAN ARFCNs in the same description, as the clause states: It is not allowed to mix FDD and TDD UTRAN ARFCNs within this description. pycrate 0.7.11 si_23_rest_octets prints one bandwidth field.
 // Package measurement contains typed CSN.1 codecs. Plain Encode calls preserve received layout and fail if an edit changes its semantic boundary. Encode<Type>Canonical copies the value, discards received layout, and checks that fresh encoding decodes to equivalent typed fields within a source-defined maximum. Definitions without a standalone maximum require Encode<Type>CanonicalAtLength with the containing value length; the default fails with runtime.ExtentError.
 package measurement
 

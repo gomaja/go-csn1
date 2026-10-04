@@ -317,6 +317,24 @@ func variants(rng *rand.Rand, base any, leaves int, yield func(any)) {
 		grow(g, 0, times, false)
 		yield(g.Interface())
 	}
+	// Grow one list at a time, so a counted list elsewhere keeps its count.
+	var single []reflect.Value
+	sliceFields(deepCopy(base), 0, &single)
+	for li := range min(len(single), 8) {
+		for _, size := range []int{8, 30} {
+			c := deepCopy(base)
+			var ls []reflect.Value
+			sliceFields(c, 0, &ls)
+			if li >= len(ls) || ls[li].Len() == 0 {
+				break
+			}
+			list := ls[li]
+			for k := 0; list.Len() < size; k++ {
+				list.Set(reflect.Append(list, list.Index(k)))
+			}
+			yield(c.Interface())
+		}
+	}
 	// Append a copy of the last element of each list, then set the copy's
 	// fields to extremes: this reaches counts that must fill a remainder.
 	var lists []reflect.Value
@@ -670,6 +688,10 @@ var canonicalSeeds = map[string][]string{
 	// and inside SI 13; pycrate and Wireshark agree on their decoding.
 	"12.24\x00GPRS Cell Options IE":   {"b0e1d5122d103fc76dfdb8ebeb652a", "b48f27c6a62ca8ce639d2adb"},
 	"10.5.2.37b\x00SI 13 Rest Octets": {"e1b88bbdf784a1a279df24ba4896ad235775bf40", "ea15976ab36992bb4a4df259d63dd40957e08528", "dd0011a6fea7fbd89c88ffa33d38bfbdb253df4b"},
+	// TS 44.018 V19.0.0 §10.5.2.37o with UTRAN neighbour frequencies,
+	// confirmed by pycrate 0.7.11 (ts44018/restoctets/utran_fdd_tdd_test.go).
+	"10.5.2.37o\x00SI 23 Rest Octets":                {"206cf51e2d49fa50f4ae1fb0012b2b2b2b2b2b2b"},
+	"10.5.2.37o\x00UTRAN FDD/TDD Description struct": {"9ea3c5a93f4a1e95c3f600"},
 	// TS 44.018 V19.0.0 §10.5.2.37h: an 8-bit header, one Non-GSM message
 	// with 17 container octets ending at bit 152, then the stop record.
 	"10.5.2.37h\x00SI 18 Rest Octets": {"0031" + strings.Repeat("00", 17) + "20"},
@@ -792,14 +814,8 @@ func corpusDigest(values [][]any, harvested map[reflect.Type][]reflect.Value) []
 	return h.Sum(nil)
 }
 
-// pendingAmbiguity pins a published grammar defect that awaits a decision.
-// TS 44.018 V19.0.0 §10.5.2.37o table 10.5.2.37o.1 prints
-// "{{ 0 | 1 < Bandwidth_FDD : bit (3) > } | { 0 | 1 < Bandwidth_TDD :
-// bit (3) > }}": both alternatives have the same bit layout, so the
-// generated decoder finds two matching alternatives for every input and a
-// canonical encoding of either fails its decode-back check. pycrate 0.7.11
-// prints a single "bandwidth" field instead.
-var pendingAmbiguity = map[string]string{
-	"10.5.2.37o\x00UTRAN FDD/TDD Description struct\x00" + entryAtLength:                 classDecode,
-	"10.5.2.37o\x00Priority and UTRAN Parameters Description struct\x00" + entryAtLength: classDecode,
-}
+// pendingAmbiguity pins a published grammar defect that awaits a decision,
+// keyed by clause, name and entry point: the mismatch must stay exactly as
+// pinned. It is empty. TS 44.018 V19.0.0 §10.5.2.37o, the last entry, was
+// resolved by a source correction (gomaja/go-csn1#20).
+var pendingAmbiguity = map[string]string{}
