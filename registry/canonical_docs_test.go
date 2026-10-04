@@ -775,7 +775,7 @@ func corpusDigest(values [][]any, harvested map[reflect.Type][]reflect.Value) []
 	for index, list := range values {
 		for _, v := range list {
 			encoded, _ := json.Marshal(v)
-			fmt.Fprintf(h, "%d %T %s\n", index, v, encoded)
+			_, _ = fmt.Fprintf(h, "%d %T %s\n", index, v, encoded)
 		}
 	}
 	types := make([]reflect.Type, 0, len(harvested))
@@ -786,7 +786,7 @@ func corpusDigest(values [][]any, harvested map[reflect.Type][]reflect.Value) []
 	for _, typ := range types {
 		for _, v := range harvested[typ] {
 			encoded, _ := json.Marshal(v.Interface())
-			fmt.Fprintf(h, "%s %s\n", typ, encoded)
+			_, _ = fmt.Fprintf(h, "%s %s\n", typ, encoded)
 		}
 	}
 	return h.Sum(nil)
