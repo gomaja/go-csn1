@@ -1,7 +1,9 @@
 package registry
 
 import (
+	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"go/ast"
@@ -31,6 +33,7 @@ const (
 	classLength         = "bound-length"      // BoundError LengthBound
 	classContext        = "context"           // wraps ErrContextRequired
 	classContextLayout  = "context-acs"       // *ContextRequiredError (SI4 ACS)
+	classDecode         = "decode"            // wraps a *DecodeError
 	entryCanonical      = "Canonical"         //
 	entryAtLength       = "CanonicalAtLength" //
 	entryWithContext    = "CanonicalWithContext"
@@ -38,24 +41,37 @@ const (
 )
 
 // documentedClasses reads the classes each generated canonical entry point
-// documents, keyed by function name.
-func documentedClasses(t *testing.T) map[string]map[string]bool {
+// documents, keyed by package directory and function name: two packages may
+// define the same function name. It also returns each package name's
+// directory, and fails on a duplicate key.
+func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]string) {
 	t.Helper()
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
 	if err != nil || len(files) != 8 {
 		t.Fatalf("generated files %v, %v", files, err)
 	}
 	out := map[string]map[string]bool{}
-	delegations := map[string]string{}
+	packages := map[string]string{}
+	type delegation struct{ dir, text string }
+	delegations := map[string]delegation{}
 	for _, file := range files {
 		parsed, err := parser.ParseFile(token.NewFileSet(), file, nil, parser.ParseComments)
 		if err != nil {
 			t.Fatal(err)
 		}
+		dir := filepath.ToSlash(filepath.Dir(strings.TrimPrefix(file, ".."+string(filepath.Separator))))
+		if prior, ok := packages[parsed.Name.Name]; ok && prior != dir {
+			t.Fatalf("package name %s in %s and %s", parsed.Name.Name, prior, dir)
+		}
+		packages[parsed.Name.Name] = dir
 		for _, decl := range parsed.Decls {
 			fn, ok := decl.(*ast.FuncDecl)
 			if !ok || fn.Doc == nil || !strings.HasPrefix(fn.Name.Name, "Encode") || !strings.Contains(fn.Name.Name, "Canonical") {
 				continue
+			}
+			key := dir + "." + fn.Name.Name
+			if _, ok := out[key]; ok {
+				t.Fatalf("duplicate documented function %s", key)
 			}
 			doc := strings.Join(strings.Fields(fn.Doc.Text()), " ")
 			classes := map[string]bool{}
@@ -72,28 +88,38 @@ func documentedClasses(t *testing.T) map[string]map[string]bool {
 			add(classLength, strings.Contains(doc, "Kind runtime.LengthBound"))
 			add(classContext, strings.Contains(doc, "wrapping runtime.ErrContextRequired"))
 			add(classContextLayout, strings.Contains(doc, "*runtime.ContextRequiredError"))
-			out[fn.Name.Name] = classes
+			out[key] = classes
 			if _, delegated, ok := strings.Cut(doc, "returns the errors of "); ok {
-				delegations[fn.Name.Name] = delegated
+				delegations[key] = delegation{dir, delegated}
 			}
 		}
 	}
-	// A wrapper documents the errors of the canonical encoders it calls.
-	for name, text := range delegations {
-		for _, callee := range delegatedCallee.FindAllStringSubmatch(text, -1) {
-			for class := range out[callee[1]] {
-				out[name][class] = true
+	// A wrapper documents the errors of the canonical encoders it calls; an
+	// unqualified callee is in the wrapper's own package.
+	for key, d := range delegations {
+		for _, callee := range delegatedCallee.FindAllStringSubmatch(d.text, -1) {
+			dir := d.dir
+			if callee[1] != "" {
+				dir = packages[callee[1]]
+			}
+			classes, ok := out[dir+"."+callee[2]]
+			if !ok {
+				t.Fatalf("%s delegates to unknown %s", key, callee[0])
+			}
+			for class := range classes {
+				out[key][class] = true
 			}
 		}
 	}
-	return out
+	return out, packages
 }
 
-var delegatedCallee = regexp.MustCompile(`(?:[a-z]+\.)?(Encode[A-Za-z0-9]*Canonical)\b`)
+var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Canonical)\b`)
 
-// canonicalFunctions maps each descriptor (clause and name) to the generated
-// canonical function its Canonical closure calls.
-func canonicalFunctions(t *testing.T) map[string]string {
+// canonicalFunctions maps each descriptor (clause and name) to the package
+// directory and function its Canonical closure calls, and fails when one
+// descriptor key maps to two functions.
+func canonicalFunctions(t *testing.T, packages map[string]string) map[string]string {
 	t.Helper()
 	files, _ := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
 	files = append(files, "registry.go")
@@ -103,6 +129,7 @@ func canonicalFunctions(t *testing.T) map[string]string {
 		if err != nil {
 			t.Fatal(err)
 		}
+		own := packages[parsed.Name.Name]
 		ast.Inspect(parsed, func(n ast.Node) bool {
 			lit, ok := n.(*ast.CompositeLit)
 			if !ok {
@@ -133,12 +160,12 @@ func canonicalFunctions(t *testing.T) map[string]string {
 						if c, ok := m.(*ast.CallExpr); ok {
 							switch fn := c.Fun.(type) {
 							case *ast.Ident:
-								if strings.HasSuffix(fn.Name, "Canonical") {
-									call = fn.Name
+								if strings.HasSuffix(fn.Name, "Canonical") && own != "" {
+									call = own + "." + fn.Name
 								}
 							case *ast.SelectorExpr:
-								if strings.HasSuffix(fn.Sel.Name, "Canonical") {
-									call = fn.Sel.Name
+								if pkg, ok := fn.X.(*ast.Ident); ok && strings.HasSuffix(fn.Sel.Name, "Canonical") && packages[pkg.Name] != "" {
+									call = packages[pkg.Name] + "." + fn.Sel.Name
 								}
 							}
 						}
@@ -147,7 +174,11 @@ func canonicalFunctions(t *testing.T) map[string]string {
 				}
 			}
 			if name != "" && call != "" {
-				out[clause+"\x00"+name] = call
+				key := clause + "\x00" + name
+				if prior, ok := out[key]; ok && prior != call {
+					t.Fatalf("descriptor %s §%s maps to %s and %s", name, clause, prior, call)
+				}
+				out[key] = call
 			}
 			return true
 		})
@@ -159,6 +190,7 @@ func classify(err error, octets int, entry string) string {
 	var bound *runtime.BoundError
 	var extent *runtime.ExtentError
 	var layout *runtime.ContextRequiredError
+	var decode *runtime.DecodeError
 	switch {
 	case err == nil:
 		return ""
@@ -187,6 +219,10 @@ func classify(err error, octets int, entry string) string {
 		return classContextLayout
 	case errors.Is(err, runtime.ErrContextRequired):
 		return classContext
+	case errors.As(err, &decode):
+		// No generated comment lists a decode-back failure; provoking one
+		// is a mismatch, for example an ambiguous choice.
+		return classDecode
 	}
 	return ""
 }
@@ -406,14 +442,13 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 	if testing.Short() {
 		t.Skip("explores every definition")
 	}
-	documented := documentedClasses(t)
-	functions := canonicalFunctions(t)
+	documented, packages := documentedClasses(t)
+	functions := canonicalFunctions(t, packages)
 	definitions := descriptors()
 
 	// Decode-guided values, then nested values harvested by type.
 	values := make([][]any, len(definitions))
-	harvested := map[reflect.Type][]reflect.Value{}
-	var mu sync.Mutex
+	locals := make([]map[reflect.Type][]reflect.Value, len(definitions))
 	var wg sync.WaitGroup
 	for index, d := range definitions {
 		wg.Add(1)
@@ -457,19 +492,23 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			for _, v := range found {
 				harvest(reflect.ValueOf(v), local, 0)
 			}
-			mu.Lock()
-			values[index] = found
-			for typ, list := range local {
-				for _, v := range list {
-					if len(harvested[typ]) < 12 {
-						harvested[typ] = append(harvested[typ], v)
-					}
-				}
-			}
-			mu.Unlock()
+			values[index], locals[index] = found, local
 		}()
 	}
 	wg.Wait()
+	// Merge in descriptor order, so the capped corpus does not depend on
+	// which worker finished first.
+	harvested := map[reflect.Type][]reflect.Value{}
+	for _, local := range locals {
+		for typ, list := range local {
+			for _, v := range list {
+				if len(harvested[typ]) < 12 {
+					harvested[typ] = append(harvested[typ], v)
+				}
+			}
+		}
+	}
+	t.Logf("harvest digest %x", corpusDigest(values, harvested))
 
 	types := map[reflect.Type]bool{}
 	for _, list := range values {
@@ -584,6 +623,14 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			}
 			sort.Strings(missing)
 			sort.Strings(undocumented)
+			if pending := pendingAmbiguity[d.Clause+"\x00"+d.Name+"\x00"+entry]; pending != "" {
+				// The mismatch must be exactly the pending one; a fix or a
+				// new class fails until this table is updated.
+				if len(missing) != 0 || strings.Join(undocumented, ",") != pending {
+					failures = append(failures, fmt.Sprintf("%s %s: pending ambiguity changed: documented but not provoked %v; provoked but undocumented %v", results[index].key, name, missing, undocumented))
+				}
+				continue
+			}
 			if len(missing)+len(undocumented) > 0 {
 				failures = append(failures, fmt.Sprintf("%s %s: documented but not provoked %v; provoked but undocumented %v", results[index].key, name, missing, undocumented))
 			}
@@ -719,4 +766,40 @@ func selectValues(d runtime.Descriptor, values []any, seeds int) []any {
 		}
 	}
 	return kept
+}
+
+// corpusDigest hashes the decoded values and the harvested nested values in
+// descriptor and type order, as evidence that the searched corpus is fixed.
+func corpusDigest(values [][]any, harvested map[reflect.Type][]reflect.Value) []byte {
+	h := sha256.New()
+	for index, list := range values {
+		for _, v := range list {
+			encoded, _ := json.Marshal(v)
+			fmt.Fprintf(h, "%d %T %s\n", index, v, encoded)
+		}
+	}
+	types := make([]reflect.Type, 0, len(harvested))
+	for typ := range harvested {
+		types = append(types, typ)
+	}
+	sort.Slice(types, func(a, b int) bool { return types[a].String() < types[b].String() })
+	for _, typ := range types {
+		for _, v := range harvested[typ] {
+			encoded, _ := json.Marshal(v.Interface())
+			fmt.Fprintf(h, "%s %s\n", typ, encoded)
+		}
+	}
+	return h.Sum(nil)
+}
+
+// pendingAmbiguity pins a published grammar defect that awaits a decision.
+// TS 44.018 V19.0.0 §10.5.2.37o table 10.5.2.37o.1 prints
+// "{{ 0 | 1 < Bandwidth_FDD : bit (3) > } | { 0 | 1 < Bandwidth_TDD :
+// bit (3) > }}": both alternatives have the same bit layout, so the
+// generated decoder finds two matching alternatives for every input and a
+// canonical encoding of either fails its decode-back check. pycrate 0.7.11
+// prints a single "bandwidth" field instead.
+var pendingAmbiguity = map[string]string{
+	"10.5.2.37o\x00UTRAN FDD/TDD Description struct\x00" + entryAtLength:                 classDecode,
+	"10.5.2.37o\x00Priority and UTRAN Parameters Description struct\x00" + entryAtLength: classDecode,
 }
