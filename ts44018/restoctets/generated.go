@@ -19887,8 +19887,9 @@ func decodeSI21RestOctetsNetworkSharingEABInformation(r *runtime.Reader) (SI21Re
 	}
 	defer r.Leave()
 	var v SI21RestOctetsNetworkSharingEABInformation
+	truncation := r.BeginTruncation("SI21RestOctetsNetworkSharingEABInformation")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI21RestOctetsNetworkSharingEABInformation", 0)
+		r.RecordTruncation("SI21RestOctetsNetworkSharingEABInformation", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeSI21RestOctetsNetworkSharingEABInformationNetworkSharingEABInformationSelector(r)
@@ -19897,7 +19898,7 @@ func decodeSI21RestOctetsNetworkSharingEABInformation(r *runtime.Reader) (SI21Re
 	}
 	v.NetworkSharingEABInformation = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI21RestOctetsNetworkSharingEABInformation", 1)
+		r.RecordTruncation("SI21RestOctetsNetworkSharingEABInformation", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeSI21RestOctetsNetworkSharingEABInformationSparePadding(r)
@@ -30218,8 +30219,9 @@ func decodeSI4RestOctets(r *runtime.Reader) (SI4RestOctets, error) {
 	}
 	defer r.Leave()
 	var v SI4RestOctets
+	truncation := r.BeginTruncation("SI4RestOctets")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctets", 0)
+		r.RecordTruncation("SI4RestOctets", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeSI4RestOctetsSI4RestOctetsO(r)
@@ -30228,7 +30230,7 @@ func decodeSI4RestOctets(r *runtime.Reader) (SI4RestOctets, error) {
 	}
 	v.SI4RestOctetsO = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctets", 1)
+		r.RecordTruncation("SI4RestOctets", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeSI4RestOctetsBreakIndicatorChoice(r)
@@ -30237,7 +30239,7 @@ func decodeSI4RestOctets(r *runtime.Reader) (SI4RestOctets, error) {
 	}
 	v.BreakIndicatorChoice = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctets", 2)
+		r.RecordTruncation("SI4RestOctets", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeSI4RestOctetsSparePadding(r)
@@ -30341,8 +30343,9 @@ func decodeSI4RestOctetsO(r *runtime.Reader) (SI4RestOctetsO, error) {
 	}
 	defer r.Leave()
 	var v SI4RestOctetsO
+	truncation := r.BeginTruncation("SI4RestOctetsO")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctetsO", 0)
+		r.RecordTruncation("SI4RestOctetsO", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeSI4RestOctetsOOptionalSelectionParametersClause105235(r)
@@ -30351,7 +30354,7 @@ func decodeSI4RestOctetsO(r *runtime.Reader) (SI4RestOctetsO, error) {
 	}
 	v.OptionalSelectionParametersClause105235 = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctetsO", 1)
+		r.RecordTruncation("SI4RestOctetsO", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeSI4RestOctetsOOptionalPowerOffsetClause105235(r)
@@ -30360,7 +30363,7 @@ func decodeSI4RestOctetsO(r *runtime.Reader) (SI4RestOctetsO, error) {
 	}
 	v.OptionalPowerOffsetClause105235 = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI4RestOctetsO", 2)
+		r.RecordTruncation("SI4RestOctetsO", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeSI4RestOctetsOGPRSIndicatorClause105235Selector(r)
@@ -33978,8 +33981,9 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	defer r.Leave()
 	var v P2RestOctets
+	truncation := r.BeginTruncation("P2RestOctets")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 0)
+		r.RecordTruncation("P2RestOctets", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeP2RestOctetsCN3Selector(r)
@@ -33988,7 +33992,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.CN3 = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 1)
+		r.RecordTruncation("P2RestOctets", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeP2RestOctetsNLNPCHGroupSelector(r)
@@ -33997,7 +34001,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.NLNPCHGroup = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 2)
+		r.RecordTruncation("P2RestOctets", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeP2RestOctetsPriority1Selector(r)
@@ -34006,7 +34010,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.Priority1 = x2
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 3)
+		r.RecordTruncation("P2RestOctets", truncation, 3)
 		return v, nil
 	}
 	x3, err := decodeP2RestOctetsPriority2Selector(r)
@@ -34015,7 +34019,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.Priority2 = x3
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 4)
+		r.RecordTruncation("P2RestOctets", truncation, 4)
 		return v, nil
 	}
 	x4, err := decodeP2RestOctetsPriority3Selector(r)
@@ -34024,7 +34028,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.Priority3 = x4
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 5)
+		r.RecordTruncation("P2RestOctets", truncation, 5)
 		return v, nil
 	}
 	x5, err := decodeP2RestOctetsPacketPageIndication3(r)
@@ -34033,7 +34037,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.PacketPageIndication3 = x5
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 6)
+		r.RecordTruncation("P2RestOctets", truncation, 6)
 		return v, nil
 	}
 	x6, err := decodeP2RestOctetsMBMSNotification3Choice(r)
@@ -34042,7 +34046,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.MBMSNotification3Choice = x6
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 7)
+		r.RecordTruncation("P2RestOctets", truncation, 7)
 		return v, nil
 	}
 	x7, err := decodeP2RestOctetsImplicitRejectCSChoice(r)
@@ -34051,7 +34055,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.ImplicitRejectCSChoice = x7
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 8)
+		r.RecordTruncation("P2RestOctets", truncation, 8)
 		return v, nil
 	}
 	x8, err := decodeP2RestOctetsIPASupportChoice(r)
@@ -34060,7 +34064,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.IPASupportChoice = x8
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 9)
+		r.RecordTruncation("P2RestOctets", truncation, 9)
 		return v, nil
 	}
 	x9, err := decodeP2RestOctetsPEOBCCHCHANGEMARKChoice(r)
@@ -34069,7 +34073,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.PEOBCCHCHANGEMARKChoice = x9
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 10)
+		r.RecordTruncation("P2RestOctets", truncation, 10)
 		return v, nil
 	}
 	x10, err := decodeP2RestOctetsPositioningEventPendingIndicatorChoice(r)
@@ -34078,7 +34082,7 @@ func decodeP2RestOctets(r *runtime.Reader) (P2RestOctets, error) {
 	}
 	v.PositioningEventPendingIndicatorChoice = x10
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P2RestOctets", 11)
+		r.RecordTruncation("P2RestOctets", truncation, 11)
 		return v, nil
 	}
 	x11, err := decodeP2RestOctetsPEOIMMCellGroupDetailsChoice(r)
@@ -36119,8 +36123,9 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	defer r.Leave()
 	var v P3RestOctets
+	truncation := r.BeginTruncation("P3RestOctets")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 0)
+		r.RecordTruncation("P3RestOctets", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeP3RestOctetsCN3GroupSelector(r)
@@ -36129,7 +36134,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.CN3Group = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 1)
+		r.RecordTruncation("P3RestOctets", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeP3RestOctetsNLNPCHGroupSelector(r)
@@ -36138,7 +36143,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.NLNPCHGroup = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 2)
+		r.RecordTruncation("P3RestOctets", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeP3RestOctetsPriority1Selector(r)
@@ -36147,7 +36152,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.Priority1 = x2
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 3)
+		r.RecordTruncation("P3RestOctets", truncation, 3)
 		return v, nil
 	}
 	x3, err := decodeP3RestOctetsPriority2Selector(r)
@@ -36156,7 +36161,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.Priority2 = x3
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 4)
+		r.RecordTruncation("P3RestOctets", truncation, 4)
 		return v, nil
 	}
 	x4, err := decodeP3RestOctetsPriority3Selector(r)
@@ -36165,7 +36170,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.Priority3 = x4
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 5)
+		r.RecordTruncation("P3RestOctets", truncation, 5)
 		return v, nil
 	}
 	x5, err := decodeP3RestOctetsPriority4Selector(r)
@@ -36174,7 +36179,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.Priority4 = x5
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 6)
+		r.RecordTruncation("P3RestOctets", truncation, 6)
 		return v, nil
 	}
 	x6, err := decodeP3RestOctetsImplicitRejectCSChoice(r)
@@ -36183,7 +36188,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.ImplicitRejectCSChoice = x6
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 7)
+		r.RecordTruncation("P3RestOctets", truncation, 7)
 		return v, nil
 	}
 	x7, err := decodeP3RestOctetsIPASupportChoice(r)
@@ -36192,7 +36197,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.IPASupportChoice = x7
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 8)
+		r.RecordTruncation("P3RestOctets", truncation, 8)
 		return v, nil
 	}
 	x8, err := decodeP3RestOctetsPEOBCCHCHANGEMARKChoice(r)
@@ -36201,7 +36206,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.PEOBCCHCHANGEMARKChoice = x8
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 9)
+		r.RecordTruncation("P3RestOctets", truncation, 9)
 		return v, nil
 	}
 	x9, err := decodeP3RestOctetsPositioningEventPendingIndicatorChoice(r)
@@ -36210,7 +36215,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.PositioningEventPendingIndicatorChoice = x9
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 10)
+		r.RecordTruncation("P3RestOctets", truncation, 10)
 		return v, nil
 	}
 	x10, err := decodeP3RestOctetsPEOIMMCellGroupDetailsChoice(r)
@@ -36219,7 +36224,7 @@ func decodeP3RestOctets(r *runtime.Reader) (P3RestOctets, error) {
 	}
 	v.PEOIMMCellGroupDetailsChoice = x10
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P3RestOctets", 11)
+		r.RecordTruncation("P3RestOctets", truncation, 11)
 		return v, nil
 	}
 	x11, err := decodeP3RestOctetsSparePadding(r)
@@ -54522,8 +54527,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	defer r.Leave()
 	var v SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup
+	truncation := r.BeginTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 0)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupSICHANGEALT(r)
@@ -54532,7 +54538,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	v.SICHANGEALT = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 1)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupPEODSCGroupSelector(r)
@@ -54541,7 +54547,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	v.PEODSCGroup = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 2)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupC1DELTAMINGroupSelector(r)
@@ -54550,7 +54556,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	v.C1DELTAMINGroup = x2
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 3)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 3)
 		return v, nil
 	}
 	x3, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupMTABITMAPSelector(r)
@@ -54559,7 +54565,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	v.MTABITMAP = x3
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 4)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 4)
 		return v, nil
 	}
 	x4, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupMSASSISTEDDCN(r)
@@ -54568,7 +54574,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	}
 	v.MSASSISTEDDCN = x4
 	if r.Remaining() == 0 {
-		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", 5)
+		r.RecordTruncation("SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroup", truncation, 5)
 		return v, nil
 	}
 	x5, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupPEOIMMCellGroupDefinitionSelector(r)
@@ -66993,8 +66999,9 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	defer r.Leave()
 	var v P1RestOctets
+	truncation := r.BeginTruncation("P1RestOctets")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 0)
+		r.RecordTruncation("P1RestOctets", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeP1RestOctetsNLNPCHGroupSelector(r)
@@ -67003,7 +67010,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.NLNPCHGroup = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 1)
+		r.RecordTruncation("P1RestOctets", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeP1RestOctetsPriority1Selector(r)
@@ -67012,7 +67019,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.Priority1 = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 2)
+		r.RecordTruncation("P1RestOctets", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeP1RestOctetsPriority2Selector(r)
@@ -67021,7 +67028,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.Priority2 = x2
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 3)
+		r.RecordTruncation("P1RestOctets", truncation, 3)
 		return v, nil
 	}
 	x3, err := decodeP1RestOctetsGroupCallInformationSelector(r)
@@ -67030,7 +67037,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.GroupCallInformation = x3
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 4)
+		r.RecordTruncation("P1RestOctets", truncation, 4)
 		return v, nil
 	}
 	x4, err := decodeP1RestOctetsPacketPageIndication1(r)
@@ -67039,7 +67046,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PacketPageIndication1 = x4
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 5)
+		r.RecordTruncation("P1RestOctets", truncation, 5)
 		return v, nil
 	}
 	x5, err := decodeP1RestOctetsPacketPageIndication2(r)
@@ -67048,7 +67055,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PacketPageIndication2 = x5
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 6)
+		r.RecordTruncation("P1RestOctets", truncation, 6)
 		return v, nil
 	}
 	x6, err := decodeP1RestOctetsCELLGLOBALCOUNTChoice(r)
@@ -67057,7 +67064,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.CELLGLOBALCOUNTChoice = x6
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 7)
+		r.RecordTruncation("P1RestOctets", truncation, 7)
 		return v, nil
 	}
 	x7, err := decodeP1RestOctetsAMRConfigChoice(r)
@@ -67066,7 +67073,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.AMRConfigChoice = x7
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 8)
+		r.RecordTruncation("P1RestOctets", truncation, 8)
 		return v, nil
 	}
 	x8, err := decodeP1RestOctetsPriorityUplinkAccessChoice(r)
@@ -67075,7 +67082,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PriorityUplinkAccessChoice = x8
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 9)
+		r.RecordTruncation("P1RestOctets", truncation, 9)
 		return v, nil
 	}
 	x9, err := decodeP1RestOctetsImplicitRejectCSChoice(r)
@@ -67084,7 +67091,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.ImplicitRejectCSChoice = x9
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 10)
+		r.RecordTruncation("P1RestOctets", truncation, 10)
 		return v, nil
 	}
 	x10, err := decodeP1RestOctetsIPASupportChoice(r)
@@ -67093,7 +67100,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.IPASupportChoice = x10
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 11)
+		r.RecordTruncation("P1RestOctets", truncation, 11)
 		return v, nil
 	}
 	x11, err := decodeP1RestOctetsPEOBCCHCHANGEMARKChoice(r)
@@ -67102,7 +67109,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PEOBCCHCHANGEMARKChoice = x11
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 12)
+		r.RecordTruncation("P1RestOctets", truncation, 12)
 		return v, nil
 	}
 	x12, err := decodeP1RestOctetsPositioningEventPendingIndicatorChoice(r)
@@ -67111,7 +67118,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PositioningEventPendingIndicatorChoice = x12
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 13)
+		r.RecordTruncation("P1RestOctets", truncation, 13)
 		return v, nil
 	}
 	x13, err := decodeP1RestOctetsPEOIMMCellGroupDetailsChoice(r)
@@ -67120,7 +67127,7 @@ func decodeP1RestOctets(r *runtime.Reader) (P1RestOctets, error) {
 	}
 	v.PEOIMMCellGroupDetailsChoice = x13
 	if r.Remaining() == 0 {
-		r.RecordTruncation("P1RestOctets", 14)
+		r.RecordTruncation("P1RestOctets", truncation, 14)
 		return v, nil
 	}
 	x14, err := decodeP1RestOctetsSparePadding(r)

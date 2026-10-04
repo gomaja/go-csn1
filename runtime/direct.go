@@ -16,14 +16,18 @@ type WireInfo struct {
 	Spare           []BitString
 	Padding         []BitString
 	Terminal        []BitString
-	TruncatedAt     map[string]int
-	SpareCounts     map[string][]int
-	ImplicitZeros   int
-	ImplicitSpans   []ImplicitSpan
-	sealed          bool
-	canonical       bool
-	targetSet       bool
-	targetBits      int
+	// TruncatedAt lists, per truncated concatenation (TS 44.060 V19.0.0
+	// §11.1.4.4) and in decode order of its instances, the number of
+	// components each instance received, or -1 when it was complete. One
+	// entry per instance keeps recursive and repeated instances apart.
+	TruncatedAt   map[string][]int
+	SpareCounts   map[string][]int
+	ImplicitZeros int
+	ImplicitSpans []ImplicitSpan
+	sealed        bool
+	canonical     bool
+	targetSet     bool
+	targetBits    int
 }
 
 // ImplicitSpan records a receiver-inferred zero run in logical bit order.
@@ -76,7 +80,7 @@ func NewReader(data []byte) *Reader {
 		end = len(data) * 8
 	}
 	return &Reader{data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
-		wire: WireInfo{TruncatedAt: make(map[string]int)}}
+		wire: WireInfo{TruncatedAt: make(map[string][]int)}}
 }
 
 func CheckInput(data []byte) error {
@@ -350,16 +354,38 @@ func (r *Reader) PopLimit(old int) error {
 	r.boundDepth--
 	return nil
 }
-func (r *Reader) RecordTruncation(path string, child int) {
-	if r.truncShared {
-		copy := make(map[string]int, len(r.wire.TruncatedAt))
+
+// BeginTruncation reserves the truncation entry of a truncated
+// concatenation instance on entry, so instances are listed in the order an
+// encoder meets them, outer before nested. The entry stays -1 unless
+// RecordTruncation marks where the instance ended.
+func (r *Reader) BeginTruncation(path string) int {
+	r.ownTruncations()
+	slot := len(r.wire.TruncatedAt[path])
+	r.wire.TruncatedAt[path] = append(r.wire.TruncatedAt[path], -1)
+	return slot
+}
+
+// RecordTruncation records that the instance in slot received child
+// components before its input ended.
+func (r *Reader) RecordTruncation(path string, slot, child int) {
+	r.ownTruncations()
+	if points := r.wire.TruncatedAt[path]; slot >= 0 && slot < len(points) {
+		points[slot] = child
+	}
+}
+
+// ownTruncations copies truncation entries shared with a fork before they
+// change.
+func (r *Reader) ownTruncations() {
+	if r.truncShared || r.wire.TruncatedAt == nil {
+		copy := make(map[string][]int, len(r.wire.TruncatedAt))
 		for k, v := range r.wire.TruncatedAt {
-			copy[k] = v
+			copy[k] = append([]int(nil), v...)
 		}
 		r.wire.TruncatedAt = copy
 		r.truncShared = false
 	}
-	r.wire.TruncatedAt[path] = child
 }
 
 // RecordTerminal preserves the nonsemantic zero-length stop record printed
@@ -400,7 +426,7 @@ type Writer struct {
 	depth                    int
 	spare, padding, terminal int
 	spareCountIndex          map[string]int
-	truncationUsed           map[string]bool
+	truncationIndex          map[string]int
 	wire                     WireInfo
 	implicitSpan             int
 	stateErr                 error
@@ -411,7 +437,7 @@ func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
 func (w *Writer) WithWire(wire WireInfo) {
 	w.wire = wire
 	w.spareCountIndex = make(map[string]int)
-	w.truncationUsed = make(map[string]bool)
+	w.truncationIndex = make(map[string]int)
 	w.stateErr = nil
 }
 
@@ -502,12 +528,18 @@ func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) err
 	return &BoundError{Kind: kind, Path: w.path, Field: field, Detail: detail, Limit: limit, Position: w.bits}
 }
 func (w *Writer) Canonical() bool { return w.wire.canonical }
+
+// Truncation consumes the next received truncation entry for path, in the
+// order Reader.BeginTruncation listed the instances, and reports where that
+// instance ended when it was truncated.
 func (w *Writer) Truncation(path string) (int, bool) {
-	n, ok := w.wire.TruncatedAt[path]
-	if ok {
-		w.truncationUsed[path] = true
+	points := w.wire.TruncatedAt[path]
+	i := w.truncationIndex[path]
+	if i >= len(points) {
+		return 0, false
 	}
-	return n, ok
+	w.truncationIndex[path] = i + 1
+	return points[i], points[i] >= 0
 }
 func (w *Writer) SpareCount(path string) (int, bool) {
 	counts := w.wire.SpareCounts[path]
@@ -963,8 +995,8 @@ func (w *Writer) validateState() error {
 	if w.spare != len(w.wire.Spare) || w.padding != len(w.wire.Padding) || w.terminal != len(w.wire.Terminal) {
 		return fmt.Errorf("unconsumed received spare, padding, or terminal state")
 	}
-	for path := range w.wire.TruncatedAt {
-		if !w.truncationUsed[path] {
+	for path, points := range w.wire.TruncatedAt {
+		if w.truncationIndex[path] != len(points) {
 			return fmt.Errorf("unused truncation point %s", path)
 		}
 	}

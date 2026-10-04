@@ -4487,8 +4487,9 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	defer r.Leave()
 	var v ExtensionInformation
+	truncation := r.BeginTruncation("ExtensionInformation")
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 0)
+		r.RecordTruncation("ExtensionInformation", truncation, 0)
 		return v, nil
 	}
 	x0, err := decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroup(r)
@@ -4497,7 +4498,7 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	v.Group = x0
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 1)
+		r.RecordTruncation("ExtensionInformation", truncation, 1)
 		return v, nil
 	}
 	x1, err := decodeExtensionInformationCCNACTIVEGroup(r)
@@ -4506,7 +4507,7 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	v.Group2 = x1
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 2)
+		r.RecordTruncation("ExtensionInformation", truncation, 2)
 		return v, nil
 	}
 	x2, err := decodeExtensionInformationMULTIPLETBFCAPABILITYGroup(r)
@@ -4515,7 +4516,7 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	v.Group3 = x2
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 3)
+		r.RecordTruncation("ExtensionInformation", truncation, 3)
 		return v, nil
 	}
 	x3, err := decodeExtensionInformationREDUCEDLATENCYACCESS(r)
@@ -4524,7 +4525,7 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	v.REDUCEDLATENCYACCESS = x3
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 4)
+		r.RecordTruncation("ExtensionInformation", truncation, 4)
 		return v, nil
 	}
 	x4, err := decodeExtensionInformationNMOIALTERNATE(r)
@@ -4533,7 +4534,7 @@ func decodeExtensionInformation(r *runtime.Reader) (ExtensionInformation, error)
 	}
 	v.NMOIALTERNATE = x4
 	if r.Remaining() == 0 {
-		r.RecordTruncation("ExtensionInformation", 5)
+		r.RecordTruncation("ExtensionInformation", truncation, 5)
 		return v, nil
 	}
 	x5, err := decodeExtensionInformationSpareBitList(r)

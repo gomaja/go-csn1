@@ -273,7 +273,7 @@ func TestForkIsolatesBindingsPathAndWireState(t *testing.T) {
 	if _, err := a.ReadSpare(); err != nil {
 		t.Fatal(err)
 	}
-	a.RecordTruncation("A", 1)
+	a.RecordTruncation("A", a.BeginTruncation("A"), 1)
 	a.RecordSpareCount("A", 1)
 	if err := b.Enter("B"); err != nil {
 		t.Fatal(err)
@@ -436,7 +436,7 @@ func TestWireStateCannotBeSilentlyDropped(t *testing.T) {
 		{"spare", func(w *WireInfo) { w.Spare = append(w.Spare, BitString{Bytes: []byte{0}, BitLength: 1}) }},
 		{"padding", func(w *WireInfo) { w.Padding = append(w.Padding, BitString{Bytes: []byte{0}, BitLength: 1}) }},
 		{"terminal", func(w *WireInfo) { w.Terminal = append(w.Terminal, BitString{Bytes: []byte{0}, BitLength: 8}) }},
-		{"truncation", func(w *WireInfo) { w.TruncatedAt = map[string]int{"missing": 1} }},
+		{"truncation", func(w *WireInfo) { w.TruncatedAt = map[string][]int{"missing": {1}} }},
 		{"spare count", func(w *WireInfo) { w.SpareCounts = map[string][]int{"missing": {1}} }},
 		{"consumed", func(w *WireInfo) { w.BitsConsumed = 7 }},
 	} {
