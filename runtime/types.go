@@ -86,9 +86,11 @@ type DecodeError struct {
 	Path, Detail string
 }
 
-// ExtentError reports a missing caller-supplied extent or an encoding that
-// does not fit its source-defined or caller-supplied octet extent. Maximum
-// zero means the source does not define a standalone maximum.
+// ExtentError reports a missing caller-supplied extent (Required: the
+// definition has no standalone maximum), or an encoding or requested length,
+// Actual octets, outside a source-defined or caller-supplied octet extent.
+// A plain encoder checks its definition's minimum and maximum separately, so
+// a zero Maximum there means only the minimum was checked.
 type ExtentError struct {
 	Actual, Minimum, Maximum int
 	Required                 bool
@@ -97,6 +99,9 @@ type ExtentError struct {
 func (e *ExtentError) Error() string {
 	if e.Required {
 		return "CSN.1 canonical encoding requires an explicit containing-message length"
+	}
+	if e.Maximum == 0 && e.Minimum > 0 {
+		return fmt.Sprintf("CSN.1 extent %d below minimum %d octets", e.Actual, e.Minimum)
 	}
 	return fmt.Sprintf("CSN.1 extent %d outside %d..%d octets", e.Actual, e.Minimum, e.Maximum)
 }

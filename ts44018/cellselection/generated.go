@@ -1942,12 +1942,28 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v CellSel
 	return out, nil
 }
 
-// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
+// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical always returns *runtime.ExtentError with Required set:
+// this definition has no standalone maximum, so the containing message must
+// supply the length through EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 2, 0, false, EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 }
 
-// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
+// EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is below 2 or above the runtime bit limit, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
+//     length-delimited or fixed-size value, a length field or a truncation
+//     point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 2, 0, EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 }
@@ -1994,12 +2010,38 @@ func EncodeGSMDescriptionStruct(v GSMDescriptionStruct) ([]byte, error) {
 }
 
 // Canonical maximum: TS 44.018 V19.0.0 §10.5.2.1e (finite maximum from the printed CSN.1 grammar).
-// EncodeGSMDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
+// EncodeGSMDescriptionStructCanonical encodes a fresh semantic value using source-defined
+// minimum length, truncation and padding, then checks that the bytes decode to
+// an equivalent typed value. It returns:
+//   - *runtime.ExtentError when the encoding falls outside 0..3 octets;
+//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
+//     fit a length-delimited or fixed-size value, a length field or a
+//     truncation point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeGSMDescriptionStructCanonical(v GSMDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 3, false, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
 
-// EncodeGSMDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
+// EncodeGSMDescriptionStructCanonicalAtLength encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..3 octets, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
+//     length-delimited or fixed-size value, a length field or a truncation
+//     point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeGSMDescriptionStructCanonicalAtLength(v GSMDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 3, EncodeGSMDescriptionStruct, DecodeGSMDescriptionStruct, nil)
 }
@@ -2045,12 +2087,28 @@ func EncodeUTRANFDDDescriptionStruct(v UTRANFDDDescriptionStruct) ([]byte, error
 	return out, nil
 }
 
-// EncodeUTRANFDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
+// EncodeUTRANFDDDescriptionStructCanonical always returns *runtime.ExtentError with Required set:
+// this definition has no standalone maximum, so the containing message must
+// supply the length through EncodeUTRANFDDDescriptionStructCanonicalAtLength.
 func EncodeUTRANFDDDescriptionStructCanonical(v UTRANFDDDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANFDDDescriptionStruct, DecodeUTRANFDDDescriptionStruct, nil)
 }
 
-// EncodeUTRANFDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
+// EncodeUTRANFDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
+//     length-delimited or fixed-size value, a length field or a truncation
+//     point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeUTRANFDDDescriptionStructCanonicalAtLength(v UTRANFDDDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANFDDDescriptionStruct, DecodeUTRANFDDDescriptionStruct, nil)
 }
@@ -2096,12 +2154,28 @@ func EncodeUTRANTDDDescriptionStruct(v UTRANTDDDescriptionStruct) ([]byte, error
 	return out, nil
 }
 
-// EncodeUTRANTDDDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
+// EncodeUTRANTDDDescriptionStructCanonical always returns *runtime.ExtentError with Required set:
+// this definition has no standalone maximum, so the containing message must
+// supply the length through EncodeUTRANTDDDescriptionStructCanonicalAtLength.
 func EncodeUTRANTDDDescriptionStructCanonical(v UTRANTDDDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeUTRANTDDDescriptionStruct, DecodeUTRANTDDDescriptionStruct, nil)
 }
 
-// EncodeUTRANTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
+// EncodeUTRANTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
+//     length-delimited or fixed-size value, a length field or a truncation
+//     point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeUTRANTDDDescriptionStructCanonicalAtLength(v UTRANTDDDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeUTRANTDDDescriptionStruct, DecodeUTRANTDDDescriptionStruct, nil)
 }
@@ -2147,12 +2221,28 @@ func EncodeEUTRANDescriptionStruct(v EUTRANDescriptionStruct) ([]byte, error) {
 	return out, nil
 }
 
-// EncodeEUTRANDescriptionStructCanonical encodes a fresh semantic value using source-defined minimum length, truncation and padding. It requires CanonicalAtLength when no standalone maximum is defined. Content that does not fit a length, extent or truncation point returns *runtime.BoundError.
+// EncodeEUTRANDescriptionStructCanonical always returns *runtime.ExtentError with Required set:
+// this definition has no standalone maximum, so the containing message must
+// supply the length through EncodeEUTRANDescriptionStructCanonicalAtLength.
 func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, error) {
 	return runtime.CanonicalEncode(v, 0, 0, false, EncodeEUTRANDescriptionStruct, DecodeEUTRANDescriptionStruct, nil)
 }
 
-// EncodeEUTRANDescriptionStructCanonicalAtLength encodes into the value length supplied by the containing message. Content that does not fit that length or a length within the value returns *runtime.BoundError.
+// EncodeEUTRANDescriptionStructCanonicalAtLength encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets, or Kind runtime.LengthBound when it does not fit a
+//     length-delimited or fixed-size value, a length field or a truncation
+//     point inside the value;
+//   - an error wrapping runtime.ErrContextRequired when an extent belongs to
+//     an absent containing message;
+//   - an error wrapping the *runtime.DecodeError if the bytes do not decode.
+//
+// Other errors are untyped: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, octets int) ([]byte, error) {
 	return runtime.CanonicalEncodeAtLength(v, octets, 0, 0, EncodeEUTRANDescriptionStruct, DecodeEUTRANDescriptionStruct, nil)
 }

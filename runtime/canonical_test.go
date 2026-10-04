@@ -63,3 +63,21 @@ func TestCanonicalExtentIsRequiredAndEnforced(t *testing.T) {
 		})
 	}
 }
+
+// A plain encoder checks a definition's minimum on its own; its message must
+// not invent a zero maximum.
+func TestExtentErrorMessages(t *testing.T) {
+	for _, tc := range []struct {
+		err  ExtentError
+		want string
+	}{
+		{ExtentError{Required: true}, "CSN.1 canonical encoding requires an explicit containing-message length"},
+		{ExtentError{Actual: 5, Minimum: 20}, "CSN.1 extent 5 below minimum 20 octets"},
+		{ExtentError{Actual: 22, Maximum: 21}, "CSN.1 extent 22 outside 0..21 octets"},
+		{ExtentError{Actual: 6, Minimum: 10, Maximum: 10}, "CSN.1 extent 6 outside 10..10 octets"},
+	} {
+		if got := tc.err.Error(); got != tc.want {
+			t.Errorf("%+v: %q, want %q", tc.err, got, tc.want)
+		}
+	}
+}

@@ -47,9 +47,16 @@ func SemanticallyEqual[T any](a, b T) bool {
 // CanonicalEncode tries a fresh encoding, then the permitted octet extents
 // when source-defined truncation or inferred zeros require a shorter layout.
 // Each candidate must fit the source-defined extent and decode to the same
-// typed semantic value. A zero maximum requires CanonicalEncodeAtLength.
-// Content that cannot fit a length-delimited or fixed-size value, a
-// candidate extent or a truncation point returns *BoundError.
+// typed semantic value. A zero maximum returns *ExtentError with Required
+// set: the caller must use CanonicalEncodeAtLength. Otherwise, if no
+// candidate succeeds, the fresh encoding's error is returned:
+//   - *ExtentError when it falls outside minOctets..maxOctets;
+//   - the encoder's own error, which for generated encoders is *BoundError
+//     with Kind LengthBound when content does not fit a bound inside the
+//     value, or an error wrapping ErrContextRequired;
+//   - an error wrapping the decode error when the bytes do not decode.
+//
+// Bytes that decode to a different typed value give an untyped error.
 func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
 	if maxOctets == 0 {
 		return nil, &ExtentError{Minimum: minOctets, Required: true}
@@ -108,9 +115,20 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 // original typed value. The caller supplies the length prescribed by its
 // enclosing message (TS 44.018 V19.0.0 §8.9). A zero maximum means that
 // the definition has no standalone extent, so the supplied length is the
-// bound (subject to the runtime bit limit). A typed length within the value
-// keeps its value: content it cannot carry, such as a nonzero field after a
-// TS 44.060 V19.0.0 §12.24 Extension Length, returns *BoundError.
+// bound (subject to the runtime bit limit). It returns:
+//   - *ExtentError when octets is outside minOctets..maxOctets, or the
+//     encoding does not fill exactly octets;
+//   - the encoder's own error otherwise. Generated encoders return
+//     *BoundError with Kind CanonicalTarget when content does not fit in
+//     octets, or Kind LengthBound when it does not fit a bound inside the
+//     value. A typed length within the value keeps its value: content it
+//     cannot carry, such as a nonzero field after a TS 44.060 V19.0.0
+//     §12.24 Extension Length, is a LengthBound conflict. A value whose
+//     extent belongs to an absent containing message wraps
+//     ErrContextRequired;
+//   - an error wrapping the decode error when the bytes do not decode.
+//
+// Bytes that decode to a different typed value give an untyped error.
 func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
 	if maxOctets == 0 {
 		maxOctets = maxBits / 8
