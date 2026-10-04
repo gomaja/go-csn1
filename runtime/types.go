@@ -17,7 +17,9 @@ var ErrEmptyValue = errors.New("empty CSN.1 value")
 var ErrUnsupported = errors.New("unsupported CSN.1 value")
 
 // ErrContextRequired identifies a value whose alternatives are selected by
-// a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35).
+// a field in its containing message (TS 44.018 V19.0.0 §10.5.2.35), or whose
+// extent is the rest of the containing value: Non-GSM container length code
+// 31 fills the enclosing SI 18/SI 20 value (§10.5.2.37h table 10.5.2.37h.1).
 var ErrContextRequired = errors.New("CSN.1 context required")
 
 type ContextRequiredError struct{ Standard, Clause, Name string }
@@ -84,9 +86,11 @@ type DecodeError struct {
 	Path, Detail string
 }
 
-// ExtentError reports a missing caller-supplied extent or an encoding that
-// does not fit its source-defined or caller-supplied octet extent. Maximum
-// zero means the source does not define a standalone maximum.
+// ExtentError reports a missing caller-supplied extent (Required: the
+// definition has no standalone maximum), or an encoding or requested length,
+// Actual octets, outside a source-defined or caller-supplied octet extent.
+// A plain encoder checks its definition's minimum and maximum separately, so
+// a zero Maximum there means only the minimum was checked.
 type ExtentError struct {
 	Actual, Minimum, Maximum int
 	Required                 bool
@@ -96,8 +100,74 @@ func (e *ExtentError) Error() string {
 	if e.Required {
 		return "CSN.1 canonical encoding requires an explicit containing-message length"
 	}
+	if e.Maximum == 0 && e.Minimum > 0 {
+		return fmt.Sprintf("CSN.1 extent %d below minimum %d octets", e.Actual, e.Minimum)
+	}
 	return fmt.Sprintf("CSN.1 extent %d outside %d..%d octets", e.Actual, e.Minimum, e.Maximum)
 }
+
+// ErrBoundConflict identifies a typed value that cannot be encoded within a
+// bound enclosing it. Every *BoundError unwraps to it.
+var ErrBoundConflict = errors.New("CSN.1 value conflicts with its enclosing bound")
+
+// BoundKind names the bound that a typed value conflicts with.
+type BoundKind string
+
+const (
+	// LengthBound is a length-delimited value such as TS 44.060 V19.0.0
+	// §12.24 "< bit (val(Extension Length) + 1) & … >", or a fixed-size
+	// value such as the TS 44.018 V19.0.0 §10.5.2.37h 20-octet SI 18 value.
+	LengthBound BoundKind = "length"
+	// CanonicalTarget is the explicit extent of a canonical encoding.
+	CanonicalTarget BoundKind = "canonical-target"
+	// ReceivedTruncation is the truncation point recorded when a value was
+	// decoded (TS 44.060 V19.0.0 §11.1.4.4, TS 44.018 V19.0.0 §8.9).
+	ReceivedTruncation BoundKind = "received-truncation"
+)
+
+// BoundError reports a typed value that does not fit a bound enclosing it.
+// For example, a GPRS Cell Options Extension Length that is too short for a
+// nonzero later field (TS 44.060 V19.0.0 §12.24): the truncated
+// concatenation must end at the length, and only zero components may be
+// omitted. Path is the encoder path at the conflict, Field the conflicting
+// field or component, Limit the bound and Position the bits written so far,
+// both counted from the start of the encoding. Limit and Position are never
+// negative: a value that needs a containing message which is absent reports
+// ErrContextRequired instead, because there is no bound to name.
+type BoundError struct {
+	Kind            BoundKind
+	Path, Field     string
+	Detail          string
+	Limit, Position int
+}
+
+func (e *BoundError) Error() string {
+	return fmt.Sprintf("CSN.1 %s bound at bit %d conflicts with %s at %s (bit %d): %s", e.Kind, e.Limit, e.Field, e.Path, e.Position, e.Detail)
+}
+
+func (e *BoundError) Unwrap() error { return ErrBoundConflict }
+
+// ErrFallbackKnown identifies ignored fallback bits that the decoder would
+// read through the known arm. Every *FallbackError unwraps to it.
+var ErrFallbackKnown = errors.New("CSN.1 ignored fallback bits decode through the known arm")
+
+// FallbackError reports an ignored fallback value whose bits decode through
+// the known arm, so its encoding would not decode back to it. TS 44.060
+// V19.0.0 §12.24 and TS 44.018 V19.0.0 §10.5.2.33b print { <known> !
+// <ignored> }: the decoder tries the known arm first and keeps the bits as
+// ignored only when it fails. Path is the encoder path of the fallback and
+// Position the bit offset, from the start of the encoding, where the
+// ignored bits start.
+type FallbackError struct {
+	Path     string
+	Position int
+}
+
+func (e *FallbackError) Error() string {
+	return fmt.Sprintf("CSN.1 ignored fallback bits at %s (bit %d) decode through the known arm", e.Path, e.Position)
+}
+
+func (e *FallbackError) Unwrap() error { return ErrFallbackKnown }
 
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007
 // V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm

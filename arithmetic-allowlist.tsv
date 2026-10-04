@@ -1,87 +1,89 @@
 # AST/go-types arithmetic inventory for go-csn1 production Go files.
 # Key: file:kind:expression; count pins every occurrence, including repeated generated patterns.
 # BOUNDED and FIXED reasons cite bounds that apply on 32-bit targets.
-runtime/canonical.go:arithmetic:octets++	1	FIXED: CanonicalEncode bounds both ends by maxBits/8 at runtime/canonical.go:68.
-runtime/canonical.go:arithmetic:octets * 8	2	FIXED: CanonicalEncode and CanonicalEncodeAtLength bound octets by maxBits/8 at runtime/canonical.go:68 and runtime/canonical.go:102.
-runtime/direct.go:arithmetic:*r.steps++	1	BOUNDED: operand=r.steps guard=runtime/direct.go:161
-runtime/direct.go:arithmetic:1 << (7 - uint((start+i)%8))	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:904
-runtime/direct.go:arithmetic:1 << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:905
-runtime/direct.go:arithmetic:1 << (7 - uint(w.bits%8))	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:572
-runtime/direct.go:arithmetic:7 - uint((consumed+i)%8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:865
-runtime/direct.go:arithmetic:7 - uint((r.pos+i)%8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:275
-runtime/direct.go:arithmetic:7 - uint((start+i)%8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:904
-runtime/direct.go:arithmetic:7 - uint(i%8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:250; operand=i intrinsic=mod8 guard=runtime/direct.go:604; operand=i intrinsic=mod8 guard=runtime/direct.go:866; operand=i intrinsic=mod8 guard=runtime/direct.go:905
-runtime/direct.go:arithmetic:7 - uint(position%8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:883
-runtime/direct.go:arithmetic:7 - uint(r.pos%8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:200
-runtime/direct.go:arithmetic:7 - uint(w.bits%8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:572
-runtime/direct.go:arithmetic:b << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:250
-runtime/direct.go:arithmetic:bits - w.bits	2	BOUNDED: operand=bits guard=runtime/direct.go:675
-runtime/direct.go:arithmetic:consumed + i	2	BOUNDED: operand=consumed guard=runtime/direct.go:855
-runtime/direct.go:arithmetic:count + 7	1	BOUNDED: operand=count guard=runtime/direct.go:899
-runtime/direct.go:arithmetic:count += span.Count	1	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:582 and runtime/direct.go:821
-runtime/direct.go:arithmetic:i + 1	1	BOUNDED: operand=i guard=runtime/direct.go:444
-runtime/direct.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/direct.go:231; operand=i guard=runtime/direct.go:245; operand=i guard=runtime/direct.go:603; operand=i guard=runtime/direct.go:864; operand=i guard=runtime/direct.go:903
-runtime/direct.go:arithmetic:i--	2	BOUNDED: operand=i guard=runtime/direct.go:179; operand=i guard=runtime/direct.go:517; operand=i guard=runtime/direct.go:592
-runtime/direct.go:arithmetic:len(data) * 8	6	BOUNDED: operand=data guard=runtime/direct.go:75; operand=data guard=runtime/direct.go:91; operand=data guard=runtime/direct.go:899; operand=data guard=runtime/direct.go:915
-runtime/direct.go:arithmetic:len(data)*8 - start	1	FIXED: bitsAt checks start and count against bounded data length before subtraction at runtime/direct.go:898
-runtime/direct.go:arithmetic:len(encoded) * 8	1	BOUNDED: operand=encoded guard=runtime/direct.go:855
-runtime/direct.go:arithmetic:len(r.data) * 8	3	BOUNDED: operand=r.data callee=Check guard=runtime/direct.go:107; operand=data callee=CheckInput guard=runtime/direct.go:83
-runtime/direct.go:arithmetic:len(r.data)*8 - r.pos	1	BOUNDED: operand=r.data callee=Check guard=runtime/direct.go:107
-runtime/direct.go:arithmetic:len(r.path) - 1	1	BOUNDED: operand=r.path intrinsic=lenMinusOne guard=runtime/direct.go:180
-runtime/direct.go:arithmetic:len(r.wire.ImplicitSpans) - 1	1	BOUNDED: operand=r.wire.ImplicitSpans intrinsic=lenMinusOne guard=runtime/direct.go:220
-runtime/direct.go:arithmetic:len(raw) * 8	1	BOUNDED: operand=raw guard=runtime/direct.go:45
-runtime/direct.go:arithmetic:len(spans) - 1	3	BOUNDED: operand=spans intrinsic=lenMinusOne guard=runtime/direct.go:212; operand=spans intrinsic=lenMinusOne guard=runtime/direct.go:217
-runtime/direct.go:arithmetic:len(w.bytes) - 1	1	BOUNDED: operand=w.bytes intrinsic=lenMinusOne guard=runtime/direct.go:572
-runtime/direct.go:arithmetic:len(w.path) - 1	1	BOUNDED: operand=w.path intrinsic=lenMinusOne guard=runtime/direct.go:517
-runtime/direct.go:arithmetic:maxBits + 8	1	BOUNDED: operand=maxBits intrinsic=constant guard=runtime/direct.go:44
-runtime/direct.go:arithmetic:maxBits - last.Count	1	FIXED: Reader.bit checks prior span count is positive and at most maxBits before subtracting at runtime/direct.go:213
-runtime/direct.go:arithmetic:maxBits - r.pos	2	BOUNDED: operand=r.pos guard=runtime/direct.go:104; operand=r.pos guard=runtime/direct.go:196
-runtime/direct.go:arithmetic:maxBits - span.Count	3	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:582 and runtime/direct.go:821
-runtime/direct.go:arithmetic:maxBits - w.bits	2	BOUNDED: operand=w.bits guard=runtime/direct.go:477; operand=w.bits guard=runtime/direct.go:526
-runtime/direct.go:arithmetic:r.boundDepth++	1	FIXED: PushLimit rejects depth 128 before increment at runtime/direct.go:325
-runtime/direct.go:arithmetic:r.boundDepth--	1	BOUNDED: operand=r.boundDepth guard=runtime/direct.go:340
-runtime/direct.go:arithmetic:r.depth++	1	BOUNDED: operand=r.depth guard=runtime/direct.go:161
-runtime/direct.go:arithmetic:r.depth--	1	BOUNDED: operand=r.depth guard=runtime/direct.go:176
-runtime/direct.go:arithmetic:r.end - r.pos	2	BOUNDED: operand=r.pos callee=Check guard=runtime/direct.go:107
-runtime/direct.go:arithmetic:r.pos + i	3	BOUNDED: operand=r.pos intrinsic=matchedRange guard=runtime/direct.go:271; operand=r.pos guard=runtime/direct.go:276
-runtime/direct.go:arithmetic:r.pos + r.virtual	2	BOUNDED: operand=r.pos guard=runtime/direct.go:196; operand=r.virtual callee=Check guard=runtime/direct.go:107
-runtime/direct.go:arithmetic:r.pos + width	1	BOUNDED: operand=width guard=runtime/direct.go:328
-runtime/direct.go:arithmetic:r.pos - start	1	FIXED: RecordTerminal checks 0 <= start <= pos before subtraction at runtime/direct.go:371
-runtime/direct.go:arithmetic:r.pos++	1	BOUNDED: operand=r.pos guard=runtime/direct.go:199
-runtime/direct.go:arithmetic:r.virtual++	1	BOUNDED: operand=r.virtual guard=runtime/direct.go:196
-runtime/direct.go:arithmetic:r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:213
-runtime/direct.go:arithmetic:span.At + span.Count	2	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:582 and runtime/direct.go:821
-runtime/direct.go:arithmetic:spans[len(spans)-1].At + spans[len(spans)-1].Count	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:213
-runtime/direct.go:arithmetic:start + i	2	BOUNDED: operand=start guard=runtime/direct.go:899
-runtime/direct.go:arithmetic:uint64(1) << uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:589
-runtime/direct.go:arithmetic:value << 1	1	BOUNDED: operand=width intrinsic=bitAccumulator guard=runtime/direct.go:227
-runtime/direct.go:arithmetic:w.bits + w.virtual	2	BOUNDED: operand=w.bits guard=runtime/direct.go:526; operand=w.bits callee=logicalPosition guard=runtime/direct.go:526
-runtime/direct.go:arithmetic:w.bits + width	1	BOUNDED: operand=w.bits guard=runtime/direct.go:477
-runtime/direct.go:arithmetic:w.bits++	1	BOUNDED: operand=w.bits callee=logicalPosition guard=runtime/direct.go:526
-runtime/direct.go:arithmetic:w.depth++	1	BOUNDED: operand=w.depth guard=runtime/direct.go:502
-runtime/direct.go:arithmetic:w.depth--	1	BOUNDED: operand=w.depth guard=runtime/direct.go:514
-runtime/direct.go:arithmetic:w.implicitSpan++	1	BOUNDED: operand=w.implicitSpan guard=runtime/direct.go:549
-runtime/direct.go:arithmetic:w.limit - w.bits	2	BOUNDED: operand=w.limit guard=runtime/direct.go:456; operand=w.limit guard=runtime/direct.go:477
-runtime/direct.go:arithmetic:w.padding++	4	BOUNDED: operand=w.padding guard=runtime/direct.go:651; operand=w.padding guard=runtime/direct.go:681; operand=w.padding guard=runtime/direct.go:739; operand=w.padding guard=runtime/direct.go:755
-runtime/direct.go:arithmetic:w.spare++	1	BOUNDED: operand=w.spare guard=runtime/direct.go:623
-runtime/direct.go:arithmetic:w.terminal++	1	BOUNDED: operand=w.terminal guard=runtime/direct.go:725
-runtime/direct.go:arithmetic:w.virtual++	2	BOUNDED: operand=w.virtual callee=logicalPosition guard=runtime/direct.go:526; operand=w.virtual callee=logicalPosition guard=runtime/direct.go:526
-runtime/direct.go:arithmetic:w.wire.Tail.BitLength + 7	1	BOUNDED: operand=w.wire.Tail.BitLength guard=runtime/direct.go:817
-runtime/direct.go:arithmetic:w.wire.TransmittedBits - w.wire.BitsConsumed	1	BOUNDED: operand=w.wire.TransmittedBits guard=runtime/direct.go:817
-runtime/direct.go:arithmetic:width + 7	2	BOUNDED: operand=width guard=runtime/direct.go:241; operand=width guard=runtime/direct.go:600
-runtime/direct.go:arithmetic:width - 1	1	BOUNDED: operand=width guard=runtime/direct.go:589
-runtime/direct.go:conversion:uint((consumed + i) % 8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:865
-runtime/direct.go:conversion:uint((r.pos + i) % 8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:275
-runtime/direct.go:conversion:uint((start + i) % 8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:904
-runtime/direct.go:conversion:uint(i % 8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:250; operand=i intrinsic=mod8 guard=runtime/direct.go:604; operand=i intrinsic=mod8 guard=runtime/direct.go:866; operand=i intrinsic=mod8 guard=runtime/direct.go:905
-runtime/direct.go:conversion:uint(i)	1	BOUNDED: operand=i guard=runtime/direct.go:592
-runtime/direct.go:conversion:uint(position % 8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:883
-runtime/direct.go:conversion:uint(r.pos % 8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:200
-runtime/direct.go:conversion:uint(w.bits % 8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:572
-runtime/direct.go:conversion:uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:589
-runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen guard=runtime/direct.go:236
-runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:883
-runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:593
+runtime/canonical.go:arithmetic:octets++	1	FIXED: CanonicalEncode bounds both ends by maxBits/8 at runtime/canonical.go:64 `maxOctets > maxBits/8`.
+runtime/canonical.go:arithmetic:octets * 8	2	FIXED: CanonicalEncode and CanonicalEncodeAtLength bound octets by maxBits/8 at runtime/canonical.go:64 `maxOctets > maxBits/8` and runtime/canonical.go:136 `octets > maxOctets || maxOctets > maxBits/8`.
+runtime/direct.go:arithmetic:*r.steps++	1	BOUNDED: operand=r.steps guard=runtime/direct.go:165
+runtime/direct.go:arithmetic:1 << (7 - uint((start+i)%8))	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1068
+runtime/direct.go:arithmetic:1 << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:1069
+runtime/direct.go:arithmetic:1 << (7 - uint(w.bits%8))	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:685
+runtime/direct.go:arithmetic:7 - uint((consumed+i)%8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1029
+runtime/direct.go:arithmetic:7 - uint((r.pos+i)%8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:279
+runtime/direct.go:arithmetic:7 - uint((start+i)%8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1068
+runtime/direct.go:arithmetic:7 - uint(i%8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:254; operand=i intrinsic=mod8 guard=runtime/direct.go:717; operand=i intrinsic=mod8 guard=runtime/direct.go:1030; operand=i intrinsic=mod8 guard=runtime/direct.go:1069
+runtime/direct.go:arithmetic:7 - uint(position%8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1047
+runtime/direct.go:arithmetic:7 - uint(r.pos%8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:204
+runtime/direct.go:arithmetic:7 - uint(w.bits%8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:685
+runtime/direct.go:arithmetic:b << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:254
+runtime/direct.go:arithmetic:bits - w.bits	2	BOUNDED: operand=bits guard=runtime/direct.go:791
+runtime/direct.go:arithmetic:consumed + i	2	BOUNDED: operand=consumed guard=runtime/direct.go:1019
+runtime/direct.go:arithmetic:count + 7	1	BOUNDED: operand=count guard=runtime/direct.go:1063
+runtime/direct.go:arithmetic:count += span.Count	1	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:696 `span.At > maxBits-span.Count` and runtime/direct.go:986 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:i + 1	2	BOUNDED: operand=i guard=runtime/direct.go:538; operand=i guard=runtime/direct.go:550
+runtime/direct.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/direct.go:235; operand=i guard=runtime/direct.go:249; operand=i guard=runtime/direct.go:716; operand=i guard=runtime/direct.go:1028; operand=i guard=runtime/direct.go:1067
+runtime/direct.go:arithmetic:i--	2	BOUNDED: operand=i guard=runtime/direct.go:626; operand=i guard=runtime/direct.go:705
+runtime/direct.go:arithmetic:len(data) * 8	6	BOUNDED: operand=data guard=runtime/direct.go:79; operand=data guard=runtime/direct.go:95; operand=data guard=runtime/direct.go:1063; operand=data guard=runtime/direct.go:1079
+runtime/direct.go:arithmetic:len(data)*8 - start	1	FIXED: bitsAt checks start and count against bounded data length before subtraction at runtime/direct.go:1063 `count > len(data)*8-start`
+runtime/direct.go:arithmetic:len(encoded) * 8	1	BOUNDED: operand=encoded guard=runtime/direct.go:1019
+runtime/direct.go:arithmetic:len(r.data) * 8	3	BOUNDED: operand=r.data callee=Check guard=runtime/direct.go:111; operand=data callee=CheckInput guard=runtime/direct.go:87
+runtime/direct.go:arithmetic:len(r.data)*8 - r.pos	1	BOUNDED: operand=r.data callee=Check guard=runtime/direct.go:111
+runtime/direct.go:arithmetic:len(r.path) - 1	1	BOUNDED: operand=r.path intrinsic=lenMinusOne guard=runtime/direct.go:184
+runtime/direct.go:arithmetic:len(r.wire.ImplicitSpans) - 1	1	BOUNDED: operand=r.wire.ImplicitSpans intrinsic=lenMinusOne guard=runtime/direct.go:224
+runtime/direct.go:arithmetic:len(raw) * 8	1	BOUNDED: operand=raw guard=runtime/direct.go:49
+runtime/direct.go:arithmetic:len(spans) - 1	3	BOUNDED: operand=spans intrinsic=lenMinusOne guard=runtime/direct.go:216; operand=spans intrinsic=lenMinusOne guard=runtime/direct.go:221
+runtime/direct.go:arithmetic:len(w.bytes) - 1	1	BOUNDED: operand=w.bytes intrinsic=lenMinusOne guard=runtime/direct.go:685
+runtime/direct.go:arithmetic:len(w.path) - 1	1	BOUNDED: operand=w.path intrinsic=lenMinusOne guard=runtime/direct.go:626
+runtime/direct.go:arithmetic:maxBits + 8	1	BOUNDED: operand=maxBits intrinsic=constant guard=runtime/direct.go:48
+runtime/direct.go:arithmetic:maxBits - last.Count	1	FIXED: Reader.bit checks prior span count is positive and at most maxBits before subtracting at runtime/direct.go:217 `last.Count >= maxBits`
+runtime/direct.go:arithmetic:maxBits - r.pos	2	BOUNDED: operand=r.pos guard=runtime/direct.go:108; operand=r.pos guard=runtime/direct.go:200
+runtime/direct.go:arithmetic:maxBits - span.Count	3	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:696 `span.At > maxBits-span.Count` and runtime/direct.go:986 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:maxBits - w.bits	3	BOUNDED: operand=w.bits guard=runtime/direct.go:583; operand=w.bits guard=runtime/direct.go:635; operand=w.bits guard=runtime/direct.go:510
+runtime/direct.go:arithmetic:r.boundDepth++	1	FIXED: PushLimit rejects depth 128 before increment at runtime/direct.go:329 `if r.boundDepth >= 128 {`
+runtime/direct.go:arithmetic:r.boundDepth--	1	BOUNDED: operand=r.boundDepth guard=runtime/direct.go:344
+runtime/direct.go:arithmetic:r.depth++	1	BOUNDED: operand=r.depth guard=runtime/direct.go:165
+runtime/direct.go:arithmetic:r.depth--	1	BOUNDED: operand=r.depth guard=runtime/direct.go:180
+runtime/direct.go:arithmetic:r.end - r.pos	2	BOUNDED: operand=r.pos callee=Check guard=runtime/direct.go:111
+runtime/direct.go:arithmetic:r.pos + i	3	BOUNDED: operand=r.pos intrinsic=matchedRange guard=runtime/direct.go:275; operand=r.pos guard=runtime/direct.go:280
+runtime/direct.go:arithmetic:r.pos + r.virtual	2	BOUNDED: operand=r.pos guard=runtime/direct.go:200; operand=r.virtual callee=Check guard=runtime/direct.go:111
+runtime/direct.go:arithmetic:r.pos + width	1	BOUNDED: operand=width guard=runtime/direct.go:332
+runtime/direct.go:arithmetic:r.pos - start	1	FIXED: RecordTerminal checks 0 <= start <= pos before subtraction at runtime/direct.go:397 `start > r.pos || r.pos > r.end`
+runtime/direct.go:arithmetic:r.pos++	1	BOUNDED: operand=r.pos guard=runtime/direct.go:203
+runtime/direct.go:arithmetic:r.virtual++	1	BOUNDED: operand=r.virtual guard=runtime/direct.go:200
+runtime/direct.go:arithmetic:r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:217
+runtime/direct.go:arithmetic:span.At + span.Count	2	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:696 `span.At > maxBits-span.Count` and runtime/direct.go:986 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:spans[len(spans)-1].At + spans[len(spans)-1].Count	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:217
+runtime/direct.go:arithmetic:start + i	2	BOUNDED: operand=start guard=runtime/direct.go:1063
+runtime/direct.go:arithmetic:uint64(1) << uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:702
+runtime/direct.go:arithmetic:value << 1	1	BOUNDED: operand=width intrinsic=bitAccumulator guard=runtime/direct.go:231
+runtime/direct.go:arithmetic:w.bits + w.virtual	2	BOUNDED: operand=w.bits guard=runtime/direct.go:635; operand=w.bits callee=logicalPosition guard=runtime/direct.go:635
+runtime/direct.go:arithmetic:w.bits + width	1	BOUNDED: operand=w.bits guard=runtime/direct.go:583
+runtime/direct.go:arithmetic:w.bits + octets*8	1	FIXED: LengthFieldError checks w.bits in 0..maxBits and octets in 0..(maxBits-w.bits)/8 before the bound arithmetic at runtime/direct.go:510 `octets > (maxBits-w.bits)/8`.
+runtime/direct.go:arithmetic:octets * 8	1	FIXED: LengthFieldError checks w.bits in 0..maxBits and octets in 0..(maxBits-w.bits)/8 before the bound arithmetic at runtime/direct.go:510 `octets > (maxBits-w.bits)/8`.
+runtime/direct.go:arithmetic:w.bits++	1	BOUNDED: operand=w.bits callee=logicalPosition guard=runtime/direct.go:635
+runtime/direct.go:arithmetic:w.depth++	1	BOUNDED: operand=w.depth guard=runtime/direct.go:611
+runtime/direct.go:arithmetic:w.depth--	1	BOUNDED: operand=w.depth guard=runtime/direct.go:623
+runtime/direct.go:arithmetic:w.implicitSpan++	1	BOUNDED: operand=w.implicitSpan guard=runtime/direct.go:662
+runtime/direct.go:arithmetic:w.limit - w.bits	2	BOUNDED: operand=w.limit guard=runtime/direct.go:562; operand=w.limit guard=runtime/direct.go:583
+runtime/direct.go:arithmetic:w.padding++	4	BOUNDED: operand=w.padding guard=runtime/direct.go:764; operand=w.padding guard=runtime/direct.go:797; operand=w.padding guard=runtime/direct.go:855; operand=w.padding guard=runtime/direct.go:919
+runtime/direct.go:arithmetic:w.spare++	1	BOUNDED: operand=w.spare guard=runtime/direct.go:736
+runtime/direct.go:arithmetic:w.terminal++	1	BOUNDED: operand=w.terminal guard=runtime/direct.go:841
+runtime/direct.go:arithmetic:w.virtual++	2	BOUNDED: operand=w.virtual callee=logicalPosition guard=runtime/direct.go:635; operand=w.virtual callee=logicalPosition guard=runtime/direct.go:635
+runtime/direct.go:arithmetic:w.wire.Tail.BitLength + 7	1	BOUNDED: operand=w.wire.Tail.BitLength guard=runtime/direct.go:981
+runtime/direct.go:arithmetic:w.wire.TransmittedBits - w.wire.BitsConsumed	1	BOUNDED: operand=w.wire.TransmittedBits guard=runtime/direct.go:981
+runtime/direct.go:arithmetic:width + 7	2	BOUNDED: operand=width guard=runtime/direct.go:245; operand=width guard=runtime/direct.go:713
+runtime/direct.go:arithmetic:width - 1	1	BOUNDED: operand=width guard=runtime/direct.go:702
+runtime/direct.go:conversion:uint((consumed + i) % 8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1029
+runtime/direct.go:conversion:uint((r.pos + i) % 8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:279
+runtime/direct.go:conversion:uint((start + i) % 8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1068
+runtime/direct.go:conversion:uint(i % 8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:254; operand=i intrinsic=mod8 guard=runtime/direct.go:717; operand=i intrinsic=mod8 guard=runtime/direct.go:1030; operand=i intrinsic=mod8 guard=runtime/direct.go:1069
+runtime/direct.go:conversion:uint(i)	1	BOUNDED: operand=i guard=runtime/direct.go:705
+runtime/direct.go:conversion:uint(position % 8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1047
+runtime/direct.go:conversion:uint(r.pos % 8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:204
+runtime/direct.go:conversion:uint(w.bits % 8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:685
+runtime/direct.go:conversion:uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:702
+runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen guard=runtime/direct.go:240
+runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1047
+runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:706
 runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:i + 1	5	BOUNDED: operand=i guard=runtime/expr.go:205
@@ -96,67 +98,67 @@ runtime/expr.go:conversion:int(n)	1	BOUNDED: operand=n guard=runtime/expr.go:56
 runtime/expr.go:conversion:int64(len(table))	1	BOUNDED: operand=table intrinsic=hostIntWiden guard=runtime/expr.go:181
 runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/expr.go:229
 runtime/expr.go:conversion:rune(raw[i])	3	BOUNDED: operand=raw guard=runtime/expr.go:28; operand=i guard=runtime/expr.go:40
-ts24008/classmark/generated.go:arithmetic:count++	14	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/classmark/generated.go:arithmetic:i++	3	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
-ts24008/classmark/generated.go:arithmetic:matches++	14	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/classmark/generated.go:conversion:uint64(v)	130	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts24008/classmark/generated.go:conversion:uint8(v)	65	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts24008/msrac/generated.go:arithmetic:count++	2	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/msrac/generated.go:arithmetic:i + 1	1	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:853; AST source proof at internal/arithaudit/loops.go:180
-ts24008/msrac/generated.go:arithmetic:i++	3	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
-ts24008/msrac/generated.go:arithmetic:knownEnd - r.Position()	1	BOUNDED: knownEnd is clamped to at least the checked reader position before subtraction at csn1/gen/direct.go:584; AST source proof at internal/arithaudit/residual.go
-ts24008/msrac/generated.go:arithmetic:knownEnd - valueStart	1	BOUNDED: valueStart records the checked reader position before decoding the prefix, and knownEnd is the checked reader end at csn1/gen/direct.go:566; AST source proof at internal/arithaudit/residual.go
-ts24008/msrac/generated.go:arithmetic:matches++	2	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/msrac/generated.go:arithmetic:r.Position() + r.Remaining()	1	BOUNDED: Reader.Remaining checks that position and end are within maxBits, then returns end-position at runtime/direct.go:114; AST source proof at internal/arithaudit/residual.go
-ts24008/msrac/generated.go:arithmetic:valueStart + 400	1	BOUNDED: Reader.Check limits valueStart to maxBits, and adding the fixed 400-bit extent remains within int at csn1/gen/direct.go:584; AST source proof at internal/arithaudit/residual.go
-ts24008/msrac/generated.go:conversion:uint64(v)	188	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts24008/msrac/generated.go:conversion:uint8(v)	93	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts36331/uecapability/generated.go:arithmetic:(len(data) - 3) * 8	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:42 and ts36331/uecapability/generated.go:45
-ts36331/uecapability/generated.go:arithmetic:40 + cm3.BitsConsumed	2	BOUNDED: nested decode consumed bits fit checked input after five-byte wrapper at ts36331/uecapability/generated.go:142 and ts36331/uecapability/generated.go:152
-ts36331/uecapability/generated.go:arithmetic:40 + v.Classmark3.Wire.BitsConsumed	1	FIXED: encoder checks nested count <= len(cm3)*8 before addition at ts36331/uecapability/generated.go:179
-ts36331/uecapability/generated.go:arithmetic:len(cm3) * 8	1	FIXED: runtime.CheckInput(cm3) limits length before octet-to-bit conversion at ts36331/uecapability/generated.go:173
-ts36331/uecapability/generated.go:arithmetic:len(data) - 3	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:42 and ts36331/uecapability/generated.go:45
-ts36331/uecapability/generated.go:arithmetic:v.RevisionLevel << 5	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
-ts36331/uecapability/generated.go:arithmetic:v.SSScreeningIndicator << 4	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:60
-ts44018/measurement/generated.go:arithmetic:count++	9	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/measurement/generated.go:arithmetic:i++	4	BOUNDED: pre-Rel-8 bitmap decode and fill loops use literal i<96; other generated loops use counts checked by Eval; AST source proof at internal/arithaudit/loops.go:79
-ts44018/measurement/generated.go:arithmetic:matches++	9	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/measurement/generated.go:conversion:uint16(v)	1	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/measurement/generated.go:conversion:uint64(v)	49	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts44018/measurement/generated.go:conversion:uint8(v)	23	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/restoctets/generated.go:arithmetic:^uint64(0) - 1	1	BOUNDED: compile-time uint64 constant subtraction at ts44018/restoctets/generated.go:55884
-ts44018/restoctets/generated.go:arithmetic:count++	270	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/restoctets/generated.go:arithmetic:i + 1	4	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:853; AST source proof at internal/arithaudit/loops.go:180
-ts44018/restoctets/generated.go:arithmetic:i++	16	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
-ts44018/restoctets/generated.go:arithmetic:matches++	270	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/restoctets/generated.go:arithmetic:r.Position() - 1	19	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14741
-ts44018/restoctets/generated.go:arithmetic:uint64(v) - 1	1	BOUNDED: encoder checks interpreted value >= 1 before subtraction at ts44018/restoctets/generated.go:55899
-ts44018/restoctets/generated.go:arithmetic:v += 1	1	BOUNDED: three-bit code plus one fits uint8, checked by AST gate at internal/arithaudit/narrowing.go:100 and internal/arithaudit/narrowing.go:106
-ts44018/restoctets/generated.go:conversion:uint16(v)	44	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/restoctets/generated.go:conversion:uint32(v)	13	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', r.Position()-1))	4	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14778
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:490 and ts44018/restoctets/generated.go:14793
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', r.Position()-1))	15	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:14741
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', w.Position()))	23	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:490 and ts44018/restoctets/generated.go:14756
-ts44018/restoctets/generated.go:conversion:uint64(v)	1198	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts44018/restoctets/generated.go:conversion:uint8(v)	528	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44060/ies/generated.go:arithmetic:count++	12	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44060/ies/generated.go:arithmetic:i + 1	2	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:853; AST source proof at internal/arithaudit/loops.go:180
-ts44060/ies/generated.go:arithmetic:i++	1	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
-ts44060/ies/generated.go:arithmetic:matches++	12	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44060/ies/generated.go:conversion:uint16(v)	9	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44060/ies/generated.go:conversion:uint32(v)	4	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44060/ies/generated.go:conversion:uint64(v)	176	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts44060/ies/generated.go:conversion:uint8(v)	73	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-runtime/direct.go:arithmetic:len(data)*8 - consumed	1	FIXED: TrailingBits bounds data by maxBits/8 and consumed by len(data)*8 at runtime/direct.go:903
-runtime/direct.go:arithmetic:8 - w.bits%8	1	FIXED: modulo 8 yields 0..7 so subtraction yields 1..8 at runtime/direct.go:498
-ts24008/msnetcap/generated.go:arithmetic:count++	2	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/cellselection/generated.go:arithmetic:count++	4	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:802-804; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/msnetcap/generated.go:arithmetic:i++	2	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:625,628,663,665; AST source proof at internal/arithaudit/loops.go:77
-ts24008/msnetcap/generated.go:arithmetic:matches++	2	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts44018/cellselection/generated.go:arithmetic:matches++	4	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:790; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:63
-ts24008/msnetcap/generated.go:conversion:uint64(v)	62	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts44018/cellselection/generated.go:conversion:uint64(v)	28	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:523 and csn1/gen/direct.go:542; AST source proof at internal/arithaudit/widening.go:25
-ts24008/msnetcap/generated.go:conversion:uint8(v)	31	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/cellselection/generated.go:conversion:uint8(v)	9	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
-ts44018/cellselection/generated.go:conversion:uint16(v)	5	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:506 and csn1/gen/direct.go:538; AST width and offset proof at internal/arithaudit/narrowing.go:100
+ts24008/classmark/generated.go:arithmetic:count++	14	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/classmark/generated.go:arithmetic:i++	3	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:881 `count,recorded:=w.SpareCount(%q)`, csn1/gen/direct.go:884 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:933 `remaining:=r.BoundedRemaining()` and csn1/gen/direct.go:881 `for i:=0;i<count;i++`; AST source proof at internal/arithaudit/loops.go:83 `!countLoopCondition(loop.Cond)`
+ts24008/classmark/generated.go:arithmetic:matches++	14	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/classmark/generated.go:conversion:uint64(v)	130	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts24008/classmark/generated.go:conversion:uint8(v)	65	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts24008/msrac/generated.go:arithmetic:count++	2	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/msrac/generated.go:arithmetic:i + 1	1	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:1277 `if i+1<len(v.Entries){selector=1}`; AST source proof at internal/arithaudit/loops.go:223 `func boundedRangeNext(`
+ts24008/msrac/generated.go:arithmetic:i++	3	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:881 `count,recorded:=w.SpareCount(%q)`, csn1/gen/direct.go:884 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:933 `remaining:=r.BoundedRemaining()` and csn1/gen/direct.go:881 `for i:=0;i<count;i++`; AST source proof at internal/arithaudit/loops.go:83 `!countLoopCondition(loop.Cond)`
+ts24008/msrac/generated.go:arithmetic:knownEnd - r.Position()	1	BOUNDED: knownEnd is clamped to at least the checked reader position before subtraction at csn1/gen/direct.go:1194 `knownEnd:=r.Position()+r.Remaining()`; AST source proof at internal/arithaudit/residual.go
+ts24008/msrac/generated.go:arithmetic:knownEnd - valueStart	1	BOUNDED: valueStart records the checked reader position before decoding the prefix, and knownEnd is the checked reader end at csn1/gen/direct.go:1176 `valueStart:=r.Position();`; AST source proof at internal/arithaudit/residual.go
+ts24008/msrac/generated.go:arithmetic:matches++	2	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/msrac/generated.go:arithmetic:r.Position() + r.Remaining()	1	BOUNDED: Reader.Remaining checks that position and end are within maxBits, then returns end-position at runtime/direct.go:122 `return r.end - r.pos`; AST source proof at internal/arithaudit/residual.go
+ts24008/msrac/generated.go:arithmetic:valueStart + 400	1	BOUNDED: Reader.Check limits valueStart to maxBits, and adding the fixed 400-bit extent remains within int at csn1/gen/direct.go:1194 `knownEnd:=r.Position()+r.Remaining()`; AST source proof at internal/arithaudit/residual.go
+ts24008/msrac/generated.go:conversion:uint64(v)	188	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts24008/msrac/generated.go:conversion:uint8(v)	93	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts36331/uecapability/generated.go:arithmetic:(len(data) - 3) * 8	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:43 `runtime.CheckInput(data)` and ts36331/uecapability/generated.go:46 `if len(data) < 3 {`
+ts36331/uecapability/generated.go:arithmetic:40 + cm3.BitsConsumed	2	BOUNDED: nested decode consumed bits fit checked input after five-byte wrapper at ts36331/uecapability/generated.go:149 `runtime.CheckInput(data)` and ts36331/uecapability/generated.go:152 `if len(data) < 6`
+ts36331/uecapability/generated.go:arithmetic:40 + v.Classmark3.Wire.BitsConsumed	1	FIXED: encoder checks nested count <= len(cm3)*8 before addition at ts36331/uecapability/generated.go:186 `v.Classmark3.Wire.BitsConsumed > len(cm3)*8`
+ts36331/uecapability/generated.go:arithmetic:len(cm3) * 8	1	FIXED: runtime.CheckInput(cm3) limits length before octet-to-bit conversion at ts36331/uecapability/generated.go:180 `runtime.CheckInput(cm3)`
+ts36331/uecapability/generated.go:arithmetic:len(data) - 3	1	BOUNDED: Classmark 2 decoder checks len(data)>=3 and CheckInput at ts36331/uecapability/generated.go:43 `runtime.CheckInput(data)` and ts36331/uecapability/generated.go:46 `if len(data) < 3 {`
+ts36331/uecapability/generated.go:arithmetic:v.RevisionLevel << 5	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:61 `v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3`
+ts36331/uecapability/generated.go:arithmetic:v.SSScreeningIndicator << 4	1	BOUNDED: encoder checks values <=3 before uint8 shift at ts36331/uecapability/generated.go:61 `v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3`
+ts44018/measurement/generated.go:arithmetic:count++	9	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/measurement/generated.go:arithmetic:i++	4	BOUNDED: pre-Rel-8 bitmap decode and fill loops use literal i<96; other generated loops use counts checked by Eval; AST source proof at internal/arithaudit/loops.go:80 `fixedLoopCondition(loop.Cond)`
+ts44018/measurement/generated.go:arithmetic:matches++	9	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/measurement/generated.go:conversion:uint16(v)	1	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/measurement/generated.go:conversion:uint64(v)	49	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts44018/measurement/generated.go:conversion:uint8(v)	23	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/restoctets/generated.go:arithmetic:^uint64(0) - 1	1	BOUNDED: compile-time uint64 constant subtraction at ts44018/restoctets/generated.go:56681 `^uint64(0)-1`
+ts44018/restoctets/generated.go:arithmetic:count++	268	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/restoctets/generated.go:arithmetic:i + 1	4	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:1277 `if i+1<len(v.Entries){selector=1}`; AST source proof at internal/arithaudit/loops.go:223 `func boundedRangeNext(`
+ts44018/restoctets/generated.go:arithmetic:i++	16	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:881 `count,recorded:=w.SpareCount(%q)`, csn1/gen/direct.go:884 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:933 `remaining:=r.BoundedRemaining()` and csn1/gen/direct.go:881 `for i:=0;i<count;i++`; AST source proof at internal/arithaudit/loops.go:83 `!countLoopCondition(loop.Cond)`
+ts44018/restoctets/generated.go:arithmetic:matches++	268	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/restoctets/generated.go:arithmetic:r.Position() - 1	19	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:3607 `v, err := r.ReadUint(width)`
+ts44018/restoctets/generated.go:arithmetic:uint64(v) - 1	1	BOUNDED: encoder checks interpreted value >= 1 before subtraction at ts44018/restoctets/generated.go:56696 `if uint64(v) < 1 {`
+ts44018/restoctets/generated.go:arithmetic:v += 1	1	BOUNDED: three-bit code plus one fits uint8, checked by AST gate at internal/arithaudit/narrowing.go:103 `readWidth > bits` and internal/arithaudit/narrowing.go:109 `offset > targetMaximum-readMaximum`
+ts44018/restoctets/generated.go:conversion:uint16(v)	44	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/restoctets/generated.go:conversion:uint32(v)	13	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', r.Position()-1))	4	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:15025 `v, err := r.ReadUint(width)`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1047 `uint(position%8)` and ts44018/restoctets/generated.go:15048 `uint64(runtime.LHBit('H', w.Position()))`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', r.Position()-1))	15	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:3607 `v, err := r.ReadUint(width)`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', w.Position()))	23	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1047 `uint(position%8)` and ts44018/restoctets/generated.go:3627 `uint64(runtime.LHBit('L', w.Position()))`
+ts44018/restoctets/generated.go:conversion:uint64(v)	1196	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts44018/restoctets/generated.go:conversion:uint8(v)	527	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44060/ies/generated.go:arithmetic:count++	12	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44060/ies/generated.go:arithmetic:i + 1	2	BOUNDED: generator emits i+1 only under range over the same slice and compares with its len at csn1/gen/direct.go:1277 `if i+1<len(v.Entries){selector=1}`; AST source proof at internal/arithaudit/loops.go:223 `func boundedRangeNext(`
+ts44060/ies/generated.go:arithmetic:i++	1	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:881 `count,recorded:=w.SpareCount(%q)`, csn1/gen/direct.go:884 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:933 `remaining:=r.BoundedRemaining()` and csn1/gen/direct.go:881 `for i:=0;i<count;i++`; AST source proof at internal/arithaudit/loops.go:83 `!countLoopCondition(loop.Cond)`
+ts44060/ies/generated.go:arithmetic:matches++	12	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44060/ies/generated.go:conversion:uint16(v)	9	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44060/ies/generated.go:conversion:uint32(v)	4	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44060/ies/generated.go:conversion:uint64(v)	176	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts44060/ies/generated.go:conversion:uint8(v)	73	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+runtime/direct.go:arithmetic:len(data)*8 - consumed	1	FIXED: TrailingBits bounds data by maxBits/8 and consumed by len(data)*8 at runtime/direct.go:1079 `consumed > len(data)*8`
+runtime/direct.go:arithmetic:8 - w.bits%8	1	FIXED: modulo 8 yields 0..7 so subtraction yields 1..8 at runtime/direct.go:574 `return (8 - w.bits%8) % 8`
+ts24008/msnetcap/generated.go:arithmetic:count++	2	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/cellselection/generated.go:arithmetic:count++	4	BOUNDED: generator emits one conditional increment per static choice arm at csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/msnetcap/generated.go:arithmetic:i++	2	BOUNDED: generator emits i<count after Eval or SpareCount; SI continuation derives count from checked BoundedRemaining at csn1/gen/direct.go:881 `count,recorded:=w.SpareCount(%q)`, csn1/gen/direct.go:884 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:933 `remaining:=r.BoundedRemaining()` and csn1/gen/direct.go:881 `for i:=0;i<count;i++`; AST source proof at internal/arithaudit/loops.go:83 `!countLoopCondition(loop.Cond)`
+ts24008/msnetcap/generated.go:arithmetic:matches++	2	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts44018/cellselection/generated.go:arithmetic:matches++	4	BOUNDED: generator emits one conditional candidate increment per static choice arm at csn1/gen/direct.go:1086 `matches++`; AST proof rejects loops and more than 64 arms at internal/arithaudit/choice.go:45 `case *ast.ForStmt, *ast.RangeStmt:` and internal/arithaudit/choice.go:83 `if n > 64 {`
+ts24008/msnetcap/generated.go:conversion:uint64(v)	62	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts44018/cellselection/generated.go:conversion:uint64(v)	28	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:769 `value := "uint64(v)"` and csn1/gen/direct.go:741 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
+ts24008/msnetcap/generated.go:conversion:uint8(v)	31	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/cellselection/generated.go:conversion:uint8(v)	9	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`
+ts44018/cellselection/generated.go:conversion:uint16(v)	5	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:726 `result.typ = "uint8"` and csn1/gen/direct.go:764 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:103 `readWidth > bits`

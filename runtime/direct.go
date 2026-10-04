@@ -16,14 +16,18 @@ type WireInfo struct {
 	Spare           []BitString
 	Padding         []BitString
 	Terminal        []BitString
-	TruncatedAt     map[string]int
-	SpareCounts     map[string][]int
-	ImplicitZeros   int
-	ImplicitSpans   []ImplicitSpan
-	sealed          bool
-	canonical       bool
-	targetSet       bool
-	targetBits      int
+	// TruncatedAt lists, per truncated concatenation (TS 44.060 V19.0.0
+	// §11.1.4.4) and in decode order of its instances, the number of
+	// components each instance received, or -1 when it was complete. One
+	// entry per instance keeps recursive and repeated instances apart.
+	TruncatedAt   map[string][]int
+	SpareCounts   map[string][]int
+	ImplicitZeros int
+	ImplicitSpans []ImplicitSpan
+	sealed        bool
+	canonical     bool
+	targetSet     bool
+	targetBits    int
 }
 
 // ImplicitSpan records a receiver-inferred zero run in logical bit order.
@@ -76,7 +80,7 @@ func NewReader(data []byte) *Reader {
 		end = len(data) * 8
 	}
 	return &Reader{data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
-		wire: WireInfo{TruncatedAt: make(map[string]int)}}
+		wire: WireInfo{TruncatedAt: make(map[string][]int)}}
 }
 
 func CheckInput(data []byte) error {
@@ -350,16 +354,38 @@ func (r *Reader) PopLimit(old int) error {
 	r.boundDepth--
 	return nil
 }
-func (r *Reader) RecordTruncation(path string, child int) {
-	if r.truncShared {
-		copy := make(map[string]int, len(r.wire.TruncatedAt))
+
+// BeginTruncation reserves the truncation entry of a truncated
+// concatenation instance on entry, so instances are listed in the order an
+// encoder meets them, outer before nested. The entry stays -1 unless
+// RecordTruncation marks where the instance ended.
+func (r *Reader) BeginTruncation(path string) int {
+	r.ownTruncations()
+	slot := len(r.wire.TruncatedAt[path])
+	r.wire.TruncatedAt[path] = append(r.wire.TruncatedAt[path], -1)
+	return slot
+}
+
+// RecordTruncation records that the instance in slot received child
+// components before its input ended.
+func (r *Reader) RecordTruncation(path string, slot, child int) {
+	r.ownTruncations()
+	if points := r.wire.TruncatedAt[path]; slot >= 0 && slot < len(points) {
+		points[slot] = child
+	}
+}
+
+// ownTruncations copies truncation entries shared with a fork before they
+// change.
+func (r *Reader) ownTruncations() {
+	if r.truncShared || r.wire.TruncatedAt == nil {
+		copy := make(map[string][]int, len(r.wire.TruncatedAt))
 		for k, v := range r.wire.TruncatedAt {
-			copy[k] = v
+			copy[k] = append([]int(nil), v...)
 		}
 		r.wire.TruncatedAt = copy
 		r.truncShared = false
 	}
-	r.wire.TruncatedAt[path] = child
 }
 
 // RecordTerminal preserves the nonsemantic zero-length stop record printed
@@ -400,7 +426,7 @@ type Writer struct {
 	depth                    int
 	spare, padding, terminal int
 	spareCountIndex          map[string]int
-	truncationUsed           map[string]bool
+	truncationIndex          map[string]int
 	wire                     WireInfo
 	implicitSpan             int
 	stateErr                 error
@@ -411,7 +437,7 @@ func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
 func (w *Writer) WithWire(wire WireInfo) {
 	w.wire = wire
 	w.spareCountIndex = make(map[string]int)
-	w.truncationUsed = make(map[string]bool)
+	w.truncationIndex = make(map[string]int)
 	w.stateErr = nil
 }
 
@@ -427,13 +453,93 @@ func (w *Writer) SetZeroExtension(allow bool) (previous bool) {
 func (w *Writer) CanonicalTargetReached() bool {
 	return w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits
 }
-func (w *Writer) Canonical() bool { return w.wire.canonical }
-func (w *Writer) Truncation(path string) (int, bool) {
-	n, ok := w.wire.TruncatedAt[path]
-	if ok {
-		w.truncationUsed[path] = true
+
+// TruncationReached marks where a fresh value ends a truncated
+// concatenation. TS 44.060 V19.0.0 §11.1.4.4 and TS 44.018 V19.0.0 §8.9
+// make "{ <a> <b> <c> } //" any component prefix. Inside a length-delimited
+// value the prefix must fill that length exactly, so the writer stops where
+// the reader does, at the exhausted bound, and keeps the typed length
+// (§12.24 Extension Length). The omitted components must be zero: "The
+// receiver shall assume the value zero for any truncated bit" (§12.24).
+// Outside a bound, the canonical target applies. A decoded value follows its
+// recorded truncation point instead.
+func (w *Writer) TruncationReached() bool {
+	if w.wire.sealed {
+		return false
 	}
-	return n, ok
+	if w.bounded {
+		return w.bits >= w.limit
+	}
+	return w.CanonicalTargetReached()
+}
+
+// OmittedFieldError reports a nonzero field after the point where a truncated
+// concatenation ends. Only zero components may be omitted (TS 44.060 V19.0.0
+// §12.24: "The receiver shall assume the value zero for any truncated bit";
+// TS 44.018 V19.0.0 §8.9). The bound is the one TruncationReached applied,
+// or the decoded value's recorded truncation point.
+func (w *Writer) OmittedFieldError(field string) error {
+	detail := "nonzero field omitted from a truncated concatenation; only zero components may be omitted"
+	switch {
+	case !w.wire.sealed && w.bounded && w.bits >= w.limit:
+		return w.boundError(LengthBound, w.limit, field, detail)
+	case w.CanonicalTargetReached():
+		return w.boundError(CanonicalTarget, w.wire.targetBits, field, detail)
+	default:
+		return w.boundError(ReceivedTruncation, w.bits, field, detail)
+	}
+}
+
+// LengthBoundError reports content that cannot fill or fit its enclosing
+// length-delimited or fixed-size value. Generated code calls it only inside
+// such a value; without one there is no bound to report.
+func (w *Writer) LengthBoundError(detail string) error {
+	if !w.bounded {
+		return fmt.Errorf("%s at %s: no enclosing length-delimited value", detail, w.path)
+	}
+	return w.boundError(LengthBound, w.limit, "", detail)
+}
+
+// LengthFieldError reports an alternative that conflicts with the octet
+// length printed before it. TS 44.018 V19.0.0 §10.5.2.16: Length of
+// frequency parameters is "the number of octets occupied by the frequency
+// parameters, before time field. If this length is 0, the frequency
+// parameters, before time is not present." The bound starts at the
+// alternative, so Limit is the current position plus that many octets.
+func (w *Writer) LengthFieldError(field string, octets int, detail string) error {
+	if w.bits < 0 || w.bits > maxBits || octets < 0 || octets > (maxBits-w.bits)/8 {
+		return fmt.Errorf("length field of %d octets outside encoded bit limit at %s", octets, w.path)
+	}
+	return w.boundError(LengthBound, w.bits+octets*8, field, detail)
+}
+
+// boundError builds a BoundError. Limit and Position are always bit offsets
+// from the start of the encoding; an invalid offset is an internal error.
+func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) error {
+	if limit < 0 || limit > maxBits || w.bits < 0 || w.bits > maxBits {
+		return fmt.Errorf("invalid %s bound %d at bit %d in %s: %s", kind, limit, w.bits, w.path, detail)
+	}
+	if field == "" {
+		field = w.path
+		if i := strings.LastIndexByte(w.path, '/'); i >= 0 {
+			field = strings.TrimPrefix(w.path[i:], "/")
+		}
+	}
+	return &BoundError{Kind: kind, Path: w.path, Field: field, Detail: detail, Limit: limit, Position: w.bits}
+}
+func (w *Writer) Canonical() bool { return w.wire.canonical }
+
+// Truncation consumes the next received truncation entry for path, in the
+// order Reader.BeginTruncation listed the instances, and reports where that
+// instance ended when it was truncated.
+func (w *Writer) Truncation(path string) (int, bool) {
+	points := w.wire.TruncatedAt[path]
+	i := w.truncationIndex[path]
+	if i >= len(points) {
+		return 0, false
+	}
+	w.truncationIndex[path] = i + 1
+	return points[i], points[i] >= 0
 }
 func (w *Writer) SpareCount(path string) (int, bool) {
 	counts := w.wire.SpareCounts[path]
@@ -474,8 +580,11 @@ func (w *Writer) BoundEndOr(unbounded int) int {
 	return unbounded
 }
 func (w *Writer) PushLimit(width int) (int, error) {
-	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits || width > w.limit-w.bits) {
-		return 0, fmt.Errorf("fixed value exceeds enclosing limit at %s", w.path)
+	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits) {
+		return 0, fmt.Errorf("fixed value outside encoded bit limit at %s", w.path)
+	}
+	if w.bounded && width > w.limit-w.bits {
+		return 0, w.boundError(LengthBound, w.limit, "", "length exceeds the enclosing length-delimited value")
 	}
 	old := -1
 	if w.bounded {
@@ -490,7 +599,7 @@ func (w *Writer) PopLimit(old int) error {
 		return fmt.Errorf("invalid enclosing fixed value at %s", w.path)
 	}
 	if w.bits != w.limit {
-		return fmt.Errorf("fixed value has %d bits, want %d at %s", w.bits, w.limit, w.path)
+		return w.boundError(LengthBound, w.limit, "", "content ends before the length-delimited value")
 	}
 	w.limit = old
 	w.bounded = old >= 0
@@ -538,13 +647,17 @@ func (w *Writer) put(bit uint8) error {
 	}
 	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 		if bit != 0 {
-			return fmt.Errorf("nonzero bit beyond receiver-inferred boundary at %s", w.path)
+			detail := "nonzero bit beyond the receiver-inferred zero extension"
+			if w.bounded && w.bits >= w.limit {
+				return w.boundError(LengthBound, w.limit, "", detail)
+			}
+			return w.boundError(CanonicalTarget, w.wire.targetBits, "", detail)
 		}
 		w.virtual++
 		return nil
 	}
 	if w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits {
-		return fmt.Errorf("encoded bit exceeds canonical target at %s", w.path)
+		return w.boundError(CanonicalTarget, w.wire.targetBits, "", "encoded bit exceeds the canonical target")
 	}
 	if w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans) {
 		span, end, err := w.currentImplicitSpan()
@@ -563,7 +676,7 @@ func (w *Writer) put(bit uint8) error {
 		}
 	}
 	if w.bounded && w.bits >= w.limit {
-		return fmt.Errorf("encoded bit exceeds fixed value at %s", w.path)
+		return w.boundError(LengthBound, w.limit, "", "encoded bit exceeds the length-delimited value")
 	}
 	if w.bits%8 == 0 {
 		w.bytes = append(w.bytes, 0)
@@ -672,8 +785,11 @@ func (w *Writer) WritePadding() error {
 // TS 44.060 V19.0.0 §11 defines the padding pattern. A decoded value's
 // received padding is retained when its width still fits after editing.
 func (w *Writer) WritePaddingTo(bits int) error {
-	if bits < w.bits || bits > maxBits {
-		return fmt.Errorf("padding target outside bounded value")
+	if bits > maxBits {
+		return fmt.Errorf("padding target outside encoded bit limit")
+	}
+	if bits < w.bits {
+		return w.boundError(LengthBound, bits, "", "content exceeds the fixed-size value")
 	}
 	if w.wire.Tail.BitLength == bits-w.bits && w.wire.Tail.BitLength > 0 {
 		return w.WriteBitString(w.wire.Tail, w.wire.Tail.BitLength)
@@ -744,6 +860,54 @@ func (w *Writer) WriteIgnored(value BitString) error {
 		}
 	}
 	return w.WriteBitString(value, value.BitLength)
+}
+
+// FallbackMark is the writer state where an ignored fallback arm starts.
+type FallbackMark struct {
+	bits, virtual int
+	allowZero     bool
+	vars          map[string]uint64
+}
+
+// MarkFallback records the state the decoder's known-arm trial starts from:
+// the bit position, the receiver-inferred zeros so far, zero extension and
+// the field bindings, which the writer binds as the reader does.
+func (w *Writer) MarkFallback() FallbackMark {
+	vars := make(map[string]uint64, len(w.vars))
+	for k, v := range w.vars {
+		vars[k] = v
+	}
+	return FallbackMark{bits: w.bits, virtual: w.virtual, allowZero: w.allowZero, vars: vars}
+}
+
+// CheckIgnoredFallback returns a *FallbackError when the bits written since
+// mark decode through known, which the decoder would then choose. The trial
+// reads exactly the bits the decoder's trial can read: with toBound, the
+// completed length-delimited value that the ignored arm fills; otherwise the
+// ignored bits alone, which the generator permits only when the known arm
+// cannot read past them. An ignored arm that leaves its bound unfilled is
+// not tried here, because PopLimit rejects it.
+func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known func(*Reader) error) error {
+	if toBound && (!w.bounded || w.bits != w.limit) {
+		return nil
+	}
+	if mark.bits < 0 || mark.bits > w.bits {
+		return fmt.Errorf("invalid fallback mark at %s", w.path)
+	}
+	r := NewReader(w.bytes)
+	// Reader.Check bounds the window by the written bytes; the shared
+	// bindings are copied before the trial binds anything.
+	r.pos, r.end, r.virtual, r.allowZero, r.vars, r.varsShared = mark.bits, w.bits, mark.virtual, mark.allowZero, mark.vars, true
+	if toBound {
+		r.boundDepth = 1
+	}
+	if err := r.Check(); err != nil {
+		return err
+	}
+	if known(r) == nil {
+		return &FallbackError{Path: w.path, Position: mark.bits}
+	}
+	return nil
 }
 
 // WriteIgnoredFixed re-emits a received ignored field or a zero-valued
@@ -831,8 +995,8 @@ func (w *Writer) validateState() error {
 	if w.spare != len(w.wire.Spare) || w.padding != len(w.wire.Padding) || w.terminal != len(w.wire.Terminal) {
 		return fmt.Errorf("unconsumed received spare, padding, or terminal state")
 	}
-	for path := range w.wire.TruncatedAt {
-		if !w.truncationUsed[path] {
+	for path, points := range w.wire.TruncatedAt {
+		if w.truncationIndex[path] != len(points) {
 			return fmt.Errorf("unused truncation point %s", path)
 		}
 	}

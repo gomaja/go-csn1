@@ -27,10 +27,10 @@ func TestIAEmptyValueAndBranches(t *testing.T) {
 		{0x50, 0x00, 0x00, 0x80, 0x00, 0x00, 0x2b},             // LH, TMGI IE
 		{0x50, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x00, 0x20, 0x0b}, // LH, packet timing advance IE
 		{0x40, 0x20, 0x00, 0x00, 0x00, 0x09, 0x2b},             // LH, EGPRS uplink TFI with TS 44.060 MCS/window IEs
-		{0x80, 0x08},                                           // HL, zero-length frequency parameters
-		{0x82, 0x00, 0x00, 0x08},                               // HL, two-octet frequency parameters
-		{0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b},             // HH, EGPRS Level IE
-		{0xe8, 0x2b}, // HH, second part packet assignment
+		{0x80, 0x08},                               // HL, zero-length frequency parameters
+		{0x82, 0x00, 0x00, 0x08},                   // HL, two-octet frequency parameters
+		{0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b}, // HH, EGPRS Level IE
+		{0xe8, 0x2b},                               // HH, second part packet assignment
 	} {
 		decoded, err := DecodeIARestOctets(wire)
 		if err != nil {

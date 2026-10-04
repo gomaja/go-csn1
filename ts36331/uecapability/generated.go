@@ -131,6 +131,7 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 }
 
 // EncodeClassmark2ValuePartCanonical encodes a copy without received wire layout.
+// It returns only untyped errors: a field value outside its width.
 func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
 	return EncodeClassmark2ValuePart(runtime.Canonical(v))
 }
@@ -199,6 +200,9 @@ func EncodeGERANCS(v GERANCS) ([]byte, error) {
 
 // EncodeGERANCSCanonical uses the shortest equivalent TS 24.008 V20.1.0
 // §10.5.1.7 Classmark 3 value in the TS 36.331 V19.4.0 container.
+// It returns the errors of EncodeClassmark2ValuePartCanonical and
+// classmark.EncodeClassmark3ValuePartCanonical; its own container checks are
+// untyped.
 func EncodeGERANCSCanonical(v GERANCS) ([]byte, error) {
 	fresh := runtime.Canonical(v)
 	cm2, err := EncodeClassmark2ValuePartCanonical(fresh.Classmark2)
@@ -254,6 +258,8 @@ func EncodeGERANPS(v GERANPS) ([]byte, error) {
 
 // EncodeGERANPSCanonical uses TS 24.008 V20.1.0 §10.5.5.12a
 // receiver-inferred zeros within the TS 36.331 V19.4.0 container.
+// It returns the errors of msrac.EncodeMSRACapabilityValuePartCanonical; its
+// own container checks are untyped.
 func EncodeGERANPSCanonical(v GERANPS) ([]byte, error) {
 	out, err := msrac.EncodeMSRACapabilityValuePartCanonical(v.Capability)
 	if err != nil {

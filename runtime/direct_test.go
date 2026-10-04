@@ -2,7 +2,9 @@ package runtime
 
 import (
 	"bytes"
+	"errors"
 	"math"
+	"strings"
 	"testing"
 )
 
@@ -271,7 +273,7 @@ func TestForkIsolatesBindingsPathAndWireState(t *testing.T) {
 	if _, err := a.ReadSpare(); err != nil {
 		t.Fatal(err)
 	}
-	a.RecordTruncation("A", 1)
+	a.RecordTruncation("A", a.BeginTruncation("A"), 1)
 	a.RecordSpareCount("A", 1)
 	if err := b.Enter("B"); err != nil {
 		t.Fatal(err)
@@ -434,7 +436,7 @@ func TestWireStateCannotBeSilentlyDropped(t *testing.T) {
 		{"spare", func(w *WireInfo) { w.Spare = append(w.Spare, BitString{Bytes: []byte{0}, BitLength: 1}) }},
 		{"padding", func(w *WireInfo) { w.Padding = append(w.Padding, BitString{Bytes: []byte{0}, BitLength: 1}) }},
 		{"terminal", func(w *WireInfo) { w.Terminal = append(w.Terminal, BitString{Bytes: []byte{0}, BitLength: 8}) }},
-		{"truncation", func(w *WireInfo) { w.TruncatedAt = map[string]int{"missing": 1} }},
+		{"truncation", func(w *WireInfo) { w.TruncatedAt = map[string][]int{"missing": {1}} }},
 		{"spare count", func(w *WireInfo) { w.SpareCounts = map[string][]int{"missing": {1}} }},
 		{"consumed", func(w *WireInfo) { w.BitsConsumed = 7 }},
 	} {
@@ -450,5 +452,159 @@ func TestWireStateCannotBeSilentlyDropped(t *testing.T) {
 				t.Fatalf("dropped inconsistent %s state: %x", tc.name, out)
 			}
 		})
+	}
+}
+
+// TS 44.060 V19.0.0 §11.1.4.4 and §12.24: a fresh truncated concatenation
+// stops at an exhausted length-delimited value, as the reader does; a
+// decoded value keeps its recorded truncation point instead.
+func TestTruncationReachedFollowsEnclosingLength(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		wire WireInfo
+	}{
+		{"canonical", WireInfo{canonical: true}},
+		{"canonical with larger target", WireInfo{canonical: true, targetSet: true, targetBits: 64}},
+		{"newly constructed", WireInfo{}},
+	} {
+		w := NewWriter()
+		w.WithWire(tc.wire)
+		old, err := w.PushLimit(3)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if w.TruncationReached() {
+			t.Fatalf("%s: truncated before the length was filled", tc.name)
+		}
+		if err := w.WriteUint(5, 3); err != nil {
+			t.Fatal(err)
+		}
+		if !w.TruncationReached() {
+			t.Fatalf("%s: continued past an exhausted length", tc.name)
+		}
+		if err := w.PopLimit(old); err != nil {
+			t.Fatal(err)
+		}
+		if w.TruncationReached() != (tc.wire.targetSet && w.Position() >= tc.wire.targetBits) {
+			t.Fatalf("%s: unbounded truncation ignores the canonical target", tc.name)
+		}
+	}
+	sealed := NewWriter()
+	sealed.WithWire(Seal(struct{}{}, []byte{0}, 3, BitString{Bytes: []byte{0}, BitLength: 5}, WireInfo{}))
+	if _, err := sealed.PushLimit(0); err != nil {
+		t.Fatal(err)
+	}
+	if sealed.TruncationReached() {
+		t.Fatal("decoded value ignored its recorded truncation point")
+	}
+	target := NewWriter()
+	target.WithWire(WireInfo{canonical: true, targetSet: true, targetBits: 0})
+	if !target.TruncationReached() {
+		t.Fatal("unbounded canonical value ignored its target")
+	}
+}
+
+// Every writer rejection for content that does not fit an enclosing bound is
+// a *BoundError naming the bound kind, limit, position, path and field.
+func TestWriterBoundConflictsAreTyped(t *testing.T) {
+	fresh := func(wire WireInfo) *Writer {
+		w := NewWriter()
+		w.WithWire(wire)
+		if err := w.Enter("Value"); err != nil {
+			t.Fatal(err)
+		}
+		if err := w.Enter("Field"); err != nil {
+			t.Fatal(err)
+		}
+		return w
+	}
+	bounded := func(wire WireInfo, width int) *Writer {
+		w := fresh(wire)
+		if _, err := w.PushLimit(width); err != nil {
+			t.Fatal(err)
+		}
+		return w
+	}
+	sealed := Seal(struct{}{}, []byte{0}, 0, BitString{Bytes: []byte{0}, BitLength: 8}, WireInfo{})
+	for _, tc := range []struct {
+		name         string
+		run          func() error
+		kind         BoundKind
+		field        string
+		limit, at    int
+		detailPrefix string
+	}{
+		{"bit beyond length", func() error { return bounded(WireInfo{}, 1).WriteUint(1, 2) }, LengthBound, "Field", 1, 1, "encoded bit exceeds"},
+		{"bit beyond canonical target", func() error {
+			return fresh(WireInfo{canonical: true, targetSet: true, targetBits: 2}).WriteUint(0, 3)
+		}, CanonicalTarget, "Field", 2, 2, "encoded bit exceeds"},
+		{"nonzero inferred bit beyond length", func() error {
+			w := bounded(WireInfo{canonical: true}, 1)
+			w.SetZeroExtension(true)
+			return w.WriteUint(1, 2)
+		}, LengthBound, "Field", 1, 1, "nonzero bit"},
+		{"nonzero inferred bit beyond target", func() error {
+			w := fresh(WireInfo{canonical: true, targetSet: true, targetBits: 1})
+			w.SetZeroExtension(true)
+			return w.WriteUint(1, 2)
+		}, CanonicalTarget, "Field", 1, 1, "nonzero bit"},
+		{"inner length beyond outer", func() error { _, err := bounded(WireInfo{}, 2).PushLimit(3); return err }, LengthBound, "Field", 2, 0, "length exceeds"},
+		{"content before length", func() error {
+			w := fresh(WireInfo{})
+			old, err := w.PushLimit(2)
+			if err != nil {
+				return err
+			}
+			return w.PopLimit(old)
+		}, LengthBound, "Field", 2, 0, "content ends"},
+		{"content beyond fixed size", func() error {
+			w := fresh(WireInfo{})
+			if err := w.WriteUint(0, 3); err != nil {
+				return err
+			}
+			return w.WritePaddingTo(2)
+		}, LengthBound, "Field", 2, 3, "content exceeds"},
+		{"omitted field at length", func() error { w := bounded(WireInfo{}, 0); return w.OmittedFieldError("Later") }, LengthBound, "Later", 0, 0, "nonzero field"},
+		{"omitted field at target", func() error {
+			return fresh(WireInfo{canonical: true, targetSet: true, targetBits: 0}).OmittedFieldError("Later")
+		}, CanonicalTarget, "Later", 0, 0, "nonzero field"},
+		{"omitted field at received truncation", func() error { return bounded(sealed, 0).OmittedFieldError("Later") }, ReceivedTruncation, "Later", 0, 0, "nonzero field"},
+		{"length field conflict", func() error { return bounded(WireInfo{}, 4).LengthBoundError("stop record does not fit") }, LengthBound, "Field", 4, 0, "stop record"},
+	} {
+		err := tc.run()
+		var bound *BoundError
+		if !errors.As(err, &bound) || !errors.Is(err, ErrBoundConflict) {
+			t.Fatalf("%s: error %v (%T) is not a typed bound conflict", tc.name, err, err)
+		}
+		if bound.Kind != tc.kind || bound.Path != "Value/Field" || bound.Field != tc.field || bound.Limit != tc.limit || bound.Position != tc.at || !strings.HasPrefix(bound.Detail, tc.detailPrefix) {
+			t.Fatalf("%s: %+v", tc.name, *bound)
+		}
+	}
+}
+
+// A BoundError always names a real bound: without an enclosing value, or
+// with an offset outside the bit limit, the writer reports a plain error.
+// TS 44.018 V19.0.0 §10.5.2.16 sets the length-field bound in octets.
+func TestBoundErrorRequiresRealBound(t *testing.T) {
+	var bound *BoundError
+	w := NewWriter()
+	w.WithWire(WireInfo{})
+	if err := w.LengthBoundError("stop record does not fit"); err == nil || errors.As(err, &bound) {
+		t.Fatalf("unbounded length conflict: %v", err)
+	}
+	for _, octets := range []int{-1, maxBits/8 + 1} {
+		if err := w.LengthFieldError("Arm", octets, "conflict"); err == nil || errors.As(err, &bound) {
+			t.Fatalf("length field of %d octets: %v", octets, err)
+		}
+	}
+	if err := w.boundError(LengthBound, -1, "Arm", "conflict"); err == nil || errors.As(err, &bound) {
+		t.Fatalf("negative limit: %v", err)
+	}
+	if err := w.WriteUint(0, 8); err != nil {
+		t.Fatal(err)
+	}
+	err := w.LengthFieldError("Arm", 2, "empty alternative requires zero length")
+	if !errors.As(err, &bound) || bound.Kind != LengthBound || bound.Field != "Arm" || bound.Limit != 24 || bound.Position != 8 {
+		t.Fatalf("length field bound: %v", err)
 	}
 }
