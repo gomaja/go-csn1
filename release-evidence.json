@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "f28e245c051f079e6e61d39c188b37ee2d73e84e",
+  "compiler_commit": "db61b966e7f59a3da2eb006ffe72e99bf41d605f",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -86,7 +86,7 @@
     },
     {
       "path": "docs/csn1/ts44018/ia-rest-octets.csn",
-      "sha256": "7772c772fbb60cd5e30f01080f48504b7273bd688bffcbf6b9e9b34a6d9b9cab"
+      "sha256": "b72373d4766584c6ffada7fd6c15c79374e2d70cb16891719d5f9ffdabc25e20"
     },
     {
       "path": "docs/csn1/ts44018/iar-rest-octets.csn",
@@ -984,6 +984,16 @@
       "standard": "TS 44.018",
       "version": "19.0.0",
       "clause": "10.5.2.16",
+      "paragraph": 16262,
+      "expected": "\t\t0\t\t-- The value '1' was allocated in an earlier version of the protocol and shall not be used.\t\t\u003c USF: bit (3) \u003e",
+      "replacement": "\t\t0\t\t-- The value '1' was allocated in an earlier version of the protocol and shall not be used.\n\t\t\u003c USF: bit (3) \u003e",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.16 Packet Uplink Assignment and table 10.5.2.16.1 require the three-bit USF before USF_GRANULARITY. The authenticated DOCX paragraph places USF after a comment without a line break; separate the field because TS 24.007 V20.0.0 §B.1.5.1 ends comments only at line end (gomaja/go-csn1#21)",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16262"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.16",
       "paragraph": 16349,
       "expected": "TLLI / G-RNTI bit (32)",
       "replacement": "TLLI / G-RNTI : bit (32)",
@@ -1682,11 +1692,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "6555f35c3dc1636cf9f89cd24a6f741e2d5f0fc48484d6f35833819e3f238bc1"
+      "sha256": "b0be7349aab333f43295891222b85d33a1897df789eba89d48991fcd4302da19"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "fe3fe09dad1f9b30bd7eefd1ee5ece076203b10a1700295179fd1ee998ab91ef"
+      "sha256": "340c761e62f74ecc88e5d076a6c4876c7d85ff0ee0050dceb64aa5e7a58c586a"
     },
     {
       "path": "ts44060/ies/generated.go",

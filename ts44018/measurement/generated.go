@@ -63,6 +63,7 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16: malformed assignment separator for EGPRS Packet Uplink Assignment.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16: stray underscore after field colon; table 10.5.2.16.1 defines RTTI USF Mode as one bit.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16: inline comment precedes the TSH field on the same paragraph and would hide its transmitted bits.
+// Source correction: TS 44.018 V19.0.0 §10.5.2.16 Packet Uplink Assignment and table 10.5.2.16.1 require the three-bit USF before USF_GRANULARITY. The authenticated DOCX paragraph places USF after a comment without a line break; separate the field because TS 24.007 V20.0.0 §B.1.5.1 ends comments only at line end (gomaja/go-csn1#21).
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16: missing field-name separator for 32-bit TLLI or G-RNTI in Multiple Blocks Packet Downlink Assignment.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16: the expression must reference the exact two-bit Length Indicator of MS ID field printed in paragraph 16350.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.24 and §8.9: put the opening truncatable group after the P2 definition assignment.
