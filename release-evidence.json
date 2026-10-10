@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "45a3b9eaad54c329c14e70e75a3cf437d1472449",
+  "compiler_commit": "902ba4d3e086bd7cb2d940fa690dd84170f921c3",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -33,6 +33,14 @@
       "archive_sha256": "c106a388834eca5e5e136739c1e50f422fee3ef93bbd906325c02118df1ff119",
       "member": "44060-j00.docx",
       "member_sha256": "1eb357daf5db58369a44664eb753def088587403c52902ed5bcf728b0a032f1e"
+    },
+    {
+      "standard": "TS 45.008",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/45_series/45.008/45008-j00.zip",
+      "archive_sha256": "1908cdc05f80292adff9780efae373f26d350c6853f26a499cc0f37ac66d902b",
+      "member": "45008-j00.docx",
+      "member_sha256": "9b9e794c07f98a0e90b4798a0435693a961455e84bdde84dd870f4c8c7a16163"
     }
   ],
   "extracted_files": [
@@ -371,6 +379,10 @@
     {
       "path": "docs/csn1/ts44060/utran-csg-measurement-report-ie.csn",
       "sha256": "3b13c4e4865da5ff04e69f4aca8860ed2d848d68ddc828df69de474e84ad5e9f"
+    },
+    {
+      "path": "docs/csn1/ts45008/bep-period-table.txt",
+      "sha256": "fef8c42b7d95c83dfada99411ac4bdc277b50d9d86f573998c65a4e8b77ecae2"
     }
   ],
   "corrections": [
@@ -1744,7 +1756,7 @@
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "10ad9f1ad680be45bdbfc36d996c24638f32f2c3b2e8e66a12a985113f477ee8"
+      "sha256": "b6ccecbeaf34cdab09af62115c16ec33ce016254da6c8a76f62c49573b388074"
     }
   ],
   "validation_commands": [

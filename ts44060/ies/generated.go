@@ -123,6 +123,7 @@ const (
 // GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback keeps Known when the known arm decodes and Ignored otherwise. Encoding
 // Ignored returns *runtime.FallbackError when its bits would decode through
 // the known arm.
+// Recognized reserved values return value-constraint errors in every mode.
 type GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback struct {
 	Alternative GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternative
 	Known       *ExtensionInformation
@@ -3442,6 +3443,9 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 		r.Commit(candidate)
 		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{Alternative: GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeKnown, Known: &known}, nil
 	}
+	if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{}, err
+	}
 	candidate = r.Fork()
 	ignored, err := decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(candidate)
 	if err != nil {
@@ -3752,6 +3756,8 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	w.Set("EGPRS_PACKET_CHANNEL_REQUEST", uint64(v))
 	return nil
 }
+
+// TS 44.060 V19.0.0 §12.24 table 12.24.2 → TS 45.008 V19.0.0 §10.2.3.2.1 (BEP_PERIOD table).
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD"); err != nil {
 		return 0, err
@@ -3765,6 +3771,9 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 10 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("BEP_PERIOD", v)
 	return uint8(v), nil
 }
@@ -3776,6 +3785,9 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 10 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err

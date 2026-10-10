@@ -72,9 +72,8 @@ Reserved values that remain accepted in all modes have an explicit interpretatio
 - SI13 MTA_BITMAP's unknown positions: retained as forward capability indications (TS 44.018 table 10.5.2.37b.2).
 - IA PFI 4–7: the imported reservation's receiver policy is deferred (TS 24.008 table 10.5.161; TS 44.018 §8.1).
 - Classmark 3 ECSD class codes and GPRS/EGPRS class 0: the delegated range needs a separate applicability decision (TS 45.002 §B.1); MS RAC's explicit ECSD 1–18 range is enforced canonically.
-- GPRS Cell Options BEP_PERIOD 11–15: newly inventoried delegated reservation awaiting a separate scope decision (TS 44.060 §12.24; TS 45.008 V19.0.0 §10.2.3.2.1). BEP_PERIOD2 defines all sixteen codes and remains accepted.
 
-Source tables also reject MPRACH S 10–15 and NPM Transfer Time 31 in MBMS and IA, in all modes (TS 44.060 V19.0.0 tables 12.14.2, 12.45a.1; the delegations are in table 12.41.2, table 12.40.2 and TS 44.018 table 10.5.2.16.1). Rejected alternative arms are absent from the Go API, and the remaining Multiple Blocks assignment is mandatory.
+Source tables also reject MPRACH S 10–15 and NPM Transfer Time 31 in MBMS and IA, in all modes (TS 44.060 V19.0.0 tables 12.14.2, 12.45a.1; the delegations are in table 12.41.2, table 12.40.2 and TS 44.018 table 10.5.2.16.1). GPRS Cell Options BEP_PERIOD 11–15 is rejected on decode and in both encoders, including through the ignored-extension arm (TS 44.060 V19.0.0 §11.1, §12.24 table 12.24.2; TS 45.008 V19.0.0 §10.2.3.2.1). Codes 0–10 remain accepted. BEP_PERIOD2 defines all sixteen codes and remains accepted. Rejected alternative arms are absent from the Go API, and the remaining Multiple Blocks assignment is mandatory.
 
 An extent violation of the whole encoding returns `*runtime.ExtentError`:
 

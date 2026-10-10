@@ -761,8 +761,8 @@ var canonicalSeeds = map[string][]string{
 	"10.5.2.16\x00IA Rest Octets": {"82000008", "8008", "40400000002b"},
 	// Short GPRS Cell Options extensions (TS 44.060 V19.0.0 §12.24), alone
 	// and inside SI 13; pycrate and Wireshark agree on their decoding.
-	"12.24\x00GPRS Cell Options IE":   {"b0e1d5122d103fc76dfdb8ebeb652a", "b48f27c6a62ca8ce639d2adb"},
-	"10.5.2.37b\x00SI 13 Rest Octets": {"e1b88bbdf784a1a279df24ba4896ad235775bf40", "ea15976ab36992bb4a4df259d63dd40957e08528", "dd0011a6fea7fbd89c88ffa33d38bfbdb253df4b"},
+	"12.24\x00GPRS Cell Options IE":   {"b0e1d5122a103fc76dfdb8ebeb652a", "b48f27c6a62ca8ce639d2adb"},
+	"10.5.2.37b\x00SI 13 Rest Octets": {"e1b88bbdf784a1a279df24ba4896ad235775bf40", "ea15976ab36992ba4a4df259d63dd40957e08528", "dd0011a6fea7f5d89c88ffa33d38bfbdb253df4b"},
 	// TS 44.018 V19.0.0 §10.5.2.37o with UTRAN neighbour frequencies,
 	// confirmed by pycrate 0.7.11 (ts44018/restoctets/utran_fdd_tdd_test.go).
 	"10.5.2.37o\x00SI 23 Rest Octets":                {"206cf51e2d49fa50f4ae1fb0012b2b2b2b2b2b2b"},

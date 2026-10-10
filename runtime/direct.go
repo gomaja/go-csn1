@@ -905,7 +905,8 @@ func (w *Writer) MarkFallback() FallbackMark {
 // completed length-delimited value that the ignored arm fills; otherwise the
 // ignored bits alone, which the generator permits only when the known arm
 // cannot read past them. An ignored arm that leaves its bound unfilled is
-// not tried here, because PopLimit rejects it.
+// not tried here, because PopLimit rejects it. Recognized reserved values
+// remain value-constraint errors (TS 44.060 V19.0.0 §11.1, §12.24).
 func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known func(*Reader) error) error {
 	if toBound && (!w.bounded || w.bits != w.limit) {
 		return nil
@@ -923,8 +924,12 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 	if err := r.Check(); err != nil {
 		return err
 	}
-	if known(r) == nil {
+	err := known(r)
+	if err == nil {
 		return &FallbackError{Path: w.path, Position: mark.bits}
+	}
+	if de, ok := err.(*DecodeError); ok && de.Kind == InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+		return fmt.Errorf("%s", de.Detail)
 	}
 	return nil
 }

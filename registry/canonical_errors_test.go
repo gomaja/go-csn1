@@ -25,7 +25,7 @@ func TestCanonicalErrorTypes(t *testing.T) {
 		}
 		return b
 	}
-	gprs, err := ies.DecodeGPRSCellOptionsIE(decodeHex("b0e1d5122d103fc76dfdb8ebeb652a"))
+	gprs, err := ies.DecodeGPRSCellOptionsIE(decodeHex("b0e1d5122a103fc76dfdb8ebeb652a"))
 	if err != nil {
 		t.Fatal(err)
 	}
