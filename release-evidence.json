@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "e0e4c6b22c8425942e45d4bbce0cfbcfeafa6f81",
+  "compiler_commit": "e6a39338159c6c1eafbccfeb6a9f07aa6d770df7",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1732,11 +1732,11 @@
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "3941848d2002c2ee3d841bbf50e00ce50e13889ed8669be82ddb69353e58fee0"
+      "sha256": "e27f5a10bc7a7c20281046ee012d4006949ea49c40a4ff25e90b7496ef96c83b"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "e6579e5911826997b6ef773881c4114b7ad4647a789ad259ea7d785ae4d97acf"
+      "sha256": "9f5d212b2d663d580d90bbb219c6a9680303d0ac80e85ec0414f254c055d4936"
     },
     {
       "path": "ts36331/uecapability/generated.go",
