@@ -2,6 +2,8 @@ package msrac
 
 import (
 	"bytes"
+	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -96,4 +98,116 @@ func TestInferredA52RecordSurvivesFreshReplacement(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestInferredA52TransplantedIntoFullEntry(t *testing.T) {
+	// Synthetic short Content has no transmitted A5/2 bit. When its A5Bits
+	// move to a full Content, sender layout defaults apply: A5/2 is zero
+	// (TS 24.008 V20.1.0 §10.5.5.12a, table 10.5.146).
+	short, err := DecodeMSRACapabilityValuePart([]byte{0x10, 0x82})
+	if err != nil {
+		t.Fatal(err)
+	}
+	inferred := *short.Value.MSRACapabilityValuePartStruct.Entries[0].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities.A5Bits
+	if len(inferred.Wire.Spare) != 1 || inferred.Wire.Spare[0].BitLength != 0 || inferred.ReceivedA52() {
+		t.Fatal("missing inferred A5/2 record")
+	}
+	alone, err := EncodeA5Bits(inferred)
+	if err != nil || !bytes.Equal(alone, []byte{0}) {
+		t.Fatalf("standalone %x: %v", alone, err)
+	}
+	for _, entry := range []int{0, 1} {
+		t.Run(fmt.Sprintf("entry %d", entry), func(t *testing.T) {
+			wire := []byte{0x12, 0x07, 0x80, 0x13, 0x20, 0x78, 0}
+			d, err := DecodeMSRACapabilityValuePart(wire)
+			if err != nil {
+				t.Fatal(err)
+			}
+			unchanged, err := EncodeMSRACapabilityValuePart(d.Value)
+			if err != nil || !bytes.Equal(unchanged, wire) {
+				t.Fatalf("unchanged %x: %v", unchanged, err)
+			}
+			content := &d.Value.MSRACapabilityValuePartStruct.Entries[entry].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities
+			content.A5Bits = &inferred
+			want := bytes.Clone(wire)
+			if entry == 0 {
+				want[1], want[2] = 0x06, 0
+			} else {
+				want[5] &^= 0x18
+			}
+			plain, err := EncodeMSRACapabilityValuePart(d.Value)
+			if err != nil || !bytes.Equal(plain, want) {
+				t.Fatalf("plain %x, want %x: %v", plain, want, err)
+			}
+			content.A5Bits = &A5Bits{}
+			fresh, err := EncodeMSRACapabilityValuePart(d.Value)
+			if err != nil || !bytes.Equal(plain, fresh) {
+				t.Fatalf("fresh %x differs from inferred %x: %v", fresh, plain, err)
+			}
+			canonical, err := EncodeMSRACapabilityValuePartCanonical(d.Value)
+			content.A5Bits = &inferred
+			fromInferred, inferredErr := EncodeMSRACapabilityValuePartCanonical(d.Value)
+			if err != nil || inferredErr != nil || !bytes.Equal(canonical, fromInferred) {
+				t.Fatalf("canonical %x / %x: %v / %v", canonical, fromInferred, err, inferredErr)
+			}
+		})
+	}
+	// Moving a received one into an inferred position must still fail closed.
+	one, err := DecodeA5Bits([]byte{0x40})
+	if err != nil {
+		t.Fatal(err)
+	}
+	short.Value.MSRACapabilityValuePartStruct.Entries[0].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities.A5Bits = &one.Value
+	if _, err := EncodeMSRACapabilityValuePart(short.Value); err == nil || !strings.Contains(err.Error(), "edit to receiver-inferred bit") {
+		t.Fatalf("transmitted one in inferred position: %v", err)
+	}
+}
+
+func FuzzInferredA52Transplant(f *testing.F) {
+	for _, wire := range [][]byte{{0x12, 0x07, 0x80, 0x13, 0x20, 0x78, 0}, {0x10, 0x82}, {0x12, 0x07, 0, 0x13, 0x20, 0x70, 0}} {
+		f.Add(wire)
+	}
+	f.Fuzz(func(t *testing.T, wire []byte) {
+		if len(wire) > 256 {
+			t.Skip()
+		}
+		d, err := DecodeMSRACapabilityValuePart(wire)
+		if err != nil {
+			return
+		}
+		short, err := DecodeMSRACapabilityValuePart([]byte{0x10, 0x82})
+		if err != nil {
+			t.Fatal(err)
+		}
+		inferred := *short.Value.MSRACapabilityValuePartStruct.Entries[0].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities.A5Bits
+		for i, entry := range d.Value.MSRACapabilityValuePartStruct.Entries {
+			if entry.AccessTechnologyTypeChoice.AccessCapabilities == nil {
+				continue
+			}
+			content := &d.Value.MSRACapabilityValuePartStruct.Entries[i].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities
+			if content.A5Bits == nil {
+				continue
+			}
+			original := content.A5Bits
+			content.A5Bits = &inferred
+			plain, err := EncodeMSRACapabilityValuePart(d.Value)
+			if err != nil {
+				t.Fatalf("inferred replacement entry %d: %v", i, err)
+			}
+			content.A5Bits = &A5Bits{}
+			fresh, err := EncodeMSRACapabilityValuePart(d.Value)
+			if err != nil || !bytes.Equal(plain, fresh) {
+				t.Fatalf("inferred %x / fresh %x: %v", plain, fresh, err)
+			}
+			replay, err := DecodeMSRACapabilityValuePart(plain)
+			if err != nil {
+				t.Fatalf("replacement decode: %v", err)
+			}
+			out, err := EncodeMSRACapabilityValuePart(replay.Value)
+			if err != nil || !bytes.Equal(plain, out) {
+				t.Fatalf("replacement replay %x / %x: %v", plain, out, err)
+			}
+			content.A5Bits = original
+		}
+	})
 }

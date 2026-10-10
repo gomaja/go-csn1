@@ -755,7 +755,9 @@ func (w *Writer) WriteSpare() error {
 }
 
 // WriteLayoutBit replays a value-local received bit. An empty record writes
-// zero, or preserves its receiver-inferred zero span when the root is sealed.
+// zero. Inferred records carry no transmitted bit, so a replacement at a
+// transmitted position is fresh. WriteUint preserves the containing root's
+// inferred spans and rejects nonzero edits there.
 // Canonical copies clear these records (TS 24.008 §§10.5.5.12, 10.5.5.12a).
 func (w *Writer) WriteLayoutBit(v BitString) error {
 	if v.BitLength == 1 {
@@ -764,19 +766,7 @@ func (w *Writer) WriteLayoutBit(v BitString) error {
 	if v.BitLength != 0 || len(v.Bytes) != 0 {
 		return fmt.Errorf("invalid received spare-bit width")
 	}
-	if w.wire.sealed {
-		span, end, err := w.currentImplicitSpan()
-		if err != nil {
-			return err
-		}
-		at, err := w.logicalPosition()
-		if err != nil {
-			return err
-		}
-		if at < span.At || at >= end {
-			return fmt.Errorf("inferred spare bit is outside its zero span")
-		}
-	}
+
 	return w.WriteUint(0, 1)
 }
 func (w *Writer) WritePadding() error {
