@@ -10,16 +10,14 @@ import (
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 )
 
-// Classmark2ValuePart contains all 24 transmitted bits of TS 24.008
+// Classmark2ValuePart contains the capabilities of TS 24.008
 // V20.1.0 §10.5.1.6, figure 10.5.6 and tables 10.5.6a-b.
 type Classmark2ValuePart struct {
-	Spare3        bool
 	RevisionLevel uint8
 	ESIND         bool
 	// A51Unavailable is the transmitted bit: 0 means A5/1 available, 1 means unavailable (TS 24.008 §10.5.1.6, table 10.5.6a).
 	A51Unavailable       bool
 	RFPowerCapability    uint8
-	Spare4               bool
 	PSCapability         bool
 	SSScreeningIndicator uint8
 	SMCapability         bool
@@ -27,16 +25,16 @@ type Classmark2ValuePart struct {
 	VGCS                 bool
 	FC                   bool
 	CM3                  bool
-	Spare5               bool
 	LCSVA                bool
 	UCS2                 bool
 	SoLSA                bool
 	CMSP                 bool
 	// A53Available is the transmitted bit: 1 means A5/3 available (TS 24.008 §10.5.1.6, table 10.5.6b).
 	A53Available bool
-	// A52ReservedBit preserves the received bit. The MS sends 0; the network accepts either value (TS 24.008 §10.5.1.6, table 10.5.6b).
-	A52ReservedBit bool
-	Wire           runtime.WireInfo `json:"-"`
+	// Wire.Spare records octet 3 bit 8, octet 4 bit 8, octet 5 bit 7,
+	// then A5/2 (octet 5 bit 1). Send zero; accept either received value
+	// (TS 24.008 V20.1.0 figure 10.5.6 and table 10.5.6b).
+	Wire runtime.WireInfo `json:"-"`
 }
 
 func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
@@ -46,14 +44,51 @@ func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart
 	if len(data) < 3 {
 		return runtime.Decoded[Classmark2ValuePart]{}, fmt.Errorf("classmark 2 value part requires 3 octets")
 	}
-	a, b, c := data[0], data[1], data[2]
-	v := Classmark2ValuePart{
-		Spare3: a&0x80 != 0, RevisionLevel: (a >> 5) & 3, ESIND: a&0x10 != 0, A51Unavailable: a&0x08 != 0, RFPowerCapability: a & 7,
-		Spare4: b&0x80 != 0, PSCapability: b&0x40 != 0, SSScreeningIndicator: (b >> 4) & 3, SMCapability: b&0x08 != 0, VBS: b&0x04 != 0, VGCS: b&0x02 != 0, FC: b&1 != 0,
-		CM3: c&0x80 != 0, Spare5: c&0x40 != 0, LCSVA: c&0x20 != 0, UCS2: c&0x10 != 0, SoLSA: c&0x08 != 0, CMSP: c&0x04 != 0, A53Available: c&0x02 != 0, A52ReservedBit: c&1 != 0,
+	r := runtime.NewReader(data[:3])
+	var readErr error
+	read := func(width int) uint8 {
+		if width < 0 || width > 8 {
+			readErr = fmt.Errorf("invalid Classmark 2 read width")
+			return 0
+		}
+		value, err := r.ReadUint(width)
+		if err != nil {
+			readErr = err
+		}
+		return uint8(value)
+	}
+	spare := func() {
+		_, err := r.ReadSpare()
+		if err != nil {
+			readErr = err
+		}
+	}
+	var v Classmark2ValuePart
+	spare()
+	v.RevisionLevel = read(2)
+	v.ESIND = read(1) != 0
+	v.A51Unavailable = read(1) != 0
+	v.RFPowerCapability = read(3)
+	spare()
+	v.PSCapability = read(1) != 0
+	v.SSScreeningIndicator = read(2)
+	v.SMCapability = read(1) != 0
+	v.VBS = read(1) != 0
+	v.VGCS = read(1) != 0
+	v.FC = read(1) != 0
+	v.CM3 = read(1) != 0
+	spare()
+	v.LCSVA = read(1) != 0
+	v.UCS2 = read(1) != 0
+	v.SoLSA = read(1) != 0
+	v.CMSP = read(1) != 0
+	v.A53Available = read(1) != 0
+	spare()
+	if readErr != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, readErr
 	}
 	tail := runtime.BitString{Bytes: append([]byte(nil), data[3:]...), BitLength: (len(data) - 3) * 8}
-	v.Wire = runtime.Seal(v, data, 24, tail, runtime.WireInfo{})
+	v.Wire = runtime.Seal(v, data, 24, tail, r.Wire())
 	return runtime.Decoded[Classmark2ValuePart]{Value: v, BitsConsumed: 24, Tail: tail}, nil
 }
 
@@ -67,67 +102,50 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 	if v.Wire.Tail.BitLength < 0 || v.Wire.Tail.BitLength%8 != 0 || v.Wire.Tail.BitLength/8 != len(v.Wire.Tail.Bytes) {
 		return nil, fmt.Errorf("classmark 2 tail must be whole octets")
 	}
-	var a, b, c byte
-	if v.Spare3 {
-		a |= 0x80
+	w := runtime.NewWriter()
+	w.WithWire(v.Wire)
+	var writeErr error
+	write := func(value uint8, width int) {
+		if writeErr == nil {
+			writeErr = w.WriteUint(uint64(value), width)
+		}
 	}
-	a |= v.RevisionLevel << 5
-	if v.ESIND {
-		a |= 0x10
+	flag := func(value bool) {
+		var bit uint8
+		if value {
+			bit = 1
+		}
+		write(bit, 1)
 	}
-	if v.A51Unavailable {
-		a |= 0x08
+	spare := func() {
+		if writeErr == nil {
+			writeErr = w.WriteSpare()
+		}
 	}
-	a |= v.RFPowerCapability
-	if v.Spare4 {
-		b |= 0x80
+	spare()
+	write(v.RevisionLevel, 2)
+	flag(v.ESIND)
+	flag(v.A51Unavailable)
+	write(v.RFPowerCapability, 3)
+	spare()
+	flag(v.PSCapability)
+	write(v.SSScreeningIndicator, 2)
+	flag(v.SMCapability)
+	flag(v.VBS)
+	flag(v.VGCS)
+	flag(v.FC)
+	flag(v.CM3)
+	spare()
+	flag(v.LCSVA)
+	flag(v.UCS2)
+	flag(v.SoLSA)
+	flag(v.CMSP)
+	flag(v.A53Available)
+	spare()
+	if writeErr != nil {
+		return nil, writeErr
 	}
-	if v.PSCapability {
-		b |= 0x40
-	}
-	b |= v.SSScreeningIndicator << 4
-	if v.SMCapability {
-		b |= 0x08
-	}
-	if v.VBS {
-		b |= 0x04
-	}
-	if v.VGCS {
-		b |= 0x02
-	}
-	if v.FC {
-		b |= 1
-	}
-	if v.CM3 {
-		c |= 0x80
-	}
-	if v.Spare5 {
-		c |= 0x40
-	}
-	if v.LCSVA {
-		c |= 0x20
-	}
-	if v.UCS2 {
-		c |= 0x10
-	}
-	if v.SoLSA {
-		c |= 0x08
-	}
-	if v.CMSP {
-		c |= 0x04
-	}
-	if v.A53Available {
-		c |= 0x02
-	}
-	if v.A52ReservedBit {
-		c |= 1
-	}
-	out := []byte{a, b, c}
-	out = append(out, v.Wire.Tail.Bytes...)
-	if err := v.Wire.ValidateOutput(out, 24); err != nil {
-		return nil, err
-	}
-	return out, nil
+	return w.Finish(v.Wire.Tail)
 }
 
 // EncodeClassmark2ValuePartCanonical encodes a copy without received wire layout.

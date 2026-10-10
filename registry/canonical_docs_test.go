@@ -754,9 +754,11 @@ func structTypes(t reflect.Type, into map[reflect.Type]bool) {
 // canonicalSeeds are synthetic inputs for arms that random bits rarely
 // select. pycrate 0.7.11 decodes 82000008 as IA Rest Octets HL, Length of
 // frequency parameters 2 and the MAIO arm, and 8008 as HL, length 0 and the
-// null arm.
+// null arm. The 40400000002b control has one access-technology request
+// entry and a valid multiblock assignment; growing that list reaches the
+// IA extent error without selecting a reserved alternative.
 var canonicalSeeds = map[string][]string{
-	"10.5.2.16\x00IA Rest Octets": {"82000008", "8008"},
+	"10.5.2.16\x00IA Rest Octets": {"82000008", "8008", "40400000002b"},
 	// Short GPRS Cell Options extensions (TS 44.060 V19.0.0 §12.24), alone
 	// and inside SI 13; pycrate and Wireshark agree on their decoding.
 	"12.24\x00GPRS Cell Options IE":   {"b0e1d5122d103fc76dfdb8ebeb652a", "b48f27c6a62ca8ce639d2adb"},

@@ -4101,21 +4101,23 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 	}
 	return nil
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.16.1, IA LH alternative.
 func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1"); err != nil {
+	if err := r.Expect("1"); err != nil {
 		return struct{}{}, err
 	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("1")
+	return struct{}{}, r.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
 }
-func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("1")
+func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(_ *runtime.Writer, _ struct{}) error {
+	return fmt.Errorf("reserved CSN.1 alternative")
 }
 func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice(r *runtime.Reader) (IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice, error) {
 	var result IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceEGPRSPacketUplinkAssignment(candidate)
@@ -4126,6 +4128,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeEGPRSPacketUplinkAssignment
 			result.EGPRSPacketUplinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4139,21 +4144,22 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeMultipleBlocksPacketDownlinkAssignment
 			result.MultipleBlocksPacketDownlinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeAlt1
-			result.Alt1 = &v
-		} else {
-			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		_, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(candidate)
+		if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+			reservedErr = err
 		}
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -5806,6 +5812,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCC(candidate)
@@ -5816,6 +5823,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeRCC
 			result.RCC = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5829,6 +5839,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeEGPRSPacketUplinkAssignment
 			result.EGPRSPacketUplinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5842,6 +5855,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeLengthOfFrequencyParameters
 			result.LengthOfFrequencyParameters = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5855,8 +5871,14 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativePacketUplinkAssignment
 			result.PacketUplinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -8092,6 +8114,8 @@ func encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 	w.Set("TBF_STARTING_TIME", uint64(v))
 	return nil
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.16.1, Number of Radio Blocks Allocated.
 func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDNUMBEROFRADIOBLOCKSALLOCATED(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDNUMBEROFRADIOBLOCKSALLOCATED"); err != nil {
 		return 0, err
@@ -8105,6 +8129,9 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 1 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NUMBER OF RADIO BLOCKS ALLOCATED", v)
 	return uint8(v), nil
 }
@@ -8116,6 +8143,9 @@ func encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 1 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -8611,6 +8641,7 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT(candidate)
@@ -8621,6 +8652,9 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeTFIASSIGNMENT
 			result.TFIASSIGNMENT = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8634,8 +8668,14 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeNUMBEROFRADIOBLOCKSALLOCATED
 			result.NUMBEROFRADIOBLOCKSALLOCATED = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -12921,6 +12961,8 @@ func encodeMultipleBlocksPacketDownlinkAssignmentTBFSTARTINGTIME(w *runtime.Writ
 	w.Set("TBF_STARTING_TIME", uint64(v))
 	return nil
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.16.1, Number of Allocated Blocks.
 func decodeMultipleBlocksPacketDownlinkAssignmentNUMBEROFALLOCATEDBLOCKS(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MultipleBlocksPacketDownlinkAssignmentNUMBEROFALLOCATEDBLOCKS"); err != nil {
 		return 0, err
@@ -12934,6 +12976,9 @@ func decodeMultipleBlocksPacketDownlinkAssignmentNUMBEROFALLOCATEDBLOCKS(r *runt
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 8 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NUMBER_OF_ALLOCATED_BLOCKS", v)
 	return uint8(v), nil
 }
@@ -12945,6 +12990,9 @@ func encodeMultipleBlocksPacketDownlinkAssignmentNUMBEROFALLOCATEDBLOCKS(w *runt
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 8 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -13576,11 +13624,12 @@ func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(w *runtime.Writ
 		return fmt.Errorf("invalid choice alternative")
 	}
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.16.1, Multiple Blocks Packet Downlink Assignment.
 func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(r *runtime.Reader) (*MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue, error) {
 	candidate := r.Fork()
 	if err := candidate.Expect("0"); err == nil {
-		r.Commit(candidate)
-		return nil, nil
+		return nil, candidate.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
 	}
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
@@ -13595,7 +13644,7 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(r *runtime.R
 }
 func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(w *runtime.Writer, v *MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue) error {
 	if v == nil {
-		return w.WriteLiteral("0")
+		return fmt.Errorf("reserved CSN.1 alternative")
 	}
 	if err := w.WriteLiteral("1"); err != nil {
 		return err
@@ -32851,6 +32900,7 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -32862,6 +32912,9 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 				result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -32876,6 +32929,9 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -32889,8 +32945,14 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeMBMSNotification3
 			result.MBMSNotification3 = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -53880,6 +53942,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoiceRAC(candidate)
@@ -53890,6 +53953,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupRACChoiceAlternativeRAC
 			result.RAC = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53903,8 +53969,14 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupRACChoiceAlternativePSI1REPEATPERIOD
 			result.PSI1REPEATPERIOD = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -54786,6 +54858,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -54797,6 +54870,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -54811,6 +54887,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -54824,8 +54903,14 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeLBMSTXPWRMAXCCH
 			result.LBMSTXPWRMAXCCH = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -54933,6 +55018,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -54944,6 +55030,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -54958,6 +55047,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -54971,8 +55063,14 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeSISTATUSIND
 			result.SISTATUSIND = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -55080,6 +55178,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -55091,6 +55190,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -55105,6 +55207,9 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55118,8 +55223,14 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeSGSNR
 			result.SGSNR = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -55947,6 +56058,8 @@ func encodePEOIMMCellGroupDefinitionStructPEOIMMChangeMark(w *runtime.Writer, v 
 	w.Set("PEO IMM Change Mark", uint64(v))
 	return nil
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.37b.2, Timeout Read Complete SI.
 func decodePEOIMMCellGroupDefinitionStructTimeoutReadCompleteSI(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("PEOIMMCellGroupDefinitionStructTimeoutReadCompleteSI"); err != nil {
 		return 0, err
@@ -55960,6 +56073,9 @@ func decodePEOIMMCellGroupDefinitionStructTimeoutReadCompleteSI(r *runtime.Reade
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 2 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("Timeout Read Complete SI", v)
 	return uint8(v), nil
 }
@@ -55971,6 +56087,9 @@ func encodePEOIMMCellGroupDefinitionStructTimeoutReadCompleteSI(w *runtime.Write
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 2 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -59022,6 +59141,7 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -59033,6 +59153,9 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 				result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -59047,6 +59170,9 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59060,8 +59186,14 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAcknowledgedAccessRequest1
 			result.AcknowledgedAccessRequest1 = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -61160,21 +61292,23 @@ func encodeAcknowledgedAccessRequestStructShortIDChoiceRandomIDHigh(w *runtime.W
 	}
 	return nil
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.78.1, Acknowledged Access Request struct.
 func decodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("AcknowledgedAccessRequestStructShortIDChoiceAlt11"); err != nil {
+	if err := r.Expect("11"); err != nil {
 		return struct{}{}, err
 	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("11")
+	return struct{}{}, r.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
 }
-func encodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("11")
+func encodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(_ *runtime.Writer, _ struct{}) error {
+	return fmt.Errorf("reserved CSN.1 alternative")
 }
 func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (AcknowledgedAccessRequestStructShortIDChoice, error) {
 	var result AcknowledgedAccessRequestStructShortIDChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeAcknowledgedAccessRequestStructShortIDChoiceShortID(candidate)
@@ -61185,6 +61319,9 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeShortID
 			result.ShortID = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -61198,6 +61335,9 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDLow
 			result.RandomIDLow = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -61211,21 +61351,22 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDHigh
 			result.RandomIDHigh = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
 		candidate := r.Fork()
-		v, err := decodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(candidate)
-		if err == nil {
-			matches++
-			chosen = candidate
-			_ = v
-			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeAlt11
-			result.Alt11 = &v
-		} else {
-			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		_, err := decodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(candidate)
+		if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+			reservedErr = err
 		}
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -65412,6 +65553,7 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -65423,6 +65565,9 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 				result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -65437,6 +65582,9 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65450,8 +65598,14 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeCELLGLOBALCOUNT
 			result.CELLGLOBALCOUNT = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -65863,6 +66017,7 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -65874,6 +66029,9 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 				result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -65888,6 +66046,9 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65901,8 +66062,14 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativePriorityUplinkAccess
 			result.PriorityUplinkAccess = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -67780,6 +67947,8 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 func encodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceTotalNoOfSegmentsForETWSPrimaryNotificationAlt0(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("0")
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.23.2, Total No Of Segments.
 func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceTotalNoOfSegmentsForETWSPrimaryNotificationTotalNoOfSegmentsForETWSPrimaryNotification(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceTotalNoOfSegmentsForETWSPrimaryNotificationTotalNoOfSegmentsForETWSPrimaryNotification"); err != nil {
 		return 0, err
@@ -67793,6 +67962,9 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) < 1 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("Total No Of Segments For ETWS Primary Notification", v)
 	return uint8(v), nil
 }
@@ -67804,6 +67976,9 @@ func encodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) < 1 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -67866,6 +68041,8 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 func encodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceSegmentNumberAlt1(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("1")
 }
+
+// TS 44.018 V19.0.0 table 10.5.2.23.2, Segment Number.
 func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceSegmentNumberSegmentNumber(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceSegmentNumberSegmentNumber"); err != nil {
 		return 0, err
@@ -67879,6 +68056,9 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) < 2 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("Segment Number", v)
 	return uint8(v), nil
 }
@@ -67890,6 +68070,9 @@ func encodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) < 2 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -67947,6 +68130,7 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceTotalNoOfSegmentsForETWSPrimaryNotification(candidate)
@@ -67957,6 +68141,9 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 			result.Alternative = ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceAlternativeTotalNoOfSegmentsForETWSPrimaryNotification
 			result.TotalNoOfSegmentsForETWSPrimaryNotification = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67970,8 +68157,14 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 			result.Alternative = ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceAlternativeSegmentNumber
 			result.SegmentNumber = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr

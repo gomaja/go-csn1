@@ -38,7 +38,6 @@ type MSNetworkCapabilityValuePart struct {
 	Wire                                          runtime.WireInfo `json:"-"`
 }
 type GEA1Bits struct {
-	GEA1 uint8
 	Wire runtime.WireInfo `json:"-"`
 }
 type ExtendedGEABits struct {
@@ -1225,48 +1224,21 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 	}
 	return nil
 }
-func decodeGEA1BitsGEA1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("GEA1BitsGEA1"); err != nil {
-		return 0, err
-	}
-	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
-	v, err := r.ReadUint(width)
-	if err != nil {
-		return 0, err
-	}
-	r.Set("GEA/1", v)
-	return uint8(v), nil
-}
-func encodeGEA1BitsGEA1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("GEA1BitsGEA1"); err != nil {
-		return err
-	}
-	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
-		return err
-	}
-	w.Set("GEA/1", uint64(v))
-	return nil
-}
+
+// TS 24.008 V20.1.0 §10.5.5.12, GEA/1.
+func decodeGEA1BitsSpareBit(r *runtime.Reader) (runtime.BitString, error) { return r.ReadSpare() }
+func encodeGEA1BitsSpareBit(w *runtime.Writer, _ runtime.BitString) error { return w.WriteSpare() }
 func decodeGEA1Bits(r *runtime.Reader) (GEA1Bits, error) {
 	if err := r.Enter("GEA1Bits"); err != nil {
 		return GEA1Bits{}, err
 	}
 	defer r.Leave()
 	var v GEA1Bits
-	x0, err := decodeGEA1BitsGEA1(r)
+	x0, err := decodeGEA1BitsSpareBit(r)
 	if err != nil {
 		return GEA1Bits{}, err
 	}
-	v.GEA1 = x0
+	_ = x0
 	return v, nil
 }
 func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
@@ -1281,11 +1253,8 @@ func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
 		}
 		limit = n
 	}
-	if limit <= 0 && !runtime.IsZero(v.GEA1) {
-		return w.OmittedFieldError("GEA1")
-	}
 	if limit > 0 {
-		if err := encodeGEA1BitsGEA1(w, v.GEA1); err != nil {
+		if err := encodeGEA1BitsSpareBit(w, runtime.BitString{}); err != nil {
 			return err
 		}
 	}

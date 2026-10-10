@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "9a5846522a1461c46edd35edbe58e9fe095d4ceb",
+  "compiler_commit": "a0d56727a9ac5aeb51056f898e38c9c4666e56a7",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -45,8 +45,16 @@
       "sha256": "9e7354672d4b26f0d939394ad0ca199a2a4e25254082d593ccf8bd6a6db55744"
     },
     {
+      "path": "docs/csn1/ts24008/msnetcap-received-bit-table.txt",
+      "sha256": "9eff5c5290732dea89d92fba42c14d7d758d3e8295b1441278a1b27486f329c2"
+    },
+    {
       "path": "docs/csn1/ts24008/msnetcap.csn",
       "sha256": "392a04d15b185c121a081e3a88b20d2831c87a96a7625a920bcab4d8edd8ce34"
+    },
+    {
+      "path": "docs/csn1/ts24008/msrac-received-bit-table.txt",
+      "sha256": "085252a8b85688e4a528baa002743a911617c51372d68ecfac807ad65b82ca7c"
     },
     {
       "path": "docs/csn1/ts24008/msrac.csn",
@@ -73,6 +81,10 @@
       "sha256": "2a8052f13bf84ee22d19f2555f66b65b23c3d4e01b81b27b4eff9c062e388644"
     },
     {
+      "path": "docs/csn1/ts44018/etws-reserved-tables.txt",
+      "sha256": "b7f51ae6e9a79a890bd2698f3c0a4343c2bf0ebd4a91d5eb2a7af98936a84f55"
+    },
+    {
       "path": "docs/csn1/ts44018/group-call-information.csn",
       "sha256": "6e957586121bd6d934cf1c414a38f217abb7653a553cb8651451acef4309c99f"
     },
@@ -83,6 +95,10 @@
     {
       "path": "docs/csn1/ts44018/group-channel-description.csn",
       "sha256": "200001d631bdb134c652200d908f093a5eef62abecdb0863d02f4d3590d5b65d"
+    },
+    {
+      "path": "docs/csn1/ts44018/ia-reserved-tables.txt",
+      "sha256": "aff3e6bd864f67c621801f8bad2e4ec277643e80414a48d1ed3da77da4c66e52"
     },
     {
       "path": "docs/csn1/ts44018/ia-rest-octets.csn",
@@ -167,6 +183,10 @@
     {
       "path": "docs/csn1/ts44018/si10ter-rest-octets.csn",
       "sha256": "28eefe664d0a2483ad6cb0be8787aad91c8f931a73ff7b79e05586d8addddc6c"
+    },
+    {
+      "path": "docs/csn1/ts44018/si13-reserved-tables.txt",
+      "sha256": "0ef4f143e2d13c22b38237f66d0c5bdbbc964fa6282a2dd4e7b93a2ea356bdb2"
     },
     {
       "path": "docs/csn1/ts44018/si13-rest-octets.csn",
@@ -281,6 +301,10 @@
       "sha256": "639d225fd6a32f054e2b6d7b1f2551942b1a9f21acab996f7ae9c9af1477a937"
     },
     {
+      "path": "docs/csn1/ts44060/gprs-options-reserved-tables.txt",
+      "sha256": "f33e938a5382812f935b05ea6299a482c5adb16af5a2ac41da10b8950f4dcd24"
+    },
+    {
       "path": "docs/csn1/ts44060/gprs-power-control-parameters-ie.csn",
       "sha256": "81953b4b5d4d8ea389b2259f5fe6774c89518bd8ccc45c32669f089a4f7d01d9"
     },
@@ -291,6 +315,10 @@
     {
       "path": "docs/csn1/ts44060/mbms-ptm-channel-description-ie.csn",
       "sha256": "d2085e073e18bfea07e3dc8361ff8dea4f9c444813bee5026694ace800300c33"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-reserved-tables.txt",
+      "sha256": "a4a1fefd8bd8ca3f44c11077c534bca0c846a9217b690a9fec499b5fa08f8ca6"
     },
     {
       "path": "docs/csn1/ts44060/mbms-session-list-ie.csn",
@@ -1676,15 +1704,15 @@
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "26b61419980a77dc1ce9c078b54170a78a3e47dd292ae32d662ebcb7e2e8d323"
+      "sha256": "39c3f8ee59a4031d7fc782102e8d9d4206246256f806b5a239cbb76292f64b24"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "98be0dc196855b3f048d89e220f3d94afe9e18593272f880871fb4cc4364b64b"
+      "sha256": "a5d85658eb2c063aa461bc451813d0384ec1fa1998dd99eace6618f1f807de56"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "1105c76f4f29283885270404e14cfbac6c526c3be336c8f7962cf8b5667390e9"
+      "sha256": "94d0818d7ddb061c49c4653c5f8aa1319b273111ed4246bbda4a29acbf5f2fce"
     },
     {
       "path": "ts44018/cellselection/generated.go",
@@ -1696,11 +1724,11 @@
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "340c761e62f74ecc88e5d076a6c4876c7d85ff0ee0050dceb64aa5e7a58c586a"
+      "sha256": "89006fcd5048b4e6a9c1aaf8804141e01c605f2a86b62fc1755ee1135f25200a"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "43345ccb734c07246b2b79757ac3ab9408e1810a2b95b047b6ad520ae4835605"
+      "sha256": "cf043e2309e11344d4eaf9b44f03c1f62711de9841fc19d04acb70f3480b8851"
     }
   ],
   "validation_commands": [

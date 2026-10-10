@@ -165,7 +165,6 @@ type MultislotCapabilityStruct struct {
 }
 type A5Bits struct {
 	A51  uint8
-	A52  uint8
 	A53  uint8
 	A54  uint8
 	A55  uint8
@@ -5231,37 +5230,10 @@ func encodeA5BitsA51(w *runtime.Writer, v uint8) error {
 	w.Set("A5/1", uint64(v))
 	return nil
 }
-func decodeA5BitsA52(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("A5BitsA52"); err != nil {
-		return 0, err
-	}
-	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
-	v, err := r.ReadUint(width)
-	if err != nil {
-		return 0, err
-	}
-	r.Set("A5/2", v)
-	return uint8(v), nil
-}
-func encodeA5BitsA52(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("A5BitsA52"); err != nil {
-		return err
-	}
-	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
-		return err
-	}
-	w.Set("A5/2", uint64(v))
-	return nil
-}
+
+// TS 24.008 V20.1.0 §10.5.5.12a, A5/2.
+func decodeA5BitsSpareBit(r *runtime.Reader) (runtime.BitString, error) { return r.ReadSpare() }
+func encodeA5BitsSpareBit(w *runtime.Writer, _ runtime.BitString) error { return w.WriteSpare() }
 func decodeA5BitsA53(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("A5BitsA53"); err != nil {
 		return 0, err
@@ -5428,11 +5400,11 @@ func decodeA5Bits(r *runtime.Reader) (A5Bits, error) {
 		return A5Bits{}, err
 	}
 	v.A51 = x0
-	x1, err := decodeA5BitsA52(r)
+	x1, err := decodeA5BitsSpareBit(r)
 	if err != nil {
 		return A5Bits{}, err
 	}
-	v.A52 = x1
+	_ = x1
 	x2, err := decodeA5BitsA53(r)
 	if err != nil {
 		return A5Bits{}, err
@@ -5480,11 +5452,8 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 			return err
 		}
 	}
-	if limit <= 1 && !runtime.IsZero(v.A52) {
-		return w.OmittedFieldError("A52")
-	}
 	if limit > 1 {
-		if err := encodeA5BitsA52(w, v.A52); err != nil {
+		if err := encodeA5BitsSpareBit(w, runtime.BitString{}); err != nil {
 			return err
 		}
 	}

@@ -275,7 +275,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 		out.err = err
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
-			out.spare3, out.spare4, out.spare5 = d.Value.Spare3, d.Value.Spare4, d.Value.Spare5
+			out.spare3, out.spare4, out.spare5 = wire[0]&0x80 != 0, wire[1]&0x80 != 0, wire[2]&0x40 != 0
 			out.encoded, out.err = uecapability.EncodeClassmark2ValuePart(d.Value)
 			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.DecodeClassmark2ValuePart)
 		}
