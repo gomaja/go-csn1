@@ -27,3 +27,37 @@ func TestA52IsReceivedLayout(t *testing.T) {
 		}
 	}
 }
+
+func TestReceivedA52BelongsToAccessTechnology(t *testing.T) {
+	// Synthetic two-technology vector independently decoded by pycrate 0.7.11.
+	// TS 24.008 V20.1.0 §10.5.5.12a: each A5 bits value belongs to its entry.
+	wire := []byte{0x12, 0x07, 0x80, 0x13, 0x20, 0x70, 0}
+	d, err := DecodeMSRACapabilityValuePart(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	entries := d.Value.MSRACapabilityValuePartStruct.Entries
+	if len(entries) != 2 {
+		t.Fatalf("entries %d", len(entries))
+	}
+	a := entries[0].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities.A5Bits
+	b := entries[1].AccessTechnologyTypeChoice.AccessCapabilities.AccessCapabilities.Content.AccessCapabilities.A5Bits
+	if a == nil || b == nil || !a.ReceivedA52() || b.ReceivedA52() {
+		t.Fatalf("local A5/2: %+v %+v", a, b)
+	}
+	if len(a.Wire.Spare) != 1 || len(b.Wire.Spare) != 1 {
+		t.Fatal("local layout missing")
+	}
+	plain, err := EncodeMSRACapabilityValuePart(d.Value)
+	if err != nil || !bytes.Equal(plain, wire) {
+		t.Fatalf("plain %x: %v", plain, err)
+	}
+	canonical, err := EncodeMSRACapabilityValuePartCanonical(d.Value)
+	want := []byte{0x12, 0x07, 0, 0x13, 0x20, 0x70, 0}
+	if err != nil || !bytes.Equal(canonical, want) {
+		t.Fatalf("canonical %x: %v", canonical, err)
+	}
+	if (A5Bits{}).ReceivedA52() {
+		t.Fatal("fresh A5/2 set")
+	}
+}

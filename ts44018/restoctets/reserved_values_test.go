@@ -12,36 +12,45 @@ import (
 
 func TestReservedAlternatives(t *testing.T) {
 	// TS 44.018 V19.0.0 tables 10.5.2.16.1 and 10.5.2.78.1.
-	ack := AcknowledgedAccessRequestStruct{ShortIDChoice: AcknowledgedAccessRequestStructShortIDChoice{Alternative: AcknowledgedAccessRequestStructShortIDChoiceAlternativeAlt11, Alt11: &struct{}{}}}
-	ia := IARestOctets{CompressedInterRATHOINFOINDChoice: IARestOctetsCompressedInterRATHOINFOINDChoice{Alternative: IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeEGPRSPacketUplinkAssignment, EGPRSPacketUplinkAssignment: &IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignment{EGPRSPacketUplinkAssignmentChoice: IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice{Alternative: IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeAlt1, Alt1: &struct{}{}}, ImplicitRejectPSChoice: IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoice{Alternative: IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeAltL, AltL: &struct{}{}}}}}
+
 	for _, tc := range []struct {
-		name, wire       string
-		decode           func([]byte) error
-		plain, canonical func() ([]byte, error)
+		name, wire string
+		decode     func([]byte) error
 	}{
-		{"ack-11", "c0", func(b []byte) error { _, err := DecodeAcknowledgedAccessRequestStruct(b); return err }, func() ([]byte, error) { return EncodeAcknowledgedAccessRequestStruct(ack) }, func() ([]byte, error) { return EncodeAcknowledgedAccessRequestStructCanonical(ack) }},
-		{"ia-LH-1", "6b", func(b []byte) error { _, err := DecodeIARestOctets(b); return err }, func() ([]byte, error) { return EncodeIARestOctets(ia) }, func() ([]byte, error) { return EncodeIARestOctetsCanonical(ia) }},
-		{"multiple-blocks-0", "000000", func(b []byte) error { _, err := DecodeMultipleBlocksPacketDownlinkAssignment(b); return err }, func() ([]byte, error) {
-			return EncodeMultipleBlocksPacketDownlinkAssignment(MultipleBlocksPacketDownlinkAssignment{})
-		}, func() ([]byte, error) {
-			return EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength(MultipleBlocksPacketDownlinkAssignment{}, 3)
-		}},
+		{"ack-11", "c0", func(b []byte) error { _, err := DecodeAcknowledgedAccessRequestStruct(b); return err }},
+		{"ia-LH-1", "6b", func(b []byte) error { _, err := DecodeIARestOctets(b); return err }},
+		{"multiple-blocks-0", "000000", func(b []byte) error { _, err := DecodeMultipleBlocksPacketDownlinkAssignment(b); return err }},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			wire, _ := hex.DecodeString(tc.wire)
 			err := tc.decode(wire)
 			var de *runtime.DecodeError
 			if !errors.As(err, &de) || de.Kind != runtime.InvalidValue || !strings.Contains(err.Error(), "reserved CSN.1 alternative") {
-				t.Errorf("decode: want reserved alternative invalid-value, got %v", err)
-			}
-			for name, encode := range map[string]func() ([]byte, error){"plain": tc.plain, "canonical": tc.canonical} {
-				_, err := encode()
-				var bound *runtime.BoundError
-				if err == nil || !strings.Contains(err.Error(), "reserved CSN.1 alternative") || errors.As(err, &bound) {
-					t.Errorf("%s: want value constraint, got %v", name, err)
-				}
+				t.Fatalf("decode: %v", err)
 			}
 		})
+	}
+	// Rejected arms are absent from the API. A mandatory remaining payload
+	// cannot select the reserved absent arm in either encoder.
+	if _, ok := reflect.TypeFor[AcknowledgedAccessRequestStructShortIDChoice]().FieldByName("Alt11"); ok {
+		t.Fatal("reserved Ack arm remains typed")
+	}
+	if _, ok := reflect.TypeFor[IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice]().FieldByName("Alt1"); ok {
+		t.Fatal("reserved IA arm remains typed")
+	}
+	field, _ := reflect.TypeFor[MultipleBlocksPacketDownlinkAssignment]().FieldByName("TMGIChoice")
+	if field.Type.Kind() == reflect.Pointer {
+		t.Fatal("mandatory assignment is optional")
+	}
+	ack, err := DecodeAcknowledgedAccessRequestStruct([]byte{0x40})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ack.Value.ShortIDChoice.Alternative = 255
+	for _, encode := range []func(AcknowledgedAccessRequestStruct) ([]byte, error){EncodeAcknowledgedAccessRequestStruct, EncodeAcknowledgedAccessRequestStructCanonical} {
+		if _, err := encode(ack.Value); err == nil {
+			t.Fatal("accepted invented choice code")
+		}
 	}
 }
 
@@ -193,6 +202,10 @@ func setReservedScalar(value reflect.Value, name string, code uint64) bool {
 	}
 	if value.Kind() != reflect.Struct {
 		return false
+	}
+	if field := value.FieldByName(name); field.IsValid() && field.Kind() == reflect.Pointer && !field.IsNil() && field.Elem().CanSet() && field.Elem().Kind() == reflect.Uint8 {
+		field.Elem().SetUint(code)
+		return true
 	}
 	if field := value.FieldByName(name); field.IsValid() && field.CanSet() && field.Kind() == reflect.Uint8 {
 		field.SetUint(code)

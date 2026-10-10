@@ -4434,6 +4434,8 @@ func encodeRSupport(w *runtime.Writer, v RSupport) error {
 	}
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.1.7 (HSCSD delegation); TS 45.002 V19.0.0 §B.1 table B.1 and HSCSD restriction to classes 1–18.
 func decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("HSCSDMultiSlotCapabilityHSCSDMultiSlotClass"); err != nil {
 		return 0, err
@@ -4458,6 +4460,14 @@ func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
+		if uint64(v) > 18 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -4773,6 +4783,8 @@ func encodeN8PSKStructModulationCapability(w *runtime.Writer, v uint8) error {
 	w.Set("Modulation Capability", uint64(v))
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.1.7 (8-PSK RF Power Capability).
 func decodeN8PSKStructN8PSKRFPowerCapability1Value(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("N8PSKStructN8PSKRFPowerCapability1Value"); err != nil {
 		return 0, err
@@ -4797,6 +4809,11 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) e
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -4830,6 +4847,8 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Selector(w *runtime.Writer, v *uint
 	}
 	return encodeN8PSKStructN8PSKRFPowerCapability1Value(w, *v)
 }
+
+// TS 24.008 V20.1.0 table 10.5.1.7 (8-PSK RF Power Capability).
 func decodeN8PSKStructN8PSKRFPowerCapability2Value(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("N8PSKStructN8PSKRFPowerCapability2Value"); err != nil {
 		return 0, err
@@ -4854,6 +4873,11 @@ func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) e
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -4948,6 +4972,8 @@ func encodeN8PSKStruct(w *runtime.Writer, v N8PSKStruct) error {
 	}
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.1.7 (GSM Band).
 func decodeSingleBandSupportGSMBand(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("SingleBandSupportGSMBand"); err != nil {
 		return 0, err
@@ -4972,6 +4998,11 @@ func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) > 9 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err

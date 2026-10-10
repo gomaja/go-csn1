@@ -2147,6 +2147,8 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEG
 	}
 	return encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEGPRSWindowSizeValue(w, *v)
 }
+
+// TS 44.060 V19.0.0 table 12.45a.1; table 12.40.2.
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue"); err != nil {
 		return 0, err
@@ -2160,6 +2162,9 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 30 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NPM Transfer Time", v)
 	return uint8(v), nil
 }
@@ -2171,6 +2176,9 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 30 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2497,6 +2505,8 @@ func encodeMPRACHControlParametersIEMAXRETRANSSelector(w *runtime.Writer, v *uin
 	}
 	return encodeMPRACHControlParametersIEMAXRETRANSValue(w, *v)
 }
+
+// TS 44.060 V19.0.0 §12.41 table 12.41.2 → table 12.14.2 (S).
 func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MPRACHControlParametersIES"); err != nil {
 		return 0, err
@@ -2510,6 +2520,9 @@ func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 9 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("S", v)
 	return uint8(v), nil
 }
@@ -2521,6 +2534,9 @@ func encodeMPRACHControlParametersIES(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 9 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err

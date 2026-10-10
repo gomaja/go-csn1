@@ -170,14 +170,12 @@ type IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGP
 const (
 	IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeEGPRSPacketUplinkAssignment            IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternative = iota
 	IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeMultipleBlocksPacketDownlinkAssignment IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternative = iota
-	IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeAlt1                                   IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternative = iota
 )
 
 type IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoice struct {
 	Alternative                            IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternative
 	EGPRSPacketUplinkAssignment            *IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceEGPRSPacketUplinkAssignment
 	MultipleBlocksPacketDownlinkAssignment *IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceMultipleBlocksPacketDownlinkAssignment
-	Alt1                                   *struct{}
 }
 type IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceImplicitRejectPS struct {
 	ImplicitRejectPS  uint8
@@ -689,7 +687,7 @@ type MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue struct {
 type MultipleBlocksPacketDownlinkAssignment struct {
 	TBFSTARTINGTIME         uint16
 	NUMBEROFALLOCATEDBLOCKS uint8
-	TMGIChoice              *MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue
+	TMGIChoice              MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue
 	Wire                    runtime.WireInfo `json:"-"`
 }
 type PEOIMMCellGroupDetailsStructClause105216 struct {
@@ -3088,7 +3086,6 @@ const (
 	AcknowledgedAccessRequestStructShortIDChoiceAlternativeShortID      AcknowledgedAccessRequestStructShortIDChoiceAlternative = iota
 	AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDLow  AcknowledgedAccessRequestStructShortIDChoiceAlternative = iota
 	AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDHigh AcknowledgedAccessRequestStructShortIDChoiceAlternative = iota
-	AcknowledgedAccessRequestStructShortIDChoiceAlternativeAlt11        AcknowledgedAccessRequestStructShortIDChoiceAlternative = iota
 )
 
 type AcknowledgedAccessRequestStructShortIDChoice struct {
@@ -3096,7 +3093,6 @@ type AcknowledgedAccessRequestStructShortIDChoice struct {
 	ShortID      *AcknowledgedAccessRequestStructShortIDChoiceShortID
 	RandomIDLow  *AcknowledgedAccessRequestStructShortIDChoiceRandomIDLow
 	RandomIDHigh *AcknowledgedAccessRequestStructShortIDChoiceRandomIDHigh
-	Alt11        *struct{}
 }
 type AcknowledgedAccessRequestStruct struct {
 	ShortIDChoice AcknowledgedAccessRequestStructShortIDChoice
@@ -4178,9 +4174,6 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 	if v.MultipleBlocksPacketDownlinkAssignment != nil {
 		count++
 	}
-	if v.Alt1 != nil {
-		count++
-	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
@@ -4195,11 +4188,6 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			return fmt.Errorf("choice alternative mismatch")
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceMultipleBlocksPacketDownlinkAssignment(w, *v.MultipleBlocksPacketDownlinkAssignment)
-	case IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeAlt1:
-		if v.Alt1 == nil {
-			return fmt.Errorf("choice alternative mismatch")
-		}
-		return encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlt1(w, *v.Alt1)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}
@@ -5184,6 +5172,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoicePacketUplinkAssignment(candidate)
@@ -5194,6 +5183,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativePacketUplinkAssignment
 			result.PacketUplinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5207,6 +5199,9 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativePacketDownlinkAssignment
 			result.PacketDownlinkAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5220,8 +5215,14 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativeSecondPartPacketAssignment
 			result.SecondPartPacketAssignment = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -11748,6 +11749,8 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeAltH(r *r
 func encodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeAltH(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("H")
 }
+
+// TS 44.060 V19.0.0 table 12.45a.1; TS 44.018 V19.0.0 table 10.5.2.16.1 (NPM Transfer Time delegation).
 func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransferTimeValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("PacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransferTimeValue"); err != nil {
 		return 0, err
@@ -11761,6 +11764,9 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransf
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 30 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NPM Transfer Time", v)
 	return uint8(v), nil
 }
@@ -11772,6 +11778,9 @@ func encodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransf
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 30 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -12195,6 +12204,7 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	if r.Remaining() == 0 {
 		{
 			candidate := r.Fork()
@@ -12206,6 +12216,9 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 				result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+					reservedErr = err
+				}
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -12220,6 +12233,9 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -12233,8 +12249,14 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeNPMTransferTime
 			result.NPMTransferTime = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -13626,30 +13648,21 @@ func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(w *runtime.Writ
 }
 
 // TS 44.018 V19.0.0 table 10.5.2.16.1, Multiple Blocks Packet Downlink Assignment.
-func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(r *runtime.Reader) (*MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue, error) {
+func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(r *runtime.Reader) (MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue, error) {
 	candidate := r.Fork()
 	if err := candidate.Expect("0"); err == nil {
-		return nil, candidate.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
+		return MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue{}, candidate.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
 	}
-	candidate = r.Fork()
-	if err := candidate.Expect("1"); err != nil {
-		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
+	if err := r.Expect("1"); err != nil {
+		return MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue{}, err
 	}
-	v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(candidate)
-	if err != nil {
-		return nil, err
-	}
-	r.Commit(candidate)
-	return &v, nil
+	return decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(r)
 }
-func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(w *runtime.Writer, v *MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue) error {
-	if v == nil {
-		return fmt.Errorf("reserved CSN.1 alternative")
-	}
+func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(w *runtime.Writer, v MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue) error {
 	if err := w.WriteLiteral("1"); err != nil {
 		return err
 	}
-	return encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(w, *v)
+	return encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(w, v)
 }
 func decodeMultipleBlocksPacketDownlinkAssignment(r *runtime.Reader) (MultipleBlocksPacketDownlinkAssignment, error) {
 	if err := r.Enter("MultipleBlocksPacketDownlinkAssignment"); err != nil {
@@ -61388,9 +61401,6 @@ func encodeAcknowledgedAccessRequestStructShortIDChoice(w *runtime.Writer, v Ack
 	if v.RandomIDHigh != nil {
 		count++
 	}
-	if v.Alt11 != nil {
-		count++
-	}
 	if count != 1 {
 		return fmt.Errorf("choice requires exactly one alternative")
 	}
@@ -61410,11 +61420,6 @@ func encodeAcknowledgedAccessRequestStructShortIDChoice(w *runtime.Writer, v Ack
 			return fmt.Errorf("choice alternative mismatch")
 		}
 		return encodeAcknowledgedAccessRequestStructShortIDChoiceRandomIDHigh(w, *v.RandomIDHigh)
-	case AcknowledgedAccessRequestStructShortIDChoiceAlternativeAlt11:
-		if v.Alt11 == nil {
-			return fmt.Errorf("choice alternative mismatch")
-		}
-		return encodeAcknowledgedAccessRequestStructShortIDChoiceAlt11(w, *v.Alt11)
 	default:
 		return fmt.Errorf("invalid choice alternative")
 	}

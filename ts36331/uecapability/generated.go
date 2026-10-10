@@ -37,6 +37,13 @@ type Classmark2ValuePart struct {
 	Wire runtime.WireInfo `json:"-"`
 }
 
+// ReceivedA52 reports the received A5/2 bit (TS 24.008 V20.1.0
+// §10.5.1.6 table 10.5.6b). It is false for a fresh value; Wire is omitted
+// from JSON. Plain encoding replays it, and canonical encoding writes zero.
+func (v Classmark2ValuePart) ReceivedA52() bool {
+	return len(v.Wire.Spare) > 3 && v.Wire.Spare[3].BitLength == 1 && len(v.Wire.Spare[3].Bytes) > 0 && v.Wire.Spare[3].Bytes[0]&0x80 != 0
+}
+
 func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Classmark2ValuePart]{}, err
@@ -149,8 +156,17 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 }
 
 // EncodeClassmark2ValuePartCanonical encodes a copy without received wire layout.
-// It returns only untyped errors: a field value outside its width.
+// It returns an untyped value-constraint error for a reserved sender code
+// (TS 24.008 V20.1.0 table 10.5.6a; TS 24.007 §11.4.2).
+// RF codes 0..4 and 7 have a defined band/RAT interpretation; selecting the
+// applicable band-specific row requires the containing radio context.
 func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
+	if v.RevisionLevel != 1 && v.RevisionLevel != 2 {
+		return nil, fmt.Errorf("value reserved by source table: TS 24.008 table 10.5.6a Revision level")
+	}
+	if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
+		return nil, fmt.Errorf("value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability")
+	}
 	return EncodeClassmark2ValuePart(runtime.Canonical(v))
 }
 

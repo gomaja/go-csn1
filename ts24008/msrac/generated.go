@@ -172,6 +172,13 @@ type A5Bits struct {
 	A57  uint8
 	Wire runtime.WireInfo `json:"-"`
 }
+
+// ReceivedA52 reports the received A52 bit (TS 24.008 V20.1.0 §10.5.5.12a, A5/2).
+// It is false for a fresh value or an inferred zero; Wire is omitted from JSON.
+func (v A5Bits) ReceivedA52() bool {
+	return len(v.Wire.Spare) > 0 && v.Wire.Spare[0].BitLength == 1 && len(v.Wire.Spare[0].Bytes) > 0 && v.Wire.Spare[0].Bytes[0]&0x80 != 0
+}
+
 type EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroup struct {
 	AlternativeEFTAMultislotClass                          uint8
 	EFTAMultislotCapabilityReductionForDownlinkDualCarrier uint8
@@ -715,6 +722,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities(candidate)
@@ -725,6 +733,9 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities
 			result.AccessCapabilities = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -738,8 +749,14 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength
 			result.Length = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -1425,6 +1442,8 @@ func encodeContentMultislotCapabilitySelector(w *runtime.Writer, v *MultislotCap
 	}
 	return encodeContentMultislotCapabilityValue(w, *v)
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (8PSK Power Capability).
 func decodeContentN8PSKPowerCapabilityValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ContentN8PSKPowerCapabilityValue"); err != nil {
 		return 0, err
@@ -1449,6 +1468,11 @@ func encodeContentN8PSKPowerCapabilityValue(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2341,6 +2365,8 @@ func encodeContentDTMHandoverCapability(w *runtime.Writer, v uint8) error {
 	w.Set("DTM Handover Capability", uint64(v))
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (Multislot Capability Reduction; EFTA delegates to the same coding).
 func decodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultislotCapabilityReductionForDownlinkDualCarrier(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultislotCapabilityReductionForDownlinkDualCarrier"); err != nil {
 		return 0, err
@@ -2365,6 +2391,11 @@ func encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultisl
 	width, err := w.Eval("3")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) > 6 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -3352,6 +3383,8 @@ func encodeContentExtendedEARFCNValueRange(w *runtime.Writer, v uint8) error {
 	w.Set("Extended EARFCN value range", uint64(v))
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 ((EC-)PCH monitoring support).
 func decodeContentECPCHMonitoringSupport(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ContentECPCHMonitoringSupport"); err != nil {
 		return 0, err
@@ -3376,6 +3409,11 @@ func encodeContentECPCHMonitoringSupport(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) > 2 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -4371,6 +4409,8 @@ func encodeContent(w *runtime.Writer, v Content) error {
 	}
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (HSCSD/ECSD Multi Slot Class); table 10.5.1.7 delegates the same class coding to TS 45.002.
 func decodeMultislotCapabilityStructHSCSDMultislotClassValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MultislotCapabilityStructHSCSDMultislotClassValue"); err != nil {
 		return 0, err
@@ -4395,6 +4435,14 @@ func encodeMultislotCapabilityStructHSCSDMultislotClassValue(w *runtime.Writer, 
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
+		if uint64(v) > 18 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -4700,6 +4748,8 @@ func encodeMultislotCapabilityStructSMSVALUEGroupSelector(w *runtime.Writer, v *
 	}
 	return encodeMultislotCapabilityStructSMSVALUEGroup(w, *v)
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (HSCSD/ECSD Multi Slot Class); table 10.5.1.7 delegates the same class coding to TS 45.002.
 func decodeMultislotCapabilityStructECSDMultislotClassValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MultislotCapabilityStructECSDMultislotClassValue"); err != nil {
 		return 0, err
@@ -4724,6 +4774,14 @@ func encodeMultislotCapabilityStructECSDMultislotClassValue(w *runtime.Writer, v
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) < 1 {
+			return fmt.Errorf("value reserved by source table")
+		}
+		if uint64(v) > 18 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -5232,8 +5290,9 @@ func encodeA5BitsA51(w *runtime.Writer, v uint8) error {
 }
 
 // TS 24.008 V20.1.0 §10.5.5.12a, A5/2.
-func decodeA5BitsSpareBit(r *runtime.Reader) (runtime.BitString, error) { return r.ReadSpare() }
-func encodeA5BitsSpareBit(w *runtime.Writer, _ runtime.BitString) error { return w.WriteSpare() }
+// TS 24.008 V20.1.0 §10.5.5.12a, A5/2.
+func decodeA5BitsSpareBit(r *runtime.Reader) (runtime.BitString, error) { return r.ReadLayoutBit() }
+func encodeA5BitsSpareBit(w *runtime.Writer, v runtime.BitString) error { return w.WriteLayoutBit(v) }
 func decodeA5BitsA53(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("A5BitsA53"); err != nil {
 		return 0, err
@@ -5404,7 +5463,7 @@ func decodeA5Bits(r *runtime.Reader) (A5Bits, error) {
 	if err != nil {
 		return A5Bits{}, err
 	}
-	_ = x1
+	v.Wire.Spare = append(v.Wire.Spare, x1)
 	x2, err := decodeA5BitsA53(r)
 	if err != nil {
 		return A5Bits{}, err
@@ -5453,7 +5512,12 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 		}
 	}
 	if limit > 1 {
-		if err := encodeA5BitsSpareBit(w, runtime.BitString{}); err != nil {
+		if err := encodeA5BitsSpareBit(w, func() runtime.BitString {
+			if len(v.Wire.Spare) > 0 {
+				return v.Wire.Spare[0]
+			}
+			return runtime.BitString{}
+		}()); err != nil {
 			return err
 		}
 	}
@@ -5530,6 +5594,8 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 	w.Set("Alternative EFTA Multislot Class", uint64(v))
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (Multislot Capability Reduction; EFTA delegates to the same coding).
 func decodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupEFTAMultislotCapabilityReductionForDownlinkDualCarrier(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupEFTAMultislotCapabilityReductionForDownlinkDualCarrier"); err != nil {
 		return 0, err
@@ -5554,6 +5620,11 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 	width, err := w.Eval("3")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) > 6 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -5837,6 +5908,8 @@ func encodeDLMCCapabilityStructDLMCMaximumBandwidth(w *runtime.Writer, v uint8) 
 	w.Set("DLMC - Maximum Bandwidth", uint64(v))
 	return nil
 }
+
+// TS 24.008 V20.1.0 table 10.5.146 (DLMC Maximum Number of Downlink Timeslots).
 func decodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("DLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots"); err != nil {
 		return 0, err
@@ -5861,6 +5934,11 @@ func encodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots(w *runtime.W
 	width, err := w.Eval("6")
 	if err != nil {
 		return err
+	}
+	if w.Canonical() {
+		if uint64(v) > 61 {
+			return fmt.Errorf("value reserved by source table")
+		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -6405,14 +6483,14 @@ func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 		return runtime.Decoded[A5Bits]{}, err
 	}
 	tail := runtime.TrailingBits(data, r.Position())
-	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
+	v.Wire = runtime.Seal(v, data, r.Position(), tail, func() runtime.WireInfo { wire := r.Wire(); wire.Spare = v.Wire.Spare; return wire }())
 	return runtime.Decoded[A5Bits]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
 
 // EncodeA5Bits encodes an edited or newly constructed value through direct bit operations.
 func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	w := runtime.NewWriter()
-	w.WithWire(v.Wire)
+	w.WithWire(func() runtime.WireInfo { wire := v.Wire; wire.Spare = nil; return wire }())
 	w.SetZeroExtension(false)
 	if err := encodeA5Bits(w, v); err != nil {
 		return nil, err

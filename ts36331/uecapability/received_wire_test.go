@@ -7,7 +7,7 @@ import (
 )
 
 func TestClassmark2SpareWireRecord(t *testing.T) {
-	d, err := DecodeClassmark2ValuePart([]byte{0x80, 0x80, 0x41, 0xaa})
+	d, err := DecodeClassmark2ValuePart([]byte{0xa0, 0x80, 0x41, 0xaa})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,11 +21,11 @@ func TestClassmark2SpareWireRecord(t *testing.T) {
 	}
 	d.Value.RFPowerCapability = 3
 	out, err := EncodeClassmark2ValuePart(d.Value)
-	if err != nil || !bytes.Equal(out, []byte{0x83, 0x80, 0x41, 0xaa}) {
+	if err != nil || !bytes.Equal(out, []byte{0xa3, 0x80, 0x41, 0xaa}) {
 		t.Fatalf("edited value %x: %v", out, err)
 	}
 	canonical, err := EncodeClassmark2ValuePartCanonical(d.Value)
-	if err != nil || !bytes.Equal(canonical, []byte{3, 0, 0}) {
+	if err != nil || !bytes.Equal(canonical, []byte{0x23, 0, 0}) {
 		t.Fatalf("canonical %x: %v", canonical, err)
 	}
 	d.Value.Wire.Spare[0] = runtime.BitString{Bytes: []byte{0xc0}, BitLength: 2}
