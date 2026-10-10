@@ -5516,7 +5516,7 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 			if len(v.Wire.Spare) > 0 {
 				return v.Wire.Spare[0]
 			}
-			return runtime.BitString{}
+			return runtime.BitString{Bytes: []byte{0}, BitLength: 1}
 		}()); err != nil {
 			return err
 		}

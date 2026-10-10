@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 )
 
@@ -30,5 +31,47 @@ func TestLocalLayoutBitDoesNotEnterRootSpare(t *testing.T) {
 	bit, err = r.ReadLayoutBit()
 	if err != nil || bit.BitLength != 0 || r.Wire().ImplicitZeros != 1 {
 		t.Fatalf("inferred %+v: %v", bit, err)
+	}
+}
+
+func TestInferredLayoutBitUsesContainingRootSpans(t *testing.T) {
+	for _, tc := range []struct {
+		name                  string
+		spans                 []ImplicitSpan
+		prefix                int
+		wantBits, wantVirtual int
+	}{
+		{name: "transmitted", wantBits: 1},
+		{name: "before span", spans: []ImplicitSpan{{At: 2, Count: 1}}, wantBits: 1},
+		{name: "in span", spans: []ImplicitSpan{{At: 0, Count: 1}}, wantVirtual: 1},
+		{name: "after span", spans: []ImplicitSpan{{At: 0, Count: 1}}, prefix: 1, wantBits: 1, wantVirtual: 1},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			w := NewWriter()
+			w.WithWire(WireInfo{ImplicitSpans: tc.spans, sealed: true})
+			if err := w.WriteUint(0, tc.prefix); err != nil {
+				t.Fatal(err)
+			}
+			if err := w.WriteLayoutBit(BitString{}); err != nil {
+				t.Fatal(err)
+			}
+			if w.bits != tc.wantBits || w.virtual != tc.wantVirtual {
+				t.Fatalf("bits %d+%d, want %d+%d", w.bits, w.virtual, tc.wantBits, tc.wantVirtual)
+			}
+		})
+	}
+	for i, record := range []BitString{{BitLength: -1}, {BitLength: 2, Bytes: []byte{0}}, {BitLength: 0, Bytes: []byte{0}}, {BitLength: 1}} {
+		t.Run(fmt.Sprintf("invalid %d", i), func(t *testing.T) {
+			w := NewWriter()
+			w.WithWire(WireInfo{sealed: true})
+			if err := w.WriteLayoutBit(record); err == nil {
+				t.Fatal("accepted invalid layout record")
+			}
+		})
+	}
+	w := NewWriter()
+	w.WithWire(WireInfo{ImplicitSpans: []ImplicitSpan{{At: 0, Count: 1}}, sealed: true})
+	if err := w.WriteLayoutBit(BitString{BitLength: 1, Bytes: []byte{0x80}}); err == nil {
+		t.Fatal("accepted received one at inferred position")
 	}
 }
