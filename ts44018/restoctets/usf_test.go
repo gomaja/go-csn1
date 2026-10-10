@@ -14,18 +14,20 @@ func TestPacketUplinkAssignmentUSF(t *testing.T) {
 	pointer := func(v uint8) *uint8 { return &v }
 	start := uint16(0x1234)
 	for _, tc := range []struct {
-		name, wire string
-		usf        uint8
-		branch     PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT
-		extendedRA *uint8
-		pfi        *uint8
+		name, wire     string
+		usf            uint8
+		branch         PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT
+		extendedRA     *uint8
+		pfi            *uint8
+		raAlternative  PacketUplinkAssignmentExtendedRAChoiceAlternative
+		pfiAlternative PacketUplinkAssignmentPFIChoiceAlternative
 	}{
 		{name: "usf5", wire: "80a000", usf: 5},
 		{name: "granularity1", wire: "80f544", usf: 7, branch: PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT{USFGRANULARITY: 1, CHANNELCODINGCOMMAND: 2, TLLIBLOCKCHANNELCODING: 1, GAMMA: 17}},
-		{name: "p0-and-all-optionals", wire: "b66cede3a891a0", usf: 3, branch: PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT{TFIASSIGNMENT: 13, POLLING: 1, P0Group: &PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group{P0: 9, PRMODE: 1}, CHANNELCODINGCOMMAND: 2, TLLIBLOCKCHANNELCODING: 1, ALPHA: pointer(7), GAMMA: 17, TIMINGADVANCEINDEX: pointer(10), TBFSTARTINGTIME: &start}},
-		{name: "extended-ra", wire: "804000eb", usf: 2, extendedRA: pointer(21)},
-		{name: "pfi", wire: "8080007540", usf: 4, pfi: pointer(85)},
-		{name: "both-extensions-and-p0", wire: "80db00071648", usf: 6, branch: PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT{USFGRANULARITY: 1, P0Group: &PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group{P0: 6}}, extendedRA: pointer(17), pfi: pointer(73)},
+		{name: "p0-and-all-optionals", wire: "b66cede3a891a0", usf: 3, branch: PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT{TFIASSIGNMENT: 13, POLLING: 1, P0Group: &PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group{P0: 9, PRMODE: 1}, CHANNELCODINGCOMMAND: 2, TLLIBLOCKCHANNELCODING: 1, ALPHA: pointer(7), GAMMA: 17, TIMINGADVANCEINDEX: pointer(10), TBFSTARTINGTIME: &start}, raAlternative: PacketUplinkAssignmentExtendedRAChoiceAlternativeAltL, pfiAlternative: PacketUplinkAssignmentPFIChoiceAlternativePFI},
+		{name: "extended-ra", wire: "804000eb", usf: 2, extendedRA: pointer(21), raAlternative: PacketUplinkAssignmentExtendedRAChoiceAlternativeExtendedRA, pfiAlternative: PacketUplinkAssignmentPFIChoiceAlternativeAltL},
+		{name: "pfi", wire: "8080007540", usf: 4, pfi: pointer(85), raAlternative: PacketUplinkAssignmentExtendedRAChoiceAlternativeAltL, pfiAlternative: PacketUplinkAssignmentPFIChoiceAlternativePFI},
+		{name: "both-extensions-and-p0", wire: "80db00071648", usf: 6, branch: PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT{USFGRANULARITY: 1, P0Group: &PacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group{P0: 6}}, extendedRA: pointer(17), pfi: pointer(73), raAlternative: PacketUplinkAssignmentExtendedRAChoiceAlternativeExtendedRA, pfiAlternative: PacketUplinkAssignmentPFIChoiceAlternativePFI},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			wire, err := hex.DecodeString(tc.wire)
@@ -50,15 +52,28 @@ func TestPacketUplinkAssignmentUSF(t *testing.T) {
 			if !reflect.DeepEqual(*branch, tc.branch) {
 				t.Fatalf("assignment fields = %+v, want %+v", *branch, tc.branch)
 			}
-			var ra, pfi *uint8
-			if ext := d.Value.ExtendedRAChoice.ExtendedRA; ext != nil {
-				ra = ext.ExtendedRA
+			// Build both extension choices only from the oracle expectations,
+			// including absent, L and H-with-absent-payload alternatives.
+			wantRA := PacketUplinkAssignmentExtendedRAChoice{Alternative: tc.raAlternative}
+			switch tc.raAlternative {
+			case PacketUplinkAssignmentExtendedRAChoiceAlternativeAltUnlabeled:
+				wantRA.AltUnlabeled = &struct{}{}
+			case PacketUplinkAssignmentExtendedRAChoiceAlternativeAltL:
+				wantRA.AltL = &struct{}{}
+			case PacketUplinkAssignmentExtendedRAChoiceAlternativeExtendedRA:
+				wantRA.ExtendedRA = &PacketUplinkAssignmentExtendedRAChoiceExtendedRA{ExtendedRA: tc.extendedRA}
 			}
-			if ext := d.Value.PFIChoice.PFI; ext != nil {
-				pfi = ext.PFI
+			wantPFI := PacketUplinkAssignmentPFIChoice{Alternative: tc.pfiAlternative}
+			switch tc.pfiAlternative {
+			case PacketUplinkAssignmentPFIChoiceAlternativeAltUnlabeled:
+				wantPFI.AltUnlabeled = &struct{}{}
+			case PacketUplinkAssignmentPFIChoiceAlternativeAltL:
+				wantPFI.AltL = &struct{}{}
+			case PacketUplinkAssignmentPFIChoiceAlternativePFI:
+				wantPFI.PFI = &PacketUplinkAssignmentPFIChoicePFI{PFI: tc.pfi}
 			}
-			if !reflect.DeepEqual(ra, tc.extendedRA) || !reflect.DeepEqual(pfi, tc.pfi) {
-				t.Fatalf("extension values = %v, %v; want %v, %v", ra, pfi, tc.extendedRA, tc.pfi)
+			if !reflect.DeepEqual(d.Value.ExtendedRAChoice, wantRA) || !reflect.DeepEqual(d.Value.PFIChoice, wantPFI) {
+				t.Fatalf("extension choices = %+v, %+v; want %+v, %+v", d.Value.ExtendedRAChoice, d.Value.PFIChoice, wantRA, wantPFI)
 			}
 			encoded, err := EncodePacketUplinkAssignment(d.Value)
 			if err != nil || !bytes.Equal(encoded, wire) {
@@ -67,8 +82,8 @@ func TestPacketUplinkAssignmentUSF(t *testing.T) {
 			// Construct a fresh assignment without received wire state.
 			fresh := PacketUplinkAssignment{
 				TFIASSIGNMENTChoice: PacketUplinkAssignmentTFIASSIGNMENTChoice{Alternative: PacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeTFIASSIGNMENT, TFIASSIGNMENT: &tc.branch},
-				ExtendedRAChoice:    d.Value.ExtendedRAChoice,
-				PFIChoice:           d.Value.PFIChoice,
+				ExtendedRAChoice:    wantRA,
+				PFIChoice:           wantPFI,
 			}
 			encoded, err = EncodePacketUplinkAssignment(fresh)
 			if err != nil || !bytes.Equal(encoded, wire) {
