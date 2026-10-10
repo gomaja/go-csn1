@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "fb0c000503ae57837e659066b8a47d9d5dfbb93b",
+  "compiler_commit": "2c096568eb1cea456c30f309d247707194fa610f",
   "sources": [
     {
       "standard": "TS 24.008",
