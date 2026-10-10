@@ -9,8 +9,8 @@ import (
 
 // CheckGeneratedChoiceCounters proves the emitted choice counters are local
 // zero-based sums over a finite number of static alternatives. The generator
-// emits one conditional increment per arm: csn1/gen/direct.go:1086 `matches++`
-// and csn1/gen/direct.go:1100 `if v.%s!=nil{count++};`.
+// emits one conditional increment per arm: csn1/gen/direct.go:1151 `matches++`
+// and csn1/gen/direct.go:1178 `if v.%s!=nil{count++};`.
 func CheckGeneratedChoiceCounters(name string, source []byte) (int, error) {
 	set := token.NewFileSet()
 	file, err := parser.ParseFile(set, name, source, 0)

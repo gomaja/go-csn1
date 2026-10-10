@@ -284,6 +284,17 @@ func (r *Reader) Matches(pattern string) bool {
 	return true
 }
 func (r *Reader) ReadSpare() (BitString, error) {
+	value, err := r.ReadLayoutBit()
+	if err == nil {
+		r.wire.Spare = append(r.wire.Spare, value)
+	}
+	return value, err
+}
+
+// ReadLayoutBit reads a bit retained by the current generated value's Wire.
+// It leaves the root spare stream untouched, so repeated capability entries
+// retain their own legacy indications (TS 24.008 V20.1.0 §10.5.5.12a).
+func (r *Reader) ReadLayoutBit() (BitString, error) {
 	start := r.pos
 	_, present, err := r.bit()
 	if err != nil {
@@ -293,7 +304,6 @@ func (r *Reader) ReadSpare() (BitString, error) {
 	if present {
 		value = bitsAt(r.data, start, 1)
 	}
-	r.wire.Spare = append(r.wire.Spare, value)
 	return value, nil
 }
 func (r *Reader) ReadPadding() BitString {
@@ -736,27 +746,36 @@ func (w *Writer) WriteSpare() error {
 	if w.spare < len(w.wire.Spare) {
 		v := w.wire.Spare[w.spare]
 		w.spare++
-		if v.BitLength == 1 {
-			return w.WriteBitString(v, 1)
-		}
-		if v.BitLength != 0 {
-			return fmt.Errorf("invalid received spare-bit width")
-		}
-		if w.wire.sealed {
-			span, end, err := w.currentImplicitSpan()
-			if err != nil {
-				return err
-			}
-			at, err := w.logicalPosition()
-			if err != nil {
-				return err
-			}
-			if at < span.At || at >= end {
-				return fmt.Errorf("inferred spare bit is outside its zero span")
-			}
-		}
-	} else if w.wire.sealed {
+		return w.WriteLayoutBit(v)
+	}
+	if w.wire.sealed {
 		return fmt.Errorf("received spare-bit state exhausted")
+	}
+	return w.WriteUint(0, 1)
+}
+
+// WriteLayoutBit replays a value-local received bit. An empty record writes
+// zero, or preserves its receiver-inferred zero span when the root is sealed.
+// Canonical copies clear these records (TS 24.008 §§10.5.5.12, 10.5.5.12a).
+func (w *Writer) WriteLayoutBit(v BitString) error {
+	if v.BitLength == 1 {
+		return w.WriteBitString(v, 1)
+	}
+	if v.BitLength != 0 || len(v.Bytes) != 0 {
+		return fmt.Errorf("invalid received spare-bit width")
+	}
+	if w.wire.sealed {
+		span, end, err := w.currentImplicitSpan()
+		if err != nil {
+			return err
+		}
+		at, err := w.logicalPosition()
+		if err != nil {
+			return err
+		}
+		if at < span.At || at >= end {
+			return fmt.Errorf("inferred spare bit is outside its zero span")
+		}
 	}
 	return w.WriteUint(0, 1)
 }
@@ -886,7 +905,8 @@ func (w *Writer) MarkFallback() FallbackMark {
 // completed length-delimited value that the ignored arm fills; otherwise the
 // ignored bits alone, which the generator permits only when the known arm
 // cannot read past them. An ignored arm that leaves its bound unfilled is
-// not tried here, because PopLimit rejects it.
+// not tried here, because PopLimit rejects it. Recognized reserved values
+// remain value-constraint errors (TS 44.060 V19.0.0 §11.1, §12.24).
 func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known func(*Reader) error) error {
 	if toBound && (!w.bounded || w.bits != w.limit) {
 		return nil
@@ -904,8 +924,12 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 	if err := r.Check(); err != nil {
 		return err
 	}
-	if known(r) == nil {
+	err := known(r)
+	if err == nil {
 		return &FallbackError{Path: w.path, Position: mark.bits}
+	}
+	if de, ok := err.(*DecodeError); ok && de.Kind == InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+		return fmt.Errorf("%s", de.Detail)
 	}
 	return nil
 }

@@ -64,6 +64,7 @@ type geranResult struct {
 	encoded                []byte
 	err                    error
 	canonicalErr           error
+	canonicalReservation   string
 	spare3, spare4, spare5 bool
 	ia                     *restoctets.IARestOctets
 	iar                    *restoctets.IARRestOctets
@@ -261,6 +262,7 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.encoded, out.err = uecapability.EncodeGERANCS(d.Value)
 			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeGERANCSCanonical, uecapability.DecodeGERANCS)
+			out.canonicalReservation = classmark2SenderReservation(d.Value.Classmark2)
 		}
 	case strings.HasSuffix(name, "geran-ps.jsonl"):
 		d, err := uecapability.DecodeGERANPS(wire)
@@ -275,9 +277,10 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 		out.err = err
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
-			out.spare3, out.spare4, out.spare5 = d.Value.Spare3, d.Value.Spare4, d.Value.Spare5
+			out.spare3, out.spare4, out.spare5 = wire[0]&0x80 != 0, wire[1]&0x80 != 0, wire[2]&0x40 != 0
 			out.encoded, out.err = uecapability.EncodeClassmark2ValuePart(d.Value)
 			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.DecodeClassmark2ValuePart)
+			out.canonicalReservation = classmark2SenderReservation(d.Value)
 		}
 	case strings.HasSuffix(name, "classmark3.jsonl"):
 		d, err := classmark.DecodeClassmark3ValuePart(wire)
@@ -320,7 +323,11 @@ func compareGERANExpected(record geranRecord, wire []byte, got geranResult) stri
 	if got.err != nil {
 		return fmt.Sprintf("decode or encode: %v", got.err)
 	}
-	if got.canonicalErr != nil {
+	if got.canonicalReservation != "" {
+		if got.canonicalErr == nil || got.canonicalErr.Error() != got.canonicalReservation {
+			return fmt.Sprintf("canonical reserved sender code: got %v, want %s", got.canonicalErr, got.canonicalReservation)
+		}
+	} else if got.canonicalErr != nil {
 		return fmt.Sprintf("canonical typed round trip: %v", got.canonicalErr)
 	}
 	if !bytes.Equal(got.encoded, wire) {
@@ -361,6 +368,19 @@ func compareGERANExpected(record geranRecord, wire []byte, got geranResult) stri
 		if v.ExtendedRA3 == nil || *v.ExtendedRA3 != 11 || v.RCCChoice.RCC != nil || v.PEOIMMCellGroupDetails != nil {
 			return "IAR padding selected wrong extended RA or present Rel-15 addition"
 		}
+	}
+	return ""
+}
+
+// TS 24.008 V20.1.0 table 10.5.6a permits reception of these codes but
+// forbids their use by a conforming sender. Reception and plain replay remain
+// checked against the external records; canonical rejection is checked here.
+func classmark2SenderReservation(v uecapability.Classmark2ValuePart) string {
+	if v.RevisionLevel == 0 || v.RevisionLevel == 3 {
+		return "value reserved by source table: TS 24.008 table 10.5.6a Revision level"
+	}
+	if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
+		return "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability"
 	}
 	return ""
 }

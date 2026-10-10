@@ -31,10 +31,12 @@ func gprsCellOptionsWithIgnored(ignored runtime.BitString) []byte {
 
 // The decoder keeps extension bits as ignored only when Extension
 // Information fails on them. The encoders accept an ignored value exactly
-// when its bytes decode back to it, and otherwise return FallbackError.
+// when its bytes decode back to it. Recognized reserved values retain their
+// source-table error; other known values return FallbackError.
 func TestIgnoredExtensionBitsThatDecodeAsKnownAreRejected(t *testing.T) {
 	rng := rand.New(rand.NewSource(1224))
 	outcomes := map[bool]int{}
+	reservedInputs := 0
 	for range 4000 {
 		n := 1 + rng.Intn(64)
 		raw := make([]byte, (n+7)/8)
@@ -46,6 +48,11 @@ func TestIgnoredExtensionBitsThatDecodeAsKnownAreRejected(t *testing.T) {
 		wire := gprsCellOptionsWithIgnored(ignored)
 		decoded, err := DecodeGPRSCellOptionsIE(wire)
 		keepsIgnored := err == nil && decoded.Value.ExtensionLengthGroup != nil && decoded.Value.ExtensionLengthGroup.Content.Ignored != nil
+		var de *runtime.DecodeError
+		reserved := errors.As(err, &de) && de.Kind == runtime.InvalidValue && de.Detail == "value reserved by source table"
+		if reserved {
+			reservedInputs++
+		}
 		outcomes[keepsIgnored]++
 
 		value := GPRSCellOptionsIE{ExtensionLengthGroup: &GPRSCellOptionsIEExtensionLengthGroup{
@@ -61,6 +68,10 @@ func TestIgnoredExtensionBitsThatDecodeAsKnownAreRejected(t *testing.T) {
 			encoded []byte
 			err     error
 		}{"plain": {plain, plainErr}, "canonical": {canonical, canonicalErr}} {
+			if reserved {
+				requireDelegatedValueError(t, result.err, false)
+				continue
+			}
 			if keepsIgnored {
 				if result.err != nil || !bytes.Equal(result.encoded, wire) {
 					t.Fatalf("%s %x: %x, %v; want the input", name, wire, result.encoded, result.err)
@@ -76,5 +87,5 @@ func TestIgnoredExtensionBitsThatDecodeAsKnownAreRejected(t *testing.T) {
 	if outcomes[true] == 0 || outcomes[false] == 0 {
 		t.Fatalf("outcomes %v do not cover both arms", outcomes)
 	}
-	t.Logf("kept as ignored %d, decoded through the known arm %d", outcomes[true], outcomes[false])
+	t.Logf("kept as ignored %d, decoded through the known arm %d, reserved %d", outcomes[true], outcomes[false]-reservedInputs, reservedInputs)
 }

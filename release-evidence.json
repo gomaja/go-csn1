@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "9a5846522a1461c46edd35edbe58e9fe095d4ceb",
+  "compiler_commit": "e0e4c6b22c8425942e45d4bbce0cfbcfeafa6f81",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -33,6 +33,14 @@
       "archive_sha256": "c106a388834eca5e5e136739c1e50f422fee3ef93bbd906325c02118df1ff119",
       "member": "44060-j00.docx",
       "member_sha256": "1eb357daf5db58369a44664eb753def088587403c52902ed5bcf728b0a032f1e"
+    },
+    {
+      "standard": "TS 45.008",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/45_series/45.008/45008-j00.zip",
+      "archive_sha256": "1908cdc05f80292adff9780efae373f26d350c6853f26a499cc0f37ac66d902b",
+      "member": "45008-j00.docx",
+      "member_sha256": "9b9e794c07f98a0e90b4798a0435693a961455e84bdde84dd870f4c8c7a16163"
     }
   ],
   "extracted_files": [
@@ -41,12 +49,28 @@
       "sha256": "fe9b53189829aa5e9b350f345f68197cb9ca1851945cbb82b5f74158a39ee3f3"
     },
     {
+      "path": "docs/csn1/ts24008/classmark3-reserved-tables.txt",
+      "sha256": "670c2e1a850c7575b67c9baa8387e812bbfa2b729b056a5b7f9243b4a292bfd4"
+    },
+    {
       "path": "docs/csn1/ts24008/classmark3.csn",
       "sha256": "9e7354672d4b26f0d939394ad0ca199a2a4e25254082d593ccf8bd6a6db55744"
     },
     {
+      "path": "docs/csn1/ts24008/msnetcap-received-bit-table.txt",
+      "sha256": "9eff5c5290732dea89d92fba42c14d7d758d3e8295b1441278a1b27486f329c2"
+    },
+    {
       "path": "docs/csn1/ts24008/msnetcap.csn",
       "sha256": "392a04d15b185c121a081e3a88b20d2831c87a96a7625a920bcab4d8edd8ce34"
+    },
+    {
+      "path": "docs/csn1/ts24008/msrac-received-bit-table.txt",
+      "sha256": "085252a8b85688e4a528baa002743a911617c51372d68ecfac807ad65b82ca7c"
+    },
+    {
+      "path": "docs/csn1/ts24008/msrac-reserved-tables.txt",
+      "sha256": "71950391e3ffa9319bbbe8cb5db77b13cf494497711858207da09fd27581c1d3"
     },
     {
       "path": "docs/csn1/ts24008/msrac.csn",
@@ -73,6 +97,10 @@
       "sha256": "2a8052f13bf84ee22d19f2555f66b65b23c3d4e01b81b27b4eff9c062e388644"
     },
     {
+      "path": "docs/csn1/ts44018/etws-reserved-tables.txt",
+      "sha256": "b7f51ae6e9a79a890bd2698f3c0a4343c2bf0ebd4a91d5eb2a7af98936a84f55"
+    },
+    {
       "path": "docs/csn1/ts44018/group-call-information.csn",
       "sha256": "6e957586121bd6d934cf1c414a38f217abb7653a553cb8651451acef4309c99f"
     },
@@ -83,6 +111,10 @@
     {
       "path": "docs/csn1/ts44018/group-channel-description.csn",
       "sha256": "200001d631bdb134c652200d908f093a5eef62abecdb0863d02f4d3590d5b65d"
+    },
+    {
+      "path": "docs/csn1/ts44018/ia-reserved-tables.txt",
+      "sha256": "aff3e6bd864f67c621801f8bad2e4ec277643e80414a48d1ed3da77da4c66e52"
     },
     {
       "path": "docs/csn1/ts44018/ia-rest-octets.csn",
@@ -167,6 +199,10 @@
     {
       "path": "docs/csn1/ts44018/si10ter-rest-octets.csn",
       "sha256": "28eefe664d0a2483ad6cb0be8787aad91c8f931a73ff7b79e05586d8addddc6c"
+    },
+    {
+      "path": "docs/csn1/ts44018/si13-reserved-tables.txt",
+      "sha256": "0ef4f143e2d13c22b38237f66d0c5bdbbc964fa6282a2dd4e7b93a2ea356bdb2"
     },
     {
       "path": "docs/csn1/ts44018/si13-rest-octets.csn",
@@ -281,6 +317,10 @@
       "sha256": "639d225fd6a32f054e2b6d7b1f2551942b1a9f21acab996f7ae9c9af1477a937"
     },
     {
+      "path": "docs/csn1/ts44060/gprs-options-reserved-tables.txt",
+      "sha256": "f33e938a5382812f935b05ea6299a482c5adb16af5a2ac41da10b8950f4dcd24"
+    },
+    {
       "path": "docs/csn1/ts44060/gprs-power-control-parameters-ie.csn",
       "sha256": "81953b4b5d4d8ea389b2259f5fe6774c89518bd8ccc45c32669f089a4f7d01d9"
     },
@@ -291,6 +331,10 @@
     {
       "path": "docs/csn1/ts44060/mbms-ptm-channel-description-ie.csn",
       "sha256": "d2085e073e18bfea07e3dc8361ff8dea4f9c444813bee5026694ace800300c33"
+    },
+    {
+      "path": "docs/csn1/ts44060/mbms-reserved-tables.txt",
+      "sha256": "a4a1fefd8bd8ca3f44c11077c534bca0c846a9217b690a9fec499b5fa08f8ca6"
     },
     {
       "path": "docs/csn1/ts44060/mbms-session-list-ie.csn",
@@ -307,6 +351,14 @@
     {
       "path": "docs/csn1/ts44060/mprach-description-ie.csn",
       "sha256": "5c1ec9331827aff4b0397a4d86836238cc61ed411712ea5d5ef49842b8bbb0c1"
+    },
+    {
+      "path": "docs/csn1/ts44060/mprach-reserved-table.txt",
+      "sha256": "260709c7b6f564476c61d6775603b29c19d048acadf4e5f8ea595ffa7f692d97"
+    },
+    {
+      "path": "docs/csn1/ts44060/npm-reserved-table.txt",
+      "sha256": "3960b213caa3667cf46d347c0086083562010cb7c49ae234a7c7e870b3ec190c"
     },
     {
       "path": "docs/csn1/ts44060/packet-timing-advance-ie.csn",
@@ -327,6 +379,10 @@
     {
       "path": "docs/csn1/ts44060/utran-csg-measurement-report-ie.csn",
       "sha256": "3b13c4e4865da5ff04e69f4aca8860ed2d848d68ddc828df69de474e84ad5e9f"
+    },
+    {
+      "path": "docs/csn1/ts45008/bep-period-table.txt",
+      "sha256": "fef8c42b7d95c83dfada99411ac4bdc277b50d9d86f573998c65a4e8b77ecae2"
     }
   ],
   "corrections": [
@@ -1672,19 +1728,19 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "039143e4d7388564c995b401d6bde659cb1517aee29a92f3ee7b23fcab835a0f"
+      "sha256": "e83f5744f8d9478d6c5363a2449e34b8796dc2c120979e6bcc4a6b8e084eb1f1"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "26b61419980a77dc1ce9c078b54170a78a3e47dd292ae32d662ebcb7e2e8d323"
+      "sha256": "3941848d2002c2ee3d841bbf50e00ce50e13889ed8669be82ddb69353e58fee0"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "98be0dc196855b3f048d89e220f3d94afe9e18593272f880871fb4cc4364b64b"
+      "sha256": "e6579e5911826997b6ef773881c4114b7ad4647a789ad259ea7d785ae4d97acf"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "1105c76f4f29283885270404e14cfbac6c526c3be336c8f7962cf8b5667390e9"
+      "sha256": "f7f4e6a7eff223333c65540da234d81ff515d8a22476e61572052cedc55eb06c"
     },
     {
       "path": "ts44018/cellselection/generated.go",
@@ -1696,11 +1752,11 @@
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "340c761e62f74ecc88e5d076a6c4876c7d85ff0ee0050dceb64aa5e7a58c586a"
+      "sha256": "197b0519b9673696db7aaeca83a26d4daea5f7fe13246144c6bd4a6da042a81a"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "43345ccb734c07246b2b79757ac3ab9408e1810a2b95b047b6ad520ae4835605"
+      "sha256": "b6ccecbeaf34cdab09af62115c16ec33ce016254da6c8a76f62c49573b388074"
     }
   ],
   "validation_commands": [

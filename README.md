@@ -25,6 +25,8 @@ encoded, err := uecapability.EncodeGERANPS(decoded.Value)
 
 `BitsConsumed` and `Tail` are reported by every decoder. Values contain an explicit `Wire` record for received spare bits, padding, implicit zero spans, truncation, list stop records, the transmitted boundary and tail. Every encode uses the generated bit encoder; received bytes are not retained for replay. An unchanged decoded value re-encodes byte for byte. Truncation is recorded per instance in decode order, so recursive and repeated truncated concatenations each keep their own truncation point. Plain `Encode<Type>` rejects edits that move a semantic boundary or conflict with retained wire state.
 
+Classmark 2 keeps its three spare bits and A5/2 in `Wire.Spare`, in transmitted order. Plain encoding preserves them, while fresh and canonical encoding send zero (TS 24.008 V20.1.0 §10.5.1.6, figure 10.5.6 and table 10.5.6b). For example, `a08041` plainly re-encodes as `a08041` and canonically encodes as `200000`. The GEA/1 bit in MS network capability (§10.5.5.12) and the A5/2 bit in MS RA capability (§10.5.5.12a) follow the same rule.
+
 `Encode<Type>Canonical` is available for every generated type. It copies the typed value, discards received layout at every nested level, encodes the copy using the printed grammar, then decodes the result to check typed semantic equivalence within the definition's source-defined length. For TS 24.008 V20.1.0 §10.5.5.12a capabilities, zero-extension bits inferred by the receiver are omitted beyond the transmitted length. For TS 44.018 V19.0.0 §8.9 truncated concatenations, it chooses the shortest octet-aligned prefix that decodes equivalently. A truncated concatenation inside a length-delimited value, such as TS 44.060 V19.0.0 §12.24 Extension Information, keeps the typed length field and ends where that length is exhausted (§11.1.4.4). The omitted components must be zero, because the receiver assumes zero for them. If a typed length cannot carry the typed content, for example an Extension Length too short for a nonzero CCN_ACTIVE, encoding keeps the length and fails with a `*runtime.BoundError` (`errors.Is(err, runtime.ErrBoundConflict)`). Its `Kind` names the bound (`LengthBound`, `CanonicalTarget` or a decoded value's `ReceivedTruncation`). `Limit` and `Position` are nonnegative bit offsets from the start of the encoding, and `Path` and `Field` name the conflicting field. An encoder returns `BoundError` for exactly these conditions:
 
 - a bit written past the end of a length-delimited value (`< bit (n) & … >`), a fixed-size value (the 20-octet SI 18/SI 20 value and SI 7/SI 8 layouts), width-bound padding, or the length requested from `Encode<Type>CanonicalAtLength` (`CanonicalTarget`), including a nonzero receiver-inferred bit past such a bound;
@@ -49,6 +51,29 @@ Value-constraint errors are untyped, even when the field is a count or a length,
 - a failed equality constraint;
 - an excluded or reserved value;
 - an L/H field outside 0..1.
+
+Source-bound reservations are rejected by decode, plain encode and canonical encode. These include the TS 44.018 V19.0.0 tables 10.5.2.16.1 and 10.5.2.78.1 reserved alternatives, allocated-block counts, ETWS segment numbers (table 10.5.2.23.2), and SI13 timeout (table 10.5.2.37b.2); TS 44.060 V19.0.0 table 12.40.2 allows MBMS bearer-identity lengths 1–5, and table 12.24.2 reserves NMO 3. A reserved scalar with an explicit receiver interpretation remains accepted, such as ALPHA 11–15 interpreted as 1.0 by table 10.5.2.16.1. The raw ALPHA code remains typed for exact re-encoding.
+
+Received legacy capability bits remain in `Wire` rather than typed fields. `Classmark2ValuePart.ReceivedA52()`, `MSNetworkCapabilityValuePart.ReceivedGEA1()` and `A5Bits.ReceivedA52()` report them; `A5Bits.Wire.Spare` belongs to its own access-technology entry, including repeated entries. A fresh value or an inferred zero reports false. Plain encoding replays these bits; fresh and canonical encoding write zero (TS 24.008 V20.1.0 §§10.5.1.6, 10.5.5.12, 10.5.5.12a). `Wire` and these accessor results are omitted from JSON. A Classmark 2 with revision level 1 and received bytes `a08041` canonically encodes as `200000`.
+
+Canonical encoding rejects reserved TS 24.008 sender capability codes while decoding and plain replay preserve them (§8.1; TS 24.007 V20.0.0 §11.4.2): Classmark 2 revision levels 0/3 and universally reserved RF power codes 5/6 (table 10.5.6a); Classmark 3 8PSK power code 0, GSM band 10–15 and HSCSD class outside 1–18 (table 10.5.1.7; TS 45.002 V19.0.0 §B.1); MS RAC 8PSK power code 0, HSCSD/ECSD class outside 1–18, ordinary/EFTA multislot reduction 7, DLMC timeslot count 62/63 and EC-PCH monitoring 3 (table 10.5.146). Classmark 2 RF codes 0–4 and 7 each have a defined band/RAT context; the containing application selects the applicable row. Original Classmark 2 vectors whose revision level is 0 now return a canonical value-constraint error.
+
+Reserved values that remain accepted in all modes have an explicit interpretation or a reviewed context decision:
+
+- ALPHA 11–15: alpha=1.0 (TS 44.018 table 10.5.2.16.1; TS 44.060 table 12.9.2).
+- NC order 3, including SI2quater: NC0 (TS 44.018 table 10.5.2.37b.2; TS 44.060 table 11.2.25.2).
+- Measurement Bandwidth 6–7: NRB=100 (TS 44.060 table 12.53.2; TS 44.018 table 9.1.54.1b).
+- SS Screening Indicator 2/3: treated as 01 (TS 24.080 V19.4.0 table 3.18 note 2).
+- NCH position codes outside the defined table: interpreted as NCH absent (TS 44.018 table 10.5.2.32.2).
+- EARFCN 65535: identifies the corresponding Extended EARFCN rather than an ordinary frequency (TS 44.018 table 10.5.2.33b.2).
+- Unknown SI9 information types: treated as unnecessary information (TS 44.018 table 10.5.2.37a.2).
+- Unknown SI14 band indicators: retained; the table says to accept future codes without treating them as errors (TS 44.018 §10.5.2.37j).
+- EGPRS MCS 11: defined for EGPRS2-B; IA lacks the context needed to choose the narrower EGPRS/EGPRS2-A table (TS 44.060 tables 12.10d.1–3).
+- SI13 MTA_BITMAP's unknown positions: retained as forward capability indications (TS 44.018 table 10.5.2.37b.2).
+- IA PFI 4–7: the imported reservation's receiver policy is deferred (TS 24.008 table 10.5.161; TS 44.018 §8.1).
+- Classmark 3 ECSD class codes and GPRS/EGPRS class 0: the delegated range needs a separate applicability decision (TS 45.002 §B.1); MS RAC's explicit ECSD 1–18 range is enforced canonically.
+
+Source tables also reject MPRACH S 10–15 and NPM Transfer Time 31 in MBMS and IA, in all modes (TS 44.060 V19.0.0 tables 12.14.2, 12.45a.1; the delegations are in table 12.41.2, table 12.40.2 and TS 44.018 table 10.5.2.16.1). GPRS Cell Options BEP_PERIOD 11–15 is rejected on decode and in both encoders, including through the ignored-extension arm (TS 44.060 V19.0.0 §11.1, §12.24 table 12.24.2; TS 45.008 V19.0.0 §10.2.3.2.1). Codes 0–10 remain accepted. BEP_PERIOD2 defines all sixteen codes and remains accepted. Rejected alternative arms are absent from the Go API, and the remaining Multiple Blocks assignment is mandatory.
 
 An extent violation of the whole encoding returns `*runtime.ExtentError`:
 

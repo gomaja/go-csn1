@@ -24,7 +24,7 @@ func TestMSNetworkCapabilityValuePart(t *testing.T) {
 		if d.BitsConsumed != len(wire)*8 || d.Tail.BitLength != 0 {
 			t.Fatalf("boundary %x: %d, %d", wire, d.BitsConsumed, d.Tail.BitLength)
 		}
-		if wire[0] == 0xff && (d.Value.GEA1Bits.GEA1 != 1 || d.Value.SMCapabilitiesViaDedicatedChannels != 1 || d.Value.SSScreeningIndicator != 3) {
+		if wire[0] == 0xff && (d.Value.SMCapabilitiesViaDedicatedChannels != 1 || d.Value.SSScreeningIndicator != 3) {
 			t.Fatalf("first octet fields: %+v", d.Value)
 		}
 		encoded, err := EncodeMSNetworkCapabilityValuePart(d.Value)

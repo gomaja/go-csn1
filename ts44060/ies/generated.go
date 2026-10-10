@@ -123,6 +123,7 @@ const (
 // GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback keeps Known when the known arm decodes and Ignored otherwise. Encoding
 // Ignored returns *runtime.FallbackError when its bits would decode through
 // the known arm.
+// Recognized reserved values return value-constraint errors in every mode.
 type GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback struct {
 	Alternative GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternative
 	Known       *ExtensionInformation
@@ -1326,6 +1327,7 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
+	var reservedErr error
 	{
 		candidate := r.Fork()
 		v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription(candidate)
@@ -1336,6 +1338,9 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMBMSPTMChannelDescription
 			result.MBMSPTMChannelDescription = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1349,8 +1354,14 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMPRACHDescription
 			result.MPRACHDescription = &v
 		} else {
+			if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+				reservedErr = err
+			}
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if matches == 0 && reservedErr != nil {
+		return result, reservedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -1943,6 +1954,8 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryAl
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryAlt1(w *runtime.Writer, _ struct{}) error {
 	return w.WriteLiteral("1")
 }
+
+// TS 44.060 V19.0.0 table 12.40.2.
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity"); err != nil {
 		return 0, err
@@ -1956,6 +1969,12 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) < 1 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
+	if uint64(v) > 5 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("Length of MBMS Bearer Identity", v)
 	return uint8(v), nil
 }
@@ -1967,6 +1986,12 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 	width, err := w.Eval("3")
 	if err != nil {
 		return err
+	}
+	if uint64(v) < 1 {
+		return fmt.Errorf("value reserved by source table")
+	}
+	if uint64(v) > 5 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2123,6 +2148,8 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEG
 	}
 	return encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEGPRSWindowSizeValue(w, *v)
 }
+
+// TS 44.060 V19.0.0 table 12.45a.1; table 12.40.2.
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue"); err != nil {
 		return 0, err
@@ -2136,6 +2163,9 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 30 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NPM Transfer Time", v)
 	return uint8(v), nil
 }
@@ -2147,6 +2177,9 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 	width, err := w.Eval("5")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 30 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2473,6 +2506,8 @@ func encodeMPRACHControlParametersIEMAXRETRANSSelector(w *runtime.Writer, v *uin
 	}
 	return encodeMPRACHControlParametersIEMAXRETRANSValue(w, *v)
 }
+
+// TS 44.060 V19.0.0 §12.41 table 12.41.2 → table 12.14.2 (S).
 func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("MPRACHControlParametersIES"); err != nil {
 		return 0, err
@@ -2486,6 +2521,9 @@ func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 9 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("S", v)
 	return uint8(v), nil
 }
@@ -2497,6 +2535,9 @@ func encodeMPRACHControlParametersIES(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 9 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2947,6 +2988,8 @@ func encodeGPRSPowerControlParametersIE(w *runtime.Writer, v GPRSPowerControlPar
 	}
 	return nil
 }
+
+// TS 44.060 V19.0.0 table 12.24.2, Network Mode of Operation.
 func decodeGPRSCellOptionsIENMO(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("GPRSCellOptionsIENMO"); err != nil {
 		return 0, err
@@ -2960,6 +3003,9 @@ func decodeGPRSCellOptionsIENMO(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 2 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("NMO", v)
 	return uint8(v), nil
 }
@@ -2971,6 +3017,9 @@ func encodeGPRSCellOptionsIENMO(w *runtime.Writer, v uint8) error {
 	width, err := w.Eval("2")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 2 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -3394,6 +3443,9 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 		r.Commit(candidate)
 		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{Alternative: GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeKnown, Known: &known}, nil
 	}
+	if de, ok := err.(*runtime.DecodeError); ok && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
+		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{}, err
+	}
 	candidate = r.Fork()
 	ignored, err := decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(candidate)
 	if err != nil {
@@ -3704,6 +3756,8 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	w.Set("EGPRS_PACKET_CHANNEL_REQUEST", uint64(v))
 	return nil
 }
+
+// TS 44.060 V19.0.0 §12.24 table 12.24.2 → TS 45.008 V19.0.0 §10.2.3.2.1 (BEP_PERIOD table).
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD(r *runtime.Reader) (uint8, error) {
 	if err := r.Enter("ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD"); err != nil {
 		return 0, err
@@ -3717,6 +3771,9 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	if err != nil {
 		return 0, err
 	}
+	if uint64(v) > 10 {
+		return 0, r.Error(runtime.InvalidValue, "value reserved by source table")
+	}
 	r.Set("BEP_PERIOD", v)
 	return uint8(v), nil
 }
@@ -3728,6 +3785,9 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	width, err := w.Eval("4")
 	if err != nil {
 		return err
+	}
+	if uint64(v) > 10 {
+		return fmt.Errorf("value reserved by source table")
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err

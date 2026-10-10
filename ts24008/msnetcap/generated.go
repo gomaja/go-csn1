@@ -37,10 +37,21 @@ type MSNetworkCapabilityValuePart struct {
 	DualConnectivityOfEUTRAWithNRCapability       uint8
 	Wire                                          runtime.WireInfo `json:"-"`
 }
+
+// ReceivedGEA1 reports the received bit retained by GEA1Bits (TS 24.008 V20.1.0 §10.5.5.12, GEA/1).
+// Wire is omitted from JSON; canonical encoding writes zero.
+func (v MSNetworkCapabilityValuePart) ReceivedGEA1() bool { return v.GEA1Bits.ReceivedGEA1() }
+
 type GEA1Bits struct {
-	GEA1 uint8
 	Wire runtime.WireInfo `json:"-"`
 }
+
+// ReceivedGEA1 reports the received GEA1 bit (TS 24.008 V20.1.0 §10.5.5.12, GEA/1).
+// It is false for a fresh value or an inferred zero; Wire is omitted from JSON.
+func (v GEA1Bits) ReceivedGEA1() bool {
+	return len(v.Wire.Spare) > 0 && v.Wire.Spare[0].BitLength == 1 && len(v.Wire.Spare[0].Bytes) > 0 && v.Wire.Spare[0].Bytes[0]&0x80 != 0
+}
+
 type ExtendedGEABits struct {
 	GEA2 uint8
 	GEA3 uint8
@@ -1225,48 +1236,22 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 	}
 	return nil
 }
-func decodeGEA1BitsGEA1(r *runtime.Reader) (uint8, error) {
-	if err := r.Enter("GEA1BitsGEA1"); err != nil {
-		return 0, err
-	}
-	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
-	v, err := r.ReadUint(width)
-	if err != nil {
-		return 0, err
-	}
-	r.Set("GEA/1", v)
-	return uint8(v), nil
-}
-func encodeGEA1BitsGEA1(w *runtime.Writer, v uint8) error {
-	if err := w.Enter("GEA1BitsGEA1"); err != nil {
-		return err
-	}
-	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
-	if err := w.WriteUint(uint64(v), width); err != nil {
-		return err
-	}
-	w.Set("GEA/1", uint64(v))
-	return nil
-}
+
+// TS 24.008 V20.1.0 §10.5.5.12, GEA/1.
+// TS 24.008 V20.1.0 §10.5.5.12, GEA/1.
+func decodeGEA1BitsSpareBit(r *runtime.Reader) (runtime.BitString, error) { return r.ReadLayoutBit() }
+func encodeGEA1BitsSpareBit(w *runtime.Writer, v runtime.BitString) error { return w.WriteLayoutBit(v) }
 func decodeGEA1Bits(r *runtime.Reader) (GEA1Bits, error) {
 	if err := r.Enter("GEA1Bits"); err != nil {
 		return GEA1Bits{}, err
 	}
 	defer r.Leave()
 	var v GEA1Bits
-	x0, err := decodeGEA1BitsGEA1(r)
+	x0, err := decodeGEA1BitsSpareBit(r)
 	if err != nil {
 		return GEA1Bits{}, err
 	}
-	v.GEA1 = x0
+	v.Wire.Spare = append(v.Wire.Spare, x0)
 	return v, nil
 }
 func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
@@ -1281,11 +1266,13 @@ func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
 		}
 		limit = n
 	}
-	if limit <= 0 && !runtime.IsZero(v.GEA1) {
-		return w.OmittedFieldError("GEA1")
-	}
 	if limit > 0 {
-		if err := encodeGEA1BitsGEA1(w, v.GEA1); err != nil {
+		if err := encodeGEA1BitsSpareBit(w, func() runtime.BitString {
+			if len(v.Wire.Spare) > 0 {
+				return v.Wire.Spare[0]
+			}
+			return runtime.BitString{}
+		}()); err != nil {
 			return err
 		}
 	}
@@ -1860,14 +1847,14 @@ func DecodeGEA1Bits(data []byte) (runtime.Decoded[GEA1Bits], error) {
 		return runtime.Decoded[GEA1Bits]{}, err
 	}
 	tail := runtime.TrailingBits(data, r.Position())
-	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
+	v.Wire = runtime.Seal(v, data, r.Position(), tail, func() runtime.WireInfo { wire := r.Wire(); wire.Spare = v.Wire.Spare; return wire }())
 	return runtime.Decoded[GEA1Bits]{Value: v, BitsConsumed: r.Position(), Tail: tail}, nil
 }
 
 // EncodeGEA1Bits encodes an edited or newly constructed value through direct bit operations.
 func EncodeGEA1Bits(v GEA1Bits) ([]byte, error) {
 	w := runtime.NewWriter()
-	w.WithWire(v.Wire)
+	w.WithWire(func() runtime.WireInfo { wire := v.Wire; wire.Spare = nil; return wire }())
 	w.SetZeroExtension(false)
 	if err := encodeGEA1Bits(w, v); err != nil {
 		return nil, err

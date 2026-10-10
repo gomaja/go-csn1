@@ -67,7 +67,7 @@ func TestGERANContainersRetainExcessType4Bits(t *testing.T) {
 	// TS 36.331 V19.4.0 UE-CapabilityRAT-ContainerList carries
 	// Classmark 3 and MS RA capability value parts. TS 24.007 V20.0.0
 	// §11.4.2 permits a longer type 4 value part at the receiver.
-	cs := append([]byte{0x33, 3, 0, 0, 0}, make([]byte, 32)...)
+	cs := append([]byte{0x33, 3, 0x20, 0, 0}, make([]byte, 32)...)
 	cs[5] = 0x60
 	cs = append(cs, 0x80)
 	decodedCS, err := DecodeGERANCS(cs)

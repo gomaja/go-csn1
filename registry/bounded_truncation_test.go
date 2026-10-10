@@ -69,15 +69,17 @@ func canonicalWithin(t *testing.T, d runtime.Descriptor, value any) error {
 // are synthetic; pycrate 0.7.11 re-encodes its own decoding of each GPRS Cell
 // Options input to the same bytes, and Wireshark 4.6.8 dissects each SI 13
 // pair (input, canonical) identically apart from the padding.
+// The R99 control uses BEP_PERIOD 10: the original 13 is reserved by
+// TS 45.008 V19.0.0 §10.2.3.2.1. Its length and truncation stay the same.
 func TestBoundedTruncatedExtension(t *testing.T) {
 	for _, tc := range []struct {
 		standard, clause, name, wire, canonical string
 	}{
-		{"TS 44.060", "12.24", "GPRS Cell Options IE", "b0e1d5122d103fc76dfdb8ebeb652a", "b0e1d5122d00"},
+		{"TS 44.060", "12.24", "GPRS Cell Options IE", "b0e1d5122a103fc76dfdb8ebeb652a", "b0e1d5122a00"},
 		{"TS 44.060", "12.24", "GPRS Cell Options IE", "b48f27c6a62ca8ce639d2adb", "b48f27c6a600"},
 		{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", "e1b88bbdf784a1a279df24ba4896ad235775bf40", "e1b88bbdf784a1a279df24ba4896ad2b2b2b2b2b"},
-		{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", "ea15976ab36992bb4a4df259d63dd40957e08528", "ea15976ab36992bb4a4df22b2b2b2b2b2b2b2b2b"},
-		{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", "dd0011a6fea7fbd89c88ffa33d38bfbdb253df4b", "dd0011a6fea7fbd89c88fb2b2b2b2b2b2b2b2b2b"},
+		{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", "ea15976ab36992ba4a4df259d63dd40957e08528", "ea15976ab36992ba4a4df22b2b2b2b2b2b2b2b2b"},
+		{"TS 44.018", "10.5.2.37b", "SI 13 Rest Octets", "dd0011a6fea7f5d89c88ffa33d38bfbdb253df4b", "dd0011a6fea7f5d89c88fb2b2b2b2b2b2b2b2b2b"},
 	} {
 		d, err := LookupClause(tc.standard, tc.clause, tc.name)
 		if err != nil {
@@ -179,7 +181,7 @@ var boundedTruncationDefinitions = []struct {
 // keeps the typed length; the refusal is a *runtime.BoundError naming the
 // bound, the encoder path and the conflicting field.
 func TestBoundConflictIsTyped(t *testing.T) {
-	wire, _ := hex.DecodeString("b0e1d5122d103fc76dfdb8ebeb652a")
+	wire, _ := hex.DecodeString("b0e1d5122a103fc76dfdb8ebeb652a")
 	decoded, err := ies.DecodeGPRSCellOptionsIE(wire)
 	if err != nil {
 		t.Fatal(err)

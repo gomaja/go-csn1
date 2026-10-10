@@ -21,9 +21,8 @@ func TestIAEmptyValueAndBranches(t *testing.T) {
 		t.Fatalf("nonempty truncated IA value: %v", err)
 	}
 	for _, wire := range [][]byte{
-		{0x2b},                   // LL, canonical spare padding
-		{0x0b},                   // LL, compressed inter-RAT indication set (H)
-		{0x50, 0x00, 0x00, 0x0b}, // LH, multiple blocks packet downlink assignment
+		{0x2b}, // LL, canonical spare padding
+		{0x0b}, // LL, compressed inter-RAT indication set (H)
 		{0x50, 0x00, 0x00, 0x80, 0x00, 0x00, 0x2b},             // LH, TMGI IE
 		{0x50, 0x00, 0x00, 0xc0, 0x00, 0x00, 0x00, 0x20, 0x0b}, // LH, packet timing advance IE
 		{0x40, 0x20, 0x00, 0x00, 0x00, 0x09, 0x2b},             // LH, EGPRS uplink TFI with TS 44.060 MCS/window IEs
@@ -119,7 +118,7 @@ func TestIAStructuralVectors(t *testing.T) {
 	if err != nil || ll.Value.CompressedInterRATHOINFOINDChoice.RCC == nil || ll.Value.CompressedInterRATHOINFOINDChoice.RCC.CompressedInterRATHOINFOIND != 1 {
 		t.Fatalf("LL compressed indication: %+v, %v", ll.Value, err)
 	}
-	lh, err := DecodeIARestOctets([]byte{0x50, 0, 0, 0x0b})
+	lh, err := DecodeIARestOctets([]byte{0x50, 0, 0, 0x80, 0, 0, 0x2b})
 	if err != nil {
 		t.Fatal(err)
 	}
