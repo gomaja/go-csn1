@@ -30,54 +30,9 @@ func descriptors() []runtime.Descriptor {
 	out = append(out, restoctets.Descriptors()...)
 	out = append(out, ies.Descriptors()...)
 	out = append(out,
-		runtime.Descriptor{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Name: "Mobile Station Classmark 2 value part",
-			Decode: func(b []byte) (any, error) { return uecapability.DecodeClassmark2ValuePart(b) },
-			Canonical: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.Classmark2ValuePart)
-				if !ok {
-					return nil, fmt.Errorf("wrong Classmark 2 value type")
-				}
-				return uecapability.EncodeClassmark2ValuePartCanonical(typed)
-			},
-			Encode: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.Classmark2ValuePart)
-				if !ok {
-					return nil, fmt.Errorf("wrong Classmark 2 value type")
-				}
-				return uecapability.EncodeClassmark2ValuePart(typed)
-			}},
-		runtime.Descriptor{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-cs",
-			Decode: func(b []byte) (any, error) { return uecapability.DecodeGERANCS(b) },
-			Canonical: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.GERANCS)
-				if !ok {
-					return nil, fmt.Errorf("wrong geran-cs value type")
-				}
-				return uecapability.EncodeGERANCSCanonical(typed)
-			},
-			Encode: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.GERANCS)
-				if !ok {
-					return nil, fmt.Errorf("wrong geran-cs value type")
-				}
-				return uecapability.EncodeGERANCS(typed)
-			}},
-		runtime.Descriptor{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-ps",
-			Decode: func(b []byte) (any, error) { return uecapability.DecodeGERANPS(b) },
-			Canonical: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.GERANPS)
-				if !ok {
-					return nil, fmt.Errorf("wrong geran-ps value type")
-				}
-				return uecapability.EncodeGERANPSCanonical(typed)
-			},
-			Encode: func(v any) ([]byte, error) {
-				typed, ok := v.(uecapability.GERANPS)
-				if !ok {
-					return nil, fmt.Errorf("wrong geran-ps value type")
-				}
-				return uecapability.EncodeGERANPS(typed)
-			}},
+		manualDescriptor(runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}, "Mobile Station Classmark 2 value part", 24, 24, 3, uecapability.DecodeClassmark2ValuePart, uecapability.DecodeClassmark2ValuePartFrom, uecapability.EncodeClassmark2ValuePart, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.EncodeClassmark2ValuePartCanonicalAtLength),
+		manualDescriptor(runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}, "geran-cs", 48, 296, 37, uecapability.DecodeGERANCS, uecapability.DecodeGERANCSFrom, uecapability.EncodeGERANCS, uecapability.EncodeGERANCSCanonical, uecapability.EncodeGERANCSCanonicalAtLength),
+		manualDescriptor(runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}, "geran-ps", 16, 400, 50, uecapability.DecodeGERANPS, uecapability.DecodeGERANPSFrom, uecapability.EncodeGERANPS, uecapability.EncodeGERANPSCanonical, uecapability.EncodeGERANPSCanonicalAtLength),
 	)
 	return out
 }
@@ -100,9 +55,9 @@ func validateVersions(entries []runtime.Descriptor) error {
 // clause-qualified definitions is rejected with the candidate clauses.
 func Lookup(standard, name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
-	entries := descriptors()
+	entries := catalogue
 	if err := validateVersions(entries); err != nil {
-		return runtime.Descriptor{}, err
+		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
 	}
 	for _, d := range entries {
 		if d.Standard == standard && d.Name == name {
@@ -113,28 +68,28 @@ func Lookup(standard, name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q in %s", name, standard)
+		return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("unknown CSN.1 definition %q in %s", name, standard))
 	}
 	clauses := make([]string, 0, len(matches))
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
 	sort.Strings(clauses)
-	return runtime.Descriptor{}, fmt.Errorf("ambiguous CSN.1 definition %q in %s; clauses: %s", name, standard, strings.Join(clauses, ", "))
+	return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("ambiguous CSN.1 definition %q in %s; clauses: %s", name, standard, strings.Join(clauses, ", ")))
 }
 
 // LookupClause resolves the exact specification, clause and printed name.
 func LookupClause(standard, clause, name string) (runtime.Descriptor, error) {
-	entries := descriptors()
+	entries := catalogue
 	if err := validateVersions(entries); err != nil {
-		return runtime.Descriptor{}, err
+		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
 	}
 	for _, d := range entries {
 		if d.Standard == standard && d.Clause == clause && d.Name == name {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q in %s §%s", name, standard, clause)
+	return runtime.Descriptor{}, lookupFailure(standard, clause, name, fmt.Errorf("unknown CSN.1 definition %q in %s §%s", name, standard, clause))
 }
 
 // Decode resolves a printed definition name. SI7/SI8 return a typed
@@ -155,7 +110,95 @@ func DecodeWithContext(standard, name string, data []byte, acs runtime.SI4ACS) (
 		return nil, err
 	}
 	if d.DecodeWithContext == nil {
-		return nil, fmt.Errorf("%w: %s §%s <%s> has no ACS context", runtime.ErrUnsupported, d.Standard, d.Clause, d.Name)
+		return nil, &runtime.OperationError{Operation: "context", Kind: runtime.InvalidValue, Location: runtime.Location{Path: d.Name, BitOffset: -1, Source: d.Extent.Source}, Cause: runtime.ErrUnsupported}
 	}
 	return d.DecodeWithContext(data, acs)
+}
+
+// Descriptors returns a detached catalogue in stable standard, clause and name
+// order. Changing entries or function slots never changes subsequent lookups.
+func Descriptors() []runtime.Descriptor { return append([]runtime.Descriptor(nil), catalogue...) }
+
+var catalogue = func() []runtime.Descriptor {
+	entries := descriptors()
+	sort.Slice(entries, func(i, j int) bool {
+		a, b := entries[i], entries[j]
+		if a.Standard != b.Standard {
+			return a.Standard < b.Standard
+		}
+		if a.Clause != b.Clause {
+			return a.Clause < b.Clause
+		}
+		return a.Name < b.Name
+	})
+	return entries
+}()
+
+func lookupFailure(standard, clause, name string, cause error) error {
+	return &runtime.OperationError{Operation: "lookup", Kind: runtime.InvalidSchema, Location: runtime.Location{Path: name, BitOffset: -1, Source: runtime.Source{Standard: standard, Clause: clause}}, Cause: cause}
+}
+
+// The manual finite canonical bounds are TS 24.008 V20.1.0 §§10.5.1.6,
+// 10.5.1.7, 10.5.5.12a and TS 36.331 V19.4.0 §6.3.6
+// UE-CapabilityRAT-ContainerList field descriptions; receiver tails are separate.
+func manualDescriptor[T any](source runtime.Source, name string, minBits, maxBits, maxOctets int, decode func([]byte) (runtime.Decoded[T], error), from func(*runtime.Reader) (T, error), encode, canonical func(T) ([]byte, error), atLength func(T, int) ([]byte, error)) runtime.Descriptor {
+	wrong := func(operation string) error {
+		return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
+	}
+	value := func(v any) (T, bool) {
+		switch v := v.(type) {
+		case T:
+			return v, true
+		case runtime.Decoded[T]:
+			return v.Value, true
+		default:
+			var zero T
+			return zero, false
+		}
+	}
+	return runtime.Descriptor{Standard: source.Standard, Version: source.Version, Clause: source.Clause, Name: name, MaxOctets: maxOctets,
+		Extent: runtime.Extent{MinimumBits: minBits, MaximumBits: maxBits, Finite: true, Fixed: minBits == maxBits, NeedsContext: minBits != maxBits, Source: source},
+		Decode: func(b []byte) (any, error) { return decode(b) },
+		DecodeFrom: func(r *runtime.Reader) (any, error) {
+			if err := r.Check(); err != nil {
+				return nil, &runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Cause: err}
+			}
+			start := r.Position()
+			v, err := from(r)
+			if err != nil {
+				return nil, err
+			}
+			tail := runtime.BitString{}
+			switch value := any(v).(type) {
+			case uecapability.Classmark2ValuePart:
+				tail = value.Wire.Tail
+			case uecapability.GERANCS:
+				tail = value.Wire.Tail
+			case uecapability.GERANPS:
+				tail = value.Wire.Tail
+			}
+			return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: tail}, nil
+		},
+		Encode: func(v any) ([]byte, error) {
+			x, ok := value(v)
+			if !ok {
+				return nil, wrong("encode")
+			}
+			return encode(x)
+		},
+		Canonical: func(v any) ([]byte, error) {
+			x, ok := value(v)
+			if !ok {
+				return nil, wrong("canonical")
+			}
+			return canonical(x)
+		},
+		CanonicalAtLength: func(v any, n int) ([]byte, error) {
+			x, ok := value(v)
+			if !ok {
+				return nil, wrong("canonical")
+			}
+			return atLength(x, n)
+		},
+	}
 }

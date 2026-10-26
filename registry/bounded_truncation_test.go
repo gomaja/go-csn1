@@ -265,7 +265,7 @@ func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 		omitted += strings.Count(string(source), "w.OmittedFieldError(")
 		length += strings.Count(string(source), "w.LengthBoundError(")
 		lengthField += strings.Count(string(source), "w.LengthFieldError(")
-		context += strings.Count(string(source), `fmt.Errorf("%w: continuation count requires enclosing SI value", runtime.ErrContextRequired)`)
+		context += strings.Count(string(source), `"%w: continuation count requires enclosing SI value"`)
 	}
 	// Two SI stop records and one continuation container sit inside the
 	// fixed SI 18/SI 20 value; the IA length field bounds both choice arms;

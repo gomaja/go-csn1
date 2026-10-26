@@ -8,12 +8,13 @@ import (
 	"go/parser"
 	"go/token"
 	"strconv"
+	"strings"
 )
 
 // CheckGeneratedLoopArithmetic verifies the two emitted index patterns:
 // counted repeats and recursive-list selectors. Their generator sites are
-// csn1/gen/direct.go:904 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:955
-// `for i:=0;i<count;i++` and csn1/gen/direct.go:1388 `if i+1<len(v.Entries)`.
+// csn1/gen/direct.go:893 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:944
+// `for i:=0;i<count;i++` and csn1/gen/direct.go:1377 `if i+1<len(v.Entries)`.
 func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextIndexes int, err error) {
 	set := token.NewFileSet()
 	file, err := parser.ParseFile(set, name, source, 0)
@@ -24,6 +25,14 @@ func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextI
 		fn, ok := declaration.(*ast.FuncDecl)
 		if !ok || fn.Body == nil {
 			continue
+		}
+		if fn.Name.Name == "constrainedWidth" {
+			start, end := set.Position(fn.Pos()).Offset, set.Position(fn.End()).Offset
+			body := generatedWhitespace.ReplaceAllString(string(source[start:end]), "")
+			if !strings.Contains(body, "fori:=len(path)-1;i>=0;i--") || !strings.Contains(body, "path=path[i+1:]") {
+				return 0, 0, fmt.Errorf("%s: unbounded field-path scan", name)
+			}
+			continue // Its decrement and successor are checked in residual.go.
 		}
 		var counted []*ast.ForStmt
 		var ranged []*ast.RangeStmt
