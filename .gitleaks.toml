@@ -1,0 +1,12 @@
+title = "go-csn1 gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Release evidence records the SHA-256 digests of the pinned runtime API inventory and of the API ledger; their key names match the generic API key heuristic."
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "match"
+paths = ['''^release-evidence\.json$''']
+regexes = ['''^api(_ledger)?_sha256": "[0-9a-f]{64}"$''']
