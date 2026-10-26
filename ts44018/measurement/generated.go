@@ -2969,7 +2969,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, descriptorTypeError("canonical", "Repeated Invalid_BSIC_Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
 			}
 		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
+		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return descriptorFrom(r, DecodeEUTRANMeasurementReportStructFrom, func(v EUTRANMeasurementReportStruct, wire runtime.WireInfo) EUTRANMeasurementReportStruct {
 				v.Wire = wire
 				return v

@@ -11086,7 +11086,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, descriptorTypeError("canonical", "Direct encoding 1 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
 			}
 		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeDirectEncoding2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
+		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeDirectEncoding2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
 			return descriptorFrom(r, DecodeDirectEncoding2StructFrom, func(v DirectEncoding2Struct, wire runtime.WireInfo) DirectEncoding2Struct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Direct encoding 2 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {

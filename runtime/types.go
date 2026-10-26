@@ -58,7 +58,7 @@ type Decoded[T any] struct {
 // printed name. Version is metadata and never part of the lookup key.
 type Descriptor struct {
 	Standard, Version, Clause, Name string
-	// MaxOctets is zero when a definition has no standalone source bound.
+	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
 	MaxOctets                    int
 	Extent                       Extent
 	Decode                       func([]byte) (any, error)
@@ -247,8 +247,8 @@ func cloneVars(input map[string]uint64) map[string]uint64 {
 // Source identifies the exact published rule used by a codec.
 type Source struct{ Standard, Version, Clause, Table string }
 
-// Extent is the exact canonical bit extent, excluding external framing.
-// A finite zero maximum is distinct from the absence of a standalone maximum.
+// Extent bounds canonical source bits, excluding framing, octet completion and Tail.
+// MinimumBits may be conservative; finite zero differs from an unknown maximum.
 type Extent struct {
 	MinimumBits, MaximumBits    int
 	Finite, Fixed, NeedsContext bool
