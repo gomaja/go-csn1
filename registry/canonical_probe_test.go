@@ -166,9 +166,23 @@ func canonicalCapabilityDefinition(definition runtime.Descriptor) bool {
 	return false
 }
 
-// Generated sender constraints use an untyped error; keep this exception
-// limited to the exact generator marker and the two Classmark 2 constraints.
+// Sender constraints retain their exact cause through the located operation
+// wrapper; only the authenticated capability reservation markers qualify.
 func canonicalCapabilityReservation(err error) bool {
+	var operation *runtime.OperationError
+	if errors.As(err, &operation) {
+		if operation.Kind != runtime.InvalidValue {
+			return false
+		}
+		if operation.Cause == nil {
+			switch operation.Detail {
+			case "value reserved by source table: TS 24.008 table 10.5.6a Revision level", "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability":
+				return true
+			}
+			return false
+		}
+		return canonicalCapabilityReservation(operation.Cause)
+	}
 	switch err.Error() {
 	case "value reserved by source table", "value reserved by source table: TS 24.008 table 10.5.6a Revision level", "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability":
 		return true

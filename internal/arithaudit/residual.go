@@ -23,6 +23,17 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 	}
 	start, end := file.set.Position(fn.Pos()).Offset, file.set.Position(fn.End()).Offset
 	body := generatedWhitespace.ReplaceAllString(string(file.source[start:end]), "")
+	// These new operations are emitted only in fixed descriptor and location
+	// helpers. Check the complete local guard shape before accepting their
+	// classified arithmetic; other generated functions still use the rules below.
+	if guards, ok := reviewedHelperGuards[fn.Name.Name]; ok && reviewedHelperExpressions[fn.Name.Name][f.Expression] {
+		for _, guard := range guards {
+			if !strings.Contains(body, guard) {
+				return fmt.Errorf("generated helper guard %q absent for %s", guard, f.Key())
+			}
+		}
+		return nil
+	}
 	var ordered []string
 	switch f.Expression {
 	case "uint64(value)", "uint8(value)":
@@ -31,6 +42,18 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		want := "func(valueuint8,widthint){ifwriteErr==nil{writeErr=w.WriteUint(uint64(value),width)}}"
 		if f.Expression == "uint8(value)" {
 			want = "func(widthint)uint8{ifwidth<0||width>8{readErr=fmt.Errorf(\"invalidClassmark2readwidth\");return0};value,err:=r.ReadUint(width);iferr!=nil{readErr=err};returnuint8(value)}"
+			if fn.Name.Name == "DecodeClassmark2ValuePartFrom" {
+				want = "func(widthint)uint8{value,err:=r.ReadUint(width);iferr!=nil{readErr=err};returnuint8(value)}"
+				calls := regexp.MustCompile(`read\(([0-9]+)\)`).FindAllStringSubmatch(body, -1)
+				if len(calls) == 0 {
+					return fmt.Errorf("classmark 2 reader has no fixed widths: %s", f.Key())
+				}
+				for _, call := range calls {
+					if len(call[1]) > 1 || call[1] == "0" || call[1][0] > '8' {
+						return fmt.Errorf("classmark 2 reader width exceeds eight: %s", f.Key())
+					}
+				}
+			}
 		}
 		proven := false
 		ast.Inspect(fn.Body, func(node ast.Node) bool {
@@ -78,6 +101,8 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		ordered = []string{"r.Eval(\"3\")", "r.ReadUint(width)", "v+=1"}
 	case "uint64(v) - 1":
 		ordered = []string{"ifuint64(v)<1", "raw:=uint64(v)-1"}
+	case "len(out.Entries) - 1":
+		ordered = []string{"for{before:=r.Position()", "out.Entries=append(out.Entries,element)", "continuation,err:=r.ReadUint(1)", "iferr!=nil{return", "len(out.Entries)-1"}
 	default:
 		return fmt.Errorf("unverified generated expression: %s", f.Key())
 	}
@@ -89,4 +114,30 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		body = body[at+len(part):]
 	}
 	return nil
+}
+
+var reviewedHelperExpressions = map[string]map[string]bool{
+	"descriptorRead":                 {"r.Position() + r.Remaining()": true, "start + originalRemaining": true, "start + maxBits": true, "r.Position() - start": true},
+	"constrainedWidth":               {"len(path) - 1": true, "i--": true, "i + 1": true},
+	"locatedFailure":                 {"be.Limit - be.Position": true, `"/" + be.Field`: true, `location.Path += "/" + be.Field`: true},
+	"shiftOperation":                 {"copy.Location.BitOffset += offset": true, "copy.Offset += offset": true, "copy.Position += offset": true, "copy.Limit += offset": true, `path + "/" + copy.Location.Path`: true, `path + "/" + copy.Path`: true},
+	"DecodeClassmark2ValuePartFrom":  {"r.Position() + r.Remaining()": true},
+	"DecodeGERANCSFrom":              {"r.Position() + r.Remaining()": true},
+	"DecodeGERANPSFrom":              {"r.Position() + r.Remaining()": true},
+	"EncodeClassmark2ValuePartTo":    {"spareIndex++": true},
+	"EncodeGERANCSCanonicalAtLength": {"octets - 5": true},
+	"decodeClassmark2ValuePartBytes": {"len(data) * 8": true},
+}
+
+var reviewedHelperGuards = map[string][]string{
+	"descriptorRead":                 {"r.Check()", "r.Remaining()<minBits", "originalRemaining:=r.Remaining()", "start:=r.Position()", "err:=decode(r)", "ifmaxBits>0&&originalRemaining>maxBits"},
+	"constrainedWidth":               {"fori:=len(path)-1;i>=0;i--", "path=path[i+1:]"},
+	"locatedFailure":                 {"be.Limit>=0&&be.Limit<=1<<20&&be.Position>=0&&be.Position<=1<<20", "location.Width=be.Limit-be.Position"},
+	"shiftOperation":                 {"ifcopy.Location.BitOffset>=0", "copy.Cause=shiftOperation(copy.Cause,offset,path)"},
+	"DecodeClassmark2ValuePartFrom":  {"r.Check()", "r.Remaining()<24", "r.Position()+r.Remaining()"},
+	"DecodeGERANCSFrom":              {"r.Check()", "r.BoundedRemaining()<0", "r.BoundedRemaining()<48", "r.Position()+r.Remaining()"},
+	"DecodeGERANPSFrom":              {"r.Check()", "r.BoundedRemaining()<0", "r.BoundedRemaining()<16", "r.Position()+r.Remaining()"},
+	"EncodeClassmark2ValuePartTo":    {"spareIndex:=0", "ifspareIndex<len(v.Wire.Spare)", "spareIndex++"},
+	"EncodeGERANCSCanonicalAtLength": {"octets<6||octets>37", "octets-5"},
+	"decodeClassmark2ValuePartBytes": {"runtime.CheckInput(data)", "len(data)<3", "len(data)*8"},
 }

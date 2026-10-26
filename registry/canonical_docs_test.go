@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts44018/restoctets"
 )
 
 // Typed error classes of the generated canonical entry points.
@@ -153,10 +154,10 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 	return out, packages
 }
 
-var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Canonical)\b`)
+var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Canonical(?:AtLength)?(?:WithContext)?)\b`)
 
 // canonicalFunctions maps each descriptor (clause and name) to the package
-// directory and function its Canonical closure calls, and fails when one
+// directory and function its Canonical adapter calls, and fails when one
 // descriptor key maps to two functions.
 func canonicalFunctions(t *testing.T, packages map[string]string) map[string]string {
 	t.Helper()
@@ -168,6 +169,12 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 			t.Fatal(err)
 		}
 		own := packages[parsed.Name.Name]
+		adapters := map[string]*ast.FuncDecl{}
+		for _, decl := range parsed.Decls {
+			if fn, ok := decl.(*ast.FuncDecl); ok && fn.Recv == nil {
+				adapters[fn.Name.Name] = fn
+			}
+		}
 		ast.Inspect(parsed, func(n ast.Node) bool {
 			lit, ok := n.(*ast.CompositeLit)
 			if !ok {
@@ -194,7 +201,13 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 						}
 					}
 				case "Canonical":
-					ast.Inspect(kv.Value, func(m ast.Node) bool {
+					var body ast.Node = kv.Value
+					if id, ok := kv.Value.(*ast.Ident); ok {
+						if fn := adapters[id.Name]; fn != nil {
+							body = fn.Body
+						}
+					}
+					ast.Inspect(body, func(m ast.Node) bool {
 						if c, ok := m.(*ast.CallExpr); ok {
 							switch fn := c.Fun.(type) {
 							case *ast.Ident:
@@ -221,6 +234,10 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 			return true
 		})
 	}
+
+	out["10.5.1.6\x00Mobile Station Classmark 2 value part"] = "ts36331/uecapability.EncodeClassmark2ValuePartCanonical"
+	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs"] = "ts36331/uecapability.EncodeGERANCSCanonical"
+	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-ps"] = "ts36331/uecapability.EncodeGERANPSCanonical"
 	return out
 }
 
@@ -249,7 +266,7 @@ func classify(err error, octets int, entry string) string {
 			return classRequired
 		case entry == entryAtLength && extent.Actual == octets:
 			return classRange
-		case entry == entryAtLength && extent.Minimum == octets && extent.Maximum == octets && extent.Actual < octets:
+		case entry == entryAtLength && extent.Minimum == extent.Maximum && extent.Actual < extent.Minimum:
 			return classUnfilled
 		case extent.Maximum > 0 && extent.Actual > extent.Maximum:
 			return classLonger
@@ -275,11 +292,20 @@ func classify(err error, octets int, entry string) string {
 // guidedDecode decodes biased random bits, resampling from the offset where
 // the decoder rejects them, so most grammars yield valid values; a high
 // one-bit bias lengthens {1 ...}** lists and selects optional arms.
-func guidedDecode(rng *rand.Rand, decode func([]byte) (any, error)) []any {
+func guidedDecode(rng *rand.Rand, maxOctets int, decode func([]byte) (any, error)) []any {
 	var out []any
+	sizes := []int{0, 1, 8, 20, 64, 200}
+	if maxOctets > 0 {
+		for size := 2; size <= min(maxOctets, 20); size++ {
+			sizes = append(sizes, size)
+		}
+		if maxOctets > 20 {
+			sizes = append(sizes, maxOctets)
+		}
+	}
 	for _, bias := range []float64{0.1, 0.5, 0.8, 0.95} {
 		// Empty and one-octet inputs select null alternatives.
-		for _, size := range []int{0, 1, 8, 20, 64, 200} {
+		for _, size := range sizes {
 			bits := make([]bool, size*8)
 			fill := func(from int) {
 				for i := from; i < len(bits); i++ {
@@ -315,6 +341,26 @@ func guidedDecode(rng *rand.Rand, decode func([]byte) (any, error)) []any {
 		}
 	}
 	return out
+}
+
+// Canonical error documentation also covers user-constructed values beyond
+// a descriptor's receiver extent. These typed decoders provide such seeds
+// without weakening the descriptor entry point's source-length check.
+func canonicalLongSeed[T any](decode func(*runtime.Reader) (T, error)) func([]byte) (any, error) {
+	return func(data []byte) (any, error) {
+		r := runtime.NewReader(data)
+		if _, err := r.PushLimit(len(data) * 8); err != nil {
+			return nil, err
+		}
+		return decode(r)
+	}
+}
+
+var canonicalLongSeeds = map[string]func([]byte) (any, error){
+	"10.5.2.25\x00P3 Rest Octets":      canonicalLongSeed(restoctets.DecodeP3RestOctetsFrom),
+	"10.5.2.33a\x00SI2ter Rest Octets": canonicalLongSeed(restoctets.DecodeSI2terRestOctetsFrom),
+	"10.5.2.34\x00SI3 Rest Octet":      canonicalLongSeed(restoctets.DecodeSI3RestOctetFrom),
+	"10.5.2.37n\x00SI 22 Rest Octets":  canonicalLongSeed(restoctets.DecodeSI22RestOctetsFrom),
 }
 
 // harvest records every struct value nested in a decoded value, so that
@@ -550,7 +596,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			switch {
 			case d.DecodeWithContext != nil:
 				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
-					found = append(found, guidedDecode(rng, func(b []byte) (any, error) {
+					found = append(found, guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
 						decoded, err := d.DecodeWithContext(b, acs)
 						if err != nil {
 							return nil, err
@@ -559,9 +605,19 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					})...)
 				}
 			case d.DecodeFrom != nil:
-				found = guidedDecode(rng, func(b []byte) (any, error) { return d.DecodeFrom(runtime.NewReader(b)) })
+				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
+					r := runtime.NewReader(b)
+					if _, err := r.PushLimit(len(b) * 8); err != nil {
+						return nil, err
+					}
+					decoded, err := d.DecodeFrom(r)
+					if err != nil {
+						return nil, err
+					}
+					return reflect.ValueOf(decoded).FieldByName("Value").Interface(), nil
+				})
 			default:
-				found = guidedDecode(rng, func(b []byte) (any, error) {
+				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
 					decoded, err := d.Decode(b)
 					if err != nil {
 						return nil, err
@@ -578,6 +634,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				if decoded, err := d.Decode(wire); err == nil {
 					found = append(found, reflect.ValueOf(decoded).FieldByName("Value").Interface())
 				}
+			}
+			if decode := canonicalLongSeeds[d.Clause+"\x00"+d.Name]; decode != nil {
+				found = append(found, guidedDecode(rand.New(rand.NewSource(int64(index))), 0, decode)...)
 			}
 			local := map[reflect.Type][]reflect.Value{}
 			for _, v := range found {
@@ -689,7 +748,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				if d.CanonicalAtLength == nil {
 					continue
 				}
-				name += "AtLength"
+				if d.DecodeWithContext == nil {
+					name += "AtLength"
+				}
 			case entryWithContext:
 				if d.CanonicalWithContext == nil {
 					continue
@@ -758,7 +819,10 @@ func structTypes(t reflect.Type, into map[reflect.Type]bool) {
 // entry and a valid multiblock assignment; growing that list reaches the
 // IA extent error without selecting a reserved alternative.
 var canonicalSeeds = map[string][]string{
-	"10.5.2.16\x00IA Rest Octets": {"82000008", "8008", "40400000002b"},
+	// TS 36.331 V19.4.0 §6.3.6 carries GERAN Classmark 2 and 3 after
+	// the RAT marker; this minimum value reaches the new manual length slot.
+	"UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs": {"330320000000"},
+	"10.5.2.16\x00IA Rest Octets":                                   {"82000008", "8008", "40400000002b"},
 	// Short GPRS Cell Options extensions (TS 44.060 V19.0.0 §12.24), alone
 	// and inside SI 13; pycrate and Wireshark agree on their decoding.
 	"12.24\x00GPRS Cell Options IE":   {"b0e1d5122a103fc76dfdb8ebeb652a", "b48f27c6a62ca8ce639d2adb"},
@@ -947,12 +1011,23 @@ func TestClassifyExtentErrors(t *testing.T) {
 		{&runtime.ExtentError{Minimum: 1, Required: true}, 0, entryCanonical, classRequired},
 		{&runtime.ExtentError{Actual: 30, Minimum: 1, Maximum: 20}, 30, entryAtLength, classRange},
 		{&runtime.ExtentError{Actual: 2, Minimum: 4, Maximum: 4}, 4, entryAtLength, classUnfilled},
+		{&runtime.ExtentError{Actual: 2, Minimum: 4, Maximum: 4}, 9, entryAtLength, classUnfilled},
 		{&runtime.ExtentError{Actual: 22, Minimum: 0, Maximum: 21}, 0, entryCanonical, classLonger},
 		// Below the definition's minimum, as runtime.CanonicalEncode reports it.
 		{&runtime.ExtentError{Actual: 0, Minimum: 1, Maximum: 1}, 0, entryCanonical, classShorter},
 	} {
 		if got := classify(fmt.Errorf("wrapped: %w", tc.err), tc.octets, tc.entry); got != tc.want {
 			t.Errorf("classify(%+v, %d, %s) = %q, want %q", *tc.err, tc.octets, tc.entry, got, tc.want)
+		}
+	}
+}
+
+func TestCanonicalFunctionsResolveDescriptorAdapters(t *testing.T) {
+	_, packages := documentedClasses(t)
+	functions := canonicalFunctions(t, packages)
+	for _, d := range descriptors() {
+		if functions[d.Clause+"\x00"+d.Name] == "" {
+			t.Errorf("%s §%s <%s>: no generated canonical function", d.Standard, d.Clause, d.Name)
 		}
 	}
 }

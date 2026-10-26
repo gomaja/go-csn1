@@ -177,7 +177,7 @@ func ScanSource(name string, source []byte) ([]Finding, error) {
 }
 
 func isDecoderName(name string) bool {
-	for _, prefix := range []string{"Decode", "Unmarshal", "Read", "Parse", "decode", "unmarshal", "read", "parse"} {
+	for _, prefix := range []string{"Decode", "Unmarshal", "Read", "Parse", "decode", "unmarshal", "read", "parse", "manualDecode"} {
 		if strings.HasPrefix(name, prefix) {
 			return true
 		}

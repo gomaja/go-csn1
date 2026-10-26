@@ -59,6 +59,9 @@ func TestCapabilityValueReaderOffsets(t *testing.T) {
 							t.Fatal(err)
 						}
 					}
+					if _, err := r.PushLimit(len(tc.wire) * 8); err != nil {
+						t.Fatal(err)
+					}
 					if _, err := entry.decode(r); err != nil {
 						t.Fatal(err)
 					}

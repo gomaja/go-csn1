@@ -156,3 +156,15 @@ func encode(entries []int) { for i := range entries { if i+1<len(entries) {} } }
 		}
 	}
 }
+
+func TestScanIncludesConcreteDescriptorReaders(t *testing.T) {
+	findings, err := ScanSource("registry/registry.go", []byte(`package registry
+func manualDecodeValueFrom(r *Reader, start int) int { return r.Position() - start }
+`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(findings) != 1 || findings[0].Expression != "r.Position() - start" {
+		t.Fatalf("concrete descriptor reader arithmetic not inventoried: %+v", findings)
+	}
+}

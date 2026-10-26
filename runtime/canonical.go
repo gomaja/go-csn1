@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 )
@@ -16,32 +17,44 @@ type canonicalPointer struct {
 // received wire layout from it, including nested fields. Generated canonical
 // encoders use the copy so that a caller can also keep encoding the original
 // value byte for byte.
-func Canonical[T any](value T) T {
+func Canonical[T any](value T) T { return canonicalCopy(value, false) }
+func canonicalCopy[T any](value T, rawErrors bool) T {
+	input := any(value)
+	if input == nil {
+		return value
+	}
+	return canonicalCopyValue(input, rawErrors).(T)
+}
+
+func canonicalCopyValue(value any, rawErrors bool) any {
 	reflected := reflect.ValueOf(value)
 	if !reflected.IsValid() {
 		return value
 	}
-	copy := canonicalValue(reflected, make(map[canonicalPointer]reflect.Value))
-	return copy.Interface().(T)
+	return canonicalValue(reflected, make(map[canonicalPointer]reflect.Value), rawErrors).Interface()
 }
 
 // CanonicalTo gives a fresh value an explicit transmitted length in bits.
 // Generated encoders use it for truncated rest octets and receiver-inferred
 // zero extensions. The target is independent of any received wire layout.
-func CanonicalTo[T any](value T, bits int) T {
-	copy := Canonical(value)
-	rv := reflect.ValueOf(&copy).Elem()
-	if rv.Kind() == reflect.Struct {
-		field := rv.FieldByName("Wire")
-		if field.IsValid() && field.CanSet() && field.Type() == wireInfoType {
-			field.Set(reflect.ValueOf(WireInfo{canonical: true, targetSet: true, targetBits: bits}))
-		}
-	}
+func CanonicalTo[T any](value T, bits int) T { return canonicalTo(value, bits, false) }
+func canonicalTo[T any](value T, bits int, rawErrors bool) T {
+	copy := canonicalCopy(value, rawErrors)
+	setCanonicalTarget(reflect.ValueOf(&copy).Elem(), bits, rawErrors)
 	return copy
 }
 
+func setCanonicalTarget(rv reflect.Value, bits int, rawErrors bool) {
+	if rv.Kind() == reflect.Struct {
+		field := rv.FieldByName("Wire")
+		if field.IsValid() && field.CanSet() && field.Type() == wireInfoType {
+			field.Set(reflect.ValueOf(WireInfo{canonical: true, targetSet: true, targetBits: bits, rawErrors: rawErrors}))
+		}
+	}
+}
+
 func SemanticallyEqual[T any](a, b T) bool {
-	return reflect.DeepEqual(Canonical(a), Canonical(b))
+	return reflect.DeepEqual(canonicalCopyValue(a, false), canonicalCopyValue(b, false))
 }
 
 // CanonicalEncode tries a fresh encoding, then the permitted octet extents
@@ -58,35 +71,54 @@ func SemanticallyEqual[T any](a, b T) bool {
 //
 // Bytes that decode to a different typed value give an untyped error.
 func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if equivalent == nil {
+		equivalent = SemanticallyEqual[T]
+	}
+	return canonicalEncode(minOctets, maxOctets, shortest,
+		func(bits int, target bool) ([]byte, error) {
+			if target {
+				return encode(canonicalTo(value, bits, true))
+			}
+			return encode(canonicalCopy(value, true))
+		},
+		func(out []byte) error {
+			again, err := decode(out)
+			if err != nil {
+				return fmt.Errorf("canonical bytes do not decode: %w", err)
+			}
+			if !equivalent(value, again.Value) {
+				return errCanonicalMismatch
+			}
+			return nil
+		},
+		func() error { _, err := encode(Canonical(value)); return err })
+}
+
+// canonicalEncode shares the extent search across generated value types. Its
+// typed callbacks do not need an intermediate interface box.
+func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, bool) ([]byte, error), verify func([]byte) error, locate func() error) ([]byte, error) {
 	if maxOctets == 0 {
 		return nil, &ExtentError{Minimum: minOctets, Required: true}
 	}
 	if minOctets < 0 || maxOctets < minOctets || maxOctets > maxBits/8 {
-		return nil, fmt.Errorf("invalid canonical extent range")
+		return nil, canonicalFailure(fmt.Errorf("invalid canonical extent range"))
 	}
-	if equivalent == nil {
-		equivalent = SemanticallyEqual[T]
-	}
-	try := func(fresh T) ([]byte, error) {
-		out, err := encode(fresh)
+	try := func(bits int, target bool) ([]byte, error, bool) {
+		out, err := encode(bits, target)
 		if err != nil {
-			return nil, err
+			return nil, err, false
 		}
 		if len(out) < minOctets || len(out) > maxOctets {
-			return nil, &ExtentError{Actual: len(out), Minimum: minOctets, Maximum: maxOctets}
+			return nil, &ExtentError{Actual: len(out), Minimum: minOctets, Maximum: maxOctets}, false
 		}
-		again, err := decode(out)
-		if err != nil {
-			return nil, fmt.Errorf("canonical bytes do not decode: %w", err)
+		if err := verify(out); err != nil {
+			return nil, err, true
 		}
-		if !equivalent(value, again.Value) {
-			return nil, fmt.Errorf("canonical bytes change typed semantics")
-		}
-		return out, nil
+		return out, nil, false
 	}
 	search := func() ([]byte, bool) {
 		for octets := minOctets; octets <= maxOctets; octets++ {
-			out, err := try(CanonicalTo(value, octets*8))
+			out, err, _ := try(octets*8, true)
 			if err == nil && len(out) == octets {
 				return out, true
 			}
@@ -98,7 +130,7 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 			return out, nil
 		}
 	}
-	out, firstErr := try(Canonical(value))
+	out, firstErr, firstSchema := try(0, false)
 	if firstErr == nil {
 		return out, nil
 	}
@@ -106,6 +138,12 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 		if out, ok := search(); ok {
 			return out, nil
 		}
+	}
+	if firstSchema {
+		return nil, canonicalFailure(firstErr)
+	}
+	if located := locate(); located != nil {
+		return nil, located
 	}
 	return nil, firstErr
 }
@@ -130,38 +168,62 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 //
 // Bytes that decode to a different typed value give an untyped error.
 func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, encode func(T) ([]byte, error), decode func([]byte) (Decoded[T], error), equivalent func(T, T) bool) ([]byte, error) {
+	if equivalent == nil {
+		equivalent = SemanticallyEqual[T]
+	}
+	return canonicalEncodeAtLength(octets, minOctets, maxOctets,
+		func(bits int) ([]byte, error) { return encode(CanonicalTo(value, bits)) },
+		func(out []byte) error {
+			again, err := decode(out)
+			if err != nil {
+				return canonicalFailure(fmt.Errorf("canonical bytes do not decode: %w", err))
+			}
+			if !equivalent(value, again.Value) {
+				return canonicalFailure(fmt.Errorf("canonical bytes change typed semantics"))
+			}
+			return nil
+		})
+}
+
+// canonicalEncodeAtLength validates the extent before invoking the typed
+// callbacks, and rejects an unfilled target before decoding its bytes.
+func canonicalEncodeAtLength(octets, minOctets, maxOctets int, encode func(int) ([]byte, error), verify func([]byte) error) ([]byte, error) {
 	if maxOctets == 0 {
 		maxOctets = maxBits / 8
 	}
 	if octets < minOctets || octets > maxOctets || maxOctets > maxBits/8 {
 		return nil, &ExtentError{Actual: octets, Minimum: minOctets, Maximum: maxOctets}
 	}
-	if equivalent == nil {
-		equivalent = SemanticallyEqual[T]
-	}
-	out, err := encode(CanonicalTo(value, octets*8))
+	out, err := encode(octets * 8)
 	if err != nil {
 		return nil, err
 	}
 	if len(out) != octets {
 		return nil, &ExtentError{Actual: len(out), Minimum: octets, Maximum: octets}
 	}
-	again, err := decode(out)
-	if err != nil {
-		return nil, fmt.Errorf("canonical bytes do not decode: %w", err)
-	}
-	if !equivalent(value, again.Value) {
-		return nil, fmt.Errorf("canonical bytes change typed semantics")
+	if err := verify(out); err != nil {
+		return nil, err
 	}
 	return out, nil
 }
 
-func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value) reflect.Value {
+// canonicalWire and canonicalRawErrorsWire are the shared fresh wire records
+// of a canonical copy. Callers only copy them into a destination, so sharing
+// one boxed record avoids an allocation for every WireInfo field copied.
+var (
+	canonicalWire          = reflect.ValueOf(WireInfo{canonical: true})
+	canonicalRawErrorsWire = reflect.ValueOf(WireInfo{canonical: true, rawErrors: true})
+)
+
+func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
 	if !value.IsValid() {
 		return value
 	}
 	if value.Type() == wireInfoType {
-		return reflect.ValueOf(WireInfo{canonical: true})
+		if rawErrors {
+			return canonicalRawErrorsWire
+		}
+		return canonicalWire
 	}
 	switch value.Kind() {
 	case reflect.Pointer:
@@ -174,21 +236,21 @@ func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value
 		}
 		out := reflect.New(value.Type().Elem())
 		seen[key] = out
-		out.Elem().Set(canonicalValue(value.Elem(), seen))
+		out.Elem().Set(canonicalValue(value.Elem(), seen, rawErrors))
 		return out
 	case reflect.Interface:
 		if value.IsNil() {
 			return reflect.Zero(value.Type())
 		}
 		out := reflect.New(value.Type()).Elem()
-		out.Set(canonicalValue(value.Elem(), seen))
+		out.Set(canonicalValue(value.Elem(), seen, rawErrors))
 		return out
 	case reflect.Struct:
 		out := reflect.New(value.Type()).Elem()
 		out.Set(value)
 		for i := range value.NumField() {
 			if out.Field(i).CanSet() && value.Field(i).CanInterface() {
-				out.Field(i).Set(canonicalValue(value.Field(i), seen))
+				out.Field(i).Set(canonicalValue(value.Field(i), seen, rawErrors))
 			}
 		}
 		return out
@@ -198,13 +260,13 @@ func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value
 		}
 		out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
 		for i := range value.Len() {
-			out.Index(i).Set(canonicalValue(value.Index(i), seen))
+			out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
 		}
 		return out
 	case reflect.Array:
 		out := reflect.New(value.Type()).Elem()
 		for i := range value.Len() {
-			out.Index(i).Set(canonicalValue(value.Index(i), seen))
+			out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
 		}
 		return out
 	case reflect.Map:
@@ -214,10 +276,16 @@ func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value
 		out := reflect.MakeMapWithSize(value.Type(), value.Len())
 		iter := value.MapRange()
 		for iter.Next() {
-			out.SetMapIndex(iter.Key(), canonicalValue(iter.Value(), seen))
+			out.SetMapIndex(iter.Key(), canonicalValue(iter.Value(), seen, rawErrors))
 		}
 		return out
 	default:
 		return value
 	}
 }
+
+func canonicalFailure(cause error) error {
+	return &OperationError{Operation: "canonical", Kind: InvalidSchema, Location: Location{BitOffset: -1}, Cause: cause}
+}
+
+var errCanonicalMismatch = errors.New("canonical bytes change typed semantics")

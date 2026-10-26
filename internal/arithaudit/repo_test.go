@@ -94,7 +94,13 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 			wantLoopIncrements++
 		}
 		if strings.HasSuffix(finding.File, "/generated.go") && finding.Expression == "i + 1" {
-			wantRangeNext++
+			file, err := citations.source(finding.File)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if fn := functionAt(file, finding.Line); fn != nil && fn.Name.Name != "constrainedWidth" {
+				wantRangeNext++
+			}
 		}
 	}
 	if checked != want {

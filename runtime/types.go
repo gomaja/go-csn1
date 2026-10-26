@@ -58,16 +58,19 @@ type Decoded[T any] struct {
 // printed name. Version is metadata and never part of the lookup key.
 type Descriptor struct {
 	Standard, Version, Clause, Name string
-	// MaxOctets is zero when a definition has no standalone source bound.
-	MaxOctets            int
-	Decode               func([]byte) (any, error)
-	DecodeFrom           func(*Reader) (any, error)
-	Encode               func(any) ([]byte, error)
-	Canonical            func(any) ([]byte, error)
-	CanonicalAtLength    func(any, int) ([]byte, error)
-	DecodeWithContext    func([]byte, SI4ACS) (any, error)
-	EncodeWithContext    func(any, SI4ACS) ([]byte, error)
-	CanonicalWithContext func(any, SI4ACS) ([]byte, error)
+	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
+	MaxOctets                    int
+	Extent                       Extent
+	Decode                       func([]byte) (any, error)
+	DecodeFrom                   func(*Reader) (any, error)
+	Encode                       func(any) ([]byte, error)
+	Canonical                    func(any) ([]byte, error)
+	CanonicalAtLength            func(any, int) ([]byte, error)
+	DecodeWithContext            func([]byte, SI4ACS) (any, error)
+	DecodeFromWithContext        func(*Reader, SI4ACS) (any, error)
+	CanonicalAtLengthWithContext func(any, int, SI4ACS) ([]byte, error)
+	EncodeWithContext            func(any, SI4ACS) ([]byte, error)
+	CanonicalWithContext         func(any, SI4ACS) ([]byte, error)
 }
 
 type ErrorKind string
@@ -188,7 +191,50 @@ func (e *DecodeError) Error() string {
 	return fmt.Sprintf("CSN.1 %s at bit %d in %s: %s", e.Kind, e.Offset, e.Path, e.Detail)
 }
 
-func key(name string) string { return strings.ToLower(strings.Join(strings.Fields(name), " ")) }
+// Expression names are ASCII in the published sources. Normalize them with
+// one allocation; preserve the existing Unicode and invalid-UTF-8 behavior.
+func key(name string) string {
+	if strings.HasPrefix(name, "\x00") {
+		return name
+	}
+	canonical := true
+	space := true
+	for i := 0; i < len(name); i++ {
+		c := name[i]
+		if c >= 128 {
+			return strings.ToLower(strings.Join(strings.Fields(name), " "))
+		}
+		white := c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f'
+		if c >= 'A' && c <= 'Z' || white && (c != ' ' || space || i == len(name)-1) {
+			canonical = false
+		}
+		space = white
+	}
+	if canonical {
+		return name
+	}
+	var b strings.Builder
+	b.Grow(len(name))
+	pending := false
+	for i := 0; i < len(name); i++ {
+		c := name[i]
+		if c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f' {
+			if b.Len() > 0 {
+				pending = true
+			}
+			continue
+		}
+		if pending {
+			b.WriteByte(' ')
+			pending = false
+		}
+		if c >= 'A' && c <= 'Z' {
+			c += 'a' - 'A'
+		}
+		b.WriteByte(c)
+	}
+	return b.String()
+}
 
 func cloneVars(input map[string]uint64) map[string]uint64 {
 	out := make(map[string]uint64, len(input))
@@ -197,3 +243,48 @@ func cloneVars(input map[string]uint64) map[string]uint64 {
 	}
 	return out
 }
+
+// Source identifies the exact published rule used by a codec.
+type Source struct{ Standard, Version, Clause, Table string }
+
+// Extent bounds canonical source bits, excluding framing, octet completion and Tail.
+// MinimumBits may be conservative; finite zero differs from an unknown maximum.
+type Extent struct {
+	MinimumBits, MaximumBits    int
+	Finite, Fixed, NeedsContext bool
+	Source                      Source
+}
+
+// Location is absolute from the caller's reader or writer origin. A bit
+// offset of -1 means the operation failed before any bit existed.
+type Location struct {
+	Path             string
+	BitOffset, Width int
+	Source           Source
+}
+
+// OperationError adds operation and source information while retaining the
+// original typed cause and sentinel identities through Unwrap.
+type OperationError struct {
+	Operation string
+	Kind      ErrorKind
+	Location  Location
+	Cause     error
+	Detail    string
+}
+
+func (e *OperationError) Error() string {
+	where := ""
+	if e.Location.BitOffset >= 0 {
+		where = fmt.Sprintf(" at bit %d", e.Location.BitOffset)
+	}
+	if e.Location.Path != "" {
+		where += " in " + e.Location.Path
+	}
+	detail := e.Detail
+	if detail == "" && e.Cause != nil {
+		detail = e.Cause.Error()
+	}
+	return fmt.Sprintf("CSN.1 %s %s%s: %s", e.Operation, e.Kind, where, detail)
+}
+func (e *OperationError) Unwrap() error { return e.Cause }

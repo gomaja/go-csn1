@@ -324,7 +324,7 @@ func compareGERANExpected(record geranRecord, wire []byte, got geranResult) stri
 		return fmt.Sprintf("decode or encode: %v", got.err)
 	}
 	if got.canonicalReservation != "" {
-		if got.canonicalErr == nil || got.canonicalErr.Error() != got.canonicalReservation {
+		if got.canonicalErr == nil || canonicalReservationDetail(got.canonicalErr) != got.canonicalReservation {
 			return fmt.Sprintf("canonical reserved sender code: got %v, want %s", got.canonicalErr, got.canonicalReservation)
 		}
 	} else if got.canonicalErr != nil {
@@ -396,4 +396,15 @@ func oldGERANMismatch(record geranRecord) bool {
 		return true
 	}
 	return false
+}
+
+func canonicalReservationDetail(err error) string {
+	var operation *runtime.OperationError
+	if errors.As(err, &operation) {
+		if operation.Cause != nil {
+			return canonicalReservationDetail(operation.Cause)
+		}
+		return operation.Detail
+	}
+	return err.Error()
 }
