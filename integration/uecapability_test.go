@@ -28,7 +28,11 @@ func TestLocalUuContainers(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer f.Close()
+	t.Cleanup(func() {
+		if err := f.Close(); err != nil {
+			t.Errorf("close local trace: %v", err)
+		}
+	})
 	scanner := bufio.NewScanner(f)
 	scanner.Buffer(make([]byte, 65536), 8<<20)
 	var messages, cs, ps int
