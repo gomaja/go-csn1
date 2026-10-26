@@ -117,7 +117,7 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 }
 
 var reviewedHelperExpressions = map[string]map[string]bool{
-	"descriptorFrom":                 {"r.Position() + r.Remaining()": true, "r.Position() - start": true},
+	"descriptorFrom":                 {"r.Position() + r.Remaining()": true, "start + originalRemaining": true, "start + maxBits": true, "r.Position() - start": true},
 	"constrainedWidth":               {"len(path) - 1": true, "i--": true, "i + 1": true},
 	"locatedFailure":                 {"be.Limit - be.Position": true, `"/" + be.Field`: true, `location.Path += "/" + be.Field`: true},
 	"shiftOperation":                 {"copy.Location.BitOffset += offset": true, "copy.Offset += offset": true, "copy.Position += offset": true, "copy.Limit += offset": true, `path + "/" + copy.Location.Path`: true, `path + "/" + copy.Path`: true},
@@ -130,7 +130,7 @@ var reviewedHelperExpressions = map[string]map[string]bool{
 }
 
 var reviewedHelperGuards = map[string][]string{
-	"descriptorFrom":                 {"r.Check()", "r.Remaining()<minBits", "start:=r.Position()", "v,err:=decode(r)"},
+	"descriptorFrom":                 {"r.Check()", "r.Remaining()<minBits", "originalRemaining:=r.Remaining()", "start:=r.Position()", "v,err:=decode(r)", "ifmaxBits>0&&originalRemaining>maxBits"},
 	"constrainedWidth":               {"fori:=len(path)-1;i>=0;i--", "path=path[i+1:]"},
 	"locatedFailure":                 {"be.Limit>=0&&be.Limit<=1<<20&&be.Position>=0&&be.Position<=1<<20", "location.Width=be.Limit-be.Position"},
 	"shiftOperation":                 {"ifcopy.Location.BitOffset>=0", "copy.Cause=shiftOperation(copy.Cause,offset,path)"},
