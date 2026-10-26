@@ -94,6 +94,7 @@ runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen
 runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1113
 runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:763
 runtime/direct.go:conversion:uint8(encoded >> 16)	3	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:269 `r.fieldWidthHi = uint8(encoded >> 16)`.
+runtime/error_message.go:arithmetic:len(message) - len(e.Detail)	1	FIXED: DecodeError.Error appends Detail verbatim, so its length does not exceed the formatted message length; the difference is a nonnegative string index within the message; runtime/error_message.go:25 `detail := message[len(message)-len(e.Detail):]`.
 runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:i + 1	5	BOUNDED: operand=i guard=runtime/expr.go:205
@@ -110,9 +111,9 @@ runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/e
 runtime/expr.go:conversion:rune(raw[i])	3	BOUNDED: operand=raw guard=runtime/expr.go:28; operand=i guard=runtime/expr.go:40
 runtime/operation.go:arithmetic:"/" + be.Field	1	FIXED: string concatenation; this operation produces no integer result; runtime/operation.go:27 `path += "/" + be.Field`.
 runtime/operation.go:arithmetic:be.Limit - be.Position	1	FIXED: positions are produced from bounded reader or writer state; nested container offsets are at most 40 bits; runtime/operation.go:30 `width = be.Limit - be.Position`.
-runtime/types.go:arithmetic:c += 'a' - 'A'	1	FIXED: the ASCII uppercase range 65..90 is shifted by 32 into lowercase 97..122; runtime/types.go:232 `c += 'a' - 'A'`.
-runtime/types.go:arithmetic:i++	2	FIXED: index is bounded by the length of the iterated string, slice or fixed source fields; runtime/types.go:202 `for i := 0; i < len(name); i++ {`.
-runtime/types.go:arithmetic:len(name) - 1	1	FIXED: index is bounded by the length of the iterated string, slice or fixed source fields; runtime/types.go:208 `if c >= 'A' && c <= 'Z' || white && (c != ' ' || space || i == len(name)-1) {`.
+runtime/types.go:arithmetic:c += 'a' - 'A'	1	FIXED: the ASCII uppercase range 65..90 is shifted by 32 into lowercase 97..122; runtime/types.go:235 `c += 'a' - 'A'`.
+runtime/types.go:arithmetic:i++	2	FIXED: index is bounded by the length of the iterated string, slice or fixed source fields; runtime/types.go:205 `for i := 0; i < len(name); i++ {`.
+runtime/types.go:arithmetic:len(name) - 1	1	FIXED: index is bounded by the length of the iterated string, slice or fixed source fields; runtime/types.go:211 `if c >= 'A' && c <= 'Z' || white && (c != ' ' || space || i == len(name)-1) {`.
 runtime/value_reader.go:arithmetic:at - begin	1	FIXED: the value span and received tail are checked within the 2^20-bit reader ceiling; runtime/value_reader.go:65 `spans = append(spans, ImplicitSpan{At: at - begin, Count: end - at})`.
 runtime/value_reader.go:arithmetic:consumed + tail.BitLength	2	FIXED: the value span and received tail are checked within the 2^20-bit reader ceiling; runtime/value_reader.go:76 `image, err := start.ReadBitString(consumed + tail.BitLength)`.
 runtime/value_reader.go:arithmetic:end - at	1	FIXED: the value span and received tail are checked within the 2^20-bit reader ceiling; runtime/value_reader.go:65 `spans = append(spans, ImplicitSpan{At: at - begin, Count: end - at})`.

@@ -188,6 +188,9 @@ func PreferTruncation(current, candidate error) error {
 }
 
 func (e *DecodeError) Error() string {
+	if e.Path == "" {
+		return fmt.Sprintf("CSN.1 %s at bit %d: %s", e.Kind, e.Offset, e.Detail)
+	}
 	return fmt.Sprintf("CSN.1 %s at bit %d in %s: %s", e.Kind, e.Offset, e.Path, e.Detail)
 }
 
@@ -283,7 +286,9 @@ func (e *OperationError) Error() string {
 	}
 	detail := e.Detail
 	if detail == "" && e.Cause != nil {
-		detail = e.Cause.Error()
+		detail = operationCauseDetail(e.Cause, e)
+	} else if inner, ok := e.Cause.(*OperationError); ok && inner.Detail == detail {
+		detail = causeFacts(inner.Operation, inner.Kind, inner.Location, detail, e)
 	}
 	return fmt.Sprintf("CSN.1 %s %s%s: %s", e.Operation, e.Kind, where, detail)
 }
