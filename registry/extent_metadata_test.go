@@ -15,8 +15,8 @@ import (
 // can coexist with a canonical API that requires an explicit external extent.
 func TestDescriptorContextMetadataMatchesOperations(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 235 {
-		t.Fatalf("catalogue has %d descriptors, want 235", len(descriptors))
+	if len(descriptors) != 236 {
+		t.Fatalf("catalogue has %d descriptors, want 236", len(descriptors))
 	}
 	for _, d := range descriptors {
 		t.Run(d.Standard+"/"+d.Clause+"/"+d.Name, func(t *testing.T) {
