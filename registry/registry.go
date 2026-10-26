@@ -166,11 +166,21 @@ func manualDecodeClassmark2ValuePartFrom(r *runtime.Reader) (any, error) {
 		return nil, err
 	}
 	start := r.Position()
+	before := r.Wire()
+	origin := r.Fork()
 	v, err := uecapability.DecodeClassmark2ValuePartFrom(r)
 	if err != nil {
 		return nil, err
 	}
-	return runtime.Decoded[uecapability.Classmark2ValuePart]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+	// The typed reader stops after the three octets, so a containing value can
+	// continue; the descriptor keeps the rest of a bounded reader in Tail and in
+	// the value's received form, as its byte entry point does.
+	wire, err := r.ValueWire(origin, before, true)
+	if err != nil {
+		return nil, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[uecapability.Classmark2ValuePart]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
 }
 func manualUnwrapClassmark2ValuePart(value any) (uecapability.Classmark2ValuePart, bool) {
 	switch v := value.(type) {

@@ -547,14 +547,17 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 		return GERANPS{}, operationLocation6.failure(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-ps"}, "", r.Position(), 0)
 	}
 	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
-	// §10.5.5.12a require a two-octet minimum before inferred zeros apply.
+	// §10.5.5.12a require a two-octet minimum.
 	if r.BoundedRemaining() < 16 {
 		return GERANPS{}, operationLocation6.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANPS", Detail: "GERAN PS requires at least 16 bits"}, "", r.Position(), 0)
 	}
+	// As in DecodeGERANPS, receiver-inferred zeros apply only inside the
+	// <Content> of the access capabilities (TS 24.008 V20.1.0 §10.5.5.12a),
+	// which enables them itself, not across the whole value part.
 	before := r.Wire()
 	start := r.Fork()
 	prior := r.ZeroExtension()
-	r.SetZeroExtension(true)
+	r.SetZeroExtension(false)
 	defer r.SetZeroExtension(prior)
 	v, err := msrac.DecodeMSRACapabilityValuePartFrom(r)
 	if err != nil {
