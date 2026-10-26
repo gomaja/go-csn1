@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts44018/restoctets"
 )
 
 // Typed error classes of the generated canonical entry points.
@@ -279,11 +280,20 @@ func classify(err error, octets int, entry string) string {
 // guidedDecode decodes biased random bits, resampling from the offset where
 // the decoder rejects them, so most grammars yield valid values; a high
 // one-bit bias lengthens {1 ...}** lists and selects optional arms.
-func guidedDecode(rng *rand.Rand, decode func([]byte) (any, error)) []any {
+func guidedDecode(rng *rand.Rand, maxOctets int, decode func([]byte) (any, error)) []any {
 	var out []any
+	sizes := []int{0, 1, 8, 20, 64, 200}
+	if maxOctets > 0 {
+		for size := 2; size <= min(maxOctets, 20); size++ {
+			sizes = append(sizes, size)
+		}
+		if maxOctets > 20 {
+			sizes = append(sizes, maxOctets)
+		}
+	}
 	for _, bias := range []float64{0.1, 0.5, 0.8, 0.95} {
 		// Empty and one-octet inputs select null alternatives.
-		for _, size := range []int{0, 1, 8, 20, 64, 200} {
+		for _, size := range sizes {
 			bits := make([]bool, size*8)
 			fill := func(from int) {
 				for i := from; i < len(bits); i++ {
@@ -319,6 +329,26 @@ func guidedDecode(rng *rand.Rand, decode func([]byte) (any, error)) []any {
 		}
 	}
 	return out
+}
+
+// Canonical error documentation also covers user-constructed values beyond
+// a descriptor's receiver extent. These typed decoders provide such seeds
+// without weakening the descriptor entry point's source-length check.
+func canonicalLongSeed[T any](decode func(*runtime.Reader) (T, error)) func([]byte) (any, error) {
+	return func(data []byte) (any, error) {
+		r := runtime.NewReader(data)
+		if _, err := r.PushLimit(len(data) * 8); err != nil {
+			return nil, err
+		}
+		return decode(r)
+	}
+}
+
+var canonicalLongSeeds = map[string]func([]byte) (any, error){
+	"10.5.2.25\x00P3 Rest Octets":      canonicalLongSeed(restoctets.DecodeP3RestOctetsFrom),
+	"10.5.2.33a\x00SI2ter Rest Octets": canonicalLongSeed(restoctets.DecodeSI2terRestOctetsFrom),
+	"10.5.2.34\x00SI3 Rest Octet":      canonicalLongSeed(restoctets.DecodeSI3RestOctetFrom),
+	"10.5.2.37n\x00SI 22 Rest Octets":  canonicalLongSeed(restoctets.DecodeSI22RestOctetsFrom),
 }
 
 // harvest records every struct value nested in a decoded value, so that
@@ -554,7 +584,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			switch {
 			case d.DecodeWithContext != nil:
 				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
-					found = append(found, guidedDecode(rng, func(b []byte) (any, error) {
+					found = append(found, guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
 						decoded, err := d.DecodeWithContext(b, acs)
 						if err != nil {
 							return nil, err
@@ -563,7 +593,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					})...)
 				}
 			case d.DecodeFrom != nil:
-				found = guidedDecode(rng, func(b []byte) (any, error) {
+				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
 					r := runtime.NewReader(b)
 					if _, err := r.PushLimit(len(b) * 8); err != nil {
 						return nil, err
@@ -575,7 +605,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					return reflect.ValueOf(decoded).FieldByName("Value").Interface(), nil
 				})
 			default:
-				found = guidedDecode(rng, func(b []byte) (any, error) {
+				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
 					decoded, err := d.Decode(b)
 					if err != nil {
 						return nil, err
@@ -592,6 +622,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				if decoded, err := d.Decode(wire); err == nil {
 					found = append(found, reflect.ValueOf(decoded).FieldByName("Value").Interface())
 				}
+			}
+			if decode := canonicalLongSeeds[d.Clause+"\x00"+d.Name]; decode != nil {
+				found = append(found, guidedDecode(rand.New(rand.NewSource(int64(index))), 0, decode)...)
 			}
 			local := map[reflect.Type][]reflect.Value{}
 			for _, v := range found {

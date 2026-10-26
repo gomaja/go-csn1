@@ -2329,7 +2329,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom, func(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, wire runtime.WireInfo) CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart {
 				v.Wire = wire
 				return v
-			}, false, 16, 0, false, "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
+			}, false, 16, 0, 0, false, false, "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart:
@@ -2359,7 +2359,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) { return DecodeGSMDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGSMDescriptionStructFrom, func(v GSMDescriptionStruct, wire runtime.WireInfo) GSMDescriptionStruct { v.Wire = wire; return v }, false, 0, 0, false, "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
+			return descriptorFrom(r, DecodeGSMDescriptionStructFrom, func(v GSMDescriptionStruct, wire runtime.WireInfo) GSMDescriptionStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GSMDescriptionStruct:
@@ -2392,7 +2392,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANFDDDescriptionStructFrom, func(v UTRANFDDDescriptionStruct, wire runtime.WireInfo) UTRANFDDDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
+			}, false, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDDescriptionStruct:
@@ -2425,7 +2425,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANTDDDescriptionStructFrom, func(v UTRANTDDDescriptionStruct, wire runtime.WireInfo) UTRANTDDDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
+			}, false, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANTDDDescriptionStruct:
@@ -2458,7 +2458,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEUTRANDescriptionStructFrom, func(v EUTRANDescriptionStruct, wire runtime.WireInfo) EUTRANDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, false, "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
+			}, false, 0, 0, 0, false, false, "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANDescriptionStruct:
@@ -2520,15 +2520,21 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxWindow int, zeroExtension bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
 	if err := r.Check(); err != nil {
 		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
+	if emptyValue && r.Remaining() == 0 {
+		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+	}
 	if r.Remaining() < minBits {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+	}
+	if maxBits > 0 && r.Remaining() > maxBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: r.Position() + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, r.Position(), maxBits, source)
 	}
 	priorZero := r.ZeroExtension()
 	if zeroExtension {

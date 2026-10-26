@@ -2111,7 +2111,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMSNetworkCapabilityValuePartFrom, func(v MSNetworkCapabilityValuePart, wire runtime.WireInfo) MSNetworkCapabilityValuePart {
 				v.Wire = wire
 				return v
-			}, true, 8, 64, true, "MS network capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
+			}, true, 8, 0, 64, true, false, "MS network capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSNetworkCapabilityValuePart:
@@ -2141,7 +2141,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "GEA1 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: func(data []byte) (any, error) { return DecodeGEA1Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGEA1BitsFrom, func(v GEA1Bits, wire runtime.WireInfo) GEA1Bits { wire.Spare = v.Wire.Spare; v.Wire = wire; return v }, false, 0, 0, false, "GEA1 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
+			return descriptorFrom(r, DecodeGEA1BitsFrom, func(v GEA1Bits, wire runtime.WireInfo) GEA1Bits { wire.Spare = v.Wire.Spare; v.Wire = wire; return v }, false, 0, 0, 0, false, false, "GEA1 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GEA1Bits:
@@ -2171,7 +2171,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Extended GEA bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 6, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: func(data []byte) (any, error) { return DecodeExtendedGEABits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeExtendedGEABitsFrom, func(v ExtendedGEABits, wire runtime.WireInfo) ExtendedGEABits { v.Wire = wire; return v }, false, 0, 0, false, "Extended GEA bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
+			return descriptorFrom(r, DecodeExtendedGEABitsFrom, func(v ExtendedGEABits, wire runtime.WireInfo) ExtendedGEABits { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Extended GEA bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedGEABits:
@@ -2201,7 +2201,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Spare bits", MaxOctets: 8, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 64, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: func(data []byte) (any, error) { return DecodeSpareBits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSpareBitsFrom, func(v SpareBits, wire runtime.WireInfo) SpareBits { v.Wire = wire; return v }, true, 0, 0, false, "Spare bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
+			return descriptorFrom(r, DecodeSpareBitsFrom, func(v SpareBits, wire runtime.WireInfo) SpareBits { v.Wire = wire; return v }, true, 0, 0, 0, false, false, "Spare bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SpareBits:
@@ -2263,15 +2263,21 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxWindow int, zeroExtension bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
 	if err := r.Check(); err != nil {
 		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
+	if emptyValue && r.Remaining() == 0 {
+		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+	}
 	if r.Remaining() < minBits {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+	}
+	if maxBits > 0 && r.Remaining() > maxBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: r.Position() + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, r.Position(), maxBits, source)
 	}
 	priorZero := r.ZeroExtension()
 	if zeroExtension {
