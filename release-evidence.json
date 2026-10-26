@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "f421c60fedad8b4a7aaaf60a975e8c447d800e2e",
+  "compiler_commit": "cc7f95cff2b4d0dc5b385c24a5e3d1b4255e448b",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -278,7 +278,7 @@
     },
     {
       "path": "docs/csn1/ts44018/si2quater-rest-octets.csn",
-      "sha256": "5d881ec7431c93863d19b4736cb024a52ba3fbd2a4c5e8d59c2ec65c81fcac30"
+      "sha256": "00b09fe8959fd9193e2eb43c88b21a6846e0758eb4b77acce5dcab15cbcbd028"
     },
     {
       "path": "docs/csn1/ts44018/si2ter-rest-octets.csn",
@@ -436,7 +436,10 @@
       "expected": "{ 0 | 1 \u003c Multilateration Information Request",
       "replacement": "{ L | H \u003c Multilateration Information Request",
       "reason": "TS 44.018 V19.0.0 §10.5.2.16: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16194"
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16194",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the Rel-14 Multilateration Information Request selector as L | H.",
+      "approval_date": "2026-10-26"
     },
     {
       "standard": "TS 44.018",
@@ -446,7 +449,10 @@
       "expected": "{ 0 | 1 \u003c PEO IMM Cell Group Details",
       "replacement": "{ L | H \u003c PEO IMM Cell Group Details",
       "reason": "TS 44.018 V19.0.0 §10.5.2.16: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16196"
+      "citation": "TS 44.018 V19.0.0 §10.5.2.16 paragraph 16196",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the Rel-15 PEO IMM Cell Group Details selector as L | H.",
+      "approval_date": "2026-10-26"
     },
     {
       "standard": "TS 44.018",
@@ -456,7 +462,10 @@
       "expected": "{0 | 1 \u003c PEO IMM Cell Group Details",
       "replacement": "{L | H \u003c PEO IMM Cell Group Details",
       "reason": "TS 44.018 V19.0.0 §10.5.2.17: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.17 paragraph 16537"
+      "citation": "TS 44.018 V19.0.0 §10.5.2.17 paragraph 16537",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the Rel-15 PEO IMM Cell Group Details selector as L | H.",
+      "approval_date": "2026-10-26"
     },
     {
       "standard": "TS 44.018",
@@ -466,7 +475,10 @@
       "expected": "{0 | 1 \u003c PEO IMM Cell Group Details",
       "replacement": "{L | H \u003c PEO IMM Cell Group Details",
       "reason": "TS 44.018 V19.0.0 §10.5.2.18: printed selectors are indistinguishable from spare padding; all earlier additions in this IE use L/H; Wireshark 4.6.8 decodes all-padding as absent",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.18 paragraph 16568"
+      "citation": "TS 44.018 V19.0.0 §10.5.2.18 paragraph 16568",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the Rel-15 PEO IMM Cell Group Details selector as L | H.",
+      "approval_date": "2026-10-26"
     },
     {
       "standard": "TS 44.018",
@@ -1322,16 +1334,6 @@
       "standard": "TS 44.018",
       "version": "19.0.0",
       "clause": "10.5.2.33b",
-      "paragraph": 18974,
-      "expected": "Ignore: bit ** = \u003cno string\u003e",
-      "replacement": "bit ** = \u003cno string\u003e",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: keep the no-string extension fallback as ignored wire bits without an unsupported bare label",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 18974"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.33b",
       "paragraph": 19021,
       "expected": "Index_Start_3G : bit (7) }",
       "replacement": "Index_Start_3G : bit (7) \u003e }",
@@ -1686,7 +1688,10 @@
       "expected": "{{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e } | { 0 | 1 \u003c Bandwidth_TDD : bit (3) \u003e }}",
       "replacement": "{ 0 | 1 \u003c Bandwidth_FDD_or_TDD : bit (3) \u003e }",
       "reason": "TS 44.018 V19.0.0 §10.5.2.37o table 10.5.2.37o.1 prints {{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e } | { 0 | 1 \u003c Bandwidth_TDD : bit (3) \u003e }} in UTRAN FDD/TDD Description struct; the two alternatives are bit-identical, so no decoder can select one (gomaja/go-csn1#20). Merge them into one optional 3-bit field carrying BANDWIDTH_FDD or BANDWIDTH_TDD (table 10.5.2.33b.2); FDD or TDD follows from the UTRAN ARFCNs in the same description, as the clause states: It is not allowed to mix FDD and TDD UTRAN ARFCNs within this description. pycrate 0.7.11 si_23_rest_octets prints one bandwidth field",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.37o paragraph 20335"
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37o paragraph 20335",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the bit-identical FDD/TDD bandwidth alternatives as one optional three-bit Bandwidth_FDD_or_TDD field; the ARFCNs supply the RAT context.",
+      "approval_date": "2026-10-26"
     },
     {
       "standard": "TS 44.060",
@@ -1731,10 +1736,20 @@
   ],
   "source_discrepancies": [
     {
-      "citation": "TS 44.018 V19.0.0 §10.5.2.37g table 10.5.2.37g.1",
-      "source_text": "NR_OF_REMAINING_CELLS: Range 1-16.",
-      "resolution": "Expose the raw four-bit count 0-15, equal to the number of repeated cells; FREQ_DIFF_LENGTH separately uses its printed +1 width.",
-      "evidence": "Printed * (val(NR_OF_REMAINING_CELLS)) grammar; pycrate_csn1dir si_19_rest_octets.py; Wireshark packet-gsm_rlcmac.c COMPACT neighbour-cell repetition."
+      "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraphs [19924 19927 19962 19963 19964]",
+      "source_text": "\u003c NR_OF_REMAINING_CELLS : bit (4) \u003e; } * val(NR_OF_REMAINING_CELLS; Range 1-16.",
+      "resolution": "Use the raw four-bit count 0-15 as the repetition count, equal to the repeated-cell list length; no +1 count adjustment. FREQ_DIFF_LENGTH retains its separate +1 width binding.",
+      "evidence": "Printed repetition and field table in the authenticated official source; pycrate si_19_rest_octets.py and Wireshark packet-gsm_rlcmac.c COMPACT neighbour-cell repetition.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-26",
+      "paragraphs": [
+        19924,
+        19927,
+        19962,
+        19963,
+        19964
+      ],
+      "reason": "A printed repetition against a prose range: retain the printed val(NR_OF_REMAINING_CELLS) repetition rather than deriving count+1 from Range 1-16."
     }
   ],
   "generated_files": [
@@ -1760,11 +1775,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "8082e6b568bf8a4d7f70ca3d7df22b6defb277fc828a1e882303152aeba11af6"
+      "sha256": "447cfbf14a06ac6785bbc86bf5946a1fed2fbef874a18c0646b9288091976d9f"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "1a28388ae49e1cba8dc1a7ccae87b1481e2bbcc7823fd7977b28966a1152c34c"
+      "sha256": "8aa87366264f81f95b41257f4a2451a20087fc8e964e8b796b790af7960a8bd0"
     },
     {
       "path": "ts44060/ies/generated.go",
@@ -1871,6 +1886,12 @@
     {
       "module": "go-csn1",
       "command": "go test ./ts44060/ies -run '^$' -fuzz '^FuzzIEDefinitions$' -fuzztime=15s -parallel=2"
+    }
+  ],
+  "source_policies": [
+    {
+      "path": "conformance/csn1-expansion.json",
+      "sha256": "538989eaff5d25d5c20588a622e4720fe7fb5701e407802ca6544ec8d6521e44"
     }
   ]
 }

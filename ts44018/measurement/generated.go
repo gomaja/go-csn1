@@ -90,7 +90,6 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: align the reporting-priority reference with its printed definition.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS measurement reference with its printed definition.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: align the GPRS 3G measurement reference with its printed definition.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.33b: keep the no-string extension fallback as ignored wire bits without an unsupported bare label.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: close the seven-bit Index_Start_3G field.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: close the seven-bit Absolute_Index_Start_EMR field.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: mark the printed UTRAN FDD definition as a nested reference.
