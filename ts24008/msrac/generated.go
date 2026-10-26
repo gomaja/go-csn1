@@ -6855,7 +6855,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMSRACapabilityValuePartFrom, func(v MSRACapabilityValuePart, wire runtime.WireInfo) MSRACapabilityValuePart {
 				v.Wire = wire
 				return v
-			}, true, 16, 0, 0, false, false, "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, true, 16, 0, 0, 0, false, false, "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSRACapabilityValuePart:
@@ -6888,7 +6888,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMSRACapabilityValuePartStructFrom, func(v MSRACapabilityValuePartStruct, wire runtime.WireInfo) MSRACapabilityValuePartStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, false, 0, 0, 0, 0, false, false, "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSRACapabilityValuePartStruct:
@@ -6921,7 +6921,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeAdditionalAccessTechnologiesStructFrom, func(v AdditionalAccessTechnologiesStruct, wire runtime.WireInfo) AdditionalAccessTechnologiesStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, false, 0, 0, 0, 0, false, false, "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AdditionalAccessTechnologiesStruct:
@@ -6954,7 +6954,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeAccessCapabilitiesStructFrom, func(v AccessCapabilitiesStruct, wire runtime.WireInfo) AccessCapabilitiesStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, false, 0, 0, 0, 0, false, false, "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AccessCapabilitiesStruct:
@@ -6984,7 +6984,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeContent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeContentFrom, func(v Content, wire runtime.WireInfo) Content { v.Wire = wire; return v }, false, 0, 0, 0, true, false, "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			return descriptorFrom(r, DecodeContentFrom, func(v Content, wire runtime.WireInfo) Content { v.Wire = wire; return v }, false, 0, 0, 0, 0, true, false, "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Content:
@@ -7017,7 +7017,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMultislotCapabilityStructFrom, func(v MultislotCapabilityStruct, wire runtime.WireInfo) MultislotCapabilityStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, false, 0, 0, 0, 0, false, false, "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MultislotCapabilityStruct:
@@ -7047,7 +7047,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { wire.Spare = v.Wire.Spare; v.Wire = wire; return v }, false, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { wire.Spare = v.Wire.Spare; v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case A5Bits:
@@ -7080,7 +7080,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEnhancedFlexibleTimeslotAssignmentStructFrom, func(v EnhancedFlexibleTimeslotAssignmentStruct, wire runtime.WireInfo) EnhancedFlexibleTimeslotAssignmentStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			}, false, 0, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EnhancedFlexibleTimeslotAssignmentStruct:
@@ -7110,7 +7110,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDLMCCapabilityStructFrom, func(v DLMCCapabilityStruct, wire runtime.WireInfo) DLMCCapabilityStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
+			return descriptorFrom(r, DecodeDLMCCapabilityStructFrom, func(v DLMCCapabilityStruct, wire runtime.WireInfo) DLMCCapabilityStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DLMCCapabilityStruct:
@@ -7172,7 +7172,7 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
 	if err := r.Check(); err != nil {
 		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
 	}
@@ -7183,9 +7183,7 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	if r.Remaining() < minBits {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
-	if maxBits > 0 && r.Remaining() > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: r.Position() + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, r.Position(), maxBits, source)
-	}
+	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
 	if zeroExtension {
 		r.SetZeroExtension(true)
@@ -7206,6 +7204,12 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	v, err := decode(r)
 	if err != nil {
 		return runtime.Decoded[T]{}, err
+	}
+	if originalRemaining < postMinBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+	}
+	if maxBits > 0 && originalRemaining > maxBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
 		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)

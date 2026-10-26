@@ -85219,7 +85219,7 @@ func Definitions() []string {
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: func(data []byte) (any, error) { return DecodeIARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIARestOctetsFrom, func(v IARestOctets, wire runtime.WireInfo) IARestOctets { v.Wire = wire; return v }, true, 0, 88, 0, false, true, "IA Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			return descriptorFrom(r, DecodeIARestOctetsFrom, func(v IARestOctets, wire runtime.WireInfo) IARestOctets { v.Wire = wire; return v }, true, 0, 0, 88, 0, false, true, "IA Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IARestOctets:
@@ -85252,7 +85252,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEGPRSPacketUplinkAssignmentFrom, func(v EGPRSPacketUplinkAssignment, wire runtime.WireInfo) EGPRSPacketUplinkAssignment {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "EGPRS Packet Uplink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "EGPRS Packet Uplink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EGPRSPacketUplinkAssignment:
@@ -85285,7 +85285,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeAccessTechnologiesRequestStructFrom, func(v AccessTechnologiesRequestStruct, wire runtime.WireInfo) AccessTechnologiesRequestStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Access Technologies Request struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "Access Technologies Request struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AccessTechnologiesRequestStruct:
@@ -85315,7 +85315,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 9, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 69, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: func(data []byte) (any, error) { return DecodePacketUplinkAssignment(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePacketUplinkAssignmentFrom, func(v PacketUplinkAssignment, wire runtime.WireInfo) PacketUplinkAssignment { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Packet Uplink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			return descriptorFrom(r, DecodePacketUplinkAssignmentFrom, func(v PacketUplinkAssignment, wire runtime.WireInfo) PacketUplinkAssignment { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Packet Uplink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketUplinkAssignment:
@@ -85348,7 +85348,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePacketDownlinkAssignmentFrom, func(v PacketDownlinkAssignment, wire runtime.WireInfo) PacketDownlinkAssignment {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Packet Downlink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "Packet Downlink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PacketDownlinkAssignment:
@@ -85381,7 +85381,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeFrequencyParametersBeforeTimeFrom, func(v FrequencyParametersBeforeTime, wire runtime.WireInfo) FrequencyParametersBeforeTime {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Frequency Parameters, before time", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "Frequency Parameters, before time", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FrequencyParametersBeforeTime:
@@ -85414,7 +85414,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSecondPartPacketAssignmentFrom, func(v SecondPartPacketAssignment, wire runtime.WireInfo) SecondPartPacketAssignment {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Second Part Packet Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "Second Part Packet Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SecondPartPacketAssignment:
@@ -85447,7 +85447,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMultipleBlocksPacketDownlinkAssignmentFrom, func(v MultipleBlocksPacketDownlinkAssignment, wire runtime.WireInfo) MultipleBlocksPacketDownlinkAssignment {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Multiple Blocks Packet Downlink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "Multiple Blocks Packet Downlink Assignment", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MultipleBlocksPacketDownlinkAssignment:
@@ -85480,7 +85480,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105216From, func(v PEOIMMCellGroupDetailsStructClause105216, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105216 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105216:
@@ -85510,7 +85510,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: func(data []byte) (any, error) { return DecodeIARRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIARRestOctetsFrom, func(v IARRestOctets, wire runtime.WireInfo) IARRestOctets { v.Wire = wire; return v }, true, 24, 24, 0, false, true, "IAR Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"})
+			return descriptorFrom(r, DecodeIARRestOctetsFrom, func(v IARRestOctets, wire runtime.WireInfo) IARRestOctets { v.Wire = wire; return v }, true, 24, 0, 24, 0, false, true, "IAR Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IARRestOctets:
@@ -85543,7 +85543,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105217From, func(v PEOIMMCellGroupDetailsStructClause105217, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105217 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105217:
@@ -85573,7 +85573,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "IAX Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 32, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"}}, Decode: func(data []byte) (any, error) { return DecodeIAXRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIAXRestOctetsFrom, func(v IAXRestOctets, wire runtime.WireInfo) IAXRestOctets { v.Wire = wire; return v }, true, 0, 32, 0, false, true, "IAX Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"})
+			return descriptorFrom(r, DecodeIAXRestOctetsFrom, func(v IAXRestOctets, wire runtime.WireInfo) IAXRestOctets { v.Wire = wire; return v }, true, 0, 0, 32, 0, false, true, "IAX Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IAXRestOctets:
@@ -85606,7 +85606,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105218From, func(v PEOIMMCellGroupDetailsStructClause105218, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105218 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105218:
@@ -85636,7 +85636,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "SI1 Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"}}, Decode: func(data []byte) (any, error) { return DecodeSI1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI1RestOctetsFrom, func(v SI1RestOctets, wire runtime.WireInfo) SI1RestOctets { v.Wire = wire; return v }, true, 8, 8, 0, false, true, "SI1 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"})
+			return descriptorFrom(r, DecodeSI1RestOctetsFrom, func(v SI1RestOctets, wire runtime.WireInfo) SI1RestOctets { v.Wire = wire; return v }, true, 8, 0, 8, 0, false, true, "SI1 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI1RestOctets:
@@ -85669,7 +85669,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeBandIndicatorClause105232From, func(v BandIndicatorClause105232, wire runtime.WireInfo) BandIndicatorClause105232 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Band indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"})
+			}, false, 0, 0, 0, 0, false, false, "Band indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BandIndicatorClause105232:
@@ -85699,7 +85699,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33", Name: "SI2bis Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33"}}, Decode: func(data []byte) (any, error) { return DecodeSI2bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI2bisRestOctetsFrom, func(v SI2bisRestOctets, wire runtime.WireInfo) SI2bisRestOctets { v.Wire = wire; return v }, true, 8, 8, 0, false, true, "SI2bis Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33"})
+			return descriptorFrom(r, DecodeSI2bisRestOctetsFrom, func(v SI2bisRestOctets, wire runtime.WireInfo) SI2bisRestOctets { v.Wire = wire; return v }, true, 8, 0, 8, 0, false, true, "SI2bis Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2bisRestOctets:
@@ -85729,7 +85729,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "SI2n Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: func(data []byte) (any, error) { return DecodeSI2nRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI2nRestOctetsFrom, func(v SI2nRestOctets, wire runtime.WireInfo) SI2nRestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI2n Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
+			return descriptorFrom(r, DecodeSI2nRestOctetsFrom, func(v SI2nRestOctets, wire runtime.WireInfo) SI2nRestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI2n Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2nRestOctets:
@@ -85762,7 +85762,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGSMNeighbourCellSelectionParamsStructFrom, func(v GSMNeighbourCellSelectionParamsStruct, wire runtime.WireInfo) GSMNeighbourCellSelectionParamsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GSM Neighbour Cell Selection params struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
+			}, false, 0, 0, 0, 0, false, false, "GSM Neighbour Cell Selection params struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GSMNeighbourCellSelectionParamsStruct:
@@ -85795,7 +85795,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSSupportIndicatorStructFrom, func(v GPRSSupportIndicatorStruct, wire runtime.WireInfo) GPRSSupportIndicatorStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS Support Indicator struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS Support Indicator struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSSupportIndicatorStruct:
@@ -85825,7 +85825,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI3 Rest Octet", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: func(data []byte) (any, error) { return DecodeSI3RestOctet(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI3RestOctetFrom, func(v SI3RestOctet, wire runtime.WireInfo) SI3RestOctet { v.Wire = wire; return v }, true, 32, 32, 0, false, true, "SI3 Rest Octet", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			return descriptorFrom(r, DecodeSI3RestOctetFrom, func(v SI3RestOctet, wire runtime.WireInfo) SI3RestOctet { v.Wire = wire; return v }, true, 32, 0, 32, 0, false, true, "SI3 Rest Octet", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI3RestOctet:
@@ -85858,7 +85858,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeOptionalSelectionParametersClause105234From, func(v OptionalSelectionParametersClause105234, wire runtime.WireInfo) OptionalSelectionParametersClause105234 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Optional Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "Optional Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalSelectionParametersClause105234:
@@ -85891,7 +85891,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSelectionParametersClause105234From, func(v SelectionParametersClause105234, wire runtime.WireInfo) SelectionParametersClause105234 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SelectionParametersClause105234:
@@ -85924,7 +85924,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeOptionalPowerOffsetClause105234From, func(v OptionalPowerOffsetClause105234, wire runtime.WireInfo) OptionalPowerOffsetClause105234 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Optional Power Offset", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "Optional Power Offset", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalPowerOffsetClause105234:
@@ -85957,7 +85957,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSystemInformation2terIndicatorFrom, func(v SystemInformation2terIndicator, wire runtime.WireInfo) SystemInformation2terIndicator {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "System Information 2ter Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "System Information 2ter Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SystemInformation2terIndicator:
@@ -85990,7 +85990,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEarlyClassmarkSendingControlFrom, func(v EarlyClassmarkSendingControl, wire runtime.WireInfo) EarlyClassmarkSendingControl {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Early Classmark Sending Control", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "Early Classmark Sending Control", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EarlyClassmarkSendingControl:
@@ -86020,7 +86020,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Scheduling if and where", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: func(data []byte) (any, error) { return DecodeSchedulingIfAndWhere(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSchedulingIfAndWhereFrom, func(v SchedulingIfAndWhere, wire runtime.WireInfo) SchedulingIfAndWhere { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Scheduling if and where", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			return descriptorFrom(r, DecodeSchedulingIfAndWhereFrom, func(v SchedulingIfAndWhere, wire runtime.WireInfo) SchedulingIfAndWhere { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Scheduling if and where", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SchedulingIfAndWhere:
@@ -86053,7 +86053,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSIndicatorClause105234From, func(v GPRSIndicatorClause105234, wire runtime.WireInfo) GPRSIndicatorClause105234 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSIndicatorClause105234:
@@ -86086,7 +86086,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GEarlyClassmarkSendingRestrictionFrom, func(v N3GEarlyClassmarkSendingRestriction, wire runtime.WireInfo) N3GEarlyClassmarkSendingRestriction {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Early Classmark Sending Restriction", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "3G Early Classmark Sending Restriction", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GEarlyClassmarkSendingRestriction:
@@ -86119,7 +86119,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSI2quaterIndicatorStructFrom, func(v SI2quaterIndicatorStruct, wire runtime.WireInfo) SI2quaterIndicatorStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "SI2quater Indicator struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "SI2quater Indicator struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2quaterIndicatorStruct:
@@ -86149,7 +86149,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Iu Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: func(data []byte) (any, error) { return DecodeIuIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIuIndicatorFrom, func(v IuIndicator, wire runtime.WireInfo) IuIndicator { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Iu Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			return descriptorFrom(r, DecodeIuIndicatorFrom, func(v IuIndicator, wire runtime.WireInfo) IuIndicator { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Iu Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IuIndicator:
@@ -86182,7 +86182,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSystemInformation21IndicatorFrom, func(v SystemInformation21Indicator, wire runtime.WireInfo) SystemInformation21Indicator {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "System Information 21 Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
+			}, false, 0, 0, 0, 0, false, false, "System Information 21 Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SystemInformation21Indicator:
@@ -86212,7 +86212,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "SI16 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: func(data []byte) (any, error) { return DecodeSI16RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI16RestOctetsFrom, func(v SI16RestOctets, wire runtime.WireInfo) SI16RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI16 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
+			return descriptorFrom(r, DecodeSI16RestOctetsFrom, func(v SI16RestOctets, wire runtime.WireInfo) SI16RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI16 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI16RestOctets:
@@ -86242,7 +86242,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f", Name: "SI17 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f"}}, Decode: func(data []byte) (any, error) { return DecodeSI17RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI17RestOctetsFrom, func(v SI17RestOctets, wire runtime.WireInfo) SI17RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI17 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f"})
+			return descriptorFrom(r, DecodeSI17RestOctetsFrom, func(v SI17RestOctets, wire runtime.WireInfo) SI17RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI17 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI17RestOctets:
@@ -86275,7 +86275,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAParametersClause105237eFrom, func(v LSAParametersClause105237e, wire runtime.WireInfo) LSAParametersClause105237e {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
+			}, false, 0, 0, 0, 0, false, false, "LSA Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAParametersClause105237e:
@@ -86308,7 +86308,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAIDInformationClause105237eFrom, func(v LSAIDInformationClause105237e, wire runtime.WireInfo) LSAIDInformationClause105237e {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA ID information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
+			}, false, 0, 0, 0, 0, false, false, "LSA ID information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIDInformationClause105237e:
@@ -86341,7 +86341,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAIdentityClause105237eFrom, func(v LSAIdentityClause105237e, wire runtime.WireInfo) LSAIdentityClause105237e {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA identity", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
+			}, false, 0, 0, 0, 0, false, false, "LSA identity", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIdentityClause105237e:
@@ -86371,7 +86371,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "SI14 Rest Octets", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"}}, Decode: func(data []byte) (any, error) { return DecodeSI14RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI14RestOctetsFrom, func(v SI14RestOctets, wire runtime.WireInfo) SI14RestOctets { v.Wire = wire; return v }, true, 128, 128, 0, false, true, "SI14 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"})
+			return descriptorFrom(r, DecodeSI14RestOctetsFrom, func(v SI14RestOctets, wire runtime.WireInfo) SI14RestOctets { v.Wire = wire; return v }, true, 128, 0, 128, 0, false, true, "SI14 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI14RestOctets:
@@ -86404,7 +86404,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeDYNAMICARFCNMAPPINGClause105237jFrom, func(v DYNAMICARFCNMAPPINGClause105237j, wire runtime.WireInfo) DYNAMICARFCNMAPPINGClause105237j {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"})
+			}, false, 0, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DYNAMICARFCNMAPPINGClause105237j:
@@ -86434,7 +86434,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "SI15 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"}}, Decode: func(data []byte) (any, error) { return DecodeSI15RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI15RestOctetsFrom, func(v SI15RestOctets, wire runtime.WireInfo) SI15RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI15 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"})
+			return descriptorFrom(r, DecodeSI15RestOctetsFrom, func(v SI15RestOctets, wire runtime.WireInfo) SI15RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI15 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI15RestOctets:
@@ -86467,7 +86467,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeDYNAMICARFCNMAPPINGClause105237kFrom, func(v DYNAMICARFCNMAPPINGClause105237k, wire runtime.WireInfo) DYNAMICARFCNMAPPINGClause105237k {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"})
+			}, false, 0, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DYNAMICARFCNMAPPINGClause105237k:
@@ -86497,7 +86497,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "SI 21 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"}}, Decode: func(data []byte) (any, error) { return DecodeSI21RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI21RestOctetsFrom, func(v SI21RestOctets, wire runtime.WireInfo) SI21RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 21 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"})
+			return descriptorFrom(r, DecodeSI21RestOctetsFrom, func(v SI21RestOctets, wire runtime.WireInfo) SI21RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 21 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI21RestOctets:
@@ -86530,7 +86530,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeNetworkSharingEABInformationStructFrom, func(v NetworkSharingEABInformationStruct, wire runtime.WireInfo) NetworkSharingEABInformationStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Network Sharing EAB Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"})
+			}, false, 0, 0, 0, 0, false, false, "Network Sharing EAB Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NetworkSharingEABInformationStruct:
@@ -86560,7 +86560,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "SI 22 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"}}, Decode: func(data []byte) (any, error) { return DecodeSI22RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI22RestOctetsFrom, func(v SI22RestOctets, wire runtime.WireInfo) SI22RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 22 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"})
+			return descriptorFrom(r, DecodeSI22RestOctetsFrom, func(v SI22RestOctets, wire runtime.WireInfo) SI22RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 22 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI22RestOctets:
@@ -86593,7 +86593,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeNetworkSharingInformationStructFrom, func(v NetworkSharingInformationStruct, wire runtime.WireInfo) NetworkSharingInformationStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Network Sharing Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"})
+			}, false, 0, 0, 0, 0, false, false, "Network Sharing Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NetworkSharingInformationStruct:
@@ -86623,7 +86623,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "SI 23 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: func(data []byte) (any, error) { return DecodeSI23RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI23RestOctetsFrom, func(v SI23RestOctets, wire runtime.WireInfo) SI23RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 23 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			return descriptorFrom(r, DecodeSI23RestOctetsFrom, func(v SI23RestOctets, wire runtime.WireInfo) SI23RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 23 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI23RestOctets:
@@ -86656,7 +86656,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeIRATCellReselectionInformationStructFrom, func(v IRATCellReselectionInformationStruct, wire runtime.WireInfo) IRATCellReselectionInformationStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "IRAT Cell Reselection Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "IRAT Cell Reselection Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IRATCellReselectionInformationStruct:
@@ -86689,7 +86689,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePriorityAndUTRANParametersDescriptionStructFrom, func(v PriorityAndUTRANParametersDescriptionStruct, wire runtime.WireInfo) PriorityAndUTRANParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Priority and UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "Priority and UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityAndUTRANParametersDescriptionStruct:
@@ -86722,7 +86722,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANFDDTDDDescriptionStructFrom, func(v UTRANFDDTDDDescriptionStruct, wire runtime.WireInfo) UTRANFDDTDDDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN FDD/TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN FDD/TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDTDDDescriptionStruct:
@@ -86757,7 +86757,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom, func(v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, wire runtime.WireInfo) RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct:
@@ -86792,7 +86792,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom, func(v PriorityAndEUTRANParametersDescriptionStructClause105237o, wire runtime.WireInfo) PriorityAndEUTRANParametersDescriptionStructClause105237o {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityAndEUTRANParametersDescriptionStructClause105237o:
@@ -86825,7 +86825,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom, func(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, wire runtime.WireInfo) RepeatedEUTRANNeighbourFrequencyAndPriorityStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Frequency and Priority struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Frequency and Priority struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANNeighbourFrequencyAndPriorityStruct:
@@ -86855,7 +86855,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "SI10 rest octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeSI10RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI10RestOctetsFrom, func(v SI10RestOctets, wire runtime.WireInfo) SI10RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI10 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeSI10RestOctetsFrom, func(v SI10RestOctets, wire runtime.WireInfo) SI10RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI10 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10RestOctets:
@@ -86885,7 +86885,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "neighbour information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 13, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeNeighbourInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeNeighbourInformationFrom, func(v NeighbourInformation, wire runtime.WireInfo) NeighbourInformation { v.Wire = wire; return v }, true, 0, 0, 0, false, false, "neighbour information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeNeighbourInformationFrom, func(v NeighbourInformation, wire runtime.WireInfo) NeighbourInformation { v.Wire = wire; return v }, true, 0, 0, 0, 0, false, false, "neighbour information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NeighbourInformation:
@@ -86915,7 +86915,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 37, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeCellInfoFrom, func(v CellInfo, wire runtime.WireInfo) CellInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeCellInfoFrom, func(v CellInfo, wire runtime.WireInfo) CellInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellInfo:
@@ -86945,7 +86945,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell parameters", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 30, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeCellParameters(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeCellParametersFrom, func(v CellParameters, wire runtime.WireInfo) CellParameters { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "cell parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeCellParametersFrom, func(v CellParameters, wire runtime.WireInfo) CellParameters { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "cell parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellParameters:
@@ -86975,7 +86975,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell barred", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeCellBarred(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeCellBarredFrom, func(v CellBarred, wire runtime.WireInfo) CellBarred { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "cell barred", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeCellBarredFrom, func(v CellBarred, wire runtime.WireInfo) CellBarred { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "cell barred", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CellBarred:
@@ -87005,7 +87005,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further cell info", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 26, MaximumBits: 29, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeFurtherCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeFurtherCellInfoFrom, func(v FurtherCellInfo, wire runtime.WireInfo) FurtherCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "further cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeFurtherCellInfoFrom, func(v FurtherCellInfo, wire runtime.WireInfo) FurtherCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "further cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FurtherCellInfo:
@@ -87035,7 +87035,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "la different", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeLaDifferent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeLaDifferentFrom, func(v LaDifferent, wire runtime.WireInfo) LaDifferent { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "la different", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeLaDifferentFrom, func(v LaDifferent, wire runtime.WireInfo) LaDifferent { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "la different", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LaDifferent:
@@ -87065,7 +87065,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "info field", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeInfoField(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeInfoFieldFrom, func(v InfoField, wire runtime.WireInfo) InfoField { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "info field", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeInfoFieldFrom, func(v InfoField, wire runtime.WireInfo) InfoField { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "info field", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InfoField:
@@ -87095,7 +87095,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "next frequency", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeNextFrequency(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeNextFrequencyFrom, func(v NextFrequency, wire runtime.WireInfo) NextFrequency { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "next frequency", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeNextFrequencyFrom, func(v NextFrequency, wire runtime.WireInfo) NextFrequency { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "next frequency", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NextFrequency:
@@ -87125,7 +87125,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "differential cell info", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 43, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeDifferentialCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDifferentialCellInfoFrom, func(v DifferentialCellInfo, wire runtime.WireInfo) DifferentialCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "differential cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeDifferentialCellInfoFrom, func(v DifferentialCellInfo, wire runtime.WireInfo) DifferentialCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "differential cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DifferentialCellInfo:
@@ -87155,7 +87155,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "diff cell pars", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 35, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeDiffCellPars(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDiffCellParsFrom, func(v DiffCellPars, wire runtime.WireInfo) DiffCellPars { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "diff cell pars", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeDiffCellParsFrom, func(v DiffCellPars, wire runtime.WireInfo) DiffCellPars { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "diff cell pars", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case DiffCellPars:
@@ -87185,7 +87185,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further diff cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: func(data []byte) (any, error) { return DecodeFurtherDiffCellInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeFurtherDiffCellInfoFrom, func(v FurtherDiffCellInfo, wire runtime.WireInfo) FurtherDiffCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "further diff cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
+			return descriptorFrom(r, DecodeFurtherDiffCellInfoFrom, func(v FurtherDiffCellInfo, wire runtime.WireInfo) FurtherDiffCellInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "further diff cell info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case FurtherDiffCellInfo:
@@ -87215,7 +87215,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71", Name: "SI10ter Rest Octets", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71"}}, Decode: func(data []byte) (any, error) { return DecodeSI10terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI10terRestOctetsFrom, func(v SI10terRestOctets, wire runtime.WireInfo) SI10terRestOctets { v.Wire = wire; return v }, true, 0, 0, 0, false, true, "SI10ter Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71"})
+			return descriptorFrom(r, DecodeSI10terRestOctetsFrom, func(v SI10terRestOctets, wire runtime.WireInfo) SI10terRestOctets { v.Wire = wire; return v }, true, 0, 0, 0, 0, false, true, "SI10ter Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10terRestOctets:
@@ -87245,7 +87245,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "SI9 rest octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 136, MaximumBits: 136, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: func(data []byte) (any, error) { return DecodeSI9RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI9RestOctetsFrom, func(v SI9RestOctets, wire runtime.WireInfo) SI9RestOctets { v.Wire = wire; return v }, true, 136, 136, 0, false, true, "SI9 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
+			return descriptorFrom(r, DecodeSI9RestOctetsFrom, func(v SI9RestOctets, wire runtime.WireInfo) SI9RestOctets { v.Wire = wire; return v }, true, 136, 0, 136, 0, false, true, "SI9 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI9RestOctets:
@@ -87275,7 +87275,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Scheduling info", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: func(data []byte) (any, error) { return DecodeSchedulingInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSchedulingInfoFrom, func(v SchedulingInfo, wire runtime.WireInfo) SchedulingInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Scheduling info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
+			return descriptorFrom(r, DecodeSchedulingInfoFrom, func(v SchedulingInfo, wire runtime.WireInfo) SchedulingInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Scheduling info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SchedulingInfo:
@@ -87305,7 +87305,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Info type", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: func(data []byte) (any, error) { return DecodeInfoType(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeInfoTypeFrom, func(v InfoType, wire runtime.WireInfo) InfoType { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Info type", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
+			return descriptorFrom(r, DecodeInfoTypeFrom, func(v InfoType, wire runtime.WireInfo) InfoType { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Info type", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InfoType:
@@ -87335,7 +87335,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Positions", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: func(data []byte) (any, error) { return DecodePositions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePositionsFrom, func(v Positions, wire runtime.WireInfo) Positions { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Positions", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
+			return descriptorFrom(r, DecodePositionsFrom, func(v Positions, wire runtime.WireInfo) Positions { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Positions", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Positions:
@@ -87365,7 +87365,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Position", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: func(data []byte) (any, error) { return DecodePosition(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePositionFrom, func(v Position, wire runtime.WireInfo) Position { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Position", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
+			return descriptorFrom(r, DecodePositionFrom, func(v Position, wire runtime.WireInfo) Position { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Position", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Position:
@@ -87395,7 +87395,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "SI2ter Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: func(data []byte) (any, error) { return DecodeSI2terRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI2terRestOctetsFrom, func(v SI2terRestOctets, wire runtime.WireInfo) SI2terRestOctets { v.Wire = wire; return v }, true, 32, 32, 0, false, true, "SI2ter Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
+			return descriptorFrom(r, DecodeSI2terRestOctetsFrom, func(v SI2terRestOctets, wire runtime.WireInfo) SI2terRestOctets { v.Wire = wire; return v }, true, 32, 0, 32, 0, false, true, "SI2ter Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2terRestOctets:
@@ -87428,7 +87428,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANFDDDescriptionStructClause105233aFrom, func(v UTRANFDDDescriptionStructClause105233a, wire runtime.WireInfo) UTRANFDDDescriptionStructClause105233a {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDDescriptionStructClause105233a:
@@ -87461,7 +87461,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANTDDDescriptionStructClause105233aFrom, func(v UTRANTDDDescriptionStructClause105233a, wire runtime.WireInfo) UTRANTDDDescriptionStructClause105233a {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANTDDDescriptionStructClause105233a:
@@ -87496,7 +87496,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom, func(v N3GMEASUREMENTParametersDescriptionStructClause105233a, wire runtime.WireInfo) N3GMEASUREMENTParametersDescriptionStructClause105233a {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G MEASUREMENT Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
+			}, false, 0, 0, 0, 0, false, false, "3G MEASUREMENT Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GMEASUREMENTParametersDescriptionStructClause105233a:
@@ -87531,7 +87531,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom, func(v N3GAdditionalMeasurementParametersDescriptionStructClause105233a, wire runtime.WireInfo) N3GAdditionalMeasurementParametersDescriptionStructClause105233a {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
+			}, false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GAdditionalMeasurementParametersDescriptionStructClause105233a:
@@ -87561,7 +87561,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets", MaxOctets: 10, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 80, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI4RestOctetsFrom, func(v SI4RestOctets, wire runtime.WireInfo) SI4RestOctets { v.Wire = wire; return v }, true, 0, 80, 0, false, true, "SI4 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			return descriptorFrom(r, DecodeSI4RestOctetsFrom, func(v SI4RestOctets, wire runtime.WireInfo) SI4RestOctets { v.Wire = wire; return v }, true, 0, 0, 80, 0, false, true, "SI4 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctets:
@@ -87591,7 +87591,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_O", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 24, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsO(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI4RestOctetsOFrom, func(v SI4RestOctetsO, wire runtime.WireInfo) SI4RestOctetsO { v.Wire = wire; return v }, true, 0, 0, 0, false, true, "SI4 Rest Octets_O", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			return descriptorFrom(r, DecodeSI4RestOctetsOFrom, func(v SI4RestOctetsO, wire runtime.WireInfo) SI4RestOctetsO { v.Wire = wire; return v }, true, 0, 0, 0, 0, false, true, "SI4 Rest Octets_O", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctetsO:
@@ -87621,7 +87621,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_S", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: func(data []byte) (any, error) { return DecodeSI4RestOctetsS(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI4RestOctetsSFrom, func(v SI4RestOctetsS, wire runtime.WireInfo) SI4RestOctetsS { v.Wire = wire; return v }, false, 0, 0, 0, false, true, "SI4 Rest Octets_S", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			return descriptorFrom(r, DecodeSI4RestOctetsSFrom, func(v SI4RestOctetsS, wire runtime.WireInfo) SI4RestOctetsS { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, true, "SI4 Rest Octets_S", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI4RestOctetsS:
@@ -87651,7 +87651,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Break Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: func(data []byte) (any, error) { return DecodeBreakIndicator(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeBreakIndicatorFrom, func(v BreakIndicator, wire runtime.WireInfo) BreakIndicator { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Break Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			return descriptorFrom(r, DecodeBreakIndicatorFrom, func(v BreakIndicator, wire runtime.WireInfo) BreakIndicator { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Break Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BreakIndicator:
@@ -87681,7 +87681,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36", Name: "SI7 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"}}, Decode: func(data []byte) (any, error) { return DecodeSI7RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI7RestOctetsFrom, func(v SI7RestOctets, wire runtime.WireInfo) SI7RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI7 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"})
+			return descriptorFrom(r, DecodeSI7RestOctetsFrom, func(v SI7RestOctets, wire runtime.WireInfo) SI7RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI7 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI7RestOctets:
@@ -87710,7 +87710,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, descriptorTypeError("canonical", "SI7 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"})
 			}
 		}, DecodeWithContext: func(data []byte, c runtime.SI4ACS) (any, error) { return DecodeSI7RestOctetsWithContext(data, c) }, DecodeFromWithContext: func(r *runtime.Reader, c runtime.SI4ACS) (any, error) {
-			return descriptorFrom(r, func(r *runtime.Reader) (SI7RestOctets, error) { return DecodeSI7RestOctetsFromWithContext(r, c) }, func(v SI7RestOctets, wire runtime.WireInfo) SI7RestOctets { v.Wire = wire; return v }, false, 160, 160, 0, false, true, "SI7 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"})
+			return descriptorFrom(r, func(r *runtime.Reader) (SI7RestOctets, error) { return DecodeSI7RestOctetsFromWithContext(r, c) }, func(v SI7RestOctets, wire runtime.WireInfo) SI7RestOctets { v.Wire = wire; return v }, false, 0, 160, 160, 0, false, true, "SI7 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"})
 		}, EncodeWithContext: func(value any, c runtime.SI4ACS) ([]byte, error) {
 			switch v := value.(type) {
 			case SI7RestOctets:
@@ -87740,7 +87740,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37", Name: "SI8 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"}}, Decode: func(data []byte) (any, error) { return DecodeSI8RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI8RestOctetsFrom, func(v SI8RestOctets, wire runtime.WireInfo) SI8RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI8 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"})
+			return descriptorFrom(r, DecodeSI8RestOctetsFrom, func(v SI8RestOctets, wire runtime.WireInfo) SI8RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI8 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI8RestOctets:
@@ -87769,7 +87769,7 @@ func Descriptors() []runtime.Descriptor {
 				return nil, descriptorTypeError("canonical", "SI8 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"})
 			}
 		}, DecodeWithContext: func(data []byte, c runtime.SI4ACS) (any, error) { return DecodeSI8RestOctetsWithContext(data, c) }, DecodeFromWithContext: func(r *runtime.Reader, c runtime.SI4ACS) (any, error) {
-			return descriptorFrom(r, func(r *runtime.Reader) (SI8RestOctets, error) { return DecodeSI8RestOctetsFromWithContext(r, c) }, func(v SI8RestOctets, wire runtime.WireInfo) SI8RestOctets { v.Wire = wire; return v }, false, 160, 160, 0, false, true, "SI8 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"})
+			return descriptorFrom(r, func(r *runtime.Reader) (SI8RestOctets, error) { return DecodeSI8RestOctetsFromWithContext(r, c) }, func(v SI8RestOctets, wire runtime.WireInfo) SI8RestOctets { v.Wire = wire; return v }, false, 0, 160, 160, 0, false, true, "SI8 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"})
 		}, EncodeWithContext: func(value any, c runtime.SI4ACS) ([]byte, error) {
 			switch v := value.(type) {
 			case SI8RestOctets:
@@ -87802,7 +87802,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeOptionalSelectionParametersClause105235From, func(v OptionalSelectionParametersClause105235, wire runtime.WireInfo) OptionalSelectionParametersClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Optional Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "Optional Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalSelectionParametersClause105235:
@@ -87835,7 +87835,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSelectionParametersClause105235From, func(v SelectionParametersClause105235, wire runtime.WireInfo) SelectionParametersClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "Selection Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SelectionParametersClause105235:
@@ -87868,7 +87868,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeOptionalPowerOffsetClause105235From, func(v OptionalPowerOffsetClause105235, wire runtime.WireInfo) OptionalPowerOffsetClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Optional Power Offset", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "Optional Power Offset", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case OptionalPowerOffsetClause105235:
@@ -87901,7 +87901,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSIndicatorClause105235From, func(v GPRSIndicatorClause105235, wire runtime.WireInfo) GPRSIndicatorClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS Indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSIndicatorClause105235:
@@ -87934,7 +87934,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAParametersClause105235From, func(v LSAParametersClause105235, wire runtime.WireInfo) LSAParametersClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "LSA Parameters", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAParametersClause105235:
@@ -87967,7 +87967,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAIDInformationClause105235From, func(v LSAIDInformationClause105235, wire runtime.WireInfo) LSAIDInformationClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA ID information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "LSA ID information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIDInformationClause105235:
@@ -88000,7 +88000,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeLSAIdentityClause105235From, func(v LSAIdentityClause105235, wire runtime.WireInfo) LSAIdentityClause105235 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "LSA identity", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
+			}, false, 0, 0, 0, 0, false, false, "LSA identity", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LSAIdentityClause105235:
@@ -88030,7 +88030,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "SI 13alt Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}}, Decode: func(data []byte) (any, error) { return DecodeSI13altRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI13altRestOctetsFrom, func(v SI13altRestOctets, wire runtime.WireInfo) SI13altRestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 13alt Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"})
+			return descriptorFrom(r, DecodeSI13altRestOctetsFrom, func(v SI13altRestOctets, wire runtime.WireInfo) SI13altRestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 13alt Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI13altRestOctets:
@@ -88063,7 +88063,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePBCCHDescription2StructFrom, func(v PBCCHDescription2Struct, wire runtime.WireInfo) PBCCHDescription2Struct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PBCCH Description 2 struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"})
+			}, false, 0, 0, 0, 0, false, false, "PBCCH Description 2 struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PBCCHDescription2Struct:
@@ -88093,7 +88093,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "P2 Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: func(data []byte) (any, error) { return DecodeP2RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeP2RestOctetsFrom, func(v P2RestOctets, wire runtime.WireInfo) P2RestOctets { v.Wire = wire; return v }, true, 8, 88, 0, false, true, "P2 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
+			return descriptorFrom(r, DecodeP2RestOctetsFrom, func(v P2RestOctets, wire runtime.WireInfo) P2RestOctets { v.Wire = wire; return v }, true, 8, 0, 88, 0, false, true, "P2 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P2RestOctets:
@@ -88123,7 +88123,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: func(data []byte) (any, error) { return DecodePriorityClause105224(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePriorityClause105224From, func(v PriorityClause105224, wire runtime.WireInfo) PriorityClause105224 { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
+			return descriptorFrom(r, DecodePriorityClause105224From, func(v PriorityClause105224, wire runtime.WireInfo) PriorityClause105224 { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105224:
@@ -88156,7 +88156,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMBMSInformationClause105224From, func(v MBMSInformationClause105224, wire runtime.WireInfo) MBMSInformationClause105224 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MBMS Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
+			}, false, 0, 0, 0, 0, false, false, "MBMS Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSInformationClause105224:
@@ -88189,7 +88189,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105224From, func(v PEOIMMCellGroupDetailsStructClause105224, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105224 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105224:
@@ -88219,7 +88219,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "P3 Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: func(data []byte) (any, error) { return DecodeP3RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeP3RestOctetsFrom, func(v P3RestOctets, wire runtime.WireInfo) P3RestOctets { v.Wire = wire; return v }, true, 24, 24, 0, false, true, "P3 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
+			return descriptorFrom(r, DecodeP3RestOctetsFrom, func(v P3RestOctets, wire runtime.WireInfo) P3RestOctets { v.Wire = wire; return v }, true, 24, 0, 24, 0, false, true, "P3 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P3RestOctets:
@@ -88249,7 +88249,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: func(data []byte) (any, error) { return DecodePriorityClause105225(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePriorityClause105225From, func(v PriorityClause105225, wire runtime.WireInfo) PriorityClause105225 { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
+			return descriptorFrom(r, DecodePriorityClause105225From, func(v PriorityClause105225, wire runtime.WireInfo) PriorityClause105225 { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105225:
@@ -88282,7 +88282,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105225From, func(v PEOIMMCellGroupDetailsStructClause105225, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105225 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105225:
@@ -88312,7 +88312,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2quater Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: func(data []byte) (any, error) { return DecodeSI2quaterRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI2quaterRestOctetsFrom, func(v SI2quaterRestOctets, wire runtime.WireInfo) SI2quaterRestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI2quater Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			return descriptorFrom(r, DecodeSI2quaterRestOctetsFrom, func(v SI2quaterRestOctets, wire runtime.WireInfo) SI2quaterRestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI2quater Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2quaterRestOctets:
@@ -88345,7 +88345,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GNeighbourCellDescriptionStructFrom, func(v N3GNeighbourCellDescriptionStruct, wire runtime.WireInfo) N3GNeighbourCellDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Neighbour Cell Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G Neighbour Cell Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GNeighbourCellDescriptionStruct:
@@ -88378,7 +88378,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANFDDDescriptionStructClause105233bFrom, func(v UTRANFDDDescriptionStructClause105233b, wire runtime.WireInfo) UTRANFDDDescriptionStructClause105233b {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANFDDDescriptionStructClause105233b:
@@ -88411,7 +88411,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedUTRANFDDNeighbourCellsStructFrom, func(v RepeatedUTRANFDDNeighbourCellsStruct, wire runtime.WireInfo) RepeatedUTRANFDDNeighbourCellsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated UTRAN FDD Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated UTRAN FDD Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANFDDNeighbourCellsStruct:
@@ -88444,7 +88444,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANTDDDescriptionStructClause105233bFrom, func(v UTRANTDDDescriptionStructClause105233b, wire runtime.WireInfo) UTRANTDDDescriptionStructClause105233b {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANTDDDescriptionStructClause105233b:
@@ -88477,7 +88477,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedUTRANTDDNeighbourCellsStructFrom, func(v RepeatedUTRANTDDNeighbourCellsStruct, wire runtime.WireInfo) RepeatedUTRANTDDNeighbourCellsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated UTRAN TDD Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated UTRAN TDD Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANTDDNeighbourCellsStruct:
@@ -88510,7 +88510,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMEASUREMENTPARAMETERSDescriptionStructFrom, func(v MEASUREMENTPARAMETERSDescriptionStruct, wire runtime.WireInfo) MEASUREMENTPARAMETERSDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MEASUREMENT PARAMETERS Description Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "MEASUREMENT PARAMETERS Description Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MEASUREMENTPARAMETERSDescriptionStruct:
@@ -88545,7 +88545,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom, func(v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, wire runtime.WireInfo) N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b:
@@ -88578,7 +88578,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSRealTimeDifferenceDescriptionStructFrom, func(v GPRSRealTimeDifferenceDescriptionStruct, wire runtime.WireInfo) GPRSRealTimeDifferenceDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS Real Time Difference Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS Real Time Difference Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSRealTimeDifferenceDescriptionStruct:
@@ -88608,7 +88608,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD6 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: func(data []byte) (any, error) { return DecodeRTD6Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRTD6StructFrom, func(v RTD6Struct, wire runtime.WireInfo) RTD6Struct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "RTD6 Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			return descriptorFrom(r, DecodeRTD6StructFrom, func(v RTD6Struct, wire runtime.WireInfo) RTD6Struct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "RTD6 Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RTD6Struct:
@@ -88638,7 +88638,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD12 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: func(data []byte) (any, error) { return DecodeRTD12Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRTD12StructFrom, func(v RTD12Struct, wire runtime.WireInfo) RTD12Struct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "RTD12 Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			return descriptorFrom(r, DecodeRTD12StructFrom, func(v RTD12Struct, wire runtime.WireInfo) RTD12Struct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "RTD12 Struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RTD12Struct:
@@ -88671,7 +88671,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSBSICDescriptionStructFrom, func(v GPRSBSICDescriptionStruct, wire runtime.WireInfo) GPRSBSICDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS BSIC Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS BSIC Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSBSICDescriptionStruct:
@@ -88704,7 +88704,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSREPORTPRIORITYDescriptionStructFrom, func(v GPRSREPORTPRIORITYDescriptionStruct, wire runtime.WireInfo) GPRSREPORTPRIORITYDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS REPORT PRIORITY Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS REPORT PRIORITY Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSREPORTPRIORITYDescriptionStruct:
@@ -88737,7 +88737,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom, func(v GPRSMEASUREMENTPARAMETERSDescriptionStruct, wire runtime.WireInfo) GPRSMEASUREMENTPARAMETERSDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSMEASUREMENTPARAMETERSDescriptionStruct:
@@ -88770,7 +88770,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom, func(v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct, wire runtime.WireInfo) GPRS3GMEASUREMENTPARAMETERSDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS 3G MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS 3G MEASUREMENT PARAMETERS Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRS3GMEASUREMENTPARAMETERSDescriptionStruct:
@@ -88803,7 +88803,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeNCMeasurementParametersStructFrom, func(v NCMeasurementParametersStruct, wire runtime.WireInfo) NCMeasurementParametersStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "NC Measurement Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "NC Measurement Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NCMeasurementParametersStruct:
@@ -88836,7 +88836,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSI2qExtensionInformationFrom, func(v SI2qExtensionInformation, wire runtime.WireInfo) SI2qExtensionInformation {
 				v.Wire = wire
 				return v
-			}, true, 0, 0, 0, false, false, "SI2q Extension Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, true, 0, 0, 0, 0, false, false, "SI2q Extension Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI2qExtensionInformation:
@@ -88869,7 +88869,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeCCNSupportDescriptionStructFrom, func(v CCNSupportDescriptionStruct, wire runtime.WireInfo) CCNSupportDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "CCN Support Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "CCN Support Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CCNSupportDescriptionStruct:
@@ -88904,7 +88904,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom, func(v N3GAdditionalMeasurementParametersDescriptionStructClause105233b, wire runtime.WireInfo) N3GAdditionalMeasurementParametersDescriptionStructClause105233b {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GAdditionalMeasurementParametersDescriptionStructClause105233b:
@@ -88939,7 +88939,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GAdditionalMeasurementParametersDescription2StructFrom, func(v N3GAdditionalMeasurementParametersDescription2Struct, wire runtime.WireInfo) N3GAdditionalMeasurementParametersDescription2Struct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description 2 struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description 2 struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GAdditionalMeasurementParametersDescription2Struct:
@@ -88974,7 +88974,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom, func(v PriorityAndEUTRANParametersDescriptionStructClause105233b, wire runtime.WireInfo) PriorityAndEUTRANParametersDescriptionStructClause105233b {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityAndEUTRANParametersDescriptionStructClause105233b:
@@ -89007,7 +89007,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeServingCellPriorityParametersDescriptionStructFrom, func(v ServingCellPriorityParametersDescriptionStruct, wire runtime.WireInfo) ServingCellPriorityParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Serving Cell Priority Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Serving Cell Priority Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ServingCellPriorityParametersDescriptionStruct:
@@ -89040,7 +89040,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GPriorityParametersDescriptionStructFrom, func(v N3GPriorityParametersDescriptionStruct, wire runtime.WireInfo) N3GPriorityParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G Priority Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G Priority Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GPriorityParametersDescriptionStruct:
@@ -89073,7 +89073,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedUTRANPriorityParametersStructFrom, func(v RepeatedUTRANPriorityParametersStruct, wire runtime.WireInfo) RepeatedUTRANPriorityParametersStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated UTRAN Priority Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated UTRAN Priority Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedUTRANPriorityParametersStruct:
@@ -89106,7 +89106,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEUTRANParametersDescriptionStructFrom, func(v EUTRANParametersDescriptionStruct, wire runtime.WireInfo) EUTRANParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "E-UTRAN Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANParametersDescriptionStruct:
@@ -89139,7 +89139,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEUTRANMeasurementParametersDescriptionStructFrom, func(v EUTRANMeasurementParametersDescriptionStruct, wire runtime.WireInfo) EUTRANMeasurementParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "E-UTRAN Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "E-UTRAN Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANMeasurementParametersDescriptionStruct:
@@ -89172,7 +89172,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom, func(v GPRSEUTRANMeasurementParametersDescriptionStruct, wire runtime.WireInfo) GPRSEUTRANMeasurementParametersDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "GPRS E-UTRAN Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "GPRS E-UTRAN Measurement Parameters Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GPRSEUTRANMeasurementParametersDescriptionStruct:
@@ -89205,7 +89205,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedEUTRANNeighbourCellsStructFrom, func(v RepeatedEUTRANNeighbourCellsStruct, wire runtime.WireInfo) RepeatedEUTRANNeighbourCellsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANNeighbourCellsStruct:
@@ -89238,7 +89238,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedEUTRANNotAllowedCellsStructFrom, func(v RepeatedEUTRANNotAllowedCellsStruct, wire runtime.WireInfo) RepeatedEUTRANNotAllowedCellsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated E-UTRAN Not Allowed Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Not Allowed Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANNotAllowedCellsStruct:
@@ -89271,7 +89271,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeRepeatedEUTRANPCIDToTAMappingStructFrom, func(v RepeatedEUTRANPCIDToTAMappingStruct, wire runtime.WireInfo) RepeatedEUTRANPCIDToTAMappingStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Repeated E-UTRAN PCID to TA mapping struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN PCID to TA mapping struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RepeatedEUTRANPCIDToTAMappingStruct:
@@ -89304,7 +89304,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeN3GCSGDescriptionStructFrom, func(v N3GCSGDescriptionStruct, wire runtime.WireInfo) N3GCSGDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "3G CSG Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "3G CSG Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N3GCSGDescriptionStruct:
@@ -89337,7 +89337,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEUTRANCSGDescriptionStructFrom, func(v EUTRANCSGDescriptionStruct, wire runtime.WireInfo) EUTRANCSGDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "E-UTRAN CSG Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "E-UTRAN CSG Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANCSGDescriptionStruct:
@@ -89370,7 +89370,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeCSGCellsReportingDescriptionStructFrom, func(v CSGCellsReportingDescriptionStruct, wire runtime.WireInfo) CSGCellsReportingDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case CSGCellsReportingDescriptionStruct:
@@ -89403,7 +89403,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeUTRANCSGCellsReportingDescriptionStructFrom, func(v UTRANCSGCellsReportingDescriptionStruct, wire runtime.WireInfo) UTRANCSGCellsReportingDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "UTRAN CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "UTRAN CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case UTRANCSGCellsReportingDescriptionStruct:
@@ -89436,7 +89436,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeEUTRANCSGCellsReportingDescriptionStructFrom, func(v EUTRANCSGCellsReportingDescriptionStruct, wire runtime.WireInfo) EUTRANCSGCellsReportingDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "E-UTRAN CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "E-UTRAN CSG Cells Reporting Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EUTRANCSGCellsReportingDescriptionStruct:
@@ -89469,7 +89469,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeExtendedEARFCNsDescriptionStructFrom, func(v ExtendedEARFCNsDescriptionStruct, wire runtime.WireInfo) ExtendedEARFCNsDescriptionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Extended EARFCNs Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Extended EARFCNs Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedEARFCNsDescriptionStruct:
@@ -89502,7 +89502,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom, func(v ExtendedEARFCNsDescriptionForCSGCellsStruct, wire runtime.WireInfo) ExtendedEARFCNsDescriptionForCSGCellsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Extended EARFCNs Description for CSG Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
+			}, false, 0, 0, 0, 0, false, false, "Extended EARFCNs Description for CSG Cells struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ExtendedEARFCNsDescriptionForCSGCellsStruct:
@@ -89532,7 +89532,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "SI6 rest octets", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 56, MaximumBits: 56, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: func(data []byte) (any, error) { return DecodeSI6RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI6RestOctetsFrom, func(v SI6RestOctets, wire runtime.WireInfo) SI6RestOctets { v.Wire = wire; return v }, true, 56, 56, 0, false, true, "SI6 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			return descriptorFrom(r, DecodeSI6RestOctetsFrom, func(v SI6RestOctets, wire runtime.WireInfo) SI6RestOctets { v.Wire = wire; return v }, true, 56, 0, 56, 0, false, true, "SI6 rest octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI6RestOctets:
@@ -89562,7 +89562,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "PCH and NCH info", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: func(data []byte) (any, error) { return DecodePCHAndNCHInfo(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePCHAndNCHInfoFrom, func(v PCHAndNCHInfo, wire runtime.WireInfo) PCHAndNCHInfo { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "PCH and NCH info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			return descriptorFrom(r, DecodePCHAndNCHInfoFrom, func(v PCHAndNCHInfo, wire runtime.WireInfo) PCHAndNCHInfo { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "PCH and NCH info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PCHAndNCHInfo:
@@ -89595,7 +89595,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePagingChannelRestructuringFrom, func(v PagingChannelRestructuring, wire runtime.WireInfo) PagingChannelRestructuring {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "paging channel restructuring", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			}, false, 0, 0, 0, 0, false, false, "paging channel restructuring", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PagingChannelRestructuring:
@@ -89625,7 +89625,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "VBS/VGCS options", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: func(data []byte) (any, error) { return DecodeVBSVGCSOptions(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeVBSVGCSOptionsFrom, func(v VBSVGCSOptions, wire runtime.WireInfo) VBSVGCSOptions { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "VBS/VGCS options", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			return descriptorFrom(r, DecodeVBSVGCSOptionsFrom, func(v VBSVGCSOptions, wire runtime.WireInfo) VBSVGCSOptions { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "VBS/VGCS options", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case VBSVGCSOptions:
@@ -89655,7 +89655,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband notifications", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: func(data []byte) (any, error) { return DecodeInbandNotifications(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeInbandNotificationsFrom, func(v InbandNotifications, wire runtime.WireInfo) InbandNotifications { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "inband notifications", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			return descriptorFrom(r, DecodeInbandNotificationsFrom, func(v InbandNotifications, wire runtime.WireInfo) InbandNotifications { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "inband notifications", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InbandNotifications:
@@ -89685,7 +89685,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband pagings", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: func(data []byte) (any, error) { return DecodeInbandPagings(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeInbandPagingsFrom, func(v InbandPagings, wire runtime.WireInfo) InbandPagings { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "inband pagings", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			return descriptorFrom(r, DecodeInbandPagingsFrom, func(v InbandPagings, wire runtime.WireInfo) InbandPagings { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "inband pagings", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case InbandPagings:
@@ -89718,7 +89718,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeBandIndicatorClause105235aFrom, func(v BandIndicatorClause105235a, wire runtime.WireInfo) BandIndicatorClause105235a {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Band indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
+			}, false, 0, 0, 0, 0, false, false, "Band indicator", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BandIndicatorClause105235a:
@@ -89748,7 +89748,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI 13 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: func(data []byte) (any, error) { return DecodeSI13RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI13RestOctetsFrom, func(v SI13RestOctets, wire runtime.WireInfo) SI13RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 13 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
+			return descriptorFrom(r, DecodeSI13RestOctetsFrom, func(v SI13RestOctets, wire runtime.WireInfo) SI13RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 13 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI13RestOctets:
@@ -89778,7 +89778,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PBCCH Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 22, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: func(data []byte) (any, error) { return DecodePBCCHDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePBCCHDescriptionStructFrom, func(v PBCCHDescriptionStruct, wire runtime.WireInfo) PBCCHDescriptionStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "PBCCH Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
+			return descriptorFrom(r, DecodePBCCHDescriptionStructFrom, func(v PBCCHDescriptionStruct, wire runtime.WireInfo) PBCCHDescriptionStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "PBCCH Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PBCCHDescriptionStruct:
@@ -89808,7 +89808,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI_CHANGE_ALT", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: func(data []byte) (any, error) { return DecodeSICHANGEALT(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSICHANGEALTFrom, func(v SICHANGEALT, wire runtime.WireInfo) SICHANGEALT { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "SI_CHANGE_ALT", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
+			return descriptorFrom(r, DecodeSICHANGEALTFrom, func(v SICHANGEALT, wire runtime.WireInfo) SICHANGEALT { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "SI_CHANGE_ALT", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SICHANGEALT:
@@ -89841,7 +89841,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDefinitionStructFrom, func(v PEOIMMCellGroupDefinitionStruct, wire runtime.WireInfo) PEOIMMCellGroupDefinitionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Definition struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Definition struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDefinitionStruct:
@@ -89874,7 +89874,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupSpecificParametersStructFrom, func(v PEOIMMCellGroupSpecificParametersStruct, wire runtime.WireInfo) PEOIMMCellGroupSpecificParametersStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Specific Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Specific Parameters struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupSpecificParametersStruct:
@@ -89904,7 +89904,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "SI 19 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: func(data []byte) (any, error) { return DecodeSI19RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI19RestOctetsFrom, func(v SI19RestOctets, wire runtime.WireInfo) SI19RestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "SI 19 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
+			return descriptorFrom(r, DecodeSI19RestOctetsFrom, func(v SI19RestOctets, wire runtime.WireInfo) SI19RestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "SI 19 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI19RestOctets:
@@ -89937,7 +89937,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeCOMPACTNeighbourCellParamsStructFrom, func(v COMPACTNeighbourCellParamsStruct, wire runtime.WireInfo) COMPACTNeighbourCellParamsStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "COMPACT Neighbour Cell params struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
+			}, false, 0, 0, 0, 0, false, false, "COMPACT Neighbour Cell params struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case COMPACTNeighbourCellParamsStruct:
@@ -89970,7 +89970,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeCOMPACTCellSelectionStructFrom, func(v COMPACTCellSelectionStruct, wire runtime.WireInfo) COMPACTCellSelectionStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "COMPACT Cell Selection struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
+			}, false, 0, 0, 0, 0, false, false, "COMPACT Cell Selection struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case COMPACTCellSelectionStruct:
@@ -90000,7 +90000,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: func(data []byte) (any, error) { return DecodeLADifferentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeLADifferentStructFrom, func(v LADifferentStruct, wire runtime.WireInfo) LADifferentStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "LA Different struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
+			return descriptorFrom(r, DecodeLADifferentStructFrom, func(v LADifferentStruct, wire runtime.WireInfo) LADifferentStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "LA Different struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case LADifferentStruct:
@@ -90030,7 +90030,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: func(data []byte) (any, error) { return DecodeSI18RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI18RestOctetsFrom, func(v SI18RestOctets, wire runtime.WireInfo) SI18RestOctets { v.Wire = wire; return v }, false, 160, 160, 0, false, true, "SI 18 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"})
+			return descriptorFrom(r, DecodeSI18RestOctetsFrom, func(v SI18RestOctets, wire runtime.WireInfo) SI18RestOctets { v.Wire = wire; return v }, false, 160, 0, 160, 0, false, true, "SI 18 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI18RestOctets:
@@ -90060,7 +90060,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: func(data []byte) (any, error) { return DecodeNonGSMMessageStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeNonGSMMessageStructFrom, func(v NonGSMMessageStruct, wire runtime.WireInfo) NonGSMMessageStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Non-GSM Message struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"})
+			return descriptorFrom(r, DecodeNonGSMMessageStructFrom, func(v NonGSMMessageStruct, wire runtime.WireInfo) NonGSMMessageStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Non-GSM Message struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NonGSMMessageStruct:
@@ -90090,7 +90090,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", MaxOctets: 19, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 152, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: func(data []byte) (any, error) { return DecodeIPARestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIPARestOctetsFrom, func(v IPARestOctets, wire runtime.WireInfo) IPARestOctets { v.Wire = wire; return v }, true, 152, 152, 0, false, true, "IPA Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			return descriptorFrom(r, DecodeIPARestOctetsFrom, func(v IPARestOctets, wire runtime.WireInfo) IPARestOctets { v.Wire = wire; return v }, true, 152, 0, 152, 0, false, true, "IPA Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPARestOctets:
@@ -90123,7 +90123,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeIPAUplinkAssignmentStructFrom, func(v IPAUplinkAssignmentStruct, wire runtime.WireInfo) IPAUplinkAssignmentStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "IPA Uplink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			}, false, 0, 0, 0, 0, false, false, "IPA Uplink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPAUplinkAssignmentStruct:
@@ -90156,7 +90156,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeIPADownlinkAssignmentStructFrom, func(v IPADownlinkAssignmentStruct, wire runtime.WireInfo) IPADownlinkAssignmentStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "IPA Downlink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			}, false, 0, 0, 0, 0, false, false, "IPA Downlink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPADownlinkAssignmentStruct:
@@ -90189,7 +90189,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeIPASingleBlockUplinkAssignmentStructFrom, func(v IPASingleBlockUplinkAssignmentStruct, wire runtime.WireInfo) IPASingleBlockUplinkAssignmentStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "IPA Single Block Uplink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			}, false, 0, 0, 0, 0, false, false, "IPA Single Block Uplink Assignment struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case IPASingleBlockUplinkAssignmentStruct:
@@ -90222,7 +90222,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeAcknowledgedAccessRequestStructFrom, func(v AcknowledgedAccessRequestStruct, wire runtime.WireInfo) AcknowledgedAccessRequestStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Acknowledged Access Request struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			}, false, 0, 0, 0, 0, false, false, "Acknowledged Access Request struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case AcknowledgedAccessRequestStruct:
@@ -90255,7 +90255,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105278From, func(v PEOIMMCellGroupDetailsStructClause105278, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105278 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105278:
@@ -90285,7 +90285,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"}}, Decode: func(data []byte) (any, error) { return DecodeSI20RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI20RestOctetsFrom, func(v SI20RestOctets, wire runtime.WireInfo) SI20RestOctets { v.Wire = wire; return v }, false, 160, 160, 0, false, true, "SI 20 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"})
+			return descriptorFrom(r, DecodeSI20RestOctetsFrom, func(v SI20RestOctets, wire runtime.WireInfo) SI20RestOctets { v.Wire = wire; return v }, false, 160, 0, 160, 0, false, true, "SI 20 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI20RestOctets:
@@ -90315,7 +90315,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 37, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: func(data []byte) (any, error) { return DecodeGroupCallInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGroupCallInformationFrom, func(v GroupCallInformation, wire runtime.WireInfo) GroupCallInformation { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Group Call information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
+			return descriptorFrom(r, DecodeGroupCallInformationFrom, func(v GroupCallInformation, wire runtime.WireInfo) GroupCallInformation { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Group Call information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GroupCallInformation:
@@ -90345,7 +90345,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: func(data []byte) (any, error) { return DecodeEmergencyInd(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEmergencyIndFrom, func(v EmergencyInd, wire runtime.WireInfo) EmergencyInd { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Emergency_Ind", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
+			return descriptorFrom(r, DecodeEmergencyIndFrom, func(v EmergencyInd, wire runtime.WireInfo) EmergencyInd { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Emergency_Ind", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case EmergencyInd:
@@ -90378,7 +90378,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeGroupChannelDescriptionFrom, func(v GroupChannelDescription, wire runtime.WireInfo) GroupChannelDescription {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "Group Channel Description", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
+			}, false, 0, 0, 0, 0, false, false, "Group Channel Description", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case GroupChannelDescription:
@@ -90408,7 +90408,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "bit string", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: func(data []byte) (any, error) { return DecodeBitString(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeBitStringFrom, func(v BitString, wire runtime.WireInfo) BitString { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "bit string", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
+			return descriptorFrom(r, DecodeBitStringFrom, func(v BitString, wire runtime.WireInfo) BitString { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "bit string", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case BitString:
@@ -90438,7 +90438,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "NT/N Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: func(data []byte) (any, error) { return DecodeNTNRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeNTNRestOctetsFrom, func(v NTNRestOctets, wire runtime.WireInfo) NTNRestOctets { v.Wire = wire; return v }, true, 160, 160, 0, false, true, "NT/N Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
+			return descriptorFrom(r, DecodeNTNRestOctetsFrom, func(v NTNRestOctets, wire runtime.WireInfo) NTNRestOctets { v.Wire = wire; return v }, true, 160, 0, 160, 0, false, true, "NT/N Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case NTNRestOctets:
@@ -90471,7 +90471,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeListOfGroupCallNCHInformationFrom, func(v ListOfGroupCallNCHInformation, wire runtime.WireInfo) ListOfGroupCallNCHInformation {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "List of Group Call NCH information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
+			}, false, 0, 0, 0, 0, false, false, "List of Group Call NCH information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfGroupCallNCHInformation:
@@ -90504,7 +90504,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeListOfEmergencyInformationFrom, func(v ListOfEmergencyInformation, wire runtime.WireInfo) ListOfEmergencyInformation {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "List of Emergency information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
+			}, false, 0, 0, 0, 0, false, false, "List of Emergency information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfEmergencyInformation:
@@ -90537,7 +90537,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeListOfVSTKRANDInformationFrom, func(v ListOfVSTKRANDInformation, wire runtime.WireInfo) ListOfVSTKRANDInformation {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "List of VSTK_RAND information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
+			}, false, 0, 0, 0, 0, false, false, "List of VSTK_RAND information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfVSTKRANDInformation:
@@ -90567,7 +90567,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Reduced GCR", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: func(data []byte) (any, error) { return DecodeListOfReducedGCR(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeListOfReducedGCRFrom, func(v ListOfReducedGCR, wire runtime.WireInfo) ListOfReducedGCR { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "List of Reduced GCR", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
+			return descriptorFrom(r, DecodeListOfReducedGCRFrom, func(v ListOfReducedGCR, wire runtime.WireInfo) ListOfReducedGCR { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "List of Reduced GCR", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ListOfReducedGCR:
@@ -90597,7 +90597,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "P1 Rest Octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 136, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: func(data []byte) (any, error) { return DecodeP1RestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeP1RestOctetsFrom, func(v P1RestOctets, wire runtime.WireInfo) P1RestOctets { v.Wire = wire; return v }, true, 0, 136, 0, false, true, "P1 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
+			return descriptorFrom(r, DecodeP1RestOctetsFrom, func(v P1RestOctets, wire runtime.WireInfo) P1RestOctets { v.Wire = wire; return v }, true, 0, 0, 136, 0, false, true, "P1 Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case P1RestOctets:
@@ -90627,7 +90627,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: func(data []byte) (any, error) { return DecodePriorityClause105223(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePriorityClause105223From, func(v PriorityClause105223, wire runtime.WireInfo) PriorityClause105223 { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
+			return descriptorFrom(r, DecodePriorityClause105223From, func(v PriorityClause105223, wire runtime.WireInfo) PriorityClause105223 { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Priority", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PriorityClause105223:
@@ -90660,7 +90660,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMBMSInformationClause105223From, func(v MBMSInformationClause105223, wire runtime.WireInfo) MBMSInformationClause105223 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MBMS Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
+			}, false, 0, 0, 0, 0, false, false, "MBMS Information", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MBMSInformationClause105223:
@@ -90693,7 +90693,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeETWSPrimaryNotificationStructFrom, func(v ETWSPrimaryNotificationStruct, wire runtime.WireInfo) ETWSPrimaryNotificationStruct {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "ETWS Primary Notification struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
+			}, false, 0, 0, 0, 0, false, false, "ETWS Primary Notification struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ETWSPrimaryNotificationStruct:
@@ -90726,7 +90726,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodePEOIMMCellGroupDetailsStructClause105223From, func(v PEOIMMCellGroupDetailsStructClause105223, wire runtime.WireInfo) PEOIMMCellGroupDetailsStructClause105223 {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
+			}, false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case PEOIMMCellGroupDetailsStructClause105223:
@@ -90756,7 +90756,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 160, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"}}, Decode: func(data []byte) (any, error) { return DecodeSI10bisRestOctets(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSI10bisRestOctetsFrom, func(v SI10bisRestOctets, wire runtime.WireInfo) SI10bisRestOctets { v.Wire = wire; return v }, true, 0, 160, 0, false, true, "SI10bis Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"})
+			return descriptorFrom(r, DecodeSI10bisRestOctetsFrom, func(v SI10bisRestOctets, wire runtime.WireInfo) SI10bisRestOctets { v.Wire = wire; return v }, true, 0, 0, 160, 0, false, true, "SI10bis Rest Octets", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10bisRestOctets:
@@ -90789,7 +90789,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeSI10bisNeighbourCellInfoFrom, func(v SI10bisNeighbourCellInfo, wire runtime.WireInfo) SI10bisNeighbourCellInfo {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "SI10bis Neighbour Cell Info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"})
+			}, false, 0, 0, 0, 0, false, false, "SI10bis Neighbour Cell Info", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SI10bisNeighbourCellInfo:
@@ -90851,7 +90851,7 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
 	if err := r.Check(); err != nil {
 		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
 	}
@@ -90862,9 +90862,7 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	if r.Remaining() < minBits {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
-	if maxBits > 0 && r.Remaining() > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: r.Position() + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, r.Position(), maxBits, source)
-	}
+	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
 	if zeroExtension {
 		r.SetZeroExtension(true)
@@ -90885,6 +90883,12 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	v, err := decode(r)
 	if err != nil {
 		return runtime.Decoded[T]{}, err
+	}
+	if originalRemaining < postMinBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+	}
+	if maxBits > 0 && originalRemaining > maxBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
 		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)

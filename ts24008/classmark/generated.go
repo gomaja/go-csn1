@@ -5823,7 +5823,7 @@ func Definitions() []string {
 func Descriptors() []runtime.Descriptor {
 	return []runtime.Descriptor{
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeClassmark3ValuePart(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeClassmark3ValuePartFrom, func(v Classmark3ValuePart, wire runtime.WireInfo) Classmark3ValuePart { v.Wire = wire; return v }, true, 8, 0, 256, true, false, "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			return descriptorFrom(r, DecodeClassmark3ValuePartFrom, func(v Classmark3ValuePart, wire runtime.WireInfo) Classmark3ValuePart { v.Wire = wire; return v }, true, 8, 0, 0, 256, true, false, "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case Classmark3ValuePart:
@@ -5853,7 +5853,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case A5Bits:
@@ -5883,7 +5883,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeRSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRSupportFrom, func(v RSupport, wire runtime.WireInfo) RSupport { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			return descriptorFrom(r, DecodeRSupportFrom, func(v RSupport, wire runtime.WireInfo) RSupport { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case RSupport:
@@ -5916,7 +5916,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeHSCSDMultiSlotCapabilityFrom, func(v HSCSDMultiSlotCapability, wire runtime.WireInfo) HSCSDMultiSlotCapability {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			}, false, 0, 0, 0, 0, false, false, "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case HSCSDMultiSlotCapability:
@@ -5949,7 +5949,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMSMeasurementCapabilityFrom, func(v MSMeasurementCapability, wire runtime.WireInfo) MSMeasurementCapability {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			}, false, 0, 0, 0, 0, false, false, "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSMeasurementCapability:
@@ -5982,7 +5982,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeMSPositioningMethodCapabilityFrom, func(v MSPositioningMethodCapability, wire runtime.WireInfo) MSPositioningMethodCapability {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			}, false, 0, 0, 0, 0, false, false, "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case MSPositioningMethodCapability:
@@ -6015,7 +6015,7 @@ func Descriptors() []runtime.Descriptor {
 			return descriptorFrom(r, DecodeECSDMultiSlotCapabilityFrom, func(v ECSDMultiSlotCapability, wire runtime.WireInfo) ECSDMultiSlotCapability {
 				v.Wire = wire
 				return v
-			}, false, 0, 0, 0, false, false, "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			}, false, 0, 0, 0, 0, false, false, "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case ECSDMultiSlotCapability:
@@ -6045,7 +6045,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeN8PSKStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeN8PSKStructFrom, func(v N8PSKStruct, wire runtime.WireInfo) N8PSKStruct { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			return descriptorFrom(r, DecodeN8PSKStructFrom, func(v N8PSKStruct, wire runtime.WireInfo) N8PSKStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case N8PSKStruct:
@@ -6075,7 +6075,7 @@ func Descriptors() []runtime.Descriptor {
 			}
 		}},
 		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeSingleBandSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSingleBandSupportFrom, func(v SingleBandSupport, wire runtime.WireInfo) SingleBandSupport { v.Wire = wire; return v }, false, 0, 0, 0, false, false, "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
+			return descriptorFrom(r, DecodeSingleBandSupportFrom, func(v SingleBandSupport, wire runtime.WireInfo) SingleBandSupport { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
 		}, Encode: func(value any) ([]byte, error) {
 			switch v := value.(type) {
 			case SingleBandSupport:
@@ -6137,7 +6137,7 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
 	if err := r.Check(); err != nil {
 		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
 	}
@@ -6148,9 +6148,7 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	if r.Remaining() < minBits {
 		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
-	if maxBits > 0 && r.Remaining() > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: r.Position() + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, r.Position(), maxBits, source)
-	}
+	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
 	if zeroExtension {
 		r.SetZeroExtension(true)
@@ -6171,6 +6169,12 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 	v, err := decode(r)
 	if err != nil {
 		return runtime.Decoded[T]{}, err
+	}
+	if originalRemaining < postMinBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+	}
+	if maxBits > 0 && originalRemaining > maxBits {
+		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
 		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
