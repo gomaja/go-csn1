@@ -642,7 +642,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	for i := 0; i < count; i++ {
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
 		}
 		out = append(out, v)
 	}
@@ -3428,7 +3428,7 @@ func decodeClassmark3ValuePartSpareBitsList(r *runtime.Reader) ([]runtime.BitStr
 	for r.Remaining() > 0 {
 		v, err := decodeClassmark3ValuePartSpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "Classmark3ValuePartSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "Classmark3ValuePartSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}

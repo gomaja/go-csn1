@@ -168,7 +168,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -176,10 +176,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -318,7 +318,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -326,10 +326,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -468,7 +468,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -476,10 +476,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -618,7 +618,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -626,10 +626,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}

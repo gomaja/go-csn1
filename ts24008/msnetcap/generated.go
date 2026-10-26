@@ -849,7 +849,7 @@ func decodeMSNetworkCapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runti
 	for r.Remaining() > 0 {
 		v, err := decodeMSNetworkCapabilityValuePartSpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MSNetworkCapabilityValuePartSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSNetworkCapabilityValuePartSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -1587,7 +1587,7 @@ func decodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsList(r *runtime.Rea
 	for r.Remaining() > 0 {
 		v, err := decodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}

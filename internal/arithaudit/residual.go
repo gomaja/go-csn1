@@ -101,6 +101,8 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		ordered = []string{"r.Eval(\"3\")", "r.ReadUint(width)", "v+=1"}
 	case "uint64(v) - 1":
 		ordered = []string{"ifuint64(v)<1", "raw:=uint64(v)-1"}
+	case "len(out.Entries) - 1":
+		ordered = []string{"for{before:=r.Position()", "out.Entries=append(out.Entries,element)", "continuation,err:=r.ReadUint(1)", "iferr!=nil{return", "len(out.Entries)-1"}
 	default:
 		return fmt.Errorf("unverified generated expression: %s", f.Key())
 	}
@@ -120,6 +122,8 @@ var reviewedHelperExpressions = map[string]map[string]bool{
 	"locatedFailure":                 {"be.Limit - be.Position": true, `"/" + be.Field`: true, `location.Path += "/" + be.Field`: true},
 	"shiftOperation":                 {"copy.Location.BitOffset += offset": true, "copy.Offset += offset": true, "copy.Position += offset": true, "copy.Limit += offset": true, `path + "/" + copy.Location.Path`: true, `path + "/" + copy.Path`: true},
 	"DecodeClassmark2ValuePartFrom":  {"r.Position() + r.Remaining()": true},
+	"DecodeGERANCSFrom":              {"r.Position() + r.Remaining()": true},
+	"DecodeGERANPSFrom":              {"r.Position() + r.Remaining()": true},
 	"EncodeClassmark2ValuePartTo":    {"spareIndex++": true},
 	"EncodeGERANCSCanonicalAtLength": {"octets - 5": true},
 	"decodeClassmark2ValuePartBytes": {"len(data) * 8": true},
@@ -131,6 +135,8 @@ var reviewedHelperGuards = map[string][]string{
 	"locatedFailure":                 {"be.Limit>=0&&be.Limit<=1<<20&&be.Position>=0&&be.Position<=1<<20", "location.Width=be.Limit-be.Position"},
 	"shiftOperation":                 {"ifcopy.Location.BitOffset>=0", "copy.Cause=shiftOperation(copy.Cause,offset,path)"},
 	"DecodeClassmark2ValuePartFrom":  {"r.Check()", "r.Remaining()<24", "r.Position()+r.Remaining()"},
+	"DecodeGERANCSFrom":              {"r.Check()", "r.BoundedRemaining()<0", "r.BoundedRemaining()<48", "r.Position()+r.Remaining()"},
+	"DecodeGERANPSFrom":              {"r.Check()", "r.BoundedRemaining()<0", "r.BoundedRemaining()<16", "r.Position()+r.Remaining()"},
 	"EncodeClassmark2ValuePartTo":    {"spareIndex:=0", "ifspareIndex<len(v.Wire.Spare)", "spareIndex++"},
 	"EncodeGERANCSCanonicalAtLength": {"octets<6||octets>37", "octets-5"},
 	"decodeClassmark2ValuePartBytes": {"runtime.CheckInput(data)", "len(data)<3", "len(data)*8"},

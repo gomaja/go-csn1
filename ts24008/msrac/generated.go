@@ -218,7 +218,7 @@ func decodeMSRACapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runtime.Bi
 	for r.Remaining() > 0 {
 		v, err := decodeMSRACapabilityValuePartSpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -525,7 +525,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 			}
 			terminated = true
 			break
@@ -533,10 +533,10 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 		before := r.Position()
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -564,7 +564,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	for r.Remaining() > 0 {
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -842,18 +842,18 @@ func decodeMSRACapabilityValuePartStruct(r *runtime.Reader) (MSRACapabilityValue
 		before := r.Position()
 		element, err := decodeMSRACapabilityValuePartStructElement(r)
 		if err != nil {
-			return MSRACapabilityValuePartStruct{}, err
+			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return MSRACapabilityValuePartStruct{}, err
+			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return MSRACapabilityValuePartStruct{}, r.Error(runtime.Limit, "non-progressing recursive list")
+			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -1087,7 +1087,7 @@ func decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBits
 	for r.Remaining() > 0 {
 		v, err := decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}

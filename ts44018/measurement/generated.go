@@ -564,7 +564,7 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 			}
 			terminated = true
 			break
@@ -572,10 +572,10 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 		before := r.Position()
 		v, err := decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -659,7 +659,7 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader
 	for i := 0; i < 96 && r.Remaining() > 0; i++ {
 		v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportREPORTINGQUANTITYListValue", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
 		}
 		out = append(out, v)
 	}
@@ -883,7 +883,7 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 	for i := 0; i < count; i++ {
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
 		}
 		out = append(out, v)
 	}
@@ -2416,7 +2416,7 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(r *runtime
 	for i := 0; i < count; i++ {
 		v, err := decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
 		}
 		out = append(out, v)
 	}

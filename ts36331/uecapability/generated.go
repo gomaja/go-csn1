@@ -471,6 +471,12 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	if r.BoundedRemaining() < 0 {
 		return GERANCS{}, locateOperationKind(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-cs"}, "decode", "GERANCS", r.Position(), 0, sourceClause1, runtime.InvalidValue)
 	}
+	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
+	// §§10.5.1.6–10.5.1.7 require the five framing/Classmark 2 octets
+	// and at least one Classmark 3 octet before receiver-inferred zeros apply.
+	if r.BoundedRemaining() < 48 {
+		return GERANCS{}, locateOperationKind(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANCS", Detail: "GERAN CS requires at least 48 bits"}, "decode", "GERANCS", r.Position(), 0, sourceClause1, runtime.InvalidValue)
+	}
 	if err := r.Expect("0011001100000011"); err != nil {
 		return GERANCS{}, locateOperationKind(err, "decode", "GERANCS", r.Position(), 0, sourceClause1, runtime.InvalidValue)
 	}
@@ -539,6 +545,11 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	}
 	if r.BoundedRemaining() < 0 {
 		return GERANPS{}, locateOperationKind(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-ps"}, "decode", "GERANPS", r.Position(), 0, sourceClause1, runtime.InvalidValue)
+	}
+	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
+	// §10.5.5.12a require a two-octet minimum before inferred zeros apply.
+	if r.BoundedRemaining() < 16 {
+		return GERANPS{}, locateOperationKind(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANPS", Detail: "GERAN PS requires at least 16 bits"}, "decode", "GERANPS", r.Position(), 0, sourceClause1, runtime.InvalidValue)
 	}
 	before := r.Wire()
 	start := r.Fork()

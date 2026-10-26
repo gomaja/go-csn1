@@ -7130,7 +7130,7 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 	for i := 0; i < count; i++ {
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList", i)
 		}
 		out = append(out, v)
 	}
@@ -7222,7 +7222,7 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 	for i := 0; i < count; i++ {
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2ListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List", i)
 		}
 		out = append(out, v)
 	}
@@ -8852,18 +8852,18 @@ func decodeAccessTechnologiesRequestStruct(r *runtime.Reader) (AccessTechnologie
 		before := r.Position()
 		element, err := decodeAccessTechnologiesRequestStructElement(r)
 		if err != nil {
-			return AccessTechnologiesRequestStruct{}, err
+			return AccessTechnologiesRequestStruct{}, locateIndex(locateOperationKind(err, "decode", "AccessTechnologiesRequestStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "AccessTechnologiesRequestStruct", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return AccessTechnologiesRequestStruct{}, err
+			return AccessTechnologiesRequestStruct{}, locateIndex(locateOperationKind(err, "decode", "AccessTechnologiesRequestStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "AccessTechnologiesRequestStruct", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return AccessTechnologiesRequestStruct{}, r.Error(runtime.Limit, "non-progressing recursive list")
+			return AccessTechnologiesRequestStruct{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "AccessTechnologiesRequestStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "AccessTechnologiesRequestStruct", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -15498,7 +15498,7 @@ func decodeSI2nRestOctetsGSMNeighbourCellSelectionParameters(r *runtime.Reader) 
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI2nRestOctetsGSMNeighbourCellSelectionParameters", r.Position(), 0, sourceClause5, runtime.InvalidValue), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
 			}
 			terminated = true
 			break
@@ -15506,10 +15506,10 @@ func decodeSI2nRestOctetsGSMNeighbourCellSelectionParameters(r *runtime.Reader) 
 		before := r.Position()
 		v, err := decodeSI2nRestOctetsGSMNeighbourCellSelectionParametersEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI2nRestOctetsGSMNeighbourCellSelectionParameters", r.Position(), 0, sourceClause5, runtime.InvalidValue), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI2nRestOctetsGSMNeighbourCellSelectionParameters", r.Position(), 0, sourceClause5, runtime.InvalidValue), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
 		}
 		out = append(out, v)
 	}
@@ -18465,18 +18465,18 @@ func decodeLSAIDInformationClause105237e(r *runtime.Reader) (LSAIDInformationCla
 		before := r.Position()
 		element, err := decodeLSAIDInformationClause105237eElement(r)
 		if err != nil {
-			return LSAIDInformationClause105237e{}, err
+			return LSAIDInformationClause105237e{}, locateIndex(locateOperationKind(err, "decode", "LSAIDInformationClause105237e", r.Position(), 0, sourceClause7, runtime.InvalidValue), "LSAIDInformationClause105237e", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return LSAIDInformationClause105237e{}, err
+			return LSAIDInformationClause105237e{}, locateIndex(locateOperationKind(err, "decode", "LSAIDInformationClause105237e", r.Position(), 0, sourceClause7, runtime.InvalidValue), "LSAIDInformationClause105237e", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return LSAIDInformationClause105237e{}, r.Error(runtime.Limit, "non-progressing recursive list")
+			return LSAIDInformationClause105237e{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "LSAIDInformationClause105237e", r.Position(), 0, sourceClause7, runtime.InvalidValue), "LSAIDInformationClause105237e", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -18936,7 +18936,7 @@ func decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause9, runtime.InvalidValue), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 			}
 			terminated = true
 			break
@@ -18944,10 +18944,10 @@ func decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 		before := r.Position()
 		v, err := decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause9, runtime.InvalidValue), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause9, runtime.InvalidValue), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
 		out = append(out, v)
 	}
@@ -19412,7 +19412,7 @@ func decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause10, runtime.InvalidValue), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 			}
 			terminated = true
 			break
@@ -19420,10 +19420,10 @@ func decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 		before := r.Position()
 		v, err := decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause10, runtime.InvalidValue), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", r.Position(), 0, sourceClause10, runtime.InvalidValue), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
 		out = append(out, v)
 	}
@@ -20664,7 +20664,7 @@ func decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroup
 	for i := 0; i < count; i++ {
 		v, err := decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList", r.Position(), 0, sourceClause11, runtime.InvalidValue), "NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -21466,7 +21466,7 @@ func decodeNetworkSharingInformationStructMCCGroupList(r *runtime.Reader) ([]Net
 	for i := 0; i < count; i++ {
 		v, err := decodeNetworkSharingInformationStructMCCGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "NetworkSharingInformationStructMCCGroupList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "NetworkSharingInformationStructMCCGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -21989,7 +21989,7 @@ func decodeIRATCellReselectionInformationStructPLMNIndexGroupList(r *runtime.Rea
 	for i := 0; i < count; i++ {
 		v, err := decodeIRATCellReselectionInformationStructPLMNIndexGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "IRATCellReselectionInformationStructPLMNIndexGroupList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "IRATCellReselectionInformationStructPLMNIndexGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -22607,7 +22607,7 @@ func decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndP
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
 			}
 			terminated = true
 			break
@@ -22615,10 +22615,10 @@ func decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndP
 		before := r.Position()
 		v, err := decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -22775,7 +22775,7 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList(
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
 			}
 			terminated = true
 			break
@@ -22783,10 +22783,10 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList(
 		before := r.Position()
 		v, err := decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -23417,7 +23417,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
 			}
 			terminated = true
 			break
@@ -23425,10 +23425,10 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		before := r.Position()
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -23512,7 +23512,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
 			}
 			terminated = true
 			break
@@ -23520,10 +23520,10 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		before := r.Position()
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -23607,7 +23607,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
 			}
 			terminated = true
 			break
@@ -23615,10 +23615,10 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		before := r.Position()
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -23977,7 +23977,7 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -23985,10 +23985,10 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -24662,7 +24662,7 @@ func decodeNeighbourInformationInfoFieldList(r *runtime.Reader) ([]NeighbourInfo
 	for r.Remaining() > 0 {
 		if r.Matches("L") {
 			if err := r.Expect("L"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "NeighbourInformationInfoFieldList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "NeighbourInformationInfoFieldList", len(out))
 			}
 			terminated = true
 			break
@@ -24670,10 +24670,10 @@ func decodeNeighbourInformationInfoFieldList(r *runtime.Reader) ([]NeighbourInfo
 		before := r.Position()
 		v, err := decodeNeighbourInformationInfoFieldListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "NeighbourInformationInfoFieldList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "NeighbourInformationInfoFieldList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "NeighbourInformationInfoFieldList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "NeighbourInformationInfoFieldList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -25661,7 +25661,7 @@ func decodeInfoFieldNextFrequencyList(r *runtime.Reader) ([]NextFrequency, error
 	for r.Remaining() > 0 {
 		if r.Matches("L") {
 			if err := r.Expect("L"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "InfoFieldNextFrequencyList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "InfoFieldNextFrequencyList", len(out))
 			}
 			terminated = true
 			break
@@ -25669,10 +25669,10 @@ func decodeInfoFieldNextFrequencyList(r *runtime.Reader) ([]NextFrequency, error
 		before := r.Position()
 		v, err := decodeInfoFieldNextFrequencyListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "InfoFieldNextFrequencyList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "InfoFieldNextFrequencyList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "InfoFieldNextFrequencyList", r.Position(), 0, sourceClause14, runtime.InvalidValue), "InfoFieldNextFrequencyList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -27890,18 +27890,18 @@ func decodeSchedulingInfo(r *runtime.Reader) (SchedulingInfo, error) {
 		before := r.Position()
 		element, err := decodeSchedulingInfoElement(r)
 		if err != nil {
-			return SchedulingInfo{}, err
+			return SchedulingInfo{}, locateIndex(locateOperationKind(err, "decode", "SchedulingInfo", r.Position(), 0, sourceClause16, runtime.InvalidValue), "SchedulingInfo", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return SchedulingInfo{}, err
+			return SchedulingInfo{}, locateIndex(locateOperationKind(err, "decode", "SchedulingInfo", r.Position(), 0, sourceClause16, runtime.InvalidValue), "SchedulingInfo", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return SchedulingInfo{}, r.Error(runtime.Limit, "non-progressing recursive list")
+			return SchedulingInfo{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "SchedulingInfo", r.Position(), 0, sourceClause16, runtime.InvalidValue), "SchedulingInfo", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -31791,18 +31791,18 @@ func decodeLSAIDInformationClause105235(r *runtime.Reader) (LSAIDInformationClau
 		before := r.Position()
 		element, err := decodeLSAIDInformationClause105235Element(r)
 		if err != nil {
-			return LSAIDInformationClause105235{}, err
+			return LSAIDInformationClause105235{}, locateIndex(locateOperationKind(err, "decode", "LSAIDInformationClause105235", r.Position(), 0, sourceClause18, runtime.InvalidValue), "LSAIDInformationClause105235", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return LSAIDInformationClause105235{}, err
+			return LSAIDInformationClause105235{}, locateIndex(locateOperationKind(err, "decode", "LSAIDInformationClause105235", r.Position(), 0, sourceClause18, runtime.InvalidValue), "LSAIDInformationClause105235", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return LSAIDInformationClause105235{}, r.Error(runtime.Limit, "non-progressing recursive list")
+			return LSAIDInformationClause105235{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "LSAIDInformationClause105235", r.Position(), 0, sourceClause18, runtime.InvalidValue), "LSAIDInformationClause105235", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -34555,7 +34555,7 @@ func decodeMBMSInformationClause105224MBMSChannelParametersGroupList(r *runtime.
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "MBMSInformationClause105224MBMSChannelParametersGroupList", r.Position(), 0, sourceClause20, runtime.InvalidValue), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -34563,10 +34563,10 @@ func decodeMBMSInformationClause105224MBMSChannelParametersGroupList(r *runtime.
 		before := r.Position()
 		v, err := decodeMBMSInformationClause105224MBMSChannelParametersGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MBMSInformationClause105224MBMSChannelParametersGroupList", r.Position(), 0, sourceClause20, runtime.InvalidValue), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MBMSInformationClause105224MBMSChannelParametersGroupList", r.Position(), 0, sourceClause20, runtime.InvalidValue), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -39903,7 +39903,7 @@ func decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsL
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
 			}
 			terminated = true
 			break
@@ -39911,10 +39911,10 @@ func decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsL
 		before := r.Position()
 		v, err := decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -40319,7 +40319,7 @@ func decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsL
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
 			}
 			terminated = true
 			break
@@ -40327,10 +40327,10 @@ func decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsL
 		before := r.Position()
 		v, err := decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -41347,7 +41347,7 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList(r 
 	for r.Remaining() > 0 {
 		if r.Matches("1") {
 			if err := r.Expect("1"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
 			}
 			terminated = true
 			break
@@ -41355,10 +41355,10 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList(r 
 		before := r.Position()
 		v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -41592,7 +41592,7 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RT
 	for r.Remaining() > 0 {
 		if r.Matches("1") {
 			if err := r.Expect("1"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
 			}
 			terminated = true
 			break
@@ -41600,10 +41600,10 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RT
 		before := r.Position()
 		v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -41847,7 +41847,7 @@ func decodeRTD6StructRTDList(r *runtime.Reader) ([]RTD6StructRTDListEntry, error
 	for r.Remaining() > 0 {
 		if r.Matches("1") {
 			if err := r.Expect("1"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RTD6StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD6StructRTDList", len(out))
 			}
 			terminated = true
 			break
@@ -41855,10 +41855,10 @@ func decodeRTD6StructRTDList(r *runtime.Reader) ([]RTD6StructRTDListEntry, error
 		before := r.Position()
 		v, err := decodeRTD6StructRTDListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RTD6StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD6StructRTDList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RTD6StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD6StructRTDList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -42002,7 +42002,7 @@ func decodeRTD12StructRTDList(r *runtime.Reader) ([]RTD12StructRTDListEntry, err
 	for r.Remaining() > 0 {
 		if r.Matches("1") {
 			if err := r.Expect("1"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RTD12StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD12StructRTDList", len(out))
 			}
 			terminated = true
 			break
@@ -42010,10 +42010,10 @@ func decodeRTD12StructRTDList(r *runtime.Reader) ([]RTD12StructRTDListEntry, err
 		before := r.Position()
 		v, err := decodeRTD12StructRTDListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RTD12StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD12StructRTDList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RTD12StructRTDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RTD12StructRTDList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -42303,7 +42303,7 @@ func decodeGPRSBSICDescriptionStructFrequencyScrollingGroupList(r *runtime.Reade
 	for i := 0; i < count; i++ {
 		v, err := decodeGPRSBSICDescriptionStructFrequencyScrollingGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "GPRSBSICDescriptionStructFrequencyScrollingGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSBSICDescriptionStructFrequencyScrollingGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -42469,7 +42469,7 @@ func decodeGPRSREPORTPRIORITYDescriptionStructREPPRIORITYList(r *runtime.Reader)
 	for i := 0; i < count; i++ {
 		v, err := decodeGPRSREPORTPRIORITYDescriptionStructREPPRIORITYListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList", i)
 		}
 		out = append(out, v)
 	}
@@ -44576,7 +44576,7 @@ func decodeSI2qExtensionInformationSpareBitList(r *runtime.Reader) ([]runtime.Bi
 	for r.Remaining() > 0 {
 		v, err := decodeSI2qExtensionInformationSpareBitListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI2qExtensionInformationSpareBitList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "SI2qExtensionInformationSpareBitList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -44711,7 +44711,7 @@ func decodeCCNSupportDescriptionStructCCNSUPPORTEDList(r *runtime.Reader) ([]uin
 	for i := 0; i < count; i++ {
 		v, err := decodeCCNSupportDescriptionStructCCNSUPPORTEDListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "CCNSupportDescriptionStructCCNSUPPORTEDList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "CCNSupportDescriptionStructCCNSUPPORTEDList", i)
 		}
 		out = append(out, v)
 	}
@@ -45690,7 +45690,7 @@ func decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParameters
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
 			}
 			terminated = true
 			break
@@ -45698,10 +45698,10 @@ func decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParameters
 		before := r.Position()
 		v, err := decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -45884,7 +45884,7 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList(r *runti
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -45892,10 +45892,10 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList(r *runti
 		before := r.Position()
 		v, err := decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -46425,7 +46425,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList(r *
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
 			}
 			terminated = true
 			break
@@ -46433,10 +46433,10 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList(r *
 		before := r.Position()
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -46520,7 +46520,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList(r 
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
 			}
 			terminated = true
 			break
@@ -46528,10 +46528,10 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList(r 
 		before := r.Position()
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -46615,7 +46615,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList(r 
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
 			}
 			terminated = true
 			break
@@ -46623,10 +46623,10 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList(r 
 		before := r.Position()
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -48916,7 +48916,7 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupList(r *runtime.Reader) 
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -48924,10 +48924,10 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupList(r *runtime.Reader) 
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -49331,7 +49331,7 @@ func decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList(r *runtim
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -49339,10 +49339,10 @@ func decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList(r *runtim
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -49474,7 +49474,7 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList(r *runtime.Rea
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
 			}
 			terminated = true
 			break
@@ -49482,10 +49482,10 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList(r *runtime.Rea
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -49594,7 +49594,7 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList(r *runtim
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -49602,10 +49602,10 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList(r *runtim
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -49778,7 +49778,7 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXLi
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -49786,10 +49786,10 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXLi
 		before := r.Position()
 		v, err := decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -49870,7 +49870,7 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupList(r *runtime.Reader) ([]N3G
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -49878,10 +49878,10 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupList(r *runtime.Reader) ([]N3G
 		before := r.Position()
 		v, err := decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "N3GCSGDescriptionStructCSGPSCSPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -50197,7 +50197,7 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNList(r *runtime.Reader) ([]N3GCSGD
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGFDDUARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
 			}
 			terminated = true
 			break
@@ -50205,10 +50205,10 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNList(r *runtime.Reader) ([]N3GCSGD
 		before := r.Position()
 		v, err := decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "N3GCSGDescriptionStructCSGFDDUARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "N3GCSGDescriptionStructCSGFDDUARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -50381,7 +50381,7 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYIND
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -50389,10 +50389,10 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYIND
 		before := r.Position()
 		v, err := decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -50473,7 +50473,7 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupList(r *runtime.Reader) ([]
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -50481,10 +50481,10 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupList(r *runtime.Reader) ([]
 		before := r.Position()
 		v, err := decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -50593,7 +50593,7 @@ func decodeEUTRANCSGDescriptionStructCSGEARFCNList(r *runtime.Reader) ([]EUTRANC
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGEARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
 			}
 			terminated = true
 			break
@@ -50601,10 +50601,10 @@ func decodeEUTRANCSGDescriptionStructCSGEARFCNList(r *runtime.Reader) ([]EUTRANC
 		before := r.Position()
 		v, err := decodeEUTRANCSGDescriptionStructCSGEARFCNListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANCSGDescriptionStructCSGEARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EUTRANCSGDescriptionStructCSGEARFCNList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -51434,7 +51434,7 @@ func decodeExtendedEARFCNsDescriptionStructEARFCNExtendedList(r *runtime.Reader)
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
 			}
 			terminated = true
 			break
@@ -51442,10 +51442,10 @@ func decodeExtendedEARFCNsDescriptionStructEARFCNExtendedList(r *runtime.Reader)
 		before := r.Position()
 		v, err := decodeExtendedEARFCNsDescriptionStructEARFCNExtendedListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -51589,7 +51589,7 @@ func decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList(r *r
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
 			}
 			terminated = true
 			break
@@ -51597,10 +51597,10 @@ func decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList(r *r
 		before := r.Position()
 		v, err := decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", r.Position(), 0, sourceClause22, runtime.InvalidValue), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -52341,10 +52341,10 @@ func decodeSI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream(r *r
 		before := r.Position()
 		v, err := decodeSI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStreamEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", r.Position(), 0, sourceClause23, runtime.InvalidValue), "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", r.Position(), 0, sourceClause23, runtime.InvalidValue), "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", len(out))
 		}
 		out = append(out, v)
 	}
@@ -56519,7 +56519,7 @@ func decodePEOIMMCellGroupSpecificParametersStructBSICGroupList(r *runtime.Reade
 	for i := 0; i < count; i++ {
 		v, err := decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "PEOIMMCellGroupSpecificParametersStructBSICGroupList", r.Position(), 0, sourceClause24, runtime.InvalidValue), "PEOIMMCellGroupSpecificParametersStructBSICGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -56986,7 +56986,7 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCY
 	for i := 0; i < count; i++ {
 		v, err := decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList", r.Position(), 0, sourceClause25, runtime.InvalidValue), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -57110,7 +57110,7 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList(r *runtime.Re
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", r.Position(), 0, sourceClause25, runtime.InvalidValue), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -57118,10 +57118,10 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList(r *runtime.Re
 		before := r.Position()
 		v, err := decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", r.Position(), 0, sourceClause25, runtime.InvalidValue), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", r.Position(), 0, sourceClause25, runtime.InvalidValue), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -58248,7 +58248,7 @@ func decodeSI18RestOctetsSpareBitList(r *runtime.Reader) ([]runtime.BitString, e
 	for i := 0; i < count; i++ {
 		v, err := decodeSI18RestOctetsSpareBitListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI18RestOctetsSpareBitList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "SI18RestOctetsSpareBitList", i)
 		}
 		out = append(out, v)
 	}
@@ -58278,19 +58278,19 @@ func decodeSI18RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 		before := r.Position()
 		v, err := decodeSI18RestOctetsNonGSMMessageListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI18RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "SI18RestOctetsNonGSMMessageList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI18RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "SI18RestOctetsNonGSMMessageList", len(out))
 		}
 		if v.NROFCONTAINEROCTETS == 0 {
 			if err := r.RecordTerminal(before); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI18RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "SI18RestOctetsNonGSMMessageList", len(out))
 			}
 			break
 		}
 		if v.NonGSMProtocolDiscriminator != 1 {
-			return nil, r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator"), "decode", "SI18RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "SI18RestOctetsNonGSMMessageList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -58545,7 +58545,7 @@ func decodeNonGSMMessageStructCONTAINERList(r *runtime.Reader) ([]uint8, error) 
 	for i := 0; i < count; i++ {
 		v, err := decodeNonGSMMessageStructCONTAINERListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "NonGSMMessageStructCONTAINERList", r.Position(), 0, sourceClause26, runtime.InvalidValue), "NonGSMMessageStructCONTAINERList", i)
 		}
 		out = append(out, v)
 	}
@@ -59972,7 +59972,7 @@ func decodeIPAUplinkAssignmentStructRandomReferenceGroupList(r *runtime.Reader) 
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "IPAUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -59980,10 +59980,10 @@ func decodeIPAUplinkAssignmentStructRandomReferenceGroupList(r *runtime.Reader) 
 		before := r.Position()
 		v, err := decodeIPAUplinkAssignmentStructRandomReferenceGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "IPAUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "IPAUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -60374,7 +60374,7 @@ func decodeIPADownlinkAssignmentStructTLLIGroupList(r *runtime.Reader) ([]IPADow
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "IPADownlinkAssignmentStructTLLIGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -60382,10 +60382,10 @@ func decodeIPADownlinkAssignmentStructTLLIGroupList(r *runtime.Reader) ([]IPADow
 		before := r.Position()
 		v, err := decodeIPADownlinkAssignmentStructTLLIGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "IPADownlinkAssignmentStructTLLIGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "IPADownlinkAssignmentStructTLLIGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -60908,7 +60908,7 @@ func decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupList(r *runti
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -60916,10 +60916,10 @@ func decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupList(r *runti
 		before := r.Position()
 		v, err := decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", r.Position(), 0, sourceClause27, runtime.InvalidValue), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -61690,7 +61690,7 @@ func decodeSI20RestOctetsSpareBitList(r *runtime.Reader) ([]runtime.BitString, e
 	for i := 0; i < count; i++ {
 		v, err := decodeSI20RestOctetsSpareBitListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI20RestOctetsSpareBitList", r.Position(), 0, sourceClause28, runtime.InvalidValue), "SI20RestOctetsSpareBitList", i)
 		}
 		out = append(out, v)
 	}
@@ -61720,19 +61720,19 @@ func decodeSI20RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 		before := r.Position()
 		v, err := decodeSI20RestOctetsNonGSMMessageListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI20RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause28, runtime.InvalidValue), "SI20RestOctetsNonGSMMessageList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI20RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause28, runtime.InvalidValue), "SI20RestOctetsNonGSMMessageList", len(out))
 		}
 		if v.NROFCONTAINEROCTETS == 0 {
 			if err := r.RecordTerminal(before); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI20RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause28, runtime.InvalidValue), "SI20RestOctetsNonGSMMessageList", len(out))
 			}
 			break
 		}
 		if v.NonGSMProtocolDiscriminator != 1 {
-			return nil, r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.InvalidValue, "reserved Non-GSM protocol discriminator"), "decode", "SI20RestOctetsNonGSMMessageList", r.Position(), 0, sourceClause28, runtime.InvalidValue), "SI20RestOctetsNonGSMMessageList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -64000,7 +64000,7 @@ func decodeListOfVSTKRANDInformationSegmentIdGroupList(r *runtime.Reader) ([]Lis
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "ListOfVSTKRANDInformationSegmentIdGroupList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -64008,10 +64008,10 @@ func decodeListOfVSTKRANDInformationSegmentIdGroupList(r *runtime.Reader) ([]Lis
 		before := r.Position()
 		v, err := decodeListOfVSTKRANDInformationSegmentIdGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "ListOfVSTKRANDInformationSegmentIdGroupList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "ListOfVSTKRANDInformationSegmentIdGroupList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -64155,7 +64155,7 @@ func decodeListOfReducedGCRReducedGCRList(r *runtime.Reader) ([]ListOfReducedGCR
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "ListOfReducedGCRReducedGCRList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfReducedGCRReducedGCRList", len(out))
 			}
 			terminated = true
 			break
@@ -64163,10 +64163,10 @@ func decodeListOfReducedGCRReducedGCRList(r *runtime.Reader) ([]ListOfReducedGCR
 		before := r.Position()
 		v, err := decodeListOfReducedGCRReducedGCRListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "ListOfReducedGCRReducedGCRList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfReducedGCRReducedGCRList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "ListOfReducedGCRReducedGCRList", r.Position(), 0, sourceClause30, runtime.InvalidValue), "ListOfReducedGCRReducedGCRList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -67869,7 +67869,7 @@ func decodeMBMSInformationClause105223MBMSChannelParametersGroupList(r *runtime.
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "MBMSInformationClause105223MBMSChannelParametersGroupList", r.Position(), 0, sourceClause31, runtime.InvalidValue), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -67877,10 +67877,10 @@ func decodeMBMSInformationClause105223MBMSChannelParametersGroupList(r *runtime.
 		before := r.Position()
 		v, err := decodeMBMSInformationClause105223MBMSChannelParametersGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "MBMSInformationClause105223MBMSChannelParametersGroupList", r.Position(), 0, sourceClause31, runtime.InvalidValue), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MBMSInformationClause105223MBMSChannelParametersGroupList", r.Position(), 0, sourceClause31, runtime.InvalidValue), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -68781,7 +68781,7 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupList(r *runtime.Reader) ([]SI1
 	for r.Remaining() > 0 {
 		if r.Matches("L") {
 			if err := r.Expect("L"); err != nil {
-				return nil, err
+				return nil, locateIndex(locateOperationKind(err, "decode", "SI10bisRestOctetsPositionInSI5ListGroupList", r.Position(), 0, sourceClause32, runtime.InvalidValue), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -68789,10 +68789,10 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupList(r *runtime.Reader) ([]SI1
 		before := r.Position()
 		v, err := decodeSI10bisRestOctetsPositionInSI5ListGroupListEntry(r)
 		if err != nil {
-			return nil, err
+			return nil, locateIndex(locateOperationKind(err, "decode", "SI10bisRestOctetsPositionInSI5ListGroupList", r.Position(), 0, sourceClause32, runtime.InvalidValue), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, r.Error(runtime.Limit, "non-progressing repetition")
+			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "SI10bisRestOctetsPositionInSI5ListGroupList", r.Position(), 0, sourceClause32, runtime.InvalidValue), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
 		}
 		out = append(out, v)
 	}
