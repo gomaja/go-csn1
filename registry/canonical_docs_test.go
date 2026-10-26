@@ -157,7 +157,7 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Canonical(?:AtLength)?(?:WithContext)?)\b`)
 
 // canonicalFunctions maps each descriptor (clause and name) to the package
-// directory and function its Canonical closure calls, and fails when one
+// directory and function its Canonical adapter calls, and fails when one
 // descriptor key maps to two functions.
 func canonicalFunctions(t *testing.T, packages map[string]string) map[string]string {
 	t.Helper()
@@ -169,6 +169,12 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 			t.Fatal(err)
 		}
 		own := packages[parsed.Name.Name]
+		adapters := map[string]*ast.FuncDecl{}
+		for _, decl := range parsed.Decls {
+			if fn, ok := decl.(*ast.FuncDecl); ok && fn.Recv == nil {
+				adapters[fn.Name.Name] = fn
+			}
+		}
 		ast.Inspect(parsed, func(n ast.Node) bool {
 			lit, ok := n.(*ast.CompositeLit)
 			if !ok {
@@ -195,7 +201,13 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 						}
 					}
 				case "Canonical":
-					ast.Inspect(kv.Value, func(m ast.Node) bool {
+					var body ast.Node = kv.Value
+					if id, ok := kv.Value.(*ast.Ident); ok {
+						if fn := adapters[id.Name]; fn != nil {
+							body = fn.Body
+						}
+					}
+					ast.Inspect(body, func(m ast.Node) bool {
 						if c, ok := m.(*ast.CallExpr); ok {
 							switch fn := c.Fun.(type) {
 							case *ast.Ident:
@@ -1006,6 +1018,16 @@ func TestClassifyExtentErrors(t *testing.T) {
 	} {
 		if got := classify(fmt.Errorf("wrapped: %w", tc.err), tc.octets, tc.entry); got != tc.want {
 			t.Errorf("classify(%+v, %d, %s) = %q, want %q", *tc.err, tc.octets, tc.entry, got, tc.want)
+		}
+	}
+}
+
+func TestCanonicalFunctionsResolveDescriptorAdapters(t *testing.T) {
+	_, packages := documentedClasses(t)
+	functions := canonicalFunctions(t, packages)
+	for _, d := range descriptors() {
+		if functions[d.Clause+"\x00"+d.Name] == "" {
+			t.Errorf("%s §%s <%s>: no generated canonical function", d.Standard, d.Clause, d.Name)
 		}
 	}
 }

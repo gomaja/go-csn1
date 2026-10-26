@@ -814,7 +814,7 @@ func decodePSCGroupIEPSCList(r *runtime.Reader) ([]PSCGroupIEPSCListEntry, error
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "PSCGroupIEPSCList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCList", len(out))
+				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
 			}
 			terminated = true
 			break
@@ -822,10 +822,10 @@ func decodePSCGroupIEPSCList(r *runtime.Reader) ([]PSCGroupIEPSCListEntry, error
 		before := r.Position()
 		v, err := decodePSCGroupIEPSCListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "PSCGroupIEPSCList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCList", len(out))
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PSCGroupIEPSCList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCList", len(out))
+			return nil, locateIndex(operationLocation0.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -1020,7 +1020,7 @@ func decodePSCGroupIEPSCPatternLengthGroupList(r *runtime.Reader) ([]PSCGroupIEP
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "PSCGroupIEPSCPatternLengthGroupList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCPatternLengthGroupList", len(out))
+				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -1028,10 +1028,10 @@ func decodePSCGroupIEPSCPatternLengthGroupList(r *runtime.Reader) ([]PSCGroupIEP
 		before := r.Position()
 		v, err := decodePSCGroupIEPSCPatternLengthGroupListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "PSCGroupIEPSCPatternLengthGroupList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCPatternLengthGroupList", len(out))
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PSCGroupIEPSCPatternLengthGroupList", r.Position(), 0, sourceClause1, runtime.InvalidValue), "PSCGroupIEPSCPatternLengthGroupList", len(out))
+			return nil, locateIndex(operationLocation1.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -1883,7 +1883,7 @@ func decodeMBMSSessionListIETMGIGroupList(r *runtime.Reader) ([]MBMSSessionListI
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "MBMSSessionListIETMGIGroupList", r.Position(), 0, sourceClause5, runtime.InvalidValue), "MBMSSessionListIETMGIGroupList", len(out))
+				return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -1891,10 +1891,10 @@ func decodeMBMSSessionListIETMGIGroupList(r *runtime.Reader) ([]MBMSSessionListI
 		before := r.Position()
 		v, err := decodeMBMSSessionListIETMGIGroupListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "MBMSSessionListIETMGIGroupList", r.Position(), 0, sourceClause5, runtime.InvalidValue), "MBMSSessionListIETMGIGroupList", len(out))
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MBMSSessionListIETMGIGroupList", r.Position(), 0, sourceClause5, runtime.InvalidValue), "MBMSSessionListIETMGIGroupList", len(out))
+			return nil, locateIndex(operationLocation2.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -2333,7 +2333,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(r *run
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", r.Position(), 0, sourceClause6, runtime.InvalidValue), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
+				return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -2341,10 +2341,10 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(r *run
 		before := r.Position()
 		v, err := decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", r.Position(), 0, sourceClause6, runtime.InvalidValue), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", r.Position(), 0, sourceClause6, runtime.InvalidValue), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
+			return nil, locateIndex(operationLocation3.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -4529,7 +4529,7 @@ func decodeExtensionInformationSpareBitList(r *runtime.Reader) ([]runtime.BitStr
 	for r.Remaining() > 0 {
 		v, err := decodeExtensionInformationSpareBitListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "ExtensionInformationSpareBitList", r.Position(), 0, sourceClause9, runtime.InvalidValue), "ExtensionInformationSpareBitList", len(out))
+			return nil, locateIndex(operationLocation4.failure(err, "", r.Position(), 0), "ExtensionInformationSpareBitList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -6191,18 +6191,18 @@ func decodeRFLNumberListStruct(r *runtime.Reader) (RFLNumberListStruct, error) {
 		before := r.Position()
 		element, err := decodeRFLNumberListStructElement(r)
 		if err != nil {
-			return RFLNumberListStruct{}, locateIndex(locateOperationKind(err, "decode", "RFLNumberListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "RFLNumberListStruct", len(out.Entries))
+			return RFLNumberListStruct{}, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "RFLNumberListStruct", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return RFLNumberListStruct{}, locateIndex(locateOperationKind(err, "decode", "RFLNumberListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "RFLNumberListStruct", len(out.Entries)-1)
+			return RFLNumberListStruct{}, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "RFLNumberListStruct", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return RFLNumberListStruct{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "RFLNumberListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "RFLNumberListStruct", len(out.Entries)-1)
+			return RFLNumberListStruct{}, locateIndex(operationLocation5.failure(r.Error(runtime.Limit, "non-progressing recursive list"), "", r.Position(), 0), "RFLNumberListStruct", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -6305,18 +6305,18 @@ func decodeARFCNIndexListStruct(r *runtime.Reader) (ARFCNIndexListStruct, error)
 		before := r.Position()
 		element, err := decodeARFCNIndexListStructElement(r)
 		if err != nil {
-			return ARFCNIndexListStruct{}, locateIndex(locateOperationKind(err, "decode", "ARFCNIndexListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "ARFCNIndexListStruct", len(out.Entries))
+			return ARFCNIndexListStruct{}, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "ARFCNIndexListStruct", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return ARFCNIndexListStruct{}, locateIndex(locateOperationKind(err, "decode", "ARFCNIndexListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "ARFCNIndexListStruct", len(out.Entries)-1)
+			return ARFCNIndexListStruct{}, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "ARFCNIndexListStruct", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return ARFCNIndexListStruct{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "ARFCNIndexListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue), "ARFCNIndexListStruct", len(out.Entries)-1)
+			return ARFCNIndexListStruct{}, locateIndex(operationLocation6.failure(r.Error(runtime.Limit, "non-progressing recursive list"), "", r.Position(), 0), "ARFCNIndexListStruct", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -6435,7 +6435,7 @@ func decodePCIDGroupIEPCIDList(r *runtime.Reader) ([]PCIDGroupIEPCIDListEntry, e
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "PCIDGroupIEPCIDList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDList", len(out))
+				return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
 			}
 			terminated = true
 			break
@@ -6443,10 +6443,10 @@ func decodePCIDGroupIEPCIDList(r *runtime.Reader) ([]PCIDGroupIEPCIDListEntry, e
 		before := r.Position()
 		v, err := decodePCIDGroupIEPCIDListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "PCIDGroupIEPCIDList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDList", len(out))
+			return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PCIDGroupIEPCIDList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDList", len(out))
+			return nil, locateIndex(operationLocation7.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -6698,7 +6698,7 @@ func decodePCIDGroupIEPCIDPatternLengthGroupList(r *runtime.Reader) ([]PCIDGroup
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "PCIDGroupIEPCIDPatternLengthGroupList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
+				return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
 			}
 			terminated = true
 			break
@@ -6706,10 +6706,10 @@ func decodePCIDGroupIEPCIDPatternLengthGroupList(r *runtime.Reader) ([]PCIDGroup
 		before := r.Position()
 		v, err := decodePCIDGroupIEPCIDPatternLengthGroupListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "PCIDGroupIEPCIDPatternLengthGroupList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
+			return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "PCIDGroupIEPCIDPatternLengthGroupList", r.Position(), 0, sourceClause12, runtime.InvalidValue), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
+			return nil, locateIndex(operationLocation8.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -6854,7 +6854,7 @@ func decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
+				return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
 			}
 			terminated = true
 			break
@@ -6862,10 +6862,10 @@ func decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 		before := r.Position()
 		v, err := decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
+			return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
+			return nil, locateIndex(operationLocation9.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -7009,7 +7009,7 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
+				return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
 			}
 			terminated = true
 			break
@@ -7017,10 +7017,10 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 		before := r.Position()
 		v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
+			return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", r.Position(), 0, sourceClause13, runtime.InvalidValue), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
+			return nil, locateIndex(operationLocation10.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -8358,21 +8358,21 @@ func encodeTMGIIE(w *runtime.Writer, v TMGIIE) error {
 // DecodeUTRANCSGMeasurementReportIE decodes TS 44.060 V19.0.0 §12.61 <UTRAN CSG Measurement Report IE>.
 func DecodeUTRANCSGMeasurementReportIEFrom(r *runtime.Reader) (UTRANCSGMeasurementReportIE, error) {
 	if err := r.Check(); err != nil {
-		return UTRANCSGMeasurementReportIE{}, locateOperationKind(err, "decode", "UTRANCSGMeasurementReportIE", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return UTRANCSGMeasurementReportIE{}, operationLocation11.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeUTRANCSGMeasurementReportIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "UTRANCSGMeasurementReportIE", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation11.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeUTRANCSGMeasurementReportIETo(w *runtime.Writer, v UTRANCSGMeasurementReportIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "UTRANCSGMeasurementReportIE", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation12.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeUTRANCSGMeasurementReportIE(w, v) }), "encode", "UTRANCSGMeasurementReportIE", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation12.failure(w.WithWireValue(v.Wire, func() error { return encodeUTRANCSGMeasurementReportIE(w, v) }), "", w.Position(), 0)
 }
 func decodeUTRANCSGMeasurementReportIEBytes(data []byte) (runtime.Decoded[UTRANCSGMeasurementReportIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8414,7 +8414,7 @@ func EncodeUTRANCSGMeasurementReportIECanonical(v UTRANCSGMeasurementReportIE) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 11, false, encodeUTRANCSGMeasurementReportIEBytes, decodeUTRANCSGMeasurementReportIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANCSGMeasurementReportIE", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8434,7 +8434,7 @@ func EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v UTRANCSGMeasurementRep
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeUTRANCSGMeasurementReportIEBytes, decodeUTRANCSGMeasurementReportIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANCSGMeasurementReportIE", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8443,21 +8443,21 @@ func EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v UTRANCSGMeasurementRep
 // DecodePLMNIDStruct decodes TS 44.060 V19.0.0 §12.61 <PLMN-ID struct>.
 func DecodePLMNIDStructFrom(r *runtime.Reader) (PLMNIDStruct, error) {
 	if err := r.Check(); err != nil {
-		return PLMNIDStruct{}, locateOperationKind(err, "decode", "PLMNIDStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return PLMNIDStruct{}, operationLocation14.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodePLMNIDStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "PLMNIDStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation14.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodePLMNIDStructTo(w *runtime.Writer, v PLMNIDStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "PLMNIDStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation15.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodePLMNIDStruct(w, v) }), "encode", "PLMNIDStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation15.failure(w.WithWireValue(v.Wire, func() error { return encodePLMNIDStruct(w, v) }), "", w.Position(), 0)
 }
 func decodePLMNIDStructBytes(data []byte) (runtime.Decoded[PLMNIDStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8499,7 +8499,7 @@ func EncodePLMNIDStructCanonical(v PLMNIDStruct) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodePLMNIDStructBytes, decodePLMNIDStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PLMNIDStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8518,7 +8518,7 @@ func EncodePLMNIDStructCanonicalAtLength(v PLMNIDStruct, octets int) ([]byte, er
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodePLMNIDStructBytes, decodePLMNIDStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PLMNIDStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8527,21 +8527,21 @@ func EncodePLMNIDStructCanonicalAtLength(v PLMNIDStruct, octets int) ([]byte, er
 // DecodePSCGroupIE decodes TS 44.060 V19.0.0 §12.58 <PSC Group IE>.
 func DecodePSCGroupIEFrom(r *runtime.Reader) (PSCGroupIE, error) {
 	if err := r.Check(); err != nil {
-		return PSCGroupIE{}, locateOperationKind(err, "decode", "PSCGroupIE", r.Position(), 0, sourceClause1, runtime.InvalidValue)
+		return PSCGroupIE{}, operationLocation17.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodePSCGroupIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "PSCGroupIE", r.Position(), 0, sourceClause1, runtime.InvalidValue)
+			return operationValue, operationLocation17.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodePSCGroupIETo(w *runtime.Writer, v PSCGroupIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "PSCGroupIE", BitOffset: -1, Source: sourceClause1}, Detail: "nil writer"}
+		return operationLocation18.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodePSCGroupIE(w, v) }), "encode", "PSCGroupIE", w.Position(), 0, sourceClause1, runtime.InvalidValue)
+	return operationLocation18.failure(w.WithWireValue(v.Wire, func() error { return encodePSCGroupIE(w, v) }), "", w.Position(), 0)
 }
 func decodePSCGroupIEBytes(data []byte) (runtime.Decoded[PSCGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8581,7 +8581,7 @@ func EncodePSCGroupIECanonical(v PSCGroupIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePSCGroupIEBytes, decodePSCGroupIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PSCGroupIE", -1, 0, sourceClause1, runtime.InvalidValue)
+			return operationValue, operationLocation19.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8601,7 +8601,7 @@ func EncodePSCGroupIECanonicalAtLength(v PSCGroupIE, octets int) ([]byte, error)
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePSCGroupIEBytes, decodePSCGroupIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PSCGroupIE", -1, 0, sourceClause1, runtime.InvalidValue)
+			return operationValue, operationLocation19.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8610,21 +8610,21 @@ func EncodePSCGroupIECanonicalAtLength(v PSCGroupIE, octets int) ([]byte, error)
 // DecodeMBMSChannelParametersIE decodes TS 44.060 V19.0.0 §12.36 <MBMS Channel Parameters IE>.
 func DecodeMBMSChannelParametersIEFrom(r *runtime.Reader) (MBMSChannelParametersIE, error) {
 	if err := r.Check(); err != nil {
-		return MBMSChannelParametersIE{}, locateOperationKind(err, "decode", "MBMSChannelParametersIE", r.Position(), 0, sourceClause2, runtime.InvalidValue)
+		return MBMSChannelParametersIE{}, operationLocation20.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMBMSChannelParametersIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MBMSChannelParametersIE", r.Position(), 0, sourceClause2, runtime.InvalidValue)
+			return operationValue, operationLocation20.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMBMSChannelParametersIETo(w *runtime.Writer, v MBMSChannelParametersIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MBMSChannelParametersIE", BitOffset: -1, Source: sourceClause2}, Detail: "nil writer"}
+		return operationLocation21.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMBMSChannelParametersIE(w, v) }), "encode", "MBMSChannelParametersIE", w.Position(), 0, sourceClause2, runtime.InvalidValue)
+	return operationLocation21.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSChannelParametersIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMBMSChannelParametersIEBytes(data []byte) (runtime.Decoded[MBMSChannelParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8664,7 +8664,7 @@ func EncodeMBMSChannelParametersIECanonical(v MBMSChannelParametersIE) ([]byte, 
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSChannelParametersIEBytes, decodeMBMSChannelParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSChannelParametersIE", -1, 0, sourceClause2, runtime.InvalidValue)
+			return operationValue, operationLocation22.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8684,7 +8684,7 @@ func EncodeMBMSChannelParametersIECanonicalAtLength(v MBMSChannelParametersIE, o
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSChannelParametersIEBytes, decodeMBMSChannelParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSChannelParametersIE", -1, 0, sourceClause2, runtime.InvalidValue)
+			return operationValue, operationLocation22.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8693,21 +8693,21 @@ func EncodeMBMSChannelParametersIECanonicalAtLength(v MBMSChannelParametersIE, o
 // DecodeMBMSPTMChannelDescriptionIE decodes TS 44.060 V19.0.0 §12.37 <MBMS p-t-m channel description IE>.
 func DecodeMBMSPTMChannelDescriptionIEFrom(r *runtime.Reader) (MBMSPTMChannelDescriptionIE, error) {
 	if err := r.Check(); err != nil {
-		return MBMSPTMChannelDescriptionIE{}, locateOperationKind(err, "decode", "MBMSPTMChannelDescriptionIE", r.Position(), 0, sourceClause3, runtime.InvalidValue)
+		return MBMSPTMChannelDescriptionIE{}, operationLocation23.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMBMSPTMChannelDescriptionIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MBMSPTMChannelDescriptionIE", r.Position(), 0, sourceClause3, runtime.InvalidValue)
+			return operationValue, operationLocation23.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMBMSPTMChannelDescriptionIETo(w *runtime.Writer, v MBMSPTMChannelDescriptionIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MBMSPTMChannelDescriptionIE", BitOffset: -1, Source: sourceClause3}, Detail: "nil writer"}
+		return operationLocation24.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMBMSPTMChannelDescriptionIE(w, v) }), "encode", "MBMSPTMChannelDescriptionIE", w.Position(), 0, sourceClause3, runtime.InvalidValue)
+	return operationLocation24.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSPTMChannelDescriptionIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMBMSPTMChannelDescriptionIEBytes(data []byte) (runtime.Decoded[MBMSPTMChannelDescriptionIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8747,7 +8747,7 @@ func EncodeMBMSPTMChannelDescriptionIECanonical(v MBMSPTMChannelDescriptionIE) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSPTMChannelDescriptionIEBytes, decodeMBMSPTMChannelDescriptionIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSPTMChannelDescriptionIE", -1, 0, sourceClause3, runtime.InvalidValue)
+			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8767,7 +8767,7 @@ func EncodeMBMSPTMChannelDescriptionIECanonicalAtLength(v MBMSPTMChannelDescript
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSPTMChannelDescriptionIEBytes, decodeMBMSPTMChannelDescriptionIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSPTMChannelDescriptionIE", -1, 0, sourceClause3, runtime.InvalidValue)
+			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8776,21 +8776,21 @@ func EncodeMBMSPTMChannelDescriptionIECanonicalAtLength(v MBMSPTMChannelDescript
 // DecodeMPRACHDescriptionIE decodes TS 44.060 V19.0.0 §12.38 <MPRACH description IE>.
 func DecodeMPRACHDescriptionIEFrom(r *runtime.Reader) (MPRACHDescriptionIE, error) {
 	if err := r.Check(); err != nil {
-		return MPRACHDescriptionIE{}, locateOperationKind(err, "decode", "MPRACHDescriptionIE", r.Position(), 0, sourceClause4, runtime.InvalidValue)
+		return MPRACHDescriptionIE{}, operationLocation26.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMPRACHDescriptionIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MPRACHDescriptionIE", r.Position(), 0, sourceClause4, runtime.InvalidValue)
+			return operationValue, operationLocation26.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMPRACHDescriptionIETo(w *runtime.Writer, v MPRACHDescriptionIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MPRACHDescriptionIE", BitOffset: -1, Source: sourceClause4}, Detail: "nil writer"}
+		return operationLocation27.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMPRACHDescriptionIE(w, v) }), "encode", "MPRACHDescriptionIE", w.Position(), 0, sourceClause4, runtime.InvalidValue)
+	return operationLocation27.failure(w.WithWireValue(v.Wire, func() error { return encodeMPRACHDescriptionIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMPRACHDescriptionIEBytes(data []byte) (runtime.Decoded[MPRACHDescriptionIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8830,7 +8830,7 @@ func EncodeMPRACHDescriptionIECanonical(v MPRACHDescriptionIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMPRACHDescriptionIEBytes, decodeMPRACHDescriptionIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MPRACHDescriptionIE", -1, 0, sourceClause4, runtime.InvalidValue)
+			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8850,7 +8850,7 @@ func EncodeMPRACHDescriptionIECanonicalAtLength(v MPRACHDescriptionIE, octets in
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMPRACHDescriptionIEBytes, decodeMPRACHDescriptionIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MPRACHDescriptionIE", -1, 0, sourceClause4, runtime.InvalidValue)
+			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8859,21 +8859,21 @@ func EncodeMPRACHDescriptionIECanonicalAtLength(v MPRACHDescriptionIE, octets in
 // DecodeMBMSSessionListIE decodes TS 44.060 V19.0.0 §12.39 <MBMS Session List IE>.
 func DecodeMBMSSessionListIEFrom(r *runtime.Reader) (MBMSSessionListIE, error) {
 	if err := r.Check(); err != nil {
-		return MBMSSessionListIE{}, locateOperationKind(err, "decode", "MBMSSessionListIE", r.Position(), 0, sourceClause5, runtime.InvalidValue)
+		return MBMSSessionListIE{}, operationLocation29.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMBMSSessionListIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MBMSSessionListIE", r.Position(), 0, sourceClause5, runtime.InvalidValue)
+			return operationValue, operationLocation29.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMBMSSessionListIETo(w *runtime.Writer, v MBMSSessionListIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MBMSSessionListIE", BitOffset: -1, Source: sourceClause5}, Detail: "nil writer"}
+		return operationLocation30.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMBMSSessionListIE(w, v) }), "encode", "MBMSSessionListIE", w.Position(), 0, sourceClause5, runtime.InvalidValue)
+	return operationLocation30.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSSessionListIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMBMSSessionListIEBytes(data []byte) (runtime.Decoded[MBMSSessionListIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8913,7 +8913,7 @@ func EncodeMBMSSessionListIECanonical(v MBMSSessionListIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSSessionListIEBytes, decodeMBMSSessionListIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSSessionListIE", -1, 0, sourceClause5, runtime.InvalidValue)
+			return operationValue, operationLocation31.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8933,7 +8933,7 @@ func EncodeMBMSSessionListIECanonicalAtLength(v MBMSSessionListIE, octets int) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSSessionListIEBytes, decodeMBMSSessionListIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSSessionListIE", -1, 0, sourceClause5, runtime.InvalidValue)
+			return operationValue, operationLocation31.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -8942,21 +8942,21 @@ func EncodeMBMSSessionListIECanonicalAtLength(v MBMSSessionListIE, octets int) (
 // DecodeMBMSSessionParametersListIE decodes TS 44.060 V19.0.0 §12.40 <MBMS Session Parameters List IE>.
 func DecodeMBMSSessionParametersListIEFrom(r *runtime.Reader) (MBMSSessionParametersListIE, error) {
 	if err := r.Check(); err != nil {
-		return MBMSSessionParametersListIE{}, locateOperationKind(err, "decode", "MBMSSessionParametersListIE", r.Position(), 0, sourceClause6, runtime.InvalidValue)
+		return MBMSSessionParametersListIE{}, operationLocation32.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMBMSSessionParametersListIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MBMSSessionParametersListIE", r.Position(), 0, sourceClause6, runtime.InvalidValue)
+			return operationValue, operationLocation32.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMBMSSessionParametersListIETo(w *runtime.Writer, v MBMSSessionParametersListIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MBMSSessionParametersListIE", BitOffset: -1, Source: sourceClause6}, Detail: "nil writer"}
+		return operationLocation33.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMBMSSessionParametersListIE(w, v) }), "encode", "MBMSSessionParametersListIE", w.Position(), 0, sourceClause6, runtime.InvalidValue)
+	return operationLocation33.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSSessionParametersListIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMBMSSessionParametersListIEBytes(data []byte) (runtime.Decoded[MBMSSessionParametersListIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -8996,7 +8996,7 @@ func EncodeMBMSSessionParametersListIECanonical(v MBMSSessionParametersListIE) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSSessionParametersListIEBytes, decodeMBMSSessionParametersListIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSSessionParametersListIE", -1, 0, sourceClause6, runtime.InvalidValue)
+			return operationValue, operationLocation34.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9016,7 +9016,7 @@ func EncodeMBMSSessionParametersListIECanonicalAtLength(v MBMSSessionParametersL
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSSessionParametersListIEBytes, decodeMBMSSessionParametersListIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MBMSSessionParametersListIE", -1, 0, sourceClause6, runtime.InvalidValue)
+			return operationValue, operationLocation34.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9025,21 +9025,21 @@ func EncodeMBMSSessionParametersListIECanonicalAtLength(v MBMSSessionParametersL
 // DecodeMPRACHControlParametersIE decodes TS 44.060 V19.0.0 §12.41 <MPRACH Control Parameters IE>.
 func DecodeMPRACHControlParametersIEFrom(r *runtime.Reader) (MPRACHControlParametersIE, error) {
 	if err := r.Check(); err != nil {
-		return MPRACHControlParametersIE{}, locateOperationKind(err, "decode", "MPRACHControlParametersIE", r.Position(), 0, sourceClause7, runtime.InvalidValue)
+		return MPRACHControlParametersIE{}, operationLocation35.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMPRACHControlParametersIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MPRACHControlParametersIE", r.Position(), 0, sourceClause7, runtime.InvalidValue)
+			return operationValue, operationLocation35.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMPRACHControlParametersIETo(w *runtime.Writer, v MPRACHControlParametersIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MPRACHControlParametersIE", BitOffset: -1, Source: sourceClause7}, Detail: "nil writer"}
+		return operationLocation36.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMPRACHControlParametersIE(w, v) }), "encode", "MPRACHControlParametersIE", w.Position(), 0, sourceClause7, runtime.InvalidValue)
+	return operationLocation36.failure(w.WithWireValue(v.Wire, func() error { return encodeMPRACHControlParametersIE(w, v) }), "", w.Position(), 0)
 }
 func decodeMPRACHControlParametersIEBytes(data []byte) (runtime.Decoded[MPRACHControlParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9081,7 +9081,7 @@ func EncodeMPRACHControlParametersIECanonical(v MPRACHControlParametersIE) ([]by
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 5, false, encodeMPRACHControlParametersIEBytes, decodeMPRACHControlParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MPRACHControlParametersIE", -1, 0, sourceClause7, runtime.InvalidValue)
+			return operationValue, operationLocation37.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9101,7 +9101,7 @@ func EncodeMPRACHControlParametersIECanonicalAtLength(v MPRACHControlParametersI
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 5, encodeMPRACHControlParametersIEBytes, decodeMPRACHControlParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MPRACHControlParametersIE", -1, 0, sourceClause7, runtime.InvalidValue)
+			return operationValue, operationLocation37.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9110,21 +9110,21 @@ func EncodeMPRACHControlParametersIECanonicalAtLength(v MPRACHControlParametersI
 // DecodeGPRSPowerControlParametersIE decodes TS 44.060 V19.0.0 §12.9a <GPRS Power Control Parameters IE>.
 func DecodeGPRSPowerControlParametersIEFrom(r *runtime.Reader) (GPRSPowerControlParametersIE, error) {
 	if err := r.Check(); err != nil {
-		return GPRSPowerControlParametersIE{}, locateOperationKind(err, "decode", "GPRSPowerControlParametersIE", r.Position(), 0, sourceClause8, runtime.InvalidValue)
+		return GPRSPowerControlParametersIE{}, operationLocation38.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeGPRSPowerControlParametersIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "GPRSPowerControlParametersIE", r.Position(), 0, sourceClause8, runtime.InvalidValue)
+			return operationValue, operationLocation38.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeGPRSPowerControlParametersIETo(w *runtime.Writer, v GPRSPowerControlParametersIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "GPRSPowerControlParametersIE", BitOffset: -1, Source: sourceClause8}, Detail: "nil writer"}
+		return operationLocation39.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeGPRSPowerControlParametersIE(w, v) }), "encode", "GPRSPowerControlParametersIE", w.Position(), 0, sourceClause8, runtime.InvalidValue)
+	return operationLocation39.failure(w.WithWireValue(v.Wire, func() error { return encodeGPRSPowerControlParametersIE(w, v) }), "", w.Position(), 0)
 }
 func decodeGPRSPowerControlParametersIEBytes(data []byte) (runtime.Decoded[GPRSPowerControlParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9166,7 +9166,7 @@ func EncodeGPRSPowerControlParametersIECanonical(v GPRSPowerControlParametersIE)
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeGPRSPowerControlParametersIEBytes, decodeGPRSPowerControlParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSPowerControlParametersIE", -1, 0, sourceClause8, runtime.InvalidValue)
+			return operationValue, operationLocation40.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9185,7 +9185,7 @@ func EncodeGPRSPowerControlParametersIECanonicalAtLength(v GPRSPowerControlParam
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeGPRSPowerControlParametersIEBytes, decodeGPRSPowerControlParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSPowerControlParametersIE", -1, 0, sourceClause8, runtime.InvalidValue)
+			return operationValue, operationLocation40.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9194,21 +9194,21 @@ func EncodeGPRSPowerControlParametersIECanonicalAtLength(v GPRSPowerControlParam
 // DecodeGPRSCellOptionsIE decodes TS 44.060 V19.0.0 §12.24 <GPRS Cell Options IE>.
 func DecodeGPRSCellOptionsIEFrom(r *runtime.Reader) (GPRSCellOptionsIE, error) {
 	if err := r.Check(); err != nil {
-		return GPRSCellOptionsIE{}, locateOperationKind(err, "decode", "GPRSCellOptionsIE", r.Position(), 0, sourceClause9, runtime.InvalidValue)
+		return GPRSCellOptionsIE{}, operationLocation41.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeGPRSCellOptionsIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "GPRSCellOptionsIE", r.Position(), 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation41.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeGPRSCellOptionsIETo(w *runtime.Writer, v GPRSCellOptionsIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "GPRSCellOptionsIE", BitOffset: -1, Source: sourceClause9}, Detail: "nil writer"}
+		return operationLocation42.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeGPRSCellOptionsIE(w, v) }), "encode", "GPRSCellOptionsIE", w.Position(), 0, sourceClause9, runtime.InvalidValue)
+	return operationLocation42.failure(w.WithWireValue(v.Wire, func() error { return encodeGPRSCellOptionsIE(w, v) }), "", w.Position(), 0)
 }
 func decodeGPRSCellOptionsIEBytes(data []byte) (runtime.Decoded[GPRSCellOptionsIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9248,7 +9248,7 @@ func EncodeGPRSCellOptionsIECanonical(v GPRSCellOptionsIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeGPRSCellOptionsIEBytes, decodeGPRSCellOptionsIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSCellOptionsIE", -1, 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation43.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9272,7 +9272,7 @@ func EncodeGPRSCellOptionsIECanonicalAtLength(v GPRSCellOptionsIE, octets int) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGPRSCellOptionsIEBytes, decodeGPRSCellOptionsIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSCellOptionsIE", -1, 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation43.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9281,21 +9281,21 @@ func EncodeGPRSCellOptionsIECanonicalAtLength(v GPRSCellOptionsIE, octets int) (
 // DecodeExtensionInformation decodes TS 44.060 V19.0.0 §12.24 <Extension Information>.
 func DecodeExtensionInformationFrom(r *runtime.Reader) (ExtensionInformation, error) {
 	if err := r.Check(); err != nil {
-		return ExtensionInformation{}, locateOperationKind(err, "decode", "ExtensionInformation", r.Position(), 0, sourceClause9, runtime.InvalidValue)
+		return ExtensionInformation{}, operationLocation44.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeExtensionInformation(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "ExtensionInformation", r.Position(), 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation44.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeExtensionInformationTo(w *runtime.Writer, v ExtensionInformation) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "ExtensionInformation", BitOffset: -1, Source: sourceClause9}, Detail: "nil writer"}
+		return operationLocation45.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeExtensionInformation(w, v) }), "encode", "ExtensionInformation", w.Position(), 0, sourceClause9, runtime.InvalidValue)
+	return operationLocation45.failure(w.WithWireValue(v.Wire, func() error { return encodeExtensionInformation(w, v) }), "", w.Position(), 0)
 }
 func decodeExtensionInformationBytes(data []byte) (runtime.Decoded[ExtensionInformation], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9335,7 +9335,7 @@ func EncodeExtensionInformationCanonical(v ExtensionInformation) ([]byte, error)
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, true, encodeExtensionInformationBytes, decodeExtensionInformationBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ExtensionInformation", -1, 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation46.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9355,7 +9355,7 @@ func EncodeExtensionInformationCanonicalAtLength(v ExtensionInformation, octets 
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeExtensionInformationBytes, decodeExtensionInformationBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ExtensionInformation", -1, 0, sourceClause9, runtime.InvalidValue)
+			return operationValue, operationLocation46.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9364,21 +9364,21 @@ func EncodeExtensionInformationCanonicalAtLength(v ExtensionInformation, octets 
 // DecodeFrequencyParametersIE decodes TS 44.060 V19.0.0 §12.8 <Frequency Parameters IE>.
 func DecodeFrequencyParametersIEFrom(r *runtime.Reader) (FrequencyParametersIE, error) {
 	if err := r.Check(); err != nil {
-		return FrequencyParametersIE{}, locateOperationKind(err, "decode", "FrequencyParametersIE", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+		return FrequencyParametersIE{}, operationLocation47.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeFrequencyParametersIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "FrequencyParametersIE", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation47.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeFrequencyParametersIETo(w *runtime.Writer, v FrequencyParametersIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "FrequencyParametersIE", BitOffset: -1, Source: sourceClause10}, Detail: "nil writer"}
+		return operationLocation48.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeFrequencyParametersIE(w, v) }), "encode", "FrequencyParametersIE", w.Position(), 0, sourceClause10, runtime.InvalidValue)
+	return operationLocation48.failure(w.WithWireValue(v.Wire, func() error { return encodeFrequencyParametersIE(w, v) }), "", w.Position(), 0)
 }
 func decodeFrequencyParametersIEBytes(data []byte) (runtime.Decoded[FrequencyParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9418,7 +9418,7 @@ func EncodeFrequencyParametersIECanonical(v FrequencyParametersIE) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeFrequencyParametersIEBytes, decodeFrequencyParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "FrequencyParametersIE", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation49.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9438,7 +9438,7 @@ func EncodeFrequencyParametersIECanonicalAtLength(v FrequencyParametersIE, octet
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeFrequencyParametersIEBytes, decodeFrequencyParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "FrequencyParametersIE", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation49.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9447,21 +9447,21 @@ func EncodeFrequencyParametersIECanonicalAtLength(v FrequencyParametersIE, octet
 // DecodeIndirectEncodingStruct decodes TS 44.060 V19.0.0 §12.8 <Indirect encoding struct>.
 func DecodeIndirectEncodingStructFrom(r *runtime.Reader) (IndirectEncodingStruct, error) {
 	if err := r.Check(); err != nil {
-		return IndirectEncodingStruct{}, locateOperationKind(err, "decode", "IndirectEncodingStruct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+		return IndirectEncodingStruct{}, operationLocation50.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeIndirectEncodingStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "IndirectEncodingStruct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation50.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeIndirectEncodingStructTo(w *runtime.Writer, v IndirectEncodingStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "IndirectEncodingStruct", BitOffset: -1, Source: sourceClause10}, Detail: "nil writer"}
+		return operationLocation51.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeIndirectEncodingStruct(w, v) }), "encode", "IndirectEncodingStruct", w.Position(), 0, sourceClause10, runtime.InvalidValue)
+	return operationLocation51.failure(w.WithWireValue(v.Wire, func() error { return encodeIndirectEncodingStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeIndirectEncodingStructBytes(data []byte) (runtime.Decoded[IndirectEncodingStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9503,7 +9503,7 @@ func EncodeIndirectEncodingStructCanonical(v IndirectEncodingStruct) ([]byte, er
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeIndirectEncodingStructBytes, decodeIndirectEncodingStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "IndirectEncodingStruct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation52.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9522,7 +9522,7 @@ func EncodeIndirectEncodingStructCanonicalAtLength(v IndirectEncodingStruct, oct
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeIndirectEncodingStructBytes, decodeIndirectEncodingStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "IndirectEncodingStruct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation52.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9531,21 +9531,21 @@ func EncodeIndirectEncodingStructCanonicalAtLength(v IndirectEncodingStruct, oct
 // DecodeDirectEncoding1Struct decodes TS 44.060 V19.0.0 §12.8 <Direct encoding 1 struct>.
 func DecodeDirectEncoding1StructFrom(r *runtime.Reader) (DirectEncoding1Struct, error) {
 	if err := r.Check(); err != nil {
-		return DirectEncoding1Struct{}, locateOperationKind(err, "decode", "DirectEncoding1Struct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+		return DirectEncoding1Struct{}, operationLocation53.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeDirectEncoding1Struct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "DirectEncoding1Struct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation53.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeDirectEncoding1StructTo(w *runtime.Writer, v DirectEncoding1Struct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "DirectEncoding1Struct", BitOffset: -1, Source: sourceClause10}, Detail: "nil writer"}
+		return operationLocation54.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeDirectEncoding1Struct(w, v) }), "encode", "DirectEncoding1Struct", w.Position(), 0, sourceClause10, runtime.InvalidValue)
+	return operationLocation54.failure(w.WithWireValue(v.Wire, func() error { return encodeDirectEncoding1Struct(w, v) }), "", w.Position(), 0)
 }
 func decodeDirectEncoding1StructBytes(data []byte) (runtime.Decoded[DirectEncoding1Struct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9585,7 +9585,7 @@ func EncodeDirectEncoding1StructCanonical(v DirectEncoding1Struct) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeDirectEncoding1StructBytes, decodeDirectEncoding1StructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DirectEncoding1Struct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation55.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9605,7 +9605,7 @@ func EncodeDirectEncoding1StructCanonicalAtLength(v DirectEncoding1Struct, octet
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeDirectEncoding1StructBytes, decodeDirectEncoding1StructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DirectEncoding1Struct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation55.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9614,21 +9614,21 @@ func EncodeDirectEncoding1StructCanonicalAtLength(v DirectEncoding1Struct, octet
 // DecodeDirectEncoding2Struct decodes TS 44.060 V19.0.0 §12.8 <Direct encoding 2 struct>.
 func DecodeDirectEncoding2StructFrom(r *runtime.Reader) (DirectEncoding2Struct, error) {
 	if err := r.Check(); err != nil {
-		return DirectEncoding2Struct{}, locateOperationKind(err, "decode", "DirectEncoding2Struct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+		return DirectEncoding2Struct{}, operationLocation56.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeDirectEncoding2Struct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "DirectEncoding2Struct", r.Position(), 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation56.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeDirectEncoding2StructTo(w *runtime.Writer, v DirectEncoding2Struct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "DirectEncoding2Struct", BitOffset: -1, Source: sourceClause10}, Detail: "nil writer"}
+		return operationLocation57.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeDirectEncoding2Struct(w, v) }), "encode", "DirectEncoding2Struct", w.Position(), 0, sourceClause10, runtime.InvalidValue)
+	return operationLocation57.failure(w.WithWireValue(v.Wire, func() error { return encodeDirectEncoding2Struct(w, v) }), "", w.Position(), 0)
 }
 func decodeDirectEncoding2StructBytes(data []byte) (runtime.Decoded[DirectEncoding2Struct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9668,7 +9668,7 @@ func EncodeDirectEncoding2StructCanonical(v DirectEncoding2Struct) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeDirectEncoding2StructBytes, decodeDirectEncoding2StructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DirectEncoding2Struct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation58.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9688,7 +9688,7 @@ func EncodeDirectEncoding2StructCanonicalAtLength(v DirectEncoding2Struct, octet
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeDirectEncoding2StructBytes, decodeDirectEncoding2StructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DirectEncoding2Struct", -1, 0, sourceClause10, runtime.InvalidValue)
+			return operationValue, operationLocation58.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9697,21 +9697,21 @@ func EncodeDirectEncoding2StructCanonicalAtLength(v DirectEncoding2Struct, octet
 // DecodeGPRSMobileAllocationIE decodes TS 44.060 V19.0.0 §12.10a <GPRS Mobile Allocation IE>.
 func DecodeGPRSMobileAllocationIEFrom(r *runtime.Reader) (GPRSMobileAllocationIE, error) {
 	if err := r.Check(); err != nil {
-		return GPRSMobileAllocationIE{}, locateOperationKind(err, "decode", "GPRSMobileAllocationIE", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+		return GPRSMobileAllocationIE{}, operationLocation59.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeGPRSMobileAllocationIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "GPRSMobileAllocationIE", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation59.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeGPRSMobileAllocationIETo(w *runtime.Writer, v GPRSMobileAllocationIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "GPRSMobileAllocationIE", BitOffset: -1, Source: sourceClause11}, Detail: "nil writer"}
+		return operationLocation60.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeGPRSMobileAllocationIE(w, v) }), "encode", "GPRSMobileAllocationIE", w.Position(), 0, sourceClause11, runtime.InvalidValue)
+	return operationLocation60.failure(w.WithWireValue(v.Wire, func() error { return encodeGPRSMobileAllocationIE(w, v) }), "", w.Position(), 0)
 }
 func decodeGPRSMobileAllocationIEBytes(data []byte) (runtime.Decoded[GPRSMobileAllocationIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9751,7 +9751,7 @@ func EncodeGPRSMobileAllocationIECanonical(v GPRSMobileAllocationIE) ([]byte, er
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeGPRSMobileAllocationIEBytes, decodeGPRSMobileAllocationIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSMobileAllocationIE", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation61.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9771,7 +9771,7 @@ func EncodeGPRSMobileAllocationIECanonicalAtLength(v GPRSMobileAllocationIE, oct
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGPRSMobileAllocationIEBytes, decodeGPRSMobileAllocationIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GPRSMobileAllocationIE", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation61.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9780,21 +9780,21 @@ func EncodeGPRSMobileAllocationIECanonicalAtLength(v GPRSMobileAllocationIE, oct
 // DecodeRFLNumberListStruct decodes TS 44.060 V19.0.0 §12.10a <RFL number list struct>.
 func DecodeRFLNumberListStructFrom(r *runtime.Reader) (RFLNumberListStruct, error) {
 	if err := r.Check(); err != nil {
-		return RFLNumberListStruct{}, locateOperationKind(err, "decode", "RFLNumberListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+		return RFLNumberListStruct{}, operationLocation5.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeRFLNumberListStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "RFLNumberListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation5.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeRFLNumberListStructTo(w *runtime.Writer, v RFLNumberListStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "RFLNumberListStruct", BitOffset: -1, Source: sourceClause11}, Detail: "nil writer"}
+		return operationLocation62.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeRFLNumberListStruct(w, v) }), "encode", "RFLNumberListStruct", w.Position(), 0, sourceClause11, runtime.InvalidValue)
+	return operationLocation62.failure(w.WithWireValue(v.Wire, func() error { return encodeRFLNumberListStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeRFLNumberListStructBytes(data []byte) (runtime.Decoded[RFLNumberListStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9834,7 +9834,7 @@ func EncodeRFLNumberListStructCanonical(v RFLNumberListStruct) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRFLNumberListStructBytes, decodeRFLNumberListStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RFLNumberListStruct", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation63.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9854,7 +9854,7 @@ func EncodeRFLNumberListStructCanonicalAtLength(v RFLNumberListStruct, octets in
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRFLNumberListStructBytes, decodeRFLNumberListStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RFLNumberListStruct", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation63.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9863,21 +9863,21 @@ func EncodeRFLNumberListStructCanonicalAtLength(v RFLNumberListStruct, octets in
 // DecodeARFCNIndexListStruct decodes TS 44.060 V19.0.0 §12.10a <ARFCN index list struct>.
 func DecodeARFCNIndexListStructFrom(r *runtime.Reader) (ARFCNIndexListStruct, error) {
 	if err := r.Check(); err != nil {
-		return ARFCNIndexListStruct{}, locateOperationKind(err, "decode", "ARFCNIndexListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+		return ARFCNIndexListStruct{}, operationLocation6.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeARFCNIndexListStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "ARFCNIndexListStruct", r.Position(), 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation6.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeARFCNIndexListStructTo(w *runtime.Writer, v ARFCNIndexListStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "ARFCNIndexListStruct", BitOffset: -1, Source: sourceClause11}, Detail: "nil writer"}
+		return operationLocation64.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeARFCNIndexListStruct(w, v) }), "encode", "ARFCNIndexListStruct", w.Position(), 0, sourceClause11, runtime.InvalidValue)
+	return operationLocation64.failure(w.WithWireValue(v.Wire, func() error { return encodeARFCNIndexListStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeARFCNIndexListStructBytes(data []byte) (runtime.Decoded[ARFCNIndexListStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -9917,7 +9917,7 @@ func EncodeARFCNIndexListStructCanonical(v ARFCNIndexListStruct) ([]byte, error)
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeARFCNIndexListStructBytes, decodeARFCNIndexListStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ARFCNIndexListStruct", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation65.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9937,7 +9937,7 @@ func EncodeARFCNIndexListStructCanonicalAtLength(v ARFCNIndexListStruct, octets 
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeARFCNIndexListStructBytes, decodeARFCNIndexListStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ARFCNIndexListStruct", -1, 0, sourceClause11, runtime.InvalidValue)
+			return operationValue, operationLocation65.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -9946,21 +9946,21 @@ func EncodeARFCNIndexListStructCanonicalAtLength(v ARFCNIndexListStruct, octets 
 // DecodePCIDGroupIE decodes TS 44.060 V19.0.0 §12.57 <PCID Group IE>.
 func DecodePCIDGroupIEFrom(r *runtime.Reader) (PCIDGroupIE, error) {
 	if err := r.Check(); err != nil {
-		return PCIDGroupIE{}, locateOperationKind(err, "decode", "PCIDGroupIE", r.Position(), 0, sourceClause12, runtime.InvalidValue)
+		return PCIDGroupIE{}, operationLocation66.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodePCIDGroupIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "PCIDGroupIE", r.Position(), 0, sourceClause12, runtime.InvalidValue)
+			return operationValue, operationLocation66.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodePCIDGroupIETo(w *runtime.Writer, v PCIDGroupIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "PCIDGroupIE", BitOffset: -1, Source: sourceClause12}, Detail: "nil writer"}
+		return operationLocation67.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodePCIDGroupIE(w, v) }), "encode", "PCIDGroupIE", w.Position(), 0, sourceClause12, runtime.InvalidValue)
+	return operationLocation67.failure(w.WithWireValue(v.Wire, func() error { return encodePCIDGroupIE(w, v) }), "", w.Position(), 0)
 }
 func decodePCIDGroupIEBytes(data []byte) (runtime.Decoded[PCIDGroupIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10000,7 +10000,7 @@ func EncodePCIDGroupIECanonical(v PCIDGroupIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePCIDGroupIEBytes, decodePCIDGroupIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PCIDGroupIE", -1, 0, sourceClause12, runtime.InvalidValue)
+			return operationValue, operationLocation68.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10020,7 +10020,7 @@ func EncodePCIDGroupIECanonicalAtLength(v PCIDGroupIE, octets int) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePCIDGroupIEBytes, decodePCIDGroupIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PCIDGroupIE", -1, 0, sourceClause12, runtime.InvalidValue)
+			return operationValue, operationLocation68.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10029,21 +10029,21 @@ func EncodePCIDGroupIECanonicalAtLength(v PCIDGroupIE, octets int) ([]byte, erro
 // DecodeEnhancedCellReselectionParametersIE decodes TS 44.060 V19.0.0 §12.59 <Enhanced Cell Reselection Parameters IE>.
 func DecodeEnhancedCellReselectionParametersIEFrom(r *runtime.Reader) (EnhancedCellReselectionParametersIE, error) {
 	if err := r.Check(); err != nil {
-		return EnhancedCellReselectionParametersIE{}, locateOperationKind(err, "decode", "EnhancedCellReselectionParametersIE", r.Position(), 0, sourceClause13, runtime.InvalidValue)
+		return EnhancedCellReselectionParametersIE{}, operationLocation69.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEnhancedCellReselectionParametersIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EnhancedCellReselectionParametersIE", r.Position(), 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation69.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEnhancedCellReselectionParametersIETo(w *runtime.Writer, v EnhancedCellReselectionParametersIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EnhancedCellReselectionParametersIE", BitOffset: -1, Source: sourceClause13}, Detail: "nil writer"}
+		return operationLocation70.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEnhancedCellReselectionParametersIE(w, v) }), "encode", "EnhancedCellReselectionParametersIE", w.Position(), 0, sourceClause13, runtime.InvalidValue)
+	return operationLocation70.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedCellReselectionParametersIE(w, v) }), "", w.Position(), 0)
 }
 func decodeEnhancedCellReselectionParametersIEBytes(data []byte) (runtime.Decoded[EnhancedCellReselectionParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10083,7 +10083,7 @@ func EncodeEnhancedCellReselectionParametersIECanonical(v EnhancedCellReselectio
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEnhancedCellReselectionParametersIEBytes, decodeEnhancedCellReselectionParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedCellReselectionParametersIE", -1, 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation71.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10103,7 +10103,7 @@ func EncodeEnhancedCellReselectionParametersIECanonicalAtLength(v EnhancedCellRe
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEnhancedCellReselectionParametersIEBytes, decodeEnhancedCellReselectionParametersIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedCellReselectionParametersIE", -1, 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation71.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10112,21 +10112,21 @@ func EncodeEnhancedCellReselectionParametersIECanonicalAtLength(v EnhancedCellRe
 // DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct decodes TS 44.060 V19.0.0 §12.59 <Repeated E-UTRAN Enhanced Cell Reselection Parameters struct>.
 func DecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r *runtime.Reader) (RepeatedEUTRANEnhancedCellReselectionParametersStruct, error) {
 	if err := r.Check(); err != nil {
-		return RepeatedEUTRANEnhancedCellReselectionParametersStruct{}, locateOperationKind(err, "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", r.Position(), 0, sourceClause13, runtime.InvalidValue)
+		return RepeatedEUTRANEnhancedCellReselectionParametersStruct{}, operationLocation72.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", r.Position(), 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation72.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructTo(w *runtime.Writer, v RepeatedEUTRANEnhancedCellReselectionParametersStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "RepeatedEUTRANEnhancedCellReselectionParametersStruct", BitOffset: -1, Source: sourceClause13}, Detail: "nil writer"}
+		return operationLocation73.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(w, v) }), "encode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", w.Position(), 0, sourceClause13, runtime.InvalidValue)
+	return operationLocation73.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes(data []byte) (runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10166,7 +10166,7 @@ func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonical(v Repe
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes, decodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", -1, 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation74.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10186,7 +10186,7 @@ func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonicalAtLengt
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes, decodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", -1, 0, sourceClause13, runtime.InvalidValue)
+			return operationValue, operationLocation74.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10195,21 +10195,21 @@ func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonicalAtLengt
 // DecodeEGPRSWindowSizeIE decodes TS 44.060 V19.0.0 §12.5.2 <EGPRS Window Size IE>.
 func DecodeEGPRSWindowSizeIEFrom(r *runtime.Reader) (EGPRSWindowSizeIE, error) {
 	if err := r.Check(); err != nil {
-		return EGPRSWindowSizeIE{}, locateOperationKind(err, "decode", "EGPRSWindowSizeIE", r.Position(), 0, sourceClause14, runtime.InvalidValue)
+		return EGPRSWindowSizeIE{}, operationLocation75.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEGPRSWindowSizeIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EGPRSWindowSizeIE", r.Position(), 0, sourceClause14, runtime.InvalidValue)
+			return operationValue, operationLocation75.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEGPRSWindowSizeIETo(w *runtime.Writer, v EGPRSWindowSizeIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EGPRSWindowSizeIE", BitOffset: -1, Source: sourceClause14}, Detail: "nil writer"}
+		return operationLocation76.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEGPRSWindowSizeIE(w, v) }), "encode", "EGPRSWindowSizeIE", w.Position(), 0, sourceClause14, runtime.InvalidValue)
+	return operationLocation76.failure(w.WithWireValue(v.Wire, func() error { return encodeEGPRSWindowSizeIE(w, v) }), "", w.Position(), 0)
 }
 func decodeEGPRSWindowSizeIEBytes(data []byte) (runtime.Decoded[EGPRSWindowSizeIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10251,7 +10251,7 @@ func EncodeEGPRSWindowSizeIECanonical(v EGPRSWindowSizeIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEGPRSWindowSizeIEBytes, decodeEGPRSWindowSizeIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSWindowSizeIE", -1, 0, sourceClause14, runtime.InvalidValue)
+			return operationValue, operationLocation77.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10270,7 +10270,7 @@ func EncodeEGPRSWindowSizeIECanonicalAtLength(v EGPRSWindowSizeIE, octets int) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEGPRSWindowSizeIEBytes, decodeEGPRSWindowSizeIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSWindowSizeIE", -1, 0, sourceClause14, runtime.InvalidValue)
+			return operationValue, operationLocation77.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10279,21 +10279,21 @@ func EncodeEGPRSWindowSizeIECanonicalAtLength(v EGPRSWindowSizeIE, octets int) (
 // DecodeEGPRSModulationAndCodingIE decodes TS 44.060 V19.0.0 §12.10d <EGPRS Modulation and Coding IE>.
 func DecodeEGPRSModulationAndCodingIEFrom(r *runtime.Reader) (EGPRSModulationAndCodingIE, error) {
 	if err := r.Check(); err != nil {
-		return EGPRSModulationAndCodingIE{}, locateOperationKind(err, "decode", "EGPRSModulationAndCodingIE", r.Position(), 0, sourceClause15, runtime.InvalidValue)
+		return EGPRSModulationAndCodingIE{}, operationLocation78.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEGPRSModulationAndCodingIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EGPRSModulationAndCodingIE", r.Position(), 0, sourceClause15, runtime.InvalidValue)
+			return operationValue, operationLocation78.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEGPRSModulationAndCodingIETo(w *runtime.Writer, v EGPRSModulationAndCodingIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EGPRSModulationAndCodingIE", BitOffset: -1, Source: sourceClause15}, Detail: "nil writer"}
+		return operationLocation79.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEGPRSModulationAndCodingIE(w, v) }), "encode", "EGPRSModulationAndCodingIE", w.Position(), 0, sourceClause15, runtime.InvalidValue)
+	return operationLocation79.failure(w.WithWireValue(v.Wire, func() error { return encodeEGPRSModulationAndCodingIE(w, v) }), "", w.Position(), 0)
 }
 func decodeEGPRSModulationAndCodingIEBytes(data []byte) (runtime.Decoded[EGPRSModulationAndCodingIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10335,7 +10335,7 @@ func EncodeEGPRSModulationAndCodingIECanonical(v EGPRSModulationAndCodingIE) ([]
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEGPRSModulationAndCodingIEBytes, decodeEGPRSModulationAndCodingIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSModulationAndCodingIE", -1, 0, sourceClause15, runtime.InvalidValue)
+			return operationValue, operationLocation80.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10354,7 +10354,7 @@ func EncodeEGPRSModulationAndCodingIECanonicalAtLength(v EGPRSModulationAndCodin
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEGPRSModulationAndCodingIEBytes, decodeEGPRSModulationAndCodingIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSModulationAndCodingIE", -1, 0, sourceClause15, runtime.InvalidValue)
+			return operationValue, operationLocation80.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10363,21 +10363,21 @@ func EncodeEGPRSModulationAndCodingIECanonicalAtLength(v EGPRSModulationAndCodin
 // DecodeEGPRSLevelIE decodes TS 44.060 V19.0.0 §12.10f <EGPRS Level IE>.
 func DecodeEGPRSLevelIEFrom(r *runtime.Reader) (EGPRSLevelIE, error) {
 	if err := r.Check(); err != nil {
-		return EGPRSLevelIE{}, locateOperationKind(err, "decode", "EGPRSLevelIE", r.Position(), 0, sourceClause16, runtime.InvalidValue)
+		return EGPRSLevelIE{}, operationLocation81.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEGPRSLevelIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EGPRSLevelIE", r.Position(), 0, sourceClause16, runtime.InvalidValue)
+			return operationValue, operationLocation81.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEGPRSLevelIETo(w *runtime.Writer, v EGPRSLevelIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EGPRSLevelIE", BitOffset: -1, Source: sourceClause16}, Detail: "nil writer"}
+		return operationLocation82.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEGPRSLevelIE(w, v) }), "encode", "EGPRSLevelIE", w.Position(), 0, sourceClause16, runtime.InvalidValue)
+	return operationLocation82.failure(w.WithWireValue(v.Wire, func() error { return encodeEGPRSLevelIE(w, v) }), "", w.Position(), 0)
 }
 func decodeEGPRSLevelIEBytes(data []byte) (runtime.Decoded[EGPRSLevelIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10419,7 +10419,7 @@ func EncodeEGPRSLevelIECanonical(v EGPRSLevelIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEGPRSLevelIEBytes, decodeEGPRSLevelIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSLevelIE", -1, 0, sourceClause16, runtime.InvalidValue)
+			return operationValue, operationLocation83.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10438,7 +10438,7 @@ func EncodeEGPRSLevelIECanonicalAtLength(v EGPRSLevelIE, octets int) ([]byte, er
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEGPRSLevelIEBytes, decodeEGPRSLevelIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EGPRSLevelIE", -1, 0, sourceClause16, runtime.InvalidValue)
+			return operationValue, operationLocation83.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10447,21 +10447,21 @@ func EncodeEGPRSLevelIECanonicalAtLength(v EGPRSLevelIE, octets int) ([]byte, er
 // DecodePacketTimingAdvanceIE decodes TS 44.060 V19.0.0 §12.12 <Packet Timing Advance IE>.
 func DecodePacketTimingAdvanceIEFrom(r *runtime.Reader) (PacketTimingAdvanceIE, error) {
 	if err := r.Check(); err != nil {
-		return PacketTimingAdvanceIE{}, locateOperationKind(err, "decode", "PacketTimingAdvanceIE", r.Position(), 0, sourceClause17, runtime.InvalidValue)
+		return PacketTimingAdvanceIE{}, operationLocation84.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodePacketTimingAdvanceIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "PacketTimingAdvanceIE", r.Position(), 0, sourceClause17, runtime.InvalidValue)
+			return operationValue, operationLocation84.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodePacketTimingAdvanceIETo(w *runtime.Writer, v PacketTimingAdvanceIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "PacketTimingAdvanceIE", BitOffset: -1, Source: sourceClause17}, Detail: "nil writer"}
+		return operationLocation85.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodePacketTimingAdvanceIE(w, v) }), "encode", "PacketTimingAdvanceIE", w.Position(), 0, sourceClause17, runtime.InvalidValue)
+	return operationLocation85.failure(w.WithWireValue(v.Wire, func() error { return encodePacketTimingAdvanceIE(w, v) }), "", w.Position(), 0)
 }
 func decodePacketTimingAdvanceIEBytes(data []byte) (runtime.Decoded[PacketTimingAdvanceIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10503,7 +10503,7 @@ func EncodePacketTimingAdvanceIECanonical(v PacketTimingAdvanceIE) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodePacketTimingAdvanceIEBytes, decodePacketTimingAdvanceIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PacketTimingAdvanceIE", -1, 0, sourceClause17, runtime.InvalidValue)
+			return operationValue, operationLocation86.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10523,7 +10523,7 @@ func EncodePacketTimingAdvanceIECanonicalAtLength(v PacketTimingAdvanceIE, octet
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodePacketTimingAdvanceIEBytes, decodePacketTimingAdvanceIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "PacketTimingAdvanceIE", -1, 0, sourceClause17, runtime.InvalidValue)
+			return operationValue, operationLocation86.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10532,21 +10532,21 @@ func EncodePacketTimingAdvanceIECanonicalAtLength(v PacketTimingAdvanceIE, octet
 // DecodeTMGIIE decodes TS 44.060 V19.0.0 §12.33 <TMGI IE>.
 func DecodeTMGIIEFrom(r *runtime.Reader) (TMGIIE, error) {
 	if err := r.Check(); err != nil {
-		return TMGIIE{}, locateOperationKind(err, "decode", "TMGIIE", r.Position(), 0, sourceClause18, runtime.InvalidValue)
+		return TMGIIE{}, operationLocation87.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeTMGIIE(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "TMGIIE", r.Position(), 0, sourceClause18, runtime.InvalidValue)
+			return operationValue, operationLocation87.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeTMGIIETo(w *runtime.Writer, v TMGIIE) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "TMGIIE", BitOffset: -1, Source: sourceClause18}, Detail: "nil writer"}
+		return operationLocation88.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeTMGIIE(w, v) }), "encode", "TMGIIE", w.Position(), 0, sourceClause18, runtime.InvalidValue)
+	return operationLocation88.failure(w.WithWireValue(v.Wire, func() error { return encodeTMGIIE(w, v) }), "", w.Position(), 0)
 }
 func decodeTMGIIEBytes(data []byte) (runtime.Decoded[TMGIIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -10588,7 +10588,7 @@ func EncodeTMGIIECanonical(v TMGIIE) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 7, false, encodeTMGIIEBytes, decodeTMGIIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "TMGIIE", -1, 0, sourceClause18, runtime.InvalidValue)
+			return operationValue, operationLocation89.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10608,7 +10608,7 @@ func EncodeTMGIIECanonicalAtLength(v TMGIIE, octets int) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 7, encodeTMGIIEBytes, decodeTMGIIEBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "TMGIIE", -1, 0, sourceClause18, runtime.InvalidValue)
+			return operationValue, operationLocation89.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -10616,848 +10616,41 @@ func EncodeTMGIIECanonicalAtLength(v TMGIIE, octets int) ([]byte, error) {
 func Definitions() []string {
 	return []string{"UTRAN CSG Measurement Report IE", "PLMN-ID struct", "PSC Group IE", "MBMS Channel Parameters IE", "MBMS p-t-m channel description IE", "MPRACH description IE", "MBMS Session List IE", "MBMS Session Parameters List IE", "MPRACH Control Parameters IE", "GPRS Power Control Parameters IE", "GPRS Cell Options IE", "Extension Information", "Frequency Parameters IE", "Indirect encoding struct", "Direct encoding 1 struct", "Direct encoding 2 struct", "GPRS Mobile Allocation IE", "RFL number list struct", "ARFCN index list struct", "PCID Group IE", "Enhanced Cell Reselection Parameters IE", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", "EGPRS Window Size IE", "EGPRS Modulation and Coding IE", "EGPRS Level IE", "Packet Timing Advance IE", "TMGI IE"}
 }
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 63, MaximumBits: 87, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodeUTRANCSGMeasurementReportIE, DecodeFrom: descriptorDecodeUTRANCSGMeasurementReportIEFrom, Encode: descriptorEncodeUTRANCSGMeasurementReportIE, Canonical: descriptorCanonicalUTRANCSGMeasurementReportIE, CanonicalAtLength: descriptorCanonicalAtLengthUTRANCSGMeasurementReportIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodePLMNIDStruct, DecodeFrom: descriptorDecodePLMNIDStructFrom, Encode: descriptorEncodePLMNIDStruct, Canonical: descriptorCanonicalPLMNIDStruct, CanonicalAtLength: descriptorCanonicalAtLengthPLMNIDStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}}, Decode: descriptorDecodePSCGroupIE, DecodeFrom: descriptorDecodePSCGroupIEFrom, Encode: descriptorEncodePSCGroupIE, Canonical: descriptorCanonicalPSCGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPSCGroupIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}}, Decode: descriptorDecodeMBMSChannelParametersIE, DecodeFrom: descriptorDecodeMBMSChannelParametersIEFrom, Encode: descriptorEncodeMBMSChannelParametersIE, Canonical: descriptorCanonicalMBMSChannelParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSChannelParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}}, Decode: descriptorDecodeMBMSPTMChannelDescriptionIE, DecodeFrom: descriptorDecodeMBMSPTMChannelDescriptionIEFrom, Encode: descriptorEncodeMBMSPTMChannelDescriptionIE, Canonical: descriptorCanonicalMBMSPTMChannelDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSPTMChannelDescriptionIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}}, Decode: descriptorDecodeMPRACHDescriptionIE, DecodeFrom: descriptorDecodeMPRACHDescriptionIEFrom, Encode: descriptorEncodeMPRACHDescriptionIE, Canonical: descriptorCanonicalMPRACHDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHDescriptionIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}}, Decode: descriptorDecodeMBMSSessionListIE, DecodeFrom: descriptorDecodeMBMSSessionListIEFrom, Encode: descriptorEncodeMBMSSessionListIE, Canonical: descriptorCanonicalMBMSSessionListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionListIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}}, Decode: descriptorDecodeMBMSSessionParametersListIE, DecodeFrom: descriptorDecodeMBMSSessionParametersListIEFrom, Encode: descriptorEncodeMBMSSessionParametersListIE, Canonical: descriptorCanonicalMBMSSessionParametersListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionParametersListIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}}, Decode: descriptorDecodeMPRACHControlParametersIE, DecodeFrom: descriptorDecodeMPRACHControlParametersIEFrom, Encode: descriptorEncodeMPRACHControlParametersIE, Canonical: descriptorCanonicalMPRACHControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHControlParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 19, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}}, Decode: descriptorDecodeGPRSPowerControlParametersIE, DecodeFrom: descriptorDecodeGPRSPowerControlParametersIEFrom, Encode: descriptorEncodeGPRSPowerControlParametersIE, Canonical: descriptorCanonicalGPRSPowerControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSPowerControlParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeGPRSCellOptionsIE, DecodeFrom: descriptorDecodeGPRSCellOptionsIEFrom, Encode: descriptorEncodeGPRSCellOptionsIE, Canonical: descriptorCanonicalGPRSCellOptionsIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSCellOptionsIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeExtensionInformation, DecodeFrom: descriptorDecodeExtensionInformationFrom, Encode: descriptorEncodeExtensionInformation, Canonical: descriptorCanonicalExtensionInformation, CanonicalAtLength: descriptorCanonicalAtLengthExtensionInformation},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeFrequencyParametersIE, DecodeFrom: descriptorDecodeFrequencyParametersIEFrom, Encode: descriptorEncodeFrequencyParametersIE, Canonical: descriptorCanonicalFrequencyParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeIndirectEncodingStruct, DecodeFrom: descriptorDecodeIndirectEncodingStructFrom, Encode: descriptorEncodeIndirectEncodingStruct, Canonical: descriptorCanonicalIndirectEncodingStruct, CanonicalAtLength: descriptorCanonicalAtLengthIndirectEncodingStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding1Struct, DecodeFrom: descriptorDecodeDirectEncoding1StructFrom, Encode: descriptorEncodeDirectEncoding1Struct, Canonical: descriptorCanonicalDirectEncoding1Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding1Struct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding2Struct, DecodeFrom: descriptorDecodeDirectEncoding2StructFrom, Encode: descriptorEncodeDirectEncoding2Struct, Canonical: descriptorCanonicalDirectEncoding2Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding2Struct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeGPRSMobileAllocationIE, DecodeFrom: descriptorDecodeGPRSMobileAllocationIEFrom, Encode: descriptorEncodeGPRSMobileAllocationIE, Canonical: descriptorCanonicalGPRSMobileAllocationIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSMobileAllocationIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeRFLNumberListStruct, DecodeFrom: descriptorDecodeRFLNumberListStructFrom, Encode: descriptorEncodeRFLNumberListStruct, Canonical: descriptorCanonicalRFLNumberListStruct, CanonicalAtLength: descriptorCanonicalAtLengthRFLNumberListStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeARFCNIndexListStruct, DecodeFrom: descriptorDecodeARFCNIndexListStructFrom, Encode: descriptorEncodeARFCNIndexListStruct, Canonical: descriptorCanonicalARFCNIndexListStruct, CanonicalAtLength: descriptorCanonicalAtLengthARFCNIndexListStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}}, Decode: descriptorDecodePCIDGroupIE, DecodeFrom: descriptorDecodePCIDGroupIEFrom, Encode: descriptorEncodePCIDGroupIE, Canonical: descriptorCanonicalPCIDGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPCIDGroupIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeEnhancedCellReselectionParametersIE, DecodeFrom: descriptorDecodeEnhancedCellReselectionParametersIEFrom, Encode: descriptorEncodeEnhancedCellReselectionParametersIE, Canonical: descriptorCanonicalEnhancedCellReselectionParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedCellReselectionParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom, Encode: descriptorEncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, Canonical: descriptorCanonicalRepeatedEUTRANEnhancedCellReselectionParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANEnhancedCellReselectionParametersStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}}, Decode: descriptorDecodeEGPRSWindowSizeIE, DecodeFrom: descriptorDecodeEGPRSWindowSizeIEFrom, Encode: descriptorEncodeEGPRSWindowSizeIE, Canonical: descriptorCanonicalEGPRSWindowSizeIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSWindowSizeIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}}, Decode: descriptorDecodeEGPRSModulationAndCodingIE, DecodeFrom: descriptorDecodeEGPRSModulationAndCodingIEFrom, Encode: descriptorEncodeEGPRSModulationAndCodingIE, Canonical: descriptorCanonicalEGPRSModulationAndCodingIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSModulationAndCodingIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}}, Decode: descriptorDecodeEGPRSLevelIE, DecodeFrom: descriptorDecodeEGPRSLevelIEFrom, Encode: descriptorEncodeEGPRSLevelIE, Canonical: descriptorCanonicalEGPRSLevelIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSLevelIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}}, Decode: descriptorDecodePacketTimingAdvanceIE, DecodeFrom: descriptorDecodePacketTimingAdvanceIEFrom, Encode: descriptorEncodePacketTimingAdvanceIE, Canonical: descriptorCanonicalPacketTimingAdvanceIE, CanonicalAtLength: descriptorCanonicalAtLengthPacketTimingAdvanceIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}}, Decode: descriptorDecodeTMGIIE, DecodeFrom: descriptorDecodeTMGIIEFrom, Encode: descriptorEncodeTMGIIE, Canonical: descriptorCanonicalTMGIIE, CanonicalAtLength: descriptorCanonicalAtLengthTMGIIE},
+}
+
 func Descriptors() []runtime.Descriptor {
-	return []runtime.Descriptor{
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 63, MaximumBits: 87, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: func(data []byte) (any, error) { return DecodeUTRANCSGMeasurementReportIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeUTRANCSGMeasurementReportIEFrom, func(v UTRANCSGMeasurementReportIE, wire runtime.WireInfo) UTRANCSGMeasurementReportIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "UTRAN CSG Measurement Report IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANCSGMeasurementReportIE:
-				return EncodeUTRANCSGMeasurementReportIE(v)
-			case runtime.Decoded[UTRANCSGMeasurementReportIE]:
-				return EncodeUTRANCSGMeasurementReportIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "UTRAN CSG Measurement Report IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANCSGMeasurementReportIE:
-				return EncodeUTRANCSGMeasurementReportIECanonical(v)
-			case runtime.Decoded[UTRANCSGMeasurementReportIE]:
-				return EncodeUTRANCSGMeasurementReportIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN CSG Measurement Report IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANCSGMeasurementReportIE:
-				return EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v, octets)
-			case runtime.Decoded[UTRANCSGMeasurementReportIE]:
-				return EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN CSG Measurement Report IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: func(data []byte) (any, error) { return DecodePLMNIDStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePLMNIDStructFrom, func(v PLMNIDStruct, wire runtime.WireInfo) PLMNIDStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "PLMN-ID struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PLMNIDStruct:
-				return EncodePLMNIDStruct(v)
-			case runtime.Decoded[PLMNIDStruct]:
-				return EncodePLMNIDStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "PLMN-ID struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PLMNIDStruct:
-				return EncodePLMNIDStructCanonical(v)
-			case runtime.Decoded[PLMNIDStruct]:
-				return EncodePLMNIDStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "PLMN-ID struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case PLMNIDStruct:
-				return EncodePLMNIDStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[PLMNIDStruct]:
-				return EncodePLMNIDStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "PLMN-ID struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}}, Decode: func(data []byte) (any, error) { return DecodePSCGroupIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePSCGroupIEFrom, func(v PSCGroupIE, wire runtime.WireInfo) PSCGroupIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "PSC Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PSCGroupIE:
-				return EncodePSCGroupIE(v)
-			case runtime.Decoded[PSCGroupIE]:
-				return EncodePSCGroupIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "PSC Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PSCGroupIE:
-				return EncodePSCGroupIECanonical(v)
-			case runtime.Decoded[PSCGroupIE]:
-				return EncodePSCGroupIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "PSC Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case PSCGroupIE:
-				return EncodePSCGroupIECanonicalAtLength(v, octets)
-			case runtime.Decoded[PSCGroupIE]:
-				return EncodePSCGroupIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "PSC Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}}, Decode: func(data []byte) (any, error) { return DecodeMBMSChannelParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMBMSChannelParametersIEFrom, func(v MBMSChannelParametersIE, wire runtime.WireInfo) MBMSChannelParametersIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MBMS Channel Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSChannelParametersIE:
-				return EncodeMBMSChannelParametersIE(v)
-			case runtime.Decoded[MBMSChannelParametersIE]:
-				return EncodeMBMSChannelParametersIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MBMS Channel Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSChannelParametersIE:
-				return EncodeMBMSChannelParametersIECanonical(v)
-			case runtime.Decoded[MBMSChannelParametersIE]:
-				return EncodeMBMSChannelParametersIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Channel Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSChannelParametersIE:
-				return EncodeMBMSChannelParametersIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MBMSChannelParametersIE]:
-				return EncodeMBMSChannelParametersIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Channel Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}}, Decode: func(data []byte) (any, error) { return DecodeMBMSPTMChannelDescriptionIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMBMSPTMChannelDescriptionIEFrom, func(v MBMSPTMChannelDescriptionIE, wire runtime.WireInfo) MBMSPTMChannelDescriptionIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MBMS p-t-m channel description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSPTMChannelDescriptionIE:
-				return EncodeMBMSPTMChannelDescriptionIE(v)
-			case runtime.Decoded[MBMSPTMChannelDescriptionIE]:
-				return EncodeMBMSPTMChannelDescriptionIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MBMS p-t-m channel description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSPTMChannelDescriptionIE:
-				return EncodeMBMSPTMChannelDescriptionIECanonical(v)
-			case runtime.Decoded[MBMSPTMChannelDescriptionIE]:
-				return EncodeMBMSPTMChannelDescriptionIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS p-t-m channel description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSPTMChannelDescriptionIE:
-				return EncodeMBMSPTMChannelDescriptionIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MBMSPTMChannelDescriptionIE]:
-				return EncodeMBMSPTMChannelDescriptionIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS p-t-m channel description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}}, Decode: func(data []byte) (any, error) { return DecodeMPRACHDescriptionIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMPRACHDescriptionIEFrom, func(v MPRACHDescriptionIE, wire runtime.WireInfo) MPRACHDescriptionIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "MPRACH description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHDescriptionIE:
-				return EncodeMPRACHDescriptionIE(v)
-			case runtime.Decoded[MPRACHDescriptionIE]:
-				return EncodeMPRACHDescriptionIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MPRACH description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHDescriptionIE:
-				return EncodeMPRACHDescriptionIECanonical(v)
-			case runtime.Decoded[MPRACHDescriptionIE]:
-				return EncodeMPRACHDescriptionIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MPRACH description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHDescriptionIE:
-				return EncodeMPRACHDescriptionIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MPRACHDescriptionIE]:
-				return EncodeMPRACHDescriptionIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MPRACH description IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}}, Decode: func(data []byte) (any, error) { return DecodeMBMSSessionListIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMBMSSessionListIEFrom, func(v MBMSSessionListIE, wire runtime.WireInfo) MBMSSessionListIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "MBMS Session List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionListIE:
-				return EncodeMBMSSessionListIE(v)
-			case runtime.Decoded[MBMSSessionListIE]:
-				return EncodeMBMSSessionListIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MBMS Session List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionListIE:
-				return EncodeMBMSSessionListIECanonical(v)
-			case runtime.Decoded[MBMSSessionListIE]:
-				return EncodeMBMSSessionListIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Session List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionListIE:
-				return EncodeMBMSSessionListIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MBMSSessionListIE]:
-				return EncodeMBMSSessionListIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Session List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}}, Decode: func(data []byte) (any, error) { return DecodeMBMSSessionParametersListIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMBMSSessionParametersListIEFrom, func(v MBMSSessionParametersListIE, wire runtime.WireInfo) MBMSSessionParametersListIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MBMS Session Parameters List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionParametersListIE:
-				return EncodeMBMSSessionParametersListIE(v)
-			case runtime.Decoded[MBMSSessionParametersListIE]:
-				return EncodeMBMSSessionParametersListIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MBMS Session Parameters List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionParametersListIE:
-				return EncodeMBMSSessionParametersListIECanonical(v)
-			case runtime.Decoded[MBMSSessionParametersListIE]:
-				return EncodeMBMSSessionParametersListIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Session Parameters List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MBMSSessionParametersListIE:
-				return EncodeMBMSSessionParametersListIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MBMSSessionParametersListIE]:
-				return EncodeMBMSSessionParametersListIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MBMS Session Parameters List IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}}, Decode: func(data []byte) (any, error) { return DecodeMPRACHControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMPRACHControlParametersIEFrom, func(v MPRACHControlParametersIE, wire runtime.WireInfo) MPRACHControlParametersIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MPRACH Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHControlParametersIE:
-				return EncodeMPRACHControlParametersIE(v)
-			case runtime.Decoded[MPRACHControlParametersIE]:
-				return EncodeMPRACHControlParametersIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MPRACH Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHControlParametersIE:
-				return EncodeMPRACHControlParametersIECanonical(v)
-			case runtime.Decoded[MPRACHControlParametersIE]:
-				return EncodeMPRACHControlParametersIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MPRACH Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MPRACHControlParametersIE:
-				return EncodeMPRACHControlParametersIECanonicalAtLength(v, octets)
-			case runtime.Decoded[MPRACHControlParametersIE]:
-				return EncodeMPRACHControlParametersIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MPRACH Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 19, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}}, Decode: func(data []byte) (any, error) { return DecodeGPRSPowerControlParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGPRSPowerControlParametersIEFrom, func(v GPRSPowerControlParametersIE, wire runtime.WireInfo) GPRSPowerControlParametersIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "GPRS Power Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSPowerControlParametersIE:
-				return EncodeGPRSPowerControlParametersIE(v)
-			case runtime.Decoded[GPRSPowerControlParametersIE]:
-				return EncodeGPRSPowerControlParametersIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "GPRS Power Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSPowerControlParametersIE:
-				return EncodeGPRSPowerControlParametersIECanonical(v)
-			case runtime.Decoded[GPRSPowerControlParametersIE]:
-				return EncodeGPRSPowerControlParametersIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Power Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSPowerControlParametersIE:
-				return EncodeGPRSPowerControlParametersIECanonicalAtLength(v, octets)
-			case runtime.Decoded[GPRSPowerControlParametersIE]:
-				return EncodeGPRSPowerControlParametersIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Power Control Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: func(data []byte) (any, error) { return DecodeGPRSCellOptionsIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGPRSCellOptionsIEFrom, func(v GPRSCellOptionsIE, wire runtime.WireInfo) GPRSCellOptionsIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "GPRS Cell Options IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSCellOptionsIE:
-				return EncodeGPRSCellOptionsIE(v)
-			case runtime.Decoded[GPRSCellOptionsIE]:
-				return EncodeGPRSCellOptionsIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "GPRS Cell Options IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSCellOptionsIE:
-				return EncodeGPRSCellOptionsIECanonical(v)
-			case runtime.Decoded[GPRSCellOptionsIE]:
-				return EncodeGPRSCellOptionsIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Cell Options IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSCellOptionsIE:
-				return EncodeGPRSCellOptionsIECanonicalAtLength(v, octets)
-			case runtime.Decoded[GPRSCellOptionsIE]:
-				return EncodeGPRSCellOptionsIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Cell Options IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: func(data []byte) (any, error) { return DecodeExtensionInformation(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeExtensionInformationFrom, func(v ExtensionInformation, wire runtime.WireInfo) ExtensionInformation { v.Wire = wire; return v }, true, 0, 0, 0, 0, false, false, "Extension Information", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ExtensionInformation:
-				return EncodeExtensionInformation(v)
-			case runtime.Decoded[ExtensionInformation]:
-				return EncodeExtensionInformation(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Extension Information", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ExtensionInformation:
-				return EncodeExtensionInformationCanonical(v)
-			case runtime.Decoded[ExtensionInformation]:
-				return EncodeExtensionInformationCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Extension Information", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case ExtensionInformation:
-				return EncodeExtensionInformationCanonicalAtLength(v, octets)
-			case runtime.Decoded[ExtensionInformation]:
-				return EncodeExtensionInformationCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Extension Information", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeFrequencyParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeFrequencyParametersIEFrom, func(v FrequencyParametersIE, wire runtime.WireInfo) FrequencyParametersIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Frequency Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case FrequencyParametersIE:
-				return EncodeFrequencyParametersIE(v)
-			case runtime.Decoded[FrequencyParametersIE]:
-				return EncodeFrequencyParametersIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Frequency Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case FrequencyParametersIE:
-				return EncodeFrequencyParametersIECanonical(v)
-			case runtime.Decoded[FrequencyParametersIE]:
-				return EncodeFrequencyParametersIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Frequency Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case FrequencyParametersIE:
-				return EncodeFrequencyParametersIECanonicalAtLength(v, octets)
-			case runtime.Decoded[FrequencyParametersIE]:
-				return EncodeFrequencyParametersIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Frequency Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeIndirectEncodingStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeIndirectEncodingStructFrom, func(v IndirectEncodingStruct, wire runtime.WireInfo) IndirectEncodingStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Indirect encoding struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case IndirectEncodingStruct:
-				return EncodeIndirectEncodingStruct(v)
-			case runtime.Decoded[IndirectEncodingStruct]:
-				return EncodeIndirectEncodingStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Indirect encoding struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case IndirectEncodingStruct:
-				return EncodeIndirectEncodingStructCanonical(v)
-			case runtime.Decoded[IndirectEncodingStruct]:
-				return EncodeIndirectEncodingStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Indirect encoding struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case IndirectEncodingStruct:
-				return EncodeIndirectEncodingStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[IndirectEncodingStruct]:
-				return EncodeIndirectEncodingStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Indirect encoding struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeDirectEncoding1Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDirectEncoding1StructFrom, func(v DirectEncoding1Struct, wire runtime.WireInfo) DirectEncoding1Struct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Direct encoding 1 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding1Struct:
-				return EncodeDirectEncoding1Struct(v)
-			case runtime.Decoded[DirectEncoding1Struct]:
-				return EncodeDirectEncoding1Struct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Direct encoding 1 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding1Struct:
-				return EncodeDirectEncoding1StructCanonical(v)
-			case runtime.Decoded[DirectEncoding1Struct]:
-				return EncodeDirectEncoding1StructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Direct encoding 1 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding1Struct:
-				return EncodeDirectEncoding1StructCanonicalAtLength(v, octets)
-			case runtime.Decoded[DirectEncoding1Struct]:
-				return EncodeDirectEncoding1StructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Direct encoding 1 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: func(data []byte) (any, error) { return DecodeDirectEncoding2Struct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDirectEncoding2StructFrom, func(v DirectEncoding2Struct, wire runtime.WireInfo) DirectEncoding2Struct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Direct encoding 2 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding2Struct:
-				return EncodeDirectEncoding2Struct(v)
-			case runtime.Decoded[DirectEncoding2Struct]:
-				return EncodeDirectEncoding2Struct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Direct encoding 2 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding2Struct:
-				return EncodeDirectEncoding2StructCanonical(v)
-			case runtime.Decoded[DirectEncoding2Struct]:
-				return EncodeDirectEncoding2StructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Direct encoding 2 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case DirectEncoding2Struct:
-				return EncodeDirectEncoding2StructCanonicalAtLength(v, octets)
-			case runtime.Decoded[DirectEncoding2Struct]:
-				return EncodeDirectEncoding2StructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Direct encoding 2 struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: func(data []byte) (any, error) { return DecodeGPRSMobileAllocationIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGPRSMobileAllocationIEFrom, func(v GPRSMobileAllocationIE, wire runtime.WireInfo) GPRSMobileAllocationIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "GPRS Mobile Allocation IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSMobileAllocationIE:
-				return EncodeGPRSMobileAllocationIE(v)
-			case runtime.Decoded[GPRSMobileAllocationIE]:
-				return EncodeGPRSMobileAllocationIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "GPRS Mobile Allocation IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSMobileAllocationIE:
-				return EncodeGPRSMobileAllocationIECanonical(v)
-			case runtime.Decoded[GPRSMobileAllocationIE]:
-				return EncodeGPRSMobileAllocationIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Mobile Allocation IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case GPRSMobileAllocationIE:
-				return EncodeGPRSMobileAllocationIECanonicalAtLength(v, octets)
-			case runtime.Decoded[GPRSMobileAllocationIE]:
-				return EncodeGPRSMobileAllocationIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "GPRS Mobile Allocation IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: func(data []byte) (any, error) { return DecodeRFLNumberListStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRFLNumberListStructFrom, func(v RFLNumberListStruct, wire runtime.WireInfo) RFLNumberListStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "RFL number list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RFLNumberListStruct:
-				return EncodeRFLNumberListStruct(v)
-			case runtime.Decoded[RFLNumberListStruct]:
-				return EncodeRFLNumberListStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "RFL number list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RFLNumberListStruct:
-				return EncodeRFLNumberListStructCanonical(v)
-			case runtime.Decoded[RFLNumberListStruct]:
-				return EncodeRFLNumberListStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "RFL number list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case RFLNumberListStruct:
-				return EncodeRFLNumberListStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[RFLNumberListStruct]:
-				return EncodeRFLNumberListStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "RFL number list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: func(data []byte) (any, error) { return DecodeARFCNIndexListStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeARFCNIndexListStructFrom, func(v ARFCNIndexListStruct, wire runtime.WireInfo) ARFCNIndexListStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "ARFCN index list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ARFCNIndexListStruct:
-				return EncodeARFCNIndexListStruct(v)
-			case runtime.Decoded[ARFCNIndexListStruct]:
-				return EncodeARFCNIndexListStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "ARFCN index list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ARFCNIndexListStruct:
-				return EncodeARFCNIndexListStructCanonical(v)
-			case runtime.Decoded[ARFCNIndexListStruct]:
-				return EncodeARFCNIndexListStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "ARFCN index list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case ARFCNIndexListStruct:
-				return EncodeARFCNIndexListStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[ARFCNIndexListStruct]:
-				return EncodeARFCNIndexListStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "ARFCN index list struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}}, Decode: func(data []byte) (any, error) { return DecodePCIDGroupIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePCIDGroupIEFrom, func(v PCIDGroupIE, wire runtime.WireInfo) PCIDGroupIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "PCID Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PCIDGroupIE:
-				return EncodePCIDGroupIE(v)
-			case runtime.Decoded[PCIDGroupIE]:
-				return EncodePCIDGroupIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "PCID Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PCIDGroupIE:
-				return EncodePCIDGroupIECanonical(v)
-			case runtime.Decoded[PCIDGroupIE]:
-				return EncodePCIDGroupIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "PCID Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case PCIDGroupIE:
-				return EncodePCIDGroupIECanonicalAtLength(v, octets)
-			case runtime.Decoded[PCIDGroupIE]:
-				return EncodePCIDGroupIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "PCID Group IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: func(data []byte) (any, error) { return DecodeEnhancedCellReselectionParametersIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEnhancedCellReselectionParametersIEFrom, func(v EnhancedCellReselectionParametersIE, wire runtime.WireInfo) EnhancedCellReselectionParametersIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Enhanced Cell Reselection Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedCellReselectionParametersIE:
-				return EncodeEnhancedCellReselectionParametersIE(v)
-			case runtime.Decoded[EnhancedCellReselectionParametersIE]:
-				return EncodeEnhancedCellReselectionParametersIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Enhanced Cell Reselection Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedCellReselectionParametersIE:
-				return EncodeEnhancedCellReselectionParametersIECanonical(v)
-			case runtime.Decoded[EnhancedCellReselectionParametersIE]:
-				return EncodeEnhancedCellReselectionParametersIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Cell Reselection Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedCellReselectionParametersIE:
-				return EncodeEnhancedCellReselectionParametersIECanonicalAtLength(v, octets)
-			case runtime.Decoded[EnhancedCellReselectionParametersIE]:
-				return EncodeEnhancedCellReselectionParametersIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Cell Reselection Parameters IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: func(data []byte) (any, error) {
-			return DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data)
-		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom, func(v RepeatedEUTRANEnhancedCellReselectionParametersStruct, wire runtime.WireInfo) RepeatedEUTRANEnhancedCellReselectionParametersStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedEUTRANEnhancedCellReselectionParametersStruct:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v)
-			case runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedEUTRANEnhancedCellReselectionParametersStruct:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonical(v)
-			case runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedEUTRANEnhancedCellReselectionParametersStruct:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]:
-				return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}}, Decode: func(data []byte) (any, error) { return DecodeEGPRSWindowSizeIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEGPRSWindowSizeIEFrom, func(v EGPRSWindowSizeIE, wire runtime.WireInfo) EGPRSWindowSizeIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "EGPRS Window Size IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSWindowSizeIE:
-				return EncodeEGPRSWindowSizeIE(v)
-			case runtime.Decoded[EGPRSWindowSizeIE]:
-				return EncodeEGPRSWindowSizeIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "EGPRS Window Size IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSWindowSizeIE:
-				return EncodeEGPRSWindowSizeIECanonical(v)
-			case runtime.Decoded[EGPRSWindowSizeIE]:
-				return EncodeEGPRSWindowSizeIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Window Size IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSWindowSizeIE:
-				return EncodeEGPRSWindowSizeIECanonicalAtLength(v, octets)
-			case runtime.Decoded[EGPRSWindowSizeIE]:
-				return EncodeEGPRSWindowSizeIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Window Size IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}}, Decode: func(data []byte) (any, error) { return DecodeEGPRSModulationAndCodingIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEGPRSModulationAndCodingIEFrom, func(v EGPRSModulationAndCodingIE, wire runtime.WireInfo) EGPRSModulationAndCodingIE {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "EGPRS Modulation and Coding IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSModulationAndCodingIE:
-				return EncodeEGPRSModulationAndCodingIE(v)
-			case runtime.Decoded[EGPRSModulationAndCodingIE]:
-				return EncodeEGPRSModulationAndCodingIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "EGPRS Modulation and Coding IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSModulationAndCodingIE:
-				return EncodeEGPRSModulationAndCodingIECanonical(v)
-			case runtime.Decoded[EGPRSModulationAndCodingIE]:
-				return EncodeEGPRSModulationAndCodingIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Modulation and Coding IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSModulationAndCodingIE:
-				return EncodeEGPRSModulationAndCodingIECanonicalAtLength(v, octets)
-			case runtime.Decoded[EGPRSModulationAndCodingIE]:
-				return EncodeEGPRSModulationAndCodingIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Modulation and Coding IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}}, Decode: func(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEGPRSLevelIEFrom, func(v EGPRSLevelIE, wire runtime.WireInfo) EGPRSLevelIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "EGPRS Level IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSLevelIE:
-				return EncodeEGPRSLevelIE(v)
-			case runtime.Decoded[EGPRSLevelIE]:
-				return EncodeEGPRSLevelIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "EGPRS Level IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSLevelIE:
-				return EncodeEGPRSLevelIECanonical(v)
-			case runtime.Decoded[EGPRSLevelIE]:
-				return EncodeEGPRSLevelIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Level IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EGPRSLevelIE:
-				return EncodeEGPRSLevelIECanonicalAtLength(v, octets)
-			case runtime.Decoded[EGPRSLevelIE]:
-				return EncodeEGPRSLevelIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "EGPRS Level IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}}, Decode: func(data []byte) (any, error) { return DecodePacketTimingAdvanceIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodePacketTimingAdvanceIEFrom, func(v PacketTimingAdvanceIE, wire runtime.WireInfo) PacketTimingAdvanceIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Packet Timing Advance IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PacketTimingAdvanceIE:
-				return EncodePacketTimingAdvanceIE(v)
-			case runtime.Decoded[PacketTimingAdvanceIE]:
-				return EncodePacketTimingAdvanceIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Packet Timing Advance IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case PacketTimingAdvanceIE:
-				return EncodePacketTimingAdvanceIECanonical(v)
-			case runtime.Decoded[PacketTimingAdvanceIE]:
-				return EncodePacketTimingAdvanceIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Packet Timing Advance IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case PacketTimingAdvanceIE:
-				return EncodePacketTimingAdvanceIECanonicalAtLength(v, octets)
-			case runtime.Decoded[PacketTimingAdvanceIE]:
-				return EncodePacketTimingAdvanceIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Packet Timing Advance IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"})
-			}
-		}},
-		{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}}, Decode: func(data []byte) (any, error) { return DecodeTMGIIE(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeTMGIIEFrom, func(v TMGIIE, wire runtime.WireInfo) TMGIIE { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "TMGI IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case TMGIIE:
-				return EncodeTMGIIE(v)
-			case runtime.Decoded[TMGIIE]:
-				return EncodeTMGIIE(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "TMGI IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case TMGIIE:
-				return EncodeTMGIIECanonical(v)
-			case runtime.Decoded[TMGIIE]:
-				return EncodeTMGIIECanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "TMGI IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case TMGIIE:
-				return EncodeTMGIIECanonicalAtLength(v, octets)
-			case runtime.Decoded[TMGIIE]:
-				return EncodeTMGIIECanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "TMGI IE", runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"})
-			}
-		}},
-	}
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
@@ -11470,13 +10663,13 @@ func Lookup(name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q", name), "lookup", name, -1, 0, sourceClause19, runtime.InvalidSchema)
+		return runtime.Descriptor{}, operationLocation90.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 	}
 	var clauses []string
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), "lookup", name, -1, 0, sourceClause19, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation90.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
 	for _, d := range Descriptors() {
@@ -11484,22 +10677,1381 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), "lookup", name, -1, 0, sourceClause19, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation90.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
+
+var descriptorSourceUTRANCSGMeasurementReportIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}
+
+func descriptorDecodeUTRANCSGMeasurementReportIE(data []byte) (any, error) {
+	return DecodeUTRANCSGMeasurementReportIE(data)
+}
+func descriptorUnwrapUTRANCSGMeasurementReportIE(value any) (UTRANCSGMeasurementReportIE, bool) {
+	switch v := value.(type) {
+	case UTRANCSGMeasurementReportIE:
+		return v, true
+	case runtime.Decoded[UTRANCSGMeasurementReportIE]:
+		return v.Value, true
+	default:
+		return UTRANCSGMeasurementReportIE{}, false
+	}
+}
+
+var descriptorPolicyUTRANCSGMeasurementReportIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN CSG Measurement Report IE", descriptorSourceUTRANCSGMeasurementReportIE}
+
+func descriptorDecodeUTRANCSGMeasurementReportIEFrom(r *runtime.Reader) (any, error) {
+	var v UTRANCSGMeasurementReportIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeUTRANCSGMeasurementReportIEFrom(r)
+		return err
+	}, descriptorPolicyUTRANCSGMeasurementReportIE)
+	if err != nil {
+		return runtime.Decoded[UTRANCSGMeasurementReportIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[UTRANCSGMeasurementReportIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeUTRANCSGMeasurementReportIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANCSGMeasurementReportIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "UTRAN CSG Measurement Report IE", descriptorSourceUTRANCSGMeasurementReportIE)
+	}
+	return EncodeUTRANCSGMeasurementReportIE(v)
+}
+func descriptorCanonicalUTRANCSGMeasurementReportIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANCSGMeasurementReportIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN CSG Measurement Report IE", descriptorSourceUTRANCSGMeasurementReportIE)
+	}
+	return EncodeUTRANCSGMeasurementReportIECanonical(v)
+}
+func descriptorCanonicalAtLengthUTRANCSGMeasurementReportIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANCSGMeasurementReportIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN CSG Measurement Report IE", descriptorSourceUTRANCSGMeasurementReportIE)
+	}
+	return EncodeUTRANCSGMeasurementReportIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourcePLMNIDStruct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}
+
+func descriptorDecodePLMNIDStruct(data []byte) (any, error) { return DecodePLMNIDStruct(data) }
+func descriptorUnwrapPLMNIDStruct(value any) (PLMNIDStruct, bool) {
+	switch v := value.(type) {
+	case PLMNIDStruct:
+		return v, true
+	case runtime.Decoded[PLMNIDStruct]:
+		return v.Value, true
+	default:
+		return PLMNIDStruct{}, false
+	}
+}
+
+var descriptorPolicyPLMNIDStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PLMN-ID struct", descriptorSourcePLMNIDStruct}
+
+func descriptorDecodePLMNIDStructFrom(r *runtime.Reader) (any, error) {
+	var v PLMNIDStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodePLMNIDStructFrom(r); return err }, descriptorPolicyPLMNIDStruct)
+	if err != nil {
+		return runtime.Decoded[PLMNIDStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[PLMNIDStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodePLMNIDStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPLMNIDStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "PLMN-ID struct", descriptorSourcePLMNIDStruct)
+	}
+	return EncodePLMNIDStruct(v)
+}
+func descriptorCanonicalPLMNIDStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPLMNIDStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PLMN-ID struct", descriptorSourcePLMNIDStruct)
+	}
+	return EncodePLMNIDStructCanonical(v)
+}
+func descriptorCanonicalAtLengthPLMNIDStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapPLMNIDStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PLMN-ID struct", descriptorSourcePLMNIDStruct)
+	}
+	return EncodePLMNIDStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourcePSCGroupIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}
+
+func descriptorDecodePSCGroupIE(data []byte) (any, error) { return DecodePSCGroupIE(data) }
+func descriptorUnwrapPSCGroupIE(value any) (PSCGroupIE, bool) {
+	switch v := value.(type) {
+	case PSCGroupIE:
+		return v, true
+	case runtime.Decoded[PSCGroupIE]:
+		return v.Value, true
+	default:
+		return PSCGroupIE{}, false
+	}
+}
+
+var descriptorPolicyPSCGroupIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PSC Group IE", descriptorSourcePSCGroupIE}
+
+func descriptorDecodePSCGroupIEFrom(r *runtime.Reader) (any, error) {
+	var v PSCGroupIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodePSCGroupIEFrom(r); return err }, descriptorPolicyPSCGroupIE)
+	if err != nil {
+		return runtime.Decoded[PSCGroupIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[PSCGroupIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodePSCGroupIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPSCGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "PSC Group IE", descriptorSourcePSCGroupIE)
+	}
+	return EncodePSCGroupIE(v)
+}
+func descriptorCanonicalPSCGroupIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPSCGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PSC Group IE", descriptorSourcePSCGroupIE)
+	}
+	return EncodePSCGroupIECanonical(v)
+}
+func descriptorCanonicalAtLengthPSCGroupIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapPSCGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PSC Group IE", descriptorSourcePSCGroupIE)
+	}
+	return EncodePSCGroupIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMBMSChannelParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}
+
+func descriptorDecodeMBMSChannelParametersIE(data []byte) (any, error) {
+	return DecodeMBMSChannelParametersIE(data)
+}
+func descriptorUnwrapMBMSChannelParametersIE(value any) (MBMSChannelParametersIE, bool) {
+	switch v := value.(type) {
+	case MBMSChannelParametersIE:
+		return v, true
+	case runtime.Decoded[MBMSChannelParametersIE]:
+		return v.Value, true
+	default:
+		return MBMSChannelParametersIE{}, false
+	}
+}
+
+var descriptorPolicyMBMSChannelParametersIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS Channel Parameters IE", descriptorSourceMBMSChannelParametersIE}
+
+func descriptorDecodeMBMSChannelParametersIEFrom(r *runtime.Reader) (any, error) {
+	var v MBMSChannelParametersIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMBMSChannelParametersIEFrom(r)
+		return err
+	}, descriptorPolicyMBMSChannelParametersIE)
+	if err != nil {
+		return runtime.Decoded[MBMSChannelParametersIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MBMSChannelParametersIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMBMSChannelParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSChannelParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MBMS Channel Parameters IE", descriptorSourceMBMSChannelParametersIE)
+	}
+	return EncodeMBMSChannelParametersIE(v)
+}
+func descriptorCanonicalMBMSChannelParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSChannelParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Channel Parameters IE", descriptorSourceMBMSChannelParametersIE)
+	}
+	return EncodeMBMSChannelParametersIECanonical(v)
+}
+func descriptorCanonicalAtLengthMBMSChannelParametersIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSChannelParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Channel Parameters IE", descriptorSourceMBMSChannelParametersIE)
+	}
+	return EncodeMBMSChannelParametersIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMBMSPTMChannelDescriptionIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}
+
+func descriptorDecodeMBMSPTMChannelDescriptionIE(data []byte) (any, error) {
+	return DecodeMBMSPTMChannelDescriptionIE(data)
+}
+func descriptorUnwrapMBMSPTMChannelDescriptionIE(value any) (MBMSPTMChannelDescriptionIE, bool) {
+	switch v := value.(type) {
+	case MBMSPTMChannelDescriptionIE:
+		return v, true
+	case runtime.Decoded[MBMSPTMChannelDescriptionIE]:
+		return v.Value, true
+	default:
+		return MBMSPTMChannelDescriptionIE{}, false
+	}
+}
+
+var descriptorPolicyMBMSPTMChannelDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS p-t-m channel description IE", descriptorSourceMBMSPTMChannelDescriptionIE}
+
+func descriptorDecodeMBMSPTMChannelDescriptionIEFrom(r *runtime.Reader) (any, error) {
+	var v MBMSPTMChannelDescriptionIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMBMSPTMChannelDescriptionIEFrom(r)
+		return err
+	}, descriptorPolicyMBMSPTMChannelDescriptionIE)
+	if err != nil {
+		return runtime.Decoded[MBMSPTMChannelDescriptionIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MBMSPTMChannelDescriptionIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMBMSPTMChannelDescriptionIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSPTMChannelDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MBMS p-t-m channel description IE", descriptorSourceMBMSPTMChannelDescriptionIE)
+	}
+	return EncodeMBMSPTMChannelDescriptionIE(v)
+}
+func descriptorCanonicalMBMSPTMChannelDescriptionIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSPTMChannelDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS p-t-m channel description IE", descriptorSourceMBMSPTMChannelDescriptionIE)
+	}
+	return EncodeMBMSPTMChannelDescriptionIECanonical(v)
+}
+func descriptorCanonicalAtLengthMBMSPTMChannelDescriptionIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSPTMChannelDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS p-t-m channel description IE", descriptorSourceMBMSPTMChannelDescriptionIE)
+	}
+	return EncodeMBMSPTMChannelDescriptionIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMPRACHDescriptionIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}
+
+func descriptorDecodeMPRACHDescriptionIE(data []byte) (any, error) {
+	return DecodeMPRACHDescriptionIE(data)
+}
+func descriptorUnwrapMPRACHDescriptionIE(value any) (MPRACHDescriptionIE, bool) {
+	switch v := value.(type) {
+	case MPRACHDescriptionIE:
+		return v, true
+	case runtime.Decoded[MPRACHDescriptionIE]:
+		return v.Value, true
+	default:
+		return MPRACHDescriptionIE{}, false
+	}
+}
+
+var descriptorPolicyMPRACHDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MPRACH description IE", descriptorSourceMPRACHDescriptionIE}
+
+func descriptorDecodeMPRACHDescriptionIEFrom(r *runtime.Reader) (any, error) {
+	var v MPRACHDescriptionIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeMPRACHDescriptionIEFrom(r); return err }, descriptorPolicyMPRACHDescriptionIE)
+	if err != nil {
+		return runtime.Decoded[MPRACHDescriptionIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MPRACHDescriptionIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMPRACHDescriptionIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MPRACH description IE", descriptorSourceMPRACHDescriptionIE)
+	}
+	return EncodeMPRACHDescriptionIE(v)
+}
+func descriptorCanonicalMPRACHDescriptionIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MPRACH description IE", descriptorSourceMPRACHDescriptionIE)
+	}
+	return EncodeMPRACHDescriptionIECanonical(v)
+}
+func descriptorCanonicalAtLengthMPRACHDescriptionIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHDescriptionIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MPRACH description IE", descriptorSourceMPRACHDescriptionIE)
+	}
+	return EncodeMPRACHDescriptionIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMBMSSessionListIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}
+
+func descriptorDecodeMBMSSessionListIE(data []byte) (any, error) {
+	return DecodeMBMSSessionListIE(data)
+}
+func descriptorUnwrapMBMSSessionListIE(value any) (MBMSSessionListIE, bool) {
+	switch v := value.(type) {
+	case MBMSSessionListIE:
+		return v, true
+	case runtime.Decoded[MBMSSessionListIE]:
+		return v.Value, true
+	default:
+		return MBMSSessionListIE{}, false
+	}
+}
+
+var descriptorPolicyMBMSSessionListIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS Session List IE", descriptorSourceMBMSSessionListIE}
+
+func descriptorDecodeMBMSSessionListIEFrom(r *runtime.Reader) (any, error) {
+	var v MBMSSessionListIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeMBMSSessionListIEFrom(r); return err }, descriptorPolicyMBMSSessionListIE)
+	if err != nil {
+		return runtime.Decoded[MBMSSessionListIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MBMSSessionListIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMBMSSessionListIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MBMS Session List IE", descriptorSourceMBMSSessionListIE)
+	}
+	return EncodeMBMSSessionListIE(v)
+}
+func descriptorCanonicalMBMSSessionListIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Session List IE", descriptorSourceMBMSSessionListIE)
+	}
+	return EncodeMBMSSessionListIECanonical(v)
+}
+func descriptorCanonicalAtLengthMBMSSessionListIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Session List IE", descriptorSourceMBMSSessionListIE)
+	}
+	return EncodeMBMSSessionListIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMBMSSessionParametersListIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}
+
+func descriptorDecodeMBMSSessionParametersListIE(data []byte) (any, error) {
+	return DecodeMBMSSessionParametersListIE(data)
+}
+func descriptorUnwrapMBMSSessionParametersListIE(value any) (MBMSSessionParametersListIE, bool) {
+	switch v := value.(type) {
+	case MBMSSessionParametersListIE:
+		return v, true
+	case runtime.Decoded[MBMSSessionParametersListIE]:
+		return v.Value, true
+	default:
+		return MBMSSessionParametersListIE{}, false
+	}
+}
+
+var descriptorPolicyMBMSSessionParametersListIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS Session Parameters List IE", descriptorSourceMBMSSessionParametersListIE}
+
+func descriptorDecodeMBMSSessionParametersListIEFrom(r *runtime.Reader) (any, error) {
+	var v MBMSSessionParametersListIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMBMSSessionParametersListIEFrom(r)
+		return err
+	}, descriptorPolicyMBMSSessionParametersListIE)
+	if err != nil {
+		return runtime.Decoded[MBMSSessionParametersListIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MBMSSessionParametersListIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMBMSSessionParametersListIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionParametersListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MBMS Session Parameters List IE", descriptorSourceMBMSSessionParametersListIE)
+	}
+	return EncodeMBMSSessionParametersListIE(v)
+}
+func descriptorCanonicalMBMSSessionParametersListIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionParametersListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Session Parameters List IE", descriptorSourceMBMSSessionParametersListIE)
+	}
+	return EncodeMBMSSessionParametersListIECanonical(v)
+}
+func descriptorCanonicalAtLengthMBMSSessionParametersListIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMBMSSessionParametersListIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MBMS Session Parameters List IE", descriptorSourceMBMSSessionParametersListIE)
+	}
+	return EncodeMBMSSessionParametersListIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMPRACHControlParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}
+
+func descriptorDecodeMPRACHControlParametersIE(data []byte) (any, error) {
+	return DecodeMPRACHControlParametersIE(data)
+}
+func descriptorUnwrapMPRACHControlParametersIE(value any) (MPRACHControlParametersIE, bool) {
+	switch v := value.(type) {
+	case MPRACHControlParametersIE:
+		return v, true
+	case runtime.Decoded[MPRACHControlParametersIE]:
+		return v.Value, true
+	default:
+		return MPRACHControlParametersIE{}, false
+	}
+}
+
+var descriptorPolicyMPRACHControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MPRACH Control Parameters IE", descriptorSourceMPRACHControlParametersIE}
+
+func descriptorDecodeMPRACHControlParametersIEFrom(r *runtime.Reader) (any, error) {
+	var v MPRACHControlParametersIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMPRACHControlParametersIEFrom(r)
+		return err
+	}, descriptorPolicyMPRACHControlParametersIE)
+	if err != nil {
+		return runtime.Decoded[MPRACHControlParametersIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MPRACHControlParametersIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMPRACHControlParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MPRACH Control Parameters IE", descriptorSourceMPRACHControlParametersIE)
+	}
+	return EncodeMPRACHControlParametersIE(v)
+}
+func descriptorCanonicalMPRACHControlParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MPRACH Control Parameters IE", descriptorSourceMPRACHControlParametersIE)
+	}
+	return EncodeMPRACHControlParametersIECanonical(v)
+}
+func descriptorCanonicalAtLengthMPRACHControlParametersIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMPRACHControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MPRACH Control Parameters IE", descriptorSourceMPRACHControlParametersIE)
+	}
+	return EncodeMPRACHControlParametersIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceGPRSPowerControlParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}
+
+func descriptorDecodeGPRSPowerControlParametersIE(data []byte) (any, error) {
+	return DecodeGPRSPowerControlParametersIE(data)
+}
+func descriptorUnwrapGPRSPowerControlParametersIE(value any) (GPRSPowerControlParametersIE, bool) {
+	switch v := value.(type) {
+	case GPRSPowerControlParametersIE:
+		return v, true
+	case runtime.Decoded[GPRSPowerControlParametersIE]:
+		return v.Value, true
+	default:
+		return GPRSPowerControlParametersIE{}, false
+	}
+}
+
+var descriptorPolicyGPRSPowerControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Power Control Parameters IE", descriptorSourceGPRSPowerControlParametersIE}
+
+func descriptorDecodeGPRSPowerControlParametersIEFrom(r *runtime.Reader) (any, error) {
+	var v GPRSPowerControlParametersIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeGPRSPowerControlParametersIEFrom(r)
+		return err
+	}, descriptorPolicyGPRSPowerControlParametersIE)
+	if err != nil {
+		return runtime.Decoded[GPRSPowerControlParametersIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[GPRSPowerControlParametersIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeGPRSPowerControlParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSPowerControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "GPRS Power Control Parameters IE", descriptorSourceGPRSPowerControlParametersIE)
+	}
+	return EncodeGPRSPowerControlParametersIE(v)
+}
+func descriptorCanonicalGPRSPowerControlParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSPowerControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Power Control Parameters IE", descriptorSourceGPRSPowerControlParametersIE)
+	}
+	return EncodeGPRSPowerControlParametersIECanonical(v)
+}
+func descriptorCanonicalAtLengthGPRSPowerControlParametersIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSPowerControlParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Power Control Parameters IE", descriptorSourceGPRSPowerControlParametersIE)
+	}
+	return EncodeGPRSPowerControlParametersIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceGPRSCellOptionsIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}
+
+func descriptorDecodeGPRSCellOptionsIE(data []byte) (any, error) {
+	return DecodeGPRSCellOptionsIE(data)
+}
+func descriptorUnwrapGPRSCellOptionsIE(value any) (GPRSCellOptionsIE, bool) {
+	switch v := value.(type) {
+	case GPRSCellOptionsIE:
+		return v, true
+	case runtime.Decoded[GPRSCellOptionsIE]:
+		return v.Value, true
+	default:
+		return GPRSCellOptionsIE{}, false
+	}
+}
+
+var descriptorPolicyGPRSCellOptionsIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Cell Options IE", descriptorSourceGPRSCellOptionsIE}
+
+func descriptorDecodeGPRSCellOptionsIEFrom(r *runtime.Reader) (any, error) {
+	var v GPRSCellOptionsIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeGPRSCellOptionsIEFrom(r); return err }, descriptorPolicyGPRSCellOptionsIE)
+	if err != nil {
+		return runtime.Decoded[GPRSCellOptionsIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[GPRSCellOptionsIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeGPRSCellOptionsIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSCellOptionsIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "GPRS Cell Options IE", descriptorSourceGPRSCellOptionsIE)
+	}
+	return EncodeGPRSCellOptionsIE(v)
+}
+func descriptorCanonicalGPRSCellOptionsIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSCellOptionsIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Cell Options IE", descriptorSourceGPRSCellOptionsIE)
+	}
+	return EncodeGPRSCellOptionsIECanonical(v)
+}
+func descriptorCanonicalAtLengthGPRSCellOptionsIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSCellOptionsIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Cell Options IE", descriptorSourceGPRSCellOptionsIE)
+	}
+	return EncodeGPRSCellOptionsIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceExtensionInformation = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}
+
+func descriptorDecodeExtensionInformation(data []byte) (any, error) {
+	return DecodeExtensionInformation(data)
+}
+func descriptorUnwrapExtensionInformation(value any) (ExtensionInformation, bool) {
+	switch v := value.(type) {
+	case ExtensionInformation:
+		return v, true
+	case runtime.Decoded[ExtensionInformation]:
+		return v.Value, true
+	default:
+		return ExtensionInformation{}, false
+	}
+}
+
+var descriptorPolicyExtensionInformation = descriptorReadPolicy{true, 0, 0, 0, 0, false, false, "Extension Information", descriptorSourceExtensionInformation}
+
+func descriptorDecodeExtensionInformationFrom(r *runtime.Reader) (any, error) {
+	var v ExtensionInformation
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeExtensionInformationFrom(r); return err }, descriptorPolicyExtensionInformation)
+	if err != nil {
+		return runtime.Decoded[ExtensionInformation]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[ExtensionInformation]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeExtensionInformation(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapExtensionInformation(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Extension Information", descriptorSourceExtensionInformation)
+	}
+	return EncodeExtensionInformation(v)
+}
+func descriptorCanonicalExtensionInformation(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapExtensionInformation(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Extension Information", descriptorSourceExtensionInformation)
+	}
+	return EncodeExtensionInformationCanonical(v)
+}
+func descriptorCanonicalAtLengthExtensionInformation(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapExtensionInformation(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Extension Information", descriptorSourceExtensionInformation)
+	}
+	return EncodeExtensionInformationCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceFrequencyParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}
+
+func descriptorDecodeFrequencyParametersIE(data []byte) (any, error) {
+	return DecodeFrequencyParametersIE(data)
+}
+func descriptorUnwrapFrequencyParametersIE(value any) (FrequencyParametersIE, bool) {
+	switch v := value.(type) {
+	case FrequencyParametersIE:
+		return v, true
+	case runtime.Decoded[FrequencyParametersIE]:
+		return v.Value, true
+	default:
+		return FrequencyParametersIE{}, false
+	}
+}
+
+var descriptorPolicyFrequencyParametersIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Frequency Parameters IE", descriptorSourceFrequencyParametersIE}
+
+func descriptorDecodeFrequencyParametersIEFrom(r *runtime.Reader) (any, error) {
+	var v FrequencyParametersIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeFrequencyParametersIEFrom(r); return err }, descriptorPolicyFrequencyParametersIE)
+	if err != nil {
+		return runtime.Decoded[FrequencyParametersIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[FrequencyParametersIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeFrequencyParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapFrequencyParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Frequency Parameters IE", descriptorSourceFrequencyParametersIE)
+	}
+	return EncodeFrequencyParametersIE(v)
+}
+func descriptorCanonicalFrequencyParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapFrequencyParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Frequency Parameters IE", descriptorSourceFrequencyParametersIE)
+	}
+	return EncodeFrequencyParametersIECanonical(v)
+}
+func descriptorCanonicalAtLengthFrequencyParametersIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapFrequencyParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Frequency Parameters IE", descriptorSourceFrequencyParametersIE)
+	}
+	return EncodeFrequencyParametersIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceIndirectEncodingStruct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}
+
+func descriptorDecodeIndirectEncodingStruct(data []byte) (any, error) {
+	return DecodeIndirectEncodingStruct(data)
+}
+func descriptorUnwrapIndirectEncodingStruct(value any) (IndirectEncodingStruct, bool) {
+	switch v := value.(type) {
+	case IndirectEncodingStruct:
+		return v, true
+	case runtime.Decoded[IndirectEncodingStruct]:
+		return v.Value, true
+	default:
+		return IndirectEncodingStruct{}, false
+	}
+}
+
+var descriptorPolicyIndirectEncodingStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Indirect encoding struct", descriptorSourceIndirectEncodingStruct}
+
+func descriptorDecodeIndirectEncodingStructFrom(r *runtime.Reader) (any, error) {
+	var v IndirectEncodingStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeIndirectEncodingStructFrom(r); return err }, descriptorPolicyIndirectEncodingStruct)
+	if err != nil {
+		return runtime.Decoded[IndirectEncodingStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[IndirectEncodingStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeIndirectEncodingStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapIndirectEncodingStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Indirect encoding struct", descriptorSourceIndirectEncodingStruct)
+	}
+	return EncodeIndirectEncodingStruct(v)
+}
+func descriptorCanonicalIndirectEncodingStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapIndirectEncodingStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Indirect encoding struct", descriptorSourceIndirectEncodingStruct)
+	}
+	return EncodeIndirectEncodingStructCanonical(v)
+}
+func descriptorCanonicalAtLengthIndirectEncodingStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapIndirectEncodingStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Indirect encoding struct", descriptorSourceIndirectEncodingStruct)
+	}
+	return EncodeIndirectEncodingStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceDirectEncoding1Struct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}
+
+func descriptorDecodeDirectEncoding1Struct(data []byte) (any, error) {
+	return DecodeDirectEncoding1Struct(data)
+}
+func descriptorUnwrapDirectEncoding1Struct(value any) (DirectEncoding1Struct, bool) {
+	switch v := value.(type) {
+	case DirectEncoding1Struct:
+		return v, true
+	case runtime.Decoded[DirectEncoding1Struct]:
+		return v.Value, true
+	default:
+		return DirectEncoding1Struct{}, false
+	}
+}
+
+var descriptorPolicyDirectEncoding1Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Direct encoding 1 struct", descriptorSourceDirectEncoding1Struct}
+
+func descriptorDecodeDirectEncoding1StructFrom(r *runtime.Reader) (any, error) {
+	var v DirectEncoding1Struct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeDirectEncoding1StructFrom(r); return err }, descriptorPolicyDirectEncoding1Struct)
+	if err != nil {
+		return runtime.Decoded[DirectEncoding1Struct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[DirectEncoding1Struct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeDirectEncoding1Struct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding1Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Direct encoding 1 struct", descriptorSourceDirectEncoding1Struct)
+	}
+	return EncodeDirectEncoding1Struct(v)
+}
+func descriptorCanonicalDirectEncoding1Struct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding1Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Direct encoding 1 struct", descriptorSourceDirectEncoding1Struct)
+	}
+	return EncodeDirectEncoding1StructCanonical(v)
+}
+func descriptorCanonicalAtLengthDirectEncoding1Struct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding1Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Direct encoding 1 struct", descriptorSourceDirectEncoding1Struct)
+	}
+	return EncodeDirectEncoding1StructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceDirectEncoding2Struct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}
+
+func descriptorDecodeDirectEncoding2Struct(data []byte) (any, error) {
+	return DecodeDirectEncoding2Struct(data)
+}
+func descriptorUnwrapDirectEncoding2Struct(value any) (DirectEncoding2Struct, bool) {
+	switch v := value.(type) {
+	case DirectEncoding2Struct:
+		return v, true
+	case runtime.Decoded[DirectEncoding2Struct]:
+		return v.Value, true
+	default:
+		return DirectEncoding2Struct{}, false
+	}
+}
+
+var descriptorPolicyDirectEncoding2Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Direct encoding 2 struct", descriptorSourceDirectEncoding2Struct}
+
+func descriptorDecodeDirectEncoding2StructFrom(r *runtime.Reader) (any, error) {
+	var v DirectEncoding2Struct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeDirectEncoding2StructFrom(r); return err }, descriptorPolicyDirectEncoding2Struct)
+	if err != nil {
+		return runtime.Decoded[DirectEncoding2Struct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[DirectEncoding2Struct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeDirectEncoding2Struct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding2Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Direct encoding 2 struct", descriptorSourceDirectEncoding2Struct)
+	}
+	return EncodeDirectEncoding2Struct(v)
+}
+func descriptorCanonicalDirectEncoding2Struct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding2Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Direct encoding 2 struct", descriptorSourceDirectEncoding2Struct)
+	}
+	return EncodeDirectEncoding2StructCanonical(v)
+}
+func descriptorCanonicalAtLengthDirectEncoding2Struct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapDirectEncoding2Struct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Direct encoding 2 struct", descriptorSourceDirectEncoding2Struct)
+	}
+	return EncodeDirectEncoding2StructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceGPRSMobileAllocationIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}
+
+func descriptorDecodeGPRSMobileAllocationIE(data []byte) (any, error) {
+	return DecodeGPRSMobileAllocationIE(data)
+}
+func descriptorUnwrapGPRSMobileAllocationIE(value any) (GPRSMobileAllocationIE, bool) {
+	switch v := value.(type) {
+	case GPRSMobileAllocationIE:
+		return v, true
+	case runtime.Decoded[GPRSMobileAllocationIE]:
+		return v.Value, true
+	default:
+		return GPRSMobileAllocationIE{}, false
+	}
+}
+
+var descriptorPolicyGPRSMobileAllocationIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Mobile Allocation IE", descriptorSourceGPRSMobileAllocationIE}
+
+func descriptorDecodeGPRSMobileAllocationIEFrom(r *runtime.Reader) (any, error) {
+	var v GPRSMobileAllocationIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeGPRSMobileAllocationIEFrom(r); return err }, descriptorPolicyGPRSMobileAllocationIE)
+	if err != nil {
+		return runtime.Decoded[GPRSMobileAllocationIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[GPRSMobileAllocationIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeGPRSMobileAllocationIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSMobileAllocationIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "GPRS Mobile Allocation IE", descriptorSourceGPRSMobileAllocationIE)
+	}
+	return EncodeGPRSMobileAllocationIE(v)
+}
+func descriptorCanonicalGPRSMobileAllocationIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSMobileAllocationIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Mobile Allocation IE", descriptorSourceGPRSMobileAllocationIE)
+	}
+	return EncodeGPRSMobileAllocationIECanonical(v)
+}
+func descriptorCanonicalAtLengthGPRSMobileAllocationIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapGPRSMobileAllocationIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GPRS Mobile Allocation IE", descriptorSourceGPRSMobileAllocationIE)
+	}
+	return EncodeGPRSMobileAllocationIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceRFLNumberListStruct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}
+
+func descriptorDecodeRFLNumberListStruct(data []byte) (any, error) {
+	return DecodeRFLNumberListStruct(data)
+}
+func descriptorUnwrapRFLNumberListStruct(value any) (RFLNumberListStruct, bool) {
+	switch v := value.(type) {
+	case RFLNumberListStruct:
+		return v, true
+	case runtime.Decoded[RFLNumberListStruct]:
+		return v.Value, true
+	default:
+		return RFLNumberListStruct{}, false
+	}
+}
+
+var descriptorPolicyRFLNumberListStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "RFL number list struct", descriptorSourceRFLNumberListStruct}
+
+func descriptorDecodeRFLNumberListStructFrom(r *runtime.Reader) (any, error) {
+	var v RFLNumberListStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeRFLNumberListStructFrom(r); return err }, descriptorPolicyRFLNumberListStruct)
+	if err != nil {
+		return runtime.Decoded[RFLNumberListStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[RFLNumberListStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeRFLNumberListStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRFLNumberListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "RFL number list struct", descriptorSourceRFLNumberListStruct)
+	}
+	return EncodeRFLNumberListStruct(v)
+}
+func descriptorCanonicalRFLNumberListStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRFLNumberListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "RFL number list struct", descriptorSourceRFLNumberListStruct)
+	}
+	return EncodeRFLNumberListStructCanonical(v)
+}
+func descriptorCanonicalAtLengthRFLNumberListStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapRFLNumberListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "RFL number list struct", descriptorSourceRFLNumberListStruct)
+	}
+	return EncodeRFLNumberListStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceARFCNIndexListStruct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}
+
+func descriptorDecodeARFCNIndexListStruct(data []byte) (any, error) {
+	return DecodeARFCNIndexListStruct(data)
+}
+func descriptorUnwrapARFCNIndexListStruct(value any) (ARFCNIndexListStruct, bool) {
+	switch v := value.(type) {
+	case ARFCNIndexListStruct:
+		return v, true
+	case runtime.Decoded[ARFCNIndexListStruct]:
+		return v.Value, true
+	default:
+		return ARFCNIndexListStruct{}, false
+	}
+}
+
+var descriptorPolicyARFCNIndexListStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "ARFCN index list struct", descriptorSourceARFCNIndexListStruct}
+
+func descriptorDecodeARFCNIndexListStructFrom(r *runtime.Reader) (any, error) {
+	var v ARFCNIndexListStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeARFCNIndexListStructFrom(r); return err }, descriptorPolicyARFCNIndexListStruct)
+	if err != nil {
+		return runtime.Decoded[ARFCNIndexListStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[ARFCNIndexListStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeARFCNIndexListStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapARFCNIndexListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "ARFCN index list struct", descriptorSourceARFCNIndexListStruct)
+	}
+	return EncodeARFCNIndexListStruct(v)
+}
+func descriptorCanonicalARFCNIndexListStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapARFCNIndexListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "ARFCN index list struct", descriptorSourceARFCNIndexListStruct)
+	}
+	return EncodeARFCNIndexListStructCanonical(v)
+}
+func descriptorCanonicalAtLengthARFCNIndexListStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapARFCNIndexListStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "ARFCN index list struct", descriptorSourceARFCNIndexListStruct)
+	}
+	return EncodeARFCNIndexListStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourcePCIDGroupIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}
+
+func descriptorDecodePCIDGroupIE(data []byte) (any, error) { return DecodePCIDGroupIE(data) }
+func descriptorUnwrapPCIDGroupIE(value any) (PCIDGroupIE, bool) {
+	switch v := value.(type) {
+	case PCIDGroupIE:
+		return v, true
+	case runtime.Decoded[PCIDGroupIE]:
+		return v.Value, true
+	default:
+		return PCIDGroupIE{}, false
+	}
+}
+
+var descriptorPolicyPCIDGroupIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PCID Group IE", descriptorSourcePCIDGroupIE}
+
+func descriptorDecodePCIDGroupIEFrom(r *runtime.Reader) (any, error) {
+	var v PCIDGroupIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodePCIDGroupIEFrom(r); return err }, descriptorPolicyPCIDGroupIE)
+	if err != nil {
+		return runtime.Decoded[PCIDGroupIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[PCIDGroupIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodePCIDGroupIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPCIDGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "PCID Group IE", descriptorSourcePCIDGroupIE)
+	}
+	return EncodePCIDGroupIE(v)
+}
+func descriptorCanonicalPCIDGroupIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPCIDGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PCID Group IE", descriptorSourcePCIDGroupIE)
+	}
+	return EncodePCIDGroupIECanonical(v)
+}
+func descriptorCanonicalAtLengthPCIDGroupIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapPCIDGroupIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "PCID Group IE", descriptorSourcePCIDGroupIE)
+	}
+	return EncodePCIDGroupIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEnhancedCellReselectionParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}
+
+func descriptorDecodeEnhancedCellReselectionParametersIE(data []byte) (any, error) {
+	return DecodeEnhancedCellReselectionParametersIE(data)
+}
+func descriptorUnwrapEnhancedCellReselectionParametersIE(value any) (EnhancedCellReselectionParametersIE, bool) {
+	switch v := value.(type) {
+	case EnhancedCellReselectionParametersIE:
+		return v, true
+	case runtime.Decoded[EnhancedCellReselectionParametersIE]:
+		return v.Value, true
+	default:
+		return EnhancedCellReselectionParametersIE{}, false
+	}
+}
+
+var descriptorPolicyEnhancedCellReselectionParametersIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Enhanced Cell Reselection Parameters IE", descriptorSourceEnhancedCellReselectionParametersIE}
+
+func descriptorDecodeEnhancedCellReselectionParametersIEFrom(r *runtime.Reader) (any, error) {
+	var v EnhancedCellReselectionParametersIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEnhancedCellReselectionParametersIEFrom(r)
+		return err
+	}, descriptorPolicyEnhancedCellReselectionParametersIE)
+	if err != nil {
+		return runtime.Decoded[EnhancedCellReselectionParametersIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EnhancedCellReselectionParametersIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEnhancedCellReselectionParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedCellReselectionParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Enhanced Cell Reselection Parameters IE", descriptorSourceEnhancedCellReselectionParametersIE)
+	}
+	return EncodeEnhancedCellReselectionParametersIE(v)
+}
+func descriptorCanonicalEnhancedCellReselectionParametersIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedCellReselectionParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Cell Reselection Parameters IE", descriptorSourceEnhancedCellReselectionParametersIE)
+	}
+	return EncodeEnhancedCellReselectionParametersIECanonical(v)
+}
+func descriptorCanonicalAtLengthEnhancedCellReselectionParametersIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedCellReselectionParametersIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Cell Reselection Parameters IE", descriptorSourceEnhancedCellReselectionParametersIE)
+	}
+	return EncodeEnhancedCellReselectionParametersIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}
+
+func descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data []byte) (any, error) {
+	return DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data)
+}
+func descriptorUnwrapRepeatedEUTRANEnhancedCellReselectionParametersStruct(value any) (RepeatedEUTRANEnhancedCellReselectionParametersStruct, bool) {
+	switch v := value.(type) {
+	case RepeatedEUTRANEnhancedCellReselectionParametersStruct:
+		return v, true
+	case runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]:
+		return v.Value, true
+	default:
+		return RepeatedEUTRANEnhancedCellReselectionParametersStruct{}, false
+	}
+}
+
+var descriptorPolicyRepeatedEUTRANEnhancedCellReselectionParametersStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct}
+
+func descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r *runtime.Reader) (any, error) {
+	var v RepeatedEUTRANEnhancedCellReselectionParametersStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r)
+		return err
+	}, descriptorPolicyRepeatedEUTRANEnhancedCellReselectionParametersStruct)
+	if err != nil {
+		return runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedEUTRANEnhancedCellReselectionParametersStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct)
+	}
+	return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v)
+}
+func descriptorCanonicalRepeatedEUTRANEnhancedCellReselectionParametersStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedEUTRANEnhancedCellReselectionParametersStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct)
+	}
+	return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonical(v)
+}
+func descriptorCanonicalAtLengthRepeatedEUTRANEnhancedCellReselectionParametersStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedEUTRANEnhancedCellReselectionParametersStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct)
+	}
+	return EncodeRepeatedEUTRANEnhancedCellReselectionParametersStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEGPRSWindowSizeIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}
+
+func descriptorDecodeEGPRSWindowSizeIE(data []byte) (any, error) {
+	return DecodeEGPRSWindowSizeIE(data)
+}
+func descriptorUnwrapEGPRSWindowSizeIE(value any) (EGPRSWindowSizeIE, bool) {
+	switch v := value.(type) {
+	case EGPRSWindowSizeIE:
+		return v, true
+	case runtime.Decoded[EGPRSWindowSizeIE]:
+		return v.Value, true
+	default:
+		return EGPRSWindowSizeIE{}, false
+	}
+}
+
+var descriptorPolicyEGPRSWindowSizeIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "EGPRS Window Size IE", descriptorSourceEGPRSWindowSizeIE}
+
+func descriptorDecodeEGPRSWindowSizeIEFrom(r *runtime.Reader) (any, error) {
+	var v EGPRSWindowSizeIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeEGPRSWindowSizeIEFrom(r); return err }, descriptorPolicyEGPRSWindowSizeIE)
+	if err != nil {
+		return runtime.Decoded[EGPRSWindowSizeIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EGPRSWindowSizeIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEGPRSWindowSizeIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSWindowSizeIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "EGPRS Window Size IE", descriptorSourceEGPRSWindowSizeIE)
+	}
+	return EncodeEGPRSWindowSizeIE(v)
+}
+func descriptorCanonicalEGPRSWindowSizeIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSWindowSizeIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Window Size IE", descriptorSourceEGPRSWindowSizeIE)
+	}
+	return EncodeEGPRSWindowSizeIECanonical(v)
+}
+func descriptorCanonicalAtLengthEGPRSWindowSizeIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSWindowSizeIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Window Size IE", descriptorSourceEGPRSWindowSizeIE)
+	}
+	return EncodeEGPRSWindowSizeIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEGPRSModulationAndCodingIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}
+
+func descriptorDecodeEGPRSModulationAndCodingIE(data []byte) (any, error) {
+	return DecodeEGPRSModulationAndCodingIE(data)
+}
+func descriptorUnwrapEGPRSModulationAndCodingIE(value any) (EGPRSModulationAndCodingIE, bool) {
+	switch v := value.(type) {
+	case EGPRSModulationAndCodingIE:
+		return v, true
+	case runtime.Decoded[EGPRSModulationAndCodingIE]:
+		return v.Value, true
+	default:
+		return EGPRSModulationAndCodingIE{}, false
+	}
+}
+
+var descriptorPolicyEGPRSModulationAndCodingIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "EGPRS Modulation and Coding IE", descriptorSourceEGPRSModulationAndCodingIE}
+
+func descriptorDecodeEGPRSModulationAndCodingIEFrom(r *runtime.Reader) (any, error) {
+	var v EGPRSModulationAndCodingIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEGPRSModulationAndCodingIEFrom(r)
+		return err
+	}, descriptorPolicyEGPRSModulationAndCodingIE)
+	if err != nil {
+		return runtime.Decoded[EGPRSModulationAndCodingIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EGPRSModulationAndCodingIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEGPRSModulationAndCodingIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSModulationAndCodingIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "EGPRS Modulation and Coding IE", descriptorSourceEGPRSModulationAndCodingIE)
+	}
+	return EncodeEGPRSModulationAndCodingIE(v)
+}
+func descriptorCanonicalEGPRSModulationAndCodingIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSModulationAndCodingIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Modulation and Coding IE", descriptorSourceEGPRSModulationAndCodingIE)
+	}
+	return EncodeEGPRSModulationAndCodingIECanonical(v)
+}
+func descriptorCanonicalAtLengthEGPRSModulationAndCodingIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSModulationAndCodingIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Modulation and Coding IE", descriptorSourceEGPRSModulationAndCodingIE)
+	}
+	return EncodeEGPRSModulationAndCodingIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEGPRSLevelIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}
+
+func descriptorDecodeEGPRSLevelIE(data []byte) (any, error) { return DecodeEGPRSLevelIE(data) }
+func descriptorUnwrapEGPRSLevelIE(value any) (EGPRSLevelIE, bool) {
+	switch v := value.(type) {
+	case EGPRSLevelIE:
+		return v, true
+	case runtime.Decoded[EGPRSLevelIE]:
+		return v.Value, true
+	default:
+		return EGPRSLevelIE{}, false
+	}
+}
+
+var descriptorPolicyEGPRSLevelIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "EGPRS Level IE", descriptorSourceEGPRSLevelIE}
+
+func descriptorDecodeEGPRSLevelIEFrom(r *runtime.Reader) (any, error) {
+	var v EGPRSLevelIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeEGPRSLevelIEFrom(r); return err }, descriptorPolicyEGPRSLevelIE)
+	if err != nil {
+		return runtime.Decoded[EGPRSLevelIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EGPRSLevelIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEGPRSLevelIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSLevelIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "EGPRS Level IE", descriptorSourceEGPRSLevelIE)
+	}
+	return EncodeEGPRSLevelIE(v)
+}
+func descriptorCanonicalEGPRSLevelIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSLevelIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Level IE", descriptorSourceEGPRSLevelIE)
+	}
+	return EncodeEGPRSLevelIECanonical(v)
+}
+func descriptorCanonicalAtLengthEGPRSLevelIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEGPRSLevelIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "EGPRS Level IE", descriptorSourceEGPRSLevelIE)
+	}
+	return EncodeEGPRSLevelIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourcePacketTimingAdvanceIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}
+
+func descriptorDecodePacketTimingAdvanceIE(data []byte) (any, error) {
+	return DecodePacketTimingAdvanceIE(data)
+}
+func descriptorUnwrapPacketTimingAdvanceIE(value any) (PacketTimingAdvanceIE, bool) {
+	switch v := value.(type) {
+	case PacketTimingAdvanceIE:
+		return v, true
+	case runtime.Decoded[PacketTimingAdvanceIE]:
+		return v.Value, true
+	default:
+		return PacketTimingAdvanceIE{}, false
+	}
+}
+
+var descriptorPolicyPacketTimingAdvanceIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Packet Timing Advance IE", descriptorSourcePacketTimingAdvanceIE}
+
+func descriptorDecodePacketTimingAdvanceIEFrom(r *runtime.Reader) (any, error) {
+	var v PacketTimingAdvanceIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodePacketTimingAdvanceIEFrom(r); return err }, descriptorPolicyPacketTimingAdvanceIE)
+	if err != nil {
+		return runtime.Decoded[PacketTimingAdvanceIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[PacketTimingAdvanceIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodePacketTimingAdvanceIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPacketTimingAdvanceIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Packet Timing Advance IE", descriptorSourcePacketTimingAdvanceIE)
+	}
+	return EncodePacketTimingAdvanceIE(v)
+}
+func descriptorCanonicalPacketTimingAdvanceIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapPacketTimingAdvanceIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Packet Timing Advance IE", descriptorSourcePacketTimingAdvanceIE)
+	}
+	return EncodePacketTimingAdvanceIECanonical(v)
+}
+func descriptorCanonicalAtLengthPacketTimingAdvanceIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapPacketTimingAdvanceIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Packet Timing Advance IE", descriptorSourcePacketTimingAdvanceIE)
+	}
+	return EncodePacketTimingAdvanceIECanonicalAtLength(v, octets)
+}
+
+var descriptorSourceTMGIIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}
+
+func descriptorDecodeTMGIIE(data []byte) (any, error) { return DecodeTMGIIE(data) }
+func descriptorUnwrapTMGIIE(value any) (TMGIIE, bool) {
+	switch v := value.(type) {
+	case TMGIIE:
+		return v, true
+	case runtime.Decoded[TMGIIE]:
+		return v.Value, true
+	default:
+		return TMGIIE{}, false
+	}
+}
+
+var descriptorPolicyTMGIIE = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "TMGI IE", descriptorSourceTMGIIE}
+
+func descriptorDecodeTMGIIEFrom(r *runtime.Reader) (any, error) {
+	var v TMGIIE
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeTMGIIEFrom(r); return err }, descriptorPolicyTMGIIE)
+	if err != nil {
+		return runtime.Decoded[TMGIIE]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[TMGIIE]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeTMGIIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapTMGIIE(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "TMGI IE", descriptorSourceTMGIIE)
+	}
+	return EncodeTMGIIE(v)
+}
+func descriptorCanonicalTMGIIE(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapTMGIIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "TMGI IE", descriptorSourceTMGIIE)
+	}
+	return EncodeTMGIIECanonical(v)
+}
+func descriptorCanonicalAtLengthTMGIIE(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapTMGIIE(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "TMGI IE", descriptorSourceTMGIIE)
+	}
+	return EncodeTMGIIECanonicalAtLength(v, octets)
 }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+
+type descriptorReadPolicy struct {
+	needsLimit                               bool
+	minBits, postMinBits, maxBits, maxWindow int
+	zeroExtension, emptyValue                bool
+	name                                     string
+	source                                   runtime.Source
+}
+
+func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
+	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
 	if err := r.Check(); err != nil {
-		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
 	emptyInput := emptyValue && r.Remaining() == 0
 	if r.Remaining() < minBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
 	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
@@ -11516,433 +12068,523 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
-	v, err := decode(r)
+	err := decode(r)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
 	if originalRemaining < postMinBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
 	}
 	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
-		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
-	v = setWire(v, wire)
-	return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+	return wire, r.Position() - start, nil
 }
 func DecodeUTRANCSGMeasurementReportIE(data []byte) (runtime.Decoded[UTRANCSGMeasurementReportIE], error) {
 	v, err := decodeUTRANCSGMeasurementReportIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "UTRANCSGMeasurementReportIE", -1, 0, sourceClause0)
+		return v, operationLocation11.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeUTRANCSGMeasurementReportIE(v UTRANCSGMeasurementReportIE) ([]byte, error) {
 	out, err := encodeUTRANCSGMeasurementReportIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "UTRANCSGMeasurementReportIE", -1, 0, sourceClause0)
+		return nil, operationLocation12.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodePLMNIDStruct(data []byte) (runtime.Decoded[PLMNIDStruct], error) {
 	v, err := decodePLMNIDStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "PLMNIDStruct", -1, 0, sourceClause0)
+		return v, operationLocation14.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodePLMNIDStruct(v PLMNIDStruct) ([]byte, error) {
 	out, err := encodePLMNIDStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "PLMNIDStruct", -1, 0, sourceClause0)
+		return nil, operationLocation15.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodePSCGroupIE(data []byte) (runtime.Decoded[PSCGroupIE], error) {
 	v, err := decodePSCGroupIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "PSCGroupIE", -1, 0, sourceClause1)
+		return v, operationLocation17.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodePSCGroupIE(v PSCGroupIE) ([]byte, error) {
 	out, err := encodePSCGroupIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "PSCGroupIE", -1, 0, sourceClause1)
+		return nil, operationLocation18.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMBMSChannelParametersIE(data []byte) (runtime.Decoded[MBMSChannelParametersIE], error) {
 	v, err := decodeMBMSChannelParametersIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MBMSChannelParametersIE", -1, 0, sourceClause2)
+		return v, operationLocation20.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMBMSChannelParametersIE(v MBMSChannelParametersIE) ([]byte, error) {
 	out, err := encodeMBMSChannelParametersIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MBMSChannelParametersIE", -1, 0, sourceClause2)
+		return nil, operationLocation21.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMBMSPTMChannelDescriptionIE(data []byte) (runtime.Decoded[MBMSPTMChannelDescriptionIE], error) {
 	v, err := decodeMBMSPTMChannelDescriptionIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MBMSPTMChannelDescriptionIE", -1, 0, sourceClause3)
+		return v, operationLocation23.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMBMSPTMChannelDescriptionIE(v MBMSPTMChannelDescriptionIE) ([]byte, error) {
 	out, err := encodeMBMSPTMChannelDescriptionIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MBMSPTMChannelDescriptionIE", -1, 0, sourceClause3)
+		return nil, operationLocation24.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMPRACHDescriptionIE(data []byte) (runtime.Decoded[MPRACHDescriptionIE], error) {
 	v, err := decodeMPRACHDescriptionIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MPRACHDescriptionIE", -1, 0, sourceClause4)
+		return v, operationLocation26.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMPRACHDescriptionIE(v MPRACHDescriptionIE) ([]byte, error) {
 	out, err := encodeMPRACHDescriptionIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MPRACHDescriptionIE", -1, 0, sourceClause4)
+		return nil, operationLocation27.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMBMSSessionListIE(data []byte) (runtime.Decoded[MBMSSessionListIE], error) {
 	v, err := decodeMBMSSessionListIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MBMSSessionListIE", -1, 0, sourceClause5)
+		return v, operationLocation29.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMBMSSessionListIE(v MBMSSessionListIE) ([]byte, error) {
 	out, err := encodeMBMSSessionListIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MBMSSessionListIE", -1, 0, sourceClause5)
+		return nil, operationLocation30.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMBMSSessionParametersListIE(data []byte) (runtime.Decoded[MBMSSessionParametersListIE], error) {
 	v, err := decodeMBMSSessionParametersListIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MBMSSessionParametersListIE", -1, 0, sourceClause6)
+		return v, operationLocation32.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMBMSSessionParametersListIE(v MBMSSessionParametersListIE) ([]byte, error) {
 	out, err := encodeMBMSSessionParametersListIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MBMSSessionParametersListIE", -1, 0, sourceClause6)
+		return nil, operationLocation33.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMPRACHControlParametersIE(data []byte) (runtime.Decoded[MPRACHControlParametersIE], error) {
 	v, err := decodeMPRACHControlParametersIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MPRACHControlParametersIE", -1, 0, sourceClause7)
+		return v, operationLocation35.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMPRACHControlParametersIE(v MPRACHControlParametersIE) ([]byte, error) {
 	out, err := encodeMPRACHControlParametersIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MPRACHControlParametersIE", -1, 0, sourceClause7)
+		return nil, operationLocation36.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeGPRSPowerControlParametersIE(data []byte) (runtime.Decoded[GPRSPowerControlParametersIE], error) {
 	v, err := decodeGPRSPowerControlParametersIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "GPRSPowerControlParametersIE", -1, 0, sourceClause8)
+		return v, operationLocation38.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGPRSPowerControlParametersIE(v GPRSPowerControlParametersIE) ([]byte, error) {
 	out, err := encodeGPRSPowerControlParametersIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "GPRSPowerControlParametersIE", -1, 0, sourceClause8)
+		return nil, operationLocation39.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeGPRSCellOptionsIE(data []byte) (runtime.Decoded[GPRSCellOptionsIE], error) {
 	v, err := decodeGPRSCellOptionsIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "GPRSCellOptionsIE", -1, 0, sourceClause9)
+		return v, operationLocation41.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGPRSCellOptionsIE(v GPRSCellOptionsIE) ([]byte, error) {
 	out, err := encodeGPRSCellOptionsIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "GPRSCellOptionsIE", -1, 0, sourceClause9)
+		return nil, operationLocation42.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeExtensionInformation(data []byte) (runtime.Decoded[ExtensionInformation], error) {
 	v, err := decodeExtensionInformationBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "ExtensionInformation", -1, 0, sourceClause9)
+		return v, operationLocation44.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeExtensionInformation(v ExtensionInformation) ([]byte, error) {
 	out, err := encodeExtensionInformationBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "ExtensionInformation", -1, 0, sourceClause9)
+		return nil, operationLocation45.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeFrequencyParametersIE(data []byte) (runtime.Decoded[FrequencyParametersIE], error) {
 	v, err := decodeFrequencyParametersIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "FrequencyParametersIE", -1, 0, sourceClause10)
+		return v, operationLocation47.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeFrequencyParametersIE(v FrequencyParametersIE) ([]byte, error) {
 	out, err := encodeFrequencyParametersIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "FrequencyParametersIE", -1, 0, sourceClause10)
+		return nil, operationLocation48.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeIndirectEncodingStruct(data []byte) (runtime.Decoded[IndirectEncodingStruct], error) {
 	v, err := decodeIndirectEncodingStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "IndirectEncodingStruct", -1, 0, sourceClause10)
+		return v, operationLocation50.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeIndirectEncodingStruct(v IndirectEncodingStruct) ([]byte, error) {
 	out, err := encodeIndirectEncodingStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "IndirectEncodingStruct", -1, 0, sourceClause10)
+		return nil, operationLocation51.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeDirectEncoding1Struct(data []byte) (runtime.Decoded[DirectEncoding1Struct], error) {
 	v, err := decodeDirectEncoding1StructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "DirectEncoding1Struct", -1, 0, sourceClause10)
+		return v, operationLocation53.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeDirectEncoding1Struct(v DirectEncoding1Struct) ([]byte, error) {
 	out, err := encodeDirectEncoding1StructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "DirectEncoding1Struct", -1, 0, sourceClause10)
+		return nil, operationLocation54.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeDirectEncoding2Struct(data []byte) (runtime.Decoded[DirectEncoding2Struct], error) {
 	v, err := decodeDirectEncoding2StructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "DirectEncoding2Struct", -1, 0, sourceClause10)
+		return v, operationLocation56.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeDirectEncoding2Struct(v DirectEncoding2Struct) ([]byte, error) {
 	out, err := encodeDirectEncoding2StructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "DirectEncoding2Struct", -1, 0, sourceClause10)
+		return nil, operationLocation57.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeGPRSMobileAllocationIE(data []byte) (runtime.Decoded[GPRSMobileAllocationIE], error) {
 	v, err := decodeGPRSMobileAllocationIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "GPRSMobileAllocationIE", -1, 0, sourceClause11)
+		return v, operationLocation59.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGPRSMobileAllocationIE(v GPRSMobileAllocationIE) ([]byte, error) {
 	out, err := encodeGPRSMobileAllocationIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "GPRSMobileAllocationIE", -1, 0, sourceClause11)
+		return nil, operationLocation60.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeRFLNumberListStruct(data []byte) (runtime.Decoded[RFLNumberListStruct], error) {
 	v, err := decodeRFLNumberListStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "RFLNumberListStruct", -1, 0, sourceClause11)
+		return v, operationLocation5.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeRFLNumberListStruct(v RFLNumberListStruct) ([]byte, error) {
 	out, err := encodeRFLNumberListStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "RFLNumberListStruct", -1, 0, sourceClause11)
+		return nil, operationLocation62.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeARFCNIndexListStruct(data []byte) (runtime.Decoded[ARFCNIndexListStruct], error) {
 	v, err := decodeARFCNIndexListStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "ARFCNIndexListStruct", -1, 0, sourceClause11)
+		return v, operationLocation6.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeARFCNIndexListStruct(v ARFCNIndexListStruct) ([]byte, error) {
 	out, err := encodeARFCNIndexListStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "ARFCNIndexListStruct", -1, 0, sourceClause11)
+		return nil, operationLocation64.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodePCIDGroupIE(data []byte) (runtime.Decoded[PCIDGroupIE], error) {
 	v, err := decodePCIDGroupIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "PCIDGroupIE", -1, 0, sourceClause12)
+		return v, operationLocation66.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodePCIDGroupIE(v PCIDGroupIE) ([]byte, error) {
 	out, err := encodePCIDGroupIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "PCIDGroupIE", -1, 0, sourceClause12)
+		return nil, operationLocation67.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEnhancedCellReselectionParametersIE(data []byte) (runtime.Decoded[EnhancedCellReselectionParametersIE], error) {
 	v, err := decodeEnhancedCellReselectionParametersIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EnhancedCellReselectionParametersIE", -1, 0, sourceClause13)
+		return v, operationLocation69.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEnhancedCellReselectionParametersIE(v EnhancedCellReselectionParametersIE) ([]byte, error) {
 	out, err := encodeEnhancedCellReselectionParametersIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EnhancedCellReselectionParametersIE", -1, 0, sourceClause13)
+		return nil, operationLocation70.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(data []byte) (runtime.Decoded[RepeatedEUTRANEnhancedCellReselectionParametersStruct], error) {
 	v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", -1, 0, sourceClause13)
+		return v, operationLocation72.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(v RepeatedEUTRANEnhancedCellReselectionParametersStruct) ([]byte, error) {
 	out, err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", -1, 0, sourceClause13)
+		return nil, operationLocation73.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEGPRSWindowSizeIE(data []byte) (runtime.Decoded[EGPRSWindowSizeIE], error) {
 	v, err := decodeEGPRSWindowSizeIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EGPRSWindowSizeIE", -1, 0, sourceClause14)
+		return v, operationLocation75.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEGPRSWindowSizeIE(v EGPRSWindowSizeIE) ([]byte, error) {
 	out, err := encodeEGPRSWindowSizeIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EGPRSWindowSizeIE", -1, 0, sourceClause14)
+		return nil, operationLocation76.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEGPRSModulationAndCodingIE(data []byte) (runtime.Decoded[EGPRSModulationAndCodingIE], error) {
 	v, err := decodeEGPRSModulationAndCodingIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EGPRSModulationAndCodingIE", -1, 0, sourceClause15)
+		return v, operationLocation78.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEGPRSModulationAndCodingIE(v EGPRSModulationAndCodingIE) ([]byte, error) {
 	out, err := encodeEGPRSModulationAndCodingIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EGPRSModulationAndCodingIE", -1, 0, sourceClause15)
+		return nil, operationLocation79.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEGPRSLevelIE(data []byte) (runtime.Decoded[EGPRSLevelIE], error) {
 	v, err := decodeEGPRSLevelIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EGPRSLevelIE", -1, 0, sourceClause16)
+		return v, operationLocation81.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEGPRSLevelIE(v EGPRSLevelIE) ([]byte, error) {
 	out, err := encodeEGPRSLevelIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EGPRSLevelIE", -1, 0, sourceClause16)
+		return nil, operationLocation82.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodePacketTimingAdvanceIE(data []byte) (runtime.Decoded[PacketTimingAdvanceIE], error) {
 	v, err := decodePacketTimingAdvanceIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "PacketTimingAdvanceIE", -1, 0, sourceClause17)
+		return v, operationLocation84.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodePacketTimingAdvanceIE(v PacketTimingAdvanceIE) ([]byte, error) {
 	out, err := encodePacketTimingAdvanceIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "PacketTimingAdvanceIE", -1, 0, sourceClause17)
+		return nil, operationLocation85.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeTMGIIE(data []byte) (runtime.Decoded[TMGIIE], error) {
 	v, err := decodeTMGIIEBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "TMGIIE", -1, 0, sourceClause18)
+		return v, operationLocation87.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeTMGIIE(v TMGIIE) ([]byte, error) {
 	out, err := encodeTMGIIEBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "TMGIIE", -1, 0, sourceClause18)
+		return nil, operationLocation88.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
 var sourceClause0 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}
 var sourceClause1 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}
+var operationLocation0 = operationLocation{"decode", "PSCGroupIEPSCList", &sourceClause1, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"decode", "PSCGroupIEPSCPatternLengthGroupList", &sourceClause1, runtime.InvalidValue}
 var sourceClause2 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}
 var sourceClause3 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}
 var sourceClause4 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}
 var sourceClause5 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}
+var operationLocation2 = operationLocation{"decode", "MBMSSessionListIETMGIGroupList", &sourceClause5, runtime.InvalidValue}
 var sourceClause6 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}
+var operationLocation3 = operationLocation{"decode", "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", &sourceClause6, runtime.InvalidValue}
 var sourceClause7 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}
 var sourceClause8 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}
 var sourceClause9 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}
+var operationLocation4 = operationLocation{"decode", "ExtensionInformationSpareBitList", &sourceClause9, runtime.InvalidValue}
 var sourceClause10 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}
 var sourceClause11 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}
+var operationLocation5 = operationLocation{"decode", "RFLNumberListStruct", &sourceClause11, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"decode", "ARFCNIndexListStruct", &sourceClause11, runtime.InvalidValue}
 var sourceClause12 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}
+var operationLocation7 = operationLocation{"decode", "PCIDGroupIEPCIDList", &sourceClause12, runtime.InvalidValue}
+var operationLocation8 = operationLocation{"decode", "PCIDGroupIEPCIDPatternLengthGroupList", &sourceClause12, runtime.InvalidValue}
 var sourceClause13 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}
+var operationLocation9 = operationLocation{"decode", "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", &sourceClause13, runtime.InvalidValue}
+var operationLocation10 = operationLocation{"decode", "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", &sourceClause13, runtime.InvalidValue}
 var sourceClause14 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}
 var sourceClause15 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}
 var sourceClause16 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}
 var sourceClause17 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}
 var sourceClause18 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}
+var operationLocation11 = operationLocation{"decode", "UTRANCSGMeasurementReportIE", &sourceClause0, runtime.InvalidValue}
+var operationLocation12 = operationLocation{"encode", "UTRANCSGMeasurementReportIE", &sourceClause0, runtime.InvalidValue}
+var operationLocation13 = operationLocation{"canonical", "UTRANCSGMeasurementReportIE", &sourceClause0, runtime.InvalidValue}
+var operationLocation14 = operationLocation{"decode", "PLMNIDStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation15 = operationLocation{"encode", "PLMNIDStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation16 = operationLocation{"canonical", "PLMNIDStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation17 = operationLocation{"decode", "PSCGroupIE", &sourceClause1, runtime.InvalidValue}
+var operationLocation18 = operationLocation{"encode", "PSCGroupIE", &sourceClause1, runtime.InvalidValue}
+var operationLocation19 = operationLocation{"canonical", "PSCGroupIE", &sourceClause1, runtime.InvalidValue}
+var operationLocation20 = operationLocation{"decode", "MBMSChannelParametersIE", &sourceClause2, runtime.InvalidValue}
+var operationLocation21 = operationLocation{"encode", "MBMSChannelParametersIE", &sourceClause2, runtime.InvalidValue}
+var operationLocation22 = operationLocation{"canonical", "MBMSChannelParametersIE", &sourceClause2, runtime.InvalidValue}
+var operationLocation23 = operationLocation{"decode", "MBMSPTMChannelDescriptionIE", &sourceClause3, runtime.InvalidValue}
+var operationLocation24 = operationLocation{"encode", "MBMSPTMChannelDescriptionIE", &sourceClause3, runtime.InvalidValue}
+var operationLocation25 = operationLocation{"canonical", "MBMSPTMChannelDescriptionIE", &sourceClause3, runtime.InvalidValue}
+var operationLocation26 = operationLocation{"decode", "MPRACHDescriptionIE", &sourceClause4, runtime.InvalidValue}
+var operationLocation27 = operationLocation{"encode", "MPRACHDescriptionIE", &sourceClause4, runtime.InvalidValue}
+var operationLocation28 = operationLocation{"canonical", "MPRACHDescriptionIE", &sourceClause4, runtime.InvalidValue}
+var operationLocation29 = operationLocation{"decode", "MBMSSessionListIE", &sourceClause5, runtime.InvalidValue}
+var operationLocation30 = operationLocation{"encode", "MBMSSessionListIE", &sourceClause5, runtime.InvalidValue}
+var operationLocation31 = operationLocation{"canonical", "MBMSSessionListIE", &sourceClause5, runtime.InvalidValue}
+var operationLocation32 = operationLocation{"decode", "MBMSSessionParametersListIE", &sourceClause6, runtime.InvalidValue}
+var operationLocation33 = operationLocation{"encode", "MBMSSessionParametersListIE", &sourceClause6, runtime.InvalidValue}
+var operationLocation34 = operationLocation{"canonical", "MBMSSessionParametersListIE", &sourceClause6, runtime.InvalidValue}
+var operationLocation35 = operationLocation{"decode", "MPRACHControlParametersIE", &sourceClause7, runtime.InvalidValue}
+var operationLocation36 = operationLocation{"encode", "MPRACHControlParametersIE", &sourceClause7, runtime.InvalidValue}
+var operationLocation37 = operationLocation{"canonical", "MPRACHControlParametersIE", &sourceClause7, runtime.InvalidValue}
+var operationLocation38 = operationLocation{"decode", "GPRSPowerControlParametersIE", &sourceClause8, runtime.InvalidValue}
+var operationLocation39 = operationLocation{"encode", "GPRSPowerControlParametersIE", &sourceClause8, runtime.InvalidValue}
+var operationLocation40 = operationLocation{"canonical", "GPRSPowerControlParametersIE", &sourceClause8, runtime.InvalidValue}
+var operationLocation41 = operationLocation{"decode", "GPRSCellOptionsIE", &sourceClause9, runtime.InvalidValue}
+var operationLocation42 = operationLocation{"encode", "GPRSCellOptionsIE", &sourceClause9, runtime.InvalidValue}
+var operationLocation43 = operationLocation{"canonical", "GPRSCellOptionsIE", &sourceClause9, runtime.InvalidValue}
+var operationLocation44 = operationLocation{"decode", "ExtensionInformation", &sourceClause9, runtime.InvalidValue}
+var operationLocation45 = operationLocation{"encode", "ExtensionInformation", &sourceClause9, runtime.InvalidValue}
+var operationLocation46 = operationLocation{"canonical", "ExtensionInformation", &sourceClause9, runtime.InvalidValue}
+var operationLocation47 = operationLocation{"decode", "FrequencyParametersIE", &sourceClause10, runtime.InvalidValue}
+var operationLocation48 = operationLocation{"encode", "FrequencyParametersIE", &sourceClause10, runtime.InvalidValue}
+var operationLocation49 = operationLocation{"canonical", "FrequencyParametersIE", &sourceClause10, runtime.InvalidValue}
+var operationLocation50 = operationLocation{"decode", "IndirectEncodingStruct", &sourceClause10, runtime.InvalidValue}
+var operationLocation51 = operationLocation{"encode", "IndirectEncodingStruct", &sourceClause10, runtime.InvalidValue}
+var operationLocation52 = operationLocation{"canonical", "IndirectEncodingStruct", &sourceClause10, runtime.InvalidValue}
+var operationLocation53 = operationLocation{"decode", "DirectEncoding1Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation54 = operationLocation{"encode", "DirectEncoding1Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation55 = operationLocation{"canonical", "DirectEncoding1Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation56 = operationLocation{"decode", "DirectEncoding2Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation57 = operationLocation{"encode", "DirectEncoding2Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation58 = operationLocation{"canonical", "DirectEncoding2Struct", &sourceClause10, runtime.InvalidValue}
+var operationLocation59 = operationLocation{"decode", "GPRSMobileAllocationIE", &sourceClause11, runtime.InvalidValue}
+var operationLocation60 = operationLocation{"encode", "GPRSMobileAllocationIE", &sourceClause11, runtime.InvalidValue}
+var operationLocation61 = operationLocation{"canonical", "GPRSMobileAllocationIE", &sourceClause11, runtime.InvalidValue}
+var operationLocation62 = operationLocation{"encode", "RFLNumberListStruct", &sourceClause11, runtime.InvalidValue}
+var operationLocation63 = operationLocation{"canonical", "RFLNumberListStruct", &sourceClause11, runtime.InvalidValue}
+var operationLocation64 = operationLocation{"encode", "ARFCNIndexListStruct", &sourceClause11, runtime.InvalidValue}
+var operationLocation65 = operationLocation{"canonical", "ARFCNIndexListStruct", &sourceClause11, runtime.InvalidValue}
+var operationLocation66 = operationLocation{"decode", "PCIDGroupIE", &sourceClause12, runtime.InvalidValue}
+var operationLocation67 = operationLocation{"encode", "PCIDGroupIE", &sourceClause12, runtime.InvalidValue}
+var operationLocation68 = operationLocation{"canonical", "PCIDGroupIE", &sourceClause12, runtime.InvalidValue}
+var operationLocation69 = operationLocation{"decode", "EnhancedCellReselectionParametersIE", &sourceClause13, runtime.InvalidValue}
+var operationLocation70 = operationLocation{"encode", "EnhancedCellReselectionParametersIE", &sourceClause13, runtime.InvalidValue}
+var operationLocation71 = operationLocation{"canonical", "EnhancedCellReselectionParametersIE", &sourceClause13, runtime.InvalidValue}
+var operationLocation72 = operationLocation{"decode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", &sourceClause13, runtime.InvalidValue}
+var operationLocation73 = operationLocation{"encode", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", &sourceClause13, runtime.InvalidValue}
+var operationLocation74 = operationLocation{"canonical", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", &sourceClause13, runtime.InvalidValue}
+var operationLocation75 = operationLocation{"decode", "EGPRSWindowSizeIE", &sourceClause14, runtime.InvalidValue}
+var operationLocation76 = operationLocation{"encode", "EGPRSWindowSizeIE", &sourceClause14, runtime.InvalidValue}
+var operationLocation77 = operationLocation{"canonical", "EGPRSWindowSizeIE", &sourceClause14, runtime.InvalidValue}
+var operationLocation78 = operationLocation{"decode", "EGPRSModulationAndCodingIE", &sourceClause15, runtime.InvalidValue}
+var operationLocation79 = operationLocation{"encode", "EGPRSModulationAndCodingIE", &sourceClause15, runtime.InvalidValue}
+var operationLocation80 = operationLocation{"canonical", "EGPRSModulationAndCodingIE", &sourceClause15, runtime.InvalidValue}
+var operationLocation81 = operationLocation{"decode", "EGPRSLevelIE", &sourceClause16, runtime.InvalidValue}
+var operationLocation82 = operationLocation{"encode", "EGPRSLevelIE", &sourceClause16, runtime.InvalidValue}
+var operationLocation83 = operationLocation{"canonical", "EGPRSLevelIE", &sourceClause16, runtime.InvalidValue}
+var operationLocation84 = operationLocation{"decode", "PacketTimingAdvanceIE", &sourceClause17, runtime.InvalidValue}
+var operationLocation85 = operationLocation{"encode", "PacketTimingAdvanceIE", &sourceClause17, runtime.InvalidValue}
+var operationLocation86 = operationLocation{"canonical", "PacketTimingAdvanceIE", &sourceClause17, runtime.InvalidValue}
+var operationLocation87 = operationLocation{"decode", "TMGIIE", &sourceClause18, runtime.InvalidValue}
+var operationLocation88 = operationLocation{"encode", "TMGIIE", &sourceClause18, runtime.InvalidValue}
+var operationLocation89 = operationLocation{"canonical", "TMGIIE", &sourceClause18, runtime.InvalidValue}
 var sourceClause19 = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12"}
+var operationLocation90 = operationLocation{"lookup", "", &sourceClause19, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -11970,6 +12612,25 @@ func constrainedWidth(path string) int {
 		return 4
 	}
 	return 0
+}
+
+type operationLocation struct {
+	operation, path string
+	source          *runtime.Source
+	kind            runtime.ErrorKind
+}
+
+//go:noinline
+func (c *operationLocation) failure(err error, path string, offset, width int) error {
+	if path == "" {
+		path = c.path
+	}
+	return locateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
+}
+
+//go:noinline
+func (c *operationLocation) nilWriter() error {
+	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
 func decodeCause(err error) *runtime.DecodeError {

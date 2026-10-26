@@ -642,7 +642,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	for i := 0; i < count; i++ {
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
 		}
 		out = append(out, v)
 	}
@@ -3428,7 +3428,7 @@ func decodeClassmark3ValuePartSpareBitsList(r *runtime.Reader) ([]runtime.BitStr
 	for r.Remaining() > 0 {
 		v, err := decodeClassmark3ValuePartSpareBitsListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "Classmark3ValuePartSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "Classmark3ValuePartSpareBitsList", len(out))
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "Classmark3ValuePartSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -5052,21 +5052,21 @@ func encodeSingleBandSupport(w *runtime.Writer, v SingleBandSupport) error {
 // DecodeClassmark3ValuePart decodes TS 24.008 V20.1.0 §10.5.1.7 <Classmark 3 Value part>.
 func DecodeClassmark3ValuePartFrom(r *runtime.Reader) (Classmark3ValuePart, error) {
 	if err := r.Check(); err != nil {
-		return Classmark3ValuePart{}, locateOperationKind(err, "decode", "Classmark3ValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return Classmark3ValuePart{}, operationLocation2.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeClassmark3ValuePart(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "Classmark3ValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation2.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeClassmark3ValuePartTo(w *runtime.Writer, v Classmark3ValuePart) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "Classmark3ValuePart", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation3.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeClassmark3ValuePart(w, v) }), "encode", "Classmark3ValuePart", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation3.failure(w.WithWireValue(v.Wire, func() error { return encodeClassmark3ValuePart(w, v) }), "", w.Position(), 0)
 }
 func decodeClassmark3ValuePartBytes(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5120,7 +5120,7 @@ func EncodeClassmark3ValuePartCanonical(v Classmark3ValuePart) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 32, true, encodeClassmark3ValuePartBytes, decodeClassmark3ValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "Classmark3ValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5140,7 +5140,7 @@ func EncodeClassmark3ValuePartCanonicalAtLength(v Classmark3ValuePart, octets in
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 32, encodeClassmark3ValuePartBytes, decodeClassmark3ValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "Classmark3ValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5149,21 +5149,21 @@ func EncodeClassmark3ValuePartCanonicalAtLength(v Classmark3ValuePart, octets in
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.1.7 <A5 bits>.
 func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) {
 	if err := r.Check(); err != nil {
-		return A5Bits{}, locateOperationKind(err, "decode", "A5Bits", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return A5Bits{}, operationLocation5.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeA5Bits(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "A5Bits", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation5.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeA5BitsTo(w *runtime.Writer, v A5Bits) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "A5Bits", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation6.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeA5Bits(w, v) }), "encode", "A5Bits", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation6.failure(w.WithWireValue(v.Wire, func() error { return encodeA5Bits(w, v) }), "", w.Position(), 0)
 }
 func decodeA5BitsBytes(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5205,7 +5205,7 @@ func EncodeA5BitsCanonical(v A5Bits) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeA5BitsBytes, decodeA5BitsBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "A5Bits", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5224,7 +5224,7 @@ func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeA5BitsBytes, decodeA5BitsBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "A5Bits", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5233,21 +5233,21 @@ func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
 // DecodeRSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <R Support>.
 func DecodeRSupportFrom(r *runtime.Reader) (RSupport, error) {
 	if err := r.Check(); err != nil {
-		return RSupport{}, locateOperationKind(err, "decode", "RSupport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return RSupport{}, operationLocation8.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeRSupport(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "RSupport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation8.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeRSupportTo(w *runtime.Writer, v RSupport) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "RSupport", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation9.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeRSupport(w, v) }), "encode", "RSupport", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation9.failure(w.WithWireValue(v.Wire, func() error { return encodeRSupport(w, v) }), "", w.Position(), 0)
 }
 func decodeRSupportBytes(data []byte) (runtime.Decoded[RSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5289,7 +5289,7 @@ func EncodeRSupportCanonical(v RSupport) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeRSupportBytes, decodeRSupportBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RSupport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation10.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5308,7 +5308,7 @@ func EncodeRSupportCanonicalAtLength(v RSupport, octets int) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeRSupportBytes, decodeRSupportBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RSupport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation10.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5317,21 +5317,21 @@ func EncodeRSupportCanonicalAtLength(v RSupport, octets int) ([]byte, error) {
 // DecodeHSCSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <HSCSD Multi Slot Capability>.
 func DecodeHSCSDMultiSlotCapabilityFrom(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
 	if err := r.Check(); err != nil {
-		return HSCSDMultiSlotCapability{}, locateOperationKind(err, "decode", "HSCSDMultiSlotCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return HSCSDMultiSlotCapability{}, operationLocation11.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeHSCSDMultiSlotCapability(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "HSCSDMultiSlotCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation11.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeHSCSDMultiSlotCapabilityTo(w *runtime.Writer, v HSCSDMultiSlotCapability) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "HSCSDMultiSlotCapability", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation12.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeHSCSDMultiSlotCapability(w, v) }), "encode", "HSCSDMultiSlotCapability", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation12.failure(w.WithWireValue(v.Wire, func() error { return encodeHSCSDMultiSlotCapability(w, v) }), "", w.Position(), 0)
 }
 func decodeHSCSDMultiSlotCapabilityBytes(data []byte) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5373,7 +5373,7 @@ func EncodeHSCSDMultiSlotCapabilityCanonical(v HSCSDMultiSlotCapability) ([]byte
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeHSCSDMultiSlotCapabilityBytes, decodeHSCSDMultiSlotCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "HSCSDMultiSlotCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5392,7 +5392,7 @@ func EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v HSCSDMultiSlotCapability,
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeHSCSDMultiSlotCapabilityBytes, decodeHSCSDMultiSlotCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "HSCSDMultiSlotCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5401,21 +5401,21 @@ func EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v HSCSDMultiSlotCapability,
 // DecodeMSMeasurementCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Measurement capability>.
 func DecodeMSMeasurementCapabilityFrom(r *runtime.Reader) (MSMeasurementCapability, error) {
 	if err := r.Check(); err != nil {
-		return MSMeasurementCapability{}, locateOperationKind(err, "decode", "MSMeasurementCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return MSMeasurementCapability{}, operationLocation14.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMSMeasurementCapability(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MSMeasurementCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation14.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMSMeasurementCapabilityTo(w *runtime.Writer, v MSMeasurementCapability) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MSMeasurementCapability", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation15.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMSMeasurementCapability(w, v) }), "encode", "MSMeasurementCapability", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation15.failure(w.WithWireValue(v.Wire, func() error { return encodeMSMeasurementCapability(w, v) }), "", w.Position(), 0)
 }
 func decodeMSMeasurementCapabilityBytes(data []byte) (runtime.Decoded[MSMeasurementCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5457,7 +5457,7 @@ func EncodeMSMeasurementCapabilityCanonical(v MSMeasurementCapability) ([]byte, 
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeMSMeasurementCapabilityBytes, decodeMSMeasurementCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSMeasurementCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5476,7 +5476,7 @@ func EncodeMSMeasurementCapabilityCanonicalAtLength(v MSMeasurementCapability, o
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeMSMeasurementCapabilityBytes, decodeMSMeasurementCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSMeasurementCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5485,21 +5485,21 @@ func EncodeMSMeasurementCapabilityCanonicalAtLength(v MSMeasurementCapability, o
 // DecodeMSPositioningMethodCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <MS Positioning Method Capability>.
 func DecodeMSPositioningMethodCapabilityFrom(r *runtime.Reader) (MSPositioningMethodCapability, error) {
 	if err := r.Check(); err != nil {
-		return MSPositioningMethodCapability{}, locateOperationKind(err, "decode", "MSPositioningMethodCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return MSPositioningMethodCapability{}, operationLocation17.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMSPositioningMethodCapability(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MSPositioningMethodCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation17.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMSPositioningMethodCapabilityTo(w *runtime.Writer, v MSPositioningMethodCapability) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MSPositioningMethodCapability", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation18.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMSPositioningMethodCapability(w, v) }), "encode", "MSPositioningMethodCapability", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation18.failure(w.WithWireValue(v.Wire, func() error { return encodeMSPositioningMethodCapability(w, v) }), "", w.Position(), 0)
 }
 func decodeMSPositioningMethodCapabilityBytes(data []byte) (runtime.Decoded[MSPositioningMethodCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5541,7 +5541,7 @@ func EncodeMSPositioningMethodCapabilityCanonical(v MSPositioningMethodCapabilit
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeMSPositioningMethodCapabilityBytes, decodeMSPositioningMethodCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSPositioningMethodCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation19.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5560,7 +5560,7 @@ func EncodeMSPositioningMethodCapabilityCanonicalAtLength(v MSPositioningMethodC
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeMSPositioningMethodCapabilityBytes, decodeMSPositioningMethodCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSPositioningMethodCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation19.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5569,21 +5569,21 @@ func EncodeMSPositioningMethodCapabilityCanonicalAtLength(v MSPositioningMethodC
 // DecodeECSDMultiSlotCapability decodes TS 24.008 V20.1.0 §10.5.1.7 <ECSD Multi Slot Capability>.
 func DecodeECSDMultiSlotCapabilityFrom(r *runtime.Reader) (ECSDMultiSlotCapability, error) {
 	if err := r.Check(); err != nil {
-		return ECSDMultiSlotCapability{}, locateOperationKind(err, "decode", "ECSDMultiSlotCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return ECSDMultiSlotCapability{}, operationLocation20.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeECSDMultiSlotCapability(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "ECSDMultiSlotCapability", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation20.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeECSDMultiSlotCapabilityTo(w *runtime.Writer, v ECSDMultiSlotCapability) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "ECSDMultiSlotCapability", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation21.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeECSDMultiSlotCapability(w, v) }), "encode", "ECSDMultiSlotCapability", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation21.failure(w.WithWireValue(v.Wire, func() error { return encodeECSDMultiSlotCapability(w, v) }), "", w.Position(), 0)
 }
 func decodeECSDMultiSlotCapabilityBytes(data []byte) (runtime.Decoded[ECSDMultiSlotCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5625,7 +5625,7 @@ func EncodeECSDMultiSlotCapabilityCanonical(v ECSDMultiSlotCapability) ([]byte, 
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeECSDMultiSlotCapabilityBytes, decodeECSDMultiSlotCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ECSDMultiSlotCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation22.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5644,7 +5644,7 @@ func EncodeECSDMultiSlotCapabilityCanonicalAtLength(v ECSDMultiSlotCapability, o
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeECSDMultiSlotCapabilityBytes, decodeECSDMultiSlotCapabilityBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ECSDMultiSlotCapability", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation22.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5653,21 +5653,21 @@ func EncodeECSDMultiSlotCapabilityCanonicalAtLength(v ECSDMultiSlotCapability, o
 // DecodeN8PSKStruct decodes TS 24.008 V20.1.0 §10.5.1.7 <8-PSK Struct>.
 func DecodeN8PSKStructFrom(r *runtime.Reader) (N8PSKStruct, error) {
 	if err := r.Check(); err != nil {
-		return N8PSKStruct{}, locateOperationKind(err, "decode", "N8PSKStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return N8PSKStruct{}, operationLocation23.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeN8PSKStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "N8PSKStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation23.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeN8PSKStructTo(w *runtime.Writer, v N8PSKStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "N8PSKStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation24.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeN8PSKStruct(w, v) }), "encode", "N8PSKStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation24.failure(w.WithWireValue(v.Wire, func() error { return encodeN8PSKStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeN8PSKStructBytes(data []byte) (runtime.Decoded[N8PSKStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5709,7 +5709,7 @@ func EncodeN8PSKStructCanonical(v N8PSKStruct) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeN8PSKStructBytes, decodeN8PSKStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "N8PSKStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5728,7 +5728,7 @@ func EncodeN8PSKStructCanonicalAtLength(v N8PSKStruct, octets int) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeN8PSKStructBytes, decodeN8PSKStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "N8PSKStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5737,21 +5737,21 @@ func EncodeN8PSKStructCanonicalAtLength(v N8PSKStruct, octets int) ([]byte, erro
 // DecodeSingleBandSupport decodes TS 24.008 V20.1.0 §10.5.1.7 <Single Band Support>.
 func DecodeSingleBandSupportFrom(r *runtime.Reader) (SingleBandSupport, error) {
 	if err := r.Check(); err != nil {
-		return SingleBandSupport{}, locateOperationKind(err, "decode", "SingleBandSupport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return SingleBandSupport{}, operationLocation26.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeSingleBandSupport(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "SingleBandSupport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation26.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeSingleBandSupportTo(w *runtime.Writer, v SingleBandSupport) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "SingleBandSupport", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation27.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeSingleBandSupport(w, v) }), "encode", "SingleBandSupport", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation27.failure(w.WithWireValue(v.Wire, func() error { return encodeSingleBandSupport(w, v) }), "", w.Position(), 0)
 }
 func decodeSingleBandSupportBytes(data []byte) (runtime.Decoded[SingleBandSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -5793,7 +5793,7 @@ func EncodeSingleBandSupportCanonical(v SingleBandSupport) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeSingleBandSupportBytes, decodeSingleBandSupportBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "SingleBandSupport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5812,7 +5812,7 @@ func EncodeSingleBandSupportCanonicalAtLength(v SingleBandSupport, octets int) (
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeSingleBandSupportBytes, decodeSingleBandSupportBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "SingleBandSupport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -5820,291 +5820,23 @@ func EncodeSingleBandSupportCanonicalAtLength(v SingleBandSupport, octets int) (
 func Definitions() []string {
 	return []string{"Classmark 3 Value part", "A5 bits", "R Support", "HSCSD Multi Slot Capability", "MS Measurement capability", "MS Positioning Method Capability", "ECSD Multi Slot Capability", "8-PSK Struct", "Single Band Support"}
 }
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeClassmark3ValuePart, DecodeFrom: descriptorDecodeClassmark3ValuePartFrom, Encode: descriptorEncodeClassmark3ValuePart, Canonical: descriptorCanonicalClassmark3ValuePart, CanonicalAtLength: descriptorCanonicalAtLengthClassmark3ValuePart},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeRSupport, DecodeFrom: descriptorDecodeRSupportFrom, Encode: descriptorEncodeRSupport, Canonical: descriptorCanonicalRSupport, CanonicalAtLength: descriptorCanonicalAtLengthRSupport},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeHSCSDMultiSlotCapability, DecodeFrom: descriptorDecodeHSCSDMultiSlotCapabilityFrom, Encode: descriptorEncodeHSCSDMultiSlotCapability, Canonical: descriptorCanonicalHSCSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthHSCSDMultiSlotCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSMeasurementCapability, DecodeFrom: descriptorDecodeMSMeasurementCapabilityFrom, Encode: descriptorEncodeMSMeasurementCapability, Canonical: descriptorCanonicalMSMeasurementCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSMeasurementCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSPositioningMethodCapability, DecodeFrom: descriptorDecodeMSPositioningMethodCapabilityFrom, Encode: descriptorEncodeMSPositioningMethodCapability, Canonical: descriptorCanonicalMSPositioningMethodCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSPositioningMethodCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeECSDMultiSlotCapability, DecodeFrom: descriptorDecodeECSDMultiSlotCapabilityFrom, Encode: descriptorEncodeECSDMultiSlotCapability, Canonical: descriptorCanonicalECSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthECSDMultiSlotCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeN8PSKStruct, DecodeFrom: descriptorDecodeN8PSKStructFrom, Encode: descriptorEncodeN8PSKStruct, Canonical: descriptorCanonicalN8PSKStruct, CanonicalAtLength: descriptorCanonicalAtLengthN8PSKStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeSingleBandSupport, DecodeFrom: descriptorDecodeSingleBandSupportFrom, Encode: descriptorEncodeSingleBandSupport, Canonical: descriptorCanonicalSingleBandSupport, CanonicalAtLength: descriptorCanonicalAtLengthSingleBandSupport},
+}
+
 func Descriptors() []runtime.Descriptor {
-	return []runtime.Descriptor{
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeClassmark3ValuePart(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeClassmark3ValuePartFrom, func(v Classmark3ValuePart, wire runtime.WireInfo) Classmark3ValuePart { v.Wire = wire; return v }, true, 8, 0, 0, 256, true, false, "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case Classmark3ValuePart:
-				return EncodeClassmark3ValuePart(v)
-			case runtime.Decoded[Classmark3ValuePart]:
-				return EncodeClassmark3ValuePart(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case Classmark3ValuePart:
-				return EncodeClassmark3ValuePartCanonical(v)
-			case runtime.Decoded[Classmark3ValuePart]:
-				return EncodeClassmark3ValuePartCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case Classmark3ValuePart:
-				return EncodeClassmark3ValuePartCanonicalAtLength(v, octets)
-			case runtime.Decoded[Classmark3ValuePart]:
-				return EncodeClassmark3ValuePartCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Classmark 3 Value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5Bits(v)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5Bits(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5BitsCanonical(v)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5BitsCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5BitsCanonicalAtLength(v, octets)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5BitsCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeRSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRSupportFrom, func(v RSupport, wire runtime.WireInfo) RSupport { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RSupport:
-				return EncodeRSupport(v)
-			case runtime.Decoded[RSupport]:
-				return EncodeRSupport(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RSupport:
-				return EncodeRSupportCanonical(v)
-			case runtime.Decoded[RSupport]:
-				return EncodeRSupportCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case RSupport:
-				return EncodeRSupportCanonicalAtLength(v, octets)
-			case runtime.Decoded[RSupport]:
-				return EncodeRSupportCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "R Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeHSCSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeHSCSDMultiSlotCapabilityFrom, func(v HSCSDMultiSlotCapability, wire runtime.WireInfo) HSCSDMultiSlotCapability {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case HSCSDMultiSlotCapability:
-				return EncodeHSCSDMultiSlotCapability(v)
-			case runtime.Decoded[HSCSDMultiSlotCapability]:
-				return EncodeHSCSDMultiSlotCapability(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case HSCSDMultiSlotCapability:
-				return EncodeHSCSDMultiSlotCapabilityCanonical(v)
-			case runtime.Decoded[HSCSDMultiSlotCapability]:
-				return EncodeHSCSDMultiSlotCapabilityCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case HSCSDMultiSlotCapability:
-				return EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v, octets)
-			case runtime.Decoded[HSCSDMultiSlotCapability]:
-				return EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "HSCSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeMSMeasurementCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMSMeasurementCapabilityFrom, func(v MSMeasurementCapability, wire runtime.WireInfo) MSMeasurementCapability {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSMeasurementCapability:
-				return EncodeMSMeasurementCapability(v)
-			case runtime.Decoded[MSMeasurementCapability]:
-				return EncodeMSMeasurementCapability(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSMeasurementCapability:
-				return EncodeMSMeasurementCapabilityCanonical(v)
-			case runtime.Decoded[MSMeasurementCapability]:
-				return EncodeMSMeasurementCapabilityCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MSMeasurementCapability:
-				return EncodeMSMeasurementCapabilityCanonicalAtLength(v, octets)
-			case runtime.Decoded[MSMeasurementCapability]:
-				return EncodeMSMeasurementCapabilityCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MS Measurement capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeMSPositioningMethodCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMSPositioningMethodCapabilityFrom, func(v MSPositioningMethodCapability, wire runtime.WireInfo) MSPositioningMethodCapability {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSPositioningMethodCapability:
-				return EncodeMSPositioningMethodCapability(v)
-			case runtime.Decoded[MSPositioningMethodCapability]:
-				return EncodeMSPositioningMethodCapability(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSPositioningMethodCapability:
-				return EncodeMSPositioningMethodCapabilityCanonical(v)
-			case runtime.Decoded[MSPositioningMethodCapability]:
-				return EncodeMSPositioningMethodCapabilityCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MSPositioningMethodCapability:
-				return EncodeMSPositioningMethodCapabilityCanonicalAtLength(v, octets)
-			case runtime.Decoded[MSPositioningMethodCapability]:
-				return EncodeMSPositioningMethodCapabilityCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MS Positioning Method Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeECSDMultiSlotCapability(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeECSDMultiSlotCapabilityFrom, func(v ECSDMultiSlotCapability, wire runtime.WireInfo) ECSDMultiSlotCapability {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ECSDMultiSlotCapability:
-				return EncodeECSDMultiSlotCapability(v)
-			case runtime.Decoded[ECSDMultiSlotCapability]:
-				return EncodeECSDMultiSlotCapability(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ECSDMultiSlotCapability:
-				return EncodeECSDMultiSlotCapabilityCanonical(v)
-			case runtime.Decoded[ECSDMultiSlotCapability]:
-				return EncodeECSDMultiSlotCapabilityCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case ECSDMultiSlotCapability:
-				return EncodeECSDMultiSlotCapabilityCanonicalAtLength(v, octets)
-			case runtime.Decoded[ECSDMultiSlotCapability]:
-				return EncodeECSDMultiSlotCapabilityCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "ECSD Multi Slot Capability", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeN8PSKStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeN8PSKStructFrom, func(v N8PSKStruct, wire runtime.WireInfo) N8PSKStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case N8PSKStruct:
-				return EncodeN8PSKStruct(v)
-			case runtime.Decoded[N8PSKStruct]:
-				return EncodeN8PSKStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case N8PSKStruct:
-				return EncodeN8PSKStructCanonical(v)
-			case runtime.Decoded[N8PSKStruct]:
-				return EncodeN8PSKStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case N8PSKStruct:
-				return EncodeN8PSKStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[N8PSKStruct]:
-				return EncodeN8PSKStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "8-PSK Struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: func(data []byte) (any, error) { return DecodeSingleBandSupport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeSingleBandSupportFrom, func(v SingleBandSupport, wire runtime.WireInfo) SingleBandSupport { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case SingleBandSupport:
-				return EncodeSingleBandSupport(v)
-			case runtime.Decoded[SingleBandSupport]:
-				return EncodeSingleBandSupport(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case SingleBandSupport:
-				return EncodeSingleBandSupportCanonical(v)
-			case runtime.Decoded[SingleBandSupport]:
-				return EncodeSingleBandSupportCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case SingleBandSupport:
-				return EncodeSingleBandSupportCanonicalAtLength(v, octets)
-			case runtime.Decoded[SingleBandSupport]:
-				return EncodeSingleBandSupportCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Single Band Support", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"})
-			}
-		}},
-	}
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
@@ -6117,13 +5849,13 @@ func Lookup(name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q", name), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+		return runtime.Descriptor{}, operationLocation29.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 	}
 	var clauses []string
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation29.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
 	for _, d := range Descriptors() {
@@ -6131,22 +5863,483 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation29.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
+
+var descriptorSourceClassmark3ValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeClassmark3ValuePart(data []byte) (any, error) {
+	return DecodeClassmark3ValuePart(data)
+}
+func descriptorUnwrapClassmark3ValuePart(value any) (Classmark3ValuePart, bool) {
+	switch v := value.(type) {
+	case Classmark3ValuePart:
+		return v, true
+	case runtime.Decoded[Classmark3ValuePart]:
+		return v.Value, true
+	default:
+		return Classmark3ValuePart{}, false
+	}
+}
+
+var descriptorPolicyClassmark3ValuePart = descriptorReadPolicy{true, 8, 0, 0, 256, true, false, "Classmark 3 Value part", descriptorSourceClassmark3ValuePart}
+
+func descriptorDecodeClassmark3ValuePartFrom(r *runtime.Reader) (any, error) {
+	var v Classmark3ValuePart
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeClassmark3ValuePartFrom(r); return err }, descriptorPolicyClassmark3ValuePart)
+	if err != nil {
+		return runtime.Decoded[Classmark3ValuePart]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[Classmark3ValuePart]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeClassmark3ValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapClassmark3ValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Classmark 3 Value part", descriptorSourceClassmark3ValuePart)
+	}
+	return EncodeClassmark3ValuePart(v)
+}
+func descriptorCanonicalClassmark3ValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapClassmark3ValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Classmark 3 Value part", descriptorSourceClassmark3ValuePart)
+	}
+	return EncodeClassmark3ValuePartCanonical(v)
+}
+func descriptorCanonicalAtLengthClassmark3ValuePart(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapClassmark3ValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Classmark 3 Value part", descriptorSourceClassmark3ValuePart)
+	}
+	return EncodeClassmark3ValuePartCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceA5Bits = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeA5Bits(data []byte) (any, error) { return DecodeA5Bits(data) }
+func descriptorUnwrapA5Bits(value any) (A5Bits, bool) {
+	switch v := value.(type) {
+	case A5Bits:
+		return v, true
+	case runtime.Decoded[A5Bits]:
+		return v.Value, true
+	default:
+		return A5Bits{}, false
+	}
+}
+
+var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "A5 bits", descriptorSourceA5Bits}
+
+func descriptorDecodeA5BitsFrom(r *runtime.Reader) (any, error) {
+	var v A5Bits
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeA5BitsFrom(r); return err }, descriptorPolicyA5Bits)
+	if err != nil {
+		return runtime.Decoded[A5Bits]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[A5Bits]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeA5Bits(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5Bits(v)
+}
+func descriptorCanonicalA5Bits(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5BitsCanonical(v)
+}
+func descriptorCanonicalAtLengthA5Bits(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5BitsCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceRSupport = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeRSupport(data []byte) (any, error) { return DecodeRSupport(data) }
+func descriptorUnwrapRSupport(value any) (RSupport, bool) {
+	switch v := value.(type) {
+	case RSupport:
+		return v, true
+	case runtime.Decoded[RSupport]:
+		return v.Value, true
+	default:
+		return RSupport{}, false
+	}
+}
+
+var descriptorPolicyRSupport = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "R Support", descriptorSourceRSupport}
+
+func descriptorDecodeRSupportFrom(r *runtime.Reader) (any, error) {
+	var v RSupport
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeRSupportFrom(r); return err }, descriptorPolicyRSupport)
+	if err != nil {
+		return runtime.Decoded[RSupport]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[RSupport]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeRSupport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "R Support", descriptorSourceRSupport)
+	}
+	return EncodeRSupport(v)
+}
+func descriptorCanonicalRSupport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "R Support", descriptorSourceRSupport)
+	}
+	return EncodeRSupportCanonical(v)
+}
+func descriptorCanonicalAtLengthRSupport(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapRSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "R Support", descriptorSourceRSupport)
+	}
+	return EncodeRSupportCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceHSCSDMultiSlotCapability = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeHSCSDMultiSlotCapability(data []byte) (any, error) {
+	return DecodeHSCSDMultiSlotCapability(data)
+}
+func descriptorUnwrapHSCSDMultiSlotCapability(value any) (HSCSDMultiSlotCapability, bool) {
+	switch v := value.(type) {
+	case HSCSDMultiSlotCapability:
+		return v, true
+	case runtime.Decoded[HSCSDMultiSlotCapability]:
+		return v.Value, true
+	default:
+		return HSCSDMultiSlotCapability{}, false
+	}
+}
+
+var descriptorPolicyHSCSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "HSCSD Multi Slot Capability", descriptorSourceHSCSDMultiSlotCapability}
+
+func descriptorDecodeHSCSDMultiSlotCapabilityFrom(r *runtime.Reader) (any, error) {
+	var v HSCSDMultiSlotCapability
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeHSCSDMultiSlotCapabilityFrom(r)
+		return err
+	}, descriptorPolicyHSCSDMultiSlotCapability)
+	if err != nil {
+		return runtime.Decoded[HSCSDMultiSlotCapability]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[HSCSDMultiSlotCapability]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeHSCSDMultiSlotCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapHSCSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "HSCSD Multi Slot Capability", descriptorSourceHSCSDMultiSlotCapability)
+	}
+	return EncodeHSCSDMultiSlotCapability(v)
+}
+func descriptorCanonicalHSCSDMultiSlotCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapHSCSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "HSCSD Multi Slot Capability", descriptorSourceHSCSDMultiSlotCapability)
+	}
+	return EncodeHSCSDMultiSlotCapabilityCanonical(v)
+}
+func descriptorCanonicalAtLengthHSCSDMultiSlotCapability(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapHSCSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "HSCSD Multi Slot Capability", descriptorSourceHSCSDMultiSlotCapability)
+	}
+	return EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMSMeasurementCapability = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeMSMeasurementCapability(data []byte) (any, error) {
+	return DecodeMSMeasurementCapability(data)
+}
+func descriptorUnwrapMSMeasurementCapability(value any) (MSMeasurementCapability, bool) {
+	switch v := value.(type) {
+	case MSMeasurementCapability:
+		return v, true
+	case runtime.Decoded[MSMeasurementCapability]:
+		return v.Value, true
+	default:
+		return MSMeasurementCapability{}, false
+	}
+}
+
+var descriptorPolicyMSMeasurementCapability = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MS Measurement capability", descriptorSourceMSMeasurementCapability}
+
+func descriptorDecodeMSMeasurementCapabilityFrom(r *runtime.Reader) (any, error) {
+	var v MSMeasurementCapability
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMSMeasurementCapabilityFrom(r)
+		return err
+	}, descriptorPolicyMSMeasurementCapability)
+	if err != nil {
+		return runtime.Decoded[MSMeasurementCapability]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MSMeasurementCapability]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMSMeasurementCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSMeasurementCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MS Measurement capability", descriptorSourceMSMeasurementCapability)
+	}
+	return EncodeMSMeasurementCapability(v)
+}
+func descriptorCanonicalMSMeasurementCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSMeasurementCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS Measurement capability", descriptorSourceMSMeasurementCapability)
+	}
+	return EncodeMSMeasurementCapabilityCanonical(v)
+}
+func descriptorCanonicalAtLengthMSMeasurementCapability(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMSMeasurementCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS Measurement capability", descriptorSourceMSMeasurementCapability)
+	}
+	return EncodeMSMeasurementCapabilityCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMSPositioningMethodCapability = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeMSPositioningMethodCapability(data []byte) (any, error) {
+	return DecodeMSPositioningMethodCapability(data)
+}
+func descriptorUnwrapMSPositioningMethodCapability(value any) (MSPositioningMethodCapability, bool) {
+	switch v := value.(type) {
+	case MSPositioningMethodCapability:
+		return v, true
+	case runtime.Decoded[MSPositioningMethodCapability]:
+		return v.Value, true
+	default:
+		return MSPositioningMethodCapability{}, false
+	}
+}
+
+var descriptorPolicyMSPositioningMethodCapability = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MS Positioning Method Capability", descriptorSourceMSPositioningMethodCapability}
+
+func descriptorDecodeMSPositioningMethodCapabilityFrom(r *runtime.Reader) (any, error) {
+	var v MSPositioningMethodCapability
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMSPositioningMethodCapabilityFrom(r)
+		return err
+	}, descriptorPolicyMSPositioningMethodCapability)
+	if err != nil {
+		return runtime.Decoded[MSPositioningMethodCapability]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MSPositioningMethodCapability]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMSPositioningMethodCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSPositioningMethodCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MS Positioning Method Capability", descriptorSourceMSPositioningMethodCapability)
+	}
+	return EncodeMSPositioningMethodCapability(v)
+}
+func descriptorCanonicalMSPositioningMethodCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSPositioningMethodCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS Positioning Method Capability", descriptorSourceMSPositioningMethodCapability)
+	}
+	return EncodeMSPositioningMethodCapabilityCanonical(v)
+}
+func descriptorCanonicalAtLengthMSPositioningMethodCapability(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMSPositioningMethodCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS Positioning Method Capability", descriptorSourceMSPositioningMethodCapability)
+	}
+	return EncodeMSPositioningMethodCapabilityCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceECSDMultiSlotCapability = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeECSDMultiSlotCapability(data []byte) (any, error) {
+	return DecodeECSDMultiSlotCapability(data)
+}
+func descriptorUnwrapECSDMultiSlotCapability(value any) (ECSDMultiSlotCapability, bool) {
+	switch v := value.(type) {
+	case ECSDMultiSlotCapability:
+		return v, true
+	case runtime.Decoded[ECSDMultiSlotCapability]:
+		return v.Value, true
+	default:
+		return ECSDMultiSlotCapability{}, false
+	}
+}
+
+var descriptorPolicyECSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "ECSD Multi Slot Capability", descriptorSourceECSDMultiSlotCapability}
+
+func descriptorDecodeECSDMultiSlotCapabilityFrom(r *runtime.Reader) (any, error) {
+	var v ECSDMultiSlotCapability
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeECSDMultiSlotCapabilityFrom(r)
+		return err
+	}, descriptorPolicyECSDMultiSlotCapability)
+	if err != nil {
+		return runtime.Decoded[ECSDMultiSlotCapability]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[ECSDMultiSlotCapability]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeECSDMultiSlotCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapECSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "ECSD Multi Slot Capability", descriptorSourceECSDMultiSlotCapability)
+	}
+	return EncodeECSDMultiSlotCapability(v)
+}
+func descriptorCanonicalECSDMultiSlotCapability(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapECSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "ECSD Multi Slot Capability", descriptorSourceECSDMultiSlotCapability)
+	}
+	return EncodeECSDMultiSlotCapabilityCanonical(v)
+}
+func descriptorCanonicalAtLengthECSDMultiSlotCapability(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapECSDMultiSlotCapability(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "ECSD Multi Slot Capability", descriptorSourceECSDMultiSlotCapability)
+	}
+	return EncodeECSDMultiSlotCapabilityCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceN8PSKStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeN8PSKStruct(data []byte) (any, error) { return DecodeN8PSKStruct(data) }
+func descriptorUnwrapN8PSKStruct(value any) (N8PSKStruct, bool) {
+	switch v := value.(type) {
+	case N8PSKStruct:
+		return v, true
+	case runtime.Decoded[N8PSKStruct]:
+		return v.Value, true
+	default:
+		return N8PSKStruct{}, false
+	}
+}
+
+var descriptorPolicyN8PSKStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "8-PSK Struct", descriptorSourceN8PSKStruct}
+
+func descriptorDecodeN8PSKStructFrom(r *runtime.Reader) (any, error) {
+	var v N8PSKStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeN8PSKStructFrom(r); return err }, descriptorPolicyN8PSKStruct)
+	if err != nil {
+		return runtime.Decoded[N8PSKStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[N8PSKStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeN8PSKStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapN8PSKStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "8-PSK Struct", descriptorSourceN8PSKStruct)
+	}
+	return EncodeN8PSKStruct(v)
+}
+func descriptorCanonicalN8PSKStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapN8PSKStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "8-PSK Struct", descriptorSourceN8PSKStruct)
+	}
+	return EncodeN8PSKStructCanonical(v)
+}
+func descriptorCanonicalAtLengthN8PSKStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapN8PSKStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "8-PSK Struct", descriptorSourceN8PSKStruct)
+	}
+	return EncodeN8PSKStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceSingleBandSupport = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+
+func descriptorDecodeSingleBandSupport(data []byte) (any, error) {
+	return DecodeSingleBandSupport(data)
+}
+func descriptorUnwrapSingleBandSupport(value any) (SingleBandSupport, bool) {
+	switch v := value.(type) {
+	case SingleBandSupport:
+		return v, true
+	case runtime.Decoded[SingleBandSupport]:
+		return v.Value, true
+	default:
+		return SingleBandSupport{}, false
+	}
+}
+
+var descriptorPolicySingleBandSupport = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Single Band Support", descriptorSourceSingleBandSupport}
+
+func descriptorDecodeSingleBandSupportFrom(r *runtime.Reader) (any, error) {
+	var v SingleBandSupport
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeSingleBandSupportFrom(r); return err }, descriptorPolicySingleBandSupport)
+	if err != nil {
+		return runtime.Decoded[SingleBandSupport]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[SingleBandSupport]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeSingleBandSupport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapSingleBandSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Single Band Support", descriptorSourceSingleBandSupport)
+	}
+	return EncodeSingleBandSupport(v)
+}
+func descriptorCanonicalSingleBandSupport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapSingleBandSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Single Band Support", descriptorSourceSingleBandSupport)
+	}
+	return EncodeSingleBandSupportCanonical(v)
+}
+func descriptorCanonicalAtLengthSingleBandSupport(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapSingleBandSupport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Single Band Support", descriptorSourceSingleBandSupport)
+	}
+	return EncodeSingleBandSupportCanonicalAtLength(v, octets)
 }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+
+type descriptorReadPolicy struct {
+	needsLimit                               bool
+	minBits, postMinBits, maxBits, maxWindow int
+	zeroExtension, emptyValue                bool
+	name                                     string
+	source                                   runtime.Source
+}
+
+func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
+	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
 	if err := r.Check(); err != nil {
-		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
 	emptyInput := emptyValue && r.Remaining() == 0
 	if r.Remaining() < minBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
 	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
@@ -6163,162 +6356,191 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
-	v, err := decode(r)
+	err := decode(r)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
 	if originalRemaining < postMinBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
 	}
 	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
-		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
-	v = setWire(v, wire)
-	return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+	return wire, r.Position() - start, nil
 }
 func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
 	v, err := decodeClassmark3ValuePartBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "Classmark3ValuePart", -1, 0, sourceClause0)
+		return v, operationLocation2.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeClassmark3ValuePart(v Classmark3ValuePart) ([]byte, error) {
 	out, err := encodeClassmark3ValuePartBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "Classmark3ValuePart", -1, 0, sourceClause0)
+		return nil, operationLocation3.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	v, err := decodeA5BitsBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "A5Bits", -1, 0, sourceClause0)
+		return v, operationLocation5.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	out, err := encodeA5BitsBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "A5Bits", -1, 0, sourceClause0)
+		return nil, operationLocation6.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeRSupport(data []byte) (runtime.Decoded[RSupport], error) {
 	v, err := decodeRSupportBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "RSupport", -1, 0, sourceClause0)
+		return v, operationLocation8.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeRSupport(v RSupport) ([]byte, error) {
 	out, err := encodeRSupportBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "RSupport", -1, 0, sourceClause0)
+		return nil, operationLocation9.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeHSCSDMultiSlotCapability(data []byte) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
 	v, err := decodeHSCSDMultiSlotCapabilityBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "HSCSDMultiSlotCapability", -1, 0, sourceClause0)
+		return v, operationLocation11.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeHSCSDMultiSlotCapability(v HSCSDMultiSlotCapability) ([]byte, error) {
 	out, err := encodeHSCSDMultiSlotCapabilityBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "HSCSDMultiSlotCapability", -1, 0, sourceClause0)
+		return nil, operationLocation12.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMSMeasurementCapability(data []byte) (runtime.Decoded[MSMeasurementCapability], error) {
 	v, err := decodeMSMeasurementCapabilityBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MSMeasurementCapability", -1, 0, sourceClause0)
+		return v, operationLocation14.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMSMeasurementCapability(v MSMeasurementCapability) ([]byte, error) {
 	out, err := encodeMSMeasurementCapabilityBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MSMeasurementCapability", -1, 0, sourceClause0)
+		return nil, operationLocation15.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMSPositioningMethodCapability(data []byte) (runtime.Decoded[MSPositioningMethodCapability], error) {
 	v, err := decodeMSPositioningMethodCapabilityBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MSPositioningMethodCapability", -1, 0, sourceClause0)
+		return v, operationLocation17.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMSPositioningMethodCapability(v MSPositioningMethodCapability) ([]byte, error) {
 	out, err := encodeMSPositioningMethodCapabilityBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MSPositioningMethodCapability", -1, 0, sourceClause0)
+		return nil, operationLocation18.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeECSDMultiSlotCapability(data []byte) (runtime.Decoded[ECSDMultiSlotCapability], error) {
 	v, err := decodeECSDMultiSlotCapabilityBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "ECSDMultiSlotCapability", -1, 0, sourceClause0)
+		return v, operationLocation20.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeECSDMultiSlotCapability(v ECSDMultiSlotCapability) ([]byte, error) {
 	out, err := encodeECSDMultiSlotCapabilityBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "ECSDMultiSlotCapability", -1, 0, sourceClause0)
+		return nil, operationLocation21.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeN8PSKStruct(data []byte) (runtime.Decoded[N8PSKStruct], error) {
 	v, err := decodeN8PSKStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "N8PSKStruct", -1, 0, sourceClause0)
+		return v, operationLocation23.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeN8PSKStruct(v N8PSKStruct) ([]byte, error) {
 	out, err := encodeN8PSKStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "N8PSKStruct", -1, 0, sourceClause0)
+		return nil, operationLocation24.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeSingleBandSupport(data []byte) (runtime.Decoded[SingleBandSupport], error) {
 	v, err := decodeSingleBandSupportBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "SingleBandSupport", -1, 0, sourceClause0)
+		return v, operationLocation26.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeSingleBandSupport(v SingleBandSupport) ([]byte, error) {
 	out, err := encodeSingleBandSupportBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "SingleBandSupport", -1, 0, sourceClause0)
+		return nil, operationLocation27.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
 var sourceClause0 = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+var operationLocation0 = operationLocation{"decode", "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", &sourceClause0, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"decode", "Classmark3ValuePartSpareBitsList", &sourceClause0, runtime.InvalidValue}
+var operationLocation2 = operationLocation{"decode", "Classmark3ValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation3 = operationLocation{"encode", "Classmark3ValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation4 = operationLocation{"canonical", "Classmark3ValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation5 = operationLocation{"decode", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"encode", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation7 = operationLocation{"canonical", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation8 = operationLocation{"decode", "RSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation9 = operationLocation{"encode", "RSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation10 = operationLocation{"canonical", "RSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation11 = operationLocation{"decode", "HSCSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation12 = operationLocation{"encode", "HSCSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation13 = operationLocation{"canonical", "HSCSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation14 = operationLocation{"decode", "MSMeasurementCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation15 = operationLocation{"encode", "MSMeasurementCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation16 = operationLocation{"canonical", "MSMeasurementCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation17 = operationLocation{"decode", "MSPositioningMethodCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation18 = operationLocation{"encode", "MSPositioningMethodCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation19 = operationLocation{"canonical", "MSPositioningMethodCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation20 = operationLocation{"decode", "ECSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation21 = operationLocation{"encode", "ECSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation22 = operationLocation{"canonical", "ECSDMultiSlotCapability", &sourceClause0, runtime.InvalidValue}
+var operationLocation23 = operationLocation{"decode", "N8PSKStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation24 = operationLocation{"encode", "N8PSKStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation25 = operationLocation{"canonical", "N8PSKStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation26 = operationLocation{"decode", "SingleBandSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation27 = operationLocation{"encode", "SingleBandSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation28 = operationLocation{"canonical", "SingleBandSupport", &sourceClause0, runtime.InvalidValue}
+var operationLocation29 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -6330,6 +6552,25 @@ func constrainedWidth(path string) int {
 	switch path {
 	}
 	return 0
+}
+
+type operationLocation struct {
+	operation, path string
+	source          *runtime.Source
+	kind            runtime.ErrorKind
+}
+
+//go:noinline
+func (c *operationLocation) failure(err error, path string, offset, width int) error {
+	if path == "" {
+		path = c.path
+	}
+	return locateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
+}
+
+//go:noinline
+func (c *operationLocation) nilWriter() error {
+	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
 func decodeCause(err error) *runtime.DecodeError {

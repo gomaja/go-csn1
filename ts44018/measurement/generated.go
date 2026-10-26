@@ -564,7 +564,7 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
+				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 			}
 			terminated = true
 			break
@@ -572,10 +572,10 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 		before := r.Position()
 		v, err := decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
+			return nil, locateIndex(operationLocation0.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -659,7 +659,7 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader
 	for i := 0; i < 96 && r.Remaining() > 0; i++ {
 		v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportREPORTINGQUANTITYListValue", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
 		}
 		out = append(out, v)
 	}
@@ -883,7 +883,7 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 	for i := 0; i < count; i++ {
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
 		}
 		out = append(out, v)
 	}
@@ -2416,7 +2416,7 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(r *runtime
 	for i := 0; i < count; i++ {
 		v, err := decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
 		}
 		out = append(out, v)
 	}
@@ -2490,21 +2490,21 @@ func encodeEUTRANMeasurementReportStruct(w *runtime.Writer, v EUTRANMeasurementR
 // DecodeEnhancedMeasurementReport decodes TS 44.018 V19.0.0 §9.1.55 <Enhanced Measurement report>.
 func DecodeEnhancedMeasurementReportFrom(r *runtime.Reader) (EnhancedMeasurementReport, error) {
 	if err := r.Check(); err != nil {
-		return EnhancedMeasurementReport{}, locateOperationKind(err, "decode", "EnhancedMeasurementReport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return EnhancedMeasurementReport{}, operationLocation4.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEnhancedMeasurementReport(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EnhancedMeasurementReport", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation4.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEnhancedMeasurementReportTo(w *runtime.Writer, v EnhancedMeasurementReport) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EnhancedMeasurementReport", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation5.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEnhancedMeasurementReport(w, v) }), "encode", "EnhancedMeasurementReport", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation5.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedMeasurementReport(w, v) }), "", w.Position(), 0)
 }
 func decodeEnhancedMeasurementReportBytes(data []byte) (runtime.Decoded[EnhancedMeasurementReport], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2573,7 +2573,7 @@ func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]by
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedMeasurementReport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2610,7 +2610,7 @@ func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementRepor
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedMeasurementReport", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2619,21 +2619,21 @@ func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementRepor
 // DecodeServingCellDataStruct decodes TS 44.018 V19.0.0 §9.1.55 <Serving cell data struct>.
 func DecodeServingCellDataStructFrom(r *runtime.Reader) (ServingCellDataStruct, error) {
 	if err := r.Check(); err != nil {
-		return ServingCellDataStruct{}, locateOperationKind(err, "decode", "ServingCellDataStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return ServingCellDataStruct{}, operationLocation7.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeServingCellDataStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "ServingCellDataStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeServingCellDataStructTo(w *runtime.Writer, v ServingCellDataStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "ServingCellDataStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation8.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeServingCellDataStruct(w, v) }), "encode", "ServingCellDataStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation8.failure(w.WithWireValue(v.Wire, func() error { return encodeServingCellDataStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeServingCellDataStructBytes(data []byte) (runtime.Decoded[ServingCellDataStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2675,7 +2675,7 @@ func EncodeServingCellDataStructCanonical(v ServingCellDataStruct) ([]byte, erro
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeServingCellDataStructBytes, decodeServingCellDataStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ServingCellDataStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2694,7 +2694,7 @@ func EncodeServingCellDataStructCanonicalAtLength(v ServingCellDataStruct, octet
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeServingCellDataStructBytes, decodeServingCellDataStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "ServingCellDataStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2703,21 +2703,21 @@ func EncodeServingCellDataStructCanonicalAtLength(v ServingCellDataStruct, octet
 // DecodeRepeatedInvalidBSICInformationStruct decodes TS 44.018 V19.0.0 §9.1.55 <Repeated Invalid_BSIC_Information struct>.
 func DecodeRepeatedInvalidBSICInformationStructFrom(r *runtime.Reader) (RepeatedInvalidBSICInformationStruct, error) {
 	if err := r.Check(); err != nil {
-		return RepeatedInvalidBSICInformationStruct{}, locateOperationKind(err, "decode", "RepeatedInvalidBSICInformationStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return RepeatedInvalidBSICInformationStruct{}, operationLocation10.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeRepeatedInvalidBSICInformationStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "RepeatedInvalidBSICInformationStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation10.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeRepeatedInvalidBSICInformationStructTo(w *runtime.Writer, v RepeatedInvalidBSICInformationStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "RepeatedInvalidBSICInformationStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation11.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeRepeatedInvalidBSICInformationStruct(w, v) }), "encode", "RepeatedInvalidBSICInformationStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation11.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedInvalidBSICInformationStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeRepeatedInvalidBSICInformationStructBytes(data []byte) (runtime.Decoded[RepeatedInvalidBSICInformationStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2759,7 +2759,7 @@ func EncodeRepeatedInvalidBSICInformationStructCanonical(v RepeatedInvalidBSICIn
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeRepeatedInvalidBSICInformationStructBytes, decodeRepeatedInvalidBSICInformationStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RepeatedInvalidBSICInformationStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2778,7 +2778,7 @@ func EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v RepeatedInval
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeRepeatedInvalidBSICInformationStructBytes, decodeRepeatedInvalidBSICInformationStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "RepeatedInvalidBSICInformationStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2787,21 +2787,21 @@ func EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v RepeatedInval
 // DecodeEUTRANMeasurementReportStruct decodes TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>.
 func DecodeEUTRANMeasurementReportStructFrom(r *runtime.Reader) (EUTRANMeasurementReportStruct, error) {
 	if err := r.Check(); err != nil {
-		return EUTRANMeasurementReportStruct{}, locateOperationKind(err, "decode", "EUTRANMeasurementReportStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return EUTRANMeasurementReportStruct{}, operationLocation13.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEUTRANMeasurementReportStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EUTRANMeasurementReportStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEUTRANMeasurementReportStructTo(w *runtime.Writer, v EUTRANMeasurementReportStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EUTRANMeasurementReportStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation14.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEUTRANMeasurementReportStruct(w, v) }), "encode", "EUTRANMeasurementReportStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation14.failure(w.WithWireValue(v.Wire, func() error { return encodeEUTRANMeasurementReportStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeEUTRANMeasurementReportStructBytes(data []byte) (runtime.Decoded[EUTRANMeasurementReportStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2843,7 +2843,7 @@ func EncodeEUTRANMeasurementReportStructCanonical(v EUTRANMeasurementReportStruc
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, false, encodeEUTRANMeasurementReportStructBytes, decodeEUTRANMeasurementReportStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EUTRANMeasurementReportStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2863,7 +2863,7 @@ func EncodeEUTRANMeasurementReportStructCanonicalAtLength(v EUTRANMeasurementRep
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeEUTRANMeasurementReportStructBytes, decodeEUTRANMeasurementReportStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EUTRANMeasurementReportStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2871,138 +2871,18 @@ func EncodeEUTRANMeasurementReportStructCanonicalAtLength(v EUTRANMeasurementRep
 func Definitions() []string {
 	return []string{"Enhanced Measurement report", "Serving cell data struct", "Repeated Invalid_BSIC_Information struct", "E-UTRAN Measurement Report struct"}
 }
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEnhancedMeasurementReport, DecodeFrom: descriptorDecodeEnhancedMeasurementReportFrom, Encode: descriptorEncodeEnhancedMeasurementReport, Canonical: descriptorCanonicalEnhancedMeasurementReport, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedMeasurementReport},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeServingCellDataStruct, DecodeFrom: descriptorDecodeServingCellDataStructFrom, Encode: descriptorEncodeServingCellDataStruct, Canonical: descriptorCanonicalServingCellDataStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellDataStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeRepeatedInvalidBSICInformationStruct, DecodeFrom: descriptorDecodeRepeatedInvalidBSICInformationStructFrom, Encode: descriptorEncodeRepeatedInvalidBSICInformationStruct, Canonical: descriptorCanonicalRepeatedInvalidBSICInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEUTRANMeasurementReportStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementReportStructFrom, Encode: descriptorEncodeEUTRANMeasurementReportStruct, Canonical: descriptorCanonicalEUTRANMeasurementReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementReportStruct},
+}
+
 func Descriptors() []runtime.Descriptor {
-	return []runtime.Descriptor{
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeEnhancedMeasurementReport(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEnhancedMeasurementReportFrom, func(v EnhancedMeasurementReport, wire runtime.WireInfo) EnhancedMeasurementReport {
-				v.Wire = wire
-				return v
-			}, true, 0, 0, 168, 0, false, false, "Enhanced Measurement report", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedMeasurementReport:
-				return EncodeEnhancedMeasurementReport(v)
-			case runtime.Decoded[EnhancedMeasurementReport]:
-				return EncodeEnhancedMeasurementReport(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Enhanced Measurement report", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedMeasurementReport:
-				return EncodeEnhancedMeasurementReportCanonical(v)
-			case runtime.Decoded[EnhancedMeasurementReport]:
-				return EncodeEnhancedMeasurementReportCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Measurement report", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedMeasurementReport:
-				return EncodeEnhancedMeasurementReportCanonicalAtLength(v, octets)
-			case runtime.Decoded[EnhancedMeasurementReport]:
-				return EncodeEnhancedMeasurementReportCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Measurement report", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeServingCellDataStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeServingCellDataStructFrom, func(v ServingCellDataStruct, wire runtime.WireInfo) ServingCellDataStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "Serving cell data struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ServingCellDataStruct:
-				return EncodeServingCellDataStruct(v)
-			case runtime.Decoded[ServingCellDataStruct]:
-				return EncodeServingCellDataStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Serving cell data struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case ServingCellDataStruct:
-				return EncodeServingCellDataStructCanonical(v)
-			case runtime.Decoded[ServingCellDataStruct]:
-				return EncodeServingCellDataStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Serving cell data struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case ServingCellDataStruct:
-				return EncodeServingCellDataStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[ServingCellDataStruct]:
-				return EncodeServingCellDataStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Serving cell data struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeRepeatedInvalidBSICInformationStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeRepeatedInvalidBSICInformationStructFrom, func(v RepeatedInvalidBSICInformationStruct, wire runtime.WireInfo) RepeatedInvalidBSICInformationStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Repeated Invalid_BSIC_Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedInvalidBSICInformationStruct:
-				return EncodeRepeatedInvalidBSICInformationStruct(v)
-			case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
-				return EncodeRepeatedInvalidBSICInformationStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Repeated Invalid_BSIC_Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedInvalidBSICInformationStruct:
-				return EncodeRepeatedInvalidBSICInformationStructCanonical(v)
-			case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
-				return EncodeRepeatedInvalidBSICInformationStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Repeated Invalid_BSIC_Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case RepeatedInvalidBSICInformationStruct:
-				return EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
-				return EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Repeated Invalid_BSIC_Information struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: func(data []byte) (any, error) { return DecodeEUTRANMeasurementReportStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEUTRANMeasurementReportStructFrom, func(v EUTRANMeasurementReportStruct, wire runtime.WireInfo) EUTRANMeasurementReportStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "E-UTRAN Measurement Report struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANMeasurementReportStruct:
-				return EncodeEUTRANMeasurementReportStruct(v)
-			case runtime.Decoded[EUTRANMeasurementReportStruct]:
-				return EncodeEUTRANMeasurementReportStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "E-UTRAN Measurement Report struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANMeasurementReportStruct:
-				return EncodeEUTRANMeasurementReportStructCanonical(v)
-			case runtime.Decoded[EUTRANMeasurementReportStruct]:
-				return EncodeEUTRANMeasurementReportStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "E-UTRAN Measurement Report struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANMeasurementReportStruct:
-				return EncodeEUTRANMeasurementReportStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[EUTRANMeasurementReportStruct]:
-				return EncodeEUTRANMeasurementReportStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "E-UTRAN Measurement Report struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"})
-			}
-		}},
-	}
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
@@ -3015,13 +2895,13 @@ func Lookup(name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q", name), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+		return runtime.Descriptor{}, operationLocation16.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 	}
 	var clauses []string
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation16.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
 	for _, d := range Descriptors() {
@@ -3029,22 +2909,240 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation16.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
+
+var descriptorSourceEnhancedMeasurementReport = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+
+func descriptorDecodeEnhancedMeasurementReport(data []byte) (any, error) {
+	return DecodeEnhancedMeasurementReport(data)
+}
+func descriptorUnwrapEnhancedMeasurementReport(value any) (EnhancedMeasurementReport, bool) {
+	switch v := value.(type) {
+	case EnhancedMeasurementReport:
+		return v, true
+	case runtime.Decoded[EnhancedMeasurementReport]:
+		return v.Value, true
+	default:
+		return EnhancedMeasurementReport{}, false
+	}
+}
+
+var descriptorPolicyEnhancedMeasurementReport = descriptorReadPolicy{true, 0, 0, 168, 0, false, false, "Enhanced Measurement report", descriptorSourceEnhancedMeasurementReport}
+
+func descriptorDecodeEnhancedMeasurementReportFrom(r *runtime.Reader) (any, error) {
+	var v EnhancedMeasurementReport
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEnhancedMeasurementReportFrom(r)
+		return err
+	}, descriptorPolicyEnhancedMeasurementReport)
+	if err != nil {
+		return runtime.Decoded[EnhancedMeasurementReport]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EnhancedMeasurementReport]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEnhancedMeasurementReport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedMeasurementReport(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Enhanced Measurement report", descriptorSourceEnhancedMeasurementReport)
+	}
+	return EncodeEnhancedMeasurementReport(v)
+}
+func descriptorCanonicalEnhancedMeasurementReport(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedMeasurementReport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Measurement report", descriptorSourceEnhancedMeasurementReport)
+	}
+	return EncodeEnhancedMeasurementReportCanonical(v)
+}
+func descriptorCanonicalAtLengthEnhancedMeasurementReport(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedMeasurementReport(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Measurement report", descriptorSourceEnhancedMeasurementReport)
+	}
+	return EncodeEnhancedMeasurementReportCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceServingCellDataStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+
+func descriptorDecodeServingCellDataStruct(data []byte) (any, error) {
+	return DecodeServingCellDataStruct(data)
+}
+func descriptorUnwrapServingCellDataStruct(value any) (ServingCellDataStruct, bool) {
+	switch v := value.(type) {
+	case ServingCellDataStruct:
+		return v, true
+	case runtime.Decoded[ServingCellDataStruct]:
+		return v.Value, true
+	default:
+		return ServingCellDataStruct{}, false
+	}
+}
+
+var descriptorPolicyServingCellDataStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Serving cell data struct", descriptorSourceServingCellDataStruct}
+
+func descriptorDecodeServingCellDataStructFrom(r *runtime.Reader) (any, error) {
+	var v ServingCellDataStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeServingCellDataStructFrom(r); return err }, descriptorPolicyServingCellDataStruct)
+	if err != nil {
+		return runtime.Decoded[ServingCellDataStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[ServingCellDataStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeServingCellDataStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapServingCellDataStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Serving cell data struct", descriptorSourceServingCellDataStruct)
+	}
+	return EncodeServingCellDataStruct(v)
+}
+func descriptorCanonicalServingCellDataStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapServingCellDataStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Serving cell data struct", descriptorSourceServingCellDataStruct)
+	}
+	return EncodeServingCellDataStructCanonical(v)
+}
+func descriptorCanonicalAtLengthServingCellDataStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapServingCellDataStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Serving cell data struct", descriptorSourceServingCellDataStruct)
+	}
+	return EncodeServingCellDataStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceRepeatedInvalidBSICInformationStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+
+func descriptorDecodeRepeatedInvalidBSICInformationStruct(data []byte) (any, error) {
+	return DecodeRepeatedInvalidBSICInformationStruct(data)
+}
+func descriptorUnwrapRepeatedInvalidBSICInformationStruct(value any) (RepeatedInvalidBSICInformationStruct, bool) {
+	switch v := value.(type) {
+	case RepeatedInvalidBSICInformationStruct:
+		return v, true
+	case runtime.Decoded[RepeatedInvalidBSICInformationStruct]:
+		return v.Value, true
+	default:
+		return RepeatedInvalidBSICInformationStruct{}, false
+	}
+}
+
+var descriptorPolicyRepeatedInvalidBSICInformationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated Invalid_BSIC_Information struct", descriptorSourceRepeatedInvalidBSICInformationStruct}
+
+func descriptorDecodeRepeatedInvalidBSICInformationStructFrom(r *runtime.Reader) (any, error) {
+	var v RepeatedInvalidBSICInformationStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeRepeatedInvalidBSICInformationStructFrom(r)
+		return err
+	}, descriptorPolicyRepeatedInvalidBSICInformationStruct)
+	if err != nil {
+		return runtime.Decoded[RepeatedInvalidBSICInformationStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[RepeatedInvalidBSICInformationStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeRepeatedInvalidBSICInformationStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedInvalidBSICInformationStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Repeated Invalid_BSIC_Information struct", descriptorSourceRepeatedInvalidBSICInformationStruct)
+	}
+	return EncodeRepeatedInvalidBSICInformationStruct(v)
+}
+func descriptorCanonicalRepeatedInvalidBSICInformationStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedInvalidBSICInformationStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Repeated Invalid_BSIC_Information struct", descriptorSourceRepeatedInvalidBSICInformationStruct)
+	}
+	return EncodeRepeatedInvalidBSICInformationStructCanonical(v)
+}
+func descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapRepeatedInvalidBSICInformationStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Repeated Invalid_BSIC_Information struct", descriptorSourceRepeatedInvalidBSICInformationStruct)
+	}
+	return EncodeRepeatedInvalidBSICInformationStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEUTRANMeasurementReportStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+
+func descriptorDecodeEUTRANMeasurementReportStruct(data []byte) (any, error) {
+	return DecodeEUTRANMeasurementReportStruct(data)
+}
+func descriptorUnwrapEUTRANMeasurementReportStruct(value any) (EUTRANMeasurementReportStruct, bool) {
+	switch v := value.(type) {
+	case EUTRANMeasurementReportStruct:
+		return v, true
+	case runtime.Decoded[EUTRANMeasurementReportStruct]:
+		return v.Value, true
+	default:
+		return EUTRANMeasurementReportStruct{}, false
+	}
+}
+
+var descriptorPolicyEUTRANMeasurementReportStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN Measurement Report struct", descriptorSourceEUTRANMeasurementReportStruct}
+
+func descriptorDecodeEUTRANMeasurementReportStructFrom(r *runtime.Reader) (any, error) {
+	var v EUTRANMeasurementReportStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEUTRANMeasurementReportStructFrom(r)
+		return err
+	}, descriptorPolicyEUTRANMeasurementReportStruct)
+	if err != nil {
+		return runtime.Decoded[EUTRANMeasurementReportStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EUTRANMeasurementReportStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEUTRANMeasurementReportStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANMeasurementReportStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "E-UTRAN Measurement Report struct", descriptorSourceEUTRANMeasurementReportStruct)
+	}
+	return EncodeEUTRANMeasurementReportStruct(v)
+}
+func descriptorCanonicalEUTRANMeasurementReportStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANMeasurementReportStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "E-UTRAN Measurement Report struct", descriptorSourceEUTRANMeasurementReportStruct)
+	}
+	return EncodeEUTRANMeasurementReportStructCanonical(v)
+}
+func descriptorCanonicalAtLengthEUTRANMeasurementReportStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANMeasurementReportStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "E-UTRAN Measurement Report struct", descriptorSourceEUTRANMeasurementReportStruct)
+	}
+	return EncodeEUTRANMeasurementReportStructCanonicalAtLength(v, octets)
 }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+
+type descriptorReadPolicy struct {
+	needsLimit                               bool
+	minBits, postMinBits, maxBits, maxWindow int
+	zeroExtension, emptyValue                bool
+	name                                     string
+	source                                   runtime.Source
+}
+
+func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
+	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
 	if err := r.Check(); err != nil {
-		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
 	emptyInput := emptyValue && r.Remaining() == 0
 	if r.Remaining() < minBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
 	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
@@ -3061,92 +3159,108 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
-	v, err := decode(r)
+	err := decode(r)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
 	if originalRemaining < postMinBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
 	}
 	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
-		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
-	v = setWire(v, wire)
-	return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+	return wire, r.Position() - start, nil
 }
 func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasurementReport], error) {
 	v, err := decodeEnhancedMeasurementReportBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EnhancedMeasurementReport", -1, 0, sourceClause0)
+		return v, operationLocation4.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEnhancedMeasurementReport(v EnhancedMeasurementReport) ([]byte, error) {
 	out, err := encodeEnhancedMeasurementReportBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EnhancedMeasurementReport", -1, 0, sourceClause0)
+		return nil, operationLocation5.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeServingCellDataStruct(data []byte) (runtime.Decoded[ServingCellDataStruct], error) {
 	v, err := decodeServingCellDataStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "ServingCellDataStruct", -1, 0, sourceClause0)
+		return v, operationLocation7.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeServingCellDataStruct(v ServingCellDataStruct) ([]byte, error) {
 	out, err := encodeServingCellDataStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "ServingCellDataStruct", -1, 0, sourceClause0)
+		return nil, operationLocation8.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeRepeatedInvalidBSICInformationStruct(data []byte) (runtime.Decoded[RepeatedInvalidBSICInformationStruct], error) {
 	v, err := decodeRepeatedInvalidBSICInformationStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "RepeatedInvalidBSICInformationStruct", -1, 0, sourceClause0)
+		return v, operationLocation10.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeRepeatedInvalidBSICInformationStruct(v RepeatedInvalidBSICInformationStruct) ([]byte, error) {
 	out, err := encodeRepeatedInvalidBSICInformationStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "RepeatedInvalidBSICInformationStruct", -1, 0, sourceClause0)
+		return nil, operationLocation11.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEUTRANMeasurementReportStruct(data []byte) (runtime.Decoded[EUTRANMeasurementReportStruct], error) {
 	v, err := decodeEUTRANMeasurementReportStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EUTRANMeasurementReportStruct", -1, 0, sourceClause0)
+		return v, operationLocation13.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byte, error) {
 	out, err := encodeEUTRANMeasurementReportStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EUTRANMeasurementReportStruct", -1, 0, sourceClause0)
+		return nil, operationLocation14.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
 var sourceClause0 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+var operationLocation0 = operationLocation{"decode", "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", &sourceClause0, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"decode", "EnhancedMeasurementReportREPORTINGQUANTITYListValue", &sourceClause0, runtime.InvalidValue}
+var operationLocation2 = operationLocation{"decode", "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", &sourceClause0, runtime.InvalidValue}
+var operationLocation3 = operationLocation{"decode", "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", &sourceClause0, runtime.InvalidValue}
+var operationLocation4 = operationLocation{"decode", "EnhancedMeasurementReport", &sourceClause0, runtime.InvalidValue}
+var operationLocation5 = operationLocation{"encode", "EnhancedMeasurementReport", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"canonical", "EnhancedMeasurementReport", &sourceClause0, runtime.InvalidValue}
+var operationLocation7 = operationLocation{"decode", "ServingCellDataStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation8 = operationLocation{"encode", "ServingCellDataStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation9 = operationLocation{"canonical", "ServingCellDataStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation10 = operationLocation{"decode", "RepeatedInvalidBSICInformationStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation11 = operationLocation{"encode", "RepeatedInvalidBSICInformationStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation12 = operationLocation{"canonical", "RepeatedInvalidBSICInformationStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation13 = operationLocation{"decode", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation14 = operationLocation{"encode", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation15 = operationLocation{"canonical", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation16 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -3160,6 +3274,25 @@ func constrainedWidth(path string) int {
 		return 5
 	}
 	return 0
+}
+
+type operationLocation struct {
+	operation, path string
+	source          *runtime.Source
+	kind            runtime.ErrorKind
+}
+
+//go:noinline
+func (c *operationLocation) failure(err error, path string, offset, width int) error {
+	if path == "" {
+		path = c.path
+	}
+	return locateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
+}
+
+//go:noinline
+func (c *operationLocation) nilWriter() error {
+	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
 func decodeCause(err error) *runtime.DecodeError {

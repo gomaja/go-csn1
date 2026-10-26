@@ -218,7 +218,7 @@ func decodeMSRACapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runtime.Bi
 	for r.Remaining() > 0 {
 		v, err := decodeMSRACapabilityValuePartSpareBitsListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartSpareBitsList", len(out))
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -525,7 +525,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
+				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 			}
 			terminated = true
 			break
@@ -533,10 +533,10 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 		before := r.Position()
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
+			return nil, locateIndex(operationLocation1.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -564,7 +564,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	for r.Remaining() > 0 {
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", len(out))
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -842,18 +842,18 @@ func decodeMSRACapabilityValuePartStruct(r *runtime.Reader) (MSRACapabilityValue
 		before := r.Position()
 		element, err := decodeMSRACapabilityValuePartStructElement(r)
 		if err != nil {
-			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries))
+			return MSRACapabilityValuePartStruct{}, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStruct", len(out.Entries))
 		}
 		out.Entries = append(out.Entries, element)
 		continuation, err := r.ReadUint(1)
 		if err != nil {
-			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(err, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
+			return MSRACapabilityValuePartStruct{}, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
 		}
 		if continuation == 0 {
 			break
 		}
 		if r.Position() <= before {
-			return MSRACapabilityValuePartStruct{}, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing recursive list"), "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
+			return MSRACapabilityValuePartStruct{}, locateIndex(operationLocation3.failure(r.Error(runtime.Limit, "non-progressing recursive list"), "", r.Position(), 0), "MSRACapabilityValuePartStruct", len(out.Entries)-1)
 		}
 	}
 	return out, nil
@@ -1087,7 +1087,7 @@ func decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBits
 	for r.Remaining() > 0 {
 		v, err := decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", len(out))
+			return nil, locateIndex(operationLocation4.failure(err, "", r.Position(), 0), "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -6060,21 +6060,21 @@ func encodeDLMCCapabilityStruct(w *runtime.Writer, v DLMCCapabilityStruct) error
 // DecodeMSRACapabilityValuePart decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part>.
 func DecodeMSRACapabilityValuePartFrom(r *runtime.Reader) (MSRACapabilityValuePart, error) {
 	if err := r.Check(); err != nil {
-		return MSRACapabilityValuePart{}, locateOperationKind(err, "decode", "MSRACapabilityValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return MSRACapabilityValuePart{}, operationLocation5.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMSRACapabilityValuePart(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MSRACapabilityValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation5.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMSRACapabilityValuePartTo(w *runtime.Writer, v MSRACapabilityValuePart) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MSRACapabilityValuePart", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation6.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePart(w, v) }), "encode", "MSRACapabilityValuePart", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation6.failure(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePart(w, v) }), "", w.Position(), 0)
 }
 func decodeMSRACapabilityValuePartBytes(data []byte) (runtime.Decoded[MSRACapabilityValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6130,7 +6130,7 @@ func EncodeMSRACapabilityValuePartCanonical(v MSRACapabilityValuePart) ([]byte, 
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 50, false, encodeMSRACapabilityValuePartBytes, decodeMSRACapabilityValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSRACapabilityValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6152,7 +6152,7 @@ func EncodeMSRACapabilityValuePartCanonicalAtLength(v MSRACapabilityValuePart, o
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 50, encodeMSRACapabilityValuePartBytes, decodeMSRACapabilityValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSRACapabilityValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6161,21 +6161,21 @@ func EncodeMSRACapabilityValuePartCanonicalAtLength(v MSRACapabilityValuePart, o
 // DecodeMSRACapabilityValuePartStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part struct>.
 func DecodeMSRACapabilityValuePartStructFrom(r *runtime.Reader) (MSRACapabilityValuePartStruct, error) {
 	if err := r.Check(); err != nil {
-		return MSRACapabilityValuePartStruct{}, locateOperationKind(err, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return MSRACapabilityValuePartStruct{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMSRACapabilityValuePartStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MSRACapabilityValuePartStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation3.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMSRACapabilityValuePartStructTo(w *runtime.Writer, v MSRACapabilityValuePartStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MSRACapabilityValuePartStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation8.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePartStruct(w, v) }), "encode", "MSRACapabilityValuePartStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation8.failure(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePartStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeMSRACapabilityValuePartStructBytes(data []byte) (runtime.Decoded[MSRACapabilityValuePartStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6222,7 +6222,7 @@ func EncodeMSRACapabilityValuePartStructCanonical(v MSRACapabilityValuePartStruc
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeMSRACapabilityValuePartStructBytes, decodeMSRACapabilityValuePartStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSRACapabilityValuePartStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6244,7 +6244,7 @@ func EncodeMSRACapabilityValuePartStructCanonicalAtLength(v MSRACapabilityValueP
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeMSRACapabilityValuePartStructBytes, decodeMSRACapabilityValuePartStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MSRACapabilityValuePartStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6253,21 +6253,21 @@ func EncodeMSRACapabilityValuePartStructCanonicalAtLength(v MSRACapabilityValueP
 // DecodeAdditionalAccessTechnologiesStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Additional access technologies struct>.
 func DecodeAdditionalAccessTechnologiesStructFrom(r *runtime.Reader) (AdditionalAccessTechnologiesStruct, error) {
 	if err := r.Check(); err != nil {
-		return AdditionalAccessTechnologiesStruct{}, locateOperationKind(err, "decode", "AdditionalAccessTechnologiesStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return AdditionalAccessTechnologiesStruct{}, operationLocation10.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeAdditionalAccessTechnologiesStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "AdditionalAccessTechnologiesStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation10.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeAdditionalAccessTechnologiesStructTo(w *runtime.Writer, v AdditionalAccessTechnologiesStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "AdditionalAccessTechnologiesStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation11.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeAdditionalAccessTechnologiesStruct(w, v) }), "encode", "AdditionalAccessTechnologiesStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation11.failure(w.WithWireValue(v.Wire, func() error { return encodeAdditionalAccessTechnologiesStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeAdditionalAccessTechnologiesStructBytes(data []byte) (runtime.Decoded[AdditionalAccessTechnologiesStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6309,7 +6309,7 @@ func EncodeAdditionalAccessTechnologiesStructCanonical(v AdditionalAccessTechnol
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeAdditionalAccessTechnologiesStructBytes, decodeAdditionalAccessTechnologiesStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "AdditionalAccessTechnologiesStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6328,7 +6328,7 @@ func EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v AdditionalAcces
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeAdditionalAccessTechnologiesStructBytes, decodeAdditionalAccessTechnologiesStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "AdditionalAccessTechnologiesStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6337,21 +6337,21 @@ func EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v AdditionalAcces
 // DecodeAccessCapabilitiesStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Access capabilities struct>.
 func DecodeAccessCapabilitiesStructFrom(r *runtime.Reader) (AccessCapabilitiesStruct, error) {
 	if err := r.Check(); err != nil {
-		return AccessCapabilitiesStruct{}, locateOperationKind(err, "decode", "AccessCapabilitiesStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return AccessCapabilitiesStruct{}, operationLocation13.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeAccessCapabilitiesStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "AccessCapabilitiesStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeAccessCapabilitiesStructTo(w *runtime.Writer, v AccessCapabilitiesStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "AccessCapabilitiesStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation14.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeAccessCapabilitiesStruct(w, v) }), "encode", "AccessCapabilitiesStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation14.failure(w.WithWireValue(v.Wire, func() error { return encodeAccessCapabilitiesStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeAccessCapabilitiesStructBytes(data []byte) (runtime.Decoded[AccessCapabilitiesStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6397,7 +6397,7 @@ func EncodeAccessCapabilitiesStructCanonical(v AccessCapabilitiesStruct) ([]byte
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeAccessCapabilitiesStructBytes, decodeAccessCapabilitiesStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "AccessCapabilitiesStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6419,7 +6419,7 @@ func EncodeAccessCapabilitiesStructCanonicalAtLength(v AccessCapabilitiesStruct,
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeAccessCapabilitiesStructBytes, decodeAccessCapabilitiesStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "AccessCapabilitiesStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6428,21 +6428,21 @@ func EncodeAccessCapabilitiesStructCanonicalAtLength(v AccessCapabilitiesStruct,
 // DecodeContent decodes TS 24.008 V20.1.0 §10.5.5.12a <Content>.
 func DecodeContentFrom(r *runtime.Reader) (Content, error) {
 	if err := r.Check(); err != nil {
-		return Content{}, locateOperationKind(err, "decode", "Content", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return Content{}, operationLocation16.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeContent(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "Content", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeContentTo(w *runtime.Writer, v Content) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "Content", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation17.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeContent(w, v) }), "encode", "Content", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation17.failure(w.WithWireValue(v.Wire, func() error { return encodeContent(w, v) }), "", w.Position(), 0)
 }
 func decodeContentBytes(data []byte) (runtime.Decoded[Content], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6484,7 +6484,7 @@ func EncodeContentCanonical(v Content) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, true, encodeContentBytes, decodeContentBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "Content", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6504,7 +6504,7 @@ func EncodeContentCanonicalAtLength(v Content, octets int) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeContentBytes, decodeContentBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "Content", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6513,21 +6513,21 @@ func EncodeContentCanonicalAtLength(v Content, octets int) ([]byte, error) {
 // DecodeMultislotCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Multislot capability struct>.
 func DecodeMultislotCapabilityStructFrom(r *runtime.Reader) (MultislotCapabilityStruct, error) {
 	if err := r.Check(); err != nil {
-		return MultislotCapabilityStruct{}, locateOperationKind(err, "decode", "MultislotCapabilityStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return MultislotCapabilityStruct{}, operationLocation19.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMultislotCapabilityStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "MultislotCapabilityStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation19.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMultislotCapabilityStructTo(w *runtime.Writer, v MultislotCapabilityStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "MultislotCapabilityStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation20.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeMultislotCapabilityStruct(w, v) }), "encode", "MultislotCapabilityStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation20.failure(w.WithWireValue(v.Wire, func() error { return encodeMultislotCapabilityStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeMultislotCapabilityStructBytes(data []byte) (runtime.Decoded[MultislotCapabilityStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6569,7 +6569,7 @@ func EncodeMultislotCapabilityStructCanonical(v MultislotCapabilityStruct) ([]by
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 6, false, encodeMultislotCapabilityStructBytes, decodeMultislotCapabilityStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MultislotCapabilityStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation21.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6589,7 +6589,7 @@ func EncodeMultislotCapabilityStructCanonicalAtLength(v MultislotCapabilityStruc
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 6, encodeMultislotCapabilityStructBytes, decodeMultislotCapabilityStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "MultislotCapabilityStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation21.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6598,21 +6598,21 @@ func EncodeMultislotCapabilityStructCanonicalAtLength(v MultislotCapabilityStruc
 // DecodeA5Bits decodes TS 24.008 V20.1.0 §10.5.5.12a <A5 bits>.
 func DecodeA5BitsFrom(r *runtime.Reader) (A5Bits, error) {
 	if err := r.Check(); err != nil {
-		return A5Bits{}, locateOperationKind(err, "decode", "A5Bits", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return A5Bits{}, operationLocation22.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeA5Bits(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "A5Bits", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation22.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeA5BitsTo(w *runtime.Writer, v A5Bits) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "A5Bits", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation23.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(func() runtime.WireInfo { wire := v.Wire; wire.Spare = nil; return wire }(), func() error { return encodeA5Bits(w, v) }), "encode", "A5Bits", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation23.failure(w.WithWireValue(func() runtime.WireInfo { wire := v.Wire; wire.Spare = nil; return wire }(), func() error { return encodeA5Bits(w, v) }), "", w.Position(), 0)
 }
 func decodeA5BitsBytes(data []byte) (runtime.Decoded[A5Bits], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6654,7 +6654,7 @@ func EncodeA5BitsCanonical(v A5Bits) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeA5BitsBytes, decodeA5BitsBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "A5Bits", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation24.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6673,7 +6673,7 @@ func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeA5BitsBytes, decodeA5BitsBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "A5Bits", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation24.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6682,21 +6682,21 @@ func EncodeA5BitsCanonicalAtLength(v A5Bits, octets int) ([]byte, error) {
 // DecodeEnhancedFlexibleTimeslotAssignmentStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <Enhanced Flexible Timeslot Assignment struct>.
 func DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r *runtime.Reader) (EnhancedFlexibleTimeslotAssignmentStruct, error) {
 	if err := r.Check(); err != nil {
-		return EnhancedFlexibleTimeslotAssignmentStruct{}, locateOperationKind(err, "decode", "EnhancedFlexibleTimeslotAssignmentStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return EnhancedFlexibleTimeslotAssignmentStruct{}, operationLocation25.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEnhancedFlexibleTimeslotAssignmentStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EnhancedFlexibleTimeslotAssignmentStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation25.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEnhancedFlexibleTimeslotAssignmentStructTo(w *runtime.Writer, v EnhancedFlexibleTimeslotAssignmentStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EnhancedFlexibleTimeslotAssignmentStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation26.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEnhancedFlexibleTimeslotAssignmentStruct(w, v) }), "encode", "EnhancedFlexibleTimeslotAssignmentStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation26.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedFlexibleTimeslotAssignmentStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data []byte) (runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6738,7 +6738,7 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v EnhancedFlexibleT
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, decodeEnhancedFlexibleTimeslotAssignmentStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedFlexibleTimeslotAssignmentStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation27.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6757,7 +6757,7 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v EnhancedF
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, decodeEnhancedFlexibleTimeslotAssignmentStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EnhancedFlexibleTimeslotAssignmentStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation27.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6766,21 +6766,21 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v EnhancedF
 // DecodeDLMCCapabilityStruct decodes TS 24.008 V20.1.0 §10.5.5.12a <DLMC Capability struct>.
 func DecodeDLMCCapabilityStructFrom(r *runtime.Reader) (DLMCCapabilityStruct, error) {
 	if err := r.Check(); err != nil {
-		return DLMCCapabilityStruct{}, locateOperationKind(err, "decode", "DLMCCapabilityStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return DLMCCapabilityStruct{}, operationLocation28.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeDLMCCapabilityStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "DLMCCapabilityStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation28.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeDLMCCapabilityStructTo(w *runtime.Writer, v DLMCCapabilityStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "DLMCCapabilityStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation29.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeDLMCCapabilityStruct(w, v) }), "encode", "DLMCCapabilityStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation29.failure(w.WithWireValue(v.Wire, func() error { return encodeDLMCCapabilityStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeDLMCCapabilityStructBytes(data []byte) (runtime.Decoded[DLMCCapabilityStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -6822,7 +6822,7 @@ func EncodeDLMCCapabilityStructCanonical(v DLMCCapabilityStruct) ([]byte, error)
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeDLMCCapabilityStructBytes, decodeDLMCCapabilityStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DLMCCapabilityStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation30.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6841,7 +6841,7 @@ func EncodeDLMCCapabilityStructCanonicalAtLength(v DLMCCapabilityStruct, octets 
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeDLMCCapabilityStructBytes, decodeDLMCCapabilityStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "DLMCCapabilityStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation30.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -6849,297 +6849,23 @@ func EncodeDLMCCapabilityStructCanonicalAtLength(v DLMCCapabilityStruct, octets 
 func Definitions() []string {
 	return []string{"MS RA capability value part", "MS RA capability value part struct", "Additional access technologies struct", "Access capabilities struct", "Content", "Multislot capability struct", "A5 bits", "Enhanced Flexible Timeslot Assignment struct", "DLMC Capability struct"}
 }
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePart, DecodeFrom: descriptorDecodeMSRACapabilityValuePartFrom, Encode: descriptorEncodeMSRACapabilityValuePart, Canonical: descriptorCanonicalMSRACapabilityValuePart, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePart},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePartStruct, DecodeFrom: descriptorDecodeMSRACapabilityValuePartStructFrom, Encode: descriptorEncodeMSRACapabilityValuePartStruct, Canonical: descriptorCanonicalMSRACapabilityValuePartStruct, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePartStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 9, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAdditionalAccessTechnologiesStruct, DecodeFrom: descriptorDecodeAdditionalAccessTechnologiesStructFrom, Encode: descriptorEncodeAdditionalAccessTechnologiesStruct, Canonical: descriptorCanonicalAdditionalAccessTechnologiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAccessCapabilitiesStruct, DecodeFrom: descriptorDecodeAccessCapabilitiesStructFrom, Encode: descriptorEncodeAccessCapabilitiesStruct, Canonical: descriptorCanonicalAccessCapabilitiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessCapabilitiesStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeContent, DecodeFrom: descriptorDecodeContentFrom, Encode: descriptorEncodeContent, Canonical: descriptorCanonicalContent, CanonicalAtLength: descriptorCanonicalAtLengthContent},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 42, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMultislotCapabilityStruct, DecodeFrom: descriptorDecodeMultislotCapabilityStructFrom, Encode: descriptorEncodeMultislotCapabilityStruct, Canonical: descriptorCanonicalMultislotCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthMultislotCapabilityStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeFrom: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom, Encode: descriptorEncodeEnhancedFlexibleTimeslotAssignmentStruct, Canonical: descriptorCanonicalEnhancedFlexibleTimeslotAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeDLMCCapabilityStruct, DecodeFrom: descriptorDecodeDLMCCapabilityStructFrom, Encode: descriptorEncodeDLMCCapabilityStruct, Canonical: descriptorCanonicalDLMCCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthDLMCCapabilityStruct},
+}
+
 func Descriptors() []runtime.Descriptor {
-	return []runtime.Descriptor{
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePart(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMSRACapabilityValuePartFrom, func(v MSRACapabilityValuePart, wire runtime.WireInfo) MSRACapabilityValuePart {
-				v.Wire = wire
-				return v
-			}, true, 16, 0, 0, 0, false, false, "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePart:
-				return EncodeMSRACapabilityValuePart(v)
-			case runtime.Decoded[MSRACapabilityValuePart]:
-				return EncodeMSRACapabilityValuePart(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePart:
-				return EncodeMSRACapabilityValuePartCanonical(v)
-			case runtime.Decoded[MSRACapabilityValuePart]:
-				return EncodeMSRACapabilityValuePartCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePart:
-				return EncodeMSRACapabilityValuePartCanonicalAtLength(v, octets)
-			case runtime.Decoded[MSRACapabilityValuePart]:
-				return EncodeMSRACapabilityValuePartCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MS RA capability value part", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeMSRACapabilityValuePartStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMSRACapabilityValuePartStructFrom, func(v MSRACapabilityValuePartStruct, wire runtime.WireInfo) MSRACapabilityValuePartStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePartStruct:
-				return EncodeMSRACapabilityValuePartStruct(v)
-			case runtime.Decoded[MSRACapabilityValuePartStruct]:
-				return EncodeMSRACapabilityValuePartStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePartStruct:
-				return EncodeMSRACapabilityValuePartStructCanonical(v)
-			case runtime.Decoded[MSRACapabilityValuePartStruct]:
-				return EncodeMSRACapabilityValuePartStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MSRACapabilityValuePartStruct:
-				return EncodeMSRACapabilityValuePartStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[MSRACapabilityValuePartStruct]:
-				return EncodeMSRACapabilityValuePartStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "MS RA capability value part struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 9, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeAdditionalAccessTechnologiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeAdditionalAccessTechnologiesStructFrom, func(v AdditionalAccessTechnologiesStruct, wire runtime.WireInfo) AdditionalAccessTechnologiesStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case AdditionalAccessTechnologiesStruct:
-				return EncodeAdditionalAccessTechnologiesStruct(v)
-			case runtime.Decoded[AdditionalAccessTechnologiesStruct]:
-				return EncodeAdditionalAccessTechnologiesStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case AdditionalAccessTechnologiesStruct:
-				return EncodeAdditionalAccessTechnologiesStructCanonical(v)
-			case runtime.Decoded[AdditionalAccessTechnologiesStruct]:
-				return EncodeAdditionalAccessTechnologiesStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case AdditionalAccessTechnologiesStruct:
-				return EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[AdditionalAccessTechnologiesStruct]:
-				return EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Additional access technologies struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeAccessCapabilitiesStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeAccessCapabilitiesStructFrom, func(v AccessCapabilitiesStruct, wire runtime.WireInfo) AccessCapabilitiesStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case AccessCapabilitiesStruct:
-				return EncodeAccessCapabilitiesStruct(v)
-			case runtime.Decoded[AccessCapabilitiesStruct]:
-				return EncodeAccessCapabilitiesStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case AccessCapabilitiesStruct:
-				return EncodeAccessCapabilitiesStructCanonical(v)
-			case runtime.Decoded[AccessCapabilitiesStruct]:
-				return EncodeAccessCapabilitiesStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case AccessCapabilitiesStruct:
-				return EncodeAccessCapabilitiesStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[AccessCapabilitiesStruct]:
-				return EncodeAccessCapabilitiesStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Access capabilities struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeContent(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeContentFrom, func(v Content, wire runtime.WireInfo) Content { v.Wire = wire; return v }, false, 0, 0, 0, 0, true, false, "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case Content:
-				return EncodeContent(v)
-			case runtime.Decoded[Content]:
-				return EncodeContent(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case Content:
-				return EncodeContentCanonical(v)
-			case runtime.Decoded[Content]:
-				return EncodeContentCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case Content:
-				return EncodeContentCanonicalAtLength(v, octets)
-			case runtime.Decoded[Content]:
-				return EncodeContentCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Content", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 42, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeMultislotCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeMultislotCapabilityStructFrom, func(v MultislotCapabilityStruct, wire runtime.WireInfo) MultislotCapabilityStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MultislotCapabilityStruct:
-				return EncodeMultislotCapabilityStruct(v)
-			case runtime.Decoded[MultislotCapabilityStruct]:
-				return EncodeMultislotCapabilityStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case MultislotCapabilityStruct:
-				return EncodeMultislotCapabilityStructCanonical(v)
-			case runtime.Decoded[MultislotCapabilityStruct]:
-				return EncodeMultislotCapabilityStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case MultislotCapabilityStruct:
-				return EncodeMultislotCapabilityStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[MultislotCapabilityStruct]:
-				return EncodeMultislotCapabilityStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Multislot capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeA5Bits(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeA5BitsFrom, func(v A5Bits, wire runtime.WireInfo) A5Bits { wire.Spare = v.Wire.Spare; v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5Bits(v)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5Bits(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5BitsCanonical(v)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5BitsCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case A5Bits:
-				return EncodeA5BitsCanonicalAtLength(v, octets)
-			case runtime.Decoded[A5Bits]:
-				return EncodeA5BitsCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "A5 bits", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEnhancedFlexibleTimeslotAssignmentStructFrom, func(v EnhancedFlexibleTimeslotAssignmentStruct, wire runtime.WireInfo) EnhancedFlexibleTimeslotAssignmentStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedFlexibleTimeslotAssignmentStruct:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v)
-			case runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedFlexibleTimeslotAssignmentStruct:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v)
-			case runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EnhancedFlexibleTimeslotAssignmentStruct:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]:
-				return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Enhanced Flexible Timeslot Assignment struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-		{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: func(data []byte) (any, error) { return DecodeDLMCCapabilityStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeDLMCCapabilityStructFrom, func(v DLMCCapabilityStruct, wire runtime.WireInfo) DLMCCapabilityStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DLMCCapabilityStruct:
-				return EncodeDLMCCapabilityStruct(v)
-			case runtime.Decoded[DLMCCapabilityStruct]:
-				return EncodeDLMCCapabilityStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case DLMCCapabilityStruct:
-				return EncodeDLMCCapabilityStructCanonical(v)
-			case runtime.Decoded[DLMCCapabilityStruct]:
-				return EncodeDLMCCapabilityStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case DLMCCapabilityStruct:
-				return EncodeDLMCCapabilityStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[DLMCCapabilityStruct]:
-				return EncodeDLMCCapabilityStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "DLMC Capability struct", runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"})
-			}
-		}},
-	}
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
@@ -7152,13 +6878,13 @@ func Lookup(name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q", name), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+		return runtime.Descriptor{}, operationLocation31.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 	}
 	var clauses []string
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation31.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
 	for _, d := range Descriptors() {
@@ -7166,22 +6892,494 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation31.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
+
+var descriptorSourceMSRACapabilityValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeMSRACapabilityValuePart(data []byte) (any, error) {
+	return DecodeMSRACapabilityValuePart(data)
+}
+func descriptorUnwrapMSRACapabilityValuePart(value any) (MSRACapabilityValuePart, bool) {
+	switch v := value.(type) {
+	case MSRACapabilityValuePart:
+		return v, true
+	case runtime.Decoded[MSRACapabilityValuePart]:
+		return v.Value, true
+	default:
+		return MSRACapabilityValuePart{}, false
+	}
+}
+
+var descriptorPolicyMSRACapabilityValuePart = descriptorReadPolicy{true, 16, 0, 0, 0, false, false, "MS RA capability value part", descriptorSourceMSRACapabilityValuePart}
+
+func descriptorDecodeMSRACapabilityValuePartFrom(r *runtime.Reader) (any, error) {
+	var v MSRACapabilityValuePart
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMSRACapabilityValuePartFrom(r)
+		return err
+	}, descriptorPolicyMSRACapabilityValuePart)
+	if err != nil {
+		return runtime.Decoded[MSRACapabilityValuePart]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MSRACapabilityValuePart]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMSRACapabilityValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MS RA capability value part", descriptorSourceMSRACapabilityValuePart)
+	}
+	return EncodeMSRACapabilityValuePart(v)
+}
+func descriptorCanonicalMSRACapabilityValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS RA capability value part", descriptorSourceMSRACapabilityValuePart)
+	}
+	return EncodeMSRACapabilityValuePartCanonical(v)
+}
+func descriptorCanonicalAtLengthMSRACapabilityValuePart(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS RA capability value part", descriptorSourceMSRACapabilityValuePart)
+	}
+	return EncodeMSRACapabilityValuePartCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMSRACapabilityValuePartStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeMSRACapabilityValuePartStruct(data []byte) (any, error) {
+	return DecodeMSRACapabilityValuePartStruct(data)
+}
+func descriptorUnwrapMSRACapabilityValuePartStruct(value any) (MSRACapabilityValuePartStruct, bool) {
+	switch v := value.(type) {
+	case MSRACapabilityValuePartStruct:
+		return v, true
+	case runtime.Decoded[MSRACapabilityValuePartStruct]:
+		return v.Value, true
+	default:
+		return MSRACapabilityValuePartStruct{}, false
+	}
+}
+
+var descriptorPolicyMSRACapabilityValuePartStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MS RA capability value part struct", descriptorSourceMSRACapabilityValuePartStruct}
+
+func descriptorDecodeMSRACapabilityValuePartStructFrom(r *runtime.Reader) (any, error) {
+	var v MSRACapabilityValuePartStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMSRACapabilityValuePartStructFrom(r)
+		return err
+	}, descriptorPolicyMSRACapabilityValuePartStruct)
+	if err != nil {
+		return runtime.Decoded[MSRACapabilityValuePartStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MSRACapabilityValuePartStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMSRACapabilityValuePartStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePartStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "MS RA capability value part struct", descriptorSourceMSRACapabilityValuePartStruct)
+	}
+	return EncodeMSRACapabilityValuePartStruct(v)
+}
+func descriptorCanonicalMSRACapabilityValuePartStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePartStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS RA capability value part struct", descriptorSourceMSRACapabilityValuePartStruct)
+	}
+	return EncodeMSRACapabilityValuePartStructCanonical(v)
+}
+func descriptorCanonicalAtLengthMSRACapabilityValuePartStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMSRACapabilityValuePartStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "MS RA capability value part struct", descriptorSourceMSRACapabilityValuePartStruct)
+	}
+	return EncodeMSRACapabilityValuePartStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceAdditionalAccessTechnologiesStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeAdditionalAccessTechnologiesStruct(data []byte) (any, error) {
+	return DecodeAdditionalAccessTechnologiesStruct(data)
+}
+func descriptorUnwrapAdditionalAccessTechnologiesStruct(value any) (AdditionalAccessTechnologiesStruct, bool) {
+	switch v := value.(type) {
+	case AdditionalAccessTechnologiesStruct:
+		return v, true
+	case runtime.Decoded[AdditionalAccessTechnologiesStruct]:
+		return v.Value, true
+	default:
+		return AdditionalAccessTechnologiesStruct{}, false
+	}
+}
+
+var descriptorPolicyAdditionalAccessTechnologiesStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Additional access technologies struct", descriptorSourceAdditionalAccessTechnologiesStruct}
+
+func descriptorDecodeAdditionalAccessTechnologiesStructFrom(r *runtime.Reader) (any, error) {
+	var v AdditionalAccessTechnologiesStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeAdditionalAccessTechnologiesStructFrom(r)
+		return err
+	}, descriptorPolicyAdditionalAccessTechnologiesStruct)
+	if err != nil {
+		return runtime.Decoded[AdditionalAccessTechnologiesStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[AdditionalAccessTechnologiesStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeAdditionalAccessTechnologiesStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapAdditionalAccessTechnologiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Additional access technologies struct", descriptorSourceAdditionalAccessTechnologiesStruct)
+	}
+	return EncodeAdditionalAccessTechnologiesStruct(v)
+}
+func descriptorCanonicalAdditionalAccessTechnologiesStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapAdditionalAccessTechnologiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Additional access technologies struct", descriptorSourceAdditionalAccessTechnologiesStruct)
+	}
+	return EncodeAdditionalAccessTechnologiesStructCanonical(v)
+}
+func descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapAdditionalAccessTechnologiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Additional access technologies struct", descriptorSourceAdditionalAccessTechnologiesStruct)
+	}
+	return EncodeAdditionalAccessTechnologiesStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceAccessCapabilitiesStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeAccessCapabilitiesStruct(data []byte) (any, error) {
+	return DecodeAccessCapabilitiesStruct(data)
+}
+func descriptorUnwrapAccessCapabilitiesStruct(value any) (AccessCapabilitiesStruct, bool) {
+	switch v := value.(type) {
+	case AccessCapabilitiesStruct:
+		return v, true
+	case runtime.Decoded[AccessCapabilitiesStruct]:
+		return v.Value, true
+	default:
+		return AccessCapabilitiesStruct{}, false
+	}
+}
+
+var descriptorPolicyAccessCapabilitiesStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Access capabilities struct", descriptorSourceAccessCapabilitiesStruct}
+
+func descriptorDecodeAccessCapabilitiesStructFrom(r *runtime.Reader) (any, error) {
+	var v AccessCapabilitiesStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeAccessCapabilitiesStructFrom(r)
+		return err
+	}, descriptorPolicyAccessCapabilitiesStruct)
+	if err != nil {
+		return runtime.Decoded[AccessCapabilitiesStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[AccessCapabilitiesStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeAccessCapabilitiesStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapAccessCapabilitiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Access capabilities struct", descriptorSourceAccessCapabilitiesStruct)
+	}
+	return EncodeAccessCapabilitiesStruct(v)
+}
+func descriptorCanonicalAccessCapabilitiesStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapAccessCapabilitiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Access capabilities struct", descriptorSourceAccessCapabilitiesStruct)
+	}
+	return EncodeAccessCapabilitiesStructCanonical(v)
+}
+func descriptorCanonicalAtLengthAccessCapabilitiesStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapAccessCapabilitiesStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Access capabilities struct", descriptorSourceAccessCapabilitiesStruct)
+	}
+	return EncodeAccessCapabilitiesStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceContent = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeContent(data []byte) (any, error) { return DecodeContent(data) }
+func descriptorUnwrapContent(value any) (Content, bool) {
+	switch v := value.(type) {
+	case Content:
+		return v, true
+	case runtime.Decoded[Content]:
+		return v.Value, true
+	default:
+		return Content{}, false
+	}
+}
+
+var descriptorPolicyContent = descriptorReadPolicy{false, 0, 0, 0, 0, true, false, "Content", descriptorSourceContent}
+
+func descriptorDecodeContentFrom(r *runtime.Reader) (any, error) {
+	var v Content
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeContentFrom(r); return err }, descriptorPolicyContent)
+	if err != nil {
+		return runtime.Decoded[Content]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[Content]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeContent(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapContent(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Content", descriptorSourceContent)
+	}
+	return EncodeContent(v)
+}
+func descriptorCanonicalContent(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapContent(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Content", descriptorSourceContent)
+	}
+	return EncodeContentCanonical(v)
+}
+func descriptorCanonicalAtLengthContent(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapContent(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Content", descriptorSourceContent)
+	}
+	return EncodeContentCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceMultislotCapabilityStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeMultislotCapabilityStruct(data []byte) (any, error) {
+	return DecodeMultislotCapabilityStruct(data)
+}
+func descriptorUnwrapMultislotCapabilityStruct(value any) (MultislotCapabilityStruct, bool) {
+	switch v := value.(type) {
+	case MultislotCapabilityStruct:
+		return v, true
+	case runtime.Decoded[MultislotCapabilityStruct]:
+		return v.Value, true
+	default:
+		return MultislotCapabilityStruct{}, false
+	}
+}
+
+var descriptorPolicyMultislotCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Multislot capability struct", descriptorSourceMultislotCapabilityStruct}
+
+func descriptorDecodeMultislotCapabilityStructFrom(r *runtime.Reader) (any, error) {
+	var v MultislotCapabilityStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeMultislotCapabilityStructFrom(r)
+		return err
+	}, descriptorPolicyMultislotCapabilityStruct)
+	if err != nil {
+		return runtime.Decoded[MultislotCapabilityStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[MultislotCapabilityStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeMultislotCapabilityStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMultislotCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Multislot capability struct", descriptorSourceMultislotCapabilityStruct)
+	}
+	return EncodeMultislotCapabilityStruct(v)
+}
+func descriptorCanonicalMultislotCapabilityStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapMultislotCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Multislot capability struct", descriptorSourceMultislotCapabilityStruct)
+	}
+	return EncodeMultislotCapabilityStructCanonical(v)
+}
+func descriptorCanonicalAtLengthMultislotCapabilityStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapMultislotCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Multislot capability struct", descriptorSourceMultislotCapabilityStruct)
+	}
+	return EncodeMultislotCapabilityStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceA5Bits = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeA5Bits(data []byte) (any, error) { return DecodeA5Bits(data) }
+func descriptorUnwrapA5Bits(value any) (A5Bits, bool) {
+	switch v := value.(type) {
+	case A5Bits:
+		return v, true
+	case runtime.Decoded[A5Bits]:
+		return v.Value, true
+	default:
+		return A5Bits{}, false
+	}
+}
+
+var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "A5 bits", descriptorSourceA5Bits}
+
+func descriptorDecodeA5BitsFrom(r *runtime.Reader) (any, error) {
+	var v A5Bits
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeA5BitsFrom(r); return err }, descriptorPolicyA5Bits)
+	if err != nil {
+		return runtime.Decoded[A5Bits]{}, err
+	}
+	wire.Spare = v.Wire.Spare
+	v.Wire = wire
+	return runtime.Decoded[A5Bits]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeA5Bits(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5Bits(v)
+}
+func descriptorCanonicalA5Bits(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5BitsCanonical(v)
+}
+func descriptorCanonicalAtLengthA5Bits(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapA5Bits(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "A5 bits", descriptorSourceA5Bits)
+	}
+	return EncodeA5BitsCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (any, error) {
+	return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data)
+}
+func descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value any) (EnhancedFlexibleTimeslotAssignmentStruct, bool) {
+	switch v := value.(type) {
+	case EnhancedFlexibleTimeslotAssignmentStruct:
+		return v, true
+	case runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]:
+		return v.Value, true
+	default:
+		return EnhancedFlexibleTimeslotAssignmentStruct{}, false
+	}
+}
+
+var descriptorPolicyEnhancedFlexibleTimeslotAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct}
+
+func descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r *runtime.Reader) (any, error) {
+	var v EnhancedFlexibleTimeslotAssignmentStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r)
+		return err
+	}, descriptorPolicyEnhancedFlexibleTimeslotAssignmentStruct)
+	if err != nil {
+		return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEnhancedFlexibleTimeslotAssignmentStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Enhanced Flexible Timeslot Assignment struct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct)
+	}
+	return EncodeEnhancedFlexibleTimeslotAssignmentStruct(v)
+}
+func descriptorCanonicalEnhancedFlexibleTimeslotAssignmentStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Flexible Timeslot Assignment struct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct)
+	}
+	return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v)
+}
+func descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Enhanced Flexible Timeslot Assignment struct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct)
+	}
+	return EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceDLMCCapabilityStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+
+func descriptorDecodeDLMCCapabilityStruct(data []byte) (any, error) {
+	return DecodeDLMCCapabilityStruct(data)
+}
+func descriptorUnwrapDLMCCapabilityStruct(value any) (DLMCCapabilityStruct, bool) {
+	switch v := value.(type) {
+	case DLMCCapabilityStruct:
+		return v, true
+	case runtime.Decoded[DLMCCapabilityStruct]:
+		return v.Value, true
+	default:
+		return DLMCCapabilityStruct{}, false
+	}
+}
+
+var descriptorPolicyDLMCCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "DLMC Capability struct", descriptorSourceDLMCCapabilityStruct}
+
+func descriptorDecodeDLMCCapabilityStructFrom(r *runtime.Reader) (any, error) {
+	var v DLMCCapabilityStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeDLMCCapabilityStructFrom(r); return err }, descriptorPolicyDLMCCapabilityStruct)
+	if err != nil {
+		return runtime.Decoded[DLMCCapabilityStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[DLMCCapabilityStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeDLMCCapabilityStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDLMCCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "DLMC Capability struct", descriptorSourceDLMCCapabilityStruct)
+	}
+	return EncodeDLMCCapabilityStruct(v)
+}
+func descriptorCanonicalDLMCCapabilityStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapDLMCCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "DLMC Capability struct", descriptorSourceDLMCCapabilityStruct)
+	}
+	return EncodeDLMCCapabilityStructCanonical(v)
+}
+func descriptorCanonicalAtLengthDLMCCapabilityStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapDLMCCapabilityStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "DLMC Capability struct", descriptorSourceDLMCCapabilityStruct)
+	}
+	return EncodeDLMCCapabilityStructCanonicalAtLength(v, octets)
 }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+
+type descriptorReadPolicy struct {
+	needsLimit                               bool
+	minBits, postMinBits, maxBits, maxWindow int
+	zeroExtension, emptyValue                bool
+	name                                     string
+	source                                   runtime.Source
+}
+
+func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
+	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
 	if err := r.Check(); err != nil {
-		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
 	emptyInput := emptyValue && r.Remaining() == 0
 	if r.Remaining() < minBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
 	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
@@ -7198,162 +7396,193 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
-	v, err := decode(r)
+	err := decode(r)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
 	if originalRemaining < postMinBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
 	}
 	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
-		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
-	v = setWire(v, wire)
-	return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+	return wire, r.Position() - start, nil
 }
 func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityValuePart], error) {
 	v, err := decodeMSRACapabilityValuePartBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MSRACapabilityValuePart", -1, 0, sourceClause0)
+		return v, operationLocation5.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
 	out, err := encodeMSRACapabilityValuePartBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MSRACapabilityValuePart", -1, 0, sourceClause0)
+		return nil, operationLocation6.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMSRACapabilityValuePartStruct(data []byte) (runtime.Decoded[MSRACapabilityValuePartStruct], error) {
 	v, err := decodeMSRACapabilityValuePartStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MSRACapabilityValuePartStruct", -1, 0, sourceClause0)
+		return v, operationLocation3.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMSRACapabilityValuePartStruct(v MSRACapabilityValuePartStruct) ([]byte, error) {
 	out, err := encodeMSRACapabilityValuePartStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MSRACapabilityValuePartStruct", -1, 0, sourceClause0)
+		return nil, operationLocation8.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeAdditionalAccessTechnologiesStruct(data []byte) (runtime.Decoded[AdditionalAccessTechnologiesStruct], error) {
 	v, err := decodeAdditionalAccessTechnologiesStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "AdditionalAccessTechnologiesStruct", -1, 0, sourceClause0)
+		return v, operationLocation10.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeAdditionalAccessTechnologiesStruct(v AdditionalAccessTechnologiesStruct) ([]byte, error) {
 	out, err := encodeAdditionalAccessTechnologiesStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "AdditionalAccessTechnologiesStruct", -1, 0, sourceClause0)
+		return nil, operationLocation11.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeAccessCapabilitiesStruct(data []byte) (runtime.Decoded[AccessCapabilitiesStruct], error) {
 	v, err := decodeAccessCapabilitiesStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "AccessCapabilitiesStruct", -1, 0, sourceClause0)
+		return v, operationLocation13.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeAccessCapabilitiesStruct(v AccessCapabilitiesStruct) ([]byte, error) {
 	out, err := encodeAccessCapabilitiesStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "AccessCapabilitiesStruct", -1, 0, sourceClause0)
+		return nil, operationLocation14.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeContent(data []byte) (runtime.Decoded[Content], error) {
 	v, err := decodeContentBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "Content", -1, 0, sourceClause0)
+		return v, operationLocation16.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeContent(v Content) ([]byte, error) {
 	out, err := encodeContentBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "Content", -1, 0, sourceClause0)
+		return nil, operationLocation17.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeMultislotCapabilityStruct(data []byte) (runtime.Decoded[MultislotCapabilityStruct], error) {
 	v, err := decodeMultislotCapabilityStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "MultislotCapabilityStruct", -1, 0, sourceClause0)
+		return v, operationLocation19.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMultislotCapabilityStruct(v MultislotCapabilityStruct) ([]byte, error) {
 	out, err := encodeMultislotCapabilityStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "MultislotCapabilityStruct", -1, 0, sourceClause0)
+		return nil, operationLocation20.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeA5Bits(data []byte) (runtime.Decoded[A5Bits], error) {
 	v, err := decodeA5BitsBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "A5Bits", -1, 0, sourceClause0)
+		return v, operationLocation22.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	out, err := encodeA5BitsBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "A5Bits", -1, 0, sourceClause0)
+		return nil, operationLocation23.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct], error) {
 	v, err := decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EnhancedFlexibleTimeslotAssignmentStruct", -1, 0, sourceClause0)
+		return v, operationLocation25.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEnhancedFlexibleTimeslotAssignmentStruct(v EnhancedFlexibleTimeslotAssignmentStruct) ([]byte, error) {
 	out, err := encodeEnhancedFlexibleTimeslotAssignmentStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EnhancedFlexibleTimeslotAssignmentStruct", -1, 0, sourceClause0)
+		return nil, operationLocation26.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeDLMCCapabilityStruct(data []byte) (runtime.Decoded[DLMCCapabilityStruct], error) {
 	v, err := decodeDLMCCapabilityStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "DLMCCapabilityStruct", -1, 0, sourceClause0)
+		return v, operationLocation28.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeDLMCCapabilityStruct(v DLMCCapabilityStruct) ([]byte, error) {
 	out, err := encodeDLMCCapabilityStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "DLMCCapabilityStruct", -1, 0, sourceClause0)
+		return nil, operationLocation29.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
 var sourceClause0 = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var operationLocation0 = operationLocation{"decode", "MSRACapabilityValuePartSpareBitsList", &sourceClause0, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", &sourceClause0, runtime.InvalidValue}
+var operationLocation2 = operationLocation{"decode", "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", &sourceClause0, runtime.InvalidValue}
+var operationLocation3 = operationLocation{"decode", "MSRACapabilityValuePartStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation4 = operationLocation{"decode", "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", &sourceClause0, runtime.InvalidValue}
+var operationLocation5 = operationLocation{"decode", "MSRACapabilityValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"encode", "MSRACapabilityValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation7 = operationLocation{"canonical", "MSRACapabilityValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation8 = operationLocation{"encode", "MSRACapabilityValuePartStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation9 = operationLocation{"canonical", "MSRACapabilityValuePartStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation10 = operationLocation{"decode", "AdditionalAccessTechnologiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation11 = operationLocation{"encode", "AdditionalAccessTechnologiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation12 = operationLocation{"canonical", "AdditionalAccessTechnologiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation13 = operationLocation{"decode", "AccessCapabilitiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation14 = operationLocation{"encode", "AccessCapabilitiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation15 = operationLocation{"canonical", "AccessCapabilitiesStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation16 = operationLocation{"decode", "Content", &sourceClause0, runtime.InvalidValue}
+var operationLocation17 = operationLocation{"encode", "Content", &sourceClause0, runtime.InvalidValue}
+var operationLocation18 = operationLocation{"canonical", "Content", &sourceClause0, runtime.InvalidValue}
+var operationLocation19 = operationLocation{"decode", "MultislotCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation20 = operationLocation{"encode", "MultislotCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation21 = operationLocation{"canonical", "MultislotCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation22 = operationLocation{"decode", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation23 = operationLocation{"encode", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation24 = operationLocation{"canonical", "A5Bits", &sourceClause0, runtime.InvalidValue}
+var operationLocation25 = operationLocation{"decode", "EnhancedFlexibleTimeslotAssignmentStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation26 = operationLocation{"encode", "EnhancedFlexibleTimeslotAssignmentStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation27 = operationLocation{"canonical", "EnhancedFlexibleTimeslotAssignmentStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation28 = operationLocation{"decode", "DLMCCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation29 = operationLocation{"encode", "DLMCCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation30 = operationLocation{"canonical", "DLMCCapabilityStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation31 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -7369,6 +7598,25 @@ func constrainedWidth(path string) int {
 		return 4
 	}
 	return 0
+}
+
+type operationLocation struct {
+	operation, path string
+	source          *runtime.Source
+	kind            runtime.ErrorKind
+}
+
+//go:noinline
+func (c *operationLocation) failure(err error, path string, offset, width int) error {
+	if path == "" {
+		path = c.path
+	}
+	return locateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
+}
+
+//go:noinline
+func (c *operationLocation) nilWriter() error {
+	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
 func decodeCause(err error) *runtime.DecodeError {

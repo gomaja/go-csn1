@@ -30,9 +30,9 @@ func descriptors() []runtime.Descriptor {
 	out = append(out, restoctets.Descriptors()...)
 	out = append(out, ies.Descriptors()...)
 	out = append(out,
-		manualDescriptor(runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}, "Mobile Station Classmark 2 value part", 24, 24, 3, uecapability.DecodeClassmark2ValuePart, uecapability.DecodeClassmark2ValuePartFrom, uecapability.EncodeClassmark2ValuePart, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.EncodeClassmark2ValuePartCanonicalAtLength),
-		manualDescriptor(runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}, "geran-cs", 48, 296, 37, uecapability.DecodeGERANCS, uecapability.DecodeGERANCSFrom, uecapability.EncodeGERANCS, uecapability.EncodeGERANCSCanonical, uecapability.EncodeGERANCSCanonicalAtLength),
-		manualDescriptor(runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}, "geran-ps", 16, 400, 50, uecapability.DecodeGERANPS, uecapability.DecodeGERANPSFrom, uecapability.EncodeGERANPS, uecapability.EncodeGERANPSCanonical, uecapability.EncodeGERANPSCanonicalAtLength),
+		manualDescriptor(manualSourceClassmark2ValuePart, "Mobile Station Classmark 2 value part", 24, 24, 3, manualDecodeClassmark2ValuePart, manualDecodeClassmark2ValuePartFrom, manualEncodeClassmark2ValuePart, manualCanonicalClassmark2ValuePart, manualCanonicalClassmark2ValuePartAtLength),
+		manualDescriptor(manualSourceGERANCS, "geran-cs", 48, 296, 37, manualDecodeGERANCS, manualDecodeGERANCSFrom, manualEncodeGERANCS, manualCanonicalGERANCS, manualCanonicalGERANCSAtLength),
+		manualDescriptor(manualSourceGERANPS, "geran-ps", 16, 400, 50, manualDecodeGERANPS, manualDecodeGERANPSFrom, manualEncodeGERANPS, manualCanonicalGERANPS, manualCanonicalGERANPSAtLength),
 	)
 	return out
 }
@@ -141,64 +141,157 @@ func lookupFailure(standard, clause, name string, cause error) error {
 // The manual finite canonical bounds are TS 24.008 V20.1.0 §§10.5.1.6,
 // 10.5.1.7, 10.5.5.12a and TS 36.331 V19.4.0 §6.3.6
 // UE-CapabilityRAT-ContainerList field descriptions; receiver tails are separate.
-func manualDescriptor[T any](source runtime.Source, name string, minBits, maxBits, maxOctets int, decode func([]byte) (runtime.Decoded[T], error), from func(*runtime.Reader) (T, error), encode, canonical func(T) ([]byte, error), atLength func(T, int) ([]byte, error)) runtime.Descriptor {
-	wrong := func(operation string) error {
-		return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
-	}
-	value := func(v any) (T, bool) {
-		switch v := v.(type) {
-		case T:
-			return v, true
-		case runtime.Decoded[T]:
-			return v.Value, true
-		default:
-			var zero T
-			return zero, false
-		}
-	}
+func manualDescriptor(source runtime.Source, name string, minBits, maxBits, maxOctets int, decode func([]byte) (any, error), from func(*runtime.Reader) (any, error), encode, canonical func(any) ([]byte, error), atLength func(any, int) ([]byte, error)) runtime.Descriptor {
 	return runtime.Descriptor{Standard: source.Standard, Version: source.Version, Clause: source.Clause, Name: name, MaxOctets: maxOctets,
 		Extent: runtime.Extent{MinimumBits: minBits, MaximumBits: maxBits, Finite: true, Fixed: minBits == maxBits, NeedsContext: minBits != maxBits, Source: source},
-		Decode: func(b []byte) (any, error) { return decode(b) },
-		DecodeFrom: func(r *runtime.Reader) (any, error) {
-			if err := r.Check(); err != nil {
-				return nil, &runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Cause: err}
-			}
-			start := r.Position()
-			v, err := from(r)
-			if err != nil {
-				return nil, err
-			}
-			tail := runtime.BitString{}
-			switch value := any(v).(type) {
-			case uecapability.Classmark2ValuePart:
-				tail = value.Wire.Tail
-			case uecapability.GERANCS:
-				tail = value.Wire.Tail
-			case uecapability.GERANPS:
-				tail = value.Wire.Tail
-			}
-			return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: tail}, nil
-		},
-		Encode: func(v any) ([]byte, error) {
-			x, ok := value(v)
-			if !ok {
-				return nil, wrong("encode")
-			}
-			return encode(x)
-		},
-		Canonical: func(v any) ([]byte, error) {
-			x, ok := value(v)
-			if !ok {
-				return nil, wrong("canonical")
-			}
-			return canonical(x)
-		},
-		CanonicalAtLength: func(v any, n int) ([]byte, error) {
-			x, ok := value(v)
-			if !ok {
-				return nil, wrong("canonical")
-			}
-			return atLength(x, n)
-		},
+		Decode: decode, DecodeFrom: from, Encode: encode, Canonical: canonical, CanonicalAtLength: atLength}
+}
+func manualTypeError(operation, name string, source runtime.Source) error {
+	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
+}
+func manualReaderCheck(r *runtime.Reader, name string, source runtime.Source) error {
+	if err := r.Check(); err != nil {
+		return &runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Cause: err}
 	}
+	return nil
+}
+
+var manualSourceClassmark2ValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}
+
+func manualDecodeClassmark2ValuePart(data []byte) (any, error) {
+	return uecapability.DecodeClassmark2ValuePart(data)
+}
+func manualDecodeClassmark2ValuePartFrom(r *runtime.Reader) (any, error) {
+	if err := manualReaderCheck(r, "Mobile Station Classmark 2 value part", manualSourceClassmark2ValuePart); err != nil {
+		return nil, err
+	}
+	start := r.Position()
+	v, err := uecapability.DecodeClassmark2ValuePartFrom(r)
+	if err != nil {
+		return nil, err
+	}
+	return runtime.Decoded[uecapability.Classmark2ValuePart]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+}
+func manualUnwrapClassmark2ValuePart(value any) (uecapability.Classmark2ValuePart, bool) {
+	switch v := value.(type) {
+	case uecapability.Classmark2ValuePart:
+		return v, true
+	case runtime.Decoded[uecapability.Classmark2ValuePart]:
+		return v.Value, true
+	default:
+		return uecapability.Classmark2ValuePart{}, false
+	}
+}
+func manualEncodeClassmark2ValuePart(value any) ([]byte, error) {
+	v, ok := manualUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, manualTypeError("encode", "Mobile Station Classmark 2 value part", manualSourceClassmark2ValuePart)
+	}
+	return uecapability.EncodeClassmark2ValuePart(v)
+}
+func manualCanonicalClassmark2ValuePart(value any) ([]byte, error) {
+	v, ok := manualUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "Mobile Station Classmark 2 value part", manualSourceClassmark2ValuePart)
+	}
+	return uecapability.EncodeClassmark2ValuePartCanonical(v)
+}
+func manualCanonicalClassmark2ValuePartAtLength(value any, octets int) ([]byte, error) {
+	v, ok := manualUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "Mobile Station Classmark 2 value part", manualSourceClassmark2ValuePart)
+	}
+	return uecapability.EncodeClassmark2ValuePartCanonicalAtLength(v, octets)
+}
+
+var manualSourceGERANCS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
+
+func manualDecodeGERANCS(data []byte) (any, error) { return uecapability.DecodeGERANCS(data) }
+func manualDecodeGERANCSFrom(r *runtime.Reader) (any, error) {
+	if err := manualReaderCheck(r, "geran-cs", manualSourceGERANCS); err != nil {
+		return nil, err
+	}
+	start := r.Position()
+	v, err := uecapability.DecodeGERANCSFrom(r)
+	if err != nil {
+		return nil, err
+	}
+	return runtime.Decoded[uecapability.GERANCS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+}
+func manualUnwrapGERANCS(value any) (uecapability.GERANCS, bool) {
+	switch v := value.(type) {
+	case uecapability.GERANCS:
+		return v, true
+	case runtime.Decoded[uecapability.GERANCS]:
+		return v.Value, true
+	default:
+		return uecapability.GERANCS{}, false
+	}
+}
+func manualEncodeGERANCS(value any) ([]byte, error) {
+	v, ok := manualUnwrapGERANCS(value)
+	if !ok {
+		return nil, manualTypeError("encode", "geran-cs", manualSourceGERANCS)
+	}
+	return uecapability.EncodeGERANCS(v)
+}
+func manualCanonicalGERANCS(value any) ([]byte, error) {
+	v, ok := manualUnwrapGERANCS(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "geran-cs", manualSourceGERANCS)
+	}
+	return uecapability.EncodeGERANCSCanonical(v)
+}
+func manualCanonicalGERANCSAtLength(value any, octets int) ([]byte, error) {
+	v, ok := manualUnwrapGERANCS(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "geran-cs", manualSourceGERANCS)
+	}
+	return uecapability.EncodeGERANCSCanonicalAtLength(v, octets)
+}
+
+var manualSourceGERANPS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
+
+func manualDecodeGERANPS(data []byte) (any, error) { return uecapability.DecodeGERANPS(data) }
+func manualDecodeGERANPSFrom(r *runtime.Reader) (any, error) {
+	if err := manualReaderCheck(r, "geran-ps", manualSourceGERANPS); err != nil {
+		return nil, err
+	}
+	start := r.Position()
+	v, err := uecapability.DecodeGERANPSFrom(r)
+	if err != nil {
+		return nil, err
+	}
+	return runtime.Decoded[uecapability.GERANPS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+}
+func manualUnwrapGERANPS(value any) (uecapability.GERANPS, bool) {
+	switch v := value.(type) {
+	case uecapability.GERANPS:
+		return v, true
+	case runtime.Decoded[uecapability.GERANPS]:
+		return v.Value, true
+	default:
+		return uecapability.GERANPS{}, false
+	}
+}
+func manualEncodeGERANPS(value any) ([]byte, error) {
+	v, ok := manualUnwrapGERANPS(value)
+	if !ok {
+		return nil, manualTypeError("encode", "geran-ps", manualSourceGERANPS)
+	}
+	return uecapability.EncodeGERANPS(v)
+}
+func manualCanonicalGERANPS(value any) ([]byte, error) {
+	v, ok := manualUnwrapGERANPS(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "geran-ps", manualSourceGERANPS)
+	}
+	return uecapability.EncodeGERANPSCanonical(v)
+}
+func manualCanonicalGERANPSAtLength(value any, octets int) ([]byte, error) {
+	v, ok := manualUnwrapGERANPS(value)
+	if !ok {
+		return nil, manualTypeError("canonical", "geran-ps", manualSourceGERANPS)
+	}
+	return uecapability.EncodeGERANPSCanonicalAtLength(v, octets)
 }

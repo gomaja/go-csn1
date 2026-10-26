@@ -168,7 +168,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
+				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -176,10 +176,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
+			return nil, locateIndex(operationLocation0.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -318,7 +318,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
+				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -326,10 +326,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
+			return nil, locateIndex(operationLocation1.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -468,7 +468,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
+				return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -476,10 +476,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
+			return nil, locateIndex(operationLocation2.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -618,7 +618,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	for r.Remaining() > 0 {
 		if r.Matches("0") {
 			if err := r.Expect("0"); err != nil {
-				return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
+				return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 			}
 			terminated = true
 			break
@@ -626,10 +626,10 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		before := r.Position()
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry(r)
 		if err != nil {
-			return nil, locateIndex(locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 		}
 		if r.Position() <= before {
-			return nil, locateIndex(locateOperationKind(r.Error(runtime.Limit, "non-progressing repetition"), "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", r.Position(), 0, sourceClause0, runtime.InvalidValue), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
+			return nil, locateIndex(operationLocation3.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 		}
 		out = append(out, v)
 	}
@@ -1897,21 +1897,21 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 // DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart decodes TS 44.018 V19.0.0 §10.5.2.1e <Cell Selection Indicator after release of all TCH and SDCCH value part>.
 func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom(r *runtime.Reader) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, error) {
 	if err := r.Check(); err != nil {
-		return CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart{}, locateOperationKind(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart{}, operationLocation4.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation4.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartTo(w *runtime.Writer, v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation5.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w, v) }), "encode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation5.failure(w.WithWireValue(v.Wire, func() error { return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w, v) }), "", w.Position(), 0)
 }
 func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data []byte) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -1960,7 +1960,7 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 0, false, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -1980,7 +1980,7 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalA
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 0, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -1989,21 +1989,21 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalA
 // DecodeGSMDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <GSM Description struct>.
 func DecodeGSMDescriptionStructFrom(r *runtime.Reader) (GSMDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
-		return GSMDescriptionStruct{}, locateOperationKind(err, "decode", "GSMDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return GSMDescriptionStruct{}, operationLocation7.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeGSMDescriptionStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "GSMDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation7.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeGSMDescriptionStructTo(w *runtime.Writer, v GSMDescriptionStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "GSMDescriptionStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation8.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeGSMDescriptionStruct(w, v) }), "encode", "GSMDescriptionStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation8.failure(w.WithWireValue(v.Wire, func() error { return encodeGSMDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeGSMDescriptionStructBytes(data []byte) (runtime.Decoded[GSMDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2045,7 +2045,7 @@ func EncodeGSMDescriptionStructCanonical(v GSMDescriptionStruct) ([]byte, error)
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeGSMDescriptionStructBytes, decodeGSMDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GSMDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2064,7 +2064,7 @@ func EncodeGSMDescriptionStructCanonicalAtLength(v GSMDescriptionStruct, octets 
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeGSMDescriptionStructBytes, decodeGSMDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "GSMDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2073,21 +2073,21 @@ func EncodeGSMDescriptionStructCanonicalAtLength(v GSMDescriptionStruct, octets 
 // DecodeUTRANFDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <UTRAN FDD Description struct>.
 func DecodeUTRANFDDDescriptionStructFrom(r *runtime.Reader) (UTRANFDDDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
-		return UTRANFDDDescriptionStruct{}, locateOperationKind(err, "decode", "UTRANFDDDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return UTRANFDDDescriptionStruct{}, operationLocation10.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeUTRANFDDDescriptionStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "UTRANFDDDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation10.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeUTRANFDDDescriptionStructTo(w *runtime.Writer, v UTRANFDDDescriptionStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "UTRANFDDDescriptionStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation11.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeUTRANFDDDescriptionStruct(w, v) }), "encode", "UTRANFDDDescriptionStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation11.failure(w.WithWireValue(v.Wire, func() error { return encodeUTRANFDDDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeUTRANFDDDescriptionStructBytes(data []byte) (runtime.Decoded[UTRANFDDDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2127,7 +2127,7 @@ func EncodeUTRANFDDDescriptionStructCanonical(v UTRANFDDDescriptionStruct) ([]by
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeUTRANFDDDescriptionStructBytes, decodeUTRANFDDDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANFDDDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2147,7 +2147,7 @@ func EncodeUTRANFDDDescriptionStructCanonicalAtLength(v UTRANFDDDescriptionStruc
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANFDDDescriptionStructBytes, decodeUTRANFDDDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANFDDDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2156,21 +2156,21 @@ func EncodeUTRANFDDDescriptionStructCanonicalAtLength(v UTRANFDDDescriptionStruc
 // DecodeUTRANTDDDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <UTRAN TDD Description struct>.
 func DecodeUTRANTDDDescriptionStructFrom(r *runtime.Reader) (UTRANTDDDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
-		return UTRANTDDDescriptionStruct{}, locateOperationKind(err, "decode", "UTRANTDDDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return UTRANTDDDescriptionStruct{}, operationLocation13.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeUTRANTDDDescriptionStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "UTRANTDDDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation13.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeUTRANTDDDescriptionStructTo(w *runtime.Writer, v UTRANTDDDescriptionStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "UTRANTDDDescriptionStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation14.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeUTRANTDDDescriptionStruct(w, v) }), "encode", "UTRANTDDDescriptionStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation14.failure(w.WithWireValue(v.Wire, func() error { return encodeUTRANTDDDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeUTRANTDDDescriptionStructBytes(data []byte) (runtime.Decoded[UTRANTDDDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2210,7 +2210,7 @@ func EncodeUTRANTDDDescriptionStructCanonical(v UTRANTDDDescriptionStruct) ([]by
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeUTRANTDDDescriptionStructBytes, decodeUTRANTDDDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANTDDDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2230,7 +2230,7 @@ func EncodeUTRANTDDDescriptionStructCanonicalAtLength(v UTRANTDDDescriptionStruc
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANTDDDescriptionStructBytes, decodeUTRANTDDDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "UTRANTDDDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2239,21 +2239,21 @@ func EncodeUTRANTDDDescriptionStructCanonicalAtLength(v UTRANTDDDescriptionStruc
 // DecodeEUTRANDescriptionStruct decodes TS 44.018 V19.0.0 §10.5.2.1e <E-UTRAN Description struct>.
 func DecodeEUTRANDescriptionStructFrom(r *runtime.Reader) (EUTRANDescriptionStruct, error) {
 	if err := r.Check(); err != nil {
-		return EUTRANDescriptionStruct{}, locateOperationKind(err, "decode", "EUTRANDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+		return EUTRANDescriptionStruct{}, operationLocation16.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeEUTRANDescriptionStruct(r)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "decode", "EUTRANDescriptionStruct", r.Position(), 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation16.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeEUTRANDescriptionStructTo(w *runtime.Writer, v EUTRANDescriptionStruct) error {
 	if w == nil {
-		return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: "EUTRANDescriptionStruct", BitOffset: -1, Source: sourceClause0}, Detail: "nil writer"}
+		return operationLocation17.nilWriter()
 	}
-	return locateOperationKind(w.WithWireValue(v.Wire, func() error { return encodeEUTRANDescriptionStruct(w, v) }), "encode", "EUTRANDescriptionStruct", w.Position(), 0, sourceClause0, runtime.InvalidValue)
+	return operationLocation17.failure(w.WithWireValue(v.Wire, func() error { return encodeEUTRANDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
 func decodeEUTRANDescriptionStructBytes(data []byte) (runtime.Decoded[EUTRANDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -2293,7 +2293,7 @@ func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, 
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANDescriptionStructBytes, decodeEUTRANDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EUTRANDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2313,7 +2313,7 @@ func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, o
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANDescriptionStructBytes, decodeEUTRANDescriptionStructBytes, nil)
 		if operationErr != nil {
-			return operationValue, locateOperationKind(operationErr, "canonical", "EUTRANDescriptionStruct", -1, 0, sourceClause0, runtime.InvalidValue)
+			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -2321,173 +2321,19 @@ func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, o
 func Definitions() []string {
 	return []string{"Cell Selection Indicator after release of all TCH and SDCCH value part", "GSM Description struct", "UTRAN FDD Description struct", "UTRAN TDD Description struct", "E-UTRAN Description struct"}
 }
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "Cell Selection Indicator after release of all TCH and SDCCH value part", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeFrom: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom, Encode: descriptorEncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, Canonical: descriptorCanonicalCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, CanonicalAtLength: descriptorCanonicalAtLengthCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeGSMDescriptionStruct, DecodeFrom: descriptorDecodeGSMDescriptionStructFrom, Encode: descriptorEncodeGSMDescriptionStruct, Canonical: descriptorCanonicalGSMDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGSMDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANFDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructFrom, Encode: descriptorEncodeUTRANFDDDescriptionStruct, Canonical: descriptorCanonicalUTRANFDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANTDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructFrom, Encode: descriptorEncodeUTRANTDDDescriptionStruct, Canonical: descriptorCanonicalUTRANTDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "E-UTRAN Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeEUTRANDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANDescriptionStructFrom, Encode: descriptorEncodeEUTRANDescriptionStruct, Canonical: descriptorCanonicalEUTRANDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANDescriptionStruct},
+}
+
 func Descriptors() []runtime.Descriptor {
-	return []runtime.Descriptor{
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "Cell Selection Indicator after release of all TCH and SDCCH value part", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) {
-			return DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data)
-		}, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom, func(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, wire runtime.WireInfo) CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart {
-				v.Wire = wire
-				return v
-			}, false, 16, 0, 0, 0, false, false, "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v)
-			case runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v)
-			case runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v, octets)
-			case runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]:
-				return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "Cell Selection Indicator after release of all TCH and SDCCH value part", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) { return DecodeGSMDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeGSMDescriptionStructFrom, func(v GSMDescriptionStruct, wire runtime.WireInfo) GSMDescriptionStruct { v.Wire = wire; return v }, false, 0, 0, 0, 0, false, false, "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GSMDescriptionStruct:
-				return EncodeGSMDescriptionStruct(v)
-			case runtime.Decoded[GSMDescriptionStruct]:
-				return EncodeGSMDescriptionStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case GSMDescriptionStruct:
-				return EncodeGSMDescriptionStructCanonical(v)
-			case runtime.Decoded[GSMDescriptionStruct]:
-				return EncodeGSMDescriptionStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case GSMDescriptionStruct:
-				return EncodeGSMDescriptionStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[GSMDescriptionStruct]:
-				return EncodeGSMDescriptionStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "GSM Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) { return DecodeUTRANFDDDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeUTRANFDDDescriptionStructFrom, func(v UTRANFDDDescriptionStruct, wire runtime.WireInfo) UTRANFDDDescriptionStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANFDDDescriptionStruct:
-				return EncodeUTRANFDDDescriptionStruct(v)
-			case runtime.Decoded[UTRANFDDDescriptionStruct]:
-				return EncodeUTRANFDDDescriptionStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANFDDDescriptionStruct:
-				return EncodeUTRANFDDDescriptionStructCanonical(v)
-			case runtime.Decoded[UTRANFDDDescriptionStruct]:
-				return EncodeUTRANFDDDescriptionStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANFDDDescriptionStruct:
-				return EncodeUTRANFDDDescriptionStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[UTRANFDDDescriptionStruct]:
-				return EncodeUTRANFDDDescriptionStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN FDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) { return DecodeUTRANTDDDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeUTRANTDDDescriptionStructFrom, func(v UTRANTDDDescriptionStruct, wire runtime.WireInfo) UTRANTDDDescriptionStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANTDDDescriptionStruct:
-				return EncodeUTRANTDDDescriptionStruct(v)
-			case runtime.Decoded[UTRANTDDDescriptionStruct]:
-				return EncodeUTRANTDDDescriptionStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANTDDDescriptionStruct:
-				return EncodeUTRANTDDDescriptionStructCanonical(v)
-			case runtime.Decoded[UTRANTDDDescriptionStruct]:
-				return EncodeUTRANTDDDescriptionStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case UTRANTDDDescriptionStruct:
-				return EncodeUTRANTDDDescriptionStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[UTRANTDDDescriptionStruct]:
-				return EncodeUTRANTDDDescriptionStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "UTRAN TDD Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}},
-		{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "E-UTRAN Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: func(data []byte) (any, error) { return DecodeEUTRANDescriptionStruct(data) }, DecodeFrom: func(r *runtime.Reader) (any, error) {
-			return descriptorFrom(r, DecodeEUTRANDescriptionStructFrom, func(v EUTRANDescriptionStruct, wire runtime.WireInfo) EUTRANDescriptionStruct {
-				v.Wire = wire
-				return v
-			}, false, 0, 0, 0, 0, false, false, "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-		}, Encode: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANDescriptionStruct:
-				return EncodeEUTRANDescriptionStruct(v)
-			case runtime.Decoded[EUTRANDescriptionStruct]:
-				return EncodeEUTRANDescriptionStruct(v.Value)
-			default:
-				return nil, descriptorTypeError("encode", "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, Canonical: func(value any) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANDescriptionStruct:
-				return EncodeEUTRANDescriptionStructCanonical(v)
-			case runtime.Decoded[EUTRANDescriptionStruct]:
-				return EncodeEUTRANDescriptionStructCanonical(v.Value)
-			default:
-				return nil, descriptorTypeError("canonical", "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}, CanonicalAtLength: func(value any, octets int) ([]byte, error) {
-			switch v := value.(type) {
-			case EUTRANDescriptionStruct:
-				return EncodeEUTRANDescriptionStructCanonicalAtLength(v, octets)
-			case runtime.Decoded[EUTRANDescriptionStruct]:
-				return EncodeEUTRANDescriptionStructCanonicalAtLength(v.Value, octets)
-			default:
-				return nil, descriptorTypeError("canonical", "E-UTRAN Description struct", runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"})
-			}
-		}},
-	}
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
@@ -2500,13 +2346,13 @@ func Lookup(name string) (runtime.Descriptor, error) {
 		return matches[0], nil
 	}
 	if len(matches) == 0 {
-		return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q", name), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+		return runtime.Descriptor{}, operationLocation19.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 	}
 	var clauses []string
 	for _, d := range matches {
 		clauses = append(clauses, d.Clause)
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation19.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
 	for _, d := range Descriptors() {
@@ -2514,22 +2360,293 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 			return d, nil
 		}
 	}
-	return runtime.Descriptor{}, locateOperationKind(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), "lookup", name, -1, 0, sourceClause0, runtime.InvalidSchema)
+	return runtime.Descriptor{}, operationLocation19.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
+
+var descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+
+func descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte) (any, error) {
+	return DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data)
+}
+func descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value any) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, bool) {
+	switch v := value.(type) {
+	case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart:
+		return v, true
+	case runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]:
+		return v.Value, true
+	default:
+		return CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart{}, false
+	}
+}
+
+var descriptorPolicyCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = descriptorReadPolicy{false, 16, 0, 0, 0, false, false, "Cell Selection Indicator after release of all TCH and SDCCH value part", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart}
+
+func descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom(r *runtime.Reader) (any, error) {
+	var v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom(r)
+		return err
+	}, descriptorPolicyCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart)
+	if err != nil {
+		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "Cell Selection Indicator after release of all TCH and SDCCH value part", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart)
+	}
+	return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v)
+}
+func descriptorCanonicalCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Cell Selection Indicator after release of all TCH and SDCCH value part", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart)
+	}
+	return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v)
+}
+func descriptorCanonicalAtLengthCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "Cell Selection Indicator after release of all TCH and SDCCH value part", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart)
+	}
+	return EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceGSMDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+
+func descriptorDecodeGSMDescriptionStruct(data []byte) (any, error) {
+	return DecodeGSMDescriptionStruct(data)
+}
+func descriptorUnwrapGSMDescriptionStruct(value any) (GSMDescriptionStruct, bool) {
+	switch v := value.(type) {
+	case GSMDescriptionStruct:
+		return v, true
+	case runtime.Decoded[GSMDescriptionStruct]:
+		return v.Value, true
+	default:
+		return GSMDescriptionStruct{}, false
+	}
+}
+
+var descriptorPolicyGSMDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GSM Description struct", descriptorSourceGSMDescriptionStruct}
+
+func descriptorDecodeGSMDescriptionStructFrom(r *runtime.Reader) (any, error) {
+	var v GSMDescriptionStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error { var err error; v, err = DecodeGSMDescriptionStructFrom(r); return err }, descriptorPolicyGSMDescriptionStruct)
+	if err != nil {
+		return runtime.Decoded[GSMDescriptionStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[GSMDescriptionStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeGSMDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGSMDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "GSM Description struct", descriptorSourceGSMDescriptionStruct)
+	}
+	return EncodeGSMDescriptionStruct(v)
+}
+func descriptorCanonicalGSMDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapGSMDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GSM Description struct", descriptorSourceGSMDescriptionStruct)
+	}
+	return EncodeGSMDescriptionStructCanonical(v)
+}
+func descriptorCanonicalAtLengthGSMDescriptionStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapGSMDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "GSM Description struct", descriptorSourceGSMDescriptionStruct)
+	}
+	return EncodeGSMDescriptionStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceUTRANFDDDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+
+func descriptorDecodeUTRANFDDDescriptionStruct(data []byte) (any, error) {
+	return DecodeUTRANFDDDescriptionStruct(data)
+}
+func descriptorUnwrapUTRANFDDDescriptionStruct(value any) (UTRANFDDDescriptionStruct, bool) {
+	switch v := value.(type) {
+	case UTRANFDDDescriptionStruct:
+		return v, true
+	case runtime.Decoded[UTRANFDDDescriptionStruct]:
+		return v.Value, true
+	default:
+		return UTRANFDDDescriptionStruct{}, false
+	}
+}
+
+var descriptorPolicyUTRANFDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStruct}
+
+func descriptorDecodeUTRANFDDDescriptionStructFrom(r *runtime.Reader) (any, error) {
+	var v UTRANFDDDescriptionStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeUTRANFDDDescriptionStructFrom(r)
+		return err
+	}, descriptorPolicyUTRANFDDDescriptionStruct)
+	if err != nil {
+		return runtime.Decoded[UTRANFDDDescriptionStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[UTRANFDDDescriptionStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeUTRANFDDDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANFDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStruct)
+	}
+	return EncodeUTRANFDDDescriptionStruct(v)
+}
+func descriptorCanonicalUTRANFDDDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANFDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStruct)
+	}
+	return EncodeUTRANFDDDescriptionStructCanonical(v)
+}
+func descriptorCanonicalAtLengthUTRANFDDDescriptionStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANFDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStruct)
+	}
+	return EncodeUTRANFDDDescriptionStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceUTRANTDDDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+
+func descriptorDecodeUTRANTDDDescriptionStruct(data []byte) (any, error) {
+	return DecodeUTRANTDDDescriptionStruct(data)
+}
+func descriptorUnwrapUTRANTDDDescriptionStruct(value any) (UTRANTDDDescriptionStruct, bool) {
+	switch v := value.(type) {
+	case UTRANTDDDescriptionStruct:
+		return v, true
+	case runtime.Decoded[UTRANTDDDescriptionStruct]:
+		return v.Value, true
+	default:
+		return UTRANTDDDescriptionStruct{}, false
+	}
+}
+
+var descriptorPolicyUTRANTDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStruct}
+
+func descriptorDecodeUTRANTDDDescriptionStructFrom(r *runtime.Reader) (any, error) {
+	var v UTRANTDDDescriptionStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeUTRANTDDDescriptionStructFrom(r)
+		return err
+	}, descriptorPolicyUTRANTDDDescriptionStruct)
+	if err != nil {
+		return runtime.Decoded[UTRANTDDDescriptionStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[UTRANTDDDescriptionStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeUTRANTDDDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANTDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStruct)
+	}
+	return EncodeUTRANTDDDescriptionStruct(v)
+}
+func descriptorCanonicalUTRANTDDDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANTDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStruct)
+	}
+	return EncodeUTRANTDDDescriptionStructCanonical(v)
+}
+func descriptorCanonicalAtLengthUTRANTDDDescriptionStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapUTRANTDDDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStruct)
+	}
+	return EncodeUTRANTDDDescriptionStructCanonicalAtLength(v, octets)
+}
+
+var descriptorSourceEUTRANDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+
+func descriptorDecodeEUTRANDescriptionStruct(data []byte) (any, error) {
+	return DecodeEUTRANDescriptionStruct(data)
+}
+func descriptorUnwrapEUTRANDescriptionStruct(value any) (EUTRANDescriptionStruct, bool) {
+	switch v := value.(type) {
+	case EUTRANDescriptionStruct:
+		return v, true
+	case runtime.Decoded[EUTRANDescriptionStruct]:
+		return v.Value, true
+	default:
+		return EUTRANDescriptionStruct{}, false
+	}
+}
+
+var descriptorPolicyEUTRANDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN Description struct", descriptorSourceEUTRANDescriptionStruct}
+
+func descriptorDecodeEUTRANDescriptionStructFrom(r *runtime.Reader) (any, error) {
+	var v EUTRANDescriptionStruct
+	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
+		var err error
+		v, err = DecodeEUTRANDescriptionStructFrom(r)
+		return err
+	}, descriptorPolicyEUTRANDescriptionStruct)
+	if err != nil {
+		return runtime.Decoded[EUTRANDescriptionStruct]{}, err
+	}
+	v.Wire = wire
+	return runtime.Decoded[EUTRANDescriptionStruct]{Value: v, BitsConsumed: bits, Tail: wire.Tail}, nil
+}
+func descriptorEncodeEUTRANDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("encode", "E-UTRAN Description struct", descriptorSourceEUTRANDescriptionStruct)
+	}
+	return EncodeEUTRANDescriptionStruct(v)
+}
+func descriptorCanonicalEUTRANDescriptionStruct(value any) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "E-UTRAN Description struct", descriptorSourceEUTRANDescriptionStruct)
+	}
+	return EncodeEUTRANDescriptionStructCanonical(v)
+}
+func descriptorCanonicalAtLengthEUTRANDescriptionStruct(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapEUTRANDescriptionStruct(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "E-UTRAN Description struct", descriptorSourceEUTRANDescriptionStruct)
+	}
+	return EncodeEUTRANDescriptionStructCanonicalAtLength(v, octets)
 }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
-func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, error), setWire func(T, runtime.WireInfo) T, needsLimit bool, minBits, postMinBits, maxBits, maxWindow int, zeroExtension, emptyValue bool, name string, source runtime.Source) (runtime.Decoded[T], error) {
+
+type descriptorReadPolicy struct {
+	needsLimit                               bool
+	minBits, postMinBits, maxBits, maxWindow int
+	zeroExtension, emptyValue                bool
+	name                                     string
+	source                                   runtime.Source
+}
+
+func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
+	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
 	if err := r.Check(); err != nil {
-		return runtime.Decoded[T]{}, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
 	}
 	emptyInput := emptyValue && r.Remaining() == 0
 	if r.Remaining() < minBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
 	}
 	originalRemaining := r.Remaining()
 	priorZero := r.ZeroExtension()
@@ -2546,106 +2663,125 @@ func descriptorFrom[T any](r *runtime.Reader, decode func(*runtime.Reader) (T, e
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
-	v, err := decode(r)
+	err := decode(r)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
 	if originalRemaining < postMinBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
 	}
 	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.Decoded[T]{}, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
 	}
 	if emptyInput {
-		return runtime.Decoded[T]{}, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.Decoded[T]{}, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return runtime.Decoded[T]{}, err
+		return runtime.WireInfo{}, 0, err
 	}
-	v = setWire(v, wire)
-	return runtime.Decoded[T]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+	return wire, r.Position() - start, nil
 }
 func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
 	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", -1, 0, sourceClause0)
+		return v, operationLocation4.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart) ([]byte, error) {
 	out, err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", -1, 0, sourceClause0)
+		return nil, operationLocation5.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeGSMDescriptionStruct(data []byte) (runtime.Decoded[GSMDescriptionStruct], error) {
 	v, err := decodeGSMDescriptionStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "GSMDescriptionStruct", -1, 0, sourceClause0)
+		return v, operationLocation7.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGSMDescriptionStruct(v GSMDescriptionStruct) ([]byte, error) {
 	out, err := encodeGSMDescriptionStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "GSMDescriptionStruct", -1, 0, sourceClause0)
+		return nil, operationLocation8.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeUTRANFDDDescriptionStruct(data []byte) (runtime.Decoded[UTRANFDDDescriptionStruct], error) {
 	v, err := decodeUTRANFDDDescriptionStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "UTRANFDDDescriptionStruct", -1, 0, sourceClause0)
+		return v, operationLocation10.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeUTRANFDDDescriptionStruct(v UTRANFDDDescriptionStruct) ([]byte, error) {
 	out, err := encodeUTRANFDDDescriptionStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "UTRANFDDDescriptionStruct", -1, 0, sourceClause0)
+		return nil, operationLocation11.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeUTRANTDDDescriptionStruct(data []byte) (runtime.Decoded[UTRANTDDDescriptionStruct], error) {
 	v, err := decodeUTRANTDDDescriptionStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "UTRANTDDDescriptionStruct", -1, 0, sourceClause0)
+		return v, operationLocation13.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeUTRANTDDDescriptionStruct(v UTRANTDDDescriptionStruct) ([]byte, error) {
 	out, err := encodeUTRANTDDDescriptionStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "UTRANTDDDescriptionStruct", -1, 0, sourceClause0)
+		return nil, operationLocation14.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeEUTRANDescriptionStruct(data []byte) (runtime.Decoded[EUTRANDescriptionStruct], error) {
 	v, err := decodeEUTRANDescriptionStructBytes(data)
 	if err != nil {
-		return v, locateOperation(err, "decode", "EUTRANDescriptionStruct", -1, 0, sourceClause0)
+		return v, operationLocation16.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeEUTRANDescriptionStruct(v EUTRANDescriptionStruct) ([]byte, error) {
 	out, err := encodeEUTRANDescriptionStructBytes(v)
 	if err != nil {
-		return nil, locateOperation(err, "encode", "EUTRANDescriptionStruct", -1, 0, sourceClause0)
+		return nil, operationLocation17.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
 var sourceClause0 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+var operationLocation0 = operationLocation{"decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", &sourceClause0, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", &sourceClause0, runtime.InvalidValue}
+var operationLocation2 = operationLocation{"decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", &sourceClause0, runtime.InvalidValue}
+var operationLocation3 = operationLocation{"decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", &sourceClause0, runtime.InvalidValue}
+var operationLocation4 = operationLocation{"decode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation5 = operationLocation{"encode", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"canonical", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", &sourceClause0, runtime.InvalidValue}
+var operationLocation7 = operationLocation{"decode", "GSMDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation8 = operationLocation{"encode", "GSMDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation9 = operationLocation{"canonical", "GSMDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation10 = operationLocation{"decode", "UTRANFDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation11 = operationLocation{"encode", "UTRANFDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation12 = operationLocation{"canonical", "UTRANFDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation13 = operationLocation{"decode", "UTRANTDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation14 = operationLocation{"encode", "UTRANTDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation15 = operationLocation{"canonical", "UTRANTDDDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation16 = operationLocation{"decode", "EUTRANDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation17 = operationLocation{"encode", "EUTRANDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation18 = operationLocation{"canonical", "EUTRANDescriptionStruct", &sourceClause0, runtime.InvalidValue}
+var operationLocation19 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -2657,6 +2793,25 @@ func constrainedWidth(path string) int {
 	switch path {
 	}
 	return 0
+}
+
+type operationLocation struct {
+	operation, path string
+	source          *runtime.Source
+	kind            runtime.ErrorKind
+}
+
+//go:noinline
+func (c *operationLocation) failure(err error, path string, offset, width int) error {
+	if path == "" {
+		path = c.path
+	}
+	return locateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
+}
+
+//go:noinline
+func (c *operationLocation) nilWriter() error {
+	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
 func decodeCause(err error) *runtime.DecodeError {

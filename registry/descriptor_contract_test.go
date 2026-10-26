@@ -2,9 +2,12 @@ package registry_test
 
 import (
 	"bytes"
+	"errors"
 	"testing"
 
 	"github.com/gomaja/go-csn1/registry"
+	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts24008/classmark"
 )
 
 func TestManualDescriptorConvention(t *testing.T) {
@@ -43,5 +46,40 @@ func TestManualDescriptorConvention(t *testing.T) {
 				t.Error("nil accepted")
 			}
 		})
+	}
+}
+
+func TestDescriptorFailureSourceSurvivesSharedMetadata(t *testing.T) {
+	want := runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+	_, decodeErr := classmark.DecodeClassmark3ValuePart(nil)
+	encodeErr := classmark.EncodeClassmark3ValuePartTo(nil, classmark.Classmark3ValuePart{})
+	for _, tc := range []struct {
+		name, operation string
+		err             error
+	}{
+		{"empty input", "decode", decodeErr},
+		{"nil writer", "encode", encodeErr},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var located *runtime.OperationError
+			if !errors.As(tc.err, &located) || located.Operation != tc.operation || located.Location.Source != want || located.Location.Path != "Classmark3ValuePart" {
+				t.Fatalf("failure lost its operation or source: %#v", tc.err)
+			}
+		})
+	}
+}
+
+func TestGeneratedCatalogueReturnsDetachedEntries(t *testing.T) {
+	first := classmark.Descriptors()
+	if len(first) == 0 || cap(first) != len(first) {
+		t.Fatal("invalid catalogue extent")
+	}
+	name, extent := first[0].Name, first[0].Extent
+	first[0].Name = "changed"
+	first[0].Decode = nil
+	first[0].Extent.MinimumBits++
+	second := classmark.Descriptors()
+	if second[0].Name != name || second[0].Decode == nil || second[0].Extent != extent {
+		t.Fatal("a returned entry changed the generated catalogue")
 	}
 }
