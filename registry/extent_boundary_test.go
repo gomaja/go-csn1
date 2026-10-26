@@ -2,12 +2,38 @@ package registry_test
 
 import (
 	"bytes"
+	"errors"
 	"reflect"
 	"testing"
 
 	"github.com/gomaja/go-csn1/registry"
 	"github.com/gomaja/go-csn1/runtime"
 )
+
+func TestDescriptorReaderKeepsExistingEmptyFailures(t *testing.T) {
+	for _, tc := range []struct {
+		name, path string
+		width      int
+	}{
+		{"SI1 Rest Octets", "SI1 Rest Octets", 8},
+		{"IA Rest Octets", "IARestOctets/IARestOctetsCompressedInterRATHOINFOINDChoiceRCC/IARestOctetsCompressedInterRATHOINFOINDChoiceRCCAltLL", 2},
+		{"IAR Rest Octets", "IAR Rest Octets", 24},
+	} {
+		d, err := registry.Lookup("TS 44.018", tc.name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r := runtime.NewReader(nil)
+		if _, err := r.PushLimit(0); err != nil {
+			t.Fatal(err)
+		}
+		_, err = d.DecodeFrom(r)
+		var located *runtime.OperationError
+		if !errors.As(err, &located) || located.Kind != runtime.Truncated || located.Location.Path != tc.path || located.Location.BitOffset != 0 || located.Location.Width != tc.width || errors.Is(err, runtime.ErrEmptyValue) {
+			t.Errorf("%s: empty reader failure changed: %v", tc.name, err)
+		}
+	}
+}
 
 // A bounded reader exposes the same value bytes as the byte entry point.
 // The extent describes canonical bytes; receivers may retain excess input.
