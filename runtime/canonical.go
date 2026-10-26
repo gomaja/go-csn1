@@ -165,12 +165,23 @@ func CanonicalEncodeAtLength[T any](value T, octets, minOctets, maxOctets int, e
 	return out, nil
 }
 
+// canonicalWire and canonicalRawErrorsWire are the shared fresh wire records
+// of a canonical copy. Callers only copy them into a destination, so sharing
+// one boxed record avoids an allocation for every WireInfo field copied.
+var (
+	canonicalWire          = reflect.ValueOf(WireInfo{canonical: true})
+	canonicalRawErrorsWire = reflect.ValueOf(WireInfo{canonical: true, rawErrors: true})
+)
+
 func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
 	if !value.IsValid() {
 		return value
 	}
 	if value.Type() == wireInfoType {
-		return reflect.ValueOf(WireInfo{canonical: true, rawErrors: rawErrors})
+		if rawErrors {
+			return canonicalRawErrorsWire
+		}
+		return canonicalWire
 	}
 	switch value.Kind() {
 	case reflect.Pointer:
