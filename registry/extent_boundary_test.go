@@ -2,6 +2,7 @@ package registry_test
 
 import (
 	"bytes"
+	"reflect"
 	"testing"
 
 	"github.com/gomaja/go-csn1/registry"
@@ -16,6 +17,7 @@ func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 		t.Fatalf("catalogue has %d descriptors, want 235", len(descriptors))
 	}
 	for _, d := range descriptors {
+		checkDescriptorTypedBoundaries(t, d)
 		lengths := []int{0, (d.Extent.MinimumBits - 1) / 8, (d.Extent.MinimumBits + 7) / 8}
 		if d.Extent.Finite {
 			lengths = append(lengths, (d.Extent.MaximumBits+7)/8, (d.Extent.MaximumBits+7)/8+1)
@@ -78,6 +80,49 @@ func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 				if _, err := d.DecodeFrom(r); err == nil {
 					t.Errorf("%s %s accepted %d bits below minimum %d", d.Standard, d.Name, bits, d.Extent.MinimumBits)
 				}
+			}
+		}
+	}
+}
+
+func checkDescriptorTypedBoundaries(t *testing.T, d runtime.Descriptor) {
+	t.Helper()
+	// Decode returns a typed wrapper even on error, so its zero Value gives
+	// every descriptor a correctly typed argument, including unsupported ones.
+	wrapper, _ := d.Decode(nil)
+	value := reflect.ValueOf(wrapper)
+	if value.Kind() != reflect.Struct || !value.FieldByName("Value").IsValid() {
+		t.Fatalf("%s %s: Decode did not return a typed wrapper", d.Standard, d.Name)
+	}
+	zero := value.FieldByName("Value").Interface()
+	_, _ = d.Encode(zero)
+	_, _ = d.Canonical(zero)
+	lengths := []int{-1, 0, (d.Extent.MinimumBits + 7) / 8}
+	if d.Extent.Finite {
+		lengths = append(lengths, (d.Extent.MaximumBits+7)/8, (d.Extent.MaximumBits+7)/8+1)
+	}
+	for _, n := range lengths {
+		got, err := d.CanonicalAtLength(zero, n)
+		if err == nil && len(got) != n {
+			t.Errorf("%s %s canonical extent %d produced %d octets", d.Standard, d.Name, n, len(got))
+		}
+		if d.Extent.Finite && n >= 0 && (n < (d.Extent.MinimumBits+7)/8 || n > (d.Extent.MaximumBits+7)/8) && err == nil {
+			t.Errorf("%s %s accepted %d octets outside canonical extent %d..%d bits", d.Standard, d.Name, n, d.Extent.MinimumBits, d.Extent.MaximumBits)
+		}
+	}
+	if d.DecodeWithContext == nil {
+		return
+	}
+	for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
+		_, _ = d.EncodeWithContext(zero, acs)
+		_, _ = d.CanonicalWithContext(zero, acs)
+		for _, n := range lengths {
+			got, err := d.CanonicalAtLengthWithContext(zero, n, acs)
+			if err == nil && len(got) != n {
+				t.Errorf("%s %s ACS=%d canonical extent %d produced %d octets", d.Standard, d.Name, acs, n, len(got))
+			}
+			if d.Extent.Finite && n >= 0 && (n < (d.Extent.MinimumBits+7)/8 || n > (d.Extent.MaximumBits+7)/8) && err == nil {
+				t.Errorf("%s %s ACS=%d accepted %d octets outside canonical extent %d..%d bits", d.Standard, d.Name, acs, n, d.Extent.MinimumBits, d.Extent.MaximumBits)
 			}
 		}
 	}
