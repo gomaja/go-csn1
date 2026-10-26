@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "93e35534a51d0752d8099d18969cb06b53a769a2",
+  "compiler_commit": "f421c60fedad8b4a7aaaf60a975e8c447d800e2e",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -131,6 +131,18 @@
     {
       "path": "docs/csn1/ts44018/ipa-rest-octets.csn",
       "sha256": "98e72b44ece91a950100ddfd68301961289a0c426ccaf553c0ed8efbfc002a18"
+    },
+    {
+      "path": "docs/csn1/ts44018/measurement-results-contents.csn",
+      "sha256": "6548168c9cf48a43e0472d40cd50e500f36b92bf097bdf03d45013b39a7882d8"
+    },
+    {
+      "path": "docs/csn1/ts44018/measurement-results-details.txt",
+      "sha256": "d87b9e31a2aeb61b015127b16084194404a25107a73dea3fc350cb0bc8362bb6"
+    },
+    {
+      "path": "docs/csn1/ts44018/measurement-results-layout.txt",
+      "sha256": "78bb26d523fd50b785983780d3e40316674cec7907c6b19d2160f1d77208a86d"
     },
     {
       "path": "docs/csn1/ts44018/mobile-allocation-length-evidence.txt",
@@ -1782,7 +1794,7 @@
     },
     {
       "module": "protocol-compilers/csn1",
-      "command": "~/go/bin/gopls check \u003cchanged .go files\u003e"
+      "command": "git ls-files -z -- '*.go' | xargs -0 ~/go/bin/gopls check"
     },
     {
       "module": "protocol-compilers/csn1",
@@ -1810,7 +1822,7 @@
     },
     {
       "module": "go-csn1",
-      "command": "~/go/bin/gopls check \u003cchanged .go files\u003e"
+      "command": "git ls-files -z -- '*.go' | xargs -0 ~/go/bin/gopls check"
     },
     {
       "module": "go-csn1",

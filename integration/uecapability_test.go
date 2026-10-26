@@ -1,6 +1,6 @@
 //go:build integration
 
-package uecapability
+package integration_test
 
 import (
 	"bufio"
@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	rrc "github.com/gomaja/go-asn1/telecom/lte/rrc"
+	"github.com/gomaja/go-csn1/ts36331/uecapability"
 )
 
 // TestLocalUuContainers reads local trace data only. No trace bytes or values
@@ -27,7 +28,11 @@ func TestLocalUuContainers(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer f.Close()
+	t.Cleanup(func() {
+		if err := f.Close(); err != nil {
+			t.Errorf("close local trace: %v", err)
+		}
+	})
 	scanner := bufio.NewScanner(f)
 	scanner.Buffer(make([]byte, 65536), 8<<20)
 	var messages, cs, ps int
@@ -62,21 +67,21 @@ func TestLocalUuContainers(t *testing.T) {
 			switch container.RatType {
 			case rrc.RATTypeGeranCs:
 				cs++
-				decoded, err := DecodeGERANCS(container.UeCapabilityRATContainer)
+				decoded, err := uecapability.DecodeGERANCS(container.UeCapabilityRATContainer)
 				if err != nil {
 					t.Fatalf("GERAN CS %d: %v", cs, err)
 				}
-				encoded, err := EncodeGERANCS(decoded.Value)
+				encoded, err := uecapability.EncodeGERANCS(decoded.Value)
 				if err != nil || !bytes.Equal(encoded, container.UeCapabilityRATContainer) {
 					t.Fatalf("GERAN CS %d: encode=%v", cs, err)
 				}
 			case rrc.RATTypeGeranPs:
 				ps++
-				decoded, err := DecodeGERANPS(container.UeCapabilityRATContainer)
+				decoded, err := uecapability.DecodeGERANPS(container.UeCapabilityRATContainer)
 				if err != nil {
 					t.Fatalf("GERAN PS %d: %v", ps, err)
 				}
-				encoded, err := EncodeGERANPS(decoded.Value)
+				encoded, err := uecapability.EncodeGERANPS(decoded.Value)
 				if err != nil || !bytes.Equal(encoded, container.UeCapabilityRATContainer) {
 					t.Fatalf("GERAN PS %d: encode=%v", ps, err)
 				}
