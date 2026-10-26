@@ -15,8 +15,8 @@ import (
 // can coexist with a canonical API that requires an explicit external extent.
 func TestDescriptorContextMetadataMatchesOperations(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 236 {
-		t.Fatalf("catalogue has %d descriptors, want 236", len(descriptors))
+	if len(descriptors) != 237 {
+		t.Fatalf("catalogue has %d descriptors, want 237", len(descriptors))
 	}
 	for _, d := range descriptors {
 		t.Run(d.Standard+"/"+d.Clause+"/"+d.Name, func(t *testing.T) {
@@ -216,6 +216,8 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 		"TS 44.018/10.5.2.17/IAR Rest Octets":                                  {24, "000000"},
 		"TS 44.018/10.5.2.1e/E-UTRAN Description struct":                       {19, "000000"},
 		"TS 44.018/10.5.2.1e/GSM Description struct":                           {17, "000000"},
+		"TS 44.018/10.5.2.20/Measurement Results Contents":                     {128, "00000000000000000000000000000000"},
+		"TS 44.018/10.5.2.20/NCELL Report struct":                              {17, "000000"},
 		"TS 44.018/10.5.2.22c/NT/N Rest Octets":                                {160, "0000000000000000000000000000000000000000"},
 		"TS 44.018/10.5.2.25/P3 Rest Octets":                                   {24, "002100"},
 		"TS 44.018/10.5.2.33a/SI2ter Rest Octets":                              {32, "00000000"},

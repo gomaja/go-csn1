@@ -2,10 +2,10 @@
   "runtime_contract": {
     "revision": "a17b985aa51e923e25958dae291aa10d2a4ac9c9",
     "api_sha256": "ca33b92d451b29c34494ba1c535ff1734a0fd18b2fe2e88d593f0862260b368a",
-    "api_ledger_sha256": "70c3666cbaa5b979d254ad0d1e5339237e08eeb2a642c1097aed0d1585a29250"
+    "api_ledger_sha256": "abc28066a4fe971011cadde083023f1a427584237e8d8cc967c2032eacd2942c"
   },
   "schema_version": 1,
-  "compiler_commit": "278b7f73b33d7ad015afc94018bb47c21d106afb",
+  "compiler_commit": "e3bd226e3abbfdb76bd485c8393c3409f09aaa78",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -139,7 +139,7 @@
     },
     {
       "path": "docs/csn1/ts44018/measurement-results-contents.csn",
-      "sha256": "6548168c9cf48a43e0472d40cd50e500f36b92bf097bdf03d45013b39a7882d8"
+      "sha256": "3a56320a4d3c877444422e75368c1529d460ae5363b2271452601b6bd96fdd93"
     },
     {
       "path": "docs/csn1/ts44018/measurement-results-details.txt",
@@ -1699,6 +1699,32 @@
       "approval_date": "2026-10-26"
     },
     {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.20",
+      "paragraph": 16651,
+      "expected": "{",
+      "replacement": "{{",
+      "reason": "Table 10.5.2.20.1 gives NO-NCELL-M a single position (Bits 1 8 7) for all eight codes, and the IE is a fixed 17-octet type 3 IE; read literally, the printed braces would start the reports arm at bit 0 without the serving-cell fields.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.20 paragraph 16651",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the nine serving-cell fields as a shared prefix of both NO_NCELL_M arms (approved 2026-10-26).",
+      "approval_date": "2026-10-26"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.20",
+      "paragraph": 16662,
+      "expected": "}",
+      "replacement": "}}",
+      "reason": "Table 10.5.2.20.1 gives NO-NCELL-M a single position (Bits 1 8 7) for all eight codes, and the IE is a fixed 17-octet type 3 IE; read literally, the printed braces would start the reports arm at bit 0 without the serving-cell fields.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.20 paragraph 16662",
+      "policy": "owner-approved-text-rule",
+      "reading": "Read the nine serving-cell fields as a shared prefix of both NO_NCELL_M arms (approved 2026-10-26).",
+      "approval_date": "2026-10-26"
+    },
+    {
       "standard": "TS 44.060",
       "version": "19.0.0",
       "clause": "12.24",
@@ -1780,11 +1806,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "1920507dc4f4129a41e92be7b460b172ce7e238c91f521b0424032c8db3ad554"
+      "sha256": "03dbfa358c60c18d11e2b81329cbbb31f6a9ff91cce176ea62ae1505f207b279"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "909083005c0cd3eab864294f3450ca287a48bc80303feeb7734744d43bafa081"
+      "sha256": "c6f440d54456d813eb62480aee0e4a126847c632548a84dbfaef6dd3be62bdb5"
     },
     {
       "path": "ts44060/ies/generated.go",
@@ -1896,7 +1922,7 @@
   "source_policies": [
     {
       "path": "conformance/csn1-expansion.json",
-      "sha256": "538989eaff5d25d5c20588a622e4720fe7fb5701e407802ca6544ec8d6521e44"
+      "sha256": "e4254681b6ceef889d611a7a7e023c126eedefa22d85d3e13887b77e4d57fd38"
     }
   ]
 }

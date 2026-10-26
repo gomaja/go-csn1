@@ -139,6 +139,19 @@ The table records whether the *prose* in each TS 44.018 V19.0.0 clause permits a
 
 `DecodeSI18RestOctets` implements the two stop conditions printed in TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.1: a zero `NR_OF_CONTAINER_OCTETS` terminal record, or a fully used 20-octet SI message. Table 10.5.2.37h.2 assigns raw count code 31 to a container occupying all octets remaining in that SI value, including after an earlier container; codes 19–30 are reserved. Encode enforces that boundary. The `DecodeFrom` and `EncodeTo` forms measure the 20 octets from the current reader or writer position, leaving subsequent values untouched. The standalone `Non-GSM Message struct` decoder rejects code 31 because that count needs an enclosing SI value. `DecodeSI20RestOctets` uses the same grammar under §10.5.2.37i. Pycrate 0.7.11 accepts the literal fully used vector but rejects the printed zero-length terminal record; for `00 3f` plus 18 `aa` octets it instead reports an empty list and re-encodes `00 20`. Wireshark 4.6.8 reaches both SI message dissectors and exposes the exact rest-octet bytes, but no structural container fields. `DecodeSI19RestOctets` exposes the raw `NR_OF_REMAINING_CELLS` count 0–15, equal to the repeated-cell slice length, and interprets `FREQ_DIFF_LENGTH` as width 1–8. The printed grammar in §10.5.2.37g uses `* (val(NR_OF_REMAINING_CELLS))`; its "Range 1-16" prose conflicts with that repetition and with pycrate `si_19_rest_octets.py` and Wireshark `packet-gsm_rlcmac.c` COMPACT neighbour-cell repetitions. Pycrate 0.7.11 differs on a nonempty group vector. The source discrepancy is recorded in release-evidence.json.
 
+`measurement.DecodeMeasurementResultsContents` implements the fixed 16-octet
+contents of TS 44.018 V19.0.0 §10.5.2.20. Its grammar-shaped model has the
+serving fields in `Content`, then a count-defined `Unavailable` or `Reports`
+arm, a typed `NCELLReports` slice and explicit `Null`, `ZeroPadding` or `CSG`
+suffix arms. CSG reuses `ies.UTRANCSGMeasurementReportIE`, including its optional
+PLMN-ID. Fresh values select their arms and provide the literal-zero repetition
+lengths; ordinary encode checks count/list equality and the fixed contents bound.
+The source policy records the shared serving-field prefix as an approved text
+rule dated 2026-10-26. No RF interpretation or padding tolerance is added.
+`measurement.DecodeNCELLReportStruct` also exposes the independent 6/5/6-bit
+neighbour report. Both definitions have Decode, DecodeFrom, Encode, EncodeTo,
+Canonical and CanonicalAtLength operations and descriptors at §10.5.2.20.
+
 `measurement.DecodeEnhancedMeasurementReport` enforces the five-bit message type `00100` from TS 44.018 V19.0.0 §10.4 table 10.4.2 and §9.1.55. Message type `00101` identifies Measurement Information and is rejected by both the EMR decoder and encoder.
 
 `registry.Lookup(specification, printedName)` succeeds only when the name is unique in that specification. `registry.LookupClause(specification, clause, printedName)` resolves a clause-qualified definition. The canonical key is the specification number, clause and definition name exactly as printed. Each module contains exactly one version per standard, so `Version` stays descriptor metadata and is not a key component. Consumers track `main`, which moves to the current pinned version without carrying historical versions. For example, `A5 bits` occurs in two TS 24.008 clauses with different layouts, so an unqualified lookup returns both candidate clauses in an ambiguity error.
@@ -168,7 +181,7 @@ Packages marked **[compiled]** contain generated Go bindings. Planned packages a
 | `ts44018/cellselection` | TS 44.018 V19.0.0 §10.5.2.1e | Cell selection indicator after release of all TCH and SDCCH | generated direct codec |
 | `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.16–18, .22c–25, .32–35a, .37a–b, .37e–f, .37j–o, .44, .70–71, .78 | IA, IAR, IAX, NT/N, P1–P3, SI1, SI2bis, SI2ter, SI2quater, SI2n, SI3, SI4, SI6, SI9, SI10, SI10bis, SI10ter, SI13, SI13alt, SI14–17, SI21–23 and IPA with local definitions | **[compiled]** |
 | `ts44018/restoctets` | TS 44.018 V19.0.0 §§10.5.2.36–37, .37g–i | SI7 and SI8 with explicit SI4 ACS context; SI18, SI19 and SI20 direct codecs | **[compiled]** |
-| `ts44018/measurement` | TS 44.018 V19.0.0 §9.1.55 | Enhanced Measurement Report body and local definitions | **[compiled]** |
+| `ts44018/measurement` | TS 44.018 V19.0.0 §§9.1.55, 10.5.2.20 | Enhanced Measurement Report, Measurement Results Contents, NCELL Report struct and local definitions | **[compiled]** |
 | `ts44060/ies` | TS 44.060 V19.0.0 §§12.5.2, 12.8, 12.9a, 12.10a, 12.10d, 12.10f, 12.12, 12.24, 12.33, 12.36–41, 12.57–59, 12.61 | Twenty-seven dependency definitions used by IA, P2, SI13, SI13alt, SI2quater, SI23 and EMR | **[compiled]** |
 | `ts44060/rlcmac` | TS 44.060 V19.0.0 §11 | RLC/MAC control messages | planned |
 
