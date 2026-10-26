@@ -29,7 +29,13 @@ func TestDescriptorContextMetadataMatchesOperations(t *testing.T) {
 			_, canonicalErr := d.Canonical(value)
 			var extent *runtime.ExtentError
 			canonicalContext := errors.As(canonicalErr, &extent) && extent.Required
-			want := d.DecodeWithContext != nil || errors.Is(readerErr, runtime.ErrContextRequired) || canonicalContext
+			// An empty input does not reach a conditional continuation code.
+			// TS 44.018 V19.0.0 table 10.5.2.37h.2 defines code 31.
+			var conditionalErr error
+			if d.Standard == "TS 44.018" && d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" {
+				_, conditionalErr = d.DecodeFrom(runtime.NewReader([]byte{0x3f, 0}))
+			}
+			want := d.DecodeWithContext != nil || errors.Is(readerErr, runtime.ErrContextRequired) || errors.Is(conditionalErr, runtime.ErrContextRequired) || canonicalContext
 			if d.Extent.NeedsContext != want {
 				t.Fatalf("NeedsContext=%t want %t: reader=%v canonical=%v", d.Extent.NeedsContext, want, readerErr, canonicalErr)
 			}

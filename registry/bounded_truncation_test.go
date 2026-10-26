@@ -269,8 +269,9 @@ func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	}
 	// Two SI stop records and one continuation container sit inside the
 	// fixed SI 18/SI 20 value; the IA length field bounds both choice arms;
-	// a standalone continuation container has no enclosing value at all.
-	if omitted == 0 || length != 3 || lengthField != 2 || context != 1 {
+	// a standalone continuation container has no enclosing value in either
+	// its reader or its writer.
+	if omitted == 0 || length != 3 || lengthField != 2 || context != 2 {
 		t.Fatalf("typed bound checks: %d omitted-field, %d length, %d length-field, %d context", omitted, length, lengthField, context)
 	}
 }

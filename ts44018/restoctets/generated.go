@@ -58533,7 +58533,7 @@ func decodeNonGSMMessageStructCONTAINERList(r *runtime.Reader) ([]uint8, error) 
 	if count == 31 {
 		remaining := r.BoundedRemaining()
 		if remaining < 0 {
-			return nil, r.Error(runtime.InvalidValue, "continuation count requires enclosing SI value")
+			return nil, operationLocation54.failure(fmt.Errorf("%w: continuation count requires enclosing SI value", runtime.ErrContextRequired), "", r.Position(), 0)
 		}
 		if remaining == 0 || remaining%8 != 0 {
 			return nil, r.Error(runtime.InvalidValue, "continuation container does not fill whole remaining octets")
