@@ -5,6 +5,7 @@ package uecapability
 
 import (
 	"fmt"
+
 	"github.com/gomaja/go-csn1/runtime"
 	"github.com/gomaja/go-csn1/ts24008/classmark"
 	"github.com/gomaja/go-csn1/ts24008/msrac"

@@ -5,6 +5,7 @@ package msrac
 
 import (
 	"fmt"
+
 	"github.com/gomaja/go-csn1/runtime"
 )
 

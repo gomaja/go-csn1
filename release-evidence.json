@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiler_commit": "2c096568eb1cea456c30f309d247707194fa610f",
+  "compiler_commit": "93e35534a51d0752d8099d18969cb06b53a769a2",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1728,64 +1728,64 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "e83f5744f8d9478d6c5363a2449e34b8796dc2c120979e6bcc4a6b8e084eb1f1"
+      "sha256": "1cedd33f798005d7637204e3fcf98d50146547a788566d86caf4cb4807c391bf"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "e27f5a10bc7a7c20281046ee012d4006949ea49c40a4ff25e90b7496ef96c83b"
+      "sha256": "fc040c173207dc9f09ffb5287142b2876d066b135950339a21f9d053c329b96c"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "9f5d212b2d663d580d90bbb219c6a9680303d0ac80e85ec0414f254c055d4936"
+      "sha256": "e625c740abb21df880286e81f8d113fe43fca704dd3f0a3132b51b866dc87f08"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "f7f4e6a7eff223333c65540da234d81ff515d8a22476e61572052cedc55eb06c"
+      "sha256": "ffa2c84770b09b184b26cb792fe3c29567b8d6defb7e2d992b19f2c0c3286548"
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "87fbb058e22915dfe12e0fcf7e058ad987d70543c7dbe440a485826b7fdaec41"
+      "sha256": "fa2dcd2ac4321befe4d639f6c9cb2b2ee641f362519bb8c19bfec52bca9d2908"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "b0be7349aab333f43295891222b85d33a1897df789eba89d48991fcd4302da19"
+      "sha256": "8082e6b568bf8a4d7f70ca3d7df22b6defb277fc828a1e882303152aeba11af6"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "197b0519b9673696db7aaeca83a26d4daea5f7fe13246144c6bd4a6da042a81a"
+      "sha256": "1a28388ae49e1cba8dc1a7ccae87b1481e2bbcc7823fd7977b28966a1152c34c"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "b6ccecbeaf34cdab09af62115c16ec33ce016254da6c8a76f62c49573b388074"
+      "sha256": "3a0e26ae15563b3c43ae18c1a3b6bdafbc14df319198276851d0ab530c1dd949"
     }
   ],
   "validation_commands": [
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "go build ./..."
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "go test ./... -count=1"
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "go vet ./..."
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "~/go/bin/staticcheck ./..."
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "~/go/bin/golangci-lint run ./..."
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "~/go/bin/gopls check \u003cchanged .go files\u003e"
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "go test -race ./... -count=1"
     },
     {
@@ -1817,7 +1817,7 @@
       "command": "go test -race ./... -count=1"
     },
     {
-      "module": "asn1-go-compiler",
+      "module": "protocol-compilers/csn1",
       "command": "go run ./cmd/csn1c -check"
     },
     {
