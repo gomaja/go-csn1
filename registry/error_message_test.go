@@ -216,11 +216,13 @@ func TestGeneratedOperationCauseMessages(t *testing.T) {
 func TestLookupMessageQuotedNames(t *testing.T) {
 	for _, name := range []string{"", "has \"quotes\"", "line\nbreak", "back\\slash", "\xff", strings.Repeat("\\\"", 4096)} {
 		_, err := Lookup("synthetic", name)
+		// The path prints the name as given, so a name that is empty or needs
+		// escaping keeps its quoted form in the detail.
 		want := "CSN.1 lookup invalid-schema"
 		if name != "" {
 			want += " in " + name
 		}
-		want += ": unknown CSN.1 definition in synthetic"
+		want += fmt.Sprintf(": unknown CSN.1 definition %q in synthetic", name)
 		if got := err.Error(); got != want {
 			t.Fatalf("name %q: got %q want %q", name, got, want)
 		}

@@ -94,7 +94,6 @@ runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen
 runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1113
 runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:763
 runtime/direct.go:conversion:uint8(encoded >> 16)	3	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:269 `r.fieldWidthHi = uint8(encoded >> 16)`.
-runtime/error_message.go:arithmetic:len(message) - len(e.Detail)	1	FIXED: DecodeError.Error appends Detail verbatim, so its length does not exceed the formatted message length; the difference is a nonnegative string index within the message; runtime/error_message.go:25 `detail := message[len(message)-len(e.Detail):]`.
 runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:110 post=runtime/expr.go:132
 runtime/expr.go:arithmetic:i + 1	5	BOUNDED: operand=i guard=runtime/expr.go:205

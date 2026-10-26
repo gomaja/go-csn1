@@ -19,11 +19,7 @@ func operationCauseDetail(cause error, outer *OperationError) string {
 	case *fieldDecodeError:
 		return operationCauseDetail(&e.DecodeError, outer)
 	case *DecodeError:
-		// The standalone message ends with the detail. Keep a view of that
-		// suffix when composing the surrounding operation's message.
-		message := e.Error()
-		detail := message[len(message)-len(e.Detail):]
-		return causeFacts("", e.Kind, Location{Path: e.Path, BitOffset: e.Offset}, detail, outer)
+		return causeFacts("", e.Kind, Location{Path: e.Path, BitOffset: e.Offset}, e.Detail, outer)
 	case *BoundError:
 		path := e.Path
 		if e.Field != "" {
@@ -91,9 +87,13 @@ func joinCauseFact(facts, fact string) string {
 }
 
 // Lookup causes quote the definition name inside their standalone message.
-// Remove that exact component when the surrounding path already names it.
+// Remove that exact component when the surrounding path already names it
+// unambiguously: an empty name, or one that needs escaping, stays quoted.
 func lookupCauseDetail(message, name string) string {
 	quoted := strconv.Quote(name)
+	if name == "" || quoted != `"`+name+`"` {
+		return message
+	}
 	for _, prefix := range []string{"unknown CSN.1 definition", "ambiguous CSN.1 definition"} {
 		if tail, ok := strings.CutPrefix(message, prefix+" "+quoted); ok && strings.HasPrefix(tail, " in ") {
 			return prefix + tail
