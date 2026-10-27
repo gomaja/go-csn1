@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "89124175344824b1166c66d3e5eb6f6999e6d36d",
-    "api_sha256": "9f9bfa0555dda30f27d4fdd09c3fb359b56c039cb34196288378f7dc09a129eb",
-    "api_ledger_sha256": "88adef1849eb7b108707c25ec9e6a9eefe2fb55e931ec159644f23985f6007d4"
+    "revision": "bea44692d2e02ffdbbc2e7bd674392f17c8023b7",
+    "api_sha256": "e28e09ad47db27750bfe8ae9abca7b241e0f2135ca7800d507bbc9fbf8dd5e64",
+    "api_ledger_sha256": "4b885e47e2405fa2cac5224e27623f12909d1d847e3307808570e411415448bc"
   },
   "schema_version": 1,
-  "compiler_commit": "0534c978d68104bc42f3e540239a64e2cf1b9c06",
+  "compiler_commit": "b6d38f6de8b594e1d6da26ed4110068506f7053f",
   "sources": [
     {
       "standard": "TS 24.008",
