@@ -59,6 +59,8 @@ func indexedPath(full,path string,index int)string{
   end:=start+len(component)
   if component==parent{
    if parent==path{return full[:end]+"["+strconv.Itoa(index)+"]"+full[end:]}
+   next,_,_:=strings.Cut(tail,"/")
+   if next==path{return full[:end]+"/"+path+"["+strconv.Itoa(index)+"]"+strings.TrimPrefix(tail,path)}
    return full[:end]+"/"+path+"["+strconv.Itoa(index)+"]"+full[end:]
   }
   if !more{break};start=end+1;rest=tail
@@ -66,7 +68,7 @@ func indexedPath(full,path string,index int)string{
  if full==""{return path+"["+strconv.Itoa(index)+"]"}
  return path+"["+strconv.Itoa(index)+"]/"+full
 }`
-	for _, mutation := range []string{"", "start:=0", `strings.Cut(rest,"/")`, "end:=start+len(component)", "if !more{break}", "start=end+1", "rest=tail"} {
+	for _, mutation := range []string{"", "start:=0", `strings.Cut(rest,"/")`, "end:=start+len(component)", "if !more{break}", "start=end+1", "rest=tail", `next,_,_:=strings.Cut(tail,"/")`} {
 		t.Run(mutation, func(t *testing.T) {
 			root := t.TempDir()
 			text := source

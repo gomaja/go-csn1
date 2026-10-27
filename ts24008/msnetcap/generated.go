@@ -865,7 +865,7 @@ func encodeMSNetworkCapabilityValuePartSpareBitsList(w *runtime.Writer, _ []runt
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSNetworkCapabilityValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSNetworkCapabilityValuePartSpareBitsList", 0, err), "MSNetworkCapabilityValuePartSpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSNetworkCapabilityValuePartSpareBitsList", 0, err), "MSNetworkCapabilityValuePartSpareBitsList", i)
 		}
 	}
 	return nil
@@ -1021,7 +1021,7 @@ func encodeMSNetworkCapabilityValuePart(w *runtime.Writer, v MSNetworkCapability
 	limit := 27
 	if n, ok := w.Truncation("MSNetworkCapabilityValuePart"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSNetworkCapabilityValuePart", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSNetworkCapabilityValuePart", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1266,7 +1266,7 @@ func encodeGEA1Bits(w *runtime.Writer, v GEA1Bits) error {
 	limit := 1
 	if n, ok := w.Truncation("GEA1Bits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GEA1Bits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GEA1Bits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1514,7 +1514,7 @@ func encodeExtendedGEABits(w *runtime.Writer, v ExtendedGEABits) error {
 	limit := 6
 	if n, ok := w.Truncation("ExtendedGEABits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtendedGEABits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtendedGEABits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1603,7 +1603,7 @@ func encodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsList(w *runtime.Wri
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", 0, err), "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", 0, err), "SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", i)
 		}
 	}
 	return nil
@@ -1634,7 +1634,7 @@ func encodeSpareBitsAlternativesAltUnlabeledVariant2(w *runtime.Writer, v SpareB
 	limit := 2
 	if n, ok := w.Truncation("SpareBitsAlternativesAltUnlabeledVariant2"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "SpareBitsAlternativesAltUnlabeledVariant2", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "SpareBitsAlternativesAltUnlabeledVariant2", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1701,21 +1701,21 @@ func encodeSpareBitsAlternatives(w *runtime.Writer, v SpareBitsAlternatives) err
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case SpareBitsAlternativesAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
-			return w.OperationError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeSpareBitsAlternativesAltUnlabeled(w, *v.AltUnlabeled)
 	case SpareBitsAlternativesAlternativeAltUnlabeledVariant2:
 		if v.AltUnlabeledVariant2 == nil {
-			return w.OperationError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeSpareBitsAlternativesAltUnlabeledVariant2(w, *v.AltUnlabeledVariant2)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeSpareBits(r *runtime.Reader) (SpareBits, error) {
@@ -1739,7 +1739,7 @@ func encodeSpareBits(w *runtime.Writer, v SpareBits) error {
 	limit := 1
 	if n, ok := w.Truncation("SpareBits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "SpareBits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "SpareBits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2555,7 +2555,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -2565,6 +2565,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}

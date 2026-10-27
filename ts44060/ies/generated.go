@@ -568,7 +568,7 @@ func encodeUTRANCSGMeasurementReportIE(w *runtime.Writer, v UTRANCSGMeasurementR
 	limit := 5
 	if n, ok := w.Truncation("UTRANCSGMeasurementReportIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "UTRANCSGMeasurementReportIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "UTRANCSGMeasurementReportIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -702,7 +702,7 @@ func encodePLMNIDStruct(w *runtime.Writer, v PLMNIDStruct) error {
 	limit := 2
 	if n, ok := w.Truncation("PLMNIDStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PLMNIDStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PLMNIDStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -791,7 +791,7 @@ func encodePSCGroupIEPSCListEntry(w *runtime.Writer, v PSCGroupIEPSCListEntry) e
 	limit := 2
 	if n, ok := w.Truncation("PSCGroupIEPSCListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PSCGroupIEPSCListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PSCGroupIEPSCListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -839,7 +839,7 @@ func decodePSCGroupIEPSCList(r *runtime.Reader) ([]PSCGroupIEPSCListEntry, error
 func encodePSCGroupIEPSCList(w *runtime.Writer, v []PSCGroupIEPSCListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodePSCGroupIEPSCListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "PSCGroupIEPSCList", 0, err), "PSCGroupIEPSCList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "PSCGroupIEPSCList", 0, err), "PSCGroupIEPSCList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -981,7 +981,7 @@ func encodePSCGroupIEPSCPatternLengthGroupListEntry(w *runtime.Writer, v PSCGrou
 	limit := 4
 	if n, ok := w.Truncation("PSCGroupIEPSCPatternLengthGroupListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PSCGroupIEPSCPatternLengthGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PSCGroupIEPSCPatternLengthGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1045,7 +1045,7 @@ func decodePSCGroupIEPSCPatternLengthGroupList(r *runtime.Reader) ([]PSCGroupIEP
 func encodePSCGroupIEPSCPatternLengthGroupList(w *runtime.Writer, v []PSCGroupIEPSCPatternLengthGroupListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodePSCGroupIEPSCPatternLengthGroupListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "PSCGroupIEPSCPatternLengthGroupList", 0, err), "PSCGroupIEPSCPatternLengthGroupList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "PSCGroupIEPSCPatternLengthGroupList", 0, err), "PSCGroupIEPSCPatternLengthGroupList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -1076,7 +1076,7 @@ func encodePSCGroupIE(w *runtime.Writer, v PSCGroupIE) error {
 	limit := 2
 	if n, ok := w.Truncation("PSCGroupIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PSCGroupIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PSCGroupIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1146,7 +1146,7 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelD
 	limit := 2
 	if n, ok := w.Truncation("MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1220,7 +1220,7 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelD
 	limit := 2
 	if n, ok := w.Truncation("MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1307,7 +1307,7 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescripti
 	limit := 2
 	if n, ok := w.Truncation("MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1385,21 +1385,21 @@ func encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(w *runtime.Wri
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMBMSPTMChannelDescription:
 		if v.MBMSPTMChannelDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription(w, *v.MBMSPTMChannelDescription)
 	case MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMPRACHDescription:
 		if v.MPRACHDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescription(w, *v.MPRACHDescription)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MBMSChannelParametersIEMBMSPTMChannelDescriptionChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeMBMSChannelParametersIE(r *runtime.Reader) (MBMSChannelParametersIE, error) {
@@ -1423,7 +1423,7 @@ func encodeMBMSChannelParametersIE(w *runtime.Writer, v MBMSChannelParametersIE)
 	limit := 1
 	if n, ok := w.Truncation("MBMSChannelParametersIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSChannelParametersIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSChannelParametersIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1526,7 +1526,7 @@ func encodeMBMSPTMChannelDescriptionIE(w *runtime.Writer, v MBMSPTMChannelDescri
 	limit := 2
 	if n, ok := w.Truncation("MBMSPTMChannelDescriptionIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSPTMChannelDescriptionIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSPTMChannelDescriptionIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1710,7 +1710,7 @@ func encodeMPRACHDescriptionIE(w *runtime.Writer, v MPRACHDescriptionIE) error {
 	limit := 4
 	if n, ok := w.Truncation("MPRACHDescriptionIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MPRACHDescriptionIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MPRACHDescriptionIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1852,7 +1852,7 @@ func encodeMBMSSessionListIETMGIGroupListEntry(w *runtime.Writer, v MBMSSessionL
 	limit := 3
 	if n, ok := w.Truncation("MBMSSessionListIETMGIGroupListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSSessionListIETMGIGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSSessionListIETMGIGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1908,7 +1908,7 @@ func decodeMBMSSessionListIETMGIGroupList(r *runtime.Reader) ([]MBMSSessionListI
 func encodeMBMSSessionListIETMGIGroupList(w *runtime.Writer, v []MBMSSessionListIETMGIGroupListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeMBMSSessionListIETMGIGroupListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MBMSSessionListIETMGIGroupList", 0, err), "MBMSSessionListIETMGIGroupList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MBMSSessionListIETMGIGroupList", 0, err), "MBMSSessionListIETMGIGroupList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -1934,7 +1934,7 @@ func encodeMBMSSessionListIE(w *runtime.Writer, v MBMSSessionListIE) error {
 	limit := 1
 	if n, ok := w.Truncation("MBMSSessionListIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSSessionListIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSSessionListIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1993,10 +1993,10 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 		return err
 	}
 	if uint64(v) < 1 {
-		return w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity", width, fmt.Errorf("value reserved by source table"))
 	}
 	if uint64(v) > 5 {
-		return w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2185,7 +2185,7 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 		return err
 	}
 	if uint64(v) > 30 {
-		return w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2270,7 +2270,7 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry(w
 	limit := 7
 	if n, ok := w.Truncation("MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2358,7 +2358,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(r *run
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(w *runtime.Writer, v []MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", 0, err), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", 0, err), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -2384,7 +2384,7 @@ func encodeMBMSSessionParametersListIE(w *runtime.Writer, v MBMSSessionParameter
 	limit := 1
 	if n, ok := w.Truncation("MBMSSessionParametersListIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MBMSSessionParametersListIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2544,7 +2544,7 @@ func encodeMPRACHControlParametersIES(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	if uint64(v) > 9 {
-		return w.OperationError(runtime.InvalidValue, "MPRACHControlParametersIES", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "MPRACHControlParametersIES", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2707,7 +2707,7 @@ func encodeMPRACHControlParametersIE(w *runtime.Writer, v MPRACHControlParameter
 	limit := 5
 	if n, ok := w.Truncation("MPRACHControlParametersIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MPRACHControlParametersIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MPRACHControlParametersIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2949,7 +2949,7 @@ func encodeGPRSPowerControlParametersIE(w *runtime.Writer, v GPRSPowerControlPar
 	limit := 5
 	if n, ok := w.Truncation("GPRSPowerControlParametersIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSPowerControlParametersIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSPowerControlParametersIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3027,7 +3027,7 @@ func encodeGPRSCellOptionsIENMO(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	if uint64(v) > 2 {
-		return w.OperationError(runtime.InvalidValue, "GPRSCellOptionsIENMO", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIENMO", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -3345,7 +3345,7 @@ func encodeGPRSCellOptionsIEPANDECGroup(w *runtime.Writer, v GPRSCellOptionsIEPA
 	limit := 3
 	if n, ok := w.Truncation("GPRSCellOptionsIEPANDECGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSCellOptionsIEPANDECGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIEPANDECGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3464,17 +3464,17 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 }
 func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback(w *runtime.Writer, v GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback) error {
 	if (v.Known == nil) == (v.Ignored == nil) {
-		return w.OperationError(runtime.InvalidValue, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("extension fallback requires exactly one arm"))
+		return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("extension fallback requires exactly one arm"))
 	}
 	switch v.Alternative {
 	case GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeKnown:
 		if v.Known == nil {
-			return w.OperationError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("fallback arm mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("fallback arm mismatch"))
 		}
 		return encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackKnown(w, *v.Known)
 	case GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeIgnored:
 		if v.Ignored == nil {
-			return w.OperationError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("fallback arm mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("fallback arm mismatch"))
 		}
 		mark := w.MarkFallback()
 		if err := encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(w, *v.Ignored); err != nil {
@@ -3485,7 +3485,7 @@ func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 			return err
 		})
 	default:
-		return w.OperationError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("invalid fallback arm"))
+		return w.ComponentError(runtime.InvalidBranch, "GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback", 0, fmt.Errorf("invalid fallback arm"))
 	}
 }
 func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformation(r *runtime.Reader) (GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback, error) {
@@ -3546,7 +3546,7 @@ func encodeGPRSCellOptionsIEExtensionLengthGroup(w *runtime.Writer, v GPRSCellOp
 	limit := 2
 	if n, ok := w.Truncation("GPRSCellOptionsIEExtensionLengthGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSCellOptionsIEExtensionLengthGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIEExtensionLengthGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3655,7 +3655,7 @@ func encodeGPRSCellOptionsIE(w *runtime.Writer, v GPRSCellOptionsIE) error {
 	limit := 9
 	if n, ok := w.Truncation("GPRSCellOptionsIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSCellOptionsIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3796,7 +3796,7 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		return err
 	}
 	if uint64(v) > 10 {
-		return w.OperationError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -3830,7 +3830,7 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	limit := 2
 	if n, ok := w.Truncation("ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4007,7 +4007,7 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroup(w *runtime.Writer,
 	limit := 4
 	if n, ok := w.Truncation("ExtensionInformationEGPRSPACKETCHANNELREQUESTGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4133,7 +4133,7 @@ func encodeExtensionInformationCCNACTIVEGroup(w *runtime.Writer, v ExtensionInfo
 	limit := 2
 	if n, ok := w.Truncation("ExtensionInformationCCNACTIVEGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformationCCNACTIVEGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformationCCNACTIVEGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4336,7 +4336,7 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 	limit := 2
 	if n, ok := w.Truncation("ExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4420,7 +4420,7 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroup(w *runtime.Writer, v E
 	limit := 4
 	if n, ok := w.Truncation("ExtensionInformationMULTIPLETBFCAPABILITYGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformationMULTIPLETBFCAPABILITYGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformationMULTIPLETBFCAPABILITYGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4545,7 +4545,7 @@ func encodeExtensionInformationSpareBitList(w *runtime.Writer, _ []runtime.BitSt
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeExtensionInformationSpareBitListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "ExtensionInformationSpareBitList", 0, err), "ExtensionInformationSpareBitList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "ExtensionInformationSpareBitList", 0, err), "ExtensionInformationSpareBitList", i)
 		}
 	}
 	return nil
@@ -4621,7 +4621,7 @@ func encodeExtensionInformation(w *runtime.Writer, v ExtensionInformation) error
 	limit := 6
 	if n, ok := w.Truncation("ExtensionInformation"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ExtensionInformation", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ExtensionInformation", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4788,7 +4788,7 @@ func encodeFrequencyParametersIEARFCNChoiceARFCN(w *runtime.Writer, v FrequencyP
 	limit := 2
 	if n, ok := w.Truncation("FrequencyParametersIEARFCNChoiceARFCN"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceARFCN", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceARFCN", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4849,7 +4849,7 @@ func encodeFrequencyParametersIEARFCNChoiceIndirectEncoding(w *runtime.Writer, v
 	limit := 2
 	if n, ok := w.Truncation("FrequencyParametersIEARFCNChoiceIndirectEncoding"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceIndirectEncoding", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceIndirectEncoding", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4910,7 +4910,7 @@ func encodeFrequencyParametersIEARFCNChoiceDirectEncoding1(w *runtime.Writer, v 
 	limit := 2
 	if n, ok := w.Truncation("FrequencyParametersIEARFCNChoiceDirectEncoding1"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceDirectEncoding1", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceDirectEncoding1", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4971,7 +4971,7 @@ func encodeFrequencyParametersIEARFCNChoiceDirectEncoding2(w *runtime.Writer, v 
 	limit := 2
 	if n, ok := w.Truncation("FrequencyParametersIEARFCNChoiceDirectEncoding2"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceDirectEncoding2", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "FrequencyParametersIEARFCNChoiceDirectEncoding2", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5071,31 +5071,31 @@ func encodeFrequencyParametersIEARFCNChoice(w *runtime.Writer, v FrequencyParame
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case FrequencyParametersIEARFCNChoiceAlternativeARFCN:
 		if v.ARFCN == nil {
-			return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeFrequencyParametersIEARFCNChoiceARFCN(w, *v.ARFCN)
 	case FrequencyParametersIEARFCNChoiceAlternativeIndirectEncoding:
 		if v.IndirectEncoding == nil {
-			return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeFrequencyParametersIEARFCNChoiceIndirectEncoding(w, *v.IndirectEncoding)
 	case FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding1:
 		if v.DirectEncoding1 == nil {
-			return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeFrequencyParametersIEARFCNChoiceDirectEncoding1(w, *v.DirectEncoding1)
 	case FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding2:
 		if v.DirectEncoding2 == nil {
-			return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeFrequencyParametersIEARFCNChoiceDirectEncoding2(w, *v.DirectEncoding2)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "FrequencyParametersIEARFCNChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeFrequencyParametersIE(r *runtime.Reader) (FrequencyParametersIE, error) {
@@ -5124,7 +5124,7 @@ func encodeFrequencyParametersIE(w *runtime.Writer, v FrequencyParametersIE) err
 	limit := 2
 	if n, ok := w.Truncation("FrequencyParametersIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "FrequencyParametersIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "FrequencyParametersIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5322,7 +5322,7 @@ func encodeIndirectEncodingStructCHANGEMARK1Group(w *runtime.Writer, v IndirectE
 	limit := 2
 	if n, ok := w.Truncation("IndirectEncodingStructCHANGEMARK1Group"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "IndirectEncodingStructCHANGEMARK1Group", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "IndirectEncodingStructCHANGEMARK1Group", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5401,7 +5401,7 @@ func encodeIndirectEncodingStruct(w *runtime.Writer, v IndirectEncodingStruct) e
 	limit := 3
 	if n, ok := w.Truncation("IndirectEncodingStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "IndirectEncodingStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "IndirectEncodingStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5494,7 +5494,7 @@ func encodeDirectEncoding1Struct(w *runtime.Writer, v DirectEncoding1Struct) err
 	limit := 2
 	if n, ok := w.Truncation("DirectEncoding1Struct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "DirectEncoding1Struct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "DirectEncoding1Struct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5674,7 +5674,7 @@ func encodeDirectEncoding2Struct(w *runtime.Writer, v DirectEncoding2Struct) err
 	limit := 4
 	if n, ok := w.Truncation("DirectEncoding2Struct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "DirectEncoding2Struct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "DirectEncoding2Struct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5876,7 +5876,7 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTH(w *runtime.Writer, v GPR
 	limit := 3
 	if n, ok := w.Truncation("GPRSMobileAllocationIEMALENGTHChoiceMALENGTH"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSMobileAllocationIEMALENGTHChoiceMALENGTH", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSMobileAllocationIEMALENGTHChoiceMALENGTH", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5971,7 +5971,7 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList(w *runtime.Writer,
 	limit := 2
 	if n, ok := w.Truncation("GPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6039,21 +6039,21 @@ func encodeGPRSMobileAllocationIEMALENGTHChoice(w *runtime.Writer, v GPRSMobileA
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case GPRSMobileAllocationIEMALENGTHChoiceAlternativeMALENGTH:
 		if v.MALENGTH == nil {
-			return w.OperationError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTH(w, *v.MALENGTH)
 	case GPRSMobileAllocationIEMALENGTHChoiceAlternativeARFCNIndexList:
 		if v.ARFCNIndexList == nil {
-			return w.OperationError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList(w, *v.ARFCNIndexList)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "GPRSMobileAllocationIEMALENGTHChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeGPRSMobileAllocationIE(r *runtime.Reader) (GPRSMobileAllocationIE, error) {
@@ -6087,7 +6087,7 @@ func encodeGPRSMobileAllocationIE(w *runtime.Writer, v GPRSMobileAllocationIE) e
 	limit := 3
 	if n, ok := w.Truncation("GPRSMobileAllocationIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GPRSMobileAllocationIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GPRSMobileAllocationIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6169,7 +6169,7 @@ func encodeRFLNumberListStructElement(w *runtime.Writer, v RFLNumberListStructEl
 	limit := 1
 	if n, ok := w.Truncation("RFLNumberListStructElement"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RFLNumberListStructElement", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RFLNumberListStructElement", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6215,18 +6215,18 @@ func encodeRFLNumberListStruct(w *runtime.Writer, v RFLNumberListStruct) error {
 	}
 	defer w.Leave()
 	if len(v.Entries) == 0 {
-		return w.OperationError(runtime.InvalidValue, "RFLNumberListStruct", 0, fmt.Errorf("recursive list requires an element"))
+		return w.ComponentError(runtime.InvalidValue, "RFLNumberListStruct", 0, fmt.Errorf("recursive list requires an element"))
 	}
 	for i, element := range v.Entries {
 		if err := encodeRFLNumberListStructElement(w, element); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "RFLNumberListStruct", 0, err), "RFLNumberListStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "RFLNumberListStruct", 0, err), "RFLNumberListStruct", i)
 		}
 		selector := uint64(0)
 		if i+1 < len(v.Entries) {
 			selector = 1
 		}
 		if err := w.WriteUint(selector, 1); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "RFLNumberListStruct", 0, err), "RFLNumberListStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "RFLNumberListStruct", 0, err), "RFLNumberListStruct", i)
 		}
 	}
 	return nil
@@ -6283,7 +6283,7 @@ func encodeARFCNIndexListStructElement(w *runtime.Writer, v ARFCNIndexListStruct
 	limit := 1
 	if n, ok := w.Truncation("ARFCNIndexListStructElement"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ARFCNIndexListStructElement", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ARFCNIndexListStructElement", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6329,18 +6329,18 @@ func encodeARFCNIndexListStruct(w *runtime.Writer, v ARFCNIndexListStruct) error
 	}
 	defer w.Leave()
 	if len(v.Entries) == 0 {
-		return w.OperationError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, fmt.Errorf("recursive list requires an element"))
+		return w.ComponentError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, fmt.Errorf("recursive list requires an element"))
 	}
 	for i, element := range v.Entries {
 		if err := encodeARFCNIndexListStructElement(w, element); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, err), "ARFCNIndexListStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, err), "ARFCNIndexListStruct", i)
 		}
 		selector := uint64(0)
 		if i+1 < len(v.Entries) {
 			selector = 1
 		}
 		if err := w.WriteUint(selector, 1); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, err), "ARFCNIndexListStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "ARFCNIndexListStruct", 0, err), "ARFCNIndexListStruct", i)
 		}
 	}
 	return nil
@@ -6412,7 +6412,7 @@ func encodePCIDGroupIEPCIDListEntry(w *runtime.Writer, v PCIDGroupIEPCIDListEntr
 	limit := 2
 	if n, ok := w.Truncation("PCIDGroupIEPCIDListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PCIDGroupIEPCIDListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PCIDGroupIEPCIDListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6460,7 +6460,7 @@ func decodePCIDGroupIEPCIDList(r *runtime.Reader) ([]PCIDGroupIEPCIDListEntry, e
 func encodePCIDGroupIEPCIDList(w *runtime.Writer, v []PCIDGroupIEPCIDListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodePCIDGroupIEPCIDListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "PCIDGroupIEPCIDList", 0, err), "PCIDGroupIEPCIDList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "PCIDGroupIEPCIDList", 0, err), "PCIDGroupIEPCIDList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -6659,7 +6659,7 @@ func encodePCIDGroupIEPCIDPatternLengthGroupListEntry(w *runtime.Writer, v PCIDG
 	limit := 4
 	if n, ok := w.Truncation("PCIDGroupIEPCIDPatternLengthGroupListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PCIDGroupIEPCIDPatternLengthGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PCIDGroupIEPCIDPatternLengthGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6723,7 +6723,7 @@ func decodePCIDGroupIEPCIDPatternLengthGroupList(r *runtime.Reader) ([]PCIDGroup
 func encodePCIDGroupIEPCIDPatternLengthGroupList(w *runtime.Writer, v []PCIDGroupIEPCIDPatternLengthGroupListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodePCIDGroupIEPCIDPatternLengthGroupListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "PCIDGroupIEPCIDPatternLengthGroupList", 0, err), "PCIDGroupIEPCIDPatternLengthGroupList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "PCIDGroupIEPCIDPatternLengthGroupList", 0, err), "PCIDGroupIEPCIDPatternLengthGroupList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -6759,7 +6759,7 @@ func encodePCIDGroupIE(w *runtime.Writer, v PCIDGroupIE) error {
 	limit := 3
 	if n, ok := w.Truncation("PCIDGroupIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PCIDGroupIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PCIDGroupIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6831,7 +6831,7 @@ func encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 	limit := 2
 	if n, ok := w.Truncation("EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6879,7 +6879,7 @@ func decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 func encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList(w *runtime.Writer, v []EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", 0, err), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", 0, err), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -6905,7 +6905,7 @@ func encodeEnhancedCellReselectionParametersIE(w *runtime.Writer, v EnhancedCell
 	limit := 1
 	if n, ok := w.Truncation("EnhancedCellReselectionParametersIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedCellReselectionParametersIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedCellReselectionParametersIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6986,7 +6986,7 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 	limit := 2
 	if n, ok := w.Truncation("RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7034,7 +7034,7 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList(w *runtime.Writer, v []RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", 0, err), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", 0, err), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -7106,7 +7106,7 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 	limit := 2
 	if n, ok := w.Truncation("RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7378,7 +7378,7 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 	limit := 5
 	if n, ok := w.Truncation("RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQ"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQ", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQ", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7470,21 +7470,21 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeEUTRANQmin:
 		if v.EUTRANQmin == nil {
-			return w.OperationError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin(w, *v.EUTRANQmin)
 	case RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeTHRESHEUTRANHighQ:
 		if v.THRESHEUTRANHighQ == nil {
-			return w.OperationError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQ(w, *v.THRESHEUTRANHighQ)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(r *runtime.Reader) (RepeatedEUTRANEnhancedCellReselectionParametersStruct, error) {
@@ -7513,7 +7513,7 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStruct(w *runtime.Writ
 	limit := 2
 	if n, ok := w.Truncation("RepeatedEUTRANEnhancedCellReselectionParametersStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RepeatedEUTRANEnhancedCellReselectionParametersStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7565,7 +7565,7 @@ func encodeEGPRSWindowSizeIEEGPRSWindowSize(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	if uint64(v) == 31 {
-		return w.OperationError(runtime.InvalidValue, "EGPRSWindowSizeIEEGPRSWindowSize", width, fmt.Errorf("excluded value"))
+		return w.ComponentError(runtime.InvalidValue, "EGPRSWindowSizeIEEGPRSWindowSize", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -7594,7 +7594,7 @@ func encodeEGPRSWindowSizeIE(w *runtime.Writer, v EGPRSWindowSizeIE) error {
 	limit := 1
 	if n, ok := w.Truncation("EGPRSWindowSizeIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EGPRSWindowSizeIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EGPRSWindowSizeIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7638,7 +7638,7 @@ func encodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(w *runtime.W
 		return err
 	}
 	if uint64(v) > 11 {
-		return w.OperationError(runtime.InvalidValue, "EGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme", width, fmt.Errorf("value reserved by source table"))
+		return w.ComponentError(runtime.InvalidValue, "EGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -7667,7 +7667,7 @@ func encodeEGPRSModulationAndCodingIE(w *runtime.Writer, v EGPRSModulationAndCod
 	limit := 1
 	if n, ok := w.Truncation("EGPRSModulationAndCodingIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EGPRSModulationAndCodingIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EGPRSModulationAndCodingIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7711,7 +7711,7 @@ func encodeEGPRSLevelIEEGPRSLevel(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	if uint64(v) == 3 {
-		return w.OperationError(runtime.InvalidValue, "EGPRSLevelIEEGPRSLevel", width, fmt.Errorf("excluded value"))
+		return w.ComponentError(runtime.InvalidValue, "EGPRSLevelIEEGPRSLevel", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -7740,7 +7740,7 @@ func encodeEGPRSLevelIE(w *runtime.Writer, v EGPRSLevelIE) error {
 	limit := 1
 	if n, ok := w.Truncation("EGPRSLevelIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EGPRSLevelIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EGPRSLevelIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7899,7 +7899,7 @@ func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroup(w *runtime.Writer, v Pac
 	limit := 2
 	if n, ok := w.Truncation("PacketTimingAdvanceIETIMINGADVANCEINDEXGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PacketTimingAdvanceIETIMINGADVANCEINDEXGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PacketTimingAdvanceIETIMINGADVANCEINDEXGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7973,7 +7973,7 @@ func encodePacketTimingAdvanceIE(w *runtime.Writer, v PacketTimingAdvanceIE) err
 	limit := 2
 	if n, ok := w.Truncation("PacketTimingAdvanceIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "PacketTimingAdvanceIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "PacketTimingAdvanceIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -8062,7 +8062,7 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(w *runtime.Writer, v TMGIIEMBM
 	limit := 2
 	if n, ok := w.Truncation("TMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "TMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "TMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -8220,7 +8220,7 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMCC(w *runtime.Writer, v TMGIIEMBMSSERVICEID
 	limit := 4
 	if n, ok := w.Truncation("TMGIIEMBMSSERVICEIDChoiceMCC"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "TMGIIEMBMSSERVICEIDChoiceMCC", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "TMGIIEMBMSSERVICEIDChoiceMCC", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -8304,21 +8304,21 @@ func encodeTMGIIEMBMSSERVICEIDChoice(w *runtime.Writer, v TMGIIEMBMSSERVICEIDCho
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case TMGIIEMBMSSERVICEIDChoiceAlternativeMBMSSERVICEID:
 		if v.MBMSSERVICEID == nil {
-			return w.OperationError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(w, *v.MBMSSERVICEID)
 	case TMGIIEMBMSSERVICEIDChoiceAlternativeMCC:
 		if v.MCC == nil {
-			return w.OperationError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeTMGIIEMBMSSERVICEIDChoiceMCC(w, *v.MCC)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "TMGIIEMBMSSERVICEIDChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeTMGIIE(r *runtime.Reader) (TMGIIE, error) {
@@ -8342,7 +8342,7 @@ func encodeTMGIIE(w *runtime.Writer, v TMGIIE) error {
 	limit := 1
 	if n, ok := w.Truncation("TMGIIE"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "TMGIIE", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "TMGIIE", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -12694,7 +12694,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -12704,6 +12704,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}

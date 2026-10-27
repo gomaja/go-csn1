@@ -427,7 +427,7 @@ func encodeEnhancedMeasurementReportMessageType(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	if uint64(v) != 4 {
-		return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportMessageType", width, fmt.Errorf("equality constraint failed"))
+		return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportMessageType", width, fmt.Errorf("equality constraint failed"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -664,7 +664,7 @@ func encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(w *r
 	limit := 2
 	if n, ok := w.Truncation("EnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -712,7 +712,7 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 func encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(w *runtime.Writer, v []EnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", 0, err), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", 0, err), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -792,11 +792,11 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader
 }
 func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer, v []*uint8) error {
 	if len(v) > 96 {
-		return w.OperationError(runtime.Limit, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, fmt.Errorf("pre-Rel-8 reporting bitmap exceeds 96 positions"))
+		return w.ComponentError(runtime.Limit, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, fmt.Errorf("pre-Rel-8 reporting bitmap exceeds 96 positions"))
 	}
 	for itemIndex, item := range v {
 		if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", itemIndex)
 		}
 	}
 	if _, received := w.ReceivedBits(); !received {
@@ -805,7 +805,7 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer
 				break
 			}
 			if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, nil); err != nil {
-				return locateIndex(w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
+				return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
 			}
 		}
 	}
@@ -885,7 +885,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceNoString(w *runtime.Writer
 	limit := 2
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceNoString"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1020,11 +1020,11 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		return err
 	}
 	if len(v) != count {
-		return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", 0, fmt.Errorf("repeat count mismatch"))
+		return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", 0, fmt.Errorf("repeat count mismatch"))
 	}
 	for itemIndex, item := range v {
 		if err := encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", 0, err), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", 0, err), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", itemIndex)
 		}
 	}
 	return nil
@@ -1109,7 +1109,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	limit := 2
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1215,7 +1215,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	limit := 2
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1298,7 +1298,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	limit := 2
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1384,26 +1384,26 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeNoString:
 		if v.NoString == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString(w, *v.NoString)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeSI23BAUSED:
 		if v.SI23BAUSED == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED(w, *v.SI23BAUSED)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport, error) {
@@ -1437,7 +1437,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	limit := 3
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1531,26 +1531,26 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeNoString:
 		if v.NoString == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString(w, *v.NoString)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeUTRANCSGMeasurementReport:
 		if v.UTRANCSGMeasurementReport == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport(w, *v.UTRANCSGMeasurementReport)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH, error) {
@@ -1594,7 +1594,7 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(w *runtime.Wr
 	limit := 5
 	if n, ok := w.Truncation("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1704,26 +1704,26 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoice(w *runtime.Writer, v Enha
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeNoString:
 		if v.NoString == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceNoString(w, *v.NoString)
 	case EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeBITMAPLENGTH:
 		if v.BITMAPLENGTH == nil {
-			return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(w, *v.BITMAPLENGTH)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "EnhancedMeasurementReportBITMAPLENGTHChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeEnhancedMeasurementReportSparePadding(r *runtime.Reader) (runtime.BitString, error) {
@@ -1808,7 +1808,7 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 	limit := 12
 	if n, ok := w.Truncation("EnhancedMeasurementReport"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedMeasurementReport", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReport", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2139,7 +2139,7 @@ func encodeServingCellDataStruct(w *runtime.Writer, v ServingCellDataStruct) err
 	limit := 6
 	if n, ok := w.Truncation("ServingCellDataStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ServingCellDataStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ServingCellDataStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2317,7 +2317,7 @@ func encodeRepeatedInvalidBSICInformationStruct(w *runtime.Writer, v RepeatedInv
 	limit := 3
 	if n, ok := w.Truncation("RepeatedInvalidBSICInformationStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RepeatedInvalidBSICInformationStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RepeatedInvalidBSICInformationStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2502,7 +2502,7 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(w *ru
 	limit := 3
 	if n, ok := w.Truncation("EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2553,11 +2553,11 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(w *runtime
 		return err
 	}
 	if len(v) != count {
-		return w.OperationError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", 0, fmt.Errorf("repeat count mismatch"))
+		return w.ComponentError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", 0, fmt.Errorf("repeat count mismatch"))
 	}
 	for itemIndex, item := range v {
 		if err := encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", 0, err), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", 0, err), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", itemIndex)
 		}
 	}
 	return nil
@@ -2588,7 +2588,7 @@ func encodeEUTRANMeasurementReportStruct(w *runtime.Writer, v EUTRANMeasurementR
 	limit := 2
 	if n, ok := w.Truncation("EUTRANMeasurementReportStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EUTRANMeasurementReportStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EUTRANMeasurementReportStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2919,7 +2919,7 @@ func encodeMeasurementResultsUnavailableArmNONCELLM(w *runtime.Writer, v uint8) 
 		return err
 	}
 	if uint64(v) != 7 {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsUnavailableArmNONCELLM", width, fmt.Errorf("equality constraint failed"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsUnavailableArmNONCELLM", width, fmt.Errorf("equality constraint failed"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -2939,7 +2939,7 @@ func decodeMeasurementResultsUnavailableArmAlt0List(r *runtime.Reader) (struct{}
 }
 func encodeMeasurementResultsUnavailableArmAlt0List(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsUnavailableArmAlt0List", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsUnavailableArmAlt0List", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
 		if err := w.WriteLiteral("0"); err != nil {
@@ -2974,7 +2974,7 @@ func encodeMeasurementResultsUnavailableArm(w *runtime.Writer, v MeasurementResu
 	limit := 2
 	if n, ok := w.Truncation("MeasurementResultsUnavailableArm"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MeasurementResultsUnavailableArm", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MeasurementResultsUnavailableArm", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3023,7 +3023,7 @@ func encodeMeasurementResultsReportsArmNONCELLM(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	if uint64(v) == 7 {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsReportsArmNONCELLM", width, fmt.Errorf("excluded value"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsReportsArmNONCELLM", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -3058,11 +3058,11 @@ func encodeMeasurementResultsNCELLReports(w *runtime.Writer, v []NCELLReportStru
 		return err
 	}
 	if len(v) != count {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsNCELLReports", 0, fmt.Errorf("repeat count mismatch"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsNCELLReports", 0, fmt.Errorf("repeat count mismatch"))
 	}
 	for itemIndex, item := range v {
 		if err := encodeMeasurementResultsNCELLReportsEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MeasurementResultsNCELLReports", 0, err), "MeasurementResultsNCELLReports", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MeasurementResultsNCELLReports", 0, err), "MeasurementResultsNCELLReports", itemIndex)
 		}
 	}
 	return nil
@@ -3079,7 +3079,7 @@ func decodeMeasurementResultsSuffixNull(r *runtime.Reader) (struct{}, error) {
 }
 func encodeMeasurementResultsSuffixNull(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsSuffixNull", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsSuffixNull", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
 		if err := w.WriteLiteral("0"); err != nil {
@@ -3116,7 +3116,7 @@ func decodeMeasurementResultsCSGSuffix(r *runtime.Reader) (struct{}, error) {
 }
 func encodeMeasurementResultsCSGSuffix(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
-		return w.OperationError(runtime.InvalidValue, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
 		if err := w.WriteLiteral("0"); err != nil {
@@ -3156,7 +3156,7 @@ func encodeMeasurementResultsCSGArm(w *runtime.Writer, v MeasurementResultsCSGAr
 	limit := 3
 	if n, ok := w.Truncation("MeasurementResultsCSGArm"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MeasurementResultsCSGArm", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MeasurementResultsCSGArm", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3229,21 +3229,21 @@ func encodeMeasurementResultsReportsSuffix(w *runtime.Writer, v MeasurementResul
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case MeasurementResultsReportsSuffixAlternativeNull:
 		if v.Null == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMeasurementResultsSuffixNull(w, *v.Null)
 	case MeasurementResultsReportsSuffixAlternativeCSG:
 		if v.CSG == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMeasurementResultsCSGArm(w, *v.CSG)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeMeasurementResultsReportsArm(r *runtime.Reader) (MeasurementResultsReportsArm, error) {
@@ -3277,7 +3277,7 @@ func encodeMeasurementResultsReportsArm(w *runtime.Writer, v MeasurementResultsR
 	limit := 3
 	if n, ok := w.Truncation("MeasurementResultsReportsArm"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MeasurementResultsReportsArm", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MeasurementResultsReportsArm", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3356,21 +3356,21 @@ func encodeMeasurementResultsCountChoice(w *runtime.Writer, v MeasurementResults
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case MeasurementResultsCountChoiceAlternativeUnavailable:
 		if v.Unavailable == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMeasurementResultsUnavailableArm(w, *v.Unavailable)
 	case MeasurementResultsCountChoiceAlternativeReports:
 		if v.Reports == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMeasurementResultsReportsArm(w, *v.Reports)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MeasurementResultsCountChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeMeasurementResultsFields(r *runtime.Reader) (MeasurementResultsFields, error) {
@@ -3439,7 +3439,7 @@ func encodeMeasurementResultsFields(w *runtime.Writer, v MeasurementResultsField
 	limit := 10
 	if n, ok := w.Truncation("MeasurementResultsFields"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MeasurementResultsFields", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MeasurementResultsFields", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3578,7 +3578,7 @@ func encodeMeasurementResultsContents(w *runtime.Writer, v MeasurementResultsCon
 	limit := 1
 	if n, ok := w.Truncation("MeasurementResultsContents"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MeasurementResultsContents", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MeasurementResultsContents", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3716,7 +3716,7 @@ func encodeNCELLReportStruct(w *runtime.Writer, v NCELLReportStruct) error {
 	limit := 3
 	if n, ok := w.Truncation("NCELLReportStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "NCELLReportStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "NCELLReportStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4934,7 +4934,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -4944,6 +4944,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}

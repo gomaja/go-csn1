@@ -234,7 +234,7 @@ func encodeMSRACapabilityValuePartSpareBitsList(w *runtime.Writer, _ []runtime.B
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartSpareBitsList", 0, err), "MSRACapabilityValuePartSpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartSpareBitsList", 0, err), "MSRACapabilityValuePartSpareBitsList", i)
 		}
 	}
 	return nil
@@ -280,7 +280,7 @@ func encodeMSRACapabilityValuePart(w *runtime.Writer, v MSRACapabilityValuePart)
 	limit := 2
 	if n, ok := w.Truncation("MSRACapabilityValuePart"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePart", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePart", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -329,7 +329,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessC
 		return err
 	}
 	if uint64(v) == 15 {
-		return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilitiesAccessTechnologyType", width, fmt.Errorf("excluded value"))
+		return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilitiesAccessTechnologyType", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -369,7 +369,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessC
 	limit := 2
 	if n, ok := w.Truncation("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -421,7 +421,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 		return err
 	}
 	if uint64(v) != 15 {
-		return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAccessTechnologyType", width, fmt.Errorf("equality constraint failed"))
+		return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAccessTechnologyType", width, fmt.Errorf("equality constraint failed"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
@@ -502,7 +502,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	limit := 2
 	if n, ok := w.Truncation("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -550,7 +550,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList(w *runtime.Writer, v []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", 0, err), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", 0, err), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -580,7 +580,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", 0, err), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", 0, err), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", i)
 		}
 	}
 	return nil
@@ -611,7 +611,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	limit := 2
 	if n, ok := w.Truncation("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologies", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -693,7 +693,7 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength(
 	limit := 3
 	if n, ok := w.Truncation("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -782,21 +782,21 @@ func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(w *run
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities:
 		if v.AccessCapabilities == nil {
-			return w.OperationError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities(w, *v.AccessCapabilities)
 	case MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength:
 		if v.Length == nil {
-			return w.OperationError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength(w, *v.Length)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeMSRACapabilityValuePartStructElement(r *runtime.Reader) (MSRACapabilityValuePartStructElement, error) {
@@ -820,7 +820,7 @@ func encodeMSRACapabilityValuePartStructElement(w *runtime.Writer, v MSRACapabil
 	limit := 1
 	if n, ok := w.Truncation("MSRACapabilityValuePartStructElement"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStructElement", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStructElement", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -866,18 +866,18 @@ func encodeMSRACapabilityValuePartStruct(w *runtime.Writer, v MSRACapabilityValu
 	}
 	defer w.Leave()
 	if len(v.Entries) == 0 {
-		return w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, fmt.Errorf("recursive list requires an element"))
+		return w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, fmt.Errorf("recursive list requires an element"))
 	}
 	for i, element := range v.Entries {
 		if err := encodeMSRACapabilityValuePartStructElement(w, element); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, err), "MSRACapabilityValuePartStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, err), "MSRACapabilityValuePartStruct", i)
 		}
 		selector := uint64(0)
 		if i+1 < len(v.Entries) {
 			selector = 1
 		}
 		if err := w.WriteUint(selector, 1); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, err), "MSRACapabilityValuePartStruct", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "MSRACapabilityValuePartStruct", 0, err), "MSRACapabilityValuePartStruct", i)
 		}
 	}
 	return nil
@@ -1006,7 +1006,7 @@ func encodeAdditionalAccessTechnologiesStruct(w *runtime.Writer, v AdditionalAcc
 	limit := 3
 	if n, ok := w.Truncation("AdditionalAccessTechnologiesStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "AdditionalAccessTechnologiesStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "AdditionalAccessTechnologiesStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1103,7 +1103,7 @@ func encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBits
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", 0, err), "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", 0, err), "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", i)
 		}
 	}
 	return nil
@@ -1134,7 +1134,7 @@ func encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilities(w *runti
 	limit := 2
 	if n, ok := w.Truncation("AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1211,7 +1211,7 @@ func encodeAccessCapabilitiesStruct(w *runtime.Writer, v AccessCapabilitiesStruc
 	limit := 2
 	if n, ok := w.Truncation("AccessCapabilitiesStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "AccessCapabilitiesStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "AccessCapabilitiesStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1477,7 +1477,7 @@ func encodeContentN8PSKPowerCapabilityValue(w *runtime.Writer, v uint8) error {
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "ContentN8PSKPowerCapabilityValue", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "ContentN8PSKPowerCapabilityValue", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -1817,7 +1817,7 @@ func encodeContentExtendedDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Conten
 	limit := 2
 	if n, ok := w.Truncation("ContentExtendedDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ContentExtendedDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ContentExtendedDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2261,7 +2261,7 @@ func encodeContentDTMGPRSHighMultiSlotClassGroup(w *runtime.Writer, v ContentDTM
 	limit := 2
 	if n, ok := w.Truncation("ContentDTMGPRSHighMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ContentDTMGPRSHighMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ContentDTMGPRSHighMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2400,7 +2400,7 @@ func encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultisl
 	}
 	if w.Canonical() {
 		if uint64(v) > 6 {
-			return w.OperationError(runtime.InvalidValue, "ContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultislotCapabilityReductionForDownlinkDualCarrier", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "ContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultislotCapabilityReductionForDownlinkDualCarrier", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -2466,7 +2466,7 @@ func encodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroup(w *run
 	limit := 2
 	if n, ok := w.Truncation("ContentMultislotCapabilityReductionForDownlinkDualCarrierGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ContentMultislotCapabilityReductionForDownlinkDualCarrierGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ContentMultislotCapabilityReductionForDownlinkDualCarrierGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3418,7 +3418,7 @@ func encodeContentECPCHMonitoringSupport(w *runtime.Writer, v uint8) error {
 	}
 	if w.Canonical() {
 		if uint64(v) > 2 {
-			return w.OperationError(runtime.InvalidValue, "ContentECPCHMonitoringSupport", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "ContentECPCHMonitoringSupport", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -3908,7 +3908,7 @@ func encodeContent(w *runtime.Writer, v Content) error {
 	limit := 63
 	if n, ok := w.Truncation("Content"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Content", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Content", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4444,10 +4444,10 @@ func encodeMultislotCapabilityStructHSCSDMultislotClassValue(w *runtime.Writer, 
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructHSCSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructHSCSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
 		}
 		if uint64(v) > 18 {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructHSCSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructHSCSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -4570,7 +4570,7 @@ func encodeMultislotCapabilityStructGPRSMultislotClassGroup(w *runtime.Writer, v
 	limit := 2
 	if n, ok := w.Truncation("MultislotCapabilityStructGPRSMultislotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructGPRSMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructGPRSMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4706,7 +4706,7 @@ func encodeMultislotCapabilityStructSMSVALUEGroup(w *runtime.Writer, v Multislot
 	limit := 2
 	if n, ok := w.Truncation("MultislotCapabilityStructSMSVALUEGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructSMSVALUEGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructSMSVALUEGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4783,10 +4783,10 @@ func encodeMultislotCapabilityStructECSDMultislotClassValue(w *runtime.Writer, v
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructECSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructECSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
 		}
 		if uint64(v) > 18 {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructECSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructECSDMultislotClassValue", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -4909,7 +4909,7 @@ func encodeMultislotCapabilityStructEGPRSMultislotClassGroup(w *runtime.Writer, 
 	limit := 2
 	if n, ok := w.Truncation("MultislotCapabilityStructEGPRSMultislotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructEGPRSMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructEGPRSMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5107,7 +5107,7 @@ func encodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroup(w *runtime.Writer
 	limit := 3
 	if n, ok := w.Truncation("MultislotCapabilityStructDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStructDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStructDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5209,7 +5209,7 @@ func encodeMultislotCapabilityStruct(w *runtime.Writer, v MultislotCapabilityStr
 	limit := 6
 	if n, ok := w.Truncation("MultislotCapabilityStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MultislotCapabilityStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MultislotCapabilityStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5505,7 +5505,7 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 	limit := 7
 	if n, ok := w.Truncation("A5Bits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "A5Bits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "A5Bits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5629,7 +5629,7 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 	}
 	if w.Canonical() {
 		if uint64(v) > 6 {
-			return w.OperationError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupEFTAMultislotCapabilityReductionForDownlinkDualCarrier", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroupEFTAMultislotCapabilityReductionForDownlinkDualCarrier", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -5664,7 +5664,7 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 	limit := 2
 	if n, ok := w.Truncation("EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5733,7 +5733,7 @@ func encodeEnhancedFlexibleTimeslotAssignmentStruct(w *runtime.Writer, v Enhance
 	limit := 1
 	if n, ok := w.Truncation("EnhancedFlexibleTimeslotAssignmentStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EnhancedFlexibleTimeslotAssignmentStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5835,7 +5835,7 @@ func encodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup(w *runti
 	limit := 2
 	if n, ok := w.Truncation("DLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "DLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "DLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5943,7 +5943,7 @@ func encodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots(w *runtime.W
 	}
 	if w.Canonical() {
 		if uint64(v) > 61 {
-			return w.OperationError(runtime.InvalidValue, "DLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "DLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -6019,7 +6019,7 @@ func encodeDLMCCapabilityStruct(w *runtime.Writer, v DLMCCapabilityStruct) error
 	limit := 4
 	if n, ok := w.Truncation("DLMCCapabilityStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "DLMCCapabilityStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "DLMCCapabilityStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -7668,7 +7668,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -7678,6 +7678,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}
