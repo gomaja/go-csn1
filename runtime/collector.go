@@ -20,9 +20,9 @@ type Report struct {
 	Dropped uint64
 }
 
-// Collector stores an operation's transactional observations. Its zero value
-// is ready for use. Readers sharing it execute serially; TakeReport is called
-// after their transactions have completed. It is not safe for concurrent use.
+// Collector stores an operation's transactional observations; its zero value is
+// ready. NewReaderWithCollector sets its bounds from that reader's input, while
+// visits accumulate until TakeReport. Readers sharing it must run serially.
 type Collector struct {
 	observations                             []Observation
 	dropped                                  uint64
