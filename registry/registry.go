@@ -189,7 +189,10 @@ func manualDecodeClassmark2ValuePartFrom(r *runtime.Reader) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	v.Wire = wire
+	// TS 24.008 V20.1.0 §10.5.1.6 fixes the value at three octets.
+	// Extend only its received tail; keep the typed reader's wire conventions.
+	v.Wire.Tail = wire.Tail
+	v.Wire.TransmittedBits = wire.TransmittedBits
 	return runtime.Decoded[uecapability.Classmark2ValuePart]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
 }
 func manualUnwrapClassmark2ValuePart(value any) (uecapability.Classmark2ValuePart, bool) {
