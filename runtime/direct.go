@@ -482,6 +482,7 @@ type Writer struct {
 	wire                     WireInfo
 	implicitSpan             int
 	stateErr                 error
+	stateErrPath             string
 	allowZero                bool
 }
 
@@ -491,6 +492,7 @@ func (w *Writer) WithWire(wire WireInfo) {
 	w.spareCountIndex = make(map[string]int)
 	w.truncationIndex = make(map[string]int)
 	w.stateErr = nil
+	w.stateErrPath = ""
 }
 
 // SetZeroExtension mirrors a printed TS 24.008 V20.1.0 §10.5.5.12a
@@ -547,7 +549,7 @@ func (w *Writer) OmittedFieldError(field string) error {
 // such a value; without one there is no bound to report.
 func (w *Writer) LengthBoundError(detail string) error {
 	if !w.bounded {
-		return w.operationFailure(fmt.Errorf("%s at %s: no enclosing length-delimited value", detail, w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("%s: no enclosing length-delimited value", detail), 0, InvalidValue)
 	}
 	return w.operationFailure(w.boundError(LengthBound, w.limit, "", detail), 0, InvalidValue)
 }
@@ -560,7 +562,7 @@ func (w *Writer) LengthBoundError(detail string) error {
 // alternative, so Limit is the current position plus that many octets.
 func (w *Writer) LengthFieldError(field string, octets int, detail string) error {
 	if w.bits < 0 || w.bits > maxBits || octets < 0 || octets > (maxBits-w.bits)/8 {
-		return w.operationFailure(fmt.Errorf("length field of %d octets outside encoded bit limit at %s", octets, w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("length field of %d octets outside encoded bit limit", octets), 0, InvalidValue)
 	}
 	return w.operationFailure(w.boundError(LengthBound, w.bits+octets*8, field, detail), 0, InvalidValue)
 }
@@ -569,7 +571,7 @@ func (w *Writer) LengthFieldError(field string, octets int, detail string) error
 // from the start of the encoding; an invalid offset is an internal error.
 func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) error {
 	if limit < 0 || limit > maxBits || w.bits < 0 || w.bits > maxBits {
-		return w.operationFailure(fmt.Errorf("invalid %s bound %d at bit %d in %s: %s", kind, limit, w.bits, w.path, detail), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("invalid %s bound %d: %s", kind, limit, detail), 0, InvalidValue)
 	}
 	if field == "" {
 		field = w.path
@@ -600,7 +602,8 @@ func (w *Writer) SpareCount(path string) (int, bool) {
 		return 0, false
 	}
 	if counts[i] < 0 || counts[i] > maxBits {
-		w.stateErr = fmt.Errorf("spare repeat count outside bit limit at %s", path)
+		w.stateErr = fmt.Errorf("spare repeat count outside bit limit")
+		w.stateErrPath = path
 		return 0, false
 	}
 	w.spareCountIndex[path] = i + 1
@@ -638,7 +641,7 @@ func (w *Writer) BoundEndOr(unbounded int) int {
 }
 func (w *Writer) PushLimit(width int) (int, error) {
 	if w.bits < 0 || w.bits > maxBits || width < 0 || width > maxBits-w.bits || w.bounded && (w.limit < w.bits || w.limit > maxBits) {
-		return 0, w.operationFailure(fmt.Errorf("fixed value outside encoded bit limit at %s", w.path), 0, InvalidValue)
+		return 0, w.operationFailure(fmt.Errorf("fixed value outside encoded bit limit"), 0, InvalidValue)
 	}
 	if w.bounded && width > w.limit-w.bits {
 		return 0, w.operationFailure(w.boundError(LengthBound, w.limit, "", "length exceeds the enclosing length-delimited value"), 0, InvalidValue)
@@ -653,7 +656,7 @@ func (w *Writer) PushLimit(width int) (int, error) {
 }
 func (w *Writer) PopLimit(old int) error {
 	if !w.bounded || old < -1 || old > maxBits {
-		return w.operationFailure(fmt.Errorf("invalid enclosing fixed value at %s", w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("invalid enclosing fixed value"), 0, InvalidValue)
 	}
 	if w.bits != w.limit {
 		return w.operationFailure(w.boundError(LengthBound, w.limit, "", "content ends before the length-delimited value"), 0, InvalidValue)
@@ -666,7 +669,7 @@ func (w *Writer) Set(name string, v uint64)           { w.vars[key(name)] = v }
 func (w *Writer) Eval(expression string) (int, error) { return eval(expression, w.vars) }
 func (w *Writer) Enter(name string) error {
 	if w.depth >= 128 {
-		return w.operationFailure(fmt.Errorf("encode nesting limit at %s", w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("encode nesting limit"), 0, InvalidValue)
 	}
 	w.depth++
 	if w.path == "" {
@@ -690,7 +693,7 @@ func (w *Writer) Leave() {
 }
 func (w *Writer) logicalPosition() (int, error) {
 	if w.bits < 0 || w.virtual < 0 || w.bits > maxBits || w.virtual > maxBits-w.bits {
-		return 0, w.operationFailure(fmt.Errorf("encoded bit limit exceeded at %s", w.path), 0, InvalidValue)
+		return 0, w.operationFailure(fmt.Errorf("encoded bit limit exceeded"), 0, InvalidValue)
 	}
 	return w.bits + w.virtual, nil
 }
@@ -700,7 +703,7 @@ func (w *Writer) put(bit uint8) error {
 		return w.operationFailure(err, 0, InvalidValue)
 	}
 	if position >= maxBits {
-		return w.operationFailure(fmt.Errorf("encoded bit limit exceeded at %s", w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("encoded bit limit exceeded"), 0, InvalidValue)
 	}
 	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 		if bit != 0 {
@@ -723,7 +726,11 @@ func (w *Writer) put(bit uint8) error {
 		}
 		if at := position; at >= span.At && at < end {
 			if bit != 0 {
-				return w.operationFailure(fmt.Errorf("edit to receiver-inferred bit at %s bit %d", w.path, at), 0, InvalidValue)
+				detail := "edit to receiver-inferred bit"
+				if at != w.bits {
+					detail = fmt.Sprintf("edit to receiver-inferred bit %d", at)
+				}
+				return w.operationFailure(fmt.Errorf("%s", detail), 0, InvalidValue)
 			}
 			w.virtual++
 			if w.bits+w.virtual == end {
@@ -757,7 +764,7 @@ func (w *Writer) currentImplicitSpan() (ImplicitSpan, int, error) {
 }
 func (w *Writer) WriteUint(value uint64, width int) error {
 	if width < 0 || width > 64 || width < 64 && value >= uint64(1)<<uint(width) {
-		return w.operationFailure(fmt.Errorf("value outside %d-bit field at %s", width, w.path), width, InvalidValue)
+		return w.operationFailure(fmt.Errorf("value outside %d-bit field", width), width, InvalidValue)
 	}
 	for i := width - 1; i >= 0; i-- {
 		if err := w.put(uint8((value >> uint(i)) & 1)); err != nil {
@@ -768,7 +775,7 @@ func (w *Writer) WriteUint(value uint64, width int) error {
 }
 func (w *Writer) WriteBitString(value BitString, width int) error {
 	if width < 0 || width != value.BitLength || width > maxBits || len(value.Bytes) < (width+7)/8 {
-		return w.operationFailure(fmt.Errorf("invalid bit string width at %s", w.path), width, InvalidValue)
+		return w.operationFailure(fmt.Errorf("invalid bit string width"), width, InvalidValue)
 	}
 	for i := 0; i < width; i++ {
 		if err := w.put((value.Bytes[i/8] >> (7 - uint(i%8))) & 1); err != nil {
@@ -949,7 +956,7 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 		return nil
 	}
 	if mark.bits < 0 || mark.bits > w.bits {
-		return w.operationFailure(fmt.Errorf("invalid fallback mark at %s", w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("invalid fallback mark"), 0, InvalidValue)
 	}
 	r := NewReader(w.bytes)
 	// Reader.Check bounds the window by the written bytes; the shared
@@ -975,7 +982,7 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 // field for a newly constructed value (TS 44.018 V19.0.0 §10.5.2.33b).
 func (w *Writer) WriteIgnoredFixed(width int) error {
 	if width < 0 || width > 64 {
-		return w.operationFailure(fmt.Errorf("ignored field width outside 0..64 at %s", w.path), 0, InvalidValue)
+		return w.operationFailure(fmt.Errorf("ignored field width outside 0..64"), 0, InvalidValue)
 	}
 	if w.padding < len(w.wire.Padding) {
 		value := w.wire.Padding[w.padding]
@@ -1012,7 +1019,7 @@ func (w *Writer) Finish(tail BitString) ([]byte, error) {
 }
 func (w *Writer) Bytes() ([]byte, error) {
 	if w.stateErr != nil {
-		return nil, w.operationFailure(w.stateErr, 0, InvalidValue)
+		return nil, w.OperationError(InvalidValue, w.stateErrPath, 0, w.stateErr)
 	}
 	if w.wire.sealed {
 		if err := w.validateState(); err != nil {

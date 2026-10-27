@@ -145,7 +145,11 @@ type BoundError struct {
 }
 
 func (e *BoundError) Error() string {
-	return fmt.Sprintf("CSN.1 %s bound at bit %d conflicts with %s at %s (bit %d): %s", e.Kind, e.Limit, e.Field, e.Path, e.Position, e.Detail)
+	location := errorPath(e.Path, e.Field)
+	if location == "" {
+		return fmt.Sprintf("CSN.1 %s bound (limit %d) at bit %d: %s", e.Kind, e.Limit, e.Position, e.Detail)
+	}
+	return fmt.Sprintf("CSN.1 %s bound (limit %d) at bit %d in %s: %s", e.Kind, e.Limit, e.Position, location, e.Detail)
 }
 
 func (e *BoundError) Unwrap() error { return ErrBoundConflict }
