@@ -104,6 +104,9 @@ type MPRACHControlParametersIE struct {
 	PERSISTENCELEVEL *uint8
 	Wire             runtime.WireInfo `json:"-"`
 }
+
+var observationRule0 = observationRule{minimum: 0, maximum: 10, source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9", Table: ""}}
+
 type GPRSPowerControlParametersIE struct {
 	ALPHA      uint8
 	TAVGW      uint8
@@ -414,12 +417,15 @@ func decodeUTRANCSGMeasurementReportIEPLMNIDSelector(r *runtime.Reader) (*PLMNID
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANCSGMeasurementReportIEPLMNIDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -822,7 +828,11 @@ func decodePSCGroupIEPSCList(r *runtime.Reader) ([]PSCGroupIEPSCListEntry, error
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PSCGroupIEPSCList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
+		}
 		v, err := decodePSCGroupIEPSCListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
 		}
@@ -1028,7 +1038,11 @@ func decodePSCGroupIEPSCPatternLengthGroupList(r *runtime.Reader) ([]PSCGroupIEP
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PSCGroupIEPSCPatternLengthGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
+		}
 		v, err := decodePSCGroupIEPSCPatternLengthGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
 		}
@@ -1174,12 +1188,15 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelD
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescriptionMBMSPTMChannelDescriptionGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1261,12 +1278,15 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescripti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescriptionMPRACHDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1337,7 +1357,12 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 		v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMBMSPTMChannelDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMBMSPTMChannelDescription
 			result.MBMSPTMChannelDescription = &v
@@ -1345,6 +1370,7 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1353,7 +1379,12 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 		v, err := decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceMPRACHDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MBMSChannelParametersIEMBMSPTMChannelDescriptionChoiceAlternativeMPRACHDescription
 			result.MPRACHDescription = &v
@@ -1361,6 +1392,7 @@ func decodeMBMSChannelParametersIEMBMSPTMChannelDescriptionChoice(r *runtime.Rea
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1449,12 +1481,15 @@ func decodeMBMSPTMChannelDescriptionIEFrequencyParametersSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSPTMChannelDescriptionIEFrequencyParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1560,12 +1595,15 @@ func decodeMPRACHDescriptionIEFrequencyParametersSelector(r *runtime.Reader) (*F
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHDescriptionIEFrequencyParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1654,12 +1692,15 @@ func decodeMPRACHDescriptionIEMPRACHControlParametersSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHDescriptionIEMPRACHControlParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1801,12 +1842,15 @@ func decodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentitySelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1891,7 +1935,11 @@ func decodeMBMSSessionListIETMGIGroupList(r *runtime.Reader) ([]MBMSSessionListI
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("MBMSSessionListIETMGIGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
+		}
 		v, err := decodeMBMSSessionListIETMGIGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
 		}
@@ -2101,12 +2149,15 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMB
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSRadioBearerStartingTimeValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2133,12 +2184,15 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEGPRSWindowSizeValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2199,12 +2253,15 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2341,7 +2398,11 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(r *run
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
+		}
 		v, err := decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
 		}
@@ -2435,12 +2496,15 @@ func decodeMPRACHControlParametersIEACCCONTRCLASSSelector(r *runtime.Reader) (*u
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHControlParametersIEACCCONTRCLASSValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2492,12 +2556,15 @@ func decodeMPRACHControlParametersIEMAXRETRANSSelector(r *runtime.Reader) (*uint
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHControlParametersIEMAXRETRANSValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2589,12 +2656,15 @@ func decodeMPRACHControlParametersIETXINTSelector(r *runtime.Reader) (*uint8, er
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHControlParametersIETXINTValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2646,12 +2716,15 @@ func decodeMPRACHControlParametersIEPERSISTENCELEVELSelector(r *runtime.Reader) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMPRACHControlParametersIEPERSISTENCELEVELValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2762,9 +2835,16 @@ func decodeGPRSPowerControlParametersIEALPHA(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -3381,12 +3461,15 @@ func decodeGPRSCellOptionsIEPANDECGroupSelector(r *runtime.Reader) (*GPRSCellOpt
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSCellOptionsIEPANDECGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -3451,12 +3534,14 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInf
 		r.Commit(candidate)
 		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{Alternative: GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackAlternativeKnown, Known: &known}, nil
 	}
+	discardReader(candidate)
 	if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{}, err
 	}
 	candidate = r.Fork()
 	ignored, err := decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackIgnored(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return GPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallback{}, r.Error(runtime.InvalidBranch, "extension fallback has no matching arm")
 	}
 	r.Commit(candidate)
@@ -3574,12 +3659,15 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupSelector(r *runtime.Reader) (*GP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSCellOptionsIEExtensionLengthGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -3858,12 +3946,15 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4364,12 +4455,15 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5000,11 +5094,17 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 		v, err := decodeFrequencyParametersIEARFCNChoiceARFCN(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeARFCN
 			result.ARFCN = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5013,11 +5113,17 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 		v, err := decodeFrequencyParametersIEARFCNChoiceIndirectEncoding(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeIndirectEncoding
 			result.IndirectEncoding = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5026,11 +5132,17 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 		v, err := decodeFrequencyParametersIEARFCNChoiceDirectEncoding1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding1
 			result.DirectEncoding1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5039,11 +5151,17 @@ func decodeFrequencyParametersIEARFCNChoice(r *runtime.Reader) (FrequencyParamet
 		v, err := decodeFrequencyParametersIEARFCNChoiceDirectEncoding2(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FrequencyParametersIEARFCNChoiceAlternativeDirectEncoding2
 			result.DirectEncoding2 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5276,12 +5394,15 @@ func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Selector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5350,12 +5471,15 @@ func decodeIndirectEncodingStructCHANGEMARK1GroupSelector(r *runtime.Reader) (*I
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIndirectEncodingStructCHANGEMARK1Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5755,12 +5879,15 @@ func decodeGPRSMobileAllocationIERFLNumberListSelector(r *runtime.Reader) (*RFLN
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMobileAllocationIERFLNumberListValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5925,12 +6052,15 @@ func decodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexListARFCNIndexListSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexListARFCNIndexListValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6000,11 +6130,17 @@ func decodeGPRSMobileAllocationIEMALENGTHChoice(r *runtime.Reader) (GPRSMobileAl
 		v, err := decodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = GPRSMobileAllocationIEMALENGTHChoiceAlternativeMALENGTH
 			result.MALENGTH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6013,11 +6149,17 @@ func decodeGPRSMobileAllocationIEMALENGTHChoice(r *runtime.Reader) (GPRSMobileAl
 		v, err := decodeGPRSMobileAllocationIEMALENGTHChoiceARFCNIndexList(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = GPRSMobileAllocationIEMALENGTHChoiceAlternativeARFCNIndexList
 			result.ARFCNIndexList = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6191,7 +6333,11 @@ func decodeRFLNumberListStruct(r *runtime.Reader) (RFLNumberListStruct, error) {
 	var out RFLNumberListStruct
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("RFLNumberListStruct", len(out.Entries)); err != nil {
+			return RFLNumberListStruct{}, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "RFLNumberListStruct", len(out.Entries))
+		}
 		element, err := decodeRFLNumberListStructElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return RFLNumberListStruct{}, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "RFLNumberListStruct", len(out.Entries))
 		}
@@ -6305,7 +6451,11 @@ func decodeARFCNIndexListStruct(r *runtime.Reader) (ARFCNIndexListStruct, error)
 	var out ARFCNIndexListStruct
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("ARFCNIndexListStruct", len(out.Entries)); err != nil {
+			return ARFCNIndexListStruct{}, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "ARFCNIndexListStruct", len(out.Entries))
+		}
 		element, err := decodeARFCNIndexListStructElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return ARFCNIndexListStruct{}, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "ARFCNIndexListStruct", len(out.Entries))
 		}
@@ -6443,7 +6593,11 @@ func decodePCIDGroupIEPCIDList(r *runtime.Reader) ([]PCIDGroupIEPCIDListEntry, e
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PCIDGroupIEPCIDList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
+		}
 		v, err := decodePCIDGroupIEPCIDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
 		}
@@ -6502,12 +6656,15 @@ func decodePCIDGroupIEPCIDBITMAPGROUPSelector(r *runtime.Reader) (*uint8, error)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePCIDGroupIEPCIDBITMAPGROUPValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6706,7 +6863,11 @@ func decodePCIDGroupIEPCIDPatternLengthGroupList(r *runtime.Reader) ([]PCIDGroup
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PCIDGroupIEPCIDPatternLengthGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
+		}
 		v, err := decodePCIDGroupIEPCIDPatternLengthGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
 		}
@@ -6862,7 +7023,11 @@ func decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
+		}
 		v, err := decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
 		}
@@ -7017,7 +7182,11 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -7203,12 +7372,15 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANLowQValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7260,12 +7432,15 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANQQUALMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7317,12 +7492,15 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANRSRPminValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7431,11 +7609,17 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeEUTRANQmin
 			result.EUTRANQmin = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -7444,11 +7628,17 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		v, err := decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQ(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceAlternativeTHRESHEUTRANHighQ
 			result.THRESHEUTRANHighQ = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -7791,12 +7981,15 @@ func decodePacketTimingAdvanceIETIMINGADVANCEVALUESelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketTimingAdvanceIETIMINGADVANCEVALUEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7927,12 +8120,15 @@ func decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -8265,11 +8461,17 @@ func decodeTMGIIEMBMSSERVICEIDChoice(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoi
 		v, err := decodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = TMGIIEMBMSSERVICEIDChoiceAlternativeMBMSSERVICEID
 			result.MBMSSERVICEID = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8278,11 +8480,17 @@ func decodeTMGIIEMBMSSERVICEIDChoice(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoi
 		v, err := decodeTMGIIEMBMSSERVICEIDChoiceMCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = TMGIIEMBMSSERVICEIDChoiceAlternativeMCC
 			result.MCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8355,6 +8563,18 @@ func encodeTMGIIE(w *runtime.Writer, v TMGIIE) error {
 		}
 	}
 	return nil
+}
+
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
 }
 
 // DecodeUTRANCSGMeasurementReportIE decodes TS 44.060 V19.0.0 §12.61 <UTRAN CSG Measurement Report IE>.
@@ -9128,12 +9348,12 @@ func EncodeGPRSPowerControlParametersIETo(w *runtime.Writer, v GPRSPowerControlP
 	}
 	return operationLocation39.failure(w.WithWireValue(v.Wire, func() error { return encodeGPRSPowerControlParametersIE(w, v) }), "", w.Position(), 0)
 }
-func decodeGPRSPowerControlParametersIEBytes(data []byte) (runtime.Decoded[GPRSPowerControlParametersIE], error) {
+func decodeGPRSPowerControlParametersIEBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[GPRSPowerControlParametersIE], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[GPRSPowerControlParametersIE]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeGPRSPowerControlParametersIE(r)
 	if err != nil {
@@ -9166,7 +9386,7 @@ func encodeGPRSPowerControlParametersIEBytes(v GPRSPowerControlParametersIE) ([]
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeGPRSPowerControlParametersIECanonical(v GPRSPowerControlParametersIE) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeGPRSPowerControlParametersIEBytes, decodeGPRSPowerControlParametersIEBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 3, false, encodeGPRSPowerControlParametersIEBytes, DecodeGPRSPowerControlParametersIE, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation40.failure(operationErr, "", -1, 0)
 		}
@@ -9185,7 +9405,7 @@ func EncodeGPRSPowerControlParametersIECanonical(v GPRSPowerControlParametersIE)
 // that decode to a different typed value.
 func EncodeGPRSPowerControlParametersIECanonicalAtLength(v GPRSPowerControlParametersIE, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeGPRSPowerControlParametersIEBytes, decodeGPRSPowerControlParametersIEBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodeGPRSPowerControlParametersIEBytes, DecodeGPRSPowerControlParametersIE, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation40.failure(operationErr, "", -1, 0)
 		}
@@ -10620,33 +10840,33 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 63, MaximumBits: 87, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodeUTRANCSGMeasurementReportIE, DecodeFrom: descriptorDecodeUTRANCSGMeasurementReportIEFrom, Encode: descriptorEncodeUTRANCSGMeasurementReportIE, Canonical: descriptorCanonicalUTRANCSGMeasurementReportIE, CanonicalAtLength: descriptorCanonicalAtLengthUTRANCSGMeasurementReportIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodePLMNIDStruct, DecodeFrom: descriptorDecodePLMNIDStructFrom, Encode: descriptorEncodePLMNIDStruct, Canonical: descriptorCanonicalPLMNIDStruct, CanonicalAtLength: descriptorCanonicalAtLengthPLMNIDStruct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}}, Decode: descriptorDecodePSCGroupIE, DecodeFrom: descriptorDecodePSCGroupIEFrom, Encode: descriptorEncodePSCGroupIE, Canonical: descriptorCanonicalPSCGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPSCGroupIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}}, Decode: descriptorDecodeMBMSChannelParametersIE, DecodeFrom: descriptorDecodeMBMSChannelParametersIEFrom, Encode: descriptorEncodeMBMSChannelParametersIE, Canonical: descriptorCanonicalMBMSChannelParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSChannelParametersIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}}, Decode: descriptorDecodeMBMSPTMChannelDescriptionIE, DecodeFrom: descriptorDecodeMBMSPTMChannelDescriptionIEFrom, Encode: descriptorEncodeMBMSPTMChannelDescriptionIE, Canonical: descriptorCanonicalMBMSPTMChannelDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSPTMChannelDescriptionIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}}, Decode: descriptorDecodeMPRACHDescriptionIE, DecodeFrom: descriptorDecodeMPRACHDescriptionIEFrom, Encode: descriptorEncodeMPRACHDescriptionIE, Canonical: descriptorCanonicalMPRACHDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHDescriptionIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}}, Decode: descriptorDecodeMBMSSessionListIE, DecodeFrom: descriptorDecodeMBMSSessionListIEFrom, Encode: descriptorEncodeMBMSSessionListIE, Canonical: descriptorCanonicalMBMSSessionListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionListIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}}, Decode: descriptorDecodeMBMSSessionParametersListIE, DecodeFrom: descriptorDecodeMBMSSessionParametersListIEFrom, Encode: descriptorEncodeMBMSSessionParametersListIE, Canonical: descriptorCanonicalMBMSSessionParametersListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionParametersListIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}}, Decode: descriptorDecodeMPRACHControlParametersIE, DecodeFrom: descriptorDecodeMPRACHControlParametersIEFrom, Encode: descriptorEncodeMPRACHControlParametersIE, Canonical: descriptorCanonicalMPRACHControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHControlParametersIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 19, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}}, Decode: descriptorDecodeGPRSPowerControlParametersIE, DecodeFrom: descriptorDecodeGPRSPowerControlParametersIEFrom, Encode: descriptorEncodeGPRSPowerControlParametersIE, Canonical: descriptorCanonicalGPRSPowerControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSPowerControlParametersIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeGPRSCellOptionsIE, DecodeFrom: descriptorDecodeGPRSCellOptionsIEFrom, Encode: descriptorEncodeGPRSCellOptionsIE, Canonical: descriptorCanonicalGPRSCellOptionsIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSCellOptionsIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeExtensionInformation, DecodeFrom: descriptorDecodeExtensionInformationFrom, Encode: descriptorEncodeExtensionInformation, Canonical: descriptorCanonicalExtensionInformation, CanonicalAtLength: descriptorCanonicalAtLengthExtensionInformation},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeFrequencyParametersIE, DecodeFrom: descriptorDecodeFrequencyParametersIEFrom, Encode: descriptorEncodeFrequencyParametersIE, Canonical: descriptorCanonicalFrequencyParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeIndirectEncodingStruct, DecodeFrom: descriptorDecodeIndirectEncodingStructFrom, Encode: descriptorEncodeIndirectEncodingStruct, Canonical: descriptorCanonicalIndirectEncodingStruct, CanonicalAtLength: descriptorCanonicalAtLengthIndirectEncodingStruct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding1Struct, DecodeFrom: descriptorDecodeDirectEncoding1StructFrom, Encode: descriptorEncodeDirectEncoding1Struct, Canonical: descriptorCanonicalDirectEncoding1Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding1Struct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding2Struct, DecodeFrom: descriptorDecodeDirectEncoding2StructFrom, Encode: descriptorEncodeDirectEncoding2Struct, Canonical: descriptorCanonicalDirectEncoding2Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding2Struct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeGPRSMobileAllocationIE, DecodeFrom: descriptorDecodeGPRSMobileAllocationIEFrom, Encode: descriptorEncodeGPRSMobileAllocationIE, Canonical: descriptorCanonicalGPRSMobileAllocationIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSMobileAllocationIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeRFLNumberListStruct, DecodeFrom: descriptorDecodeRFLNumberListStructFrom, Encode: descriptorEncodeRFLNumberListStruct, Canonical: descriptorCanonicalRFLNumberListStruct, CanonicalAtLength: descriptorCanonicalAtLengthRFLNumberListStruct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeARFCNIndexListStruct, DecodeFrom: descriptorDecodeARFCNIndexListStructFrom, Encode: descriptorEncodeARFCNIndexListStruct, Canonical: descriptorCanonicalARFCNIndexListStruct, CanonicalAtLength: descriptorCanonicalAtLengthARFCNIndexListStruct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}}, Decode: descriptorDecodePCIDGroupIE, DecodeFrom: descriptorDecodePCIDGroupIEFrom, Encode: descriptorEncodePCIDGroupIE, Canonical: descriptorCanonicalPCIDGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPCIDGroupIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeEnhancedCellReselectionParametersIE, DecodeFrom: descriptorDecodeEnhancedCellReselectionParametersIEFrom, Encode: descriptorEncodeEnhancedCellReselectionParametersIE, Canonical: descriptorCanonicalEnhancedCellReselectionParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedCellReselectionParametersIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom, Encode: descriptorEncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, Canonical: descriptorCanonicalRepeatedEUTRANEnhancedCellReselectionParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANEnhancedCellReselectionParametersStruct},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}}, Decode: descriptorDecodeEGPRSWindowSizeIE, DecodeFrom: descriptorDecodeEGPRSWindowSizeIEFrom, Encode: descriptorEncodeEGPRSWindowSizeIE, Canonical: descriptorCanonicalEGPRSWindowSizeIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSWindowSizeIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}}, Decode: descriptorDecodeEGPRSModulationAndCodingIE, DecodeFrom: descriptorDecodeEGPRSModulationAndCodingIEFrom, Encode: descriptorEncodeEGPRSModulationAndCodingIE, Canonical: descriptorCanonicalEGPRSModulationAndCodingIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSModulationAndCodingIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}}, Decode: descriptorDecodeEGPRSLevelIE, DecodeFrom: descriptorDecodeEGPRSLevelIEFrom, Encode: descriptorEncodeEGPRSLevelIE, Canonical: descriptorCanonicalEGPRSLevelIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSLevelIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}}, Decode: descriptorDecodePacketTimingAdvanceIE, DecodeFrom: descriptorDecodePacketTimingAdvanceIEFrom, Encode: descriptorEncodePacketTimingAdvanceIE, Canonical: descriptorCanonicalPacketTimingAdvanceIE, CanonicalAtLength: descriptorCanonicalAtLengthPacketTimingAdvanceIE},
-	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}}, Decode: descriptorDecodeTMGIIE, DecodeFrom: descriptorDecodeTMGIIEFrom, Encode: descriptorEncodeTMGIIE, Canonical: descriptorCanonicalTMGIIE, CanonicalAtLength: descriptorCanonicalAtLengthTMGIIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "UTRAN CSG Measurement Report IE", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 63, MaximumBits: 87, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodeUTRANCSGMeasurementReportIE, DecodeFrom: descriptorDecodeUTRANCSGMeasurementReportIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANCSGMeasurementReportIE), Encode: descriptorEncodeUTRANCSGMeasurementReportIE, Canonical: descriptorCanonicalUTRANCSGMeasurementReportIE, CanonicalAtLength: descriptorCanonicalAtLengthUTRANCSGMeasurementReportIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61", Name: "PLMN-ID struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.61"}}, Decode: descriptorDecodePLMNIDStruct, DecodeFrom: descriptorDecodePLMNIDStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePLMNIDStruct), Encode: descriptorEncodePLMNIDStruct, Canonical: descriptorCanonicalPLMNIDStruct, CanonicalAtLength: descriptorCanonicalAtLengthPLMNIDStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58", Name: "PSC Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.58"}}, Decode: descriptorDecodePSCGroupIE, DecodeFrom: descriptorDecodePSCGroupIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePSCGroupIE), Encode: descriptorEncodePSCGroupIE, Canonical: descriptorCanonicalPSCGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPSCGroupIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36", Name: "MBMS Channel Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.36"}}, Decode: descriptorDecodeMBMSChannelParametersIE, DecodeFrom: descriptorDecodeMBMSChannelParametersIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMBMSChannelParametersIE), Encode: descriptorEncodeMBMSChannelParametersIE, Canonical: descriptorCanonicalMBMSChannelParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSChannelParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37", Name: "MBMS p-t-m channel description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.37"}}, Decode: descriptorDecodeMBMSPTMChannelDescriptionIE, DecodeFrom: descriptorDecodeMBMSPTMChannelDescriptionIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMBMSPTMChannelDescriptionIE), Encode: descriptorEncodeMBMSPTMChannelDescriptionIE, Canonical: descriptorCanonicalMBMSPTMChannelDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSPTMChannelDescriptionIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38", Name: "MPRACH description IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.38"}}, Decode: descriptorDecodeMPRACHDescriptionIE, DecodeFrom: descriptorDecodeMPRACHDescriptionIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMPRACHDescriptionIE), Encode: descriptorEncodeMPRACHDescriptionIE, Canonical: descriptorCanonicalMPRACHDescriptionIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHDescriptionIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39", Name: "MBMS Session List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.39"}}, Decode: descriptorDecodeMBMSSessionListIE, DecodeFrom: descriptorDecodeMBMSSessionListIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMBMSSessionListIE), Encode: descriptorEncodeMBMSSessionListIE, Canonical: descriptorCanonicalMBMSSessionListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionListIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40", Name: "MBMS Session Parameters List IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.40"}}, Decode: descriptorDecodeMBMSSessionParametersListIE, DecodeFrom: descriptorDecodeMBMSSessionParametersListIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMBMSSessionParametersListIE), Encode: descriptorEncodeMBMSSessionParametersListIE, Canonical: descriptorCanonicalMBMSSessionParametersListIE, CanonicalAtLength: descriptorCanonicalAtLengthMBMSSessionParametersListIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41", Name: "MPRACH Control Parameters IE", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.41"}}, Decode: descriptorDecodeMPRACHControlParametersIE, DecodeFrom: descriptorDecodeMPRACHControlParametersIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMPRACHControlParametersIE), Encode: descriptorEncodeMPRACHControlParametersIE, Canonical: descriptorCanonicalMPRACHControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthMPRACHControlParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a", Name: "GPRS Power Control Parameters IE", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 19, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}}, Decode: descriptorDecodeGPRSPowerControlParametersIE, DecodeFrom: descriptorDecodeGPRSPowerControlParametersIEFrom, DecodeWithCollector: descriptorCollectGPRSPowerControlParametersIE, Encode: descriptorEncodeGPRSPowerControlParametersIE, Canonical: descriptorCanonicalGPRSPowerControlParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSPowerControlParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "GPRS Cell Options IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeGPRSCellOptionsIE, DecodeFrom: descriptorDecodeGPRSCellOptionsIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSCellOptionsIE), Encode: descriptorEncodeGPRSCellOptionsIE, Canonical: descriptorCanonicalGPRSCellOptionsIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSCellOptionsIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24", Name: "Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.24"}}, Decode: descriptorDecodeExtensionInformation, DecodeFrom: descriptorDecodeExtensionInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeExtensionInformation), Encode: descriptorEncodeExtensionInformation, Canonical: descriptorCanonicalExtensionInformation, CanonicalAtLength: descriptorCanonicalAtLengthExtensionInformation},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Frequency Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeFrequencyParametersIE, DecodeFrom: descriptorDecodeFrequencyParametersIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeFrequencyParametersIE), Encode: descriptorEncodeFrequencyParametersIE, Canonical: descriptorCanonicalFrequencyParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Indirect encoding struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeIndirectEncodingStruct, DecodeFrom: descriptorDecodeIndirectEncodingStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeIndirectEncodingStruct), Encode: descriptorEncodeIndirectEncodingStruct, Canonical: descriptorCanonicalIndirectEncodingStruct, CanonicalAtLength: descriptorCanonicalAtLengthIndirectEncodingStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 1 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding1Struct, DecodeFrom: descriptorDecodeDirectEncoding1StructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDirectEncoding1Struct), Encode: descriptorEncodeDirectEncoding1Struct, Canonical: descriptorCanonicalDirectEncoding1Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding1Struct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8", Name: "Direct encoding 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.8"}}, Decode: descriptorDecodeDirectEncoding2Struct, DecodeFrom: descriptorDecodeDirectEncoding2StructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDirectEncoding2Struct), Encode: descriptorEncodeDirectEncoding2Struct, Canonical: descriptorCanonicalDirectEncoding2Struct, CanonicalAtLength: descriptorCanonicalAtLengthDirectEncoding2Struct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "GPRS Mobile Allocation IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeGPRSMobileAllocationIE, DecodeFrom: descriptorDecodeGPRSMobileAllocationIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSMobileAllocationIE), Encode: descriptorEncodeGPRSMobileAllocationIE, Canonical: descriptorCanonicalGPRSMobileAllocationIE, CanonicalAtLength: descriptorCanonicalAtLengthGPRSMobileAllocationIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "RFL number list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeRFLNumberListStruct, DecodeFrom: descriptorDecodeRFLNumberListStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRFLNumberListStruct), Encode: descriptorEncodeRFLNumberListStruct, Canonical: descriptorCanonicalRFLNumberListStruct, CanonicalAtLength: descriptorCanonicalAtLengthRFLNumberListStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a", Name: "ARFCN index list struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10a"}}, Decode: descriptorDecodeARFCNIndexListStruct, DecodeFrom: descriptorDecodeARFCNIndexListStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeARFCNIndexListStruct), Encode: descriptorEncodeARFCNIndexListStruct, Canonical: descriptorCanonicalARFCNIndexListStruct, CanonicalAtLength: descriptorCanonicalAtLengthARFCNIndexListStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57", Name: "PCID Group IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.57"}}, Decode: descriptorDecodePCIDGroupIE, DecodeFrom: descriptorDecodePCIDGroupIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePCIDGroupIE), Encode: descriptorEncodePCIDGroupIE, Canonical: descriptorCanonicalPCIDGroupIE, CanonicalAtLength: descriptorCanonicalAtLengthPCIDGroupIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Enhanced Cell Reselection Parameters IE", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeEnhancedCellReselectionParametersIE, DecodeFrom: descriptorDecodeEnhancedCellReselectionParametersIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEnhancedCellReselectionParametersIE), Encode: descriptorEncodeEnhancedCellReselectionParametersIE, Canonical: descriptorCanonicalEnhancedCellReselectionParametersIE, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedCellReselectionParametersIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59", Name: "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.59"}}, Decode: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStruct), Encode: descriptorEncodeRepeatedEUTRANEnhancedCellReselectionParametersStruct, Canonical: descriptorCanonicalRepeatedEUTRANEnhancedCellReselectionParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANEnhancedCellReselectionParametersStruct},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2", Name: "EGPRS Window Size IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.5.2"}}, Decode: descriptorDecodeEGPRSWindowSizeIE, DecodeFrom: descriptorDecodeEGPRSWindowSizeIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEGPRSWindowSizeIE), Encode: descriptorEncodeEGPRSWindowSizeIE, Canonical: descriptorCanonicalEGPRSWindowSizeIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSWindowSizeIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d", Name: "EGPRS Modulation and Coding IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10d"}}, Decode: descriptorDecodeEGPRSModulationAndCodingIE, DecodeFrom: descriptorDecodeEGPRSModulationAndCodingIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEGPRSModulationAndCodingIE), Encode: descriptorEncodeEGPRSModulationAndCodingIE, Canonical: descriptorCanonicalEGPRSModulationAndCodingIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSModulationAndCodingIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f", Name: "EGPRS Level IE", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.10f"}}, Decode: descriptorDecodeEGPRSLevelIE, DecodeFrom: descriptorDecodeEGPRSLevelIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEGPRSLevelIE), Encode: descriptorEncodeEGPRSLevelIE, Canonical: descriptorCanonicalEGPRSLevelIE, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSLevelIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12", Name: "Packet Timing Advance IE", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.12"}}, Decode: descriptorDecodePacketTimingAdvanceIE, DecodeFrom: descriptorDecodePacketTimingAdvanceIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePacketTimingAdvanceIE), Encode: descriptorEncodePacketTimingAdvanceIE, Canonical: descriptorCanonicalPacketTimingAdvanceIE, CanonicalAtLength: descriptorCanonicalAtLengthPacketTimingAdvanceIE},
+	{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33", Name: "TMGI IE", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.33"}}, Decode: descriptorDecodeTMGIIE, DecodeFrom: descriptorDecodeTMGIIEFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeTMGIIE), Encode: descriptorEncodeTMGIIE, Canonical: descriptorCanonicalTMGIIE, CanonicalAtLength: descriptorCanonicalAtLengthTMGIIE},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -11140,9 +11360,17 @@ func descriptorCanonicalAtLengthMPRACHControlParametersIE(value any, octets int)
 }
 
 var descriptorSourceGPRSPowerControlParametersIE = runtime.Source{Standard: "TS 44.060", Version: "19.0.0", Clause: "12.9a"}
+var descriptorCollectLocationGPRSPowerControlParametersIE = operationLocation{operation: "decode", path: "GPRSPowerControlParametersIE", source: &descriptorSourceGPRSPowerControlParametersIE, kind: runtime.InvalidValue}
 
 func descriptorDecodeGPRSPowerControlParametersIE(data []byte) (any, error) {
 	return DecodeGPRSPowerControlParametersIE(data)
+}
+func descriptorCollectGPRSPowerControlParametersIE(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeGPRSPowerControlParametersIEBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationGPRSPowerControlParametersIE.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapGPRSPowerControlParametersIE(value any) (GPRSPowerControlParametersIE, bool) {
 	switch v := value.(type) {
@@ -12031,6 +12259,22 @@ func descriptorCanonicalAtLengthTMGIIE(value any, octets int) ([]byte, error) {
 	return EncodeTMGIIECanonicalAtLength(v, octets)
 }
 
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
+
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
@@ -12224,7 +12468,7 @@ func EncodeMPRACHControlParametersIE(v MPRACHControlParametersIE) ([]byte, error
 	return out, nil
 }
 func DecodeGPRSPowerControlParametersIE(data []byte) (runtime.Decoded[GPRSPowerControlParametersIE], error) {
-	v, err := decodeGPRSPowerControlParametersIEBytes(data)
+	v, err := decodeGPRSPowerControlParametersIEBytes(data, nil)
 	if err != nil {
 		return v, operationLocation38.failure(err, "", -1, 0)
 	}

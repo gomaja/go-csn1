@@ -320,6 +320,9 @@ type EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group struct {
 	P0     uint8
 	PRMODE uint8
 }
+
+var observationRule0 = observationRule{minimum: 0, maximum: 10, source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Table: ""}}
+
 type EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceTSHREPORTEDTIMESLOTSGroupValue struct {
 	REPORTEDTIMESLOTS uint8
 	TSH               uint8
@@ -1205,6 +1208,9 @@ type PriorityAndEUTRANParametersDescriptionStructClause105237o struct {
 	DEFAULTEUTRANPRIORITYGroupGroup *PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroup
 	Wire                            runtime.WireInfo `json:"-"`
 }
+
+var observationRule1 = observationRule{minimum: 0, maximum: 5, source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.54", Table: ""}}
+
 type RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupListEntry struct {
 	EARFCNExtended       uint32
 	MeasurementBandwidth *uint8
@@ -2431,6 +2437,9 @@ type GPRS3GMEASUREMENTPARAMETERSDescriptionStruct struct {
 	TDDREPORTINGOFFSETGroup *GPRS3GMEASUREMENTPARAMETERSDescriptionStructTDDREPORTINGOFFSETGroup
 	Wire                    runtime.WireInfo `json:"-"`
 }
+
+var observationRule2 = observationRule{minimum: 0, maximum: 2, source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Table: ""}}
+
 type NCMeasurementParametersStructNCNONDRXPERIODGroup struct {
 	NCNONDRXPERIOD     uint8
 	NCREPORTINGPERIODI uint8
@@ -4023,11 +4032,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoic
 			v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -4037,11 +4052,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoic
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4050,11 +4071,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoic
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceImplicitRejectPS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAlternativeImplicitRejectPS
 			result.ImplicitRejectPS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4313,7 +4340,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceEGPRSPacketUplinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeEGPRSPacketUplinkAssignment
 			result.EGPRSPacketUplinkAssignment = &v
@@ -4321,6 +4353,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4329,7 +4362,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceMultipleBlocksPacketDownlinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentEGPRSPacketUplinkAssignmentChoiceAlternativeMultipleBlocksPacketDownlinkAssignment
 			result.MultipleBlocksPacketDownlinkAssignment = &v
@@ -4337,6 +4375,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4346,6 +4385,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 			reservedErr = err
 		}
+		discardReader(candidate)
 		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	if matches == 0 && reservedErr != nil {
@@ -4587,11 +4627,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -4601,11 +4647,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -4614,11 +4666,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceImplicitRejectPS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeImplicitRejectPS
 			result.ImplicitRejectPS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5006,11 +5064,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 			v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -5020,11 +5084,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5033,11 +5103,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceImplicitRejectPS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAlternativeImplicitRejectPS
 			result.ImplicitRejectPS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5372,7 +5448,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoicePacketUplinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativePacketUplinkAssignment
 			result.PacketUplinkAssignment = &v
@@ -5380,6 +5461,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5388,7 +5470,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoicePacketDownlinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativePacketDownlinkAssignment
 			result.PacketDownlinkAssignment = &v
@@ -5396,6 +5483,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5404,7 +5492,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceSecondPartPacketAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPacketUplinkAssignmentChoiceAlternativeSecondPartPacketAssignment
 			result.SecondPartPacketAssignment = &v
@@ -5412,6 +5505,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5618,11 +5712,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentIm
 			v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -5632,11 +5732,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentIm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5645,11 +5751,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentIm
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceImplicitRejectCS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAlternativeImplicitRejectCS
 			result.ImplicitRejectCS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5853,11 +5965,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPE
 			v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -5867,11 +5985,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPE
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -5880,11 +6004,17 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPE
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoicePEOBCCHCHANGEMARK(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAlternativePEOBCCHCHANGEMARK
 			result.PEOBCCHCHANGEMARK = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6013,7 +6143,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeRCC
 			result.RCC = &v
@@ -6021,6 +6156,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6029,7 +6165,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeEGPRSPacketUplinkAssignment
 			result.EGPRSPacketUplinkAssignment = &v
@@ -6037,6 +6178,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6045,7 +6187,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParameters(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativeLengthOfFrequencyParameters
 			result.LengthOfFrequencyParameters = &v
@@ -6053,6 +6200,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6061,7 +6209,12 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 		v, err := decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignment(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARestOctetsCompressedInterRATHOINFOINDChoiceAlternativePacketUplinkAssignment
 			result.PacketUplinkAssignment = &v
@@ -6069,6 +6222,7 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -6163,12 +6317,15 @@ func decodeIARestOctetsMultilaterationInformationRequestSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARestOctetsMultilaterationInformationRequestValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6195,12 +6352,15 @@ func decodeIARestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOIM
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARestOctetsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6335,12 +6495,15 @@ func decodeEGPRSPacketUplinkAssignmentAccessTechnologiesRequestSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentAccessTechnologiesRequestValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6615,12 +6778,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0GroupSel
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6709,12 +6875,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTBEPPERIOD2
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTBEPPERIOD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6775,9 +6944,16 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHAValue
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -6803,12 +6979,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHASelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6891,12 +7070,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTIMINGADVA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTIMINGADVANCEINDEXValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -6948,12 +7130,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTBFSTARTIN
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTBFSTARTINGTIMEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7120,12 +7305,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceTSHREPORTEDTIMESLOTSGroupValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7146,12 +7334,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceTSHREPORTEDTIMESLOTSGroupValueSelector(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7321,7 +7512,11 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList", i); err != nil {
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList", i)
+		}
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList", i)
 		}
@@ -7413,7 +7608,11 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List", i); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List", i)
+		}
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2ListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List", i)
 		}
@@ -7490,12 +7689,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7626,12 +7828,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeREPORTEDTIMESLOTSGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -7753,11 +7958,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceTSH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceAlternativeTSH
 			result.TSH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -7766,11 +7977,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFMode(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceAlternativeRTTIUSFMode
 			result.RTTIUSFMode = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -7865,11 +8082,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 			v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -7879,11 +8102,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -7892,11 +8121,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAlternativeREPORTEDTIMESLOTS
 			result.REPORTEDTIMESLOTS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8199,9 +8434,16 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -8227,12 +8469,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDALPHAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -8485,12 +8730,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDP0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -8568,12 +8816,15 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoicePFIPFIValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -8644,11 +8895,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 			v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -8658,11 +8915,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8671,11 +8934,17 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoicePFI(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAlternativePFI
 			result.PFI = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8843,7 +9112,12 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeTFIASSIGNMENT
 			result.TFIASSIGNMENT = &v
@@ -8851,6 +9125,7 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -8859,7 +9134,12 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 		v, err := decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATED(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeNUMBEROFRADIOBLOCKSALLOCATED
 			result.NUMBEROFRADIOBLOCKSALLOCATED = &v
@@ -8867,6 +9147,7 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -9043,7 +9324,11 @@ func decodeAccessTechnologiesRequestStruct(r *runtime.Reader) (AccessTechnologie
 	var out AccessTechnologiesRequestStruct
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("AccessTechnologiesRequestStruct", len(out.Entries)); err != nil {
+			return AccessTechnologiesRequestStruct{}, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "AccessTechnologiesRequestStruct", len(out.Entries))
+		}
 		element, err := decodeAccessTechnologiesRequestStructElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return AccessTechnologiesRequestStruct{}, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "AccessTechnologiesRequestStruct", len(out.Entries))
 		}
@@ -9343,12 +9628,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0GroupSelector
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTP0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -9434,9 +9722,16 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHAValue(r *r
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -9462,12 +9757,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHASelector(r
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTALPHAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -9550,12 +9848,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTIMINGADVANCEIN
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTIMINGADVANCEINDEXValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -9607,12 +9908,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTBFSTARTINGTIME
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTTBFSTARTINGTIMEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -9831,9 +10135,16 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEALPHAValue(r *runtime.
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -9859,12 +10170,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEALPHASelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEALPHAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -10097,12 +10411,15 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEP0GroupSelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEP0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -10231,11 +10548,17 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (PacketU
 		v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENT(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativeTFIASSIGNMENT
 			result.TFIASSIGNMENT = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10244,11 +10567,17 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (PacketU
 		v, err := decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODE(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentTFIASSIGNMENTChoiceAlternativePRMODE
 			result.PRMODE = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10350,12 +10679,15 @@ func decodePacketUplinkAssignmentExtendedRAChoiceExtendedRAExtendedRASelector(r 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentExtendedRAChoiceExtendedRAExtendedRAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -10426,11 +10758,17 @@ func decodePacketUplinkAssignmentExtendedRAChoice(r *runtime.Reader) (PacketUpli
 			v, err := decodePacketUplinkAssignmentExtendedRAChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = PacketUplinkAssignmentExtendedRAChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -10440,11 +10778,17 @@ func decodePacketUplinkAssignmentExtendedRAChoice(r *runtime.Reader) (PacketUpli
 		v, err := decodePacketUplinkAssignmentExtendedRAChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentExtendedRAChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10453,11 +10797,17 @@ func decodePacketUplinkAssignmentExtendedRAChoice(r *runtime.Reader) (PacketUpli
 		v, err := decodePacketUplinkAssignmentExtendedRAChoiceExtendedRA(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentExtendedRAChoiceAlternativeExtendedRA
 			result.ExtendedRA = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10567,12 +10917,15 @@ func decodePacketUplinkAssignmentPFIChoicePFIPFISelector(r *runtime.Reader) (*ui
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketUplinkAssignmentPFIChoicePFIPFIValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -10643,11 +10996,17 @@ func decodePacketUplinkAssignmentPFIChoice(r *runtime.Reader) (PacketUplinkAssig
 			v, err := decodePacketUplinkAssignmentPFIChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = PacketUplinkAssignmentPFIChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -10657,11 +11016,17 @@ func decodePacketUplinkAssignmentPFIChoice(r *runtime.Reader) (PacketUplinkAssig
 		v, err := decodePacketUplinkAssignmentPFIChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentPFIChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10670,11 +11035,17 @@ func decodePacketUplinkAssignmentPFIChoice(r *runtime.Reader) (PacketUplinkAssig
 		v, err := decodePacketUplinkAssignmentPFIChoicePFI(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketUplinkAssignmentPFIChoiceAlternativePFI
 			result.PFI = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -10884,9 +11255,16 @@ func decodePacketDownlinkAssignmentTFIASSIGNMENTGroupALPHAValue(r *runtime.Reade
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -10912,12 +11290,15 @@ func decodePacketDownlinkAssignmentTFIASSIGNMENTGroupALPHASelector(r *runtime.Re
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentTFIASSIGNMENTGroupALPHAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11131,12 +11512,15 @@ func decodePacketDownlinkAssignmentTFIASSIGNMENTGroupSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentTFIASSIGNMENTGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11188,12 +11572,15 @@ func decodePacketDownlinkAssignmentTIMINGADVANCEINDEXSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentTIMINGADVANCEINDEXValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11245,12 +11632,15 @@ func decodePacketDownlinkAssignmentTBFSTARTINGTIMESelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentTBFSTARTINGTIMEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11401,12 +11791,15 @@ func decodePacketDownlinkAssignmentP0GroupSelector(r *runtime.Reader) (*PacketDo
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentP0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11521,12 +11914,15 @@ func decodePacketDownlinkAssignmentEGPRSWindowSizeChoiceEGPRSWindowSizeBEPPERIOD
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentEGPRSWindowSizeChoiceEGPRSWindowSizeBEPPERIOD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11623,11 +12019,17 @@ func decodePacketDownlinkAssignmentEGPRSWindowSizeChoice(r *runtime.Reader) (Pac
 			v, err := decodePacketDownlinkAssignmentEGPRSWindowSizeChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = PacketDownlinkAssignmentEGPRSWindowSizeChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -11637,11 +12039,17 @@ func decodePacketDownlinkAssignmentEGPRSWindowSizeChoice(r *runtime.Reader) (Pac
 		v, err := decodePacketDownlinkAssignmentEGPRSWindowSizeChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentEGPRSWindowSizeChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -11650,11 +12058,17 @@ func decodePacketDownlinkAssignmentEGPRSWindowSizeChoice(r *runtime.Reader) (Pac
 		v, err := decodePacketDownlinkAssignmentEGPRSWindowSizeChoiceEGPRSWindowSize(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentEGPRSWindowSizeChoiceAlternativeEGPRSWindowSize
 			result.EGPRSWindowSize = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -11764,12 +12178,15 @@ func decodePacketDownlinkAssignmentPFIChoicePFIPFISelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentPFIChoicePFIPFIValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -11840,11 +12257,17 @@ func decodePacketDownlinkAssignmentPFIChoice(r *runtime.Reader) (PacketDownlinkA
 			v, err := decodePacketDownlinkAssignmentPFIChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = PacketDownlinkAssignmentPFIChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -11854,11 +12277,17 @@ func decodePacketDownlinkAssignmentPFIChoice(r *runtime.Reader) (PacketDownlinkA
 		v, err := decodePacketDownlinkAssignmentPFIChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentPFIChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -11867,11 +12296,17 @@ func decodePacketDownlinkAssignmentPFIChoice(r *runtime.Reader) (PacketDownlinkA
 		v, err := decodePacketDownlinkAssignmentPFIChoicePFI(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentPFIChoiceAlternativePFI
 			result.PFI = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -11990,12 +12425,15 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransf
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeNPMTransferTimeValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -12057,12 +12495,15 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASE
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASEDFANRChoiceEVENTBASEDFANREVENTBASEDFANRValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -12262,11 +12703,17 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASE
 		v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASEDFANRChoiceEVENTBASEDFANR(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASEDFANRChoiceAlternativeEVENTBASEDFANR
 			result.EVENTBASEDFANR = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -12275,11 +12722,17 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASE
 		v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASEDFANRChoicePDCHPAIRINDICATION(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTimeEVENTBASEDFANRChoiceAlternativePDCHPAIRINDICATION
 			result.PDCHPAIRINDICATION = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -12407,7 +12860,12 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -12415,6 +12873,7 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -12424,7 +12883,12 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 		v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltL
 			result.AltL = &v
@@ -12432,6 +12896,7 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -12440,7 +12905,12 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 		v, err := decodePacketDownlinkAssignmentNPMTransferTimeChoiceNPMTransferTime(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeNPMTransferTime
 			result.NPMTransferTime = &v
@@ -12448,6 +12918,7 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -12792,11 +13263,17 @@ func decodeFrequencyParametersBeforeTimeMAIOChoice(r *runtime.Reader) (Frequency
 			v, err := decodeFrequencyParametersBeforeTimeMAIOChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = FrequencyParametersBeforeTimeMAIOChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -12807,11 +13284,17 @@ func decodeFrequencyParametersBeforeTimeMAIOChoice(r *runtime.Reader) (Frequency
 			v, err := decodeFrequencyParametersBeforeTimeMAIOChoiceMAIO(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = FrequencyParametersBeforeTimeMAIOChoiceAlternativeMAIO
 				result.MAIO = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -12959,12 +13442,15 @@ func decodeSecondPartPacketAssignmentExtendedRAChoiceExtendedRAExtendedRASelecto
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSecondPartPacketAssignmentExtendedRAChoiceExtendedRAExtendedRAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -13035,11 +13521,17 @@ func decodeSecondPartPacketAssignmentExtendedRAChoice(r *runtime.Reader) (Second
 			v, err := decodeSecondPartPacketAssignmentExtendedRAChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SecondPartPacketAssignmentExtendedRAChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -13049,11 +13541,17 @@ func decodeSecondPartPacketAssignmentExtendedRAChoice(r *runtime.Reader) (Second
 		v, err := decodeSecondPartPacketAssignmentExtendedRAChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SecondPartPacketAssignmentExtendedRAChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -13062,11 +13560,17 @@ func decodeSecondPartPacketAssignmentExtendedRAChoice(r *runtime.Reader) (Second
 		v, err := decodeSecondPartPacketAssignmentExtendedRAChoiceExtendedRA(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SecondPartPacketAssignmentExtendedRAChoiceAlternativeExtendedRA
 			result.ExtendedRA = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -13272,12 +13776,15 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTMGIMBMSSessionI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTMGIMBMSSessionIdentityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -13466,9 +13973,16 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthI
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("ALPHA", v)
 	return uint8(v), nil
@@ -13525,12 +14039,15 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthIndicatorOfMSIDGroupALPHAGroupGAMMAValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -13599,12 +14116,15 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthIndicatorOfMSIDGroupALPHAGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -13699,12 +14219,15 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTILengthIndicatorOfMSIDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -13787,11 +14310,17 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(r *runtime.Read
 		v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTMGI(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueAlternativeTMGI
 			result.TMGI = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -13800,11 +14329,17 @@ func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(r *runtime.Read
 		v, err := decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueTLLIGRNTI(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValueAlternativeTLLIGRNTI
 			result.TLLIGRNTI = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -13848,8 +14383,10 @@ func encodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue(w *runtime.Writ
 func decodeMultipleBlocksPacketDownlinkAssignmentTMGIChoiceSelector(r *runtime.Reader) (MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue, error) {
 	candidate := r.Fork()
 	if err := candidate.Expect("0"); err == nil {
+		discardReader(candidate)
 		return MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue{}, candidate.Error(runtime.InvalidValue, "reserved CSN.1 alternative")
 	}
+	discardReader(candidate)
 	if err := r.Expect("1"); err != nil {
 		return MultipleBlocksPacketDownlinkAssignmentTMGIChoiceValue{}, err
 	}
@@ -14069,12 +14606,15 @@ func decodeIARRestOctetsExtendedRA1Selector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARRestOctetsExtendedRA1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -14126,12 +14666,15 @@ func decodeIARRestOctetsExtendedRA2Selector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARRestOctetsExtendedRA2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -14183,12 +14726,15 @@ func decodeIARRestOctetsExtendedRA3Selector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARRestOctetsExtendedRA3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -14240,12 +14786,15 @@ func decodeIARRestOctetsExtendedRA4Selector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARRestOctetsExtendedRA4Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -14371,11 +14920,17 @@ func decodeIARRestOctetsRCCChoice(r *runtime.Reader) (IARRestOctetsRCCChoice, er
 			v, err := decodeIARRestOctetsRCCChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IARRestOctetsRCCChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -14385,11 +14940,17 @@ func decodeIARRestOctetsRCCChoice(r *runtime.Reader) (IARRestOctetsRCCChoice, er
 		v, err := decodeIARRestOctetsRCCChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARRestOctetsRCCChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -14398,11 +14959,17 @@ func decodeIARRestOctetsRCCChoice(r *runtime.Reader) (IARRestOctetsRCCChoice, er
 		v, err := decodeIARRestOctetsRCCChoiceRCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IARRestOctetsRCCChoiceAlternativeRCC
 			result.RCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -14461,12 +15028,15 @@ func decodeIARRestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIARRestOctetsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -14853,11 +15423,17 @@ func decodeIAXRestOctetsRCCChoice(r *runtime.Reader) (IAXRestOctetsRCCChoice, er
 			v, err := decodeIAXRestOctetsRCCChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IAXRestOctetsRCCChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -14867,11 +15443,17 @@ func decodeIAXRestOctetsRCCChoice(r *runtime.Reader) (IAXRestOctetsRCCChoice, er
 		v, err := decodeIAXRestOctetsRCCChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IAXRestOctetsRCCChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -14880,11 +15462,17 @@ func decodeIAXRestOctetsRCCChoice(r *runtime.Reader) (IAXRestOctetsRCCChoice, er
 		v, err := decodeIAXRestOctetsRCCChoiceRCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IAXRestOctetsRCCChoiceAlternativeRCC
 			result.RCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -14943,12 +15531,15 @@ func decodeIAXRestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOI
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIAXRestOctetsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -15187,12 +15778,15 @@ func decodeSI1RestOctetsNCHPositionSelector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI1RestOctetsNCHPositionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -15371,11 +15965,17 @@ func decodeBandIndicatorClause105232BANDINDICATORChoice(r *runtime.Reader) (Band
 		v, err := decodeBandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BandIndicatorClause105232BANDINDICATORChoiceAlternativeBANDINDICATOR
 			result.BANDINDICATOR = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -15384,11 +15984,17 @@ func decodeBandIndicatorClause105232BANDINDICATORChoice(r *runtime.Reader) (Band
 		v, err := decodeBandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BandIndicatorClause105232BANDINDICATORChoiceAlternativeAltUnlabeled
 			result.AltUnlabeled = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -15697,7 +16303,11 @@ func decodeSI2nRestOctetsGSMNeighbourCellSelectionParameters(r *runtime.Reader) 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out)); err != nil {
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
+		}
 		v, err := decodeSI2nRestOctetsGSMNeighbourCellSelectionParametersEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
 		}
@@ -15890,12 +16500,15 @@ func decodeGSMNeighbourCellSelectionParamsStructBSICSelector(r *runtime.Reader) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructBSICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16088,12 +16701,15 @@ func decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupRXLEVACCESSMIN
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupRXLEVACCESSMINGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16312,12 +16928,15 @@ func decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupCBQGroupSelect
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupCBQGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16369,12 +16988,15 @@ func decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupPOWEROFFSETSel
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupPOWEROFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16401,12 +17023,15 @@ func decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupGPRSSupportInd
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupGPRSSupportIndicatorValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16527,12 +17152,15 @@ func decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroupSelector(r *ru
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGSMNeighbourCellSelectionParamsStructCELLBARACCESSGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16724,12 +17352,15 @@ func decodeGPRSSupportIndicatorStructSAMERAASSERVINGCELLGroupSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSSupportIndicatorStructSAMERAASSERVINGCELLGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16821,12 +17452,15 @@ func decodeSI3RestOctetGPRSIndicatorClause105234Selector(r *runtime.Reader) (*GP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI3RestOctetGPRSIndicatorClause105234Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -16859,12 +17493,15 @@ func decodeSI3RestOctetSI2quaterIndicatorSelector(r *runtime.Reader) (*SI2quater
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI3RestOctetSI2quaterIndicatorValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -17071,12 +17708,15 @@ func decodeOptionalSelectionParametersClause105234SelectionParametersClause10523
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeOptionalSelectionParametersClause105234SelectionParametersClause105234Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -17361,12 +18001,15 @@ func decodeOptionalPowerOffsetClause105234PowerOffsetSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeOptionalPowerOffsetClause105234PowerOffsetValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -17446,11 +18089,17 @@ func decodeSystemInformation2terIndicatorAlternatives(r *runtime.Reader) (System
 		v, err := decodeSystemInformation2terIndicatorAlternativesAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SystemInformation2terIndicatorAlternativesAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -17459,11 +18108,17 @@ func decodeSystemInformation2terIndicatorAlternatives(r *runtime.Reader) (System
 		v, err := decodeSystemInformation2terIndicatorAlternativesAltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SystemInformation2terIndicatorAlternativesAlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -17567,11 +18222,17 @@ func decodeEarlyClassmarkSendingControlAlternatives(r *runtime.Reader) (EarlyCla
 		v, err := decodeEarlyClassmarkSendingControlAlternativesAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EarlyClassmarkSendingControlAlternativesAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -17580,11 +18241,17 @@ func decodeEarlyClassmarkSendingControlAlternatives(r *runtime.Reader) (EarlyCla
 		v, err := decodeEarlyClassmarkSendingControlAlternativesAltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EarlyClassmarkSendingControlAlternativesAlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -17695,12 +18362,15 @@ func decodeSchedulingIfAndWhereWHERESelector(r *runtime.Reader) (*uint8, error) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSchedulingIfAndWhereWHEREValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -17890,11 +18560,17 @@ func decodeN3GEarlyClassmarkSendingRestrictionAlternatives(r *runtime.Reader) (N
 		v, err := decodeN3GEarlyClassmarkSendingRestrictionAlternativesAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = N3GEarlyClassmarkSendingRestrictionAlternativesAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -17903,11 +18579,17 @@ func decodeN3GEarlyClassmarkSendingRestrictionAlternatives(r *runtime.Reader) (N
 		v, err := decodeN3GEarlyClassmarkSendingRestrictionAlternativesAltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = N3GEarlyClassmarkSendingRestrictionAlternativesAlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -18150,12 +18832,15 @@ func decodeSystemInformation21IndicatorSI21POSITIONSelector(r *runtime.Reader) (
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSystemInformation21IndicatorSI21POSITIONValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -18217,12 +18902,15 @@ func decodeSI16RestOctetsLSAParametersClause105237eSelector(r *runtime.Reader) (
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI16RestOctetsLSAParametersClause105237eValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -18507,12 +19195,15 @@ func decodeLSAParametersClause105237eMCCGroupSelector(r *runtime.Reader) (*LSAPa
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeLSAParametersClause105237eMCCGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -18656,7 +19347,11 @@ func decodeLSAIDInformationClause105237e(r *runtime.Reader) (LSAIDInformationCla
 	var out LSAIDInformationClause105237e
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("LSAIDInformationClause105237e", len(out.Entries)); err != nil {
+			return LSAIDInformationClause105237e{}, locateIndex(operationLocation4.failure(err, "", r.Position(), 0), "LSAIDInformationClause105237e", len(out.Entries))
+		}
 		element, err := decodeLSAIDInformationClause105237eElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return LSAIDInformationClause105237e{}, locateIndex(operationLocation4.failure(err, "", r.Position(), 0), "LSAIDInformationClause105237e", len(out.Entries))
 		}
@@ -18878,11 +19573,17 @@ func decodeLSAIdentityClause105237eLSAIDChoice(r *runtime.Reader) (LSAIdentityCl
 		v, err := decodeLSAIdentityClause105237eLSAIDChoiceLSAID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LSAIdentityClause105237eLSAIDChoiceAlternativeLSAID
 			result.LSAID = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -18891,11 +19592,17 @@ func decodeLSAIdentityClause105237eLSAIDChoice(r *runtime.Reader) (LSAIdentityCl
 		v, err := decodeLSAIdentityClause105237eLSAIDChoiceShortLSAID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LSAIdentityClause105237eLSAIDChoiceAlternativeShortLSAID
 			result.ShortLSAID = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -19135,7 +19842,11 @@ func decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out)); err != nil {
+			return nil, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
+		}
 		v, err := decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
@@ -19611,7 +20322,11 @@ func decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out)); err != nil {
+			return nil, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
+		}
 		v, err := decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 		}
@@ -20130,12 +20845,15 @@ func decodeSI21RestOctetsEABAuthorizationMaskGroupSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI21RestOctetsEABAuthorizationMaskGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20162,12 +20880,15 @@ func decodeSI21RestOctetsNetworkSharingEABInformationNetworkSharingEABInformatio
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI21RestOctetsNetworkSharingEABInformationNetworkSharingEABInformationValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20451,12 +21172,15 @@ func decodeNetworkSharingEABInformationStructCommonPLMNPSEABAuthorizationMaskGro
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingEABInformationStructCommonPLMNPSEABAuthorizationMaskGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20618,12 +21342,15 @@ func decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntryAdditionalEABAuthorizationMaskGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20754,12 +21481,15 @@ func decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntryPSEABAuthorizationMaskGroupValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20780,12 +21510,15 @@ func decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntryPSEABAuthorizationMaskGroupValueSelector(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -20855,7 +21588,11 @@ func decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroup
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList", i)
+		}
 		v, err := decodeNetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList", i)
 		}
@@ -21044,12 +21781,15 @@ func decodeSI22RestOctetsNetworkSharingInformationSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI22RestOctetsNetworkSharingInformationValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21253,12 +21993,15 @@ func decodeNetworkSharingInformationStructCommonPLMNPSACCSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingInformationStructCommonPLMNPSACCValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21341,12 +22084,15 @@ func decodeNetworkSharingInformationStructMCCGroupListEntryMCCSelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingInformationStructMCCGroupListEntryMCCValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21460,12 +22206,15 @@ func decodeNetworkSharingInformationStructMCCGroupListEntryAdditionalACCSelector
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingInformationStructMCCGroupListEntryAdditionalACCValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21517,12 +22266,15 @@ func decodeNetworkSharingInformationStructMCCGroupListEntryPSACCValueSelector(r 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingInformationStructMCCGroupListEntryPSACCValueValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21543,12 +22295,15 @@ func decodeNetworkSharingInformationStructMCCGroupListEntryPSACCSelector(r *runt
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNetworkSharingInformationStructMCCGroupListEntryPSACCValueSelector(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -21657,7 +22412,11 @@ func decodeNetworkSharingInformationStructMCCGroupList(r *runtime.Reader) ([]Net
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("NetworkSharingInformationStructMCCGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "NetworkSharingInformationStructMCCGroupList", i)
+		}
 		v, err := decodeNetworkSharingInformationStructMCCGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "NetworkSharingInformationStructMCCGroupList", i)
 		}
@@ -21903,12 +22662,15 @@ func decodeSI23RestOctetsIRATCellReselectionInformationSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI23RestOctetsIRATCellReselectionInformationValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22180,7 +22942,11 @@ func decodeIRATCellReselectionInformationStructPLMNIndexGroupList(r *runtime.Rea
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("IRATCellReselectionInformationStructPLMNIndexGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "IRATCellReselectionInformationStructPLMNIndexGroupList", i)
+		}
 		v, err := decodeIRATCellReselectionInformationStructPLMNIndexGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "IRATCellReselectionInformationStructPLMNIndexGroupList", i)
 		}
@@ -22314,12 +23080,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupDEFAULTUTRANPRIORITYGroupDEFAULTUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22371,12 +23140,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupDEFAULTUTRANPRIORITYGroupDEFAULTTHRESHUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22428,12 +23200,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupDEFAULTUTRANPRIORITYGroupDEFAULTUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22515,12 +23290,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupDEFAULTUTRANPRIORITYGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22547,12 +23325,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupUTRANFDDTDDDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22621,12 +23402,15 @@ func decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22713,12 +23497,15 @@ func decodeUTRANFDDTDDDescriptionStructBandwidthFDDOrTDDSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDTDDDescriptionStructBandwidthFDDOrTDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -22806,7 +23593,11 @@ func decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndP
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
+		}
 		v, err := decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
 		}
@@ -22974,7 +23765,11 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList(
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation11.failure(err, "", r.Position(), 0), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
+		}
 		v, err := decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation11.failure(err, "", r.Position(), 0), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
 		}
@@ -23033,12 +23828,15 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANPRIORITYSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23121,12 +23919,15 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructTHRESHUTRANLowS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructTHRESHUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23178,12 +23979,15 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANQRXLEVMINS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23322,12 +24126,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupDEFAULTEUTRANPRIORITYGroupDEFAULTEUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23379,12 +24186,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupDEFAULTEUTRANPRIORITYGroupDEFAULTTHRESHEUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23436,12 +24246,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupDEFAULTEUTRANPRIORITYGroupDEFAULTEUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23523,12 +24336,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupDEFAULTEUTRANPRIORITYGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23616,7 +24432,11 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation12.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
+		}
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation12.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
 		}
@@ -23711,7 +24531,11 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation13.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
+		}
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation13.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
@@ -23806,7 +24630,11 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation14.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
+		}
 		v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation14.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
@@ -23840,12 +24668,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupEnhancedCellReselectionParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -23953,12 +24784,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -24058,9 +24892,16 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("Measurement Bandwidth", v)
 	return uint8(v), nil
@@ -24086,12 +24927,15 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupListEntryMeasurementBandwidthValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -24176,7 +25020,11 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation15.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation15.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
 		}
@@ -24235,12 +25083,15 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEUTRANPRIORITYSelect
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -24323,12 +25174,15 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructTHRESHEUTRANLowSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructTHRESHEUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -24380,12 +25234,15 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEUTRANQRXLEVMINSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -24647,11 +25504,17 @@ func decodeSI10RestOctetsNeighbourInformationChoice(r *runtime.Reader) (SI10Rest
 		v, err := decodeSI10RestOctetsNeighbourInformationChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10RestOctetsNeighbourInformationChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -24660,11 +25523,17 @@ func decodeSI10RestOctetsNeighbourInformationChoice(r *runtime.Reader) (SI10Rest
 		v, err := decodeSI10RestOctetsNeighbourInformationChoiceNeighbourInformation(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10RestOctetsNeighbourInformationChoiceAlternativeNeighbourInformation
 			result.NeighbourInformation = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -24861,7 +25730,11 @@ func decodeNeighbourInformationInfoFieldList(r *runtime.Reader) ([]NeighbourInfo
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("NeighbourInformationInfoFieldList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation16.failure(err, "", r.Position(), 0), "NeighbourInformationInfoFieldList", len(out))
+		}
 		v, err := decodeNeighbourInformationInfoFieldListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation16.failure(err, "", r.Position(), 0), "NeighbourInformationInfoFieldList", len(out))
 		}
@@ -25072,11 +25945,17 @@ func decodeCellInfoCellParametersChoice(r *runtime.Reader) (CellInfoCellParamete
 		v, err := decodeCellInfoCellParametersChoiceCellParameters(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellInfoCellParametersChoiceAlternativeCellParameters
 			result.CellParameters = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25085,11 +25964,17 @@ func decodeCellInfoCellParametersChoice(r *runtime.Reader) (CellInfoCellParamete
 		v, err := decodeCellInfoCellParametersChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellInfoCellParametersChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25253,11 +26138,17 @@ func decodeCellParametersCellBarredChoice(r *runtime.Reader) (CellParametersCell
 		v, err := decodeCellParametersCellBarredChoiceCellBarred(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellParametersCellBarredChoiceAlternativeCellBarred
 			result.CellBarred = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25266,11 +26157,17 @@ func decodeCellParametersCellBarredChoice(r *runtime.Reader) (CellParametersCell
 		v, err := decodeCellParametersCellBarredChoiceFurtherCellInfo(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellParametersCellBarredChoiceAlternativeFurtherCellInfo
 			result.FurtherCellInfo = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25751,11 +26648,17 @@ func decodeLaDifferentCellReselectHysteresisChoice(r *runtime.Reader) (LaDiffere
 		v, err := decodeLaDifferentCellReselectHysteresisChoiceCellReselectHysteresis(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LaDifferentCellReselectHysteresisChoiceAlternativeCellReselectHysteresis
 			result.CellReselectHysteresis = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25764,11 +26667,17 @@ func decodeLaDifferentCellReselectHysteresisChoice(r *runtime.Reader) (LaDiffere
 		v, err := decodeLaDifferentCellReselectHysteresisChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LaDifferentCellReselectHysteresisChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -25860,7 +26769,11 @@ func decodeInfoFieldNextFrequencyList(r *runtime.Reader) ([]NextFrequency, error
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("InfoFieldNextFrequencyList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation17.failure(err, "", r.Position(), 0), "InfoFieldNextFrequencyList", len(out))
+		}
 		v, err := decodeInfoFieldNextFrequencyListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation17.failure(err, "", r.Position(), 0), "InfoFieldNextFrequencyList", len(out))
 		}
@@ -26158,11 +27071,17 @@ func decodeDifferentialCellInfoBCCChoice(r *runtime.Reader) (DifferentialCellInf
 		v, err := decodeDifferentialCellInfoBCCChoiceBCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DifferentialCellInfoBCCChoiceAlternativeBCC
 			result.BCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26171,11 +27090,17 @@ func decodeDifferentialCellInfoBCCChoice(r *runtime.Reader) (DifferentialCellInf
 		v, err := decodeDifferentialCellInfoBCCChoiceBsic(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DifferentialCellInfoBCCChoiceAlternativeBsic
 			result.Bsic = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26295,11 +27220,17 @@ func decodeDifferentialCellInfoDiffCellParsChoice(r *runtime.Reader) (Differenti
 		v, err := decodeDifferentialCellInfoDiffCellParsChoiceDiffCellPars(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DifferentialCellInfoDiffCellParsChoiceAlternativeDiffCellPars
 			result.DiffCellPars = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26308,11 +27239,17 @@ func decodeDifferentialCellInfoDiffCellParsChoice(r *runtime.Reader) (Differenti
 		v, err := decodeDifferentialCellInfoDiffCellParsChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DifferentialCellInfoDiffCellParsChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26476,11 +27413,17 @@ func decodeDiffCellParsCellBarredChoice(r *runtime.Reader) (DiffCellParsCellBarr
 		v, err := decodeDiffCellParsCellBarredChoiceCellBarred(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DiffCellParsCellBarredChoiceAlternativeCellBarred
 			result.CellBarred = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26489,11 +27432,17 @@ func decodeDiffCellParsCellBarredChoice(r *runtime.Reader) (DiffCellParsCellBarr
 		v, err := decodeDiffCellParsCellBarredChoiceFurtherDiffCellInfo(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = DiffCellParsCellBarredChoiceAlternativeFurtherDiffCellInfo
 			result.FurtherDiffCellInfo = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26679,11 +27628,17 @@ func decodeFurtherDiffCellInfoMsTxpwrMaxCchChoice(r *runtime.Reader) (FurtherDif
 		v, err := decodeFurtherDiffCellInfoMsTxpwrMaxCchChoiceMsTxpwrMaxCch(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoMsTxpwrMaxCchChoiceAlternativeMsTxpwrMaxCch
 			result.MsTxpwrMaxCch = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26692,11 +27647,17 @@ func decodeFurtherDiffCellInfoMsTxpwrMaxCchChoice(r *runtime.Reader) (FurtherDif
 		v, err := decodeFurtherDiffCellInfoMsTxpwrMaxCchChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoMsTxpwrMaxCchChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26841,11 +27802,17 @@ func decodeFurtherDiffCellInfoRxlevAccessMinChoice(r *runtime.Reader) (FurtherDi
 		v, err := decodeFurtherDiffCellInfoRxlevAccessMinChoiceRxlevAccessMin(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoRxlevAccessMinChoiceAlternativeRxlevAccessMin
 			result.RxlevAccessMin = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -26854,11 +27821,17 @@ func decodeFurtherDiffCellInfoRxlevAccessMinChoice(r *runtime.Reader) (FurtherDi
 		v, err := decodeFurtherDiffCellInfoRxlevAccessMinChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoRxlevAccessMinChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27003,11 +27976,17 @@ func decodeFurtherDiffCellInfoCellReselectOffsetChoice(r *runtime.Reader) (Furth
 		v, err := decodeFurtherDiffCellInfoCellReselectOffsetChoiceCellReselectOffset(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoCellReselectOffsetChoiceAlternativeCellReselectOffset
 			result.CellReselectOffset = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27016,11 +27995,17 @@ func decodeFurtherDiffCellInfoCellReselectOffsetChoice(r *runtime.Reader) (Furth
 		v, err := decodeFurtherDiffCellInfoCellReselectOffsetChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoCellReselectOffsetChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27165,11 +28150,17 @@ func decodeFurtherDiffCellInfoTemporaryOffsetChoice(r *runtime.Reader) (FurtherD
 		v, err := decodeFurtherDiffCellInfoTemporaryOffsetChoiceTemporaryOffset(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoTemporaryOffsetChoiceAlternativeTemporaryOffset
 			result.TemporaryOffset = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27178,11 +28169,17 @@ func decodeFurtherDiffCellInfoTemporaryOffsetChoice(r *runtime.Reader) (FurtherD
 		v, err := decodeFurtherDiffCellInfoTemporaryOffsetChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoTemporaryOffsetChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27327,11 +28324,17 @@ func decodeFurtherDiffCellInfoPenaltyTimeChoice(r *runtime.Reader) (FurtherDiffC
 		v, err := decodeFurtherDiffCellInfoPenaltyTimeChoicePenaltyTime(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoPenaltyTimeChoiceAlternativePenaltyTime
 			result.PenaltyTime = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27340,11 +28343,17 @@ func decodeFurtherDiffCellInfoPenaltyTimeChoice(r *runtime.Reader) (FurtherDiffC
 		v, err := decodeFurtherDiffCellInfoPenaltyTimeChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = FurtherDiffCellInfoPenaltyTimeChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27696,11 +28705,17 @@ func decodeSI10terRestOctetsPositionInSI5ListChoice(r *runtime.Reader) (SI10terR
 		v, err := decodeSI10terRestOctetsPositionInSI5ListChoicePositionInSI5List(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10terRestOctetsPositionInSI5ListChoiceAlternativePositionInSI5List
 			result.PositionInSI5List = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27709,11 +28724,17 @@ func decodeSI10terRestOctetsPositionInSI5ListChoice(r *runtime.Reader) (SI10terR
 		v, err := decodeSI10terRestOctetsPositionInSI5ListChoiceBCCHARFCN(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10terRestOctetsPositionInSI5ListChoiceAlternativeBCCHARFCN
 			result.BCCHARFCN = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -27789,12 +28810,15 @@ func decodeSI10terRestOctetsBSICSelector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10terRestOctetsBSICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -27942,12 +28966,15 @@ func decodeSI9RestOctetsSchedulingInfoSelector(r *runtime.Reader) (*SchedulingIn
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI9RestOctetsSchedulingInfoValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -28081,7 +29108,11 @@ func decodeSchedulingInfo(r *runtime.Reader) (SchedulingInfo, error) {
 	var out SchedulingInfo
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("SchedulingInfo", len(out.Entries)); err != nil {
+			return SchedulingInfo{}, locateIndex(operationLocation18.failure(err, "", r.Position(), 0), "SchedulingInfo", len(out.Entries))
+		}
 		element, err := decodeSchedulingInfoElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return SchedulingInfo{}, locateIndex(operationLocation18.failure(err, "", r.Position(), 0), "SchedulingInfo", len(out.Entries))
 		}
@@ -28429,11 +29460,17 @@ func decodeInfoTypeInfoType4Choice(r *runtime.Reader) (InfoTypeInfoType4Choice, 
 		v, err := decodeInfoTypeInfoType4ChoiceInfoType4(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InfoTypeInfoType4ChoiceAlternativeInfoType4
 			result.InfoType4 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -28442,11 +29479,17 @@ func decodeInfoTypeInfoType4Choice(r *runtime.Reader) (InfoTypeInfoType4Choice, 
 		v, err := decodeInfoTypeInfoType4ChoiceInfoType5(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InfoTypeInfoType4ChoiceAlternativeInfoType5
 			result.InfoType5 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -28455,11 +29498,17 @@ func decodeInfoTypeInfoType4Choice(r *runtime.Reader) (InfoTypeInfoType4Choice, 
 		v, err := decodeInfoTypeInfoType4ChoiceInfoType6(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InfoTypeInfoType4ChoiceAlternativeInfoType6
 			result.InfoType6 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -28555,12 +29604,15 @@ func decodePositionsPositionVariant2Selector(r *runtime.Reader) (*Position, erro
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePositionsPositionVariant2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -28909,11 +29961,17 @@ func decodePositionModulusChoice(r *runtime.Reader) (PositionModulusChoice, erro
 		v, err := decodePositionModulusChoiceBcchType(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PositionModulusChoiceAlternativeBcchType
 			result.BcchType = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -28922,11 +29980,17 @@ func decodePositionModulusChoice(r *runtime.Reader) (PositionModulusChoice, erro
 		v, err := decodePositionModulusChoiceRelativePosition(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PositionModulusChoiceAlternativeRelativePosition
 			result.RelativePosition = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -29136,12 +30200,15 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupUTRANFDDDescriptionSelector(r 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupUTRANFDDDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29168,12 +30235,15 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupUTRANTDDDescriptionSelector(r 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupUTRANTDDDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29200,12 +30270,15 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GMEASUREMENTParametersDescri
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GMEASUREMENTParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29258,12 +30331,15 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GAdditionalMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29334,11 +30410,17 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 			v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -29348,11 +30430,17 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 		v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -29361,11 +30449,17 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 		v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeN3GAdditionalMeasurementParametersDescription
 			result.N3GAdditionalMeasurementParametersDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -29544,12 +30638,15 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2terRestOctetsSI2terMPCHANGEMARKGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29693,12 +30790,15 @@ func decodeUTRANFDDDescriptionStructClause105233aBandwidthFDDSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructClause105233aBandwidthFDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -29849,12 +30949,15 @@ func decodeUTRANTDDDescriptionStructClause105233aBandwidthTDDSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructClause105233aBandwidthTDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30074,12 +31177,15 @@ func decodeN3GMEASUREMENTParametersDescriptionStructClause105233aFDDQoffsetGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GMEASUREMENTParametersDescriptionStructClause105233aFDDQoffsetGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30131,12 +31237,15 @@ func decodeN3GMEASUREMENTParametersDescriptionStructClause105233aTDDQoffsetSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GMEASUREMENTParametersDescriptionStructClause105233aTDDQoffsetValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30460,11 +31569,17 @@ func decodeSI4RestOctetsBreakIndicatorChoice(r *runtime.Reader) (SI4RestOctetsBr
 		v, err := decodeSI4RestOctetsBreakIndicatorChoiceBreakIndicator(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI4RestOctetsBreakIndicatorChoiceAlternativeBreakIndicator
 			result.BreakIndicator = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -30473,11 +31588,17 @@ func decodeSI4RestOctetsBreakIndicatorChoice(r *runtime.Reader) (SI4RestOctetsBr
 		v, err := decodeSI4RestOctetsBreakIndicatorChoiceSI4RestOctetsS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI4RestOctetsBreakIndicatorChoiceAlternativeSI4RestOctetsS
 			result.SI4RestOctetsS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -30626,12 +31747,15 @@ func decodeSI4RestOctetsOGPRSIndicatorClause105235Selector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsOGPRSIndicatorClause105235Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30741,12 +31865,15 @@ func decodeSI4RestOctetsSLSAParametersClause105235Selector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsSLSAParametersClause105235Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30798,12 +31925,15 @@ func decodeSI4RestOctetsSCellIdentitySelector(r *runtime.Reader) (*uint16, error
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsSCellIdentityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30830,12 +31960,15 @@ func decodeSI4RestOctetsSLSAIDInformationClause105235Selector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsSLSAIDInformationClause105235Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30918,12 +32051,15 @@ func decodeSI4RestOctetsSCBQ3GroupSI13altPositionSelector(r *runtime.Reader) (*u
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsSCBQ3GroupSI13altPositionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -30992,12 +32128,15 @@ func decodeSI4RestOctetsSCBQ3GroupSelector(r *runtime.Reader) (*SI4RestOctetsSCB
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI4RestOctetsSCBQ3Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -31116,11 +32255,17 @@ func decodeBreakIndicatorAlternatives(r *runtime.Reader) (BreakIndicatorAlternat
 		v, err := decodeBreakIndicatorAlternativesAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BreakIndicatorAlternativesAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -31129,11 +32274,17 @@ func decodeBreakIndicatorAlternatives(r *runtime.Reader) (BreakIndicatorAlternat
 		v, err := decodeBreakIndicatorAlternativesAltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BreakIndicatorAlternativesAlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -31219,12 +32370,15 @@ func decodeOptionalSelectionParametersClause105235SelectionParametersClause10523
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeOptionalSelectionParametersClause105235SelectionParametersClause105235Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -31509,12 +32663,15 @@ func decodeOptionalPowerOffsetClause105235PowerOffsetSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeOptionalPowerOffsetClause105235PowerOffsetValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -31852,12 +33009,15 @@ func decodeLSAParametersClause105235MCCGroupSelector(r *runtime.Reader) (*LSAPar
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeLSAParametersClause105235MCCGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -31982,7 +33142,11 @@ func decodeLSAIDInformationClause105235(r *runtime.Reader) (LSAIDInformationClau
 	var out LSAIDInformationClause105235
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("LSAIDInformationClause105235", len(out.Entries)); err != nil {
+			return LSAIDInformationClause105235{}, locateIndex(operationLocation19.failure(err, "", r.Position(), 0), "LSAIDInformationClause105235", len(out.Entries))
+		}
 		element, err := decodeLSAIDInformationClause105235Element(r)
+		r.LeaveIndex()
 		if err != nil {
 			return LSAIDInformationClause105235{}, locateIndex(operationLocation19.failure(err, "", r.Position(), 0), "LSAIDInformationClause105235", len(out.Entries))
 		}
@@ -32204,11 +33368,17 @@ func decodeLSAIdentityClause105235LSAIDChoice(r *runtime.Reader) (LSAIdentityCla
 		v, err := decodeLSAIdentityClause105235LSAIDChoiceLSAID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LSAIdentityClause105235LSAIDChoiceAlternativeLSAID
 			result.LSAID = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -32217,11 +33387,17 @@ func decodeLSAIdentityClause105235LSAIDChoice(r *runtime.Reader) (LSAIdentityCla
 		v, err := decodeLSAIdentityClause105235LSAIDChoiceShortLSAID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = LSAIdentityClause105235LSAIDChoiceAlternativeShortLSAID
 			result.ShortLSAID = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -32562,12 +33738,15 @@ func decodeP2RestOctetsCN3Selector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsCN3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32698,12 +33877,15 @@ func decodeP2RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P2RestOctetsNLNP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsNLNPCHGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32730,12 +33912,15 @@ func decodeP2RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsPriority1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32762,12 +33947,15 @@ func decodeP2RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsPriority2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32794,12 +33982,15 @@ func decodeP2RestOctetsPriority3Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsPriority3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32844,11 +34035,17 @@ func decodeP2RestOctetsPacketPageIndication3(r *runtime.Reader) (P2RestOctetsPac
 		v, err := decodeP2RestOctetsPacketPageIndication3AltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPacketPageIndication3AlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -32857,11 +34054,17 @@ func decodeP2RestOctetsPacketPageIndication3(r *runtime.Reader) (P2RestOctetsPac
 		v, err := decodeP2RestOctetsPacketPageIndication3AltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPacketPageIndication3AlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -32938,12 +34141,15 @@ func decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3GroupMBMSNotification3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -32970,12 +34176,15 @@ func decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3GroupMBMSInformationClause105224Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -33044,12 +34253,15 @@ func decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3MBMSNotification3Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -33121,7 +34333,12 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			v, err := decodeP2RestOctetsMBMSNotification3ChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -33129,6 +34346,7 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -33138,7 +34356,12 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 		v, err := decodeP2RestOctetsMBMSNotification3ChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeAltL
 			result.AltL = &v
@@ -33146,6 +34369,7 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33154,7 +34378,12 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 		v, err := decodeP2RestOctetsMBMSNotification3ChoiceMBMSNotification3(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsMBMSNotification3ChoiceAlternativeMBMSNotification3
 			result.MBMSNotification3 = &v
@@ -33162,6 +34391,7 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33368,11 +34598,17 @@ func decodeP2RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P2RestOctetsIm
 			v, err := decodeP2RestOctetsImplicitRejectCSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -33382,11 +34618,17 @@ func decodeP2RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P2RestOctetsIm
 		v, err := decodeP2RestOctetsImplicitRejectCSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsImplicitRejectCSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33395,11 +34637,17 @@ func decodeP2RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P2RestOctetsIm
 		v, err := decodeP2RestOctetsImplicitRejectCSChoiceImplicitRejectCS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsImplicitRejectCSChoiceAlternativeImplicitRejectCS
 			result.ImplicitRejectCS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33557,11 +34805,17 @@ func decodeP2RestOctetsIPASupportChoice(r *runtime.Reader) (P2RestOctetsIPASuppo
 			v, err := decodeP2RestOctetsIPASupportChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsIPASupportChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -33571,11 +34825,17 @@ func decodeP2RestOctetsIPASupportChoice(r *runtime.Reader) (P2RestOctetsIPASuppo
 		v, err := decodeP2RestOctetsIPASupportChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsIPASupportChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33584,11 +34844,17 @@ func decodeP2RestOctetsIPASupportChoice(r *runtime.Reader) (P2RestOctetsIPASuppo
 		v, err := decodeP2RestOctetsIPASupportChoiceIPASupport(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsIPASupportChoiceAlternativeIPASupport
 			result.IPASupport = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33792,11 +35058,17 @@ func decodeP2RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P2RestOctetsP
 			v, err := decodeP2RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -33806,11 +35078,17 @@ func decodeP2RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P2RestOctetsP
 		v, err := decodeP2RestOctetsPEOBCCHCHANGEMARKChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -33819,11 +35097,17 @@ func decodeP2RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P2RestOctetsP
 		v, err := decodeP2RestOctetsPEOBCCHCHANGEMARKChoicePEOBCCHCHANGEMARK(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPEOBCCHCHANGEMARKChoiceAlternativePEOBCCHCHANGEMARK
 			result.PEOBCCHCHANGEMARK = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -34027,11 +35311,17 @@ func decodeP2RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			v, err := decodeP2RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -34041,11 +35331,17 @@ func decodeP2RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP2RestOctetsPositioningEventPendingIndicatorChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -34054,11 +35350,17 @@ func decodeP2RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP2RestOctetsPositioningEventPendingIndicatorChoicePositioningEventPendingIndicator(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPositioningEventPendingIndicatorChoiceAlternativePositioningEventPendingIndicator
 			result.PositioningEventPendingIndicator = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -34143,12 +35445,15 @@ func decodeP2RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMC
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP2RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -34219,11 +35524,17 @@ func decodeP2RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P2RestOc
 			v, err := decodeP2RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P2RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -34233,11 +35544,17 @@ func decodeP2RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P2RestOc
 		v, err := decodeP2RestOctetsPEOIMMCellGroupDetailsChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -34246,11 +35563,17 @@ func decodeP2RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P2RestOc
 		v, err := decodeP2RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetails(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P2RestOctetsPEOIMMCellGroupDetailsChoiceAlternativePEOIMMCellGroupDetails
 			result.PEOIMMCellGroupDetails = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -34642,12 +35965,15 @@ func decodeMBMSInformationClause105224MBMSSessionsListVariant2Selector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSInformationClause105224MBMSSessionsListVariant2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -34754,7 +36080,11 @@ func decodeMBMSInformationClause105224MBMSChannelParametersGroupList(r *runtime.
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("MBMSInformationClause105224MBMSChannelParametersGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation20.failure(err, "", r.Position(), 0), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
+		}
 		v, err := decodeMBMSInformationClause105224MBMSChannelParametersGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation20.failure(err, "", r.Position(), 0), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
 		}
@@ -35063,12 +36393,15 @@ func decodeP3RestOctetsCN3GroupSelector(r *runtime.Reader) (*P3RestOctetsCN3Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsCN3Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35199,12 +36532,15 @@ func decodeP3RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P3RestOctetsNLNP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsNLNPCHGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35231,12 +36567,15 @@ func decodeP3RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsPriority1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35263,12 +36602,15 @@ func decodeP3RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsPriority2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35295,12 +36637,15 @@ func decodeP3RestOctetsPriority3Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsPriority3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35327,12 +36672,15 @@ func decodeP3RestOctetsPriority4Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsPriority4Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -35504,11 +36852,17 @@ func decodeP3RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P3RestOctetsIm
 			v, err := decodeP3RestOctetsImplicitRejectCSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P3RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -35518,11 +36872,17 @@ func decodeP3RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P3RestOctetsIm
 		v, err := decodeP3RestOctetsImplicitRejectCSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsImplicitRejectCSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -35531,11 +36891,17 @@ func decodeP3RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P3RestOctetsIm
 		v, err := decodeP3RestOctetsImplicitRejectCSChoiceImplicitRejectCS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsImplicitRejectCSChoiceAlternativeImplicitRejectCS
 			result.ImplicitRejectCS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -35693,11 +37059,17 @@ func decodeP3RestOctetsIPASupportChoice(r *runtime.Reader) (P3RestOctetsIPASuppo
 			v, err := decodeP3RestOctetsIPASupportChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P3RestOctetsIPASupportChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -35707,11 +37079,17 @@ func decodeP3RestOctetsIPASupportChoice(r *runtime.Reader) (P3RestOctetsIPASuppo
 		v, err := decodeP3RestOctetsIPASupportChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsIPASupportChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -35720,11 +37098,17 @@ func decodeP3RestOctetsIPASupportChoice(r *runtime.Reader) (P3RestOctetsIPASuppo
 		v, err := decodeP3RestOctetsIPASupportChoiceIPASupport(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsIPASupportChoiceAlternativeIPASupport
 			result.IPASupport = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -35928,11 +37312,17 @@ func decodeP3RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P3RestOctetsP
 			v, err := decodeP3RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P3RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -35942,11 +37332,17 @@ func decodeP3RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P3RestOctetsP
 		v, err := decodeP3RestOctetsPEOBCCHCHANGEMARKChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -35955,11 +37351,17 @@ func decodeP3RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P3RestOctetsP
 		v, err := decodeP3RestOctetsPEOBCCHCHANGEMARKChoicePEOBCCHCHANGEMARK(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPEOBCCHCHANGEMARKChoiceAlternativePEOBCCHCHANGEMARK
 			result.PEOBCCHCHANGEMARK = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -36163,11 +37565,17 @@ func decodeP3RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			v, err := decodeP3RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P3RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -36177,11 +37585,17 @@ func decodeP3RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP3RestOctetsPositioningEventPendingIndicatorChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -36190,11 +37604,17 @@ func decodeP3RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP3RestOctetsPositioningEventPendingIndicatorChoicePositioningEventPendingIndicator(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPositioningEventPendingIndicatorChoiceAlternativePositioningEventPendingIndicator
 			result.PositioningEventPendingIndicator = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -36279,12 +37699,15 @@ func decodeP3RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMC
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP3RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -36355,11 +37778,17 @@ func decodeP3RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P3RestOc
 			v, err := decodeP3RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P3RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -36369,11 +37798,17 @@ func decodeP3RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P3RestOc
 		v, err := decodeP3RestOctetsPEOIMMCellGroupDetailsChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -36382,11 +37817,17 @@ func decodeP3RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P3RestOc
 		v, err := decodeP3RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetails(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P3RestOctetsPEOIMMCellGroupDetailsChoiceAlternativePEOIMMCellGroupDetails
 			result.PEOIMMCellGroupDetails = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -37040,12 +38481,15 @@ func decodeSI2quaterRestOctetsMeasurementParametersDescriptionSelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37072,12 +38516,15 @@ func decodeSI2quaterRestOctetsGPRSRealTimeDifferenceDescriptionSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsGPRSRealTimeDifferenceDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37104,12 +38551,15 @@ func decodeSI2quaterRestOctetsGPRSBSICDescriptionSelector(r *runtime.Reader) (*G
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsGPRSBSICDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37136,12 +38586,15 @@ func decodeSI2quaterRestOctetsGPRSREPORTPRIORITYDescriptionSelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsGPRSREPORTPRIORITYDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37168,12 +38621,15 @@ func decodeSI2quaterRestOctetsGPRSMEASUREMENTParametersDescriptionSelector(r *ru
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsGPRSMEASUREMENTParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37200,12 +38656,15 @@ func decodeSI2quaterRestOctetsNCMeasurementParametersSelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsNCMeasurementParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37270,9 +38729,11 @@ func decodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qEx
 		r.Commit(candidate)
 		return SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallback{Alternative: SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackAlternativeKnown, Known: &known}, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	ignored, err := decodeSI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallbackIgnored(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return SI2quaterRestOctetsExtensionLengthGroupSI2qExtensionInformationSI2qExtensionInformationFallback{}, r.Error(runtime.InvalidBranch, "extension fallback has no matching arm")
 	}
 	r.Commit(candidate)
@@ -37390,12 +38851,15 @@ func decodeSI2quaterRestOctetsExtensionLengthGroupSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsExtensionLengthGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37422,12 +38886,15 @@ func decodeSI2quaterRestOctetsN3GNeighbourCellDescriptionSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GNeighbourCellDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37454,12 +38921,15 @@ func decodeSI2quaterRestOctetsN3GMeasurementParametersDescriptionSelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37486,12 +38956,15 @@ func decodeSI2quaterRestOctetsGPRS3GMEASUREMENTParametersDescriptionSelector(r *
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsGPRS3GMEASUREMENTParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37544,12 +39017,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GAdditionalMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37576,12 +39052,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GADDITIONALMEASUREMENTParametersDescription2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37795,12 +39274,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETN700REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37931,12 +39413,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETN810REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -37989,12 +39474,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionPriorityAndEUTRANParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38021,12 +39509,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionN3GCSGDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38053,12 +39544,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEUTRANCSGDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38111,12 +39605,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionEnhancedCellReselectionParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38143,12 +39640,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionCSGCellsReportingDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38226,12 +39726,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceINITPWRREDINITPWRREDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38346,11 +39849,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -38360,11 +39869,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38373,11 +39888,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceINITPWRRED(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAlternativeINITPWRRED
 			result.INITPWRRED = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38462,12 +39983,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceExtendedEARFCNsDescriptionExtendedEARFCNsDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38494,12 +40018,15 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceExtendedEARFCNsDescriptionExtendedEARFCNsDescriptionForCSGCellsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -38583,11 +40110,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -38597,11 +40130,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38610,11 +40149,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceExtendedEARFCNsDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAlternativeExtendedEARFCNsDescription
 			result.ExtendedEARFCNsDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38756,11 +40301,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -38770,11 +40321,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38783,11 +40340,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAlternativeEnhancedCellReselectionParametersDescription
 			result.EnhancedCellReselectionParametersDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38929,11 +40492,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -38943,11 +40512,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -38956,11 +40531,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAlternativePriorityAndEUTRANParametersDescription
 			result.PriorityAndEUTRANParametersDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39089,11 +40670,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -39103,11 +40690,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39116,11 +40709,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSET(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAlternativeN700REPORTINGOFFSET
 			result.N700REPORTINGOFFSET = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39236,11 +40835,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -39250,11 +40855,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39263,11 +40874,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVE(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAlternativeN3GCCNACTIVE
 			result.N3GCCNACTIVE = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39396,11 +41013,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -39410,11 +41033,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39423,11 +41052,17 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 		v, err := decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeN3GAdditionalMeasurementParametersDescription
 			result.N3GAdditionalMeasurementParametersDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -39757,12 +41392,15 @@ func decodeN3GNeighbourCellDescriptionStructIndexStart3GSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GNeighbourCellDescriptionStructIndexStart3GValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -39814,12 +41452,15 @@ func decodeN3GNeighbourCellDescriptionStructAbsoluteIndexStartEMRSelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GNeighbourCellDescriptionStructAbsoluteIndexStartEMRValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -39846,12 +41487,15 @@ func decodeN3GNeighbourCellDescriptionStructUTRANFDDDescriptionSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GNeighbourCellDescriptionStructUTRANFDDDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -39878,12 +41522,15 @@ func decodeN3GNeighbourCellDescriptionStructUTRANTDDDescriptionSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GNeighbourCellDescriptionStructUTRANTDDDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -40009,12 +41656,15 @@ func decodeUTRANFDDDescriptionStructClause105233bBandwidthFDDSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructClause105233bBandwidthFDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -40102,7 +41752,11 @@ func decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsL
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation21.failure(err, "", r.Position(), 0), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
+		}
 		v, err := decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation21.failure(err, "", r.Position(), 0), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
 		}
@@ -40425,12 +42079,15 @@ func decodeUTRANTDDDescriptionStructClause105233bBandwidthTDDSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructClause105233bBandwidthTDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -40518,7 +42175,11 @@ func decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsL
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation22.failure(err, "", r.Position(), 0), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
+		}
 		v, err := decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation22.failure(err, "", r.Position(), 0), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
 		}
@@ -41180,12 +42841,15 @@ func decodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFDDQoffsetGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFDDQoffsetGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -41316,12 +42980,15 @@ func decodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bTDDQoffsetGroup
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bTDDQoffsetGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -41447,12 +43114,15 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupBAIndexSta
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupBAIndexStartRTDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -41546,7 +43216,11 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList(r 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation23.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
+		}
 		v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation23.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
 		}
@@ -41635,12 +43309,15 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupSelector(r
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -41692,12 +43369,15 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2BA
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2BAIndexStartRTDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -41791,7 +43471,11 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RT
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation24.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
+		}
 		v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation24.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
 		}
@@ -41880,12 +43564,15 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2Se
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -42046,7 +43733,11 @@ func decodeRTD6StructRTDList(r *runtime.Reader) ([]RTD6StructRTDListEntry, error
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RTD6StructRTDList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation25.failure(err, "", r.Position(), 0), "RTD6StructRTDList", len(out))
+		}
 		v, err := decodeRTD6StructRTDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation25.failure(err, "", r.Position(), 0), "RTD6StructRTDList", len(out))
 		}
@@ -42201,7 +43892,11 @@ func decodeRTD12StructRTDList(r *runtime.Reader) ([]RTD12StructRTDListEntry, err
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RTD12StructRTDList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation26.failure(err, "", r.Position(), 0), "RTD12StructRTDList", len(out))
+		}
 		v, err := decodeRTD12StructRTDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation26.failure(err, "", r.Position(), 0), "RTD12StructRTDList", len(out))
 		}
@@ -42295,12 +43990,15 @@ func decodeGPRSBSICDescriptionStructBAIndexStartBSICSelector(r *runtime.Reader) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSBSICDescriptionStructBAIndexStartBSICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -42494,7 +44192,11 @@ func decodeGPRSBSICDescriptionStructFrequencyScrollingGroupList(r *runtime.Reade
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("GPRSBSICDescriptionStructFrequencyScrollingGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation27.failure(err, "", r.Position(), 0), "GPRSBSICDescriptionStructFrequencyScrollingGroupList", i)
+		}
 		v, err := decodeGPRSBSICDescriptionStructFrequencyScrollingGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation27.failure(err, "", r.Position(), 0), "GPRSBSICDescriptionStructFrequencyScrollingGroupList", i)
 		}
@@ -42660,7 +44362,11 @@ func decodeGPRSREPORTPRIORITYDescriptionStructREPPRIORITYList(r *runtime.Reader)
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList", i); err != nil {
+			return nil, locateIndex(operationLocation28.failure(err, "", r.Position(), 0), "GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList", i)
+		}
 		v, err := decodeGPRSREPORTPRIORITYDescriptionStructREPPRIORITYListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation28.failure(err, "", r.Position(), 0), "GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList", i)
 		}
@@ -42861,12 +44567,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructMULTIBANDREPORTINGSelector(
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructMULTIBANDREPORTINGValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -42918,12 +44627,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructSERVINGBANDREPORTINGSelecto
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructSERVINGBANDREPORTINGValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43085,12 +44797,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN900REPORTINGOFFSETGroupSel
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN900REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43221,12 +44936,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN1800REPORTINGOFFSETGroupSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN1800REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43357,12 +45075,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN400REPORTINGOFFSETGroupSel
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN400REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43493,12 +45214,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN1900REPORTINGOFFSETGroupSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN1900REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43629,12 +45353,15 @@ func decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN850REPORTINGOFFSETGroupSel
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSMEASUREMENTPARAMETERSDescriptionStructN850REPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -43868,9 +45595,11 @@ func decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback(r *runtime.R
 		r.Commit(candidate)
 		return GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback{Alternative: GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackAlternativeKnown, Known: &known}, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	ignored, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1FallbackIgnored(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return GPRS3GMEASUREMENTPARAMETERSDescriptionStructAlt1Fallback{}, r.Error(runtime.InvalidBranch, "extension fallback has no matching arm")
 	}
 	r.Commit(candidate)
@@ -44018,12 +45747,15 @@ func decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFDDREPQUANTGroupSelector(
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFDDREPQUANTGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44154,12 +45886,15 @@ func decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFDDREPORTINGOFFSETGroupSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFDDREPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44211,12 +45946,15 @@ func decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructTDDMULTIRATREPORTINGSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructTDDMULTIRATREPORTINGValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44347,12 +46085,15 @@ func decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructTDDREPORTINGOFFSETGroupSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructTDDREPORTINGOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44476,9 +46217,16 @@ func decodeNCMeasurementParametersStructNETWORKCONTROLORDER(r *runtime.Reader) (
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule2)
 	}
 	r.Set("NETWORK_CONTROL_ORDER", v)
 	return uint8(v), nil
@@ -44658,12 +46406,15 @@ func decodeNCMeasurementParametersStructNCNONDRXPERIODGroupSelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNCMeasurementParametersStructNCNONDRXPERIODGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44738,12 +46489,15 @@ func decodeSI2qExtensionInformationCCNSupportDescriptionSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI2qExtensionInformationCCNSupportDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -44902,7 +46656,11 @@ func decodeCCNSupportDescriptionStructCCNSUPPORTEDList(r *runtime.Reader) ([]uin
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("CCNSupportDescriptionStructCCNSUPPORTEDList", i); err != nil {
+			return nil, locateIndex(operationLocation30.failure(err, "", r.Position(), 0), "CCNSupportDescriptionStructCCNSUPPORTEDList", i)
+		}
 		v, err := decodeCCNSupportDescriptionStructCCNSUPPORTEDListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation30.failure(err, "", r.Position(), 0), "CCNSupportDescriptionStructCCNSUPPORTEDList", i)
 		}
@@ -45120,12 +46878,15 @@ func decodeN3GAdditionalMeasurementParametersDescription2StructFDDREPORTINGTHRES
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GAdditionalMeasurementParametersDescription2StructFDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -45187,12 +46948,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105233bServingCellP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bServingCellPriorityParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -45219,12 +46983,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105233bN3GPriorityP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bN3GPriorityParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -45251,12 +47018,15 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105233bEUTRANParame
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bEUTRANParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -45796,12 +47566,15 @@ func decodeN3GPriorityParametersDescriptionStructDEFAULTUTRANPRIORITYGroupSelect
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN3GPriorityParametersDescriptionStructDEFAULTUTRANPRIORITYGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -45889,7 +47662,11 @@ func decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParameters
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation31.failure(err, "", r.Position(), 0), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
+		}
 		v, err := decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation31.failure(err, "", r.Position(), 0), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
 		}
@@ -46083,7 +47860,11 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList(r *runti
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation32.failure(err, "", r.Position(), 0), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation32.failure(err, "", r.Position(), 0), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -46142,12 +47923,15 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANPRIORITYSelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANPriorityParametersStructUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -46230,12 +48014,15 @@ func decodeRepeatedUTRANPriorityParametersStructTHRESHUTRANLowSelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANPriorityParametersStructTHRESHUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -46287,12 +48074,15 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANQRXLEVMINSelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedUTRANPriorityParametersStructUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -46499,12 +48289,15 @@ func decodeEUTRANParametersDescriptionStructEUTRANMeasurementParametersDescripti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANParametersDescriptionStructEUTRANMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -46531,12 +48324,15 @@ func decodeEUTRANParametersDescriptionStructGPRSEUTRANMeasurementParametersDescr
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANParametersDescriptionStructGPRSEUTRANMeasurementParametersDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -46624,7 +48420,11 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList(r *
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation33.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
+		}
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation33.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
 		}
@@ -46719,7 +48519,11 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList(r 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation34.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
+		}
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation34.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
 		}
@@ -46814,7 +48618,11 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList(r 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation35.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
+		}
 		v, err := decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation35.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
 		}
@@ -47133,12 +48941,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANFDDREPORTINGTHRESHOLDGroupEUTRANFDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47190,12 +49001,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANFDDREPORTINGTHRESHOLDGroupEUTRANFDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47277,12 +49091,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANFDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47365,12 +49182,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANTDDREPORTINGTHRESHOLDGroupEUTRANTDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47422,12 +49242,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANTDDREPORTINGTHRESHOLDGroupEUTRANTDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47509,12 +49332,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLDEUTRANTDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47665,12 +49491,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANFDDMEASUREMENTREPORTOFFSETGroupEUTRANFDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47722,12 +49551,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANFDDMEASUREMENTREPORTOFFSETGroupEUTRANFDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47809,12 +49641,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANFDDMEASUREMENTREPORTOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47897,12 +49732,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANTDDMEASUREMENTREPORTOFFSETGroupEUTRANTDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -47954,12 +49792,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANTDDMEASUREMENTREPORTOFFSETGroupEUTRANTDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48041,12 +49882,15 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSETEUTRANTDDMEASUREMENTREPORTOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48173,11 +50017,17 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDREPORTINGTHRESHOLD(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceAlternativeEUTRANFDDREPORTINGTHRESHOLD
 			result.EUTRANFDDREPORTINGTHRESHOLD = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -48186,11 +50036,17 @@ func decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHO
 		v, err := decodeEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceEUTRANFDDMEASUREMENTREPORTOFFSET(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDChoiceAlternativeEUTRANFDDMEASUREMENTREPORTOFFSET
 			result.EUTRANFDDMEASUREMENTREPORTOFFSET = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -48464,12 +50320,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDGroupEUTRANFDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48521,12 +50380,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDGroupEUTRANFDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48608,12 +50470,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANFDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48696,12 +50561,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHRESHOLDGroupEUTRANTDDREPORTINGTHRESHOLD2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48753,12 +50621,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHRESHOLDGroupEUTRANTDDREPORTINGOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48840,12 +50711,15 @@ func decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHR
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGPRSEUTRANMeasurementParametersDescriptionStructEUTRANTDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -48997,9 +50871,16 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntryMeasurementBand
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("Measurement Bandwidth", v)
 	return uint8(v), nil
@@ -49025,12 +50906,15 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntryMeasurementBand
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntryMeasurementBandwidthValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -49115,7 +50999,11 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupList(r *runtime.Reader) 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation36.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation36.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
 		}
@@ -49174,12 +51062,15 @@ func decodeRepeatedEUTRANNeighbourCellsStructEUTRANPRIORITYSelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourCellsStructEUTRANPRIORITYValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -49262,12 +51153,15 @@ func decodeRepeatedEUTRANNeighbourCellsStructTHRESHEUTRANLowSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourCellsStructTHRESHEUTRANLowValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -49319,12 +51213,15 @@ func decodeRepeatedEUTRANNeighbourCellsStructEUTRANQRXLEVMINSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeRepeatedEUTRANNeighbourCellsStructEUTRANQRXLEVMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -49530,7 +51427,11 @@ func decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList(r *runtim
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation37.failure(err, "", r.Position(), 0), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation37.failure(err, "", r.Position(), 0), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -49673,7 +51574,11 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList(r *runtime.Rea
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation38.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation38.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
 		}
@@ -49793,7 +51698,11 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList(r *runtim
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation39.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation39.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -49977,7 +51886,11 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXLi
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation40.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation40.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -50069,7 +51982,11 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupList(r *runtime.Reader) ([]N3G
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation41.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
+		}
 		v, err := decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation41.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
 		}
@@ -50283,11 +52200,17 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoice(r *run
 		v, err := decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoiceCSGFDDUARFCN(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = N3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoiceAlternativeCSGFDDUARFCN
 			result.CSGFDDUARFCN = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -50296,11 +52219,17 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoice(r *run
 		v, err := decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoiceCSGTDDUARFCN(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = N3GCSGDescriptionStructCSGFDDUARFCNListEntryCSGFDDUARFCNChoiceAlternativeCSGTDDUARFCN
 			result.CSGTDDUARFCN = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -50396,7 +52325,11 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNList(r *runtime.Reader) ([]N3GCSGD
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("N3GCSGDescriptionStructCSGFDDUARFCNList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation42.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
+		}
 		v, err := decodeN3GCSGDescriptionStructCSGFDDUARFCNListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation42.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
 		}
@@ -50580,7 +52513,11 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYIND
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation43.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
+		}
 		v, err := decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation43.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
 		}
@@ -50672,7 +52609,11 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupList(r *runtime.Reader) ([]
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation44.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
+		}
 		v, err := decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation44.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
 		}
@@ -50792,7 +52733,11 @@ func decodeEUTRANCSGDescriptionStructCSGEARFCNList(r *runtime.Reader) ([]EUTRANC
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EUTRANCSGDescriptionStructCSGEARFCNList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation45.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
+		}
 		v, err := decodeEUTRANCSGDescriptionStructCSGEARFCNListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation45.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
 		}
@@ -50874,12 +52819,15 @@ func decodeCSGCellsReportingDescriptionStructUTRANCSGCellsReportingDescriptionSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCSGCellsReportingDescriptionStructUTRANCSGCellsReportingDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -50906,12 +52854,15 @@ func decodeCSGCellsReportingDescriptionStructEUTRANCSGCellsReportingDescriptionS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCSGCellsReportingDescriptionStructEUTRANCSGCellsReportingDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51090,12 +53041,15 @@ func decodeUTRANCSGCellsReportingDescriptionStructUTRANCSGFDDREPORTINGTHRESHOLDG
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANCSGCellsReportingDescriptionStructUTRANCSGFDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51147,12 +53101,15 @@ func decodeUTRANCSGCellsReportingDescriptionStructUTRANCSGTDDREPORTINGTHRESHOLDS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANCSGCellsReportingDescriptionStructUTRANCSGTDDREPORTINGTHRESHOLDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51331,12 +53288,15 @@ func decodeEUTRANCSGCellsReportingDescriptionStructEUTRANCSGFDDREPORTINGTHRESHOL
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANCSGCellsReportingDescriptionStructEUTRANCSGFDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51467,12 +53427,15 @@ func decodeEUTRANCSGCellsReportingDescriptionStructEUTRANCSGTDDREPORTINGTHRESHOL
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANCSGCellsReportingDescriptionStructEUTRANCSGTDDREPORTINGTHRESHOLDGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51633,7 +53596,11 @@ func decodeExtendedEARFCNsDescriptionStructEARFCNExtendedList(r *runtime.Reader)
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation46.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
+		}
 		v, err := decodeExtendedEARFCNsDescriptionStructEARFCNExtendedListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation46.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
 		}
@@ -51788,7 +53755,11 @@ func decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList(r *r
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation47.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
+		}
 		v, err := decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation47.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
 		}
@@ -51857,12 +53828,15 @@ func decodeSI6RestOctetsPCHAndNCHInfoSelector(r *runtime.Reader) (*PCHAndNCHInfo
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsPCHAndNCHInfoValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -51914,12 +53888,15 @@ func decodeSI6RestOctetsVBSVGCSOptionsSelector(r *runtime.Reader) (*uint8, error
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsVBSVGCSOptionsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -52151,11 +54128,17 @@ func decodeSI6RestOctetsDTMSupportChoice(r *runtime.Reader) (SI6RestOctetsDTMSup
 		v, err := decodeSI6RestOctetsDTMSupportChoiceDTMSupport(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI6RestOctetsDTMSupportChoiceAlternativeDTMSupport
 			result.DTMSupport = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -52164,11 +54147,17 @@ func decodeSI6RestOctetsDTMSupportChoice(r *runtime.Reader) (SI6RestOctetsDTMSup
 		v, err := decodeSI6RestOctetsDTMSupportChoiceRAC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI6RestOctetsDTMSupportChoiceAlternativeRAC
 			result.RAC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -52250,12 +54239,15 @@ func decodeSI6RestOctetsGPRSMSTXPWRMAXCCHSelector(r *runtime.Reader) (*uint8, er
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsGPRSMSTXPWRMAXCCHValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -52386,12 +54378,15 @@ func decodeSI6RestOctetsDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupSelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -52443,12 +54438,15 @@ func decodeSI6RestOctetsAMRConfigValueSelector(r *runtime.Reader) (*uint8, error
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsAMRConfigValueValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -52469,12 +54467,15 @@ func decodeSI6RestOctetsAMRConfigSelector(r *runtime.Reader) (**uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI6RestOctetsAMRConfigValueSelector(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -52532,7 +54533,11 @@ func decodeSI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream(r *r
 	var out []uint8
 	for r.Remaining() > 0 {
 		before := r.Position()
+		if err := r.EnterIndex("SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", len(out)); err != nil {
+			return nil, locateIndex(operationLocation48.failure(err, "", r.Position(), 0), "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", len(out))
+		}
 		v, err := decodeSI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStreamEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation48.failure(err, "", r.Position(), 0), "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream", len(out))
 		}
@@ -52616,11 +54621,17 @@ func decodeSI6RestOctetsRandomBitStreamChoice(r *runtime.Reader) (SI6RestOctetsR
 		v, err := decodeSI6RestOctetsRandomBitStreamChoiceRandomBitStream(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI6RestOctetsRandomBitStreamChoiceAlternativeRandomBitStream
 			result.RandomBitStream = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -52629,11 +54640,17 @@ func decodeSI6RestOctetsRandomBitStreamChoice(r *runtime.Reader) (SI6RestOctetsR
 		v, err := decodeSI6RestOctetsRandomBitStreamChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI6RestOctetsRandomBitStreamChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -52888,12 +54905,15 @@ func decodePCHAndNCHInfoCallPrioritySelector(r *runtime.Reader) (*uint8, error) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePCHAndNCHInfoCallPriorityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -53043,11 +55063,17 @@ func decodePagingChannelRestructuringAlternatives(r *runtime.Reader) (PagingChan
 		v, err := decodePagingChannelRestructuringAlternativesAlt1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PagingChannelRestructuringAlternativesAlternativeAlt1
 			result.Alt1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53056,11 +55082,17 @@ func decodePagingChannelRestructuringAlternatives(r *runtime.Reader) (PagingChan
 		v, err := decodePagingChannelRestructuringAlternativesAlt0(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PagingChannelRestructuringAlternativesAlternativeAlt0
 			result.Alt0 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53224,11 +55256,17 @@ func decodeInbandNotificationsAlternatives(r *runtime.Reader) (InbandNotificatio
 		v, err := decodeInbandNotificationsAlternativesAlt0(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InbandNotificationsAlternativesAlternativeAlt0
 			result.Alt0 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53237,11 +55275,17 @@ func decodeInbandNotificationsAlternatives(r *runtime.Reader) (InbandNotificatio
 		v, err := decodeInbandNotificationsAlternativesAlt1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InbandNotificationsAlternativesAlternativeAlt1
 			result.Alt1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53345,11 +55389,17 @@ func decodeInbandPagingsAlternatives(r *runtime.Reader) (InbandPagingsAlternativ
 		v, err := decodeInbandPagingsAlternativesAlt0(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InbandPagingsAlternativesAlternativeAlt0
 			result.Alt0 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53358,11 +55408,17 @@ func decodeInbandPagingsAlternatives(r *runtime.Reader) (InbandPagingsAlternativ
 		v, err := decodeInbandPagingsAlternativesAlt1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = InbandPagingsAlternativesAlternativeAlt1
 			result.Alt1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53530,11 +55586,17 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoice(r *runtime.Reader) (Ban
 		v, err := decodeBandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BandIndicatorClause105235aBANDINDICATORChoiceAlternativeBANDINDICATOR
 			result.BANDINDICATOR = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53543,11 +55605,17 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoice(r *runtime.Reader) (Ban
 		v, err := decodeBandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = BandIndicatorClause105235aBANDINDICATORChoiceAlternativeAltUnlabeled
 			result.AltUnlabeled = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -53774,12 +55842,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSI13CHANGEMARKGroupSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSI13CHANGEMARKGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -53906,9 +55977,16 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoiceRACNETWORKCONTROLORDER(r *r
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule2)
 	}
 	r.Set("NETWORK_CONTROL_ORDER", v)
 	return uint8(v), nil
@@ -54166,7 +56244,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoiceRAC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupRACChoiceAlternativeRAC
 			result.RAC = &v
@@ -54174,6 +56257,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -54182,7 +56266,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoicePSI1REPEATPERIOD(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupRACChoiceAlternativePSI1REPEATPERIOD
 			result.PSI1REPEATPERIOD = &v
@@ -54190,6 +56279,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupRACChoice(r *runtime.Reader) (SI13Re
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -54408,12 +56498,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHLBMSTXPWRMAXCCHValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -54581,12 +56674,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupPEODSCGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -54717,12 +56813,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupC1DELTAMINGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -54774,12 +56873,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupMTABITMAPValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -54837,12 +56939,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCHSICHANGEALTGroupPEOIMMCellGroupDefinitionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -55083,7 +57188,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -55091,6 +57201,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -55100,7 +57211,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltL
 			result.AltL = &v
@@ -55108,6 +57224,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55116,7 +57233,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceLBMSTXPWRMAXCCH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeLBMSTXPWRMAXCCH
 			result.LBMSTXPWRMAXCCH = &v
@@ -55124,6 +57246,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55243,7 +57366,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -55251,6 +57379,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -55260,7 +57389,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltL
 			result.AltL = &v
@@ -55268,6 +57402,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55276,7 +57411,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSIND(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeSISTATUSIND
 			result.SISTATUSIND = &v
@@ -55284,6 +57424,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55403,7 +57544,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -55411,6 +57557,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -55420,7 +57567,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltL
 			result.AltL = &v
@@ -55428,6 +57580,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55436,7 +57589,12 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 		v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNR(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeSGSNR
 			result.SGSNR = &v
@@ -55444,6 +57602,7 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55586,12 +57745,15 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSelector(r *runtime.Reader) (*SI13Re
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI13RestOctetsBCCHCHANGEMARKGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -55942,11 +58104,17 @@ func decodePBCCHDescriptionStructARFCNChoice(r *runtime.Reader) (PBCCHDescriptio
 		v, err := decodePBCCHDescriptionStructARFCNChoiceAlt00(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PBCCHDescriptionStructARFCNChoiceAlternativeAlt00
 			result.Alt00 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55955,11 +58123,17 @@ func decodePBCCHDescriptionStructARFCNChoice(r *runtime.Reader) (PBCCHDescriptio
 		v, err := decodePBCCHDescriptionStructARFCNChoiceARFCN(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PBCCHDescriptionStructARFCNChoiceAlternativeARFCN
 			result.ARFCN = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -55968,11 +58142,17 @@ func decodePBCCHDescriptionStructARFCNChoice(r *runtime.Reader) (PBCCHDescriptio
 		v, err := decodePBCCHDescriptionStructARFCNChoiceMAIO(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = PBCCHDescriptionStructARFCNChoiceAlternativeMAIO
 			result.MAIO = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -56123,11 +58303,17 @@ func decodeSICHANGEALTAlternatives(r *runtime.Reader) (SICHANGEALTAlternatives, 
 		v, err := decodeSICHANGEALTAlternativesAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SICHANGEALTAlternativesAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -56136,11 +58322,17 @@ func decodeSICHANGEALTAlternatives(r *runtime.Reader) (SICHANGEALTAlternatives, 
 		v, err := decodeSICHANGEALTAlternativesAltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SICHANGEALTAlternativesAlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -56359,12 +58551,15 @@ func decodePEOIMMCellGroupDefinitionStructPEOIMMCellGroupSpecificParametersSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePEOIMMCellGroupDefinitionStructPEOIMMCellGroupSpecificParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -56565,12 +58760,15 @@ func decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntryCCCHCONFSPEC
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntryCCCHCONFSPECIFICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -56622,12 +58820,15 @@ func decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntryCELLBARACCES
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntryCELLBARACCESSSPECIFICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -56710,7 +58911,11 @@ func decodePEOIMMCellGroupSpecificParametersStructBSICGroupList(r *runtime.Reade
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("PEOIMMCellGroupSpecificParametersStructBSICGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation49.failure(err, "", r.Position(), 0), "PEOIMMCellGroupSpecificParametersStructBSICGroupList", i)
+		}
 		v, err := decodePEOIMMCellGroupSpecificParametersStructBSICGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation49.failure(err, "", r.Position(), 0), "PEOIMMCellGroupSpecificParametersStructBSICGroupList", i)
 		}
@@ -57177,7 +59382,11 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCY
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation50.failure(err, "", r.Position(), 0), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList", i)
+		}
 		v, err := decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation50.failure(err, "", r.Position(), 0), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList", i)
 		}
@@ -57309,7 +59518,11 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList(r *runtime.Re
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation51.failure(err, "", r.Position(), 0), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
+		}
 		v, err := decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation51.failure(err, "", r.Position(), 0), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
 		}
@@ -57548,11 +59761,17 @@ func decodeCOMPACTCellSelectionStructBCCChoice(r *runtime.Reader) (COMPACTCellSe
 		v, err := decodeCOMPACTCellSelectionStructBCCChoiceBCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = COMPACTCellSelectionStructBCCChoiceAlternativeBCC
 			result.BCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -57561,11 +59780,17 @@ func decodeCOMPACTCellSelectionStructBCCChoice(r *runtime.Reader) (COMPACTCellSe
 		v, err := decodeCOMPACTCellSelectionStructBCCChoiceBSIC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = COMPACTCellSelectionStructBCCChoiceAlternativeBSIC
 			result.BSIC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -57698,12 +59923,15 @@ func decodeCOMPACTCellSelectionStructMSTXPWRMAXCCHSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructMSTXPWRMAXCCHValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -57755,12 +59983,15 @@ func decodeCOMPACTCellSelectionStructRXLEVACCESSMINSelector(r *runtime.Reader) (
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructRXLEVACCESSMINValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -57812,12 +60043,15 @@ func decodeCOMPACTCellSelectionStructCELLRESELECTOFFSETSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructCELLRESELECTOFFSETValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -57948,12 +60182,15 @@ func decodeCOMPACTCellSelectionStructTEMPORARYOFFSETGroupSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructTEMPORARYOFFSETGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58005,12 +60242,15 @@ func decodeCOMPACTCellSelectionStructTIMEGROUPSelector(r *runtime.Reader) (*uint
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructTIMEGROUPValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58062,12 +60302,15 @@ func decodeCOMPACTCellSelectionStructGUARCONSTANTPWRBLKSSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeCOMPACTCellSelectionStructGUARCONSTANTPWRBLKSValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58278,12 +60521,15 @@ func decodeLADifferentStructCELLRESELECTHYSTERISISSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeLADifferentStructCELLRESELECTHYSTERISISValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58439,7 +60685,11 @@ func decodeSI18RestOctetsSpareBitList(r *runtime.Reader) ([]runtime.BitString, e
 	}
 	var out []runtime.BitString
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("SI18RestOctetsSpareBitList", i); err != nil {
+			return nil, locateIndex(operationLocation52.failure(err, "", r.Position(), 0), "SI18RestOctetsSpareBitList", i)
+		}
 		v, err := decodeSI18RestOctetsSpareBitListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation52.failure(err, "", r.Position(), 0), "SI18RestOctetsSpareBitList", i)
 		}
@@ -58469,7 +60719,11 @@ func decodeSI18RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 	var out []NonGSMMessageStruct
 	for r.Remaining() > 0 {
 		before := r.Position()
+		if err := r.EnterIndex("SI18RestOctetsNonGSMMessageList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation53.failure(err, "", r.Position(), 0), "SI18RestOctetsNonGSMMessageList", len(out))
+		}
 		v, err := decodeSI18RestOctetsNonGSMMessageListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation53.failure(err, "", r.Position(), 0), "SI18RestOctetsNonGSMMessageList", len(out))
 		}
@@ -58736,7 +60990,11 @@ func decodeNonGSMMessageStructCONTAINERList(r *runtime.Reader) ([]uint8, error) 
 		return nil, r.Error(runtime.InvalidValue, "reserved container length code")
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("NonGSMMessageStructCONTAINERList", i); err != nil {
+			return nil, locateIndex(operationLocation54.failure(err, "", r.Position(), 0), "NonGSMMessageStructCONTAINERList", i)
+		}
 		v, err := decodeNonGSMMessageStructCONTAINERListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation54.failure(err, "", r.Position(), 0), "NonGSMMessageStructCONTAINERList", i)
 		}
@@ -58844,12 +61102,15 @@ func decodeIPARestOctetsIPAUplinkAssignmentStructSelector(r *runtime.Reader) (*I
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsIPAUplinkAssignmentStructValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58876,12 +61137,15 @@ func decodeIPARestOctetsIPADownlinkAssignmentStructSelector(r *runtime.Reader) (
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsIPADownlinkAssignmentStructValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -58908,12 +61172,15 @@ func decodeIPARestOctetsIPASingleBlockUplinkAssignmentStructSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsIPASingleBlockUplinkAssignmentStructValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59039,11 +61306,17 @@ func decodeIPARestOctetsRCCChoice(r *runtime.Reader) (IPARestOctetsRCCChoice, er
 			v, err := decodeIPARestOctetsRCCChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IPARestOctetsRCCChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -59053,11 +61326,17 @@ func decodeIPARestOctetsRCCChoice(r *runtime.Reader) (IPARestOctetsRCCChoice, er
 		v, err := decodeIPARestOctetsRCCChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsRCCChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59066,11 +61345,17 @@ func decodeIPARestOctetsRCCChoice(r *runtime.Reader) (IPARestOctetsRCCChoice, er
 		v, err := decodeIPARestOctetsRCCChoiceRCC(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsRCCChoiceAlternativeRCC
 			result.RCC = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59155,12 +61440,15 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessReques
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessRequest1AcknowledgedAccessRequest1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59187,12 +61475,15 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessReques
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessRequest1AcknowledgedAccessRequest2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59219,12 +61510,15 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessReques
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessRequest1AcknowledgedAccessRequest3Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59251,12 +61545,15 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessReques
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessRequest1AcknowledgedAccessRequest4Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59367,7 +61664,12 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -59375,6 +61677,7 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -59384,7 +61687,12 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 		v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltL
 			result.AltL = &v
@@ -59392,6 +61700,7 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59400,7 +61709,12 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 		v, err := decodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAcknowledgedAccessRequest1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAcknowledgedAccessRequest1
 			result.AcknowledgedAccessRequest1 = &v
@@ -59408,6 +61722,7 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59495,12 +61810,15 @@ func decodeIPARestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMM
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPARestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -59571,11 +61889,17 @@ func decodeIPARestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (IPARest
 			v, err := decodeIPARestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = IPARestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -59585,11 +61909,17 @@ func decodeIPARestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (IPARest
 		v, err := decodeIPARestOctetsPEOIMMCellGroupDetailsChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -59598,11 +61928,17 @@ func decodeIPARestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (IPARest
 		v, err := decodeIPARestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetails(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = IPARestOctetsPEOIMMCellGroupDetailsChoiceAlternativePEOIMMCellGroupDetails
 			result.PEOIMMCellGroupDetails = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -60171,7 +62507,11 @@ func decodeIPAUplinkAssignmentStructRandomReferenceGroupList(r *runtime.Reader) 
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("IPAUplinkAssignmentStructRandomReferenceGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation55.failure(err, "", r.Position(), 0), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
+		}
 		v, err := decodeIPAUplinkAssignmentStructRandomReferenceGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation55.failure(err, "", r.Position(), 0), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
@@ -60236,12 +62576,15 @@ func decodeIPAUplinkAssignmentStructFrequencyParametersSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPAUplinkAssignmentStructFrequencyParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -60457,12 +62800,15 @@ func decodeIPADownlinkAssignmentStructTLLIGroupListEntryTIMINGADVANCEVALUESelect
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPADownlinkAssignmentStructTLLIGroupListEntryTIMINGADVANCEVALUEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -60573,7 +62919,11 @@ func decodeIPADownlinkAssignmentStructTLLIGroupList(r *runtime.Reader) ([]IPADow
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("IPADownlinkAssignmentStructTLLIGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation56.failure(err, "", r.Position(), 0), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
+		}
 		v, err := decodeIPADownlinkAssignmentStructTLLIGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation56.failure(err, "", r.Position(), 0), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
 		}
@@ -60632,12 +62982,15 @@ func decodeIPADownlinkAssignmentStructLINKQUALITYMEASUREMENTMODESelector(r *runt
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPADownlinkAssignmentStructLINKQUALITYMEASUREMENTMODEValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -60726,12 +63079,15 @@ func decodeIPADownlinkAssignmentStructFrequencyParametersSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPADownlinkAssignmentStructFrequencyParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -61107,7 +63463,11 @@ func decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupList(r *runti
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation57.failure(err, "", r.Position(), 0), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
+		}
 		v, err := decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation57.failure(err, "", r.Position(), 0), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
 		}
@@ -61172,12 +63532,15 @@ func decodeIPASingleBlockUplinkAssignmentStructFrequencyParametersSelector(r *ru
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeIPASingleBlockUplinkAssignmentStructFrequencyParametersValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -61533,7 +63896,12 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 		v, err := decodeAcknowledgedAccessRequestStructShortIDChoiceShortID(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeShortID
 			result.ShortID = &v
@@ -61541,6 +63909,7 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -61549,7 +63918,12 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 		v, err := decodeAcknowledgedAccessRequestStructShortIDChoiceRandomIDLow(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDLow
 			result.RandomIDLow = &v
@@ -61557,6 +63931,7 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -61565,7 +63940,12 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 		v, err := decodeAcknowledgedAccessRequestStructShortIDChoiceRandomIDHigh(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = AcknowledgedAccessRequestStructShortIDChoiceAlternativeRandomIDHigh
 			result.RandomIDHigh = &v
@@ -61573,6 +63953,7 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -61582,6 +63963,7 @@ func decodeAcknowledgedAccessRequestStructShortIDChoice(r *runtime.Reader) (Ackn
 		if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 			reservedErr = err
 		}
+		discardReader(candidate)
 		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	if matches == 0 && reservedErr != nil {
@@ -61881,7 +64263,11 @@ func decodeSI20RestOctetsSpareBitList(r *runtime.Reader) ([]runtime.BitString, e
 	}
 	var out []runtime.BitString
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("SI20RestOctetsSpareBitList", i); err != nil {
+			return nil, locateIndex(operationLocation58.failure(err, "", r.Position(), 0), "SI20RestOctetsSpareBitList", i)
+		}
 		v, err := decodeSI20RestOctetsSpareBitListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation58.failure(err, "", r.Position(), 0), "SI20RestOctetsSpareBitList", i)
 		}
@@ -61911,7 +64297,11 @@ func decodeSI20RestOctetsNonGSMMessageList(r *runtime.Reader) ([]NonGSMMessageSt
 	var out []NonGSMMessageStruct
 	for r.Remaining() > 0 {
 		before := r.Position()
+		if err := r.EnterIndex("SI20RestOctetsNonGSMMessageList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation59.failure(err, "", r.Position(), 0), "SI20RestOctetsNonGSMMessageList", len(out))
+		}
 		v, err := decodeSI20RestOctetsNonGSMMessageListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation59.failure(err, "", r.Position(), 0), "SI20RestOctetsNonGSMMessageList", len(out))
 		}
@@ -62109,12 +64499,15 @@ func decodeGroupCallInformationGroupChannelDescriptionSelector(r *runtime.Reader
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGroupCallInformationGroupChannelDescriptionValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -62271,11 +64664,17 @@ func decodeEmergencyIndEmergencyIndChoice(r *runtime.Reader) (EmergencyIndEmerge
 		v, err := decodeEmergencyIndEmergencyIndChoiceEmergencyInd(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EmergencyIndEmergencyIndChoiceAlternativeEmergencyInd
 			result.EmergencyInd = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -62284,11 +64683,17 @@ func decodeEmergencyIndEmergencyIndChoice(r *runtime.Reader) (EmergencyIndEmerge
 		v, err := decodeEmergencyIndEmergencyIndChoiceAltUnlabeled(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EmergencyIndEmergencyIndChoiceAlternativeAltUnlabeled
 			result.AltUnlabeled = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -62550,11 +64955,17 @@ func decodeGroupChannelDescriptionMobileAllocationChoiceValue(r *runtime.Reader)
 		v, err := decodeGroupChannelDescriptionMobileAllocationChoiceValueMobileAllocation(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = GroupChannelDescriptionMobileAllocationChoiceValueAlternativeMobileAllocation
 			result.MobileAllocation = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -62563,11 +64974,17 @@ func decodeGroupChannelDescriptionMobileAllocationChoiceValue(r *runtime.Reader)
 		v, err := decodeGroupChannelDescriptionMobileAllocationChoiceValueFrequencyShortList(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = GroupChannelDescriptionMobileAllocationChoiceValueAlternativeFrequencyShortList
 			result.FrequencyShortList = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -62612,12 +65029,15 @@ func decodeGroupChannelDescriptionMobileAllocationChoiceSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeGroupChannelDescriptionMobileAllocationChoiceValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -62832,12 +65252,15 @@ func decodeNTNRestOctetsNLNNCHSelector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsNLNNCHValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -62921,12 +65344,15 @@ func decodeNTNRestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63035,11 +65461,17 @@ func decodeNTNRestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (NTNRestOctetsC
 			v, err := decodeNTNRestOctetsCELLGLOBALCOUNTChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = NTNRestOctetsCELLGLOBALCOUNTChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -63049,11 +65481,17 @@ func decodeNTNRestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (NTNRestOctetsC
 		v, err := decodeNTNRestOctetsCELLGLOBALCOUNTChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = NTNRestOctetsCELLGLOBALCOUNTChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -63062,11 +65500,17 @@ func decodeNTNRestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (NTNRestOctetsC
 		v, err := decodeNTNRestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNT(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = NTNRestOctetsCELLGLOBALCOUNTChoiceAlternativeCELLGLOBALCOUNT
 			result.CELLGLOBALCOUNT = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -63182,12 +65626,15 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformati
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformationPriorityUplinkAccessValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63239,12 +65686,15 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformati
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformationFRAMRConfigGroupFRAMRConfigValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63296,12 +65746,15 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformati
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformationFRAMRConfigGroupHRAMRConfigValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63370,12 +65823,15 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformati
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformationFRAMRConfigGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63506,12 +65962,15 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformati
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformationSMSDataConfidentialityIndGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63621,11 +66080,17 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoice(r *runtime.Reader) (NTN
 			v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = NTNRestOctetsListOfEmergencyInformationChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -63635,11 +66100,17 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoice(r *runtime.Reader) (NTN
 		v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = NTNRestOctetsListOfEmergencyInformationChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -63648,11 +66119,17 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoice(r *runtime.Reader) (NTN
 		v, err := decodeNTNRestOctetsListOfEmergencyInformationChoiceListOfEmergencyInformation(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = NTNRestOctetsListOfEmergencyInformationChoiceAlternativeListOfEmergencyInformation
 			result.ListOfEmergencyInformation = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -63855,12 +66332,15 @@ func decodeListOfGroupCallNCHInformationGroupCallInformationGroupSelector(r *run
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeListOfGroupCallNCHInformationGroupCallInformationGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -63976,12 +66456,15 @@ func decodeListOfEmergencyInformationEmergencyIndGroupSelector(r *runtime.Reader
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeListOfEmergencyInformationEmergencyIndGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64109,12 +66592,15 @@ func decodeListOfVSTKRANDInformationSegmentIdGroupListEntryVSTKRANDSelector(r *r
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeListOfVSTKRANDInformationSegmentIdGroupListEntryVSTKRANDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64199,7 +66685,11 @@ func decodeListOfVSTKRANDInformationSegmentIdGroupList(r *runtime.Reader) ([]Lis
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("ListOfVSTKRANDInformationSegmentIdGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation60.failure(err, "", r.Position(), 0), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
+		}
 		v, err := decodeListOfVSTKRANDInformationSegmentIdGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation60.failure(err, "", r.Position(), 0), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
 		}
@@ -64354,7 +66844,11 @@ func decodeListOfReducedGCRReducedGCRList(r *runtime.Reader) ([]ListOfReducedGCR
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("ListOfReducedGCRReducedGCRList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation61.failure(err, "", r.Position(), 0), "ListOfReducedGCRReducedGCRList", len(out))
+		}
 		v, err := decodeListOfReducedGCRReducedGCRListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation61.failure(err, "", r.Position(), 0), "ListOfReducedGCRReducedGCRList", len(out))
 		}
@@ -64527,12 +67021,15 @@ func decodeP1RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P1RestOctetsNLNP
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsNLNPCHGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64559,12 +67056,15 @@ func decodeP1RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsPriority1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64591,12 +67091,15 @@ func decodeP1RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsPriority2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64623,12 +67126,15 @@ func decodeP1RestOctetsGroupCallInformationSelector(r *runtime.Reader) (*GroupCa
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsGroupCallInformationValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -64673,11 +67179,17 @@ func decodeP1RestOctetsPacketPageIndication1(r *runtime.Reader) (P1RestOctetsPac
 		v, err := decodeP1RestOctetsPacketPageIndication1AltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPacketPageIndication1AlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -64686,11 +67198,17 @@ func decodeP1RestOctetsPacketPageIndication1(r *runtime.Reader) (P1RestOctetsPac
 		v, err := decodeP1RestOctetsPacketPageIndication1AltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPacketPageIndication1AlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -64759,11 +67277,17 @@ func decodeP1RestOctetsPacketPageIndication2(r *runtime.Reader) (P1RestOctetsPac
 		v, err := decodeP1RestOctetsPacketPageIndication2AltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPacketPageIndication2AlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -64772,11 +67296,17 @@ func decodeP1RestOctetsPacketPageIndication2(r *runtime.Reader) (P1RestOctetsPac
 		v, err := decodeP1RestOctetsPacketPageIndication2AltH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPacketPageIndication2AlternativeAltH
 			result.AltH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65371,11 +67901,17 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoice
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueCELLGLOBALCOUNT(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueAlternativeCELLGLOBALCOUNT
 			result.CELLGLOBALCOUNT = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65384,11 +67920,17 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoice
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueVSTKRAND(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueAlternativeVSTKRAND
 			result.VSTKRAND = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65397,11 +67939,17 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoice
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueReducedGCR(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueAlternativeReducedGCR
 			result.ReducedGCR = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65410,11 +67958,17 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoice
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueAlt11(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValueAlternativeAlt11
 			result.Alt11 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65475,12 +68029,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoice
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTChoiceValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65507,12 +68064,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1GroupMBMSNotification1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65539,12 +68099,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1GroupMBMSNotification2ValueValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65565,12 +68128,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1GroupMBMSNotification2ValueSelector(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65597,12 +68163,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1GroupMBMSInformationClause105223Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65684,12 +68253,15 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Grou
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTMBMSNotification1Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -65774,7 +68346,12 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -65782,6 +68359,7 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -65791,7 +68369,12 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltL
 			result.AltL = &v
@@ -65799,6 +68382,7 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65807,7 +68391,12 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 		v, err := decodeP1RestOctetsCELLGLOBALCOUNTChoiceCELLGLOBALCOUNT(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeCELLGLOBALCOUNT
 			result.CELLGLOBALCOUNT = &v
@@ -65815,6 +68404,7 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -65925,12 +68515,15 @@ func decodeP1RestOctetsAMRConfigChoiceAMRConfigAMRConfigSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsAMRConfigChoiceAMRConfigAMRConfigValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -66001,11 +68594,17 @@ func decodeP1RestOctetsAMRConfigChoice(r *runtime.Reader) (P1RestOctetsAMRConfig
 			v, err := decodeP1RestOctetsAMRConfigChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsAMRConfigChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -66015,11 +68614,17 @@ func decodeP1RestOctetsAMRConfigChoice(r *runtime.Reader) (P1RestOctetsAMRConfig
 		v, err := decodeP1RestOctetsAMRConfigChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsAMRConfigChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66028,11 +68633,17 @@ func decodeP1RestOctetsAMRConfigChoice(r *runtime.Reader) (P1RestOctetsAMRConfig
 		v, err := decodeP1RestOctetsAMRConfigChoiceAMRConfig(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsAMRConfigChoiceAlternativeAMRConfig
 			result.AMRConfig = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66148,12 +68759,15 @@ func decodeP1RestOctetsPriorityUplinkAccessChoicePriorityUplinkAccessETWSPrimary
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsPriorityUplinkAccessChoicePriorityUplinkAccessETWSPrimaryNotificationValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -66238,7 +68852,12 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			v, err := decodeP1RestOctetsPriorityUplinkAccessChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
@@ -66246,6 +68865,7 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 				if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 					reservedErr = err
 				}
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -66255,7 +68875,12 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 		v, err := decodeP1RestOctetsPriorityUplinkAccessChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltL
 			result.AltL = &v
@@ -66263,6 +68888,7 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66271,7 +68897,12 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 		v, err := decodeP1RestOctetsPriorityUplinkAccessChoicePriorityUplinkAccess(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPriorityUplinkAccessChoiceAlternativePriorityUplinkAccess
 			result.PriorityUplinkAccess = &v
@@ -66279,6 +68910,7 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66485,11 +69117,17 @@ func decodeP1RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P1RestOctetsIm
 			v, err := decodeP1RestOctetsImplicitRejectCSChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -66499,11 +69137,17 @@ func decodeP1RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P1RestOctetsIm
 		v, err := decodeP1RestOctetsImplicitRejectCSChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsImplicitRejectCSChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66512,11 +69156,17 @@ func decodeP1RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P1RestOctetsIm
 		v, err := decodeP1RestOctetsImplicitRejectCSChoiceImplicitRejectCS(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsImplicitRejectCSChoiceAlternativeImplicitRejectCS
 			result.ImplicitRejectCS = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66674,11 +69324,17 @@ func decodeP1RestOctetsIPASupportChoice(r *runtime.Reader) (P1RestOctetsIPASuppo
 			v, err := decodeP1RestOctetsIPASupportChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsIPASupportChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -66688,11 +69344,17 @@ func decodeP1RestOctetsIPASupportChoice(r *runtime.Reader) (P1RestOctetsIPASuppo
 		v, err := decodeP1RestOctetsIPASupportChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsIPASupportChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66701,11 +69363,17 @@ func decodeP1RestOctetsIPASupportChoice(r *runtime.Reader) (P1RestOctetsIPASuppo
 		v, err := decodeP1RestOctetsIPASupportChoiceIPASupport(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsIPASupportChoiceAlternativeIPASupport
 			result.IPASupport = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66909,11 +69577,17 @@ func decodeP1RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P1RestOctetsP
 			v, err := decodeP1RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -66923,11 +69597,17 @@ func decodeP1RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P1RestOctetsP
 		v, err := decodeP1RestOctetsPEOBCCHCHANGEMARKChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -66936,11 +69616,17 @@ func decodeP1RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P1RestOctetsP
 		v, err := decodeP1RestOctetsPEOBCCHCHANGEMARKChoicePEOBCCHCHANGEMARK(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPEOBCCHCHANGEMARKChoiceAlternativePEOBCCHCHANGEMARK
 			result.PEOBCCHCHANGEMARK = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67144,11 +69830,17 @@ func decodeP1RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			v, err := decodeP1RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -67158,11 +69850,17 @@ func decodeP1RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP1RestOctetsPositioningEventPendingIndicatorChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67171,11 +69869,17 @@ func decodeP1RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 		v, err := decodeP1RestOctetsPositioningEventPendingIndicatorChoicePositioningEventPendingIndicator(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPositioningEventPendingIndicatorChoiceAlternativePositioningEventPendingIndicator
 			result.PositioningEventPendingIndicator = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67260,12 +69964,15 @@ func decodeP1RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMC
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeP1RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetailsPEOIMMCellGroupDetailsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -67336,11 +70043,17 @@ func decodeP1RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P1RestOc
 			v, err := decodeP1RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = P1RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -67350,11 +70063,17 @@ func decodeP1RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P1RestOc
 		v, err := decodeP1RestOctetsPEOIMMCellGroupDetailsChoiceAltL(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL
 			result.AltL = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67363,11 +70082,17 @@ func decodeP1RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P1RestOc
 		v, err := decodeP1RestOctetsPEOIMMCellGroupDetailsChoicePEOIMMCellGroupDetails(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = P1RestOctetsPEOIMMCellGroupDetailsChoiceAlternativePEOIMMCellGroupDetails
 			result.PEOIMMCellGroupDetails = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67840,11 +70565,17 @@ func decodeMBMSInformationClause105223AlternativesGroupAlternatives(r *runtime.R
 		v, err := decodeMBMSInformationClause105223AlternativesGroupAlternativesAlt0(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MBMSInformationClause105223AlternativesGroupAlternativesAlternativeAlt0
 			result.Alt0 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67853,11 +70584,17 @@ func decodeMBMSInformationClause105223AlternativesGroupAlternatives(r *runtime.R
 		v, err := decodeMBMSInformationClause105223AlternativesGroupAlternativesAlt1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MBMSInformationClause105223AlternativesGroupAlternativesAlternativeAlt1
 			result.Alt1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -67956,12 +70693,15 @@ func decodeMBMSInformationClause105223AlternativesGroupSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMBMSInformationClause105223AlternativesGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -68068,7 +70808,11 @@ func decodeMBMSInformationClause105223MBMSChannelParametersGroupList(r *runtime.
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("MBMSInformationClause105223MBMSChannelParametersGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation62.failure(err, "", r.Position(), 0), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
+		}
 		v, err := decodeMBMSInformationClause105223MBMSChannelParametersGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation62.failure(err, "", r.Position(), 0), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
 		}
@@ -68352,7 +71096,12 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 		v, err := decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceTotalNoOfSegmentsForETWSPrimaryNotification(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceAlternativeTotalNoOfSegmentsForETWSPrimaryNotification
 			result.TotalNoOfSegmentsForETWSPrimaryNotification = &v
@@ -68360,6 +71109,7 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -68368,7 +71118,12 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 		v, err := decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceSegmentNumber(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = ETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificationChoiceAlternativeSegmentNumber
 			result.SegmentNumber = &v
@@ -68376,6 +71131,7 @@ func decodeETWSPrimaryNotificationStructTotalNoOfSegmentsForETWSPrimaryNotificat
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -68801,12 +71557,15 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupListEntryBCCHARFCNSelector(r *
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisRestOctetsPositionInSI5ListGroupListEntryBCCHARFCNValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -68858,12 +71617,15 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupListEntryBSICSelector(r *runti
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisRestOctetsPositionInSI5ListGroupListEntryBSICValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -68980,7 +71742,11 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupList(r *runtime.Reader) ([]SI1
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("SI10bisRestOctetsPositionInSI5ListGroupList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation63.failure(err, "", r.Position(), 0), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
+		}
 		v, err := decodeSI10bisRestOctetsPositionInSI5ListGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation63.failure(err, "", r.Position(), 0), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
 		}
@@ -69229,11 +71995,17 @@ func decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceValue(r *runtime.Read
 		v, err := decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceValueFrequencyShortList(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10bisNeighbourCellInfoFrequencyShortListChoiceValueAlternativeFrequencyShortList
 			result.FrequencyShortList = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -69242,11 +72014,17 @@ func decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceValue(r *runtime.Read
 		v, err := decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceValueFrequencyList(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SI10bisNeighbourCellInfoFrequencyShortListChoiceValueAlternativeFrequencyList
 			result.FrequencyList = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -69291,12 +72069,15 @@ func decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceSelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoFrequencyShortListChoiceValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69410,12 +72191,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupPriorityUplinkAccess
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupPriorityUplinkAccessValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69467,12 +72251,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroupFRAM
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroupFRAMRConfigValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69524,12 +72311,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroupHRAM
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroupHRAMRConfigValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69598,12 +72388,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroupSele
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupFRAMRConfigGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69734,12 +72527,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupSMSDataConfidentiali
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupSMSDataConfidentialityIndGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69870,12 +72666,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupMaxRetransGroupSelec
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupMaxRetransGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -69970,12 +72769,15 @@ func decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroupSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeSI10bisNeighbourCellInfoPriorityUplinkAccessGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -70078,6 +72880,18 @@ func encodeSI10bisNeighbourCellInfo(w *runtime.Writer, v SI10bisNeighbourCellInf
 	return nil
 }
 
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
+}
+
 // DecodeIARestOctets decodes TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>.
 func DecodeIARestOctetsFrom(r *runtime.Reader) (IARestOctets, error) {
 	if err := r.Check(); err != nil {
@@ -70097,7 +72911,7 @@ func EncodeIARestOctetsTo(w *runtime.Writer, v IARestOctets) error {
 	}
 	return operationLocation65.failure(w.WithWireValue(v.Wire, func() error { return encodeIARestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeIARestOctetsBytes(data []byte) (runtime.Decoded[IARestOctets], error) {
+func decodeIARestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IARestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IARestOctets]{}, err
 	}
@@ -70108,7 +72922,7 @@ func decodeIARestOctetsBytes(data []byte) (runtime.Decoded[IARestOctets], error)
 	if len(data) > 11 {
 		return runtime.Decoded[IARestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 88, Detail: "IARestOctets exceeds 88 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIARestOctets(r)
 	if err != nil {
@@ -70148,7 +72962,7 @@ func encodeIARestOctetsBytes(v IARestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeIARestOctetsCanonical(v IARestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 11, false, encodeIARestOctetsBytes, decodeIARestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 11, false, encodeIARestOctetsBytes, DecodeIARestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation66.failure(operationErr, "", -1, 0)
 		}
@@ -70169,7 +72983,7 @@ func EncodeIARestOctetsCanonical(v IARestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeIARestOctetsCanonicalAtLength(v IARestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 11, encodeIARestOctetsBytes, decodeIARestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 11, encodeIARestOctetsBytes, DecodeIARestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation66.failure(operationErr, "", -1, 0)
 		}
@@ -70196,12 +73010,12 @@ func EncodeEGPRSPacketUplinkAssignmentTo(w *runtime.Writer, v EGPRSPacketUplinkA
 	}
 	return operationLocation68.failure(w.WithWireValue(v.Wire, func() error { return encodeEGPRSPacketUplinkAssignment(w, v) }), "", w.Position(), 0)
 }
-func decodeEGPRSPacketUplinkAssignmentBytes(data []byte) (runtime.Decoded[EGPRSPacketUplinkAssignment], error) {
+func decodeEGPRSPacketUplinkAssignmentBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EGPRSPacketUplinkAssignment], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EGPRSPacketUplinkAssignment]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEGPRSPacketUplinkAssignment(r)
 	if err != nil {
@@ -70232,7 +73046,7 @@ func encodeEGPRSPacketUplinkAssignmentBytes(v EGPRSPacketUplinkAssignment) ([]by
 // supply the length through EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength.
 func EncodeEGPRSPacketUplinkAssignmentCanonical(v EGPRSPacketUplinkAssignment) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEGPRSPacketUplinkAssignmentBytes, decodeEGPRSPacketUplinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEGPRSPacketUplinkAssignmentBytes, DecodeEGPRSPacketUplinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation69.failure(operationErr, "", -1, 0)
 		}
@@ -70252,7 +73066,7 @@ func EncodeEGPRSPacketUplinkAssignmentCanonical(v EGPRSPacketUplinkAssignment) (
 // that decode to a different typed value.
 func EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength(v EGPRSPacketUplinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEGPRSPacketUplinkAssignmentBytes, decodeEGPRSPacketUplinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEGPRSPacketUplinkAssignmentBytes, DecodeEGPRSPacketUplinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation69.failure(operationErr, "", -1, 0)
 		}
@@ -70362,12 +73176,12 @@ func EncodePacketUplinkAssignmentTo(w *runtime.Writer, v PacketUplinkAssignment)
 	}
 	return operationLocation73.failure(w.WithWireValue(v.Wire, func() error { return encodePacketUplinkAssignment(w, v) }), "", w.Position(), 0)
 }
-func decodePacketUplinkAssignmentBytes(data []byte) (runtime.Decoded[PacketUplinkAssignment], error) {
+func decodePacketUplinkAssignmentBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[PacketUplinkAssignment], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PacketUplinkAssignment]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodePacketUplinkAssignment(r)
 	if err != nil {
@@ -70400,7 +73214,7 @@ func encodePacketUplinkAssignmentBytes(v PacketUplinkAssignment) ([]byte, error)
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 9, false, encodePacketUplinkAssignmentBytes, decodePacketUplinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 9, false, encodePacketUplinkAssignmentBytes, DecodePacketUplinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation74.failure(operationErr, "", -1, 0)
 		}
@@ -70420,7 +73234,7 @@ func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, er
 // that decode to a different typed value.
 func EncodePacketUplinkAssignmentCanonicalAtLength(v PacketUplinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 9, encodePacketUplinkAssignmentBytes, decodePacketUplinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 9, encodePacketUplinkAssignmentBytes, DecodePacketUplinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation74.failure(operationErr, "", -1, 0)
 		}
@@ -70447,12 +73261,12 @@ func EncodePacketDownlinkAssignmentTo(w *runtime.Writer, v PacketDownlinkAssignm
 	}
 	return operationLocation76.failure(w.WithWireValue(v.Wire, func() error { return encodePacketDownlinkAssignment(w, v) }), "", w.Position(), 0)
 }
-func decodePacketDownlinkAssignmentBytes(data []byte) (runtime.Decoded[PacketDownlinkAssignment], error) {
+func decodePacketDownlinkAssignmentBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[PacketDownlinkAssignment], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PacketDownlinkAssignment]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodePacketDownlinkAssignment(r)
 	if err != nil {
@@ -70483,7 +73297,7 @@ func encodePacketDownlinkAssignmentBytes(v PacketDownlinkAssignment) ([]byte, er
 // supply the length through EncodePacketDownlinkAssignmentCanonicalAtLength.
 func EncodePacketDownlinkAssignmentCanonical(v PacketDownlinkAssignment) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePacketDownlinkAssignmentBytes, decodePacketDownlinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePacketDownlinkAssignmentBytes, DecodePacketDownlinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation77.failure(operationErr, "", -1, 0)
 		}
@@ -70503,7 +73317,7 @@ func EncodePacketDownlinkAssignmentCanonical(v PacketDownlinkAssignment) ([]byte
 // that decode to a different typed value.
 func EncodePacketDownlinkAssignmentCanonicalAtLength(v PacketDownlinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePacketDownlinkAssignmentBytes, decodePacketDownlinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePacketDownlinkAssignmentBytes, DecodePacketDownlinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation77.failure(operationErr, "", -1, 0)
 		}
@@ -70695,12 +73509,12 @@ func EncodeMultipleBlocksPacketDownlinkAssignmentTo(w *runtime.Writer, v Multipl
 	}
 	return operationLocation85.failure(w.WithWireValue(v.Wire, func() error { return encodeMultipleBlocksPacketDownlinkAssignment(w, v) }), "", w.Position(), 0)
 }
-func decodeMultipleBlocksPacketDownlinkAssignmentBytes(data []byte) (runtime.Decoded[MultipleBlocksPacketDownlinkAssignment], error) {
+func decodeMultipleBlocksPacketDownlinkAssignmentBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MultipleBlocksPacketDownlinkAssignment], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MultipleBlocksPacketDownlinkAssignment]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMultipleBlocksPacketDownlinkAssignment(r)
 	if err != nil {
@@ -70731,7 +73545,7 @@ func encodeMultipleBlocksPacketDownlinkAssignmentBytes(v MultipleBlocksPacketDow
 // supply the length through EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength.
 func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacketDownlinkAssignment) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMultipleBlocksPacketDownlinkAssignmentBytes, decodeMultipleBlocksPacketDownlinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMultipleBlocksPacketDownlinkAssignmentBytes, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation86.failure(operationErr, "", -1, 0)
 		}
@@ -70751,7 +73565,7 @@ func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacke
 // that decode to a different typed value.
 func EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength(v MultipleBlocksPacketDownlinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMultipleBlocksPacketDownlinkAssignmentBytes, decodeMultipleBlocksPacketDownlinkAssignmentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMultipleBlocksPacketDownlinkAssignmentBytes, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation86.failure(operationErr, "", -1, 0)
 		}
@@ -74014,7 +76828,7 @@ func EncodeSI23RestOctetsTo(w *runtime.Writer, v SI23RestOctets) error {
 	}
 	return operationLocation195.failure(w.WithWireValue(v.Wire, func() error { return encodeSI23RestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeSI23RestOctetsBytes(data []byte) (runtime.Decoded[SI23RestOctets], error) {
+func decodeSI23RestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[SI23RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SI23RestOctets]{}, err
 	}
@@ -74028,7 +76842,7 @@ func decodeSI23RestOctetsBytes(data []byte) (runtime.Decoded[SI23RestOctets], er
 	if len(data) > 20 {
 		return runtime.Decoded[SI23RestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 160, Detail: "SI23RestOctets exceeds 160 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeSI23RestOctets(r)
 	if err != nil {
@@ -74072,7 +76886,7 @@ func encodeSI23RestOctetsBytes(v SI23RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI23RestOctetsCanonical(v SI23RestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI23RestOctetsBytes, decodeSI23RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI23RestOctetsBytes, DecodeSI23RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation196.failure(operationErr, "", -1, 0)
 		}
@@ -74091,7 +76905,7 @@ func EncodeSI23RestOctetsCanonical(v SI23RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI23RestOctetsCanonicalAtLength(v SI23RestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI23RestOctetsBytes, decodeSI23RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI23RestOctetsBytes, DecodeSI23RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation196.failure(operationErr, "", -1, 0)
 		}
@@ -74118,12 +76932,12 @@ func EncodeIRATCellReselectionInformationStructTo(w *runtime.Writer, v IRATCellR
 	}
 	return operationLocation198.failure(w.WithWireValue(v.Wire, func() error { return encodeIRATCellReselectionInformationStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeIRATCellReselectionInformationStructBytes(data []byte) (runtime.Decoded[IRATCellReselectionInformationStruct], error) {
+func decodeIRATCellReselectionInformationStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IRATCellReselectionInformationStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IRATCellReselectionInformationStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIRATCellReselectionInformationStruct(r)
 	if err != nil {
@@ -74154,7 +76968,7 @@ func encodeIRATCellReselectionInformationStructBytes(v IRATCellReselectionInform
 // supply the length through EncodeIRATCellReselectionInformationStructCanonicalAtLength.
 func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionInformationStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIRATCellReselectionInformationStructBytes, decodeIRATCellReselectionInformationStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIRATCellReselectionInformationStructBytes, DecodeIRATCellReselectionInformationStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation199.failure(operationErr, "", -1, 0)
 		}
@@ -74174,7 +76988,7 @@ func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionIn
 // that decode to a different typed value.
 func EncodeIRATCellReselectionInformationStructCanonicalAtLength(v IRATCellReselectionInformationStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIRATCellReselectionInformationStructBytes, decodeIRATCellReselectionInformationStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIRATCellReselectionInformationStructBytes, DecodeIRATCellReselectionInformationStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation199.failure(operationErr, "", -1, 0)
 		}
@@ -74450,12 +77264,12 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oTo(w *runtim
 	}
 	return operationLocation210.failure(w.WithWireValue(v.Wire, func() error { return encodePriorityAndEUTRANParametersDescriptionStructClause105237o(w, v) }), "", w.Position(), 0)
 }
-func decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(data []byte) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105237o], error) {
+func decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105237o], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105237o]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237o(r)
 	if err != nil {
@@ -74486,7 +77300,7 @@ func encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(v Prio
 // supply the length through EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105237o) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation211.failure(operationErr, "", -1, 0)
 		}
@@ -74506,7 +77320,7 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v 
 // that decode to a different typed value.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105237o, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation211.failure(operationErr, "", -1, 0)
 		}
@@ -74533,12 +77347,12 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructTo(w *runtime.Writer
 	}
 	return operationLocation213.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(data []byte) (runtime.Decoded[RepeatedEUTRANNeighbourFrequencyAndPriorityStruct], error) {
+func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[RepeatedEUTRANNeighbourFrequencyAndPriorityStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RepeatedEUTRANNeighbourFrequencyAndPriorityStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(r)
 	if err != nil {
@@ -74569,7 +77383,7 @@ func encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(v RepeatedEUTR
 // supply the length through EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength.
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation214.failure(operationErr, "", -1, 0)
 		}
@@ -74589,7 +77403,7 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v Repeated
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation214.failure(operationErr, "", -1, 0)
 		}
@@ -76984,25 +79798,34 @@ func EncodeSI7RestOctetsCanonical(v SI7RestOctets) ([]byte, error) {
 
 // DecodeSI7RestOctetsWithContext selects the TS 44.018 V19.0.0 §10.5.2.35 layout using the containing SI4 ACS bit.
 func DecodeSI7RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Decoded[SI7RestOctets], error) {
+	{
+		operationValue, operationErr := collectSI7RestOctetsWithContext(data, nil, c)
+		if operationErr != nil {
+			return operationValue, operationLocation295.failure(operationErr, "", -1, 0)
+		}
+		return operationValue, nil
+	}
+}
+func collectSI7RestOctetsWithContext(data []byte, collector *runtime.Collector, c runtime.SI4ACS) (runtime.Decoded[SI7RestOctets], error) {
 	if !c.Valid() {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(fmt.Errorf("invalid SI4 ACS %d", c), "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("invalid SI4 ACS %d", c)
 	}
 	if err := runtime.CheckInput(data); err != nil {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(err, "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, err
 	}
 	if len(data) == 0 {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.36", runtime.ErrEmptyValue), "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.36", runtime.ErrEmptyValue)
 	}
 	if len(data) < 20 {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(fmt.Errorf("SI7RestOctets requires at least 160 bits"), "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("SI7RestOctets requires at least 160 bits")
 	}
 	if len(data) > 20 {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(fmt.Errorf("SI7RestOctets exceeds 160 bits"), "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, fmt.Errorf("SI7RestOctets exceeds 160 bits")
 	}
-	r := runtime.NewReader(data)
+	r := runtime.NewReaderWithCollector(data, collector)
 	v, err := DecodeSI7RestOctetsFromWithContext(r, c)
 	if err != nil {
-		return runtime.Decoded[SI7RestOctets]{}, operationLocation295.failure(err, "", -1, 0)
+		return runtime.Decoded[SI7RestOctets]{}, err
 	}
 	tail := r.Tail()
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
@@ -77146,25 +79969,34 @@ func EncodeSI8RestOctetsCanonical(v SI8RestOctets) ([]byte, error) {
 
 // DecodeSI8RestOctetsWithContext selects the TS 44.018 V19.0.0 §10.5.2.35 layout using the containing SI4 ACS bit.
 func DecodeSI8RestOctetsWithContext(data []byte, c runtime.SI4ACS) (runtime.Decoded[SI8RestOctets], error) {
+	{
+		operationValue, operationErr := collectSI8RestOctetsWithContext(data, nil, c)
+		if operationErr != nil {
+			return operationValue, operationLocation298.failure(operationErr, "", -1, 0)
+		}
+		return operationValue, nil
+	}
+}
+func collectSI8RestOctetsWithContext(data []byte, collector *runtime.Collector, c runtime.SI4ACS) (runtime.Decoded[SI8RestOctets], error) {
 	if !c.Valid() {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(fmt.Errorf("invalid SI4 ACS %d", c), "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("invalid SI4 ACS %d", c)
 	}
 	if err := runtime.CheckInput(data); err != nil {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(err, "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, err
 	}
 	if len(data) == 0 {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37", runtime.ErrEmptyValue), "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("%w: TS 44.018 V19.0.0 §10.5.2.37", runtime.ErrEmptyValue)
 	}
 	if len(data) < 20 {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(fmt.Errorf("SI8RestOctets requires at least 160 bits"), "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("SI8RestOctets requires at least 160 bits")
 	}
 	if len(data) > 20 {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(fmt.Errorf("SI8RestOctets exceeds 160 bits"), "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, fmt.Errorf("SI8RestOctets exceeds 160 bits")
 	}
-	r := runtime.NewReader(data)
+	r := runtime.NewReaderWithCollector(data, collector)
 	v, err := DecodeSI8RestOctetsFromWithContext(r, c)
 	if err != nil {
-		return runtime.Decoded[SI8RestOctets]{}, operationLocation298.failure(err, "", -1, 0)
+		return runtime.Decoded[SI8RestOctets]{}, err
 	}
 	tail := r.Tail()
 	v.Wire = runtime.Seal(v, data, r.Position(), tail, r.Wire())
@@ -77876,7 +80708,7 @@ func EncodeSI13altRestOctetsTo(w *runtime.Writer, v SI13altRestOctets) error {
 	}
 	return operationLocation322.failure(w.WithWireValue(v.Wire, func() error { return encodeSI13altRestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeSI13altRestOctetsBytes(data []byte) (runtime.Decoded[SI13altRestOctets], error) {
+func decodeSI13altRestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[SI13altRestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SI13altRestOctets]{}, err
 	}
@@ -77890,7 +80722,7 @@ func decodeSI13altRestOctetsBytes(data []byte) (runtime.Decoded[SI13altRestOctet
 	if len(data) > 20 {
 		return runtime.Decoded[SI13altRestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 160, Detail: "SI13altRestOctets exceeds 160 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeSI13altRestOctets(r)
 	if err != nil {
@@ -77934,7 +80766,7 @@ func encodeSI13altRestOctetsBytes(v SI13altRestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI13altRestOctetsCanonical(v SI13altRestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI13altRestOctetsBytes, decodeSI13altRestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI13altRestOctetsBytes, DecodeSI13altRestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation323.failure(operationErr, "", -1, 0)
 		}
@@ -77953,7 +80785,7 @@ func EncodeSI13altRestOctetsCanonical(v SI13altRestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI13altRestOctetsCanonicalAtLength(v SI13altRestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI13altRestOctetsBytes, decodeSI13altRestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI13altRestOctetsBytes, DecodeSI13altRestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation323.failure(operationErr, "", -1, 0)
 		}
@@ -77980,12 +80812,12 @@ func EncodePBCCHDescription2StructTo(w *runtime.Writer, v PBCCHDescription2Struc
 	}
 	return operationLocation325.failure(w.WithWireValue(v.Wire, func() error { return encodePBCCHDescription2Struct(w, v) }), "", w.Position(), 0)
 }
-func decodePBCCHDescription2StructBytes(data []byte) (runtime.Decoded[PBCCHDescription2Struct], error) {
+func decodePBCCHDescription2StructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[PBCCHDescription2Struct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PBCCHDescription2Struct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodePBCCHDescription2Struct(r)
 	if err != nil {
@@ -78016,7 +80848,7 @@ func encodePBCCHDescription2StructBytes(v PBCCHDescription2Struct) ([]byte, erro
 // supply the length through EncodePBCCHDescription2StructCanonicalAtLength.
 func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePBCCHDescription2StructBytes, decodePBCCHDescription2StructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePBCCHDescription2StructBytes, DecodePBCCHDescription2Struct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation326.failure(operationErr, "", -1, 0)
 		}
@@ -78036,7 +80868,7 @@ func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, 
 // that decode to a different typed value.
 func EncodePBCCHDescription2StructCanonicalAtLength(v PBCCHDescription2Struct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePBCCHDescription2StructBytes, decodePBCCHDescription2StructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePBCCHDescription2StructBytes, DecodePBCCHDescription2Struct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation326.failure(operationErr, "", -1, 0)
 		}
@@ -78063,7 +80895,7 @@ func EncodeP2RestOctetsTo(w *runtime.Writer, v P2RestOctets) error {
 	}
 	return operationLocation328.failure(w.WithWireValue(v.Wire, func() error { return encodeP2RestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeP2RestOctetsBytes(data []byte) (runtime.Decoded[P2RestOctets], error) {
+func decodeP2RestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[P2RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[P2RestOctets]{}, err
 	}
@@ -78077,7 +80909,7 @@ func decodeP2RestOctetsBytes(data []byte) (runtime.Decoded[P2RestOctets], error)
 	if len(data) > 11 {
 		return runtime.Decoded[P2RestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 88, Detail: "P2RestOctets exceeds 88 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeP2RestOctets(r)
 	if err != nil {
@@ -78121,7 +80953,7 @@ func encodeP2RestOctetsBytes(v P2RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeP2RestOctetsCanonical(v P2RestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 11, true, encodeP2RestOctetsBytes, decodeP2RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 11, true, encodeP2RestOctetsBytes, DecodeP2RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation329.failure(operationErr, "", -1, 0)
 		}
@@ -78141,7 +80973,7 @@ func EncodeP2RestOctetsCanonical(v P2RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeP2RestOctetsCanonicalAtLength(v P2RestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 11, encodeP2RestOctetsBytes, decodeP2RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 11, encodeP2RestOctetsBytes, DecodeP2RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation329.failure(operationErr, "", -1, 0)
 		}
@@ -78252,12 +81084,12 @@ func EncodeMBMSInformationClause105224To(w *runtime.Writer, v MBMSInformationCla
 	}
 	return operationLocation334.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSInformationClause105224(w, v) }), "", w.Position(), 0)
 }
-func decodeMBMSInformationClause105224Bytes(data []byte) (runtime.Decoded[MBMSInformationClause105224], error) {
+func decodeMBMSInformationClause105224Bytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MBMSInformationClause105224], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSInformationClause105224]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSInformationClause105224(r)
 	if err != nil {
@@ -78288,7 +81120,7 @@ func encodeMBMSInformationClause105224Bytes(v MBMSInformationClause105224) ([]by
 // supply the length through EncodeMBMSInformationClause105224CanonicalAtLength.
 func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSInformationClause105224Bytes, decodeMBMSInformationClause105224Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSInformationClause105224Bytes, DecodeMBMSInformationClause105224, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation335.failure(operationErr, "", -1, 0)
 		}
@@ -78308,7 +81140,7 @@ func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) (
 // that decode to a different typed value.
 func EncodeMBMSInformationClause105224CanonicalAtLength(v MBMSInformationClause105224, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105224Bytes, decodeMBMSInformationClause105224Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105224Bytes, DecodeMBMSInformationClause105224, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation335.failure(operationErr, "", -1, 0)
 		}
@@ -78691,7 +81523,7 @@ func EncodeSI2quaterRestOctetsTo(w *runtime.Writer, v SI2quaterRestOctets) error
 	}
 	return operationLocation349.failure(w.WithWireValue(v.Wire, func() error { return encodeSI2quaterRestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeSI2quaterRestOctetsBytes(data []byte) (runtime.Decoded[SI2quaterRestOctets], error) {
+func decodeSI2quaterRestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[SI2quaterRestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SI2quaterRestOctets]{}, err
 	}
@@ -78705,7 +81537,7 @@ func decodeSI2quaterRestOctetsBytes(data []byte) (runtime.Decoded[SI2quaterRestO
 	if len(data) > 20 {
 		return runtime.Decoded[SI2quaterRestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 160, Detail: "SI2quaterRestOctets exceeds 160 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeSI2quaterRestOctets(r)
 	if err != nil {
@@ -78753,7 +81585,7 @@ func encodeSI2quaterRestOctetsBytes(v SI2quaterRestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI2quaterRestOctetsBytes, decodeSI2quaterRestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI2quaterRestOctetsBytes, DecodeSI2quaterRestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation350.failure(operationErr, "", -1, 0)
 		}
@@ -78776,7 +81608,7 @@ func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI2quaterRestOctetsCanonicalAtLength(v SI2quaterRestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI2quaterRestOctetsBytes, decodeSI2quaterRestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI2quaterRestOctetsBytes, DecodeSI2quaterRestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation350.failure(operationErr, "", -1, 0)
 		}
@@ -79972,12 +82804,12 @@ func EncodeNCMeasurementParametersStructTo(w *runtime.Writer, v NCMeasurementPar
 	}
 	return operationLocation394.failure(w.WithWireValue(v.Wire, func() error { return encodeNCMeasurementParametersStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeNCMeasurementParametersStructBytes(data []byte) (runtime.Decoded[NCMeasurementParametersStruct], error) {
+func decodeNCMeasurementParametersStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[NCMeasurementParametersStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[NCMeasurementParametersStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeNCMeasurementParametersStruct(r)
 	if err != nil {
@@ -80010,7 +82842,7 @@ func encodeNCMeasurementParametersStructBytes(v NCMeasurementParametersStruct) (
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeNCMeasurementParametersStructCanonical(v NCMeasurementParametersStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeNCMeasurementParametersStructBytes, decodeNCMeasurementParametersStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeNCMeasurementParametersStructBytes, DecodeNCMeasurementParametersStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation395.failure(operationErr, "", -1, 0)
 		}
@@ -80030,7 +82862,7 @@ func EncodeNCMeasurementParametersStructCanonical(v NCMeasurementParametersStruc
 // that decode to a different typed value.
 func EncodeNCMeasurementParametersStructCanonicalAtLength(v NCMeasurementParametersStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeNCMeasurementParametersStructBytes, decodeNCMeasurementParametersStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeNCMeasurementParametersStructBytes, DecodeNCMeasurementParametersStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation395.failure(operationErr, "", -1, 0)
 		}
@@ -80391,12 +83223,12 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bTo(w *runtim
 	}
 	return operationLocation409.failure(w.WithWireValue(v.Wire, func() error { return encodePriorityAndEUTRANParametersDescriptionStructClause105233b(w, v) }), "", w.Position(), 0)
 }
-func decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(data []byte) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105233b], error) {
+func decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105233b], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105233b]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233b(r)
 	if err != nil {
@@ -80427,7 +83259,7 @@ func encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(v Prio
 // supply the length through EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v PriorityAndEUTRANParametersDescriptionStructClause105233b) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation410.failure(operationErr, "", -1, 0)
 		}
@@ -80447,7 +83279,7 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v 
 // that decode to a different typed value.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105233b, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation410.failure(operationErr, "", -1, 0)
 		}
@@ -80724,12 +83556,12 @@ func EncodeEUTRANParametersDescriptionStructTo(w *runtime.Writer, v EUTRANParame
 	}
 	return operationLocation421.failure(w.WithWireValue(v.Wire, func() error { return encodeEUTRANParametersDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeEUTRANParametersDescriptionStructBytes(data []byte) (runtime.Decoded[EUTRANParametersDescriptionStruct], error) {
+func decodeEUTRANParametersDescriptionStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EUTRANParametersDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EUTRANParametersDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEUTRANParametersDescriptionStruct(r)
 	if err != nil {
@@ -80760,7 +83592,7 @@ func encodeEUTRANParametersDescriptionStructBytes(v EUTRANParametersDescriptionS
 // supply the length through EncodeEUTRANParametersDescriptionStructCanonicalAtLength.
 func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescriptionStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANParametersDescriptionStructBytes, decodeEUTRANParametersDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANParametersDescriptionStructBytes, DecodeEUTRANParametersDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation422.failure(operationErr, "", -1, 0)
 		}
@@ -80780,7 +83612,7 @@ func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescript
 // that decode to a different typed value.
 func EncodeEUTRANParametersDescriptionStructCanonicalAtLength(v EUTRANParametersDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANParametersDescriptionStructBytes, decodeEUTRANParametersDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANParametersDescriptionStructBytes, DecodeEUTRANParametersDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation422.failure(operationErr, "", -1, 0)
 		}
@@ -80977,12 +83809,12 @@ func EncodeRepeatedEUTRANNeighbourCellsStructTo(w *runtime.Writer, v RepeatedEUT
 	}
 	return operationLocation430.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANNeighbourCellsStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeRepeatedEUTRANNeighbourCellsStructBytes(data []byte) (runtime.Decoded[RepeatedEUTRANNeighbourCellsStruct], error) {
+func decodeRepeatedEUTRANNeighbourCellsStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[RepeatedEUTRANNeighbourCellsStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RepeatedEUTRANNeighbourCellsStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeRepeatedEUTRANNeighbourCellsStruct(r)
 	if err != nil {
@@ -81013,7 +83845,7 @@ func encodeRepeatedEUTRANNeighbourCellsStructBytes(v RepeatedEUTRANNeighbourCell
 // supply the length through EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength.
 func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbourCellsStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNeighbourCellsStructBytes, decodeRepeatedEUTRANNeighbourCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNeighbourCellsStructBytes, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation431.failure(operationErr, "", -1, 0)
 		}
@@ -81033,7 +83865,7 @@ func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbour
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength(v RepeatedEUTRANNeighbourCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourCellsStructBytes, decodeRepeatedEUTRANNeighbourCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourCellsStructBytes, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation431.failure(operationErr, "", -1, 0)
 		}
@@ -81060,12 +83892,12 @@ func EncodeRepeatedEUTRANNotAllowedCellsStructTo(w *runtime.Writer, v RepeatedEU
 	}
 	return operationLocation433.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANNotAllowedCellsStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeRepeatedEUTRANNotAllowedCellsStructBytes(data []byte) (runtime.Decoded[RepeatedEUTRANNotAllowedCellsStruct], error) {
+func decodeRepeatedEUTRANNotAllowedCellsStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[RepeatedEUTRANNotAllowedCellsStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RepeatedEUTRANNotAllowedCellsStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeRepeatedEUTRANNotAllowedCellsStruct(r)
 	if err != nil {
@@ -81096,7 +83928,7 @@ func encodeRepeatedEUTRANNotAllowedCellsStructBytes(v RepeatedEUTRANNotAllowedCe
 // supply the length through EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength.
 func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllowedCellsStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNotAllowedCellsStructBytes, decodeRepeatedEUTRANNotAllowedCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANNotAllowedCellsStructBytes, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation434.failure(operationErr, "", -1, 0)
 		}
@@ -81116,7 +83948,7 @@ func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllow
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength(v RepeatedEUTRANNotAllowedCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNotAllowedCellsStructBytes, decodeRepeatedEUTRANNotAllowedCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNotAllowedCellsStructBytes, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation434.failure(operationErr, "", -1, 0)
 		}
@@ -81143,12 +83975,12 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStructTo(w *runtime.Writer, v RepeatedEU
 	}
 	return operationLocation436.failure(w.WithWireValue(v.Wire, func() error { return encodeRepeatedEUTRANPCIDToTAMappingStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeRepeatedEUTRANPCIDToTAMappingStructBytes(data []byte) (runtime.Decoded[RepeatedEUTRANPCIDToTAMappingStruct], error) {
+func decodeRepeatedEUTRANPCIDToTAMappingStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[RepeatedEUTRANPCIDToTAMappingStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[RepeatedEUTRANPCIDToTAMappingStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeRepeatedEUTRANPCIDToTAMappingStruct(r)
 	if err != nil {
@@ -81179,7 +84011,7 @@ func encodeRepeatedEUTRANPCIDToTAMappingStructBytes(v RepeatedEUTRANPCIDToTAMapp
 // supply the length through EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength.
 func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTAMappingStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, decodeRepeatedEUTRANPCIDToTAMappingStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation437.failure(operationErr, "", -1, 0)
 		}
@@ -81199,7 +84031,7 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTA
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength(v RepeatedEUTRANPCIDToTAMappingStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, decodeRepeatedEUTRANPCIDToTAMappingStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation437.failure(operationErr, "", -1, 0)
 		}
@@ -81226,12 +84058,12 @@ func EncodeN3GCSGDescriptionStructTo(w *runtime.Writer, v N3GCSGDescriptionStruc
 	}
 	return operationLocation439.failure(w.WithWireValue(v.Wire, func() error { return encodeN3GCSGDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeN3GCSGDescriptionStructBytes(data []byte) (runtime.Decoded[N3GCSGDescriptionStruct], error) {
+func decodeN3GCSGDescriptionStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[N3GCSGDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[N3GCSGDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeN3GCSGDescriptionStruct(r)
 	if err != nil {
@@ -81262,7 +84094,7 @@ func encodeN3GCSGDescriptionStructBytes(v N3GCSGDescriptionStruct) ([]byte, erro
 // supply the length through EncodeN3GCSGDescriptionStructCanonicalAtLength.
 func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeN3GCSGDescriptionStructBytes, decodeN3GCSGDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeN3GCSGDescriptionStructBytes, DecodeN3GCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation440.failure(operationErr, "", -1, 0)
 		}
@@ -81282,7 +84114,7 @@ func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, 
 // that decode to a different typed value.
 func EncodeN3GCSGDescriptionStructCanonicalAtLength(v N3GCSGDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeN3GCSGDescriptionStructBytes, decodeN3GCSGDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeN3GCSGDescriptionStructBytes, DecodeN3GCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation440.failure(operationErr, "", -1, 0)
 		}
@@ -81309,12 +84141,12 @@ func EncodeEUTRANCSGDescriptionStructTo(w *runtime.Writer, v EUTRANCSGDescriptio
 	}
 	return operationLocation442.failure(w.WithWireValue(v.Wire, func() error { return encodeEUTRANCSGDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeEUTRANCSGDescriptionStructBytes(data []byte) (runtime.Decoded[EUTRANCSGDescriptionStruct], error) {
+func decodeEUTRANCSGDescriptionStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EUTRANCSGDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EUTRANCSGDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEUTRANCSGDescriptionStruct(r)
 	if err != nil {
@@ -81345,7 +84177,7 @@ func encodeEUTRANCSGDescriptionStructBytes(v EUTRANCSGDescriptionStruct) ([]byte
 // supply the length through EncodeEUTRANCSGDescriptionStructCanonicalAtLength.
 func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANCSGDescriptionStructBytes, decodeEUTRANCSGDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANCSGDescriptionStructBytes, DecodeEUTRANCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation443.failure(operationErr, "", -1, 0)
 		}
@@ -81365,7 +84197,7 @@ func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]
 // that decode to a different typed value.
 func EncodeEUTRANCSGDescriptionStructCanonicalAtLength(v EUTRANCSGDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANCSGDescriptionStructBytes, decodeEUTRANCSGDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANCSGDescriptionStructBytes, DecodeEUTRANCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation443.failure(operationErr, "", -1, 0)
 		}
@@ -82421,7 +85253,7 @@ func EncodeSI13RestOctetsTo(w *runtime.Writer, v SI13RestOctets) error {
 	}
 	return operationLocation481.failure(w.WithWireValue(v.Wire, func() error { return encodeSI13RestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeSI13RestOctetsBytes(data []byte) (runtime.Decoded[SI13RestOctets], error) {
+func decodeSI13RestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[SI13RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SI13RestOctets]{}, err
 	}
@@ -82435,7 +85267,7 @@ func decodeSI13RestOctetsBytes(data []byte) (runtime.Decoded[SI13RestOctets], er
 	if len(data) > 20 {
 		return runtime.Decoded[SI13RestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 160, Detail: "SI13RestOctets exceeds 160 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeSI13RestOctets(r)
 	if err != nil {
@@ -82483,7 +85315,7 @@ func encodeSI13RestOctetsBytes(v SI13RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI13RestOctetsBytes, decodeSI13RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 20, 20, false, encodeSI13RestOctetsBytes, DecodeSI13RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation482.failure(operationErr, "", -1, 0)
 		}
@@ -82506,7 +85338,7 @@ func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI13RestOctetsCanonicalAtLength(v SI13RestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI13RestOctetsBytes, decodeSI13RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 20, 20, encodeSI13RestOctetsBytes, DecodeSI13RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation482.failure(operationErr, "", -1, 0)
 		}
@@ -83419,7 +86251,7 @@ func EncodeIPARestOctetsTo(w *runtime.Writer, v IPARestOctets) error {
 	}
 	return operationLocation514.failure(w.WithWireValue(v.Wire, func() error { return encodeIPARestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeIPARestOctetsBytes(data []byte) (runtime.Decoded[IPARestOctets], error) {
+func decodeIPARestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IPARestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IPARestOctets]{}, err
 	}
@@ -83433,7 +86265,7 @@ func decodeIPARestOctetsBytes(data []byte) (runtime.Decoded[IPARestOctets], erro
 	if len(data) > 19 {
 		return runtime.Decoded[IPARestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 152, Detail: "IPARestOctets exceeds 152 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIPARestOctets(r)
 	if err != nil {
@@ -83477,7 +86309,7 @@ func encodeIPARestOctetsBytes(v IPARestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeIPARestOctetsCanonical(v IPARestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 19, 19, false, encodeIPARestOctetsBytes, decodeIPARestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 19, 19, false, encodeIPARestOctetsBytes, DecodeIPARestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation515.failure(operationErr, "", -1, 0)
 		}
@@ -83496,7 +86328,7 @@ func EncodeIPARestOctetsCanonical(v IPARestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeIPARestOctetsCanonicalAtLength(v IPARestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 19, 19, encodeIPARestOctetsBytes, decodeIPARestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 19, 19, encodeIPARestOctetsBytes, DecodeIPARestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation515.failure(operationErr, "", -1, 0)
 		}
@@ -83523,12 +86355,12 @@ func EncodeIPAUplinkAssignmentStructTo(w *runtime.Writer, v IPAUplinkAssignmentS
 	}
 	return operationLocation517.failure(w.WithWireValue(v.Wire, func() error { return encodeIPAUplinkAssignmentStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeIPAUplinkAssignmentStructBytes(data []byte) (runtime.Decoded[IPAUplinkAssignmentStruct], error) {
+func decodeIPAUplinkAssignmentStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IPAUplinkAssignmentStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IPAUplinkAssignmentStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIPAUplinkAssignmentStruct(r)
 	if err != nil {
@@ -83559,7 +86391,7 @@ func encodeIPAUplinkAssignmentStructBytes(v IPAUplinkAssignmentStruct) ([]byte, 
 // supply the length through EncodeIPAUplinkAssignmentStructCanonicalAtLength.
 func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPAUplinkAssignmentStructBytes, decodeIPAUplinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPAUplinkAssignmentStructBytes, DecodeIPAUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation518.failure(operationErr, "", -1, 0)
 		}
@@ -83579,7 +86411,7 @@ func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]by
 // that decode to a different typed value.
 func EncodeIPAUplinkAssignmentStructCanonicalAtLength(v IPAUplinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPAUplinkAssignmentStructBytes, decodeIPAUplinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPAUplinkAssignmentStructBytes, DecodeIPAUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation518.failure(operationErr, "", -1, 0)
 		}
@@ -83606,12 +86438,12 @@ func EncodeIPADownlinkAssignmentStructTo(w *runtime.Writer, v IPADownlinkAssignm
 	}
 	return operationLocation520.failure(w.WithWireValue(v.Wire, func() error { return encodeIPADownlinkAssignmentStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeIPADownlinkAssignmentStructBytes(data []byte) (runtime.Decoded[IPADownlinkAssignmentStruct], error) {
+func decodeIPADownlinkAssignmentStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IPADownlinkAssignmentStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IPADownlinkAssignmentStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIPADownlinkAssignmentStruct(r)
 	if err != nil {
@@ -83642,7 +86474,7 @@ func encodeIPADownlinkAssignmentStructBytes(v IPADownlinkAssignmentStruct) ([]by
 // supply the length through EncodeIPADownlinkAssignmentStructCanonicalAtLength.
 func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPADownlinkAssignmentStructBytes, decodeIPADownlinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPADownlinkAssignmentStructBytes, DecodeIPADownlinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation521.failure(operationErr, "", -1, 0)
 		}
@@ -83662,7 +86494,7 @@ func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) (
 // that decode to a different typed value.
 func EncodeIPADownlinkAssignmentStructCanonicalAtLength(v IPADownlinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPADownlinkAssignmentStructBytes, decodeIPADownlinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPADownlinkAssignmentStructBytes, DecodeIPADownlinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation521.failure(operationErr, "", -1, 0)
 		}
@@ -83689,12 +86521,12 @@ func EncodeIPASingleBlockUplinkAssignmentStructTo(w *runtime.Writer, v IPASingle
 	}
 	return operationLocation523.failure(w.WithWireValue(v.Wire, func() error { return encodeIPASingleBlockUplinkAssignmentStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeIPASingleBlockUplinkAssignmentStructBytes(data []byte) (runtime.Decoded[IPASingleBlockUplinkAssignmentStruct], error) {
+func decodeIPASingleBlockUplinkAssignmentStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[IPASingleBlockUplinkAssignmentStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[IPASingleBlockUplinkAssignmentStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeIPASingleBlockUplinkAssignmentStruct(r)
 	if err != nil {
@@ -83725,7 +86557,7 @@ func encodeIPASingleBlockUplinkAssignmentStructBytes(v IPASingleBlockUplinkAssig
 // supply the length through EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength.
 func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkAssignmentStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPASingleBlockUplinkAssignmentStructBytes, decodeIPASingleBlockUplinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeIPASingleBlockUplinkAssignmentStructBytes, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation524.failure(operationErr, "", -1, 0)
 		}
@@ -83745,7 +86577,7 @@ func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkA
 // that decode to a different typed value.
 func EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength(v IPASingleBlockUplinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPASingleBlockUplinkAssignmentStructBytes, decodeIPASingleBlockUplinkAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPASingleBlockUplinkAssignmentStructBytes, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation524.failure(operationErr, "", -1, 0)
 		}
@@ -84819,7 +87651,7 @@ func EncodeP1RestOctetsTo(w *runtime.Writer, v P1RestOctets) error {
 	}
 	return operationLocation562.failure(w.WithWireValue(v.Wire, func() error { return encodeP1RestOctets(w, v) }), "", w.Position(), 0)
 }
-func decodeP1RestOctetsBytes(data []byte) (runtime.Decoded[P1RestOctets], error) {
+func decodeP1RestOctetsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[P1RestOctets], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[P1RestOctets]{}, err
 	}
@@ -84830,7 +87662,7 @@ func decodeP1RestOctetsBytes(data []byte) (runtime.Decoded[P1RestOctets], error)
 	if len(data) > 17 {
 		return runtime.Decoded[P1RestOctets]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 136, Detail: "P1RestOctets exceeds 136 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeP1RestOctets(r)
 	if err != nil {
@@ -84868,7 +87700,7 @@ func encodeP1RestOctetsBytes(v P1RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeP1RestOctetsCanonical(v P1RestOctets) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 17, true, encodeP1RestOctetsBytes, decodeP1RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 17, true, encodeP1RestOctetsBytes, DecodeP1RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation563.failure(operationErr, "", -1, 0)
 		}
@@ -84887,7 +87719,7 @@ func EncodeP1RestOctetsCanonical(v P1RestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeP1RestOctetsCanonicalAtLength(v P1RestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 17, encodeP1RestOctetsBytes, decodeP1RestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 17, encodeP1RestOctetsBytes, DecodeP1RestOctets, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation563.failure(operationErr, "", -1, 0)
 		}
@@ -84998,12 +87830,12 @@ func EncodeMBMSInformationClause105223To(w *runtime.Writer, v MBMSInformationCla
 	}
 	return operationLocation568.failure(w.WithWireValue(v.Wire, func() error { return encodeMBMSInformationClause105223(w, v) }), "", w.Position(), 0)
 }
-func decodeMBMSInformationClause105223Bytes(data []byte) (runtime.Decoded[MBMSInformationClause105223], error) {
+func decodeMBMSInformationClause105223Bytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MBMSInformationClause105223], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MBMSInformationClause105223]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMBMSInformationClause105223(r)
 	if err != nil {
@@ -85034,7 +87866,7 @@ func encodeMBMSInformationClause105223Bytes(v MBMSInformationClause105223) ([]by
 // supply the length through EncodeMBMSInformationClause105223CanonicalAtLength.
 func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSInformationClause105223Bytes, decodeMBMSInformationClause105223Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeMBMSInformationClause105223Bytes, DecodeMBMSInformationClause105223, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation569.failure(operationErr, "", -1, 0)
 		}
@@ -85054,7 +87886,7 @@ func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) (
 // that decode to a different typed value.
 func EncodeMBMSInformationClause105223CanonicalAtLength(v MBMSInformationClause105223, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105223Bytes, decodeMBMSInformationClause105223Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105223Bytes, DecodeMBMSInformationClause105223, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation569.failure(operationErr, "", -1, 0)
 		}
@@ -85411,180 +88243,180 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeIARestOctets, DecodeFrom: descriptorDecodeIARestOctetsFrom, Encode: descriptorEncodeIARestOctets, Canonical: descriptorCanonicalIARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "EGPRS Packet Uplink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeEGPRSPacketUplinkAssignment, DecodeFrom: descriptorDecodeEGPRSPacketUplinkAssignmentFrom, Encode: descriptorEncodeEGPRSPacketUplinkAssignment, Canonical: descriptorCanonicalEGPRSPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSPacketUplinkAssignment},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Access Technologies Request struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeAccessTechnologiesRequestStruct, DecodeFrom: descriptorDecodeAccessTechnologiesRequestStructFrom, Encode: descriptorEncodeAccessTechnologiesRequestStruct, Canonical: descriptorCanonicalAccessTechnologiesRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessTechnologiesRequestStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 9, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 69, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketUplinkAssignment, DecodeFrom: descriptorDecodePacketUplinkAssignmentFrom, Encode: descriptorEncodePacketUplinkAssignment, Canonical: descriptorCanonicalPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketUplinkAssignment},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Downlink Assignment", MaxOctets: 15, Extent: runtime.Extent{MinimumBits: 36, MaximumBits: 116, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketDownlinkAssignment, DecodeFrom: descriptorDecodePacketDownlinkAssignmentFrom, Encode: descriptorEncodePacketDownlinkAssignment, Canonical: descriptorCanonicalPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketDownlinkAssignment},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Frequency Parameters, before time", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeFrequencyParametersBeforeTime, DecodeFrom: descriptorDecodeFrequencyParametersBeforeTimeFrom, Encode: descriptorEncodeFrequencyParametersBeforeTime, Canonical: descriptorCanonicalFrequencyParametersBeforeTime, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersBeforeTime},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeSecondPartPacketAssignment, DecodeFrom: descriptorDecodeSecondPartPacketAssignmentFrom, Encode: descriptorEncodeSecondPartPacketAssignment, Canonical: descriptorCanonicalSecondPartPacketAssignment, CanonicalAtLength: descriptorCanonicalAtLengthSecondPartPacketAssignment},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Multiple Blocks Packet Downlink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 48, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeMultipleBlocksPacketDownlinkAssignment, DecodeFrom: descriptorDecodeMultipleBlocksPacketDownlinkAssignmentFrom, Encode: descriptorEncodeMultipleBlocksPacketDownlinkAssignment, Canonical: descriptorCanonicalMultipleBlocksPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthMultipleBlocksPacketDownlinkAssignment},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105216, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105216From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105216, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105216, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105216},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: descriptorDecodeIARRestOctets, DecodeFrom: descriptorDecodeIARRestOctetsFrom, Encode: descriptorEncodeIARRestOctets, Canonical: descriptorCanonicalIARRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105217, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105217From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105217, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105217, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105217},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "IAX Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 32, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"}}, Decode: descriptorDecodeIAXRestOctets, DecodeFrom: descriptorDecodeIAXRestOctetsFrom, Encode: descriptorEncodeIAXRestOctets, Canonical: descriptorCanonicalIAXRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIAXRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105218, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105218From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105218, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105218, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105218},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "SI1 Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"}}, Decode: descriptorDecodeSI1RestOctets, DecodeFrom: descriptorDecodeSI1RestOctetsFrom, Encode: descriptorEncodeSI1RestOctets, Canonical: descriptorCanonicalSI1RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI1RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "Band indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"}}, Decode: descriptorDecodeBandIndicatorClause105232, DecodeFrom: descriptorDecodeBandIndicatorClause105232From, Encode: descriptorEncodeBandIndicatorClause105232, Canonical: descriptorCanonicalBandIndicatorClause105232, CanonicalAtLength: descriptorCanonicalAtLengthBandIndicatorClause105232},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33", Name: "SI2bis Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33"}}, Decode: descriptorDecodeSI2bisRestOctets, DecodeFrom: descriptorDecodeSI2bisRestOctetsFrom, Encode: descriptorEncodeSI2bisRestOctets, Canonical: descriptorCanonicalSI2bisRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2bisRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "SI2n Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeSI2nRestOctets, DecodeFrom: descriptorDecodeSI2nRestOctetsFrom, Encode: descriptorEncodeSI2nRestOctets, Canonical: descriptorCanonicalSI2nRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2nRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GSM Neighbour Cell Selection params struct", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 51, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeGSMNeighbourCellSelectionParamsStruct, DecodeFrom: descriptorDecodeGSMNeighbourCellSelectionParamsStructFrom, Encode: descriptorEncodeGSMNeighbourCellSelectionParamsStruct, Canonical: descriptorCanonicalGSMNeighbourCellSelectionParamsStruct, CanonicalAtLength: descriptorCanonicalAtLengthGSMNeighbourCellSelectionParamsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GPRS Support Indicator struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeGPRSSupportIndicatorStruct, DecodeFrom: descriptorDecodeGPRSSupportIndicatorStructFrom, Encode: descriptorEncodeGPRSSupportIndicatorStruct, Canonical: descriptorCanonicalGPRSSupportIndicatorStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSSupportIndicatorStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI3 Rest Octet", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSI3RestOctet, DecodeFrom: descriptorDecodeSI3RestOctetFrom, Encode: descriptorEncodeSI3RestOctet, Canonical: descriptorCanonicalSI3RestOctet, CanonicalAtLength: descriptorCanonicalAtLengthSI3RestOctet},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeOptionalSelectionParametersClause105234, DecodeFrom: descriptorDecodeOptionalSelectionParametersClause105234From, Encode: descriptorEncodeOptionalSelectionParametersClause105234, Canonical: descriptorCanonicalOptionalSelectionParametersClause105234, CanonicalAtLength: descriptorCanonicalAtLengthOptionalSelectionParametersClause105234},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSelectionParametersClause105234, DecodeFrom: descriptorDecodeSelectionParametersClause105234From, Encode: descriptorEncodeSelectionParametersClause105234, Canonical: descriptorCanonicalSelectionParametersClause105234, CanonicalAtLength: descriptorCanonicalAtLengthSelectionParametersClause105234},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Power Offset", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeOptionalPowerOffsetClause105234, DecodeFrom: descriptorDecodeOptionalPowerOffsetClause105234From, Encode: descriptorEncodeOptionalPowerOffsetClause105234, Canonical: descriptorCanonicalOptionalPowerOffsetClause105234, CanonicalAtLength: descriptorCanonicalAtLengthOptionalPowerOffsetClause105234},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 2ter Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSystemInformation2terIndicator, DecodeFrom: descriptorDecodeSystemInformation2terIndicatorFrom, Encode: descriptorEncodeSystemInformation2terIndicator, Canonical: descriptorCanonicalSystemInformation2terIndicator, CanonicalAtLength: descriptorCanonicalAtLengthSystemInformation2terIndicator},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Early Classmark Sending Control", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeEarlyClassmarkSendingControl, DecodeFrom: descriptorDecodeEarlyClassmarkSendingControlFrom, Encode: descriptorEncodeEarlyClassmarkSendingControl, Canonical: descriptorCanonicalEarlyClassmarkSendingControl, CanonicalAtLength: descriptorCanonicalAtLengthEarlyClassmarkSendingControl},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Scheduling if and where", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSchedulingIfAndWhere, DecodeFrom: descriptorDecodeSchedulingIfAndWhereFrom, Encode: descriptorEncodeSchedulingIfAndWhere, Canonical: descriptorCanonicalSchedulingIfAndWhere, CanonicalAtLength: descriptorCanonicalAtLengthSchedulingIfAndWhere},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "GPRS Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeGPRSIndicatorClause105234, DecodeFrom: descriptorDecodeGPRSIndicatorClause105234From, Encode: descriptorEncodeGPRSIndicatorClause105234, Canonical: descriptorCanonicalGPRSIndicatorClause105234, CanonicalAtLength: descriptorCanonicalAtLengthGPRSIndicatorClause105234},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "3G Early Classmark Sending Restriction", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeN3GEarlyClassmarkSendingRestriction, DecodeFrom: descriptorDecodeN3GEarlyClassmarkSendingRestrictionFrom, Encode: descriptorEncodeN3GEarlyClassmarkSendingRestriction, Canonical: descriptorCanonicalN3GEarlyClassmarkSendingRestriction, CanonicalAtLength: descriptorCanonicalAtLengthN3GEarlyClassmarkSendingRestriction},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI2quater Indicator struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSI2quaterIndicatorStruct, DecodeFrom: descriptorDecodeSI2quaterIndicatorStructFrom, Encode: descriptorEncodeSI2quaterIndicatorStruct, Canonical: descriptorCanonicalSI2quaterIndicatorStruct, CanonicalAtLength: descriptorCanonicalAtLengthSI2quaterIndicatorStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Iu Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeIuIndicator, DecodeFrom: descriptorDecodeIuIndicatorFrom, Encode: descriptorEncodeIuIndicator, Canonical: descriptorCanonicalIuIndicator, CanonicalAtLength: descriptorCanonicalAtLengthIuIndicator},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 21 Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 2, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSystemInformation21Indicator, DecodeFrom: descriptorDecodeSystemInformation21IndicatorFrom, Encode: descriptorEncodeSystemInformation21Indicator, Canonical: descriptorCanonicalSystemInformation21Indicator, CanonicalAtLength: descriptorCanonicalAtLengthSystemInformation21Indicator},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "SI16 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeSI16RestOctets, DecodeFrom: descriptorDecodeSI16RestOctetsFrom, Encode: descriptorEncodeSI16RestOctets, Canonical: descriptorCanonicalSI16RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI16RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f", Name: "SI17 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f"}}, Decode: descriptorDecodeSI17RestOctets, DecodeFrom: descriptorDecodeSI17RestOctetsFrom, Encode: descriptorEncodeSI17RestOctets, Canonical: descriptorCanonicalSI17RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI17RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA Parameters", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAParametersClause105237e, DecodeFrom: descriptorDecodeLSAParametersClause105237eFrom, Encode: descriptorEncodeLSAParametersClause105237e, Canonical: descriptorCanonicalLSAParametersClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAParametersClause105237e},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA ID information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAIDInformationClause105237e, DecodeFrom: descriptorDecodeLSAIDInformationClause105237eFrom, Encode: descriptorEncodeLSAIDInformationClause105237e, Canonical: descriptorCanonicalLSAIDInformationClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAIDInformationClause105237e},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA identity", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 25, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAIdentityClause105237e, DecodeFrom: descriptorDecodeLSAIdentityClause105237eFrom, Encode: descriptorEncodeLSAIdentityClause105237e, Canonical: descriptorCanonicalLSAIdentityClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAIdentityClause105237e},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "SI14 Rest Octets", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"}}, Decode: descriptorDecodeSI14RestOctets, DecodeFrom: descriptorDecodeSI14RestOctetsFrom, Encode: descriptorEncodeSI14RestOctets, Canonical: descriptorCanonicalSI14RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI14RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 31, MaximumBits: 31, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"}}, Decode: descriptorDecodeDYNAMICARFCNMAPPINGClause105237j, DecodeFrom: descriptorDecodeDYNAMICARFCNMAPPINGClause105237jFrom, Encode: descriptorEncodeDYNAMICARFCNMAPPINGClause105237j, Canonical: descriptorCanonicalDYNAMICARFCNMAPPINGClause105237j, CanonicalAtLength: descriptorCanonicalAtLengthDYNAMICARFCNMAPPINGClause105237j},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "SI15 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"}}, Decode: descriptorDecodeSI15RestOctets, DecodeFrom: descriptorDecodeSI15RestOctetsFrom, Encode: descriptorEncodeSI15RestOctets, Canonical: descriptorCanonicalSI15RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI15RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 31, MaximumBits: 31, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"}}, Decode: descriptorDecodeDYNAMICARFCNMAPPINGClause105237k, DecodeFrom: descriptorDecodeDYNAMICARFCNMAPPINGClause105237kFrom, Encode: descriptorEncodeDYNAMICARFCNMAPPINGClause105237k, Canonical: descriptorCanonicalDYNAMICARFCNMAPPINGClause105237k, CanonicalAtLength: descriptorCanonicalAtLengthDYNAMICARFCNMAPPINGClause105237k},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "SI 21 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"}}, Decode: descriptorDecodeSI21RestOctets, DecodeFrom: descriptorDecodeSI21RestOctetsFrom, Encode: descriptorEncodeSI21RestOctets, Canonical: descriptorCanonicalSI21RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI21RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "Network Sharing EAB Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"}}, Decode: descriptorDecodeNetworkSharingEABInformationStruct, DecodeFrom: descriptorDecodeNetworkSharingEABInformationStructFrom, Encode: descriptorEncodeNetworkSharingEABInformationStruct, Canonical: descriptorCanonicalNetworkSharingEABInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthNetworkSharingEABInformationStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "SI 22 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"}}, Decode: descriptorDecodeSI22RestOctets, DecodeFrom: descriptorDecodeSI22RestOctetsFrom, Encode: descriptorEncodeSI22RestOctets, Canonical: descriptorCanonicalSI22RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI22RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "Network Sharing Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 28, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"}}, Decode: descriptorDecodeNetworkSharingInformationStruct, DecodeFrom: descriptorDecodeNetworkSharingInformationStructFrom, Encode: descriptorEncodeNetworkSharingInformationStruct, Canonical: descriptorCanonicalNetworkSharingInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthNetworkSharingInformationStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "SI 23 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeSI23RestOctets, DecodeFrom: descriptorDecodeSI23RestOctetsFrom, Encode: descriptorEncodeSI23RestOctets, Canonical: descriptorCanonicalSI23RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI23RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "IRAT Cell Reselection Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeIRATCellReselectionInformationStruct, DecodeFrom: descriptorDecodeIRATCellReselectionInformationStructFrom, Encode: descriptorEncodeIRATCellReselectionInformationStruct, Canonical: descriptorCanonicalIRATCellReselectionInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthIRATCellReselectionInformationStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodePriorityAndUTRANParametersDescriptionStruct, DecodeFrom: descriptorDecodePriorityAndUTRANParametersDescriptionStructFrom, Encode: descriptorEncodePriorityAndUTRANParametersDescriptionStruct, Canonical: descriptorCanonicalPriorityAndUTRANParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndUTRANParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "UTRAN FDD/TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeUTRANFDDTDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANFDDTDDDescriptionStructFrom, Encode: descriptorEncodeUTRANFDDTDDDescriptionStruct, Canonical: descriptorCanonicalUTRANFDDTDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDTDDDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeFrom: descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom, Encode: descriptorEncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, Canonical: descriptorCanonicalRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodeFrom: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom, Encode: descriptorEncodePriorityAndEUTRANParametersDescriptionStructClause105237o, Canonical: descriptorCanonicalPriorityAndEUTRANParametersDescriptionStructClause105237o, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndEUTRANParametersDescriptionStructClause105237o},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated E-UTRAN Neighbour Frequency and Priority struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom, Encode: descriptorEncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, Canonical: descriptorCanonicalRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNeighbourFrequencyAndPriorityStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "SI10 rest octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeSI10RestOctets, DecodeFrom: descriptorDecodeSI10RestOctetsFrom, Encode: descriptorEncodeSI10RestOctets, Canonical: descriptorCanonicalSI10RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "neighbour information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 13, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeNeighbourInformation, DecodeFrom: descriptorDecodeNeighbourInformationFrom, Encode: descriptorEncodeNeighbourInformation, Canonical: descriptorCanonicalNeighbourInformation, CanonicalAtLength: descriptorCanonicalAtLengthNeighbourInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 37, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellInfo, DecodeFrom: descriptorDecodeCellInfoFrom, Encode: descriptorEncodeCellInfo, Canonical: descriptorCanonicalCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthCellInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell parameters", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 30, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellParameters, DecodeFrom: descriptorDecodeCellParametersFrom, Encode: descriptorEncodeCellParameters, Canonical: descriptorCanonicalCellParameters, CanonicalAtLength: descriptorCanonicalAtLengthCellParameters},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell barred", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellBarred, DecodeFrom: descriptorDecodeCellBarredFrom, Encode: descriptorEncodeCellBarred, Canonical: descriptorCanonicalCellBarred, CanonicalAtLength: descriptorCanonicalAtLengthCellBarred},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further cell info", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 26, MaximumBits: 29, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeFurtherCellInfo, DecodeFrom: descriptorDecodeFurtherCellInfoFrom, Encode: descriptorEncodeFurtherCellInfo, Canonical: descriptorCanonicalFurtherCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthFurtherCellInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "la different", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeLaDifferent, DecodeFrom: descriptorDecodeLaDifferentFrom, Encode: descriptorEncodeLaDifferent, Canonical: descriptorCanonicalLaDifferent, CanonicalAtLength: descriptorCanonicalAtLengthLaDifferent},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "info field", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeInfoField, DecodeFrom: descriptorDecodeInfoFieldFrom, Encode: descriptorEncodeInfoField, Canonical: descriptorCanonicalInfoField, CanonicalAtLength: descriptorCanonicalAtLengthInfoField},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "next frequency", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeNextFrequency, DecodeFrom: descriptorDecodeNextFrequencyFrom, Encode: descriptorEncodeNextFrequency, Canonical: descriptorCanonicalNextFrequency, CanonicalAtLength: descriptorCanonicalAtLengthNextFrequency},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "differential cell info", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 43, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeDifferentialCellInfo, DecodeFrom: descriptorDecodeDifferentialCellInfoFrom, Encode: descriptorEncodeDifferentialCellInfo, Canonical: descriptorCanonicalDifferentialCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthDifferentialCellInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "diff cell pars", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 35, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeDiffCellPars, DecodeFrom: descriptorDecodeDiffCellParsFrom, Encode: descriptorEncodeDiffCellPars, Canonical: descriptorCanonicalDiffCellPars, CanonicalAtLength: descriptorCanonicalAtLengthDiffCellPars},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further diff cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeFurtherDiffCellInfo, DecodeFrom: descriptorDecodeFurtherDiffCellInfoFrom, Encode: descriptorEncodeFurtherDiffCellInfo, Canonical: descriptorCanonicalFurtherDiffCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthFurtherDiffCellInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71", Name: "SI10ter Rest Octets", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71"}}, Decode: descriptorDecodeSI10terRestOctets, DecodeFrom: descriptorDecodeSI10terRestOctetsFrom, Encode: descriptorEncodeSI10terRestOctets, Canonical: descriptorCanonicalSI10terRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10terRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "SI9 rest octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 136, MaximumBits: 136, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeSI9RestOctets, DecodeFrom: descriptorDecodeSI9RestOctetsFrom, Encode: descriptorEncodeSI9RestOctets, Canonical: descriptorCanonicalSI9RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI9RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Scheduling info", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeSchedulingInfo, DecodeFrom: descriptorDecodeSchedulingInfoFrom, Encode: descriptorEncodeSchedulingInfo, Canonical: descriptorCanonicalSchedulingInfo, CanonicalAtLength: descriptorCanonicalAtLengthSchedulingInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Info type", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeInfoType, DecodeFrom: descriptorDecodeInfoTypeFrom, Encode: descriptorEncodeInfoType, Canonical: descriptorCanonicalInfoType, CanonicalAtLength: descriptorCanonicalAtLengthInfoType},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Positions", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodePositions, DecodeFrom: descriptorDecodePositionsFrom, Encode: descriptorEncodePositions, Canonical: descriptorCanonicalPositions, CanonicalAtLength: descriptorCanonicalAtLengthPositions},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Position", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodePosition, DecodeFrom: descriptorDecodePositionFrom, Encode: descriptorEncodePosition, Canonical: descriptorCanonicalPosition, CanonicalAtLength: descriptorCanonicalAtLengthPosition},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "SI2ter Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeSI2terRestOctets, DecodeFrom: descriptorDecodeSI2terRestOctetsFrom, Encode: descriptorEncodeSI2terRestOctets, Canonical: descriptorCanonicalSI2terRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2terRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN FDD Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeUTRANFDDDescriptionStructClause105233a, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructClause105233aFrom, Encode: descriptorEncodeUTRANFDDDescriptionStructClause105233a, Canonical: descriptorCanonicalUTRANFDDDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStructClause105233a},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN TDD Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeUTRANTDDDescriptionStructClause105233a, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructClause105233aFrom, Encode: descriptorEncodeUTRANTDDDescriptionStructClause105233a, Canonical: descriptorCanonicalUTRANTDDDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStructClause105233a},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G MEASUREMENT Parameters Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 17, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeFrom: descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom, Encode: descriptorEncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, Canonical: descriptorCanonicalN3GMEASUREMENTParametersDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthN3GMEASUREMENTParametersDescriptionStructClause105233a},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom, Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescriptionStructClause105233a},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets", MaxOctets: 10, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 80, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctets, DecodeFrom: descriptorDecodeSI4RestOctetsFrom, Encode: descriptorEncodeSI4RestOctets, Canonical: descriptorCanonicalSI4RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_O", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 24, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctetsO, DecodeFrom: descriptorDecodeSI4RestOctetsOFrom, Encode: descriptorEncodeSI4RestOctetsO, Canonical: descriptorCanonicalSI4RestOctetsO, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctetsO},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_S", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctetsS, DecodeFrom: descriptorDecodeSI4RestOctetsSFrom, Encode: descriptorEncodeSI4RestOctetsS, Canonical: descriptorCanonicalSI4RestOctetsS, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctetsS},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Break Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeBreakIndicator, DecodeFrom: descriptorDecodeBreakIndicatorFrom, Encode: descriptorEncodeBreakIndicator, Canonical: descriptorCanonicalBreakIndicator, CanonicalAtLength: descriptorCanonicalAtLengthBreakIndicator},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36", Name: "SI7 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"}}, Decode: descriptorDecodeSI7RestOctets, DecodeFrom: descriptorDecodeSI7RestOctetsFrom, Encode: descriptorEncodeSI7RestOctets, Canonical: descriptorCanonicalSI7RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI7RestOctets, DecodeWithContext: descriptorDecodeSI7RestOctetsWithContext, DecodeFromWithContext: descriptorDecodeSI7RestOctetsFromWithContext, EncodeWithContext: descriptorEncodeWithContextSI7RestOctets, CanonicalWithContext: descriptorCanonicalWithContextSI7RestOctets, CanonicalAtLengthWithContext: descriptorCanonicalAtLengthWithContextSI7RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37", Name: "SI8 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"}}, Decode: descriptorDecodeSI8RestOctets, DecodeFrom: descriptorDecodeSI8RestOctetsFrom, Encode: descriptorEncodeSI8RestOctets, Canonical: descriptorCanonicalSI8RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI8RestOctets, DecodeWithContext: descriptorDecodeSI8RestOctetsWithContext, DecodeFromWithContext: descriptorDecodeSI8RestOctetsFromWithContext, EncodeWithContext: descriptorEncodeWithContextSI8RestOctets, CanonicalWithContext: descriptorCanonicalWithContextSI8RestOctets, CanonicalAtLengthWithContext: descriptorCanonicalAtLengthWithContextSI8RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeOptionalSelectionParametersClause105235, DecodeFrom: descriptorDecodeOptionalSelectionParametersClause105235From, Encode: descriptorEncodeOptionalSelectionParametersClause105235, Canonical: descriptorCanonicalOptionalSelectionParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthOptionalSelectionParametersClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSelectionParametersClause105235, DecodeFrom: descriptorDecodeSelectionParametersClause105235From, Encode: descriptorEncodeSelectionParametersClause105235, Canonical: descriptorCanonicalSelectionParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthSelectionParametersClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Power Offset", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeOptionalPowerOffsetClause105235, DecodeFrom: descriptorDecodeOptionalPowerOffsetClause105235From, Encode: descriptorEncodeOptionalPowerOffsetClause105235, Canonical: descriptorCanonicalOptionalPowerOffsetClause105235, CanonicalAtLength: descriptorCanonicalAtLengthOptionalPowerOffsetClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "GPRS Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeGPRSIndicatorClause105235, DecodeFrom: descriptorDecodeGPRSIndicatorClause105235From, Encode: descriptorEncodeGPRSIndicatorClause105235, Canonical: descriptorCanonicalGPRSIndicatorClause105235, CanonicalAtLength: descriptorCanonicalAtLengthGPRSIndicatorClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA Parameters", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 31, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAParametersClause105235, DecodeFrom: descriptorDecodeLSAParametersClause105235From, Encode: descriptorEncodeLSAParametersClause105235, Canonical: descriptorCanonicalLSAParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAParametersClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA ID information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAIDInformationClause105235, DecodeFrom: descriptorDecodeLSAIDInformationClause105235From, Encode: descriptorEncodeLSAIDInformationClause105235, Canonical: descriptorCanonicalLSAIDInformationClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAIDInformationClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA identity", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 25, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAIdentityClause105235, DecodeFrom: descriptorDecodeLSAIdentityClause105235From, Encode: descriptorEncodeLSAIdentityClause105235, Canonical: descriptorCanonicalLSAIdentityClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAIdentityClause105235},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "SI 13alt Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}}, Decode: descriptorDecodeSI13altRestOctets, DecodeFrom: descriptorDecodeSI13altRestOctetsFrom, Encode: descriptorEncodeSI13altRestOctets, Canonical: descriptorCanonicalSI13altRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI13altRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "PBCCH Description 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 26, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}}, Decode: descriptorDecodePBCCHDescription2Struct, DecodeFrom: descriptorDecodePBCCHDescription2StructFrom, Encode: descriptorEncodePBCCHDescription2Struct, Canonical: descriptorCanonicalPBCCHDescription2Struct, CanonicalAtLength: descriptorCanonicalAtLengthPBCCHDescription2Struct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "P2 Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodeP2RestOctets, DecodeFrom: descriptorDecodeP2RestOctetsFrom, Encode: descriptorEncodeP2RestOctets, Canonical: descriptorCanonicalP2RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP2RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodePriorityClause105224, DecodeFrom: descriptorDecodePriorityClause105224From, Encode: descriptorEncodePriorityClause105224, Canonical: descriptorCanonicalPriorityClause105224, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105224},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "MBMS Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodeMBMSInformationClause105224, DecodeFrom: descriptorDecodeMBMSInformationClause105224From, Encode: descriptorEncodeMBMSInformationClause105224, Canonical: descriptorCanonicalMBMSInformationClause105224, CanonicalAtLength: descriptorCanonicalAtLengthMBMSInformationClause105224},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105224, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105224From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105224, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105224, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105224},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "P3 Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodeP3RestOctets, DecodeFrom: descriptorDecodeP3RestOctetsFrom, Encode: descriptorEncodeP3RestOctets, Canonical: descriptorCanonicalP3RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP3RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodePriorityClause105225, DecodeFrom: descriptorDecodePriorityClause105225From, Encode: descriptorEncodePriorityClause105225, Canonical: descriptorCanonicalPriorityClause105225, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105225},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105225, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105225From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105225, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105225, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105225},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2quater Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeSI2quaterRestOctets, DecodeFrom: descriptorDecodeSI2quaterRestOctetsFrom, Encode: descriptorEncodeSI2quaterRestOctets, Canonical: descriptorCanonicalSI2quaterRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2quaterRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Neighbour Cell Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GNeighbourCellDescriptionStruct, DecodeFrom: descriptorDecodeN3GNeighbourCellDescriptionStructFrom, Encode: descriptorEncodeN3GNeighbourCellDescriptionStruct, Canonical: descriptorCanonicalN3GNeighbourCellDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GNeighbourCellDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANFDDDescriptionStructClause105233b, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructClause105233bFrom, Encode: descriptorEncodeUTRANFDDDescriptionStructClause105233b, Canonical: descriptorCanonicalUTRANFDDDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStructClause105233b},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN FDD Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 21, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedUTRANFDDNeighbourCellsStructFrom, Encode: descriptorEncodeRepeatedUTRANFDDNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedUTRANFDDNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANFDDNeighbourCellsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANTDDDescriptionStructClause105233b, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructClause105233bFrom, Encode: descriptorEncodeUTRANTDDDescriptionStructClause105233b, Canonical: descriptorCanonicalUTRANTDDDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStructClause105233b},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN TDD Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 21, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedUTRANTDDNeighbourCellsStructFrom, Encode: descriptorEncodeRepeatedUTRANTDDNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedUTRANTDDNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANTDDNeighbourCellsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "MEASUREMENT PARAMETERS Description Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeMEASUREMENTPARAMETERSDescriptionStructFrom, Encode: descriptorEncodeMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthMEASUREMENTPARAMETERSDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 23, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeFrom: descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom, Encode: descriptorEncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, Canonical: descriptorCanonicalN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS Real Time Difference Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSRealTimeDifferenceDescriptionStruct, DecodeFrom: descriptorDecodeGPRSRealTimeDifferenceDescriptionStructFrom, Encode: descriptorEncodeGPRSRealTimeDifferenceDescriptionStruct, Canonical: descriptorCanonicalGPRSRealTimeDifferenceDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSRealTimeDifferenceDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD6 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRTD6Struct, DecodeFrom: descriptorDecodeRTD6StructFrom, Encode: descriptorEncodeRTD6Struct, Canonical: descriptorCanonicalRTD6Struct, CanonicalAtLength: descriptorCanonicalAtLengthRTD6Struct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD12 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRTD12Struct, DecodeFrom: descriptorDecodeRTD12StructFrom, Encode: descriptorEncodeRTD12Struct, Canonical: descriptorCanonicalRTD12Struct, CanonicalAtLength: descriptorCanonicalAtLengthRTD12Struct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS BSIC Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSBSICDescriptionStruct, DecodeFrom: descriptorDecodeGPRSBSICDescriptionStructFrom, Encode: descriptorEncodeGPRSBSICDescriptionStruct, Canonical: descriptorCanonicalGPRSBSICDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSBSICDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS REPORT PRIORITY Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSREPORTPRIORITYDescriptionStruct, DecodeFrom: descriptorDecodeGPRSREPORTPRIORITYDescriptionStructFrom, Encode: descriptorEncodeGPRSREPORTPRIORITYDescriptionStruct, Canonical: descriptorCanonicalGPRSREPORTPRIORITYDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSREPORTPRIORITYDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS MEASUREMENT PARAMETERS Description struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 46, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom, Encode: descriptorEncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalGPRSMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSMEASUREMENTPARAMETERSDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS 3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 26, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom, Encode: descriptorEncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRS3GMEASUREMENTPARAMETERSDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "NC Measurement Parameters struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 12, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeNCMeasurementParametersStruct, DecodeFrom: descriptorDecodeNCMeasurementParametersStructFrom, Encode: descriptorEncodeNCMeasurementParametersStruct, Canonical: descriptorCanonicalNCMeasurementParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthNCMeasurementParametersStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2q Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeSI2qExtensionInformation, DecodeFrom: descriptorDecodeSI2qExtensionInformationFrom, Encode: descriptorEncodeSI2qExtensionInformation, Canonical: descriptorCanonicalSI2qExtensionInformation, CanonicalAtLength: descriptorCanonicalAtLengthSI2qExtensionInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CCN Support Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeCCNSupportDescriptionStruct, DecodeFrom: descriptorDecodeCCNSupportDescriptionStructFrom, Encode: descriptorEncodeCCNSupportDescriptionStruct, Canonical: descriptorCanonicalCCNSupportDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCCNSupportDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom, Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescriptionStructClause105233b},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description 2 struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescription2StructFrom, Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescription2Struct, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescription2Struct, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescription2Struct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodeFrom: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom, Encode: descriptorEncodePriorityAndEUTRANParametersDescriptionStructClause105233b, Canonical: descriptorCanonicalPriorityAndEUTRANParametersDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndEUTRANParametersDescriptionStructClause105233b},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Serving Cell Priority Parameters Description struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeServingCellPriorityParametersDescriptionStruct, DecodeFrom: descriptorDecodeServingCellPriorityParametersDescriptionStructFrom, Encode: descriptorEncodeServingCellPriorityParametersDescriptionStruct, Canonical: descriptorCanonicalServingCellPriorityParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellPriorityParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Priority Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GPriorityParametersDescriptionStruct, DecodeFrom: descriptorDecodeN3GPriorityParametersDescriptionStructFrom, Encode: descriptorEncodeN3GPriorityParametersDescriptionStruct, Canonical: descriptorCanonicalN3GPriorityParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GPriorityParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN Priority Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANPriorityParametersStruct, DecodeFrom: descriptorDecodeRepeatedUTRANPriorityParametersStructFrom, Encode: descriptorEncodeRepeatedUTRANPriorityParametersStruct, Canonical: descriptorCanonicalRepeatedUTRANPriorityParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANPriorityParametersStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANParametersDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANParametersDescriptionStructFrom, Encode: descriptorEncodeEUTRANParametersDescriptionStruct, Canonical: descriptorCanonicalEUTRANParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Measurement Parameters Description struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 10, MaximumBits: 45, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANMeasurementParametersDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementParametersDescriptionStructFrom, Encode: descriptorEncodeEUTRANMeasurementParametersDescriptionStruct, Canonical: descriptorCanonicalEUTRANMeasurementParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS E-UTRAN Measurement Parameters Description struct", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 37, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeFrom: descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom, Encode: descriptorEncodeGPRSEUTRANMeasurementParametersDescriptionStruct, Canonical: descriptorCanonicalGPRSEUTRANMeasurementParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSEUTRANMeasurementParametersDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNeighbourCellsStructFrom, Encode: descriptorEncodeRepeatedEUTRANNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedEUTRANNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNeighbourCellsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Not Allowed Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANNotAllowedCellsStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNotAllowedCellsStructFrom, Encode: descriptorEncodeRepeatedEUTRANNotAllowedCellsStruct, Canonical: descriptorCanonicalRepeatedEUTRANNotAllowedCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNotAllowedCellsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN PCID to TA mapping struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANPCIDToTAMappingStructFrom, Encode: descriptorEncodeRepeatedEUTRANPCIDToTAMappingStruct, Canonical: descriptorCanonicalRepeatedEUTRANPCIDToTAMappingStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANPCIDToTAMappingStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G CSG Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GCSGDescriptionStruct, DecodeFrom: descriptorDecodeN3GCSGDescriptionStructFrom, Encode: descriptorEncodeN3GCSGDescriptionStruct, Canonical: descriptorCanonicalN3GCSGDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GCSGDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANCSGDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANCSGDescriptionStructFrom, Encode: descriptorEncodeEUTRANCSGDescriptionStruct, Canonical: descriptorCanonicalEUTRANCSGDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANCSGDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CSG Cells Reporting Description struct", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 36, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeCSGCellsReportingDescriptionStructFrom, Encode: descriptorEncodeCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCSGCellsReportingDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN CSG Cells Reporting Description struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 14, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeUTRANCSGCellsReportingDescriptionStructFrom, Encode: descriptorEncodeUTRANCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalUTRANCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANCSGCellsReportingDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Cells Reporting Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANCSGCellsReportingDescriptionStructFrom, Encode: descriptorEncodeEUTRANCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalEUTRANCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANCSGCellsReportingDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeExtendedEARFCNsDescriptionStruct, DecodeFrom: descriptorDecodeExtendedEARFCNsDescriptionStructFrom, Encode: descriptorEncodeExtendedEARFCNsDescriptionStruct, Canonical: descriptorCanonicalExtendedEARFCNsDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthExtendedEARFCNsDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description for CSG Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeFrom: descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom, Encode: descriptorEncodeExtendedEARFCNsDescriptionForCSGCellsStruct, Canonical: descriptorCanonicalExtendedEARFCNsDescriptionForCSGCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthExtendedEARFCNsDescriptionForCSGCellsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "SI6 rest octets", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 56, MaximumBits: 56, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeSI6RestOctets, DecodeFrom: descriptorDecodeSI6RestOctetsFrom, Encode: descriptorEncodeSI6RestOctets, Canonical: descriptorCanonicalSI6RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI6RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "PCH and NCH info", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodePCHAndNCHInfo, DecodeFrom: descriptorDecodePCHAndNCHInfoFrom, Encode: descriptorEncodePCHAndNCHInfo, Canonical: descriptorCanonicalPCHAndNCHInfo, CanonicalAtLength: descriptorCanonicalAtLengthPCHAndNCHInfo},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "paging channel restructuring", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodePagingChannelRestructuring, DecodeFrom: descriptorDecodePagingChannelRestructuringFrom, Encode: descriptorEncodePagingChannelRestructuring, Canonical: descriptorCanonicalPagingChannelRestructuring, CanonicalAtLength: descriptorCanonicalAtLengthPagingChannelRestructuring},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "VBS/VGCS options", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeVBSVGCSOptions, DecodeFrom: descriptorDecodeVBSVGCSOptionsFrom, Encode: descriptorEncodeVBSVGCSOptions, Canonical: descriptorCanonicalVBSVGCSOptions, CanonicalAtLength: descriptorCanonicalAtLengthVBSVGCSOptions},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband notifications", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeInbandNotifications, DecodeFrom: descriptorDecodeInbandNotificationsFrom, Encode: descriptorEncodeInbandNotifications, Canonical: descriptorCanonicalInbandNotifications, CanonicalAtLength: descriptorCanonicalAtLengthInbandNotifications},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband pagings", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeInbandPagings, DecodeFrom: descriptorDecodeInbandPagingsFrom, Encode: descriptorEncodeInbandPagings, Canonical: descriptorCanonicalInbandPagings, CanonicalAtLength: descriptorCanonicalAtLengthInbandPagings},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "Band indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeBandIndicatorClause105235a, DecodeFrom: descriptorDecodeBandIndicatorClause105235aFrom, Encode: descriptorEncodeBandIndicatorClause105235a, Canonical: descriptorCanonicalBandIndicatorClause105235a, CanonicalAtLength: descriptorCanonicalAtLengthBandIndicatorClause105235a},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI 13 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodeSI13RestOctets, DecodeFrom: descriptorDecodeSI13RestOctetsFrom, Encode: descriptorEncodeSI13RestOctets, Canonical: descriptorCanonicalSI13RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI13RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PBCCH Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 22, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePBCCHDescriptionStruct, DecodeFrom: descriptorDecodePBCCHDescriptionStructFrom, Encode: descriptorEncodePBCCHDescriptionStruct, Canonical: descriptorCanonicalPBCCHDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPBCCHDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI_CHANGE_ALT", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodeSICHANGEALT, DecodeFrom: descriptorDecodeSICHANGEALTFrom, Encode: descriptorEncodeSICHANGEALT, Canonical: descriptorCanonicalSICHANGEALT, CanonicalAtLength: descriptorCanonicalAtLengthSICHANGEALT},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Definition struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePEOIMMCellGroupDefinitionStruct, DecodeFrom: descriptorDecodePEOIMMCellGroupDefinitionStructFrom, Encode: descriptorEncodePEOIMMCellGroupDefinitionStruct, Canonical: descriptorCanonicalPEOIMMCellGroupDefinitionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDefinitionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Specific Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePEOIMMCellGroupSpecificParametersStruct, DecodeFrom: descriptorDecodePEOIMMCellGroupSpecificParametersStructFrom, Encode: descriptorEncodePEOIMMCellGroupSpecificParametersStruct, Canonical: descriptorCanonicalPEOIMMCellGroupSpecificParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupSpecificParametersStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "SI 19 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeSI19RestOctets, DecodeFrom: descriptorDecodeSI19RestOctetsFrom, Encode: descriptorEncodeSI19RestOctets, Canonical: descriptorCanonicalSI19RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI19RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Neighbour Cell params struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTNeighbourCellParamsStruct, DecodeFrom: descriptorDecodeCOMPACTNeighbourCellParamsStructFrom, Encode: descriptorEncodeCOMPACTNeighbourCellParamsStruct, Canonical: descriptorCanonicalCOMPACTNeighbourCellParamsStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTNeighbourCellParamsStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Cell Selection struct", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTCellSelectionStruct, DecodeFrom: descriptorDecodeCOMPACTCellSelectionStructFrom, Encode: descriptorEncodeCOMPACTCellSelectionStruct, Canonical: descriptorCanonicalCOMPACTCellSelectionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTCellSelectionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeLADifferentStruct, DecodeFrom: descriptorDecodeLADifferentStructFrom, Encode: descriptorEncodeLADifferentStruct, Canonical: descriptorCanonicalLADifferentStruct, CanonicalAtLength: descriptorCanonicalAtLengthLADifferentStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeSI18RestOctets, DecodeFrom: descriptorDecodeSI18RestOctetsFrom, Encode: descriptorEncodeSI18RestOctets, Canonical: descriptorCanonicalSI18RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI18RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeNonGSMMessageStruct, DecodeFrom: descriptorDecodeNonGSMMessageStructFrom, Encode: descriptorEncodeNonGSMMessageStruct, Canonical: descriptorCanonicalNonGSMMessageStruct, CanonicalAtLength: descriptorCanonicalAtLengthNonGSMMessageStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", MaxOctets: 19, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 152, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPARestOctets, DecodeFrom: descriptorDecodeIPARestOctetsFrom, Encode: descriptorEncodeIPARestOctets, Canonical: descriptorCanonicalIPARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIPARestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPAUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPAUplinkAssignmentStructFrom, Encode: descriptorEncodeIPAUplinkAssignmentStruct, Canonical: descriptorCanonicalIPAUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPAUplinkAssignmentStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Downlink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPADownlinkAssignmentStruct, DecodeFrom: descriptorDecodeIPADownlinkAssignmentStructFrom, Encode: descriptorEncodeIPADownlinkAssignmentStruct, Canonical: descriptorCanonicalIPADownlinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPADownlinkAssignmentStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Single Block Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPASingleBlockUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPASingleBlockUplinkAssignmentStructFrom, Encode: descriptorEncodeIPASingleBlockUplinkAssignmentStruct, Canonical: descriptorCanonicalIPASingleBlockUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPASingleBlockUplinkAssignmentStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "Acknowledged Access Request struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 14, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeAcknowledgedAccessRequestStruct, DecodeFrom: descriptorDecodeAcknowledgedAccessRequestStructFrom, Encode: descriptorEncodeAcknowledgedAccessRequestStruct, Canonical: descriptorCanonicalAcknowledgedAccessRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAcknowledgedAccessRequestStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105278, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105278From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105278, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105278, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105278},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"}}, Decode: descriptorDecodeSI20RestOctets, DecodeFrom: descriptorDecodeSI20RestOctetsFrom, Encode: descriptorEncodeSI20RestOctets, Canonical: descriptorCanonicalSI20RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI20RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 37, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupCallInformation, DecodeFrom: descriptorDecodeGroupCallInformationFrom, Encode: descriptorEncodeGroupCallInformation, Canonical: descriptorCanonicalGroupCallInformation, CanonicalAtLength: descriptorCanonicalAtLengthGroupCallInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeEmergencyInd, DecodeFrom: descriptorDecodeEmergencyIndFrom, Encode: descriptorEncodeEmergencyInd, Canonical: descriptorCanonicalEmergencyInd, CanonicalAtLength: descriptorCanonicalAtLengthEmergencyInd},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Channel Description", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupChannelDescription, DecodeFrom: descriptorDecodeGroupChannelDescriptionFrom, Encode: descriptorEncodeGroupChannelDescription, Canonical: descriptorCanonicalGroupChannelDescription, CanonicalAtLength: descriptorCanonicalAtLengthGroupChannelDescription},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "bit string", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeBitString, DecodeFrom: descriptorDecodeBitStringFrom, Encode: descriptorEncodeBitString, Canonical: descriptorCanonicalBitString, CanonicalAtLength: descriptorCanonicalAtLengthBitString},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "NT/N Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeNTNRestOctets, DecodeFrom: descriptorDecodeNTNRestOctetsFrom, Encode: descriptorEncodeNTNRestOctets, Canonical: descriptorCanonicalNTNRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthNTNRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Group Call NCH information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfGroupCallNCHInformation, DecodeFrom: descriptorDecodeListOfGroupCallNCHInformationFrom, Encode: descriptorEncodeListOfGroupCallNCHInformation, Canonical: descriptorCanonicalListOfGroupCallNCHInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfGroupCallNCHInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Emergency information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfEmergencyInformation, DecodeFrom: descriptorDecodeListOfEmergencyInformationFrom, Encode: descriptorEncodeListOfEmergencyInformation, Canonical: descriptorCanonicalListOfEmergencyInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfEmergencyInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of VSTK_RAND information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfVSTKRANDInformation, DecodeFrom: descriptorDecodeListOfVSTKRANDInformationFrom, Encode: descriptorEncodeListOfVSTKRANDInformation, Canonical: descriptorCanonicalListOfVSTKRANDInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfVSTKRANDInformation},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Reduced GCR", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfReducedGCR, DecodeFrom: descriptorDecodeListOfReducedGCRFrom, Encode: descriptorEncodeListOfReducedGCR, Canonical: descriptorCanonicalListOfReducedGCR, CanonicalAtLength: descriptorCanonicalAtLengthListOfReducedGCR},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "P1 Rest Octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 136, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeP1RestOctets, DecodeFrom: descriptorDecodeP1RestOctetsFrom, Encode: descriptorEncodeP1RestOctets, Canonical: descriptorCanonicalP1RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP1RestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodePriorityClause105223, DecodeFrom: descriptorDecodePriorityClause105223From, Encode: descriptorEncodePriorityClause105223, Canonical: descriptorCanonicalPriorityClause105223, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105223},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "MBMS Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeMBMSInformationClause105223, DecodeFrom: descriptorDecodeMBMSInformationClause105223From, Encode: descriptorEncodeMBMSInformationClause105223, Canonical: descriptorCanonicalMBMSInformationClause105223, CanonicalAtLength: descriptorCanonicalAtLengthMBMSInformationClause105223},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "ETWS Primary Notification struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 13, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeETWSPrimaryNotificationStruct, DecodeFrom: descriptorDecodeETWSPrimaryNotificationStructFrom, Encode: descriptorEncodeETWSPrimaryNotificationStruct, Canonical: descriptorCanonicalETWSPrimaryNotificationStruct, CanonicalAtLength: descriptorCanonicalAtLengthETWSPrimaryNotificationStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105223, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105223From, Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105223, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105223, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105223},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 160, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"}}, Decode: descriptorDecodeSI10bisRestOctets, DecodeFrom: descriptorDecodeSI10bisRestOctetsFrom, Encode: descriptorEncodeSI10bisRestOctets, Canonical: descriptorCanonicalSI10bisRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10bisRestOctets},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Neighbour Cell Info", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 30, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"}}, Decode: descriptorDecodeSI10bisNeighbourCellInfo, DecodeFrom: descriptorDecodeSI10bisNeighbourCellInfoFrom, Encode: descriptorEncodeSI10bisNeighbourCellInfo, Canonical: descriptorCanonicalSI10bisNeighbourCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthSI10bisNeighbourCellInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeIARestOctets, DecodeFrom: descriptorDecodeIARestOctetsFrom, DecodeWithCollector: descriptorCollectIARestOctets, Encode: descriptorEncodeIARestOctets, Canonical: descriptorCanonicalIARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "EGPRS Packet Uplink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeEGPRSPacketUplinkAssignment, DecodeFrom: descriptorDecodeEGPRSPacketUplinkAssignmentFrom, DecodeWithCollector: descriptorCollectEGPRSPacketUplinkAssignment, Encode: descriptorEncodeEGPRSPacketUplinkAssignment, Canonical: descriptorCanonicalEGPRSPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSPacketUplinkAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Access Technologies Request struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeAccessTechnologiesRequestStruct, DecodeFrom: descriptorDecodeAccessTechnologiesRequestStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAccessTechnologiesRequestStruct), Encode: descriptorEncodeAccessTechnologiesRequestStruct, Canonical: descriptorCanonicalAccessTechnologiesRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessTechnologiesRequestStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 9, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 69, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketUplinkAssignment, DecodeFrom: descriptorDecodePacketUplinkAssignmentFrom, DecodeWithCollector: descriptorCollectPacketUplinkAssignment, Encode: descriptorEncodePacketUplinkAssignment, Canonical: descriptorCanonicalPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketUplinkAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Downlink Assignment", MaxOctets: 15, Extent: runtime.Extent{MinimumBits: 36, MaximumBits: 116, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketDownlinkAssignment, DecodeFrom: descriptorDecodePacketDownlinkAssignmentFrom, DecodeWithCollector: descriptorCollectPacketDownlinkAssignment, Encode: descriptorEncodePacketDownlinkAssignment, Canonical: descriptorCanonicalPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketDownlinkAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Frequency Parameters, before time", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeFrequencyParametersBeforeTime, DecodeFrom: descriptorDecodeFrequencyParametersBeforeTimeFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeFrequencyParametersBeforeTime), Encode: descriptorEncodeFrequencyParametersBeforeTime, Canonical: descriptorCanonicalFrequencyParametersBeforeTime, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersBeforeTime},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeSecondPartPacketAssignment, DecodeFrom: descriptorDecodeSecondPartPacketAssignmentFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSecondPartPacketAssignment), Encode: descriptorEncodeSecondPartPacketAssignment, Canonical: descriptorCanonicalSecondPartPacketAssignment, CanonicalAtLength: descriptorCanonicalAtLengthSecondPartPacketAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Multiple Blocks Packet Downlink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 48, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeMultipleBlocksPacketDownlinkAssignment, DecodeFrom: descriptorDecodeMultipleBlocksPacketDownlinkAssignmentFrom, DecodeWithCollector: descriptorCollectMultipleBlocksPacketDownlinkAssignment, Encode: descriptorEncodeMultipleBlocksPacketDownlinkAssignment, Canonical: descriptorCanonicalMultipleBlocksPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthMultipleBlocksPacketDownlinkAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105216, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105216From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105216), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105216, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105216, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105216},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: descriptorDecodeIARRestOctets, DecodeFrom: descriptorDecodeIARRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeIARRestOctets), Encode: descriptorEncodeIARRestOctets, Canonical: descriptorCanonicalIARRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105217, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105217From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105217), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105217, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105217, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105217},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "IAX Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 32, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"}}, Decode: descriptorDecodeIAXRestOctets, DecodeFrom: descriptorDecodeIAXRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeIAXRestOctets), Encode: descriptorEncodeIAXRestOctets, Canonical: descriptorCanonicalIAXRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIAXRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.18"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105218, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105218From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105218), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105218, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105218, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105218},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "SI1 Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"}}, Decode: descriptorDecodeSI1RestOctets, DecodeFrom: descriptorDecodeSI1RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI1RestOctets), Encode: descriptorEncodeSI1RestOctets, Canonical: descriptorCanonicalSI1RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI1RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32", Name: "Band indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.32"}}, Decode: descriptorDecodeBandIndicatorClause105232, DecodeFrom: descriptorDecodeBandIndicatorClause105232From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeBandIndicatorClause105232), Encode: descriptorEncodeBandIndicatorClause105232, Canonical: descriptorCanonicalBandIndicatorClause105232, CanonicalAtLength: descriptorCanonicalAtLengthBandIndicatorClause105232},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33", Name: "SI2bis Rest Octets", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33"}}, Decode: descriptorDecodeSI2bisRestOctets, DecodeFrom: descriptorDecodeSI2bisRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI2bisRestOctets), Encode: descriptorEncodeSI2bisRestOctets, Canonical: descriptorCanonicalSI2bisRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2bisRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "SI2n Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeSI2nRestOctets, DecodeFrom: descriptorDecodeSI2nRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI2nRestOctets), Encode: descriptorEncodeSI2nRestOctets, Canonical: descriptorCanonicalSI2nRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2nRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GSM Neighbour Cell Selection params struct", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 51, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeGSMNeighbourCellSelectionParamsStruct, DecodeFrom: descriptorDecodeGSMNeighbourCellSelectionParamsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGSMNeighbourCellSelectionParamsStruct), Encode: descriptorEncodeGSMNeighbourCellSelectionParamsStruct, Canonical: descriptorCanonicalGSMNeighbourCellSelectionParamsStruct, CanonicalAtLength: descriptorCanonicalAtLengthGSMNeighbourCellSelectionParamsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c", Name: "GPRS Support Indicator struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33c"}}, Decode: descriptorDecodeGPRSSupportIndicatorStruct, DecodeFrom: descriptorDecodeGPRSSupportIndicatorStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSSupportIndicatorStruct), Encode: descriptorEncodeGPRSSupportIndicatorStruct, Canonical: descriptorCanonicalGPRSSupportIndicatorStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSSupportIndicatorStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI3 Rest Octet", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSI3RestOctet, DecodeFrom: descriptorDecodeSI3RestOctetFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI3RestOctet), Encode: descriptorEncodeSI3RestOctet, Canonical: descriptorCanonicalSI3RestOctet, CanonicalAtLength: descriptorCanonicalAtLengthSI3RestOctet},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeOptionalSelectionParametersClause105234, DecodeFrom: descriptorDecodeOptionalSelectionParametersClause105234From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeOptionalSelectionParametersClause105234), Encode: descriptorEncodeOptionalSelectionParametersClause105234, Canonical: descriptorCanonicalOptionalSelectionParametersClause105234, CanonicalAtLength: descriptorCanonicalAtLengthOptionalSelectionParametersClause105234},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSelectionParametersClause105234, DecodeFrom: descriptorDecodeSelectionParametersClause105234From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSelectionParametersClause105234), Encode: descriptorEncodeSelectionParametersClause105234, Canonical: descriptorCanonicalSelectionParametersClause105234, CanonicalAtLength: descriptorCanonicalAtLengthSelectionParametersClause105234},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Optional Power Offset", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeOptionalPowerOffsetClause105234, DecodeFrom: descriptorDecodeOptionalPowerOffsetClause105234From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeOptionalPowerOffsetClause105234), Encode: descriptorEncodeOptionalPowerOffsetClause105234, Canonical: descriptorCanonicalOptionalPowerOffsetClause105234, CanonicalAtLength: descriptorCanonicalAtLengthOptionalPowerOffsetClause105234},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 2ter Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSystemInformation2terIndicator, DecodeFrom: descriptorDecodeSystemInformation2terIndicatorFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSystemInformation2terIndicator), Encode: descriptorEncodeSystemInformation2terIndicator, Canonical: descriptorCanonicalSystemInformation2terIndicator, CanonicalAtLength: descriptorCanonicalAtLengthSystemInformation2terIndicator},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Early Classmark Sending Control", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeEarlyClassmarkSendingControl, DecodeFrom: descriptorDecodeEarlyClassmarkSendingControlFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEarlyClassmarkSendingControl), Encode: descriptorEncodeEarlyClassmarkSendingControl, Canonical: descriptorCanonicalEarlyClassmarkSendingControl, CanonicalAtLength: descriptorCanonicalAtLengthEarlyClassmarkSendingControl},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Scheduling if and where", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSchedulingIfAndWhere, DecodeFrom: descriptorDecodeSchedulingIfAndWhereFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSchedulingIfAndWhere), Encode: descriptorEncodeSchedulingIfAndWhere, Canonical: descriptorCanonicalSchedulingIfAndWhere, CanonicalAtLength: descriptorCanonicalAtLengthSchedulingIfAndWhere},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "GPRS Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeGPRSIndicatorClause105234, DecodeFrom: descriptorDecodeGPRSIndicatorClause105234From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSIndicatorClause105234), Encode: descriptorEncodeGPRSIndicatorClause105234, Canonical: descriptorCanonicalGPRSIndicatorClause105234, CanonicalAtLength: descriptorCanonicalAtLengthGPRSIndicatorClause105234},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "3G Early Classmark Sending Restriction", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeN3GEarlyClassmarkSendingRestriction, DecodeFrom: descriptorDecodeN3GEarlyClassmarkSendingRestrictionFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GEarlyClassmarkSendingRestriction), Encode: descriptorEncodeN3GEarlyClassmarkSendingRestriction, Canonical: descriptorCanonicalN3GEarlyClassmarkSendingRestriction, CanonicalAtLength: descriptorCanonicalAtLengthN3GEarlyClassmarkSendingRestriction},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "SI2quater Indicator struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSI2quaterIndicatorStruct, DecodeFrom: descriptorDecodeSI2quaterIndicatorStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI2quaterIndicatorStruct), Encode: descriptorEncodeSI2quaterIndicatorStruct, Canonical: descriptorCanonicalSI2quaterIndicatorStruct, CanonicalAtLength: descriptorCanonicalAtLengthSI2quaterIndicatorStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "Iu Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeIuIndicator, DecodeFrom: descriptorDecodeIuIndicatorFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeIuIndicator), Encode: descriptorEncodeIuIndicator, Canonical: descriptorCanonicalIuIndicator, CanonicalAtLength: descriptorCanonicalAtLengthIuIndicator},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34", Name: "System Information 21 Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 2, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.34"}}, Decode: descriptorDecodeSystemInformation21Indicator, DecodeFrom: descriptorDecodeSystemInformation21IndicatorFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSystemInformation21Indicator), Encode: descriptorEncodeSystemInformation21Indicator, Canonical: descriptorCanonicalSystemInformation21Indicator, CanonicalAtLength: descriptorCanonicalAtLengthSystemInformation21Indicator},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "SI16 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeSI16RestOctets, DecodeFrom: descriptorDecodeSI16RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI16RestOctets), Encode: descriptorEncodeSI16RestOctets, Canonical: descriptorCanonicalSI16RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI16RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f", Name: "SI17 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37f"}}, Decode: descriptorDecodeSI17RestOctets, DecodeFrom: descriptorDecodeSI17RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI17RestOctets), Encode: descriptorEncodeSI17RestOctets, Canonical: descriptorCanonicalSI17RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI17RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA Parameters", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAParametersClause105237e, DecodeFrom: descriptorDecodeLSAParametersClause105237eFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAParametersClause105237e), Encode: descriptorEncodeLSAParametersClause105237e, Canonical: descriptorCanonicalLSAParametersClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAParametersClause105237e},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA ID information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAIDInformationClause105237e, DecodeFrom: descriptorDecodeLSAIDInformationClause105237eFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAIDInformationClause105237e), Encode: descriptorEncodeLSAIDInformationClause105237e, Canonical: descriptorCanonicalLSAIDInformationClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAIDInformationClause105237e},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e", Name: "LSA identity", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 25, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37e"}}, Decode: descriptorDecodeLSAIdentityClause105237e, DecodeFrom: descriptorDecodeLSAIdentityClause105237eFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAIdentityClause105237e), Encode: descriptorEncodeLSAIdentityClause105237e, Canonical: descriptorCanonicalLSAIdentityClause105237e, CanonicalAtLength: descriptorCanonicalAtLengthLSAIdentityClause105237e},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "SI14 Rest Octets", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"}}, Decode: descriptorDecodeSI14RestOctets, DecodeFrom: descriptorDecodeSI14RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI14RestOctets), Encode: descriptorEncodeSI14RestOctets, Canonical: descriptorCanonicalSI14RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI14RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 31, MaximumBits: 31, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37j"}}, Decode: descriptorDecodeDYNAMICARFCNMAPPINGClause105237j, DecodeFrom: descriptorDecodeDYNAMICARFCNMAPPINGClause105237jFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDYNAMICARFCNMAPPINGClause105237j), Encode: descriptorEncodeDYNAMICARFCNMAPPINGClause105237j, Canonical: descriptorCanonicalDYNAMICARFCNMAPPINGClause105237j, CanonicalAtLength: descriptorCanonicalAtLengthDYNAMICARFCNMAPPINGClause105237j},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "SI15 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"}}, Decode: descriptorDecodeSI15RestOctets, DecodeFrom: descriptorDecodeSI15RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI15RestOctets), Encode: descriptorEncodeSI15RestOctets, Canonical: descriptorCanonicalSI15RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI15RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k", Name: "DYNAMIC ARFCN MAPPING", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 31, MaximumBits: 31, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37k"}}, Decode: descriptorDecodeDYNAMICARFCNMAPPINGClause105237k, DecodeFrom: descriptorDecodeDYNAMICARFCNMAPPINGClause105237kFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDYNAMICARFCNMAPPINGClause105237k), Encode: descriptorEncodeDYNAMICARFCNMAPPINGClause105237k, Canonical: descriptorCanonicalDYNAMICARFCNMAPPINGClause105237k, CanonicalAtLength: descriptorCanonicalAtLengthDYNAMICARFCNMAPPINGClause105237k},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "SI 21 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"}}, Decode: descriptorDecodeSI21RestOctets, DecodeFrom: descriptorDecodeSI21RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI21RestOctets), Encode: descriptorEncodeSI21RestOctets, Canonical: descriptorCanonicalSI21RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI21RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m", Name: "Network Sharing EAB Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37m"}}, Decode: descriptorDecodeNetworkSharingEABInformationStruct, DecodeFrom: descriptorDecodeNetworkSharingEABInformationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNetworkSharingEABInformationStruct), Encode: descriptorEncodeNetworkSharingEABInformationStruct, Canonical: descriptorCanonicalNetworkSharingEABInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthNetworkSharingEABInformationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "SI 22 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"}}, Decode: descriptorDecodeSI22RestOctets, DecodeFrom: descriptorDecodeSI22RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI22RestOctets), Encode: descriptorEncodeSI22RestOctets, Canonical: descriptorCanonicalSI22RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI22RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n", Name: "Network Sharing Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 28, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37n"}}, Decode: descriptorDecodeNetworkSharingInformationStruct, DecodeFrom: descriptorDecodeNetworkSharingInformationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNetworkSharingInformationStruct), Encode: descriptorEncodeNetworkSharingInformationStruct, Canonical: descriptorCanonicalNetworkSharingInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthNetworkSharingInformationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "SI 23 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeSI23RestOctets, DecodeFrom: descriptorDecodeSI23RestOctetsFrom, DecodeWithCollector: descriptorCollectSI23RestOctets, Encode: descriptorEncodeSI23RestOctets, Canonical: descriptorCanonicalSI23RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI23RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "IRAT Cell Reselection Information struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeIRATCellReselectionInformationStruct, DecodeFrom: descriptorDecodeIRATCellReselectionInformationStructFrom, DecodeWithCollector: descriptorCollectIRATCellReselectionInformationStruct, Encode: descriptorEncodeIRATCellReselectionInformationStruct, Canonical: descriptorCanonicalIRATCellReselectionInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthIRATCellReselectionInformationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodePriorityAndUTRANParametersDescriptionStruct, DecodeFrom: descriptorDecodePriorityAndUTRANParametersDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePriorityAndUTRANParametersDescriptionStruct), Encode: descriptorEncodePriorityAndUTRANParametersDescriptionStruct, Canonical: descriptorCanonicalPriorityAndUTRANParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndUTRANParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "UTRAN FDD/TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeUTRANFDDTDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANFDDTDDDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANFDDTDDDescriptionStruct), Encode: descriptorEncodeUTRANFDDTDDDescriptionStruct, Canonical: descriptorCanonicalUTRANFDDTDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDTDDDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, DecodeFrom: descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct), Encode: descriptorEncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, Canonical: descriptorCanonicalRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237o, DecodeFrom: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom, DecodeWithCollector: descriptorCollectPriorityAndEUTRANParametersDescriptionStructClause105237o, Encode: descriptorEncodePriorityAndEUTRANParametersDescriptionStructClause105237o, Canonical: descriptorCanonicalPriorityAndEUTRANParametersDescriptionStructClause105237o, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndEUTRANParametersDescriptionStructClause105237o},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o", Name: "Repeated E-UTRAN Neighbour Frequency and Priority struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}}, Decode: descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom, DecodeWithCollector: descriptorCollectRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, Encode: descriptorEncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, Canonical: descriptorCanonicalRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNeighbourFrequencyAndPriorityStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "SI10 rest octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeSI10RestOctets, DecodeFrom: descriptorDecodeSI10RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI10RestOctets), Encode: descriptorEncodeSI10RestOctets, Canonical: descriptorCanonicalSI10RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "neighbour information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 13, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeNeighbourInformation, DecodeFrom: descriptorDecodeNeighbourInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNeighbourInformation), Encode: descriptorEncodeNeighbourInformation, Canonical: descriptorCanonicalNeighbourInformation, CanonicalAtLength: descriptorCanonicalAtLengthNeighbourInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 37, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellInfo, DecodeFrom: descriptorDecodeCellInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCellInfo), Encode: descriptorEncodeCellInfo, Canonical: descriptorCanonicalCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthCellInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell parameters", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 30, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellParameters, DecodeFrom: descriptorDecodeCellParametersFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCellParameters), Encode: descriptorEncodeCellParameters, Canonical: descriptorCanonicalCellParameters, CanonicalAtLength: descriptorCanonicalAtLengthCellParameters},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "cell barred", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeCellBarred, DecodeFrom: descriptorDecodeCellBarredFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCellBarred), Encode: descriptorEncodeCellBarred, Canonical: descriptorCanonicalCellBarred, CanonicalAtLength: descriptorCanonicalAtLengthCellBarred},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further cell info", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 26, MaximumBits: 29, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeFurtherCellInfo, DecodeFrom: descriptorDecodeFurtherCellInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeFurtherCellInfo), Encode: descriptorEncodeFurtherCellInfo, Canonical: descriptorCanonicalFurtherCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthFurtherCellInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "la different", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeLaDifferent, DecodeFrom: descriptorDecodeLaDifferentFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLaDifferent), Encode: descriptorEncodeLaDifferent, Canonical: descriptorCanonicalLaDifferent, CanonicalAtLength: descriptorCanonicalAtLengthLaDifferent},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "info field", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeInfoField, DecodeFrom: descriptorDecodeInfoFieldFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeInfoField), Encode: descriptorEncodeInfoField, Canonical: descriptorCanonicalInfoField, CanonicalAtLength: descriptorCanonicalAtLengthInfoField},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "next frequency", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeNextFrequency, DecodeFrom: descriptorDecodeNextFrequencyFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNextFrequency), Encode: descriptorEncodeNextFrequency, Canonical: descriptorCanonicalNextFrequency, CanonicalAtLength: descriptorCanonicalAtLengthNextFrequency},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "differential cell info", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 43, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeDifferentialCellInfo, DecodeFrom: descriptorDecodeDifferentialCellInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDifferentialCellInfo), Encode: descriptorEncodeDifferentialCellInfo, Canonical: descriptorCanonicalDifferentialCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthDifferentialCellInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "diff cell pars", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 35, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeDiffCellPars, DecodeFrom: descriptorDecodeDiffCellParsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeDiffCellPars), Encode: descriptorEncodeDiffCellPars, Canonical: descriptorCanonicalDiffCellPars, CanonicalAtLength: descriptorCanonicalAtLengthDiffCellPars},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44", Name: "further diff cell info", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 34, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.44"}}, Decode: descriptorDecodeFurtherDiffCellInfo, DecodeFrom: descriptorDecodeFurtherDiffCellInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeFurtherDiffCellInfo), Encode: descriptorEncodeFurtherDiffCellInfo, Canonical: descriptorCanonicalFurtherDiffCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthFurtherDiffCellInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71", Name: "SI10ter Rest Octets", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.71"}}, Decode: descriptorDecodeSI10terRestOctets, DecodeFrom: descriptorDecodeSI10terRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI10terRestOctets), Encode: descriptorEncodeSI10terRestOctets, Canonical: descriptorCanonicalSI10terRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10terRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "SI9 rest octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 136, MaximumBits: 136, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeSI9RestOctets, DecodeFrom: descriptorDecodeSI9RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI9RestOctets), Encode: descriptorEncodeSI9RestOctets, Canonical: descriptorCanonicalSI9RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI9RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Scheduling info", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeSchedulingInfo, DecodeFrom: descriptorDecodeSchedulingInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSchedulingInfo), Encode: descriptorEncodeSchedulingInfo, Canonical: descriptorCanonicalSchedulingInfo, CanonicalAtLength: descriptorCanonicalAtLengthSchedulingInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Info type", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodeInfoType, DecodeFrom: descriptorDecodeInfoTypeFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeInfoType), Encode: descriptorEncodeInfoType, Canonical: descriptorCanonicalInfoType, CanonicalAtLength: descriptorCanonicalAtLengthInfoType},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Positions", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodePositions, DecodeFrom: descriptorDecodePositionsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePositions), Encode: descriptorEncodePositions, Canonical: descriptorCanonicalPositions, CanonicalAtLength: descriptorCanonicalAtLengthPositions},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a", Name: "Position", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37a"}}, Decode: descriptorDecodePosition, DecodeFrom: descriptorDecodePositionFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePosition), Encode: descriptorEncodePosition, Canonical: descriptorCanonicalPosition, CanonicalAtLength: descriptorCanonicalAtLengthPosition},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "SI2ter Rest Octets", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 32, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeSI2terRestOctets, DecodeFrom: descriptorDecodeSI2terRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI2terRestOctets), Encode: descriptorEncodeSI2terRestOctets, Canonical: descriptorCanonicalSI2terRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2terRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN FDD Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeUTRANFDDDescriptionStructClause105233a, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructClause105233aFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANFDDDescriptionStructClause105233a), Encode: descriptorEncodeUTRANFDDDescriptionStructClause105233a, Canonical: descriptorCanonicalUTRANFDDDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStructClause105233a},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "UTRAN TDD Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeUTRANTDDDescriptionStructClause105233a, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructClause105233aFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANTDDDescriptionStructClause105233a), Encode: descriptorEncodeUTRANTDDDescriptionStructClause105233a, Canonical: descriptorCanonicalUTRANTDDDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStructClause105233a},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G MEASUREMENT Parameters Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 17, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233a, DecodeFrom: descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233a), Encode: descriptorEncodeN3GMEASUREMENTParametersDescriptionStructClause105233a, Canonical: descriptorCanonicalN3GMEASUREMENTParametersDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthN3GMEASUREMENTParametersDescriptionStructClause105233a},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33a"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a), Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233a, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescriptionStructClause105233a, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescriptionStructClause105233a},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets", MaxOctets: 10, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 80, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctets, DecodeFrom: descriptorDecodeSI4RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI4RestOctets), Encode: descriptorEncodeSI4RestOctets, Canonical: descriptorCanonicalSI4RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_O", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 24, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctetsO, DecodeFrom: descriptorDecodeSI4RestOctetsOFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI4RestOctetsO), Encode: descriptorEncodeSI4RestOctetsO, Canonical: descriptorCanonicalSI4RestOctetsO, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctetsO},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "SI4 Rest Octets_S", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSI4RestOctetsS, DecodeFrom: descriptorDecodeSI4RestOctetsSFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI4RestOctetsS), Encode: descriptorEncodeSI4RestOctetsS, Canonical: descriptorCanonicalSI4RestOctetsS, CanonicalAtLength: descriptorCanonicalAtLengthSI4RestOctetsS},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Break Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeBreakIndicator, DecodeFrom: descriptorDecodeBreakIndicatorFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeBreakIndicator), Encode: descriptorEncodeBreakIndicator, Canonical: descriptorCanonicalBreakIndicator, CanonicalAtLength: descriptorCanonicalAtLengthBreakIndicator},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36", Name: "SI7 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"}}, Decode: descriptorDecodeSI7RestOctets, DecodeFrom: descriptorDecodeSI7RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI7RestOctets), Encode: descriptorEncodeSI7RestOctets, Canonical: descriptorCanonicalSI7RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI7RestOctets, DecodeWithContext: descriptorDecodeSI7RestOctetsWithContext, DecodeFromWithContext: descriptorDecodeSI7RestOctetsFromWithContext, DecodeWithCollectorWithContext: descriptorCollectSI7RestOctetsWithContext, EncodeWithContext: descriptorEncodeWithContextSI7RestOctets, CanonicalWithContext: descriptorCanonicalWithContextSI7RestOctets, CanonicalAtLengthWithContext: descriptorCanonicalAtLengthWithContextSI7RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37", Name: "SI8 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"}}, Decode: descriptorDecodeSI8RestOctets, DecodeFrom: descriptorDecodeSI8RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI8RestOctets), Encode: descriptorEncodeSI8RestOctets, Canonical: descriptorCanonicalSI8RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI8RestOctets, DecodeWithContext: descriptorDecodeSI8RestOctetsWithContext, DecodeFromWithContext: descriptorDecodeSI8RestOctetsFromWithContext, DecodeWithCollectorWithContext: descriptorCollectSI8RestOctetsWithContext, EncodeWithContext: descriptorEncodeWithContextSI8RestOctets, CanonicalWithContext: descriptorCanonicalWithContextSI8RestOctets, CanonicalAtLengthWithContext: descriptorCanonicalAtLengthWithContextSI8RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 16, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeOptionalSelectionParametersClause105235, DecodeFrom: descriptorDecodeOptionalSelectionParametersClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeOptionalSelectionParametersClause105235), Encode: descriptorEncodeOptionalSelectionParametersClause105235, Canonical: descriptorCanonicalOptionalSelectionParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthOptionalSelectionParametersClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Selection Parameters", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeSelectionParametersClause105235, DecodeFrom: descriptorDecodeSelectionParametersClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSelectionParametersClause105235), Encode: descriptorEncodeSelectionParametersClause105235, Canonical: descriptorCanonicalSelectionParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthSelectionParametersClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "Optional Power Offset", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 3, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeOptionalPowerOffsetClause105235, DecodeFrom: descriptorDecodeOptionalPowerOffsetClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeOptionalPowerOffsetClause105235), Encode: descriptorEncodeOptionalPowerOffsetClause105235, Canonical: descriptorCanonicalOptionalPowerOffsetClause105235, CanonicalAtLength: descriptorCanonicalAtLengthOptionalPowerOffsetClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "GPRS Indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeGPRSIndicatorClause105235, DecodeFrom: descriptorDecodeGPRSIndicatorClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSIndicatorClause105235), Encode: descriptorEncodeGPRSIndicatorClause105235, Canonical: descriptorCanonicalGPRSIndicatorClause105235, CanonicalAtLength: descriptorCanonicalAtLengthGPRSIndicatorClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA Parameters", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 31, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAParametersClause105235, DecodeFrom: descriptorDecodeLSAParametersClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAParametersClause105235), Encode: descriptorEncodeLSAParametersClause105235, Canonical: descriptorCanonicalLSAParametersClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAParametersClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA ID information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAIDInformationClause105235, DecodeFrom: descriptorDecodeLSAIDInformationClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAIDInformationClause105235), Encode: descriptorEncodeLSAIDInformationClause105235, Canonical: descriptorCanonicalLSAIDInformationClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAIDInformationClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35", Name: "LSA identity", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 11, MaximumBits: 25, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35"}}, Decode: descriptorDecodeLSAIdentityClause105235, DecodeFrom: descriptorDecodeLSAIdentityClause105235From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLSAIdentityClause105235), Encode: descriptorEncodeLSAIdentityClause105235, Canonical: descriptorCanonicalLSAIdentityClause105235, CanonicalAtLength: descriptorCanonicalAtLengthLSAIdentityClause105235},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "SI 13alt Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}}, Decode: descriptorDecodeSI13altRestOctets, DecodeFrom: descriptorDecodeSI13altRestOctetsFrom, DecodeWithCollector: descriptorCollectSI13altRestOctets, Encode: descriptorEncodeSI13altRestOctets, Canonical: descriptorCanonicalSI13altRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI13altRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l", Name: "PBCCH Description 2 struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 26, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}}, Decode: descriptorDecodePBCCHDescription2Struct, DecodeFrom: descriptorDecodePBCCHDescription2StructFrom, DecodeWithCollector: descriptorCollectPBCCHDescription2Struct, Encode: descriptorEncodePBCCHDescription2Struct, Canonical: descriptorCanonicalPBCCHDescription2Struct, CanonicalAtLength: descriptorCanonicalAtLengthPBCCHDescription2Struct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "P2 Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodeP2RestOctets, DecodeFrom: descriptorDecodeP2RestOctetsFrom, DecodeWithCollector: descriptorCollectP2RestOctets, Encode: descriptorEncodeP2RestOctets, Canonical: descriptorCanonicalP2RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP2RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodePriorityClause105224, DecodeFrom: descriptorDecodePriorityClause105224From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePriorityClause105224), Encode: descriptorEncodePriorityClause105224, Canonical: descriptorCanonicalPriorityClause105224, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105224},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "MBMS Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodeMBMSInformationClause105224, DecodeFrom: descriptorDecodeMBMSInformationClause105224From, DecodeWithCollector: descriptorCollectMBMSInformationClause105224, Encode: descriptorEncodeMBMSInformationClause105224, Canonical: descriptorCanonicalMBMSInformationClause105224, CanonicalAtLength: descriptorCanonicalAtLengthMBMSInformationClause105224},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105224, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105224From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105224), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105224, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105224, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105224},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "P3 Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodeP3RestOctets, DecodeFrom: descriptorDecodeP3RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeP3RestOctets), Encode: descriptorEncodeP3RestOctets, Canonical: descriptorCanonicalP3RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP3RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodePriorityClause105225, DecodeFrom: descriptorDecodePriorityClause105225From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePriorityClause105225), Encode: descriptorEncodePriorityClause105225, Canonical: descriptorCanonicalPriorityClause105225, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105225},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.25"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105225, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105225From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105225), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105225, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105225, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105225},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2quater Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeSI2quaterRestOctets, DecodeFrom: descriptorDecodeSI2quaterRestOctetsFrom, DecodeWithCollector: descriptorCollectSI2quaterRestOctets, Encode: descriptorEncodeSI2quaterRestOctets, Canonical: descriptorCanonicalSI2quaterRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI2quaterRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Neighbour Cell Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GNeighbourCellDescriptionStruct, DecodeFrom: descriptorDecodeN3GNeighbourCellDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GNeighbourCellDescriptionStruct), Encode: descriptorEncodeN3GNeighbourCellDescriptionStruct, Canonical: descriptorCanonicalN3GNeighbourCellDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GNeighbourCellDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANFDDDescriptionStructClause105233b, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructClause105233bFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANFDDDescriptionStructClause105233b), Encode: descriptorEncodeUTRANFDDDescriptionStructClause105233b, Canonical: descriptorCanonicalUTRANFDDDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStructClause105233b},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN FDD Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 21, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANFDDNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedUTRANFDDNeighbourCellsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedUTRANFDDNeighbourCellsStruct), Encode: descriptorEncodeRepeatedUTRANFDDNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedUTRANFDDNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANFDDNeighbourCellsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANTDDDescriptionStructClause105233b, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructClause105233bFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANTDDDescriptionStructClause105233b), Encode: descriptorEncodeUTRANTDDDescriptionStructClause105233b, Canonical: descriptorCanonicalUTRANTDDDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStructClause105233b},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN TDD Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 21, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANTDDNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedUTRANTDDNeighbourCellsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedUTRANTDDNeighbourCellsStruct), Encode: descriptorEncodeRepeatedUTRANTDDNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedUTRANTDDNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANTDDNeighbourCellsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "MEASUREMENT PARAMETERS Description Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeMEASUREMENTPARAMETERSDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMEASUREMENTPARAMETERSDescriptionStruct), Encode: descriptorEncodeMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthMEASUREMENTPARAMETERSDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 23, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, DecodeFrom: descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b), Encode: descriptorEncodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, Canonical: descriptorCanonicalN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS Real Time Difference Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSRealTimeDifferenceDescriptionStruct, DecodeFrom: descriptorDecodeGPRSRealTimeDifferenceDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSRealTimeDifferenceDescriptionStruct), Encode: descriptorEncodeGPRSRealTimeDifferenceDescriptionStruct, Canonical: descriptorCanonicalGPRSRealTimeDifferenceDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSRealTimeDifferenceDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD6 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRTD6Struct, DecodeFrom: descriptorDecodeRTD6StructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRTD6Struct), Encode: descriptorEncodeRTD6Struct, Canonical: descriptorCanonicalRTD6Struct, CanonicalAtLength: descriptorCanonicalAtLengthRTD6Struct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "RTD12 Struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRTD12Struct, DecodeFrom: descriptorDecodeRTD12StructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRTD12Struct), Encode: descriptorEncodeRTD12Struct, Canonical: descriptorCanonicalRTD12Struct, CanonicalAtLength: descriptorCanonicalAtLengthRTD12Struct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS BSIC Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSBSICDescriptionStruct, DecodeFrom: descriptorDecodeGPRSBSICDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSBSICDescriptionStruct), Encode: descriptorEncodeGPRSBSICDescriptionStruct, Canonical: descriptorCanonicalGPRSBSICDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSBSICDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS REPORT PRIORITY Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSREPORTPRIORITYDescriptionStruct, DecodeFrom: descriptorDecodeGPRSREPORTPRIORITYDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSREPORTPRIORITYDescriptionStruct), Encode: descriptorEncodeGPRSREPORTPRIORITYDescriptionStruct, Canonical: descriptorCanonicalGPRSREPORTPRIORITYDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSREPORTPRIORITYDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS MEASUREMENT PARAMETERS Description struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 46, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStruct), Encode: descriptorEncodeGPRSMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalGPRSMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSMEASUREMENTPARAMETERSDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS 3G MEASUREMENT PARAMETERS Description struct", MaxOctets: 4, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 26, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, DecodeFrom: descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct), Encode: descriptorEncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, Canonical: descriptorCanonicalGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRS3GMEASUREMENTPARAMETERSDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "NC Measurement Parameters struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 12, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeNCMeasurementParametersStruct, DecodeFrom: descriptorDecodeNCMeasurementParametersStructFrom, DecodeWithCollector: descriptorCollectNCMeasurementParametersStruct, Encode: descriptorEncodeNCMeasurementParametersStruct, Canonical: descriptorCanonicalNCMeasurementParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthNCMeasurementParametersStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "SI2q Extension Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeSI2qExtensionInformation, DecodeFrom: descriptorDecodeSI2qExtensionInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI2qExtensionInformation), Encode: descriptorEncodeSI2qExtensionInformation, Canonical: descriptorCanonicalSI2qExtensionInformation, CanonicalAtLength: descriptorCanonicalAtLengthSI2qExtensionInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CCN Support Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeCCNSupportDescriptionStruct, DecodeFrom: descriptorDecodeCCNSupportDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCCNSupportDescriptionStruct), Encode: descriptorEncodeCCNSupportDescriptionStruct, Canonical: descriptorCanonicalCCNSupportDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCCNSupportDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b), Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescriptionStructClause105233b, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescriptionStructClause105233b},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Additional Measurement Parameters Description 2 struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GAdditionalMeasurementParametersDescription2Struct, DecodeFrom: descriptorDecodeN3GAdditionalMeasurementParametersDescription2StructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GAdditionalMeasurementParametersDescription2Struct), Encode: descriptorEncodeN3GAdditionalMeasurementParametersDescription2Struct, Canonical: descriptorCanonicalN3GAdditionalMeasurementParametersDescription2Struct, CanonicalAtLength: descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescription2Struct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Priority and E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233b, DecodeFrom: descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom, DecodeWithCollector: descriptorCollectPriorityAndEUTRANParametersDescriptionStructClause105233b, Encode: descriptorEncodePriorityAndEUTRANParametersDescriptionStructClause105233b, Canonical: descriptorCanonicalPriorityAndEUTRANParametersDescriptionStructClause105233b, CanonicalAtLength: descriptorCanonicalAtLengthPriorityAndEUTRANParametersDescriptionStructClause105233b},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Serving Cell Priority Parameters Description struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 15, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeServingCellPriorityParametersDescriptionStruct, DecodeFrom: descriptorDecodeServingCellPriorityParametersDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeServingCellPriorityParametersDescriptionStruct), Encode: descriptorEncodeServingCellPriorityParametersDescriptionStruct, Canonical: descriptorCanonicalServingCellPriorityParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellPriorityParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G Priority Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GPriorityParametersDescriptionStruct, DecodeFrom: descriptorDecodeN3GPriorityParametersDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeN3GPriorityParametersDescriptionStruct), Encode: descriptorEncodeN3GPriorityParametersDescriptionStruct, Canonical: descriptorCanonicalN3GPriorityParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GPriorityParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated UTRAN Priority Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedUTRANPriorityParametersStruct, DecodeFrom: descriptorDecodeRepeatedUTRANPriorityParametersStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedUTRANPriorityParametersStruct), Encode: descriptorEncodeRepeatedUTRANPriorityParametersStruct, Canonical: descriptorCanonicalRepeatedUTRANPriorityParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedUTRANPriorityParametersStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Parameters Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANParametersDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANParametersDescriptionStructFrom, DecodeWithCollector: descriptorCollectEUTRANParametersDescriptionStruct, Encode: descriptorEncodeEUTRANParametersDescriptionStruct, Canonical: descriptorCanonicalEUTRANParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN Measurement Parameters Description struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 10, MaximumBits: 45, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANMeasurementParametersDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementParametersDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEUTRANMeasurementParametersDescriptionStruct), Encode: descriptorEncodeEUTRANMeasurementParametersDescriptionStruct, Canonical: descriptorCanonicalEUTRANMeasurementParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "GPRS E-UTRAN Measurement Parameters Description struct", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 37, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStruct, DecodeFrom: descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStruct), Encode: descriptorEncodeGPRSEUTRANMeasurementParametersDescriptionStruct, Canonical: descriptorCanonicalGPRSEUTRANMeasurementParametersDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGPRSEUTRANMeasurementParametersDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Neighbour Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANNeighbourCellsStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNeighbourCellsStructFrom, DecodeWithCollector: descriptorCollectRepeatedEUTRANNeighbourCellsStruct, Encode: descriptorEncodeRepeatedEUTRANNeighbourCellsStruct, Canonical: descriptorCanonicalRepeatedEUTRANNeighbourCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNeighbourCellsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN Not Allowed Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANNotAllowedCellsStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANNotAllowedCellsStructFrom, DecodeWithCollector: descriptorCollectRepeatedEUTRANNotAllowedCellsStruct, Encode: descriptorEncodeRepeatedEUTRANNotAllowedCellsStruct, Canonical: descriptorCanonicalRepeatedEUTRANNotAllowedCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANNotAllowedCellsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Repeated E-UTRAN PCID to TA mapping struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeRepeatedEUTRANPCIDToTAMappingStruct, DecodeFrom: descriptorDecodeRepeatedEUTRANPCIDToTAMappingStructFrom, DecodeWithCollector: descriptorCollectRepeatedEUTRANPCIDToTAMappingStruct, Encode: descriptorEncodeRepeatedEUTRANPCIDToTAMappingStruct, Canonical: descriptorCanonicalRepeatedEUTRANPCIDToTAMappingStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedEUTRANPCIDToTAMappingStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "3G CSG Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeN3GCSGDescriptionStruct, DecodeFrom: descriptorDecodeN3GCSGDescriptionStructFrom, DecodeWithCollector: descriptorCollectN3GCSGDescriptionStruct, Encode: descriptorEncodeN3GCSGDescriptionStruct, Canonical: descriptorCanonicalN3GCSGDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthN3GCSGDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANCSGDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANCSGDescriptionStructFrom, DecodeWithCollector: descriptorCollectEUTRANCSGDescriptionStruct, Encode: descriptorEncodeEUTRANCSGDescriptionStruct, Canonical: descriptorCanonicalEUTRANCSGDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANCSGDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "CSG Cells Reporting Description struct", MaxOctets: 5, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 36, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeCSGCellsReportingDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCSGCellsReportingDescriptionStruct), Encode: descriptorEncodeCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCSGCellsReportingDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "UTRAN CSG Cells Reporting Description struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 14, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeUTRANCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeUTRANCSGCellsReportingDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANCSGCellsReportingDescriptionStruct), Encode: descriptorEncodeUTRANCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalUTRANCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANCSGCellsReportingDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "E-UTRAN CSG Cells Reporting Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 20, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeEUTRANCSGCellsReportingDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANCSGCellsReportingDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEUTRANCSGCellsReportingDescriptionStruct), Encode: descriptorEncodeEUTRANCSGCellsReportingDescriptionStruct, Canonical: descriptorCanonicalEUTRANCSGCellsReportingDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANCSGCellsReportingDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeExtendedEARFCNsDescriptionStruct, DecodeFrom: descriptorDecodeExtendedEARFCNsDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeExtendedEARFCNsDescriptionStruct), Encode: descriptorEncodeExtendedEARFCNsDescriptionStruct, Canonical: descriptorCanonicalExtendedEARFCNsDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthExtendedEARFCNsDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b", Name: "Extended EARFCNs Description for CSG Cells struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}}, Decode: descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStruct, DecodeFrom: descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStruct), Encode: descriptorEncodeExtendedEARFCNsDescriptionForCSGCellsStruct, Canonical: descriptorCanonicalExtendedEARFCNsDescriptionForCSGCellsStruct, CanonicalAtLength: descriptorCanonicalAtLengthExtendedEARFCNsDescriptionForCSGCellsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "SI6 rest octets", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 56, MaximumBits: 56, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeSI6RestOctets, DecodeFrom: descriptorDecodeSI6RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI6RestOctets), Encode: descriptorEncodeSI6RestOctets, Canonical: descriptorCanonicalSI6RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI6RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "PCH and NCH info", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodePCHAndNCHInfo, DecodeFrom: descriptorDecodePCHAndNCHInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePCHAndNCHInfo), Encode: descriptorEncodePCHAndNCHInfo, Canonical: descriptorCanonicalPCHAndNCHInfo, CanonicalAtLength: descriptorCanonicalAtLengthPCHAndNCHInfo},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "paging channel restructuring", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodePagingChannelRestructuring, DecodeFrom: descriptorDecodePagingChannelRestructuringFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePagingChannelRestructuring), Encode: descriptorEncodePagingChannelRestructuring, Canonical: descriptorCanonicalPagingChannelRestructuring, CanonicalAtLength: descriptorCanonicalAtLengthPagingChannelRestructuring},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "VBS/VGCS options", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 2, MaximumBits: 2, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeVBSVGCSOptions, DecodeFrom: descriptorDecodeVBSVGCSOptionsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeVBSVGCSOptions), Encode: descriptorEncodeVBSVGCSOptions, Canonical: descriptorCanonicalVBSVGCSOptions, CanonicalAtLength: descriptorCanonicalAtLengthVBSVGCSOptions},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband notifications", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeInbandNotifications, DecodeFrom: descriptorDecodeInbandNotificationsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeInbandNotifications), Encode: descriptorEncodeInbandNotifications, Canonical: descriptorCanonicalInbandNotifications, CanonicalAtLength: descriptorCanonicalAtLengthInbandNotifications},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "inband pagings", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeInbandPagings, DecodeFrom: descriptorDecodeInbandPagingsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeInbandPagings), Encode: descriptorEncodeInbandPagings, Canonical: descriptorCanonicalInbandPagings, CanonicalAtLength: descriptorCanonicalAtLengthInbandPagings},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a", Name: "Band indicator", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.35a"}}, Decode: descriptorDecodeBandIndicatorClause105235a, DecodeFrom: descriptorDecodeBandIndicatorClause105235aFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeBandIndicatorClause105235a), Encode: descriptorEncodeBandIndicatorClause105235a, Canonical: descriptorCanonicalBandIndicatorClause105235a, CanonicalAtLength: descriptorCanonicalAtLengthBandIndicatorClause105235a},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI 13 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodeSI13RestOctets, DecodeFrom: descriptorDecodeSI13RestOctetsFrom, DecodeWithCollector: descriptorCollectSI13RestOctets, Encode: descriptorEncodeSI13RestOctets, Canonical: descriptorCanonicalSI13RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI13RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PBCCH Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 22, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePBCCHDescriptionStruct, DecodeFrom: descriptorDecodePBCCHDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePBCCHDescriptionStruct), Encode: descriptorEncodePBCCHDescriptionStruct, Canonical: descriptorCanonicalPBCCHDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPBCCHDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "SI_CHANGE_ALT", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodeSICHANGEALT, DecodeFrom: descriptorDecodeSICHANGEALTFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSICHANGEALT), Encode: descriptorEncodeSICHANGEALT, Canonical: descriptorCanonicalSICHANGEALT, CanonicalAtLength: descriptorCanonicalAtLengthSICHANGEALT},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Definition struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 40, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePEOIMMCellGroupDefinitionStruct, DecodeFrom: descriptorDecodePEOIMMCellGroupDefinitionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDefinitionStruct), Encode: descriptorEncodePEOIMMCellGroupDefinitionStruct, Canonical: descriptorCanonicalPEOIMMCellGroupDefinitionStruct, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDefinitionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b", Name: "PEO IMM Cell Group Specific Parameters struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}}, Decode: descriptorDecodePEOIMMCellGroupSpecificParametersStruct, DecodeFrom: descriptorDecodePEOIMMCellGroupSpecificParametersStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupSpecificParametersStruct), Encode: descriptorEncodePEOIMMCellGroupSpecificParametersStruct, Canonical: descriptorCanonicalPEOIMMCellGroupSpecificParametersStruct, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupSpecificParametersStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "SI 19 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeSI19RestOctets, DecodeFrom: descriptorDecodeSI19RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI19RestOctets), Encode: descriptorEncodeSI19RestOctets, Canonical: descriptorCanonicalSI19RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI19RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Neighbour Cell params struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTNeighbourCellParamsStruct, DecodeFrom: descriptorDecodeCOMPACTNeighbourCellParamsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCOMPACTNeighbourCellParamsStruct), Encode: descriptorEncodeCOMPACTNeighbourCellParamsStruct, Canonical: descriptorCanonicalCOMPACTNeighbourCellParamsStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTNeighbourCellParamsStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Cell Selection struct", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTCellSelectionStruct, DecodeFrom: descriptorDecodeCOMPACTCellSelectionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCOMPACTCellSelectionStruct), Encode: descriptorEncodeCOMPACTCellSelectionStruct, Canonical: descriptorCanonicalCOMPACTCellSelectionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTCellSelectionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeLADifferentStruct, DecodeFrom: descriptorDecodeLADifferentStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLADifferentStruct), Encode: descriptorEncodeLADifferentStruct, Canonical: descriptorCanonicalLADifferentStruct, CanonicalAtLength: descriptorCanonicalAtLengthLADifferentStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeSI18RestOctets, DecodeFrom: descriptorDecodeSI18RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI18RestOctets), Encode: descriptorEncodeSI18RestOctets, Canonical: descriptorCanonicalSI18RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI18RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeNonGSMMessageStruct, DecodeFrom: descriptorDecodeNonGSMMessageStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNonGSMMessageStruct), Encode: descriptorEncodeNonGSMMessageStruct, Canonical: descriptorCanonicalNonGSMMessageStruct, CanonicalAtLength: descriptorCanonicalAtLengthNonGSMMessageStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", MaxOctets: 19, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 152, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPARestOctets, DecodeFrom: descriptorDecodeIPARestOctetsFrom, DecodeWithCollector: descriptorCollectIPARestOctets, Encode: descriptorEncodeIPARestOctets, Canonical: descriptorCanonicalIPARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIPARestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPAUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPAUplinkAssignmentStructFrom, DecodeWithCollector: descriptorCollectIPAUplinkAssignmentStruct, Encode: descriptorEncodeIPAUplinkAssignmentStruct, Canonical: descriptorCanonicalIPAUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPAUplinkAssignmentStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Downlink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPADownlinkAssignmentStruct, DecodeFrom: descriptorDecodeIPADownlinkAssignmentStructFrom, DecodeWithCollector: descriptorCollectIPADownlinkAssignmentStruct, Encode: descriptorEncodeIPADownlinkAssignmentStruct, Canonical: descriptorCanonicalIPADownlinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPADownlinkAssignmentStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Single Block Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPASingleBlockUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPASingleBlockUplinkAssignmentStructFrom, DecodeWithCollector: descriptorCollectIPASingleBlockUplinkAssignmentStruct, Encode: descriptorEncodeIPASingleBlockUplinkAssignmentStruct, Canonical: descriptorCanonicalIPASingleBlockUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPASingleBlockUplinkAssignmentStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "Acknowledged Access Request struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 14, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeAcknowledgedAccessRequestStruct, DecodeFrom: descriptorDecodeAcknowledgedAccessRequestStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAcknowledgedAccessRequestStruct), Encode: descriptorEncodeAcknowledgedAccessRequestStruct, Canonical: descriptorCanonicalAcknowledgedAccessRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAcknowledgedAccessRequestStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105278, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105278From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105278), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105278, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105278, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105278},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"}}, Decode: descriptorDecodeSI20RestOctets, DecodeFrom: descriptorDecodeSI20RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI20RestOctets), Encode: descriptorEncodeSI20RestOctets, Canonical: descriptorCanonicalSI20RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI20RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 37, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupCallInformation, DecodeFrom: descriptorDecodeGroupCallInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGroupCallInformation), Encode: descriptorEncodeGroupCallInformation, Canonical: descriptorCanonicalGroupCallInformation, CanonicalAtLength: descriptorCanonicalAtLengthGroupCallInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeEmergencyInd, DecodeFrom: descriptorDecodeEmergencyIndFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEmergencyInd), Encode: descriptorEncodeEmergencyInd, Canonical: descriptorCanonicalEmergencyInd, CanonicalAtLength: descriptorCanonicalAtLengthEmergencyInd},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Channel Description", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupChannelDescription, DecodeFrom: descriptorDecodeGroupChannelDescriptionFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGroupChannelDescription), Encode: descriptorEncodeGroupChannelDescription, Canonical: descriptorCanonicalGroupChannelDescription, CanonicalAtLength: descriptorCanonicalAtLengthGroupChannelDescription},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "bit string", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeBitString, DecodeFrom: descriptorDecodeBitStringFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeBitString), Encode: descriptorEncodeBitString, Canonical: descriptorCanonicalBitString, CanonicalAtLength: descriptorCanonicalAtLengthBitString},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "NT/N Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeNTNRestOctets, DecodeFrom: descriptorDecodeNTNRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNTNRestOctets), Encode: descriptorEncodeNTNRestOctets, Canonical: descriptorCanonicalNTNRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthNTNRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Group Call NCH information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfGroupCallNCHInformation, DecodeFrom: descriptorDecodeListOfGroupCallNCHInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeListOfGroupCallNCHInformation), Encode: descriptorEncodeListOfGroupCallNCHInformation, Canonical: descriptorCanonicalListOfGroupCallNCHInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfGroupCallNCHInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Emergency information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfEmergencyInformation, DecodeFrom: descriptorDecodeListOfEmergencyInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeListOfEmergencyInformation), Encode: descriptorEncodeListOfEmergencyInformation, Canonical: descriptorCanonicalListOfEmergencyInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfEmergencyInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of VSTK_RAND information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfVSTKRANDInformation, DecodeFrom: descriptorDecodeListOfVSTKRANDInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeListOfVSTKRANDInformation), Encode: descriptorEncodeListOfVSTKRANDInformation, Canonical: descriptorCanonicalListOfVSTKRANDInformation, CanonicalAtLength: descriptorCanonicalAtLengthListOfVSTKRANDInformation},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c", Name: "List of Reduced GCR", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.22c"}}, Decode: descriptorDecodeListOfReducedGCR, DecodeFrom: descriptorDecodeListOfReducedGCRFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeListOfReducedGCR), Encode: descriptorEncodeListOfReducedGCR, Canonical: descriptorCanonicalListOfReducedGCR, CanonicalAtLength: descriptorCanonicalAtLengthListOfReducedGCR},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "P1 Rest Octets", MaxOctets: 17, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 136, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeP1RestOctets, DecodeFrom: descriptorDecodeP1RestOctetsFrom, DecodeWithCollector: descriptorCollectP1RestOctets, Encode: descriptorEncodeP1RestOctets, Canonical: descriptorCanonicalP1RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthP1RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "Priority", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodePriorityClause105223, DecodeFrom: descriptorDecodePriorityClause105223From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePriorityClause105223), Encode: descriptorEncodePriorityClause105223, Canonical: descriptorCanonicalPriorityClause105223, CanonicalAtLength: descriptorCanonicalAtLengthPriorityClause105223},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "MBMS Information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeMBMSInformationClause105223, DecodeFrom: descriptorDecodeMBMSInformationClause105223From, DecodeWithCollector: descriptorCollectMBMSInformationClause105223, Encode: descriptorEncodeMBMSInformationClause105223, Canonical: descriptorCanonicalMBMSInformationClause105223, CanonicalAtLength: descriptorCanonicalAtLengthMBMSInformationClause105223},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "ETWS Primary Notification struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 13, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodeETWSPrimaryNotificationStruct, DecodeFrom: descriptorDecodeETWSPrimaryNotificationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeETWSPrimaryNotificationStruct), Encode: descriptorEncodeETWSPrimaryNotificationStruct, Canonical: descriptorCanonicalETWSPrimaryNotificationStruct, CanonicalAtLength: descriptorCanonicalAtLengthETWSPrimaryNotificationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105223, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105223From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105223), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105223, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105223, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105223},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 160, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"}}, Decode: descriptorDecodeSI10bisRestOctets, DecodeFrom: descriptorDecodeSI10bisRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI10bisRestOctets), Encode: descriptorEncodeSI10bisRestOctets, Canonical: descriptorCanonicalSI10bisRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI10bisRestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70", Name: "SI10bis Neighbour Cell Info", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 30, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.70"}}, Decode: descriptorDecodeSI10bisNeighbourCellInfo, DecodeFrom: descriptorDecodeSI10bisNeighbourCellInfoFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI10bisNeighbourCellInfo), Encode: descriptorEncodeSI10bisNeighbourCellInfo, Canonical: descriptorCanonicalSI10bisNeighbourCellInfo, CanonicalAtLength: descriptorCanonicalAtLengthSI10bisNeighbourCellInfo},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -85621,8 +88453,16 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceIARestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}
+var descriptorCollectLocationIARestOctets = operationLocation{operation: "decode", path: "IARestOctets", source: &descriptorSourceIARestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeIARestOctets(data []byte) (any, error) { return DecodeIARestOctets(data) }
+func descriptorCollectIARestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIARestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIARestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapIARestOctets(value any) (IARestOctets, bool) {
 	switch v := value.(type) {
 	case IARestOctets:
@@ -85668,9 +88508,17 @@ func descriptorCanonicalAtLengthIARestOctets(value any, octets int) ([]byte, err
 }
 
 var descriptorSourceEGPRSPacketUplinkAssignment = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}
+var descriptorCollectLocationEGPRSPacketUplinkAssignment = operationLocation{operation: "decode", path: "EGPRSPacketUplinkAssignment", source: &descriptorSourceEGPRSPacketUplinkAssignment, kind: runtime.InvalidValue}
 
 func descriptorDecodeEGPRSPacketUplinkAssignment(data []byte) (any, error) {
 	return DecodeEGPRSPacketUplinkAssignment(data)
+}
+func descriptorCollectEGPRSPacketUplinkAssignment(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEGPRSPacketUplinkAssignmentBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEGPRSPacketUplinkAssignment.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEGPRSPacketUplinkAssignment(value any) (EGPRSPacketUplinkAssignment, bool) {
 	switch v := value.(type) {
@@ -85774,9 +88622,17 @@ func descriptorCanonicalAtLengthAccessTechnologiesRequestStruct(value any, octet
 }
 
 var descriptorSourcePacketUplinkAssignment = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}
+var descriptorCollectLocationPacketUplinkAssignment = operationLocation{operation: "decode", path: "PacketUplinkAssignment", source: &descriptorSourcePacketUplinkAssignment, kind: runtime.InvalidValue}
 
 func descriptorDecodePacketUplinkAssignment(data []byte) (any, error) {
 	return DecodePacketUplinkAssignment(data)
+}
+func descriptorCollectPacketUplinkAssignment(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodePacketUplinkAssignmentBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationPacketUplinkAssignment.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapPacketUplinkAssignment(value any) (PacketUplinkAssignment, bool) {
 	switch v := value.(type) {
@@ -85823,9 +88679,17 @@ func descriptorCanonicalAtLengthPacketUplinkAssignment(value any, octets int) ([
 }
 
 var descriptorSourcePacketDownlinkAssignment = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}
+var descriptorCollectLocationPacketDownlinkAssignment = operationLocation{operation: "decode", path: "PacketDownlinkAssignment", source: &descriptorSourcePacketDownlinkAssignment, kind: runtime.InvalidValue}
 
 func descriptorDecodePacketDownlinkAssignment(data []byte) (any, error) {
 	return DecodePacketDownlinkAssignment(data)
+}
+func descriptorCollectPacketDownlinkAssignment(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodePacketDownlinkAssignmentBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationPacketDownlinkAssignment.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapPacketDownlinkAssignment(value any) (PacketDownlinkAssignment, bool) {
 	switch v := value.(type) {
@@ -85982,9 +88846,17 @@ func descriptorCanonicalAtLengthSecondPartPacketAssignment(value any, octets int
 }
 
 var descriptorSourceMultipleBlocksPacketDownlinkAssignment = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}
+var descriptorCollectLocationMultipleBlocksPacketDownlinkAssignment = operationLocation{operation: "decode", path: "MultipleBlocksPacketDownlinkAssignment", source: &descriptorSourceMultipleBlocksPacketDownlinkAssignment, kind: runtime.InvalidValue}
 
 func descriptorDecodeMultipleBlocksPacketDownlinkAssignment(data []byte) (any, error) {
 	return DecodeMultipleBlocksPacketDownlinkAssignment(data)
+}
+func descriptorCollectMultipleBlocksPacketDownlinkAssignment(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMultipleBlocksPacketDownlinkAssignmentBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMultipleBlocksPacketDownlinkAssignment.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMultipleBlocksPacketDownlinkAssignment(value any) (MultipleBlocksPacketDownlinkAssignment, bool) {
 	switch v := value.(type) {
@@ -87861,8 +90733,16 @@ func descriptorCanonicalAtLengthNetworkSharingInformationStruct(value any, octet
 }
 
 var descriptorSourceSI23RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}
+var descriptorCollectLocationSI23RestOctets = operationLocation{operation: "decode", path: "SI23RestOctets", source: &descriptorSourceSI23RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI23RestOctets(data []byte) (any, error) { return DecodeSI23RestOctets(data) }
+func descriptorCollectSI23RestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeSI23RestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationSI23RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapSI23RestOctets(value any) (SI23RestOctets, bool) {
 	switch v := value.(type) {
 	case SI23RestOctets:
@@ -87908,9 +90788,17 @@ func descriptorCanonicalAtLengthSI23RestOctets(value any, octets int) ([]byte, e
 }
 
 var descriptorSourceIRATCellReselectionInformationStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}
+var descriptorCollectLocationIRATCellReselectionInformationStruct = operationLocation{operation: "decode", path: "IRATCellReselectionInformationStruct", source: &descriptorSourceIRATCellReselectionInformationStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeIRATCellReselectionInformationStruct(data []byte) (any, error) {
 	return DecodeIRATCellReselectionInformationStruct(data)
+}
+func descriptorCollectIRATCellReselectionInformationStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIRATCellReselectionInformationStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIRATCellReselectionInformationStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapIRATCellReselectionInformationStruct(value any) (IRATCellReselectionInformationStruct, bool) {
 	switch v := value.(type) {
@@ -88120,9 +91008,17 @@ func descriptorCanonicalAtLengthRepeatedUTRANFDDTDDNeighbourFrequencyAndPriority
 }
 
 var descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105237o = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}
+var descriptorCollectLocationPriorityAndEUTRANParametersDescriptionStructClause105237o = operationLocation{operation: "decode", path: "PriorityAndEUTRANParametersDescriptionStructClause105237o", source: &descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105237o, kind: runtime.InvalidValue}
 
 func descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237o(data []byte) (any, error) {
 	return DecodePriorityAndEUTRANParametersDescriptionStructClause105237o(data)
+}
+func descriptorCollectPriorityAndEUTRANParametersDescriptionStructClause105237o(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationPriorityAndEUTRANParametersDescriptionStructClause105237o.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapPriorityAndEUTRANParametersDescriptionStructClause105237o(value any) (PriorityAndEUTRANParametersDescriptionStructClause105237o, bool) {
 	switch v := value.(type) {
@@ -88173,9 +91069,17 @@ func descriptorCanonicalAtLengthPriorityAndEUTRANParametersDescriptionStructClau
 }
 
 var descriptorSourceRepeatedEUTRANNeighbourFrequencyAndPriorityStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37o"}
+var descriptorCollectLocationRepeatedEUTRANNeighbourFrequencyAndPriorityStruct = operationLocation{operation: "decode", path: "RepeatedEUTRANNeighbourFrequencyAndPriorityStruct", source: &descriptorSourceRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data []byte) (any, error) {
 	return DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data)
+}
+func descriptorCollectRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationRepeatedEUTRANNeighbourFrequencyAndPriorityStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(value any) (RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, bool) {
 	switch v := value.(type) {
@@ -89527,6 +92431,7 @@ func descriptorCanonicalAtLengthBreakIndicator(value any, octets int) ([]byte, e
 }
 
 var descriptorSourceSI7RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.36"}
+var descriptorCollectLocationSI7RestOctets = operationLocation{operation: "decode", path: "SI7RestOctets", source: &descriptorSourceSI7RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI7RestOctets(data []byte) (any, error) { return DecodeSI7RestOctets(data) }
 func descriptorUnwrapSI7RestOctets(value any) (SI7RestOctets, bool) {
@@ -89575,6 +92480,13 @@ func descriptorCanonicalAtLengthSI7RestOctets(value any, octets int) ([]byte, er
 func descriptorDecodeSI7RestOctetsWithContext(data []byte, c runtime.SI4ACS) (any, error) {
 	return DecodeSI7RestOctetsWithContext(data, c)
 }
+func descriptorCollectSI7RestOctetsWithContext(data []byte, c *runtime.Collector, acs runtime.SI4ACS) (any, error) {
+	v, err := collectSI7RestOctetsWithContext(data, c, acs)
+	if err != nil {
+		return v, descriptorCollectLocationSI7RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 
 var descriptorPolicySI7RestOctetsContext = descriptorReadPolicy{false, 0, 160, 160, 0, false, true, "SI7 Rest Octets", descriptorSourceSI7RestOctets}
 
@@ -89614,6 +92526,7 @@ func descriptorCanonicalAtLengthWithContextSI7RestOctets(value any, octets int, 
 }
 
 var descriptorSourceSI8RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37"}
+var descriptorCollectLocationSI8RestOctets = operationLocation{operation: "decode", path: "SI8RestOctets", source: &descriptorSourceSI8RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI8RestOctets(data []byte) (any, error) { return DecodeSI8RestOctets(data) }
 func descriptorUnwrapSI8RestOctets(value any) (SI8RestOctets, bool) {
@@ -89661,6 +92574,13 @@ func descriptorCanonicalAtLengthSI8RestOctets(value any, octets int) ([]byte, er
 }
 func descriptorDecodeSI8RestOctetsWithContext(data []byte, c runtime.SI4ACS) (any, error) {
 	return DecodeSI8RestOctetsWithContext(data, c)
+}
+func descriptorCollectSI8RestOctetsWithContext(data []byte, c *runtime.Collector, acs runtime.SI4ACS) (any, error) {
+	v, err := collectSI8RestOctetsWithContext(data, c, acs)
+	if err != nil {
+		return v, descriptorCollectLocationSI8RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 
 var descriptorPolicySI8RestOctetsContext = descriptorReadPolicy{false, 0, 160, 160, 0, false, true, "SI8 Rest Octets", descriptorSourceSI8RestOctets}
@@ -90072,9 +92992,17 @@ func descriptorCanonicalAtLengthLSAIdentityClause105235(value any, octets int) (
 }
 
 var descriptorSourceSI13altRestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}
+var descriptorCollectLocationSI13altRestOctets = operationLocation{operation: "decode", path: "SI13altRestOctets", source: &descriptorSourceSI13altRestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI13altRestOctets(data []byte) (any, error) {
 	return DecodeSI13altRestOctets(data)
+}
+func descriptorCollectSI13altRestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeSI13altRestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationSI13altRestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapSI13altRestOctets(value any) (SI13altRestOctets, bool) {
 	switch v := value.(type) {
@@ -90121,9 +93049,17 @@ func descriptorCanonicalAtLengthSI13altRestOctets(value any, octets int) ([]byte
 }
 
 var descriptorSourcePBCCHDescription2Struct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37l"}
+var descriptorCollectLocationPBCCHDescription2Struct = operationLocation{operation: "decode", path: "PBCCHDescription2Struct", source: &descriptorSourcePBCCHDescription2Struct, kind: runtime.InvalidValue}
 
 func descriptorDecodePBCCHDescription2Struct(data []byte) (any, error) {
 	return DecodePBCCHDescription2Struct(data)
+}
+func descriptorCollectPBCCHDescription2Struct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodePBCCHDescription2StructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationPBCCHDescription2Struct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapPBCCHDescription2Struct(value any) (PBCCHDescription2Struct, bool) {
 	switch v := value.(type) {
@@ -90174,8 +93110,16 @@ func descriptorCanonicalAtLengthPBCCHDescription2Struct(value any, octets int) (
 }
 
 var descriptorSourceP2RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}
+var descriptorCollectLocationP2RestOctets = operationLocation{operation: "decode", path: "P2RestOctets", source: &descriptorSourceP2RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeP2RestOctets(data []byte) (any, error) { return DecodeP2RestOctets(data) }
+func descriptorCollectP2RestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeP2RestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationP2RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapP2RestOctets(value any) (P2RestOctets, bool) {
 	switch v := value.(type) {
 	case P2RestOctets:
@@ -90270,9 +93214,17 @@ func descriptorCanonicalAtLengthPriorityClause105224(value any, octets int) ([]b
 }
 
 var descriptorSourceMBMSInformationClause105224 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.24"}
+var descriptorCollectLocationMBMSInformationClause105224 = operationLocation{operation: "decode", path: "MBMSInformationClause105224", source: &descriptorSourceMBMSInformationClause105224, kind: runtime.InvalidValue}
 
 func descriptorDecodeMBMSInformationClause105224(data []byte) (any, error) {
 	return DecodeMBMSInformationClause105224(data)
+}
+func descriptorCollectMBMSInformationClause105224(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMBMSInformationClause105224Bytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMBMSInformationClause105224.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMBMSInformationClause105224(value any) (MBMSInformationClause105224, bool) {
 	switch v := value.(type) {
@@ -90525,9 +93477,17 @@ func descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105225(value a
 }
 
 var descriptorSourceSI2quaterRestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationSI2quaterRestOctets = operationLocation{operation: "decode", path: "SI2quaterRestOctets", source: &descriptorSourceSI2quaterRestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI2quaterRestOctets(data []byte) (any, error) {
 	return DecodeSI2quaterRestOctets(data)
+}
+func descriptorCollectSI2quaterRestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeSI2quaterRestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationSI2quaterRestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapSI2quaterRestOctets(value any) (SI2quaterRestOctets, bool) {
 	switch v := value.(type) {
@@ -91304,9 +94264,17 @@ func descriptorCanonicalAtLengthGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(val
 }
 
 var descriptorSourceNCMeasurementParametersStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationNCMeasurementParametersStruct = operationLocation{operation: "decode", path: "NCMeasurementParametersStruct", source: &descriptorSourceNCMeasurementParametersStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeNCMeasurementParametersStruct(data []byte) (any, error) {
 	return DecodeNCMeasurementParametersStruct(data)
+}
+func descriptorCollectNCMeasurementParametersStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeNCMeasurementParametersStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationNCMeasurementParametersStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapNCMeasurementParametersStruct(value any) (NCMeasurementParametersStruct, bool) {
 	switch v := value.(type) {
@@ -91569,9 +94537,17 @@ func descriptorCanonicalAtLengthN3GAdditionalMeasurementParametersDescription2St
 }
 
 var descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105233b = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationPriorityAndEUTRANParametersDescriptionStructClause105233b = operationLocation{operation: "decode", path: "PriorityAndEUTRANParametersDescriptionStructClause105233b", source: &descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105233b, kind: runtime.InvalidValue}
 
 func descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233b(data []byte) (any, error) {
 	return DecodePriorityAndEUTRANParametersDescriptionStructClause105233b(data)
+}
+func descriptorCollectPriorityAndEUTRANParametersDescriptionStructClause105233b(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationPriorityAndEUTRANParametersDescriptionStructClause105233b.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapPriorityAndEUTRANParametersDescriptionStructClause105233b(value any) (PriorityAndEUTRANParametersDescriptionStructClause105233b, bool) {
 	switch v := value.(type) {
@@ -91781,9 +94757,17 @@ func descriptorCanonicalAtLengthRepeatedUTRANPriorityParametersStruct(value any,
 }
 
 var descriptorSourceEUTRANParametersDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationEUTRANParametersDescriptionStruct = operationLocation{operation: "decode", path: "EUTRANParametersDescriptionStruct", source: &descriptorSourceEUTRANParametersDescriptionStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeEUTRANParametersDescriptionStruct(data []byte) (any, error) {
 	return DecodeEUTRANParametersDescriptionStruct(data)
+}
+func descriptorCollectEUTRANParametersDescriptionStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEUTRANParametersDescriptionStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEUTRANParametersDescriptionStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEUTRANParametersDescriptionStruct(value any) (EUTRANParametersDescriptionStruct, bool) {
 	switch v := value.(type) {
@@ -91940,9 +94924,17 @@ func descriptorCanonicalAtLengthGPRSEUTRANMeasurementParametersDescriptionStruct
 }
 
 var descriptorSourceRepeatedEUTRANNeighbourCellsStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationRepeatedEUTRANNeighbourCellsStruct = operationLocation{operation: "decode", path: "RepeatedEUTRANNeighbourCellsStruct", source: &descriptorSourceRepeatedEUTRANNeighbourCellsStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeRepeatedEUTRANNeighbourCellsStruct(data []byte) (any, error) {
 	return DecodeRepeatedEUTRANNeighbourCellsStruct(data)
+}
+func descriptorCollectRepeatedEUTRANNeighbourCellsStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeRepeatedEUTRANNeighbourCellsStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationRepeatedEUTRANNeighbourCellsStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapRepeatedEUTRANNeighbourCellsStruct(value any) (RepeatedEUTRANNeighbourCellsStruct, bool) {
 	switch v := value.(type) {
@@ -91993,9 +94985,17 @@ func descriptorCanonicalAtLengthRepeatedEUTRANNeighbourCellsStruct(value any, oc
 }
 
 var descriptorSourceRepeatedEUTRANNotAllowedCellsStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationRepeatedEUTRANNotAllowedCellsStruct = operationLocation{operation: "decode", path: "RepeatedEUTRANNotAllowedCellsStruct", source: &descriptorSourceRepeatedEUTRANNotAllowedCellsStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeRepeatedEUTRANNotAllowedCellsStruct(data []byte) (any, error) {
 	return DecodeRepeatedEUTRANNotAllowedCellsStruct(data)
+}
+func descriptorCollectRepeatedEUTRANNotAllowedCellsStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeRepeatedEUTRANNotAllowedCellsStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationRepeatedEUTRANNotAllowedCellsStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapRepeatedEUTRANNotAllowedCellsStruct(value any) (RepeatedEUTRANNotAllowedCellsStruct, bool) {
 	switch v := value.(type) {
@@ -92046,9 +95046,17 @@ func descriptorCanonicalAtLengthRepeatedEUTRANNotAllowedCellsStruct(value any, o
 }
 
 var descriptorSourceRepeatedEUTRANPCIDToTAMappingStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationRepeatedEUTRANPCIDToTAMappingStruct = operationLocation{operation: "decode", path: "RepeatedEUTRANPCIDToTAMappingStruct", source: &descriptorSourceRepeatedEUTRANPCIDToTAMappingStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeRepeatedEUTRANPCIDToTAMappingStruct(data []byte) (any, error) {
 	return DecodeRepeatedEUTRANPCIDToTAMappingStruct(data)
+}
+func descriptorCollectRepeatedEUTRANPCIDToTAMappingStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeRepeatedEUTRANPCIDToTAMappingStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationRepeatedEUTRANPCIDToTAMappingStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapRepeatedEUTRANPCIDToTAMappingStruct(value any) (RepeatedEUTRANPCIDToTAMappingStruct, bool) {
 	switch v := value.(type) {
@@ -92099,9 +95107,17 @@ func descriptorCanonicalAtLengthRepeatedEUTRANPCIDToTAMappingStruct(value any, o
 }
 
 var descriptorSourceN3GCSGDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationN3GCSGDescriptionStruct = operationLocation{operation: "decode", path: "N3GCSGDescriptionStruct", source: &descriptorSourceN3GCSGDescriptionStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeN3GCSGDescriptionStruct(data []byte) (any, error) {
 	return DecodeN3GCSGDescriptionStruct(data)
+}
+func descriptorCollectN3GCSGDescriptionStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeN3GCSGDescriptionStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationN3GCSGDescriptionStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapN3GCSGDescriptionStruct(value any) (N3GCSGDescriptionStruct, bool) {
 	switch v := value.(type) {
@@ -92152,9 +95168,17 @@ func descriptorCanonicalAtLengthN3GCSGDescriptionStruct(value any, octets int) (
 }
 
 var descriptorSourceEUTRANCSGDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.33b"}
+var descriptorCollectLocationEUTRANCSGDescriptionStruct = operationLocation{operation: "decode", path: "EUTRANCSGDescriptionStruct", source: &descriptorSourceEUTRANCSGDescriptionStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeEUTRANCSGDescriptionStruct(data []byte) (any, error) {
 	return DecodeEUTRANCSGDescriptionStruct(data)
+}
+func descriptorCollectEUTRANCSGDescriptionStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEUTRANCSGDescriptionStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEUTRANCSGDescriptionStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEUTRANCSGDescriptionStruct(value any) (EUTRANCSGDescriptionStruct, bool) {
 	switch v := value.(type) {
@@ -92813,8 +95837,16 @@ func descriptorCanonicalAtLengthBandIndicatorClause105235a(value any, octets int
 }
 
 var descriptorSourceSI13RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37b"}
+var descriptorCollectLocationSI13RestOctets = operationLocation{operation: "decode", path: "SI13RestOctets", source: &descriptorSourceSI13RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeSI13RestOctets(data []byte) (any, error) { return DecodeSI13RestOctets(data) }
+func descriptorCollectSI13RestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeSI13RestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationSI13RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapSI13RestOctets(value any) (SI13RestOctets, bool) {
 	switch v := value.(type) {
 	case SI13RestOctets:
@@ -93360,8 +96392,16 @@ func descriptorCanonicalAtLengthNonGSMMessageStruct(value any, octets int) ([]by
 }
 
 var descriptorSourceIPARestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}
+var descriptorCollectLocationIPARestOctets = operationLocation{operation: "decode", path: "IPARestOctets", source: &descriptorSourceIPARestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeIPARestOctets(data []byte) (any, error) { return DecodeIPARestOctets(data) }
+func descriptorCollectIPARestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIPARestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIPARestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapIPARestOctets(value any) (IPARestOctets, bool) {
 	switch v := value.(type) {
 	case IPARestOctets:
@@ -93407,9 +96447,17 @@ func descriptorCanonicalAtLengthIPARestOctets(value any, octets int) ([]byte, er
 }
 
 var descriptorSourceIPAUplinkAssignmentStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}
+var descriptorCollectLocationIPAUplinkAssignmentStruct = operationLocation{operation: "decode", path: "IPAUplinkAssignmentStruct", source: &descriptorSourceIPAUplinkAssignmentStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeIPAUplinkAssignmentStruct(data []byte) (any, error) {
 	return DecodeIPAUplinkAssignmentStruct(data)
+}
+func descriptorCollectIPAUplinkAssignmentStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIPAUplinkAssignmentStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIPAUplinkAssignmentStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapIPAUplinkAssignmentStruct(value any) (IPAUplinkAssignmentStruct, bool) {
 	switch v := value.(type) {
@@ -93460,9 +96508,17 @@ func descriptorCanonicalAtLengthIPAUplinkAssignmentStruct(value any, octets int)
 }
 
 var descriptorSourceIPADownlinkAssignmentStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}
+var descriptorCollectLocationIPADownlinkAssignmentStruct = operationLocation{operation: "decode", path: "IPADownlinkAssignmentStruct", source: &descriptorSourceIPADownlinkAssignmentStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeIPADownlinkAssignmentStruct(data []byte) (any, error) {
 	return DecodeIPADownlinkAssignmentStruct(data)
+}
+func descriptorCollectIPADownlinkAssignmentStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIPADownlinkAssignmentStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIPADownlinkAssignmentStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapIPADownlinkAssignmentStruct(value any) (IPADownlinkAssignmentStruct, bool) {
 	switch v := value.(type) {
@@ -93513,9 +96569,17 @@ func descriptorCanonicalAtLengthIPADownlinkAssignmentStruct(value any, octets in
 }
 
 var descriptorSourceIPASingleBlockUplinkAssignmentStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}
+var descriptorCollectLocationIPASingleBlockUplinkAssignmentStruct = operationLocation{operation: "decode", path: "IPASingleBlockUplinkAssignmentStruct", source: &descriptorSourceIPASingleBlockUplinkAssignmentStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeIPASingleBlockUplinkAssignmentStruct(data []byte) (any, error) {
 	return DecodeIPASingleBlockUplinkAssignmentStruct(data)
+}
+func descriptorCollectIPASingleBlockUplinkAssignmentStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeIPASingleBlockUplinkAssignmentStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationIPASingleBlockUplinkAssignmentStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapIPASingleBlockUplinkAssignmentStruct(value any) (IPASingleBlockUplinkAssignmentStruct, bool) {
 	switch v := value.(type) {
@@ -94168,8 +97232,16 @@ func descriptorCanonicalAtLengthListOfReducedGCR(value any, octets int) ([]byte,
 }
 
 var descriptorSourceP1RestOctets = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}
+var descriptorCollectLocationP1RestOctets = operationLocation{operation: "decode", path: "P1RestOctets", source: &descriptorSourceP1RestOctets, kind: runtime.InvalidValue}
 
 func descriptorDecodeP1RestOctets(data []byte) (any, error) { return DecodeP1RestOctets(data) }
+func descriptorCollectP1RestOctets(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeP1RestOctetsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationP1RestOctets.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapP1RestOctets(value any) (P1RestOctets, bool) {
 	switch v := value.(type) {
 	case P1RestOctets:
@@ -94264,9 +97336,17 @@ func descriptorCanonicalAtLengthPriorityClause105223(value any, octets int) ([]b
 }
 
 var descriptorSourceMBMSInformationClause105223 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.23"}
+var descriptorCollectLocationMBMSInformationClause105223 = operationLocation{operation: "decode", path: "MBMSInformationClause105223", source: &descriptorSourceMBMSInformationClause105223, kind: runtime.InvalidValue}
 
 func descriptorDecodeMBMSInformationClause105223(data []byte) (any, error) {
 	return DecodeMBMSInformationClause105223(data)
+}
+func descriptorCollectMBMSInformationClause105223(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMBMSInformationClause105223Bytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMBMSInformationClause105223.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMBMSInformationClause105223(value any) (MBMSInformationClause105223, bool) {
 	switch v := value.(type) {
@@ -94524,6 +97604,22 @@ func descriptorCanonicalAtLengthSI10bisNeighbourCellInfo(value any, octets int) 
 	return EncodeSI10bisNeighbourCellInfoCanonicalAtLength(v, octets)
 }
 
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
+
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
@@ -94591,7 +97687,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeIARestOctets(data []byte) (runtime.Decoded[IARestOctets], error) {
-	v, err := decodeIARestOctetsBytes(data)
+	v, err := decodeIARestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation64.failure(err, "", -1, 0)
 	}
@@ -94605,7 +97701,7 @@ func EncodeIARestOctets(v IARestOctets) ([]byte, error) {
 	return out, nil
 }
 func DecodeEGPRSPacketUplinkAssignment(data []byte) (runtime.Decoded[EGPRSPacketUplinkAssignment], error) {
-	v, err := decodeEGPRSPacketUplinkAssignmentBytes(data)
+	v, err := decodeEGPRSPacketUplinkAssignmentBytes(data, nil)
 	if err != nil {
 		return v, operationLocation67.failure(err, "", -1, 0)
 	}
@@ -94633,7 +97729,7 @@ func EncodeAccessTechnologiesRequestStruct(v AccessTechnologiesRequestStruct) ([
 	return out, nil
 }
 func DecodePacketUplinkAssignment(data []byte) (runtime.Decoded[PacketUplinkAssignment], error) {
-	v, err := decodePacketUplinkAssignmentBytes(data)
+	v, err := decodePacketUplinkAssignmentBytes(data, nil)
 	if err != nil {
 		return v, operationLocation72.failure(err, "", -1, 0)
 	}
@@ -94647,7 +97743,7 @@ func EncodePacketUplinkAssignment(v PacketUplinkAssignment) ([]byte, error) {
 	return out, nil
 }
 func DecodePacketDownlinkAssignment(data []byte) (runtime.Decoded[PacketDownlinkAssignment], error) {
-	v, err := decodePacketDownlinkAssignmentBytes(data)
+	v, err := decodePacketDownlinkAssignmentBytes(data, nil)
 	if err != nil {
 		return v, operationLocation75.failure(err, "", -1, 0)
 	}
@@ -94689,7 +97785,7 @@ func EncodeSecondPartPacketAssignment(v SecondPartPacketAssignment) ([]byte, err
 	return out, nil
 }
 func DecodeMultipleBlocksPacketDownlinkAssignment(data []byte) (runtime.Decoded[MultipleBlocksPacketDownlinkAssignment], error) {
-	v, err := decodeMultipleBlocksPacketDownlinkAssignmentBytes(data)
+	v, err := decodeMultipleBlocksPacketDownlinkAssignmentBytes(data, nil)
 	if err != nil {
 		return v, operationLocation84.failure(err, "", -1, 0)
 	}
@@ -95207,7 +98303,7 @@ func EncodeNetworkSharingInformationStruct(v NetworkSharingInformationStruct) ([
 	return out, nil
 }
 func DecodeSI23RestOctets(data []byte) (runtime.Decoded[SI23RestOctets], error) {
-	v, err := decodeSI23RestOctetsBytes(data)
+	v, err := decodeSI23RestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation194.failure(err, "", -1, 0)
 	}
@@ -95221,7 +98317,7 @@ func EncodeSI23RestOctets(v SI23RestOctets) ([]byte, error) {
 	return out, nil
 }
 func DecodeIRATCellReselectionInformationStruct(data []byte) (runtime.Decoded[IRATCellReselectionInformationStruct], error) {
-	v, err := decodeIRATCellReselectionInformationStructBytes(data)
+	v, err := decodeIRATCellReselectionInformationStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation197.failure(err, "", -1, 0)
 	}
@@ -95277,7 +98373,7 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(v RepeatedUTRA
 	return out, nil
 }
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105237o(data []byte) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105237o], error) {
-	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(data)
+	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes(data, nil)
 	if err != nil {
 		return v, operationLocation209.failure(err, "", -1, 0)
 	}
@@ -95291,7 +98387,7 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237o(v PriorityA
 	return out, nil
 }
 func DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(data []byte) (runtime.Decoded[RepeatedEUTRANNeighbourFrequencyAndPriorityStruct], error) {
-	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(data)
+	v, err := decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation212.failure(err, "", -1, 0)
 	}
@@ -95809,7 +98905,7 @@ func EncodeLSAIdentityClause105235(v LSAIdentityClause105235) ([]byte, error) {
 	return out, nil
 }
 func DecodeSI13altRestOctets(data []byte) (runtime.Decoded[SI13altRestOctets], error) {
-	v, err := decodeSI13altRestOctetsBytes(data)
+	v, err := decodeSI13altRestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation321.failure(err, "", -1, 0)
 	}
@@ -95823,7 +98919,7 @@ func EncodeSI13altRestOctets(v SI13altRestOctets) ([]byte, error) {
 	return out, nil
 }
 func DecodePBCCHDescription2Struct(data []byte) (runtime.Decoded[PBCCHDescription2Struct], error) {
-	v, err := decodePBCCHDescription2StructBytes(data)
+	v, err := decodePBCCHDescription2StructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation324.failure(err, "", -1, 0)
 	}
@@ -95837,7 +98933,7 @@ func EncodePBCCHDescription2Struct(v PBCCHDescription2Struct) ([]byte, error) {
 	return out, nil
 }
 func DecodeP2RestOctets(data []byte) (runtime.Decoded[P2RestOctets], error) {
-	v, err := decodeP2RestOctetsBytes(data)
+	v, err := decodeP2RestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation327.failure(err, "", -1, 0)
 	}
@@ -95865,7 +98961,7 @@ func EncodePriorityClause105224(v PriorityClause105224) ([]byte, error) {
 	return out, nil
 }
 func DecodeMBMSInformationClause105224(data []byte) (runtime.Decoded[MBMSInformationClause105224], error) {
-	v, err := decodeMBMSInformationClause105224Bytes(data)
+	v, err := decodeMBMSInformationClause105224Bytes(data, nil)
 	if err != nil {
 		return v, operationLocation333.failure(err, "", -1, 0)
 	}
@@ -95935,7 +99031,7 @@ func EncodePEOIMMCellGroupDetailsStructClause105225(v PEOIMMCellGroupDetailsStru
 	return out, nil
 }
 func DecodeSI2quaterRestOctets(data []byte) (runtime.Decoded[SI2quaterRestOctets], error) {
-	v, err := decodeSI2quaterRestOctetsBytes(data)
+	v, err := decodeSI2quaterRestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation348.failure(err, "", -1, 0)
 	}
@@ -96145,7 +99241,7 @@ func EncodeGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(v GPRS3GMEASUREMENTPARAM
 	return out, nil
 }
 func DecodeNCMeasurementParametersStruct(data []byte) (runtime.Decoded[NCMeasurementParametersStruct], error) {
-	v, err := decodeNCMeasurementParametersStructBytes(data)
+	v, err := decodeNCMeasurementParametersStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation393.failure(err, "", -1, 0)
 	}
@@ -96215,7 +99311,7 @@ func EncodeN3GAdditionalMeasurementParametersDescription2Struct(v N3GAdditionalM
 	return out, nil
 }
 func DecodePriorityAndEUTRANParametersDescriptionStructClause105233b(data []byte) (runtime.Decoded[PriorityAndEUTRANParametersDescriptionStructClause105233b], error) {
-	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(data)
+	v, err := decodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes(data, nil)
 	if err != nil {
 		return v, operationLocation408.failure(err, "", -1, 0)
 	}
@@ -96271,7 +99367,7 @@ func EncodeRepeatedUTRANPriorityParametersStruct(v RepeatedUTRANPriorityParamete
 	return out, nil
 }
 func DecodeEUTRANParametersDescriptionStruct(data []byte) (runtime.Decoded[EUTRANParametersDescriptionStruct], error) {
-	v, err := decodeEUTRANParametersDescriptionStructBytes(data)
+	v, err := decodeEUTRANParametersDescriptionStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation420.failure(err, "", -1, 0)
 	}
@@ -96313,7 +99409,7 @@ func EncodeGPRSEUTRANMeasurementParametersDescriptionStruct(v GPRSEUTRANMeasurem
 	return out, nil
 }
 func DecodeRepeatedEUTRANNeighbourCellsStruct(data []byte) (runtime.Decoded[RepeatedEUTRANNeighbourCellsStruct], error) {
-	v, err := decodeRepeatedEUTRANNeighbourCellsStructBytes(data)
+	v, err := decodeRepeatedEUTRANNeighbourCellsStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation429.failure(err, "", -1, 0)
 	}
@@ -96327,7 +99423,7 @@ func EncodeRepeatedEUTRANNeighbourCellsStruct(v RepeatedEUTRANNeighbourCellsStru
 	return out, nil
 }
 func DecodeRepeatedEUTRANNotAllowedCellsStruct(data []byte) (runtime.Decoded[RepeatedEUTRANNotAllowedCellsStruct], error) {
-	v, err := decodeRepeatedEUTRANNotAllowedCellsStructBytes(data)
+	v, err := decodeRepeatedEUTRANNotAllowedCellsStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation432.failure(err, "", -1, 0)
 	}
@@ -96341,7 +99437,7 @@ func EncodeRepeatedEUTRANNotAllowedCellsStruct(v RepeatedEUTRANNotAllowedCellsSt
 	return out, nil
 }
 func DecodeRepeatedEUTRANPCIDToTAMappingStruct(data []byte) (runtime.Decoded[RepeatedEUTRANPCIDToTAMappingStruct], error) {
-	v, err := decodeRepeatedEUTRANPCIDToTAMappingStructBytes(data)
+	v, err := decodeRepeatedEUTRANPCIDToTAMappingStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation435.failure(err, "", -1, 0)
 	}
@@ -96355,7 +99451,7 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStruct(v RepeatedEUTRANPCIDToTAMappingSt
 	return out, nil
 }
 func DecodeN3GCSGDescriptionStruct(data []byte) (runtime.Decoded[N3GCSGDescriptionStruct], error) {
-	v, err := decodeN3GCSGDescriptionStructBytes(data)
+	v, err := decodeN3GCSGDescriptionStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation438.failure(err, "", -1, 0)
 	}
@@ -96369,7 +99465,7 @@ func EncodeN3GCSGDescriptionStruct(v N3GCSGDescriptionStruct) ([]byte, error) {
 	return out, nil
 }
 func DecodeEUTRANCSGDescriptionStruct(data []byte) (runtime.Decoded[EUTRANCSGDescriptionStruct], error) {
-	v, err := decodeEUTRANCSGDescriptionStructBytes(data)
+	v, err := decodeEUTRANCSGDescriptionStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation441.failure(err, "", -1, 0)
 	}
@@ -96551,7 +99647,7 @@ func EncodeBandIndicatorClause105235a(v BandIndicatorClause105235a) ([]byte, err
 	return out, nil
 }
 func DecodeSI13RestOctets(data []byte) (runtime.Decoded[SI13RestOctets], error) {
-	v, err := decodeSI13RestOctetsBytes(data)
+	v, err := decodeSI13RestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation480.failure(err, "", -1, 0)
 	}
@@ -96705,7 +99801,7 @@ func EncodeNonGSMMessageStruct(v NonGSMMessageStruct) ([]byte, error) {
 	return out, nil
 }
 func DecodeIPARestOctets(data []byte) (runtime.Decoded[IPARestOctets], error) {
-	v, err := decodeIPARestOctetsBytes(data)
+	v, err := decodeIPARestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation513.failure(err, "", -1, 0)
 	}
@@ -96719,7 +99815,7 @@ func EncodeIPARestOctets(v IPARestOctets) ([]byte, error) {
 	return out, nil
 }
 func DecodeIPAUplinkAssignmentStruct(data []byte) (runtime.Decoded[IPAUplinkAssignmentStruct], error) {
-	v, err := decodeIPAUplinkAssignmentStructBytes(data)
+	v, err := decodeIPAUplinkAssignmentStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation516.failure(err, "", -1, 0)
 	}
@@ -96733,7 +99829,7 @@ func EncodeIPAUplinkAssignmentStruct(v IPAUplinkAssignmentStruct) ([]byte, error
 	return out, nil
 }
 func DecodeIPADownlinkAssignmentStruct(data []byte) (runtime.Decoded[IPADownlinkAssignmentStruct], error) {
-	v, err := decodeIPADownlinkAssignmentStructBytes(data)
+	v, err := decodeIPADownlinkAssignmentStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation519.failure(err, "", -1, 0)
 	}
@@ -96747,7 +99843,7 @@ func EncodeIPADownlinkAssignmentStruct(v IPADownlinkAssignmentStruct) ([]byte, e
 	return out, nil
 }
 func DecodeIPASingleBlockUplinkAssignmentStruct(data []byte) (runtime.Decoded[IPASingleBlockUplinkAssignmentStruct], error) {
-	v, err := decodeIPASingleBlockUplinkAssignmentStructBytes(data)
+	v, err := decodeIPASingleBlockUplinkAssignmentStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation522.failure(err, "", -1, 0)
 	}
@@ -96929,7 +100025,7 @@ func EncodeListOfReducedGCR(v ListOfReducedGCR) ([]byte, error) {
 	return out, nil
 }
 func DecodeP1RestOctets(data []byte) (runtime.Decoded[P1RestOctets], error) {
-	v, err := decodeP1RestOctetsBytes(data)
+	v, err := decodeP1RestOctetsBytes(data, nil)
 	if err != nil {
 		return v, operationLocation561.failure(err, "", -1, 0)
 	}
@@ -96957,7 +100053,7 @@ func EncodePriorityClause105223(v PriorityClause105223) ([]byte, error) {
 	return out, nil
 }
 func DecodeMBMSInformationClause105223(data []byte) (runtime.Decoded[MBMSInformationClause105223], error) {
-	v, err := decodeMBMSInformationClause105223Bytes(data)
+	v, err := decodeMBMSInformationClause105223Bytes(data, nil)
 	if err != nil {
 		return v, operationLocation567.failure(err, "", -1, 0)
 	}

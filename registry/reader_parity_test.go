@@ -72,7 +72,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 	rng := rand.New(rand.NewSource(20261026))
 	compare := func(d runtime.Descriptor, form string, data []byte, byteValue any, byteErr error, readerValue any, readerErr error) {
 		t.Helper()
-		if (byteErr == nil) != (readerErr == nil) && knownReaderDifference(d, byteErr) {
+		if form != "report" && form != "report context" && (byteErr == nil) != (readerErr == nil) && knownReaderDifference(d, byteErr) {
 			return
 		}
 		b, r := observeDecode(d, byteValue, byteErr), observeDecode(d, readerValue, readerErr)
@@ -99,12 +99,23 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 					bv, be := d.Decode(data)
 					rv, re := d.DecodeFrom(readerBoundTo(t, data))
 					compare(d, "plain", data, bv, be, rv, re)
+					pv, _, pe := d.DecodeWithReport(data)
+					compare(d, "report", data, bv, be, pv, pe)
+					if be == nil && pe == nil && !runtime.SemanticallyEqual(bv, pv) {
+						t.Errorf("%s %s: report changes typed value", d.Standard, d.Name)
+					}
+					var before, after *runtime.DecodeError
+					if errors.As(be, &before) && errors.As(pe, &after) && (before.Kind != after.Kind || before.Offset != after.Offset) {
+						t.Errorf("%s %s: report decode error %v differs from %v", d.Standard, d.Name, pe, be)
+					}
 				}
 				if d.DecodeWithContext != nil && d.DecodeFromWithContext != nil {
 					for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
 						bv, be := d.DecodeWithContext(data, acs)
 						rv, re := d.DecodeFromWithContext(readerBoundTo(t, data), acs)
 						compare(d, fmt.Sprintf("SI4 ACS %d", acs), data, bv, be, rv, re)
+						pv, _, pe := d.DecodeWithReportWithContext(data, acs)
+						compare(d, "report context", data, bv, be, pv, pe)
 					}
 				}
 			}

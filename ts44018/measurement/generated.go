@@ -602,12 +602,15 @@ func decodeEnhancedMeasurementReportServingCellDataSelector(r *runtime.Reader) (
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportServingCellDataValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -695,7 +698,11 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
+		}
 		v, err := decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 		}
@@ -754,12 +761,15 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r *r
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -782,7 +792,11 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w *r
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader) ([]*uint8, error) {
 	var out []*uint8
 	for i := 0; i < 96 && r.Remaining() > 0; i++ {
+		if err := r.EnterIndex("EnhancedMeasurementReportREPORTINGQUANTITYListValue", i); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
+		}
 		v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
 		}
@@ -817,12 +831,15 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListSelector(r *runtime.Rea
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -979,12 +996,15 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntryValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1006,7 +1026,11 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i); err != nil {
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
+		}
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
 		}
@@ -1041,12 +1065,15 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurem
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurementReportValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1147,12 +1174,15 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportUTRANCSGMeasurementReportValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1328,11 +1358,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -1342,11 +1378,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeNoString
 			result.NoString = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1355,11 +1397,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeSI23BAUSED
 			result.SI23BAUSED = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1475,11 +1523,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -1489,11 +1543,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeNoString
 			result.NoString = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1502,11 +1562,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeUTRANCSGMeasurementReport
 			result.UTRANCSGMeasurementReport = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1648,11 +1714,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -1662,11 +1734,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceNoString(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeNoString
 			result.NoString = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1675,11 +1753,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeBITMAPLENGTH
 			result.BITMAPLENGTH = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -2539,7 +2623,11 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(r *runtime
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i); err != nil {
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
+		}
 		v, err := decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
 		}
@@ -3044,7 +3132,11 @@ func decodeMeasurementResultsNCELLReports(r *runtime.Reader) ([]NCELLReportStruc
 		return nil, err
 	}
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("MeasurementResultsNCELLReports", i); err != nil {
+			return nil, locateIndex(measurementResultsOperationLocation2.failure(err, "", r.Position(), 0), "MeasurementResultsNCELLReports", i)
+		}
 		v, err := decodeMeasurementResultsNCELLReportsEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(measurementResultsOperationLocation2.failure(err, "", r.Position(), 0), "MeasurementResultsNCELLReports", i)
 		}
@@ -3190,11 +3282,17 @@ func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResult
 		v, err := decodeMeasurementResultsSuffixNull(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MeasurementResultsReportsSuffixAlternativeNull
 			result.Null = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -3203,11 +3301,17 @@ func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResult
 		v, err := decodeMeasurementResultsCSGArm(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MeasurementResultsReportsSuffixAlternativeCSG
 			result.CSG = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -3317,11 +3421,17 @@ func decodeMeasurementResultsCountChoice(r *runtime.Reader) (MeasurementResultsC
 		v, err := decodeMeasurementResultsUnavailableArm(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MeasurementResultsCountChoiceAlternativeUnavailable
 			result.Unavailable = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -3330,11 +3440,17 @@ func decodeMeasurementResultsCountChoice(r *runtime.Reader) (MeasurementResultsC
 		v, err := decodeMeasurementResultsReportsArm(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MeasurementResultsCountChoiceAlternativeReports
 			result.Reports = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -3767,7 +3883,7 @@ func EncodeEnhancedMeasurementReportTo(w *runtime.Writer, v EnhancedMeasurementR
 	}
 	return operationLocation5.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedMeasurementReport(w, v) }), "", w.Position(), 0)
 }
-func decodeEnhancedMeasurementReportBytes(data []byte) (runtime.Decoded[EnhancedMeasurementReport], error) {
+func decodeEnhancedMeasurementReportBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EnhancedMeasurementReport], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EnhancedMeasurementReport]{}, err
 	}
@@ -3775,7 +3891,7 @@ func decodeEnhancedMeasurementReportBytes(data []byte) (runtime.Decoded[Enhanced
 	if len(data) > 21 {
 		return runtime.Decoded[EnhancedMeasurementReport]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 168, Detail: "EnhancedMeasurementReport exceeds 168 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedMeasurementReport(r)
 	if err != nil {
@@ -3814,7 +3930,7 @@ func encodeEnhancedMeasurementReportBytes(v EnhancedMeasurementReport) ([]byte, 
 // that decode to a different typed value.
 func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, false, encodeEnhancedMeasurementReportBytes, decodeEnhancedMeasurementReportBytes, func(a, b EnhancedMeasurementReport) bool {
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, false, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
 			if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
@@ -3851,7 +3967,7 @@ func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]by
 // that decode to a different typed value.
 func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementReport, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeEnhancedMeasurementReportBytes, decodeEnhancedMeasurementReportBytes, func(a, b EnhancedMeasurementReport) bool {
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
 			if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
@@ -4150,7 +4266,7 @@ func EncodeMeasurementResultsContentsTo(w *runtime.Writer, v MeasurementResultsC
 	}
 	return measurementResultsOperationLocation4.failure(w.WithWireValue(v.Wire, func() error { return encodeMeasurementResultsContents(w, v) }), "", w.Position(), 0)
 }
-func decodeMeasurementResultsContentsBytes(data []byte) (runtime.Decoded[MeasurementResultsContents], error) {
+func decodeMeasurementResultsContentsBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MeasurementResultsContents], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MeasurementResultsContents]{}, err
 	}
@@ -4161,7 +4277,7 @@ func decodeMeasurementResultsContentsBytes(data []byte) (runtime.Decoded[Measure
 	if len(data) > 16 {
 		return runtime.Decoded[MeasurementResultsContents]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 128, Detail: "MeasurementResultsContents exceeds 128 bits"}
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMeasurementResultsContents(r)
 	if err != nil {
@@ -4207,7 +4323,7 @@ func encodeMeasurementResultsContentsBytes(v MeasurementResultsContents) ([]byte
 // that decode to a different typed value.
 func EncodeMeasurementResultsContentsCanonical(v MeasurementResultsContents) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 16, 16, false, encodeMeasurementResultsContentsBytes, decodeMeasurementResultsContentsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 16, 16, false, encodeMeasurementResultsContentsBytes, DecodeMeasurementResultsContents, nil)
 		if operationErr != nil {
 			return operationValue, measurementResultsOperationLocation5.failure(operationErr, "", -1, 0)
 		}
@@ -4226,7 +4342,7 @@ func EncodeMeasurementResultsContentsCanonical(v MeasurementResultsContents) ([]
 // that decode to a different typed value.
 func EncodeMeasurementResultsContentsCanonicalAtLength(v MeasurementResultsContents, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 16, 16, encodeMeasurementResultsContentsBytes, decodeMeasurementResultsContentsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 16, 16, encodeMeasurementResultsContentsBytes, DecodeMeasurementResultsContents, nil)
 		if operationErr != nil {
 			return operationValue, measurementResultsOperationLocation5.failure(operationErr, "", -1, 0)
 		}
@@ -4322,12 +4438,12 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEnhancedMeasurementReport, DecodeFrom: descriptorDecodeEnhancedMeasurementReportFrom, Encode: descriptorEncodeEnhancedMeasurementReport, Canonical: descriptorCanonicalEnhancedMeasurementReport, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedMeasurementReport},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeServingCellDataStruct, DecodeFrom: descriptorDecodeServingCellDataStructFrom, Encode: descriptorEncodeServingCellDataStruct, Canonical: descriptorCanonicalServingCellDataStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellDataStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeRepeatedInvalidBSICInformationStruct, DecodeFrom: descriptorDecodeRepeatedInvalidBSICInformationStructFrom, Encode: descriptorEncodeRepeatedInvalidBSICInformationStruct, Canonical: descriptorCanonicalRepeatedInvalidBSICInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEUTRANMeasurementReportStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementReportStructFrom, Encode: descriptorEncodeEUTRANMeasurementReportStruct, Canonical: descriptorCanonicalEUTRANMeasurementReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementReportStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "Measurement Results Contents", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeMeasurementResultsContents, DecodeFrom: descriptorDecodeMeasurementResultsContentsFrom, Encode: descriptorEncodeMeasurementResultsContents, Canonical: descriptorCanonicalMeasurementResultsContents, CanonicalAtLength: descriptorCanonicalAtLengthMeasurementResultsContents},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "NCELL Report struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeNCELLReportStruct, DecodeFrom: descriptorDecodeNCELLReportStructFrom, Encode: descriptorEncodeNCELLReportStruct, Canonical: descriptorCanonicalNCELLReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthNCELLReportStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEnhancedMeasurementReport, DecodeFrom: descriptorDecodeEnhancedMeasurementReportFrom, DecodeWithCollector: descriptorCollectEnhancedMeasurementReport, Encode: descriptorEncodeEnhancedMeasurementReport, Canonical: descriptorCanonicalEnhancedMeasurementReport, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedMeasurementReport},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeServingCellDataStruct, DecodeFrom: descriptorDecodeServingCellDataStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeServingCellDataStruct), Encode: descriptorEncodeServingCellDataStruct, Canonical: descriptorCanonicalServingCellDataStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellDataStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeRepeatedInvalidBSICInformationStruct, DecodeFrom: descriptorDecodeRepeatedInvalidBSICInformationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedInvalidBSICInformationStruct), Encode: descriptorEncodeRepeatedInvalidBSICInformationStruct, Canonical: descriptorCanonicalRepeatedInvalidBSICInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEUTRANMeasurementReportStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementReportStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEUTRANMeasurementReportStruct), Encode: descriptorEncodeEUTRANMeasurementReportStruct, Canonical: descriptorCanonicalEUTRANMeasurementReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementReportStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "Measurement Results Contents", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeMeasurementResultsContents, DecodeFrom: descriptorDecodeMeasurementResultsContentsFrom, DecodeWithCollector: descriptorCollectMeasurementResultsContents, Encode: descriptorEncodeMeasurementResultsContents, Canonical: descriptorCanonicalMeasurementResultsContents, CanonicalAtLength: descriptorCanonicalAtLengthMeasurementResultsContents},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "NCELL Report struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeNCELLReportStruct, DecodeFrom: descriptorDecodeNCELLReportStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNCELLReportStruct), Encode: descriptorEncodeNCELLReportStruct, Canonical: descriptorCanonicalNCELLReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthNCELLReportStruct},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -4364,9 +4480,17 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceEnhancedMeasurementReport = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}
+var descriptorCollectLocationEnhancedMeasurementReport = operationLocation{operation: "decode", path: "EnhancedMeasurementReport", source: &descriptorSourceEnhancedMeasurementReport, kind: runtime.InvalidValue}
 
 func descriptorDecodeEnhancedMeasurementReport(data []byte) (any, error) {
 	return DecodeEnhancedMeasurementReport(data)
+}
+func descriptorCollectEnhancedMeasurementReport(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEnhancedMeasurementReportBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEnhancedMeasurementReport.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEnhancedMeasurementReport(value any) (EnhancedMeasurementReport, bool) {
 	switch v := value.(type) {
@@ -4572,9 +4696,17 @@ func descriptorCanonicalAtLengthEUTRANMeasurementReportStruct(value any, octets 
 }
 
 var descriptorSourceMeasurementResultsContents = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}
+var descriptorCollectLocationMeasurementResultsContents = operationLocation{operation: "decode", path: "MeasurementResultsContents", source: &descriptorSourceMeasurementResultsContents, kind: runtime.InvalidValue}
 
 func descriptorDecodeMeasurementResultsContents(data []byte) (any, error) {
 	return DecodeMeasurementResultsContents(data)
+}
+func descriptorCollectMeasurementResultsContents(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMeasurementResultsContentsBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMeasurementResultsContents.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMeasurementResultsContents(value any) (MeasurementResultsContents, bool) {
 	switch v := value.(type) {
@@ -4673,6 +4805,22 @@ func descriptorCanonicalAtLengthNCELLReportStruct(value any, octets int) ([]byte
 	return EncodeNCELLReportStructCanonicalAtLength(v, octets)
 }
 
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
+
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
@@ -4740,7 +4888,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasurementReport], error) {
-	v, err := decodeEnhancedMeasurementReportBytes(data)
+	v, err := decodeEnhancedMeasurementReportBytes(data, nil)
 	if err != nil {
 		return v, operationLocation4.failure(err, "", -1, 0)
 	}
@@ -4796,7 +4944,7 @@ func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byt
 	return out, nil
 }
 func DecodeMeasurementResultsContents(data []byte) (runtime.Decoded[MeasurementResultsContents], error) {
-	v, err := decodeMeasurementResultsContentsBytes(data)
+	v, err := decodeMeasurementResultsContentsBytes(data, nil)
 	if err != nil {
 		return v, measurementResultsOperationLocation3.failure(err, "", -1, 0)
 	}
