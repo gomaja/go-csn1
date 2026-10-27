@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "a17b985aa51e923e25958dae291aa10d2a4ac9c9",
+    "revision": "2403eb7654e7ef0dc229c58af67058c32bae37bb",
     "api_sha256": "ca33b92d451b29c34494ba1c535ff1734a0fd18b2fe2e88d593f0862260b368a",
     "api_ledger_sha256": "abc28066a4fe971011cadde083023f1a427584237e8d8cc967c2032eacd2942c"
   },
   "schema_version": 1,
-  "compiler_commit": "2d482454e5ff960958b4707b229de542c3c3eec4",
+  "compiler_commit": "fabfbb5a0bcaf52ac25d0e8defcbc1786b71d31a",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1786,35 +1786,35 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "946ef8da4caf09a53e2abfc643dde1db94e418352457c3556633924f6d71d935"
+      "sha256": "cbde581a0c6717f3a38603f8d1cd155e97fc063b85b84ed246d8d22c7eae7227"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "afce74b2a86ec8c15bfaa2013656d7a5288a7dbf1e1911c54dc524ad24ee1f96"
+      "sha256": "58d9c8782de44db75ee5a612d6344ec780847cfb5a3c5f5fc9f5f1c3bd6942ef"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "0cef30137213e658b57479247aee7a4c72a1222ad50413e24eb693127908313b"
+      "sha256": "2b6ec666df53d5df18db510d95bb7daa43c6617e2c4163f06504faa51ba5968b"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "ac251aa3d40f94f9b5a1c5ea8b9188d7d8b5b78d3f1706d0c4360ad934a960c4"
+      "sha256": "6d5ddc1e678bf63ff4f793410fa8bfeb80e30873b52d6112ee6beaa08a9decfd"
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "84c035edaf4cab4d33c6d40b1f1255f6865c6c636199cdc5379217f15c80185e"
+      "sha256": "8d33cc14cb4577f532fab2d63fdaa5fe125027f31bbe2116cb11fe64678cb8ab"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "03dbfa358c60c18d11e2b81329cbbb31f6a9ff91cce176ea62ae1505f207b279"
+      "sha256": "f8698ba45e3c3ef848fa36a54e094559318dda8d94a6b98587d1428577f094c8"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "c6f440d54456d813eb62480aee0e4a126847c632548a84dbfaef6dd3be62bdb5"
+      "sha256": "6f603eca80562cab707bc057dd48d928d9e1ee872b9e676f50c53a46f54ecdae"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "529dd45fddd64597dcaaafab8411e0ef4fa877c85d67b24b3617bc44a0fd800b"
+      "sha256": "dd02e55b331e6f561efdd3f76f9fbaa6f5c8b09ce51c9adec5ed728249c12fb4"
     }
   ],
   "validation_commands": [

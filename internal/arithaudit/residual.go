@@ -34,6 +34,17 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		}
 		return nil
 	}
+	if fn.Name.Name == "indexedPath" && (f.Expression == "start + len(component)" || f.Expression == "end + 1") {
+		// Cut advances through disjoint components of full. The separator
+		// check precedes end+1, so both offsets stay within len(full).
+		// Pin the complete loop, including its initial state, to reject
+		// shadowed variables and extra writes to the running offsets.
+		const prefix = `funcindexedPath(full,pathstring,indexint)string{parent:=indexParent(path)start:=0forrest:=fullrest!=""{component,tail,more:=strings.Cut(rest,"/")end:=start+len(component)ifcomponent==parent{ifparent==path{returnfull[:end]+"["+strconv.Itoa(index)+"]"+full[end:]}returnfull[:end]+"/"+path+"["+strconv.Itoa(index)+"]"+full[end:]}if!more{break}start=end+1rest=tail}`
+		if !strings.HasPrefix(strings.ReplaceAll(body, ";", ""), prefix) {
+			return fmt.Errorf("generated indexed path loop changed: %s", f.Key())
+		}
+		return nil
+	}
 	var ordered []string
 	switch f.Expression {
 	case "uint64(value)", "uint8(value)":

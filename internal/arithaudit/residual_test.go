@@ -48,3 +48,41 @@ func TestClassmarkReaderByteNarrowingProof(t *testing.T) {
 		}
 	}
 }
+
+func TestIndexedPathArithmeticProof(t *testing.T) {
+	const source = `package sample
+func indexedPath(full,path string,index int)string{
+ parent:=indexParent(path)
+ start:=0
+ for rest:=full;rest!="";{
+  component,tail,more:=strings.Cut(rest,"/")
+  end:=start+len(component)
+  if component==parent{
+   if parent==path{return full[:end]+"["+strconv.Itoa(index)+"]"+full[end:]}
+   return full[:end]+"/"+path+"["+strconv.Itoa(index)+"]"+full[end:]
+  }
+  if !more{break};start=end+1;rest=tail
+ }
+ if full==""{return path+"["+strconv.Itoa(index)+"]"}
+ return path+"["+strconv.Itoa(index)+"]/"+full
+}`
+	for _, mutation := range []string{"", "start:=0", `strings.Cut(rest,"/")`, "end:=start+len(component)", "if !more{break}", "start=end+1", "rest=tail"} {
+		t.Run(mutation, func(t *testing.T) {
+			root := t.TempDir()
+			text := source
+			if mutation != "" {
+				text = strings.Replace(text, mutation, mutation+";start=1<<30", 1)
+			}
+			if err := os.WriteFile(filepath.Join(root, "generated.go"), []byte(text), 0600); err != nil {
+				t.Fatal(err)
+			}
+			checker := &citationChecker{root: root, files: make(map[string]citationFile)}
+			for _, expression := range []string{"start + len(component)", "end + 1"} {
+				err := checker.checkGeneratedResidual(Finding{File: "generated.go", Line: 7, Expression: expression})
+				if (err == nil) != (mutation == "") {
+					t.Fatalf("%s: %v", expression, err)
+				}
+			}
+		})
+	}
+}
