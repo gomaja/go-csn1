@@ -82,8 +82,8 @@ func TestCanonicalErrorTypes(t *testing.T) {
 		{"length too short at extent", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(ccn, 6); return err }, bound(runtime.LengthBound)},
 		{"length too short", func() error { _, err := restoctets.EncodeSI13RestOctetsCanonical(reduced); return err }, bound(runtime.LengthBound)},
 		{"maximum exceeded", func() error { _, err := measurement.EncodeEnhancedMeasurementReportCanonical(long); return err }, func(err error) bool {
-			var got *runtime.ExtentError
-			return errors.As(err, &got) && got.Maximum == 21 && got.Actual > 21 && !got.Required
+			var got *runtime.BoundError
+			return errors.As(err, &got) && got.Kind == runtime.LengthBound && got.Limit == 168
 		}},
 		{"containing message absent", func() error {
 			_, err := restoctets.EncodeNonGSMMessageStructCanonicalAtLength(container, 2)

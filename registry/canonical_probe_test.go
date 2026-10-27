@@ -243,14 +243,31 @@ func TestProbeCanonicalCapabilityReservation(t *testing.T) {
 }
 
 func compareEMRProbe(a, b measurement.EnhancedMeasurementReport) error {
+	// TS 44.018 V19.0.0 §9.1.55: absent pre-Rel-8 no-report
+	// positions are redundant when the bitmap is present (table 9.1.55.1).
 	normalize := func(v measurement.EnhancedMeasurementReport) measurement.EnhancedMeasurementReport {
 		v = runtime.Canonical(v)
 		if v.REPORTINGQUANTITYList != nil {
-			list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
-			for len(list) < 96 {
-				list = append(list, nil)
+			list := *v.REPORTINGQUANTITYList
+			for len(list) > 0 && list[len(list)-1] == nil {
+				list = list[:len(list)-1]
+			}
+			if len(list) == 0 {
+				list = nil
 			}
 			v.REPORTINGQUANTITYList = &list
+		}
+		// Figure 9.1.55.1: only null and L have no release fields.
+		if v.BITMAPLENGTHChoice.NoString != nil {
+			v.BITMAPLENGTHChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+		if rel8 := v.BITMAPLENGTHChoice.BITMAPLENGTH; rel8 != nil {
+			if rel8.UTRANCSGMeasurementReportChoice.NoString != nil {
+				rel8.UTRANCSGMeasurementReportChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+			}
+			if rel9 := rel8.UTRANCSGMeasurementReportChoice.UTRANCSGMeasurementReport; rel9 != nil && rel9.SI23BAUSEDChoice.NoString != nil {
+				rel9.SI23BAUSEDChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+			}
 		}
 		return v
 	}

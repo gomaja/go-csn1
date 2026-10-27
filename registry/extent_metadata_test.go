@@ -256,6 +256,7 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 		"TS 44.018/10.5.2.78/IPA Rest Octets":                                  {152, "00000000000000000000000000000000000000"},
 		"TS 44.018/9.1.21a/Group Call information":                             {37, "0000000000"},
 		"TS 44.018/9.1.21a/Group Channel Description":                          {25, "00000000"},
+		"TS 44.018/9.1.55/Enhanced Measurement report":                         {168, "10012b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
 		"TS 44.018/9.1.55/E-UTRAN Measurement Report struct":                   {20, "000000"},
 		"TS 44.018/9.1.55/Repeated Invalid_BSIC_Information struct":            {17, "000000"},
 		"TS 44.018/9.1.55/Serving cell data struct":                            {23, "000000"},
