@@ -26,23 +26,23 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 		}
 		width, readWidth, offset := -1, -1, uint64(0)
 		readUint, unreviewedWidthWrite := false, false
-		var mutatingBodies []*ast.BlockStmt
+		// Only direct statements can establish the reaching width.
+		directWrites := directFunctionStatements(fn)
+		var closureBodies []*ast.BlockStmt
 		ast.Inspect(fn.Body, func(node ast.Node) bool {
 			if writesName(node, "width") {
 				assign, ok := node.(*ast.AssignStmt)
-				if !ok || assignedReadWidth(assign) < 0 {
+				if !ok || assignedReadWidth(assign) < 0 || !directWrites[node] {
 					unreviewedWidthWrite = true
 				}
 			}
-			var body *ast.BlockStmt
-			switch loop := node.(type) {
-			case *ast.ForStmt:
-				body = loop.Body
-			case *ast.RangeStmt:
-				body = loop.Body
-			}
-			if body != nil && hasNameWrite(body, "width") {
-				mutatingBodies = append(mutatingBodies, body)
+			switch value := node.(type) {
+			case *ast.FuncLit:
+				closureBodies = append(closureBodies, value.Body)
+			case *ast.BranchStmt:
+				unreviewedWidthWrite = unreviewedWidthWrite || value.Tok == token.GOTO
+			case *ast.LabeledStmt:
+				unreviewedWidthWrite = true
 			}
 			return true
 		})
@@ -69,7 +69,7 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 							if unreviewedWidthWrite {
 								readWidth = -1
 							}
-							for _, body := range mutatingBodies {
+							for _, body := range closureBodies {
 								if body.Pos() <= call.Pos() && call.End() <= body.End() {
 									readWidth = -1
 								}
@@ -211,4 +211,19 @@ func hasNarrowingCast(body *ast.BlockStmt) bool {
 func isName(expr ast.Expr, name string) bool {
 	ident, ok := expr.(*ast.Ident)
 	return ok && ident.Name == name
+}
+
+// directFunctionStatements identifies writes whose source order is execution
+// order. Nested writes, including shadowing declarations, cannot prove the
+// width reaching a read. Function literals may execute after later writes;
+// labels and goto can bypass a preceding write entirely.
+// Go specification, Blocks, Function literals, Labeled statements and Goto
+// statements: https://go.dev/ref/spec#Blocks, #Function_literals,
+// #Labeled_statements and #Goto_statements.
+func directFunctionStatements(fn *ast.FuncDecl) map[ast.Node]bool {
+	statements := make(map[ast.Node]bool, len(fn.Body.List))
+	for _, statement := range fn.Body.List {
+		statements[statement] = true
+	}
+	return statements
 }

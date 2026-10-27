@@ -47,6 +47,19 @@ func TestDirectWidthNarrowingProof(t *testing.T) {
 		{"range key declaration", `width:=8;for width:=range []int{0,1}{v,_:=r.ReadUint(width);_ = uint8(v)};return 0`, false},
 		{"range value declaration", `width:=8;for _,width:=range []int{9}{v,_:=r.ReadUint(width);_ = uint8(v)};return 0`, false},
 		{"var shadow", `width:=8;{var width=9;v,_:=r.ReadUint(width);_ = uint8(v)};return 0`, false},
+		{"conditional write", `width:=9;if n>0{width=8};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"switch write", `width:=8;switch n{case 1:width=9;default:width=8};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"block shadow before read", `width:=9;{width:=8;_ = width};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"conditional shadow before read", `width:=9;if n>0{width:=8;_ = width};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"closure write", `width:=9;f:=func(){width=8};_ = f;v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"nested write after read", `width:=8;v,_:=r.ReadUint(width);if n>0{width=8};return uint8(v)`, false},
+		{"select write", `width:=9;select{default:width=8};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"else write", `width:=9;if n>0{}else{width=8};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"for init write", `width:=9;for width=8;n>0;{};v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"closure read", `width:=8;f:=func()uint8{v,_:=r.ReadUint(width);return uint8(v)};width=9;return f()`, false},
+		{"goto skips write", `width:=9;goto read;width=8;read:v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"label without goto", `width:=8;read:v,_:=r.ReadUint(width);return uint8(v)`, false},
+		{"goto without label", `width:=8;goto read;v,_:=r.ReadUint(width);return uint8(v)`, false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			n, err := CheckGeneratedNarrowing("sample.go", []byte("package sample;func decode(r reader,n int) uint8{"+tc.body+"}"))
