@@ -8,6 +8,8 @@ package classmark
 import (
 	"errors"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/gomaja/go-csn1/runtime"
 )
@@ -6553,6 +6555,15 @@ func constrainedWidth(path string) int {
 	}
 	return 0
 }
+func indexParent(path string) string {
+	switch path {
+	case "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList":
+		return "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1"
+	case "Classmark3ValuePartSpareBitsList":
+		return "Classmark3ValuePart"
+	}
+	return ""
+}
 
 type operationLocation struct {
 	operation, path string
@@ -6594,14 +6605,50 @@ func locateIndex(err error, path string, index int) error {
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
 		copy := *previous
-		copy.Location.Path = fmt.Sprintf("%s[%d]/%s", path, index, copy.Location.Path)
+		copy.Location.Path = indexedPath(copy.Location.Path, path, index)
 		return &copy
 	}
 	var cause *runtime.DecodeError
 	if errors.As(err, &cause) {
-		return &runtime.OperationError{Operation: "decode", Kind: cause.Kind, Location: runtime.Location{Path: fmt.Sprintf("%s[%d]/%s", path, index, cause.Path), BitOffset: cause.Offset}, Cause: err}
+		return &runtime.OperationError{Operation: "decode", Kind: cause.Kind, Location: runtime.Location{Path: indexedPath(cause.Path, path, index), BitOffset: cause.Offset}, Cause: err}
 	}
 	return err
+}
+
+// indexedPath inserts the list immediately after its enclosing codec level.
+// A list that enters its own level receives the index on that component.
+func indexedPath(full, path string, index int) string {
+	parent := indexParent(path)
+	start := 0
+	for rest := full; rest != ""; {
+		component, tail, more := strings.Cut(rest, "/")
+		end := start + len(component)
+		if component == parent {
+			if parent == path {
+				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
+		}
+		if !more {
+			break
+		}
+		start = end + 1
+		rest = tail
+	}
+	if full == "" {
+		return path + "[" + strconv.Itoa(index) + "]"
+	}
+	return path + "[" + strconv.Itoa(index) + "]/" + full
+}
+
+func errorPath(parent, child string) string {
+	if child == "" || parent == child || strings.HasSuffix(parent, "/"+child) {
+		return parent
+	}
+	if parent == "" {
+		return child
+	}
+	return parent + "/" + child
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
@@ -6666,9 +6713,7 @@ func locatedFailure(err error, operation, path string, offset, width int, source
 		if be.Path != "" {
 			location.Path = be.Path
 		}
-		if be.Field != "" {
-			location.Path += "/" + be.Field
-		}
+		location.Path = errorPath(location.Path, be.Field)
 	case errors.As(err, &fe):
 		location.BitOffset = fe.Position
 		location.Path = fe.Path

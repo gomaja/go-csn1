@@ -31,7 +31,10 @@ func TestAccessTechnologiesSecondContinuationErrorHasIndex(t *testing.T) {
 	}
 	_, err := DecodeAccessTechnologiesRequestStructFrom(r)
 	var op *runtime.OperationError
-	if !errors.As(err, &op) || !strings.Contains(op.Location.Path, "AccessTechnologiesRequestStruct[1]/") {
+	if !errors.As(err, &op) || op.Location.Path != "AccessTechnologiesRequestStruct[1]" {
 		t.Fatalf("second continuation location: %v", err)
+	}
+	if got, want := err.Error(), "CSN.1 decode truncated at bit 9 in AccessTechnologiesRequestStruct[1]: required bit absent"; got != want {
+		t.Fatalf("got %q want %q", got, want)
 	}
 }

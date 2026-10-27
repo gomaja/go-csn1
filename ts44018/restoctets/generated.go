@@ -134,6 +134,8 @@ package restoctets
 import (
 	"errors"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/gomaja/go-csn1/runtime"
 	ies "github.com/gomaja/go-csn1/ts44060/ies"
@@ -97501,6 +97503,139 @@ func constrainedWidth(path string) int {
 	}
 	return 0
 }
+func indexParent(path string) string {
+	switch path {
+	case "AccessTechnologiesRequestStruct":
+		return "AccessTechnologiesRequestStruct"
+	case "CCNSupportDescriptionStructCCNSUPPORTEDList":
+		return "CCNSupportDescriptionStruct"
+	case "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList":
+		return "COMPACTNeighbourCellParamsStruct"
+	case "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupList":
+		return "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry"
+	case "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeAdditionalUSFList":
+		return "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFMode"
+	case "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2GroupAdditionalUSF2List":
+		return "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceREPORTEDTIMESLOTSREPORTEDTIMESLOTSChoiceRTTIUSFModeUSF2Group"
+	case "EUTRANCSGDescriptionStructCSGEARFCNList":
+		return "EUTRANCSGDescriptionStruct"
+	case "EUTRANCSGDescriptionStructCSGPCISPLITGroupList":
+		return "EUTRANCSGDescriptionStruct"
+	case "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList":
+		return "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntry"
+	case "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList":
+		return "EUTRANParametersDescriptionStruct"
+	case "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList":
+		return "EUTRANParametersDescriptionStruct"
+	case "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList":
+		return "EUTRANParametersDescriptionStruct"
+	case "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList":
+		return "ExtendedEARFCNsDescriptionForCSGCellsStruct"
+	case "ExtendedEARFCNsDescriptionStructEARFCNExtendedList":
+		return "ExtendedEARFCNsDescriptionStruct"
+	case "GPRSBSICDescriptionStructFrequencyScrollingGroupList":
+		return "GPRSBSICDescriptionStruct"
+	case "GPRSREPORTPRIORITYDescriptionStructREPPRIORITYList":
+		return "GPRSREPORTPRIORITYDescriptionStruct"
+	case "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList":
+		return "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroup"
+	case "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList":
+		return "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2"
+	case "IPADownlinkAssignmentStructTLLIGroupList":
+		return "IPADownlinkAssignmentStruct"
+	case "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList":
+		return "IPASingleBlockUplinkAssignmentStruct"
+	case "IPAUplinkAssignmentStructRandomReferenceGroupList":
+		return "IPAUplinkAssignmentStruct"
+	case "IRATCellReselectionInformationStructPLMNIndexGroupList":
+		return "IRATCellReselectionInformationStruct"
+	case "InfoFieldNextFrequencyList":
+		return "InfoField"
+	case "LSAIDInformationClause105235":
+		return "LSAIDInformationClause105235"
+	case "LSAIDInformationClause105237e":
+		return "LSAIDInformationClause105237e"
+	case "ListOfReducedGCRReducedGCRList":
+		return "ListOfReducedGCR"
+	case "ListOfVSTKRANDInformationSegmentIdGroupList":
+		return "ListOfVSTKRANDInformation"
+	case "MBMSInformationClause105223MBMSChannelParametersGroupList":
+		return "MBMSInformationClause105223"
+	case "MBMSInformationClause105224MBMSChannelParametersGroupList":
+		return "MBMSInformationClause105224"
+	case "N3GCSGDescriptionStructCSGFDDUARFCNList":
+		return "N3GCSGDescriptionStruct"
+	case "N3GCSGDescriptionStructCSGPSCSPLITGroupList":
+		return "N3GCSGDescriptionStruct"
+	case "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList":
+		return "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntry"
+	case "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList":
+		return "N3GPriorityParametersDescriptionStruct"
+	case "NeighbourInformationInfoFieldList":
+		return "NeighbourInformation"
+	case "NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupList":
+		return "NetworkSharingEABInformationStruct"
+	case "NetworkSharingInformationStructMCCGroupList":
+		return "NetworkSharingInformationStruct"
+	case "NonGSMMessageStructCONTAINERList":
+		return "NonGSMMessageStruct"
+	case "PEOIMMCellGroupSpecificParametersStructBSICGroupList":
+		return "PEOIMMCellGroupSpecificParametersStruct"
+	case "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList":
+		return "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroup"
+	case "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList":
+		return "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroup"
+	case "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList":
+		return "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroup"
+	case "RTD12StructRTDList":
+		return "RTD12Struct"
+	case "RTD6StructRTDList":
+		return "RTD6Struct"
+	case "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList":
+		return "RepeatedEUTRANNeighbourCellsStruct"
+	case "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList":
+		return "RepeatedEUTRANNeighbourFrequencyAndPriorityStruct"
+	case "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList":
+		return "RepeatedEUTRANNotAllowedCellsStruct"
+	case "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList":
+		return "RepeatedEUTRANPCIDToTAMappingStruct"
+	case "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList":
+		return "RepeatedEUTRANPCIDToTAMappingStruct"
+	case "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList":
+		return "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct"
+	case "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList":
+		return "RepeatedUTRANPriorityParametersStruct"
+	case "SI10bisRestOctetsPositionInSI5ListGroupList":
+		return "SI10bisRestOctets"
+	case "SI14RestOctetsDYNAMICARFCNMAPPINGDescription":
+		return "SI14RestOctets"
+	case "SI15RestOctetsDYNAMICARFCNMAPPINGDescription":
+		return "SI15RestOctets"
+	case "SI18RestOctetsNonGSMMessageList":
+		return "SI18RestOctets"
+	case "SI18RestOctetsSpareBitList":
+		return "SI18RestOctets"
+	case "SI20RestOctetsNonGSMMessageList":
+		return "SI20RestOctets"
+	case "SI20RestOctetsSpareBitList":
+		return "SI20RestOctets"
+	case "SI2nRestOctetsGSMNeighbourCellSelectionParameters":
+		return "SI2nRestOctets"
+	case "SI2qExtensionInformationSpareBitList":
+		return "SI2qExtensionInformation"
+	case "SI6RestOctetsRandomBitStreamChoiceRandomBitStreamRandomBitStream":
+		return "SI6RestOctetsRandomBitStreamChoiceRandomBitStream"
+	case "SchedulingInfo":
+		return "SchedulingInfo"
+	case "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList":
+		return "UTRANFDDDescriptionStructClause105233b"
+	case "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList":
+		return "UTRANFDDTDDDescriptionStruct"
+	case "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList":
+		return "UTRANTDDDescriptionStructClause105233b"
+	}
+	return ""
+}
 
 type operationLocation struct {
 	operation, path string
@@ -97542,14 +97677,50 @@ func locateIndex(err error, path string, index int) error {
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
 		copy := *previous
-		copy.Location.Path = fmt.Sprintf("%s[%d]/%s", path, index, copy.Location.Path)
+		copy.Location.Path = indexedPath(copy.Location.Path, path, index)
 		return &copy
 	}
 	var cause *runtime.DecodeError
 	if errors.As(err, &cause) {
-		return &runtime.OperationError{Operation: "decode", Kind: cause.Kind, Location: runtime.Location{Path: fmt.Sprintf("%s[%d]/%s", path, index, cause.Path), BitOffset: cause.Offset}, Cause: err}
+		return &runtime.OperationError{Operation: "decode", Kind: cause.Kind, Location: runtime.Location{Path: indexedPath(cause.Path, path, index), BitOffset: cause.Offset}, Cause: err}
 	}
 	return err
+}
+
+// indexedPath inserts the list immediately after its enclosing codec level.
+// A list that enters its own level receives the index on that component.
+func indexedPath(full, path string, index int) string {
+	parent := indexParent(path)
+	start := 0
+	for rest := full; rest != ""; {
+		component, tail, more := strings.Cut(rest, "/")
+		end := start + len(component)
+		if component == parent {
+			if parent == path {
+				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
+		}
+		if !more {
+			break
+		}
+		start = end + 1
+		rest = tail
+	}
+	if full == "" {
+		return path + "[" + strconv.Itoa(index) + "]"
+	}
+	return path + "[" + strconv.Itoa(index) + "]/" + full
+}
+
+func errorPath(parent, child string) string {
+	if child == "" || parent == child || strings.HasSuffix(parent, "/"+child) {
+		return parent
+	}
+	if parent == "" {
+		return child
+	}
+	return parent + "/" + child
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
@@ -97614,9 +97785,7 @@ func locatedFailure(err error, operation, path string, offset, width int, source
 		if be.Path != "" {
 			location.Path = be.Path
 		}
-		if be.Field != "" {
-			location.Path += "/" + be.Field
-		}
+		location.Path = errorPath(location.Path, be.Field)
 	case errors.As(err, &fe):
 		location.BitOffset = fe.Position
 		location.Path = fe.Path
