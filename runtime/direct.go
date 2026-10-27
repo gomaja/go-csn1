@@ -58,22 +58,21 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
 // budget but isolates position and expression bindings for choice resolution.
 type Reader struct {
-	data              []byte
-	pos, end, virtual int
-	boundDepth        int
-	allowZero         bool
-	fieldWidthHi      uint8
-	fieldWidthLo      uint16
-	vars              map[string]uint64
-	varsShared        bool
-	steps             *int
-	path              []string
-	pathShared        bool
-	depth             int
-	wire              WireInfo
-	implicitShared    bool
-	truncShared       bool
-	spareCountsShared bool
+	data                                           []byte
+	pos, end, virtual                              int
+	boundDepth                                     int
+	vars                                           map[string]uint64
+	steps                                          *int
+	path                                           []string
+	depth                                          int
+	wire                                           WireInfo
+	collector                                      *Collector
+	observationDropped                             uint64
+	observationStart                               int32
+	fieldWidthLo                                   uint16
+	fieldWidthHi                                   uint8
+	allowZero, varsShared, pathShared              bool
+	implicitShared, truncShared, spareCountsShared bool
 }
 
 func NewReader(data []byte) *Reader {
@@ -82,7 +81,7 @@ func NewReader(data []byte) *Reader {
 	if len(data) <= maxBits/8 {
 		end = len(data) * 8
 	}
-	return &Reader{data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
+	return &Reader{observationStart: -1, data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
 		wire: WireInfo{TruncatedAt: make(map[string][]int)}}
 }
 
@@ -200,12 +199,21 @@ func (r *Reader) Leave() {
 func (r *Reader) Fork() *Reader {
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
 	fork := *r
-	fork.wire.Spare = fork.wire.Spare[:len(fork.wire.Spare):len(fork.wire.Spare)]
-	fork.wire.Padding = fork.wire.Padding[:len(fork.wire.Padding):len(fork.wire.Padding)]
-	fork.wire.Terminal = fork.wire.Terminal[:len(fork.wire.Terminal):len(fork.wire.Terminal)]
+	if r.collector != nil {
+		fork.observationStart = int32(len(r.collector.observations))
+		fork.observationDropped = r.collector.dropped
+	}
+	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
 	return &fork
 }
-func (r *Reader) Commit(other *Reader) { *r = *other }
+func (r *Reader) Commit(other *Reader) {
+	if r.collector != nil {
+		r.commitCollected(other)
+		return
+	}
+	*r = *other
+}
+
 func (r *Reader) bit() (uint8, bool, error) {
 	if err := r.Check(); err != nil {
 		return 0, false, err

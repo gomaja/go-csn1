@@ -144,7 +144,17 @@ func lookupFailure(standard, clause, name string, cause error) error {
 func manualDescriptor(source runtime.Source, name string, minBits, maxBits, maxOctets int, decode func([]byte) (any, error), from func(*runtime.Reader) (any, error), encode, canonical func(any) ([]byte, error), atLength func(any, int) ([]byte, error)) runtime.Descriptor {
 	return runtime.Descriptor{Standard: source.Standard, Version: source.Version, Clause: source.Clause, Name: name, MaxOctets: maxOctets,
 		Extent: runtime.Extent{MinimumBits: minBits, MaximumBits: maxBits, Finite: true, Fixed: minBits == maxBits, NeedsContext: minBits != maxBits, Source: source},
-		Decode: decode, DecodeFrom: from, Encode: encode, Canonical: canonical, CanonicalAtLength: atLength}
+		Decode: decode, DecodeFrom: from, Encode: encode, Canonical: canonical, CanonicalAtLength: atLength,
+		DecodeWithCollector: func(data []byte, c *runtime.Collector) (any, error) {
+			if err := runtime.CheckInput(data); err != nil {
+				return nil, err
+			}
+			r := runtime.NewReaderWithCollector(data, c)
+			if _, err := r.PushLimit(len(data) * 8); err != nil {
+				return nil, err
+			}
+			return from(r)
+		}}
 }
 func manualTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
