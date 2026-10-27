@@ -59,18 +59,21 @@ type Decoded[T any] struct {
 type Descriptor struct {
 	Standard, Version, Clause, Name string
 	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
-	MaxOctets                    int
-	Extent                       Extent
-	Decode                       func([]byte) (any, error)
-	DecodeFrom                   func(*Reader) (any, error)
-	Encode                       func(any) ([]byte, error)
-	Canonical                    func(any) ([]byte, error)
-	CanonicalAtLength            func(any, int) ([]byte, error)
-	DecodeWithContext            func([]byte, SI4ACS) (any, error)
-	DecodeFromWithContext        func(*Reader, SI4ACS) (any, error)
-	CanonicalAtLengthWithContext func(any, int, SI4ACS) ([]byte, error)
-	EncodeWithContext            func(any, SI4ACS) ([]byte, error)
-	CanonicalWithContext         func(any, SI4ACS) ([]byte, error)
+	MaxOctets  int
+	Extent     Extent
+	Decode     func([]byte) (any, error)
+	DecodeFrom func(*Reader) (any, error)
+	// DecodeWithCollector preserves the byte entry point policy while using an optional collector.
+	DecodeWithCollector            func([]byte, *Collector) (any, error)
+	DecodeWithCollectorWithContext func([]byte, *Collector, SI4ACS) (any, error)
+	Encode                         func(any) ([]byte, error)
+	Canonical                      func(any) ([]byte, error)
+	CanonicalAtLength              func(any, int) ([]byte, error)
+	DecodeWithContext              func([]byte, SI4ACS) (any, error)
+	DecodeFromWithContext          func(*Reader, SI4ACS) (any, error)
+	CanonicalAtLengthWithContext   func(any, int, SI4ACS) ([]byte, error)
+	EncodeWithContext              func(any, SI4ACS) ([]byte, error)
+	CanonicalWithContext           func(any, SI4ACS) ([]byte, error)
 }
 
 type ErrorKind string
