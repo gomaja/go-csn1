@@ -26,7 +26,6 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 		}
 		width, readWidth, offset := -1, -1, uint64(0)
 		readUint, unreviewedWidthWrite := false, false
-		// Only direct statements can establish the reaching width.
 		directWrites := directFunctionStatements(fn)
 		var closureBodies []*ast.BlockStmt
 		ast.Inspect(fn.Body, func(node ast.Node) bool {
@@ -46,6 +45,9 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 			}
 			return true
 		})
+		if !reviewedValueWrites(fn, directWrites) || hasClosureNarrowing(fn.Body) {
+			return checked, fmt.Errorf("%s: unreviewed generated v write or closure cast in %s", name, fn.Name.Name)
+		}
 		var failure error
 		ast.Inspect(fn.Body, func(node ast.Node) bool {
 			if failure != nil {
@@ -69,10 +71,8 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 							if unreviewedWidthWrite {
 								readWidth = -1
 							}
-							for _, body := range closureBodies {
-								if body.Pos() <= call.Pos() && call.End() <= body.End() {
-									readWidth = -1
-								}
+							if insideClosure(call, closureBodies) {
+								readWidth = -1
 							}
 							break
 						}
@@ -226,4 +226,69 @@ func directFunctionStatements(fn *ast.FuncDecl) map[ast.Node]bool {
 		statements[statement] = true
 	}
 	return statements
+}
+
+// reviewedValueWrites requires every write to the read value to occur in
+// execution order as a direct function-body statement. Address escape and
+// same-spelled shadowing writes fail closed through writesName.
+// Go specification, Assignments and Function literals:
+// https://go.dev/ref/spec#Assignments and #Function_literals.
+func reviewedValueWrites(fn *ast.FuncDecl, directWrites map[ast.Node]bool) bool {
+	valid := true
+	ast.Inspect(fn.Body, func(node ast.Node) bool {
+		if !writesName(node, "v") {
+			return true
+		}
+		assign, ok := node.(*ast.AssignStmt)
+		if !ok || !directWrites[node] || !reviewedValueAssignment(assign) {
+			valid = false
+		}
+		return true
+	})
+	return valid
+}
+
+func reviewedValueAssignment(assign *ast.AssignStmt) bool {
+	if expr, ok := plainAssignmentValue(assign, "v"); ok && len(assign.Lhs) <= 2 {
+		call, ok := expr.(*ast.CallExpr)
+		if !ok || len(call.Args) != 1 || !isName(call.Args[0], "width") {
+			return false
+		}
+		selector, ok := call.Fun.(*ast.SelectorExpr)
+		return ok && isName(selector.X, "r") && selector.Sel.Name == "ReadUint"
+	}
+	if len(assign.Lhs) != 1 || !isName(assign.Lhs[0], "v") || len(assign.Rhs) != 1 {
+		return false
+	}
+	if assign.Tok == token.XOR_ASSIGN {
+		return isLHBitMask(assign.Rhs[0])
+	}
+	literal, ok := assign.Rhs[0].(*ast.BasicLit)
+	if assign.Tok != token.ADD_ASSIGN || !ok || literal.Kind != token.INT {
+		return false
+	}
+	_, err := strconv.ParseUint(literal.Value, 0, 64)
+	return err == nil
+}
+
+// A function literal can execute after writes that follow its source position.
+// Go specification, Function literals: https://go.dev/ref/spec#Function_literals.
+func hasClosureNarrowing(body *ast.BlockStmt) bool {
+	found := false
+	ast.Inspect(body, func(node ast.Node) bool {
+		if literal, ok := node.(*ast.FuncLit); ok && hasNarrowingCast(literal.Body) {
+			found = true
+		}
+		return !found
+	})
+	return found
+}
+
+func insideClosure(node ast.Node, bodies []*ast.BlockStmt) bool {
+	for _, body := range bodies {
+		if body.Pos() <= node.Pos() && node.End() <= body.End() {
+			return true
+		}
+	}
+	return false
 }
