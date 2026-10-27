@@ -5,7 +5,7 @@
     "api_ledger_sha256": "4b885e47e2405fa2cac5224e27623f12909d1d847e3307808570e411415448bc"
   },
   "schema_version": 1,
-  "compiler_commit": "f3bf21f791acc0c479f7753bd01f54ac5f4d704e",
+  "compiler_commit": "f074a5fda72b1597bd557a9aea62a54727938b90",
   "sources": [
     {
       "standard": "TS 24.008",
