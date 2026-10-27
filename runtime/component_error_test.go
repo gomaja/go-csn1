@@ -11,57 +11,54 @@ type componentErrorWriter interface {
 type errorPathReader interface{ ErrorPath(string) string }
 
 func TestComponentErrorPaths(t *testing.T) {
-	for _, parent := range []string{"", "First", "Second/Nested"} {
-		for _, child := range []string{"", "Field", "Nested"} {
-			t.Run(parent+"+"+child, func(t *testing.T) {
-				w := NewWriter()
-				r := NewReader(nil)
-				if parent != "" {
-					if err := w.Enter(parent); err != nil {
-						t.Fatal(err)
-					}
-					if err := r.Enter(parent); err != nil {
-						t.Fatal(err)
-					}
+	for _, tc := range []struct{ parent, child, want string }{
+		{"", "", ""}, {"", "Field", "Field"}, {"Root", "", "Root"},
+		{"Root", "Field", "Root/Field"}, {"Root/Field", "Field", "Root/Field"},
+		{"Root/Field", "Root/Field", "Root/Field"}, {"Root/Field", "Other", "Root/Field/Other"},
+		{"Root/Field2", "Field", "Root/Field2/Field"},
+		{"First", "Shared", "First/Shared"}, {"Second/Nested", "Shared", "Second/Nested/Shared"},
+	} {
+		t.Run(tc.parent+"+"+tc.child, func(t *testing.T) {
+			w := NewWriter()
+			r := NewReader(nil)
+			if tc.parent != "" {
+				if err := w.Enter(tc.parent); err != nil {
+					t.Fatal(err)
 				}
-				writer, ok := any(w).(componentErrorWriter)
-				if !ok {
-					t.Fatal("writer has no component error method")
+				if err := r.Enter(tc.parent); err != nil {
+					t.Fatal(err)
 				}
-				reader, ok := any(r).(errorPathReader)
-				if !ok {
-					t.Fatal("reader has no error path method")
-				}
-				want := parent
-				if child != "" && child != parent && !(parent == "Second/Nested" && child == "Nested") {
-					if want != "" {
-						want += "/"
-					}
-					want += child
-				}
-				cause := errors.New("invalid component")
-				err := writer.ComponentError(InvalidBranch, child, 3, cause)
-				var op *OperationError
-				if !errors.As(err, &op) || op.Operation != "encode" || op.Kind != InvalidBranch || op.Location.Path != want || op.Location.BitOffset != 0 || op.Location.Width != 3 || errors.Unwrap(err) != cause {
-					t.Fatalf("component error: %v; want %q", err, want)
-				}
-				if got := reader.ErrorPath(child); got != want {
-					t.Fatalf("reader path %q want %q", got, want)
-				}
-				explicit := w.OperationError(InvalidBranch, "Already/Composed", 3, cause)
-				if !errors.As(explicit, &op) || op.Location.Path != "Already/Composed" {
-					t.Fatal(explicit)
-				}
-				if writer.ComponentError(InvalidBranch, child, 3, nil) != nil {
-					t.Fatal("nil cause changed")
-				}
-				w.Leave()
-				r.Leave()
-				if got := reader.ErrorPath("Field"); got != "Field" {
-					t.Fatal(got)
-				}
-			})
-		}
+			}
+			writer, ok := any(w).(componentErrorWriter)
+			if !ok {
+				t.Fatal("writer has no component error method")
+			}
+			reader, ok := any(r).(errorPathReader)
+			if !ok {
+				t.Fatal("reader has no error path method")
+			}
+			cause := errors.New("invalid component")
+			err := writer.ComponentError(InvalidBranch, tc.child, 3, cause)
+			var op *OperationError
+			if !errors.As(err, &op) || op.Operation != "encode" || op.Kind != InvalidBranch || op.Location.Path != tc.want || op.Location.BitOffset != 0 || op.Location.Width != 3 || errors.Unwrap(err) != cause {
+				t.Fatalf("component error: %v; want %q", err, tc.want)
+			}
+			if got := reader.ErrorPath(tc.child); got != tc.want {
+				t.Fatalf("reader path %q want %q", got, tc.want)
+			}
+			explicit := w.OperationError(InvalidBranch, "Already/Composed", 3, cause)
+			if !errors.As(explicit, &op) || op.Location.Path != "Already/Composed" {
+				t.Fatal(explicit)
+			}
+			if writer.ComponentError(InvalidBranch, tc.child, 3, nil) != nil {
+				t.Fatal("nil cause changed")
+			}
+			w.Leave()
+			r.Leave()
+			if got := reader.ErrorPath("Field"); got != "Field" {
+				t.Fatal(got)
+			}
+		})
 	}
 }
 
