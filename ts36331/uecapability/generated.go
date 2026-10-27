@@ -380,6 +380,30 @@ func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, erro
 	if readErr != nil {
 		return Classmark2ValuePart{}, operationLocation0.failure(readErr, "", r.Position(), 0)
 	}
+	if r.Collecting() {
+		source := runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}
+		origin := start.Position()
+		observe := func(field string, offset, width int, value uint8) error {
+			return r.Observe(origin+offset, width, uint64(value), source, field)
+		}
+		if v.RevisionLevel == 0 || v.RevisionLevel == 3 {
+			if err := observe("RevisionLevel", 1, 2, v.RevisionLevel); err != nil {
+				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+		if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
+			if err := observe("RFPowerCapability", 5, 3, v.RFPowerCapability); err != nil {
+				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+		if v.SSScreeningIndicator >= 2 {
+			source = runtime.Source{Standard: "TS 24.080", Version: "19.4.0", Clause: "3.7.1"}
+			if err := observe("SSScreeningIndicator", 10, 2, v.SSScreeningIndicator); err != nil {
+				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+	}
+
 	wire, err := r.ValueWire(start, before, false)
 	if err != nil {
 		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
@@ -479,6 +503,10 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	if r.BoundedRemaining() < 48 {
 		return GERANCS{}, operationLocation3.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANCS", Detail: "GERAN CS requires at least 48 bits"}, "", r.Position(), 0)
 	}
+	if r.Collecting() {
+		r.EnterObservationPath("GERANCS")
+		defer r.LeaveObservationPath()
+	}
 	if err := r.Expect("0011001100000011"); err != nil {
 		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
@@ -561,6 +589,10 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	prior := r.ZeroExtension()
 	r.SetZeroExtension(false)
 	defer r.SetZeroExtension(prior)
+	if r.Collecting() {
+		r.EnterObservationPath("GERANPS")
+		defer r.LeaveObservationPath()
+	}
 	v, err := msrac.DecodeMSRACapabilityValuePartFrom(r)
 	if err != nil {
 		return GERANPS{}, operationLocation6.failure(err, "", r.Position(), 0)

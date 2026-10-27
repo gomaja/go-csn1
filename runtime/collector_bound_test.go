@@ -46,6 +46,9 @@ func TestCollectorSeparateBoundAndDroppedRollback(t *testing.T) {
 	r.Commit(winner)
 	r.Commit(winner)
 	winner.Discard()
+	failed = r.Fork()
+	emit(failed)
+	failed.Discard()
 	report := c.TakeReport()
 	if len(report.Observations) != 8 || report.Dropped != 1 {
 		t.Fatalf("after bound: %+v", report)
@@ -212,5 +215,29 @@ func TestCollectorPathBudgetAndDroppedRollback(t *testing.T) {
 	}
 	if c.pathUsed != 0 {
 		t.Fatal("TakeReport did not reset path accounting")
+	}
+}
+
+func TestCollectorErrorRetainsCommittedDrops(t *testing.T) {
+	descriptor := Descriptor{DecodeWithCollector: func(data []byte, c *Collector) (any, error) {
+		r := NewReaderWithCollector(data, c)
+		if _, err := r.ReadUint(1); err != nil {
+			return nil, err
+		}
+		for i := 0; i < 9; i++ {
+			if err := r.Observe(0, 1, 1, Source{}, "Code"); err != nil {
+				return nil, err
+			}
+		}
+		failed := r.Fork()
+		if err := failed.Observe(0, 1, 1, Source{}, "Code"); err != nil {
+			return nil, err
+		}
+		failed.Discard()
+		return nil, r.Error(Truncated, "synthetic failure")
+	}}
+	_, report, err := descriptor.DecodeWithReport([]byte{0xff})
+	if err == nil || len(report.Observations) != 8 || report.Dropped != 1 {
+		t.Fatalf("events=%d dropped=%d error=%v", len(report.Observations), report.Dropped, err)
 	}
 }

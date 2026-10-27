@@ -64,6 +64,9 @@ type AccessCapabilitiesStruct struct {
 	Content AccessCapabilitiesStructAccessCapabilitiesAccessCapabilities
 	Wire    runtime.WireInfo `json:"-"`
 }
+
+var observationRule0 = observationRule{minimum: 1, maximum: 18446744073709551615, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Table: "10.5.146"}}
+
 type ContentExtendedDTMGPRSMultiSlotClassGroup struct {
 	ExtendedDTMGPRSMultiSlotClass  uint8
 	ExtendedDTMEGPRSMultiSlotClass uint8
@@ -72,10 +75,16 @@ type ContentDTMGPRSHighMultiSlotClassGroup struct {
 	DTMGPRSHighMultiSlotClass  uint8
 	DTMEGPRSHighMultiSlotClass *uint8
 }
+
+var observationRule1 = observationRule{minimum: 0, maximum: 6, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Table: "10.5.146"}}
+
 type ContentMultislotCapabilityReductionForDownlinkDualCarrierGroup struct {
 	MultislotCapabilityReductionForDownlinkDualCarrier uint8
 	DownlinkDualCarrierForDTMCapability                uint8
 }
+
+var observationRule2 = observationRule{minimum: 0, maximum: 2, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Table: "10.5.146"}}
+
 type Content struct {
 	RFPowerCapability                                       uint8
 	A5Bits                                                  *A5Bits
@@ -141,6 +150,9 @@ type Content struct {
 	ECPagingIndicationChannelMonitoringSupport              uint8
 	Wire                                                    runtime.WireInfo `json:"-"`
 }
+
+var observationRule3 = observationRule{minimum: 1, maximum: 18, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Table: "10.5.146"}}
+
 type MultislotCapabilityStructGPRSMultislotClassGroup struct {
 	GPRSMultislotClass                      uint8
 	GPRSExtendedDynamicAllocationCapability uint8
@@ -195,6 +207,9 @@ type DLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup struct {
 	DLMCNonContiguousIntraBandReception uint8
 	DLMCInterBandReception              uint8
 }
+
+var observationRule4 = observationRule{minimum: 0, maximum: 61, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Table: "10.5.146"}}
+
 type DLMCCapabilityStruct struct {
 	DLMCNonContiguousIntraBandReceptionGroup *DLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup
 	DLMCMaximumBandwidth                     uint8
@@ -533,7 +548,11 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
+		}
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 		}
@@ -734,7 +753,12 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAccessCapabilities(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeAccessCapabilities
 			result.AccessCapabilities = &v
@@ -742,6 +766,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -750,7 +775,12 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 		v, err := decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLength(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceAlternativeLength
 			result.Length = &v
@@ -758,6 +788,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoice(r *run
 			if de := decodeCause(err); de != nil && de.Kind == runtime.InvalidValue && (de.Detail == "reserved CSN.1 alternative" || de.Detail == "value reserved by source table") {
 				reservedErr = err
 			}
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -842,7 +873,11 @@ func decodeMSRACapabilityValuePartStruct(r *runtime.Reader) (MSRACapabilityValue
 	var out MSRACapabilityValuePartStruct
 	for {
 		before := r.Position()
+		if err := r.EnterIndex("MSRACapabilityValuePartStruct", len(out.Entries)); err != nil {
+			return MSRACapabilityValuePartStruct{}, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStruct", len(out.Entries))
+		}
 		element, err := decodeMSRACapabilityValuePartStructElement(r)
+		r.LeaveIndex()
 		if err != nil {
 			return MSRACapabilityValuePartStruct{}, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStruct", len(out.Entries))
 		}
@@ -1272,12 +1307,15 @@ func decodeContentA5BitsSelector(r *runtime.Reader) (*A5Bits, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentA5BitsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1428,12 +1466,15 @@ func decodeContentMultislotCapabilitySelector(r *runtime.Reader) (*MultislotCapa
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentMultislotCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1459,9 +1500,16 @@ func decodeContentN8PSKPowerCapabilityValue(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("8PSK Power Capability", v)
 	return uint8(v), nil
@@ -1492,12 +1540,15 @@ func decodeContentN8PSKPowerCapabilitySelector(r *runtime.Reader) (*uint8, error
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentN8PSKPowerCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1845,12 +1896,15 @@ func decodeContentExtendedDTMGPRSMultiSlotClassGroupSelector(r *runtime.Reader) 
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentExtendedDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1933,12 +1987,15 @@ func decodeContentHighMultislotCapabilitySelector(r *runtime.Reader) (*uint8, er
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentHighMultislotCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2215,12 +2272,15 @@ func decodeContentDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelect
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2289,12 +2349,15 @@ func decodeContentDTMGPRSHighMultiSlotClassGroupSelector(r *runtime.Reader) (*Co
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentDTMGPRSHighMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2382,9 +2445,16 @@ func decodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupMultisl
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("Multislot Capability Reduction for Downlink Dual Carrier", v)
 	return uint8(v), nil
@@ -2494,12 +2564,15 @@ func decodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroupSelecto
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentMultislotCapabilityReductionForDownlinkDualCarrierGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -3307,12 +3380,15 @@ func decodeContentDLMCCapabilitySelector(r *runtime.Reader) (*DLMCCapabilityStru
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentDLMCCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -3400,9 +3476,16 @@ func decodeContentECPCHMonitoringSupport(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule2)
 	}
 	r.Set("(EC-)PCH monitoring support", v)
 	return uint8(v), nil
@@ -3464,12 +3547,15 @@ func decodeContentMSSyncAccuracySelector(r *runtime.Reader) (*uint8, error) {
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeContentMSSyncAccuracyValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4426,9 +4512,16 @@ func decodeMultislotCapabilityStructHSCSDMultislotClassValue(r *runtime.Reader) 
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule3)
 	}
 	r.Set("HSCSD multislot class", v)
 	return uint8(v), nil
@@ -4462,12 +4555,15 @@ func decodeMultislotCapabilityStructHSCSDMultislotClassSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructHSCSDMultislotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4598,12 +4694,15 @@ func decodeMultislotCapabilityStructGPRSMultislotClassGroupSelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructGPRSMultislotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4734,12 +4833,15 @@ func decodeMultislotCapabilityStructSMSVALUEGroupSelector(r *runtime.Reader) (*M
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructSMSVALUEGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4765,9 +4867,16 @@ func decodeMultislotCapabilityStructECSDMultislotClassValue(r *runtime.Reader) (
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule3)
 	}
 	r.Set("ECSD multislot class", v)
 	return uint8(v), nil
@@ -4801,12 +4910,15 @@ func decodeMultislotCapabilityStructECSDMultislotClassSelector(r *runtime.Reader
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructECSDMultislotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4937,12 +5049,15 @@ func decodeMultislotCapabilityStructEGPRSMultislotClassGroupSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructEGPRSMultislotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5056,12 +5171,15 @@ func decodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotC
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5143,12 +5261,15 @@ func decodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroupSelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeMultislotCapabilityStructDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5611,9 +5732,16 @@ func decodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("EFTA Multislot Capability Reduction for Downlink Dual Carrier", v)
 	return uint8(v), nil
@@ -5692,12 +5820,15 @@ func decodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClass
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedFlexibleTimeslotAssignmentStructAlternativeEFTAMultislotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5863,12 +5994,15 @@ func decodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroupSelector(
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeDLMCCapabilityStructDLMCNonContiguousIntraBandReceptionGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -5925,9 +6059,16 @@ func decodeDLMCCapabilityStructDLMCMaximumNumberOfDownlinkTimeslots(r *runtime.R
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule4)
 	}
 	r.Set("DLMC - Maximum Number of Downlink Timeslots", v)
 	return uint8(v), nil
@@ -6058,6 +6199,18 @@ func encodeDLMCCapabilityStruct(w *runtime.Writer, v DLMCCapabilityStruct) error
 	return nil
 }
 
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
+}
+
 // Maximum encoded extent: TS 24.008 V20.1.0 §10.5.5.12a (octets 3–52: 50-octet value part).
 // DecodeMSRACapabilityValuePart decodes TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part>.
 func DecodeMSRACapabilityValuePartFrom(r *runtime.Reader) (MSRACapabilityValuePart, error) {
@@ -6078,7 +6231,7 @@ func EncodeMSRACapabilityValuePartTo(w *runtime.Writer, v MSRACapabilityValuePar
 	}
 	return operationLocation6.failure(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePart(w, v) }), "", w.Position(), 0)
 }
-func decodeMSRACapabilityValuePartBytes(data []byte) (runtime.Decoded[MSRACapabilityValuePart], error) {
+func decodeMSRACapabilityValuePartBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MSRACapabilityValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSRACapabilityValuePart]{}, err
 	}
@@ -6086,7 +6239,7 @@ func decodeMSRACapabilityValuePartBytes(data []byte) (runtime.Decoded[MSRACapabi
 		return runtime.Decoded[MSRACapabilityValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "MSRACapabilityValuePart requires at least 16 bits"}
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePart(r)
 	if err != nil {
@@ -6130,7 +6283,7 @@ func encodeMSRACapabilityValuePartBytes(v MSRACapabilityValuePart) ([]byte, erro
 // that decode to a different typed value.
 func EncodeMSRACapabilityValuePartCanonical(v MSRACapabilityValuePart) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 50, false, encodeMSRACapabilityValuePartBytes, decodeMSRACapabilityValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 50, false, encodeMSRACapabilityValuePartBytes, DecodeMSRACapabilityValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
@@ -6152,7 +6305,7 @@ func EncodeMSRACapabilityValuePartCanonical(v MSRACapabilityValuePart) ([]byte, 
 // that decode to a different typed value.
 func EncodeMSRACapabilityValuePartCanonicalAtLength(v MSRACapabilityValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 50, encodeMSRACapabilityValuePartBytes, decodeMSRACapabilityValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 50, encodeMSRACapabilityValuePartBytes, DecodeMSRACapabilityValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation7.failure(operationErr, "", -1, 0)
 		}
@@ -6179,12 +6332,12 @@ func EncodeMSRACapabilityValuePartStructTo(w *runtime.Writer, v MSRACapabilityVa
 	}
 	return operationLocation8.failure(w.WithWireValue(v.Wire, func() error { return encodeMSRACapabilityValuePartStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeMSRACapabilityValuePartStructBytes(data []byte) (runtime.Decoded[MSRACapabilityValuePartStruct], error) {
+func decodeMSRACapabilityValuePartStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MSRACapabilityValuePartStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSRACapabilityValuePartStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMSRACapabilityValuePartStruct(r)
 	if err != nil {
@@ -6222,7 +6375,7 @@ func encodeMSRACapabilityValuePartStructBytes(v MSRACapabilityValuePartStruct) (
 // that decode to a different typed value.
 func EncodeMSRACapabilityValuePartStructCanonical(v MSRACapabilityValuePartStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeMSRACapabilityValuePartStructBytes, decodeMSRACapabilityValuePartStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeMSRACapabilityValuePartStructBytes, DecodeMSRACapabilityValuePartStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
@@ -6244,7 +6397,7 @@ func EncodeMSRACapabilityValuePartStructCanonical(v MSRACapabilityValuePartStruc
 // that decode to a different typed value.
 func EncodeMSRACapabilityValuePartStructCanonicalAtLength(v MSRACapabilityValuePartStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeMSRACapabilityValuePartStructBytes, decodeMSRACapabilityValuePartStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeMSRACapabilityValuePartStructBytes, DecodeMSRACapabilityValuePartStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation9.failure(operationErr, "", -1, 0)
 		}
@@ -6355,12 +6508,12 @@ func EncodeAccessCapabilitiesStructTo(w *runtime.Writer, v AccessCapabilitiesStr
 	}
 	return operationLocation14.failure(w.WithWireValue(v.Wire, func() error { return encodeAccessCapabilitiesStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeAccessCapabilitiesStructBytes(data []byte) (runtime.Decoded[AccessCapabilitiesStruct], error) {
+func decodeAccessCapabilitiesStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[AccessCapabilitiesStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[AccessCapabilitiesStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeAccessCapabilitiesStruct(r)
 	if err != nil {
@@ -6397,7 +6550,7 @@ func encodeAccessCapabilitiesStructBytes(v AccessCapabilitiesStruct) ([]byte, er
 // that decode to a different typed value.
 func EncodeAccessCapabilitiesStructCanonical(v AccessCapabilitiesStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeAccessCapabilitiesStructBytes, decodeAccessCapabilitiesStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 50, false, encodeAccessCapabilitiesStructBytes, DecodeAccessCapabilitiesStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
@@ -6419,7 +6572,7 @@ func EncodeAccessCapabilitiesStructCanonical(v AccessCapabilitiesStruct) ([]byte
 // that decode to a different typed value.
 func EncodeAccessCapabilitiesStructCanonicalAtLength(v AccessCapabilitiesStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeAccessCapabilitiesStructBytes, decodeAccessCapabilitiesStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeAccessCapabilitiesStructBytes, DecodeAccessCapabilitiesStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
@@ -6446,12 +6599,12 @@ func EncodeContentTo(w *runtime.Writer, v Content) error {
 	}
 	return operationLocation17.failure(w.WithWireValue(v.Wire, func() error { return encodeContent(w, v) }), "", w.Position(), 0)
 }
-func decodeContentBytes(data []byte) (runtime.Decoded[Content], error) {
+func decodeContentBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[Content], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Content]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(true)
 	v, err := decodeContent(r)
 	if err != nil {
@@ -6484,7 +6637,7 @@ func encodeContentBytes(v Content) ([]byte, error) {
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeContentCanonical(v Content) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, true, encodeContentBytes, decodeContentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, true, encodeContentBytes, DecodeContent, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
@@ -6504,7 +6657,7 @@ func EncodeContentCanonical(v Content) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeContentCanonicalAtLength(v Content, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeContentBytes, decodeContentBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeContentBytes, DecodeContent, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
@@ -6531,12 +6684,12 @@ func EncodeMultislotCapabilityStructTo(w *runtime.Writer, v MultislotCapabilityS
 	}
 	return operationLocation20.failure(w.WithWireValue(v.Wire, func() error { return encodeMultislotCapabilityStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeMultislotCapabilityStructBytes(data []byte) (runtime.Decoded[MultislotCapabilityStruct], error) {
+func decodeMultislotCapabilityStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MultislotCapabilityStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MultislotCapabilityStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMultislotCapabilityStruct(r)
 	if err != nil {
@@ -6569,7 +6722,7 @@ func encodeMultislotCapabilityStructBytes(v MultislotCapabilityStruct) ([]byte, 
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeMultislotCapabilityStructCanonical(v MultislotCapabilityStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 6, false, encodeMultislotCapabilityStructBytes, decodeMultislotCapabilityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 6, false, encodeMultislotCapabilityStructBytes, DecodeMultislotCapabilityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation21.failure(operationErr, "", -1, 0)
 		}
@@ -6589,7 +6742,7 @@ func EncodeMultislotCapabilityStructCanonical(v MultislotCapabilityStruct) ([]by
 // that decode to a different typed value.
 func EncodeMultislotCapabilityStructCanonicalAtLength(v MultislotCapabilityStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 6, encodeMultislotCapabilityStructBytes, decodeMultislotCapabilityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 6, encodeMultislotCapabilityStructBytes, DecodeMultislotCapabilityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation21.failure(operationErr, "", -1, 0)
 		}
@@ -6700,12 +6853,12 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStructTo(w *runtime.Writer, v Enhan
 	}
 	return operationLocation26.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedFlexibleTimeslotAssignmentStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data []byte) (runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct], error) {
+func decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedFlexibleTimeslotAssignmentStruct(r)
 	if err != nil {
@@ -6738,7 +6891,7 @@ func encodeEnhancedFlexibleTimeslotAssignmentStructBytes(v EnhancedFlexibleTimes
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v EnhancedFlexibleTimeslotAssignmentStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, decodeEnhancedFlexibleTimeslotAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation27.failure(operationErr, "", -1, 0)
 		}
@@ -6757,7 +6910,7 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonical(v EnhancedFlexibleT
 // that decode to a different typed value.
 func EncodeEnhancedFlexibleTimeslotAssignmentStructCanonicalAtLength(v EnhancedFlexibleTimeslotAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, decodeEnhancedFlexibleTimeslotAssignmentStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeEnhancedFlexibleTimeslotAssignmentStructBytes, DecodeEnhancedFlexibleTimeslotAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation27.failure(operationErr, "", -1, 0)
 		}
@@ -6784,12 +6937,12 @@ func EncodeDLMCCapabilityStructTo(w *runtime.Writer, v DLMCCapabilityStruct) err
 	}
 	return operationLocation29.failure(w.WithWireValue(v.Wire, func() error { return encodeDLMCCapabilityStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeDLMCCapabilityStructBytes(data []byte) (runtime.Decoded[DLMCCapabilityStruct], error) {
+func decodeDLMCCapabilityStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[DLMCCapabilityStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[DLMCCapabilityStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeDLMCCapabilityStruct(r)
 	if err != nil {
@@ -6822,7 +6975,7 @@ func encodeDLMCCapabilityStructBytes(v DLMCCapabilityStruct) ([]byte, error) {
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeDLMCCapabilityStructCanonical(v DLMCCapabilityStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeDLMCCapabilityStructBytes, decodeDLMCCapabilityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 2, false, encodeDLMCCapabilityStructBytes, DecodeDLMCCapabilityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation30.failure(operationErr, "", -1, 0)
 		}
@@ -6841,7 +6994,7 @@ func EncodeDLMCCapabilityStructCanonical(v DLMCCapabilityStruct) ([]byte, error)
 // that decode to a different typed value.
 func EncodeDLMCCapabilityStructCanonicalAtLength(v DLMCCapabilityStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeDLMCCapabilityStructBytes, decodeDLMCCapabilityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 2, encodeDLMCCapabilityStructBytes, DecodeDLMCCapabilityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation30.failure(operationErr, "", -1, 0)
 		}
@@ -6853,15 +7006,15 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePart, DecodeFrom: descriptorDecodeMSRACapabilityValuePartFrom, Encode: descriptorEncodeMSRACapabilityValuePart, Canonical: descriptorCanonicalMSRACapabilityValuePart, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePart},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePartStruct, DecodeFrom: descriptorDecodeMSRACapabilityValuePartStructFrom, Encode: descriptorEncodeMSRACapabilityValuePartStruct, Canonical: descriptorCanonicalMSRACapabilityValuePartStruct, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePartStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 9, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAdditionalAccessTechnologiesStruct, DecodeFrom: descriptorDecodeAdditionalAccessTechnologiesStructFrom, Encode: descriptorEncodeAdditionalAccessTechnologiesStruct, Canonical: descriptorCanonicalAdditionalAccessTechnologiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAccessCapabilitiesStruct, DecodeFrom: descriptorDecodeAccessCapabilitiesStructFrom, Encode: descriptorEncodeAccessCapabilitiesStruct, Canonical: descriptorCanonicalAccessCapabilitiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessCapabilitiesStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeContent, DecodeFrom: descriptorDecodeContentFrom, Encode: descriptorEncodeContent, Canonical: descriptorCanonicalContent, CanonicalAtLength: descriptorCanonicalAtLengthContent},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 42, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMultislotCapabilityStruct, DecodeFrom: descriptorDecodeMultislotCapabilityStructFrom, Encode: descriptorEncodeMultislotCapabilityStruct, Canonical: descriptorCanonicalMultislotCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthMultislotCapabilityStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeFrom: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom, Encode: descriptorEncodeEnhancedFlexibleTimeslotAssignmentStruct, Canonical: descriptorCanonicalEnhancedFlexibleTimeslotAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeDLMCCapabilityStruct, DecodeFrom: descriptorDecodeDLMCCapabilityStructFrom, Encode: descriptorEncodeDLMCCapabilityStruct, Canonical: descriptorCanonicalDLMCCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthDLMCCapabilityStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePart, DecodeFrom: descriptorDecodeMSRACapabilityValuePartFrom, DecodeWithCollector: descriptorCollectMSRACapabilityValuePart, Encode: descriptorEncodeMSRACapabilityValuePart, Canonical: descriptorCanonicalMSRACapabilityValuePart, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePart},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePartStruct, DecodeFrom: descriptorDecodeMSRACapabilityValuePartStructFrom, DecodeWithCollector: descriptorCollectMSRACapabilityValuePartStruct, Encode: descriptorEncodeMSRACapabilityValuePartStruct, Canonical: descriptorCanonicalMSRACapabilityValuePartStruct, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePartStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 9, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAdditionalAccessTechnologiesStruct, DecodeFrom: descriptorDecodeAdditionalAccessTechnologiesStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAdditionalAccessTechnologiesStruct), Encode: descriptorEncodeAdditionalAccessTechnologiesStruct, Canonical: descriptorCanonicalAdditionalAccessTechnologiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAccessCapabilitiesStruct, DecodeFrom: descriptorDecodeAccessCapabilitiesStructFrom, DecodeWithCollector: descriptorCollectAccessCapabilitiesStruct, Encode: descriptorEncodeAccessCapabilitiesStruct, Canonical: descriptorCanonicalAccessCapabilitiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessCapabilitiesStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeContent, DecodeFrom: descriptorDecodeContentFrom, DecodeWithCollector: descriptorCollectContent, Encode: descriptorEncodeContent, Canonical: descriptorCanonicalContent, CanonicalAtLength: descriptorCanonicalAtLengthContent},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 42, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMultislotCapabilityStruct, DecodeFrom: descriptorDecodeMultislotCapabilityStructFrom, DecodeWithCollector: descriptorCollectMultislotCapabilityStruct, Encode: descriptorEncodeMultislotCapabilityStruct, Canonical: descriptorCanonicalMultislotCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthMultislotCapabilityStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeA5Bits), Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeFrom: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom, DecodeWithCollector: descriptorCollectEnhancedFlexibleTimeslotAssignmentStruct, Encode: descriptorEncodeEnhancedFlexibleTimeslotAssignmentStruct, Canonical: descriptorCanonicalEnhancedFlexibleTimeslotAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "DLMC Capability struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 15, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeDLMCCapabilityStruct, DecodeFrom: descriptorDecodeDLMCCapabilityStructFrom, DecodeWithCollector: descriptorCollectDLMCCapabilityStruct, Encode: descriptorEncodeDLMCCapabilityStruct, Canonical: descriptorCanonicalDLMCCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthDLMCCapabilityStruct},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -6898,9 +7051,17 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceMSRACapabilityValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationMSRACapabilityValuePart = operationLocation{operation: "decode", path: "MSRACapabilityValuePart", source: &descriptorSourceMSRACapabilityValuePart, kind: runtime.InvalidValue}
 
 func descriptorDecodeMSRACapabilityValuePart(data []byte) (any, error) {
 	return DecodeMSRACapabilityValuePart(data)
+}
+func descriptorCollectMSRACapabilityValuePart(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMSRACapabilityValuePartBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMSRACapabilityValuePart.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMSRACapabilityValuePart(value any) (MSRACapabilityValuePart, bool) {
 	switch v := value.(type) {
@@ -6951,9 +7112,17 @@ func descriptorCanonicalAtLengthMSRACapabilityValuePart(value any, octets int) (
 }
 
 var descriptorSourceMSRACapabilityValuePartStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationMSRACapabilityValuePartStruct = operationLocation{operation: "decode", path: "MSRACapabilityValuePartStruct", source: &descriptorSourceMSRACapabilityValuePartStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeMSRACapabilityValuePartStruct(data []byte) (any, error) {
 	return DecodeMSRACapabilityValuePartStruct(data)
+}
+func descriptorCollectMSRACapabilityValuePartStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMSRACapabilityValuePartStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMSRACapabilityValuePartStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMSRACapabilityValuePartStruct(value any) (MSRACapabilityValuePartStruct, bool) {
 	switch v := value.(type) {
@@ -7057,9 +7226,17 @@ func descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct(value any, oc
 }
 
 var descriptorSourceAccessCapabilitiesStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationAccessCapabilitiesStruct = operationLocation{operation: "decode", path: "AccessCapabilitiesStruct", source: &descriptorSourceAccessCapabilitiesStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeAccessCapabilitiesStruct(data []byte) (any, error) {
 	return DecodeAccessCapabilitiesStruct(data)
+}
+func descriptorCollectAccessCapabilitiesStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeAccessCapabilitiesStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationAccessCapabilitiesStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapAccessCapabilitiesStruct(value any) (AccessCapabilitiesStruct, bool) {
 	switch v := value.(type) {
@@ -7110,8 +7287,16 @@ func descriptorCanonicalAtLengthAccessCapabilitiesStruct(value any, octets int) 
 }
 
 var descriptorSourceContent = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationContent = operationLocation{operation: "decode", path: "Content", source: &descriptorSourceContent, kind: runtime.InvalidValue}
 
 func descriptorDecodeContent(data []byte) (any, error) { return DecodeContent(data) }
+func descriptorCollectContent(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeContentBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationContent.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapContent(value any) (Content, bool) {
 	switch v := value.(type) {
 	case Content:
@@ -7157,9 +7342,17 @@ func descriptorCanonicalAtLengthContent(value any, octets int) ([]byte, error) {
 }
 
 var descriptorSourceMultislotCapabilityStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationMultislotCapabilityStruct = operationLocation{operation: "decode", path: "MultislotCapabilityStruct", source: &descriptorSourceMultislotCapabilityStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeMultislotCapabilityStruct(data []byte) (any, error) {
 	return DecodeMultislotCapabilityStruct(data)
+}
+func descriptorCollectMultislotCapabilityStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMultislotCapabilityStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMultislotCapabilityStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMultislotCapabilityStruct(value any) (MultislotCapabilityStruct, bool) {
 	switch v := value.(type) {
@@ -7258,9 +7451,17 @@ func descriptorCanonicalAtLengthA5Bits(value any, octets int) ([]byte, error) {
 }
 
 var descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationEnhancedFlexibleTimeslotAssignmentStruct = operationLocation{operation: "decode", path: "EnhancedFlexibleTimeslotAssignmentStruct", source: &descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (any, error) {
 	return DecodeEnhancedFlexibleTimeslotAssignmentStruct(data)
+}
+func descriptorCollectEnhancedFlexibleTimeslotAssignmentStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEnhancedFlexibleTimeslotAssignmentStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value any) (EnhancedFlexibleTimeslotAssignmentStruct, bool) {
 	switch v := value.(type) {
@@ -7311,9 +7512,17 @@ func descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct(value a
 }
 
 var descriptorSourceDLMCCapabilityStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}
+var descriptorCollectLocationDLMCCapabilityStruct = operationLocation{operation: "decode", path: "DLMCCapabilityStruct", source: &descriptorSourceDLMCCapabilityStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeDLMCCapabilityStruct(data []byte) (any, error) {
 	return DecodeDLMCCapabilityStruct(data)
+}
+func descriptorCollectDLMCCapabilityStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeDLMCCapabilityStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationDLMCCapabilityStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapDLMCCapabilityStruct(value any) (DLMCCapabilityStruct, bool) {
 	switch v := value.(type) {
@@ -7358,6 +7567,22 @@ func descriptorCanonicalAtLengthDLMCCapabilityStruct(value any, octets int) ([]b
 	}
 	return EncodeDLMCCapabilityStructCanonicalAtLength(v, octets)
 }
+
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
@@ -7426,7 +7651,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityValuePart], error) {
-	v, err := decodeMSRACapabilityValuePartBytes(data)
+	v, err := decodeMSRACapabilityValuePartBytes(data, nil)
 	if err != nil {
 		return v, operationLocation5.failure(err, "", -1, 0)
 	}
@@ -7440,7 +7665,7 @@ func EncodeMSRACapabilityValuePart(v MSRACapabilityValuePart) ([]byte, error) {
 	return out, nil
 }
 func DecodeMSRACapabilityValuePartStruct(data []byte) (runtime.Decoded[MSRACapabilityValuePartStruct], error) {
-	v, err := decodeMSRACapabilityValuePartStructBytes(data)
+	v, err := decodeMSRACapabilityValuePartStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation3.failure(err, "", -1, 0)
 	}
@@ -7468,7 +7693,7 @@ func EncodeAdditionalAccessTechnologiesStruct(v AdditionalAccessTechnologiesStru
 	return out, nil
 }
 func DecodeAccessCapabilitiesStruct(data []byte) (runtime.Decoded[AccessCapabilitiesStruct], error) {
-	v, err := decodeAccessCapabilitiesStructBytes(data)
+	v, err := decodeAccessCapabilitiesStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation13.failure(err, "", -1, 0)
 	}
@@ -7482,7 +7707,7 @@ func EncodeAccessCapabilitiesStruct(v AccessCapabilitiesStruct) ([]byte, error) 
 	return out, nil
 }
 func DecodeContent(data []byte) (runtime.Decoded[Content], error) {
-	v, err := decodeContentBytes(data)
+	v, err := decodeContentBytes(data, nil)
 	if err != nil {
 		return v, operationLocation16.failure(err, "", -1, 0)
 	}
@@ -7496,7 +7721,7 @@ func EncodeContent(v Content) ([]byte, error) {
 	return out, nil
 }
 func DecodeMultislotCapabilityStruct(data []byte) (runtime.Decoded[MultislotCapabilityStruct], error) {
-	v, err := decodeMultislotCapabilityStructBytes(data)
+	v, err := decodeMultislotCapabilityStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation19.failure(err, "", -1, 0)
 	}
@@ -7524,7 +7749,7 @@ func EncodeA5Bits(v A5Bits) ([]byte, error) {
 	return out, nil
 }
 func DecodeEnhancedFlexibleTimeslotAssignmentStruct(data []byte) (runtime.Decoded[EnhancedFlexibleTimeslotAssignmentStruct], error) {
-	v, err := decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data)
+	v, err := decodeEnhancedFlexibleTimeslotAssignmentStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation25.failure(err, "", -1, 0)
 	}
@@ -7538,7 +7763,7 @@ func EncodeEnhancedFlexibleTimeslotAssignmentStruct(v EnhancedFlexibleTimeslotAs
 	return out, nil
 }
 func DecodeDLMCCapabilityStruct(data []byte) (runtime.Decoded[DLMCCapabilityStruct], error) {
-	v, err := decodeDLMCCapabilityStructBytes(data)
+	v, err := decodeDLMCCapabilityStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation28.failure(err, "", -1, 0)
 	}

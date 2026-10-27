@@ -183,6 +183,9 @@ type RSupport struct {
 	RGSMBandAssociatedRadioCapability uint8
 	Wire                              runtime.WireInfo `json:"-"`
 }
+
+var observationRule0 = observationRule{minimum: 1, maximum: 18, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Table: "10.5.1.7"}}
+
 type HSCSDMultiSlotCapability struct {
 	HSCSDMultiSlotClass uint8
 	Wire                runtime.WireInfo `json:"-"`
@@ -200,12 +203,18 @@ type ECSDMultiSlotCapability struct {
 	ECSDMultiSlotClass uint8
 	Wire               runtime.WireInfo `json:"-"`
 }
+
+var observationRule1 = observationRule{minimum: 1, maximum: 18446744073709551615, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Table: "10.5.1.7"}}
+
 type N8PSKStruct struct {
 	ModulationCapability    uint8
 	N8PSKRFPowerCapability1 *uint8
 	N8PSKRFPowerCapability2 *uint8
 	Wire                    runtime.WireInfo `json:"-"`
 }
+
+var observationRule2 = observationRule{minimum: 0, maximum: 9, source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Table: "10.5.1.7"}}
+
 type SingleBandSupport struct {
 	GSMBand uint8
 	Wire    runtime.WireInfo `json:"-"`
@@ -308,11 +317,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101
 			result.Alt101 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -321,11 +336,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110
 			result.Alt110 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -546,11 +567,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001
 			result.Alt001 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -559,11 +586,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010
 			result.Alt010 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -572,11 +605,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100
 			result.Alt100 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -642,7 +681,11 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	}
 	var out []runtime.BitString
 	for i := 0; i < count; i++ {
+		if err := r.EnterIndex("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i); err != nil {
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
+		}
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
 		}
@@ -774,11 +817,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits
 			result.A5Bits = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -787,11 +836,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2
 			result.AssociatedRadioCapability2 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -800,11 +855,17 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1
 			result.AssociatedRadioCapability1 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -863,12 +924,15 @@ func decodeClassmark3ValuePartRSupportSelector(r *runtime.Reader) (*RSupport, er
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartRSupportValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -895,12 +959,15 @@ func decodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(r *runtime.Reader
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -989,12 +1056,15 @@ func decodeClassmark3ValuePartMSMeasurementCapabilitySelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartMSMeasurementCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1021,12 +1091,15 @@ func decodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(r *runtime.R
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartMSPositioningMethodCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1053,12 +1126,15 @@ func decodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartECSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1085,12 +1161,15 @@ func decodeClassmark3ValuePartN8PSKStructSelector(r *runtime.Reader) (*N8PSKStru
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartN8PSKStructValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1145,11 +1224,17 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01
 			result.Alt01 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1158,11 +1243,17 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10
 			result.Alt10 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1171,11 +1262,17 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11
 			result.Alt11 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1307,12 +1404,15 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(r *runtime.Reade
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1364,12 +1464,15 @@ func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1421,12 +1524,15 @@ func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1633,12 +1739,15 @@ func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSe
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1720,12 +1829,15 @@ func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1752,12 +1864,15 @@ func decodeClassmark3ValuePartSingleBandSupportSelector(r *runtime.Reader) (*Sin
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartSingleBandSupportValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1809,12 +1924,15 @@ func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2007,12 +2125,15 @@ func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(r *runt
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2064,12 +2185,15 @@ func decodeClassmark3ValuePartHighMultislotCapabilitySelector(r *runtime.Reader)
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartHighMultislotCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2225,11 +2349,17 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01
 			result.Alt01 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -2238,11 +2368,17 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10
 			result.Alt10 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -2251,11 +2387,17 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11
 			result.Alt11 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -2387,12 +2529,15 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(r *runtime.Read
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2578,12 +2723,15 @@ func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlo
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2665,12 +2813,15 @@ func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(r *runtime.
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2753,12 +2904,15 @@ func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(r *runtime
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -2810,12 +2964,15 @@ func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(r *runtim
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4449,9 +4606,16 @@ func decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r *runtime.Reader) (uint8
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("HSCSD Multi Slot Class", v)
 	return uint8(v), nil
@@ -4798,9 +4962,16 @@ func decodeN8PSKStructN8PSKRFPowerCapability1Value(r *runtime.Reader) (uint8, er
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("8-PSK RF Power Capability 1", v)
 	return uint8(v), nil
@@ -4831,12 +5002,15 @@ func decodeN8PSKStructN8PSKRFPowerCapability1Selector(r *runtime.Reader) (*uint8
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN8PSKStructN8PSKRFPowerCapability1Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4862,9 +5036,16 @@ func decodeN8PSKStructN8PSKRFPowerCapability2Value(r *runtime.Reader) (uint8, er
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
 	r.Set("8-PSK RF Power Capability 2", v)
 	return uint8(v), nil
@@ -4895,12 +5076,15 @@ func decodeN8PSKStructN8PSKRFPowerCapability2Selector(r *runtime.Reader) (*uint8
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN8PSKStructN8PSKRFPowerCapability2Value(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -4987,9 +5171,16 @@ func decodeSingleBandSupportGSMBand(r *runtime.Reader) (uint8, error) {
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule2)
 	}
 	r.Set("GSM Band", v)
 	return uint8(v), nil
@@ -5050,6 +5241,18 @@ func encodeSingleBandSupport(w *runtime.Writer, v SingleBandSupport) error {
 	return nil
 }
 
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
+}
+
 // Maximum encoded extent: TS 24.008 V20.1.0 §10.5.1.7 (34-octet type 4 IE minus IEI and length = 32-octet value part).
 // DecodeClassmark3ValuePart decodes TS 24.008 V20.1.0 §10.5.1.7 <Classmark 3 Value part>.
 func DecodeClassmark3ValuePartFrom(r *runtime.Reader) (Classmark3ValuePart, error) {
@@ -5070,7 +5273,7 @@ func EncodeClassmark3ValuePartTo(w *runtime.Writer, v Classmark3ValuePart) error
 	}
 	return operationLocation3.failure(w.WithWireValue(v.Wire, func() error { return encodeClassmark3ValuePart(w, v) }), "", w.Position(), 0)
 }
-func decodeClassmark3ValuePartBytes(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
+func decodeClassmark3ValuePartBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[Classmark3ValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Classmark3ValuePart]{}, err
 	}
@@ -5081,7 +5284,7 @@ func decodeClassmark3ValuePartBytes(data []byte) (runtime.Decoded[Classmark3Valu
 	if len(data) > 32 {
 		input = data[:32]
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(true)
 	v, err := decodeClassmark3ValuePart(r)
 	if err != nil {
@@ -5120,7 +5323,7 @@ func encodeClassmark3ValuePartBytes(v Classmark3ValuePart) ([]byte, error) {
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeClassmark3ValuePartCanonical(v Classmark3ValuePart) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 32, true, encodeClassmark3ValuePartBytes, decodeClassmark3ValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 32, true, encodeClassmark3ValuePartBytes, DecodeClassmark3ValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
@@ -5140,7 +5343,7 @@ func EncodeClassmark3ValuePartCanonical(v Classmark3ValuePart) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeClassmark3ValuePartCanonicalAtLength(v Classmark3ValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 32, encodeClassmark3ValuePartBytes, decodeClassmark3ValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 32, encodeClassmark3ValuePartBytes, DecodeClassmark3ValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
@@ -5335,12 +5538,12 @@ func EncodeHSCSDMultiSlotCapabilityTo(w *runtime.Writer, v HSCSDMultiSlotCapabil
 	}
 	return operationLocation12.failure(w.WithWireValue(v.Wire, func() error { return encodeHSCSDMultiSlotCapability(w, v) }), "", w.Position(), 0)
 }
-func decodeHSCSDMultiSlotCapabilityBytes(data []byte) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
+func decodeHSCSDMultiSlotCapabilityBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[HSCSDMultiSlotCapability]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeHSCSDMultiSlotCapability(r)
 	if err != nil {
@@ -5373,7 +5576,7 @@ func encodeHSCSDMultiSlotCapabilityBytes(v HSCSDMultiSlotCapability) ([]byte, er
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeHSCSDMultiSlotCapabilityCanonical(v HSCSDMultiSlotCapability) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeHSCSDMultiSlotCapabilityBytes, decodeHSCSDMultiSlotCapabilityBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeHSCSDMultiSlotCapabilityBytes, DecodeHSCSDMultiSlotCapability, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
@@ -5392,7 +5595,7 @@ func EncodeHSCSDMultiSlotCapabilityCanonical(v HSCSDMultiSlotCapability) ([]byte
 // that decode to a different typed value.
 func EncodeHSCSDMultiSlotCapabilityCanonicalAtLength(v HSCSDMultiSlotCapability, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeHSCSDMultiSlotCapabilityBytes, decodeHSCSDMultiSlotCapabilityBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeHSCSDMultiSlotCapabilityBytes, DecodeHSCSDMultiSlotCapability, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation13.failure(operationErr, "", -1, 0)
 		}
@@ -5671,12 +5874,12 @@ func EncodeN8PSKStructTo(w *runtime.Writer, v N8PSKStruct) error {
 	}
 	return operationLocation24.failure(w.WithWireValue(v.Wire, func() error { return encodeN8PSKStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeN8PSKStructBytes(data []byte) (runtime.Decoded[N8PSKStruct], error) {
+func decodeN8PSKStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[N8PSKStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[N8PSKStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeN8PSKStruct(r)
 	if err != nil {
@@ -5709,7 +5912,7 @@ func encodeN8PSKStructBytes(v N8PSKStruct) ([]byte, error) {
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeN8PSKStructCanonical(v N8PSKStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeN8PSKStructBytes, decodeN8PSKStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeN8PSKStructBytes, DecodeN8PSKStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
@@ -5728,7 +5931,7 @@ func EncodeN8PSKStructCanonical(v N8PSKStruct) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeN8PSKStructCanonicalAtLength(v N8PSKStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeN8PSKStructBytes, decodeN8PSKStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeN8PSKStructBytes, DecodeN8PSKStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation25.failure(operationErr, "", -1, 0)
 		}
@@ -5755,12 +5958,12 @@ func EncodeSingleBandSupportTo(w *runtime.Writer, v SingleBandSupport) error {
 	}
 	return operationLocation27.failure(w.WithWireValue(v.Wire, func() error { return encodeSingleBandSupport(w, v) }), "", w.Position(), 0)
 }
-func decodeSingleBandSupportBytes(data []byte) (runtime.Decoded[SingleBandSupport], error) {
+func decodeSingleBandSupportBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[SingleBandSupport], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[SingleBandSupport]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeSingleBandSupport(r)
 	if err != nil {
@@ -5793,7 +5996,7 @@ func encodeSingleBandSupportBytes(v SingleBandSupport) ([]byte, error) {
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeSingleBandSupportCanonical(v SingleBandSupport) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeSingleBandSupportBytes, decodeSingleBandSupportBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 1, false, encodeSingleBandSupportBytes, DecodeSingleBandSupport, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
@@ -5812,7 +6015,7 @@ func EncodeSingleBandSupportCanonical(v SingleBandSupport) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSingleBandSupportCanonicalAtLength(v SingleBandSupport, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeSingleBandSupportBytes, decodeSingleBandSupportBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeSingleBandSupportBytes, DecodeSingleBandSupport, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation28.failure(operationErr, "", -1, 0)
 		}
@@ -5824,15 +6027,15 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeClassmark3ValuePart, DecodeFrom: descriptorDecodeClassmark3ValuePartFrom, Encode: descriptorEncodeClassmark3ValuePart, Canonical: descriptorCanonicalClassmark3ValuePart, CanonicalAtLength: descriptorCanonicalAtLengthClassmark3ValuePart},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeRSupport, DecodeFrom: descriptorDecodeRSupportFrom, Encode: descriptorEncodeRSupport, Canonical: descriptorCanonicalRSupport, CanonicalAtLength: descriptorCanonicalAtLengthRSupport},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeHSCSDMultiSlotCapability, DecodeFrom: descriptorDecodeHSCSDMultiSlotCapabilityFrom, Encode: descriptorEncodeHSCSDMultiSlotCapability, Canonical: descriptorCanonicalHSCSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthHSCSDMultiSlotCapability},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSMeasurementCapability, DecodeFrom: descriptorDecodeMSMeasurementCapabilityFrom, Encode: descriptorEncodeMSMeasurementCapability, Canonical: descriptorCanonicalMSMeasurementCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSMeasurementCapability},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSPositioningMethodCapability, DecodeFrom: descriptorDecodeMSPositioningMethodCapabilityFrom, Encode: descriptorEncodeMSPositioningMethodCapability, Canonical: descriptorCanonicalMSPositioningMethodCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSPositioningMethodCapability},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeECSDMultiSlotCapability, DecodeFrom: descriptorDecodeECSDMultiSlotCapabilityFrom, Encode: descriptorEncodeECSDMultiSlotCapability, Canonical: descriptorCanonicalECSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthECSDMultiSlotCapability},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeN8PSKStruct, DecodeFrom: descriptorDecodeN8PSKStructFrom, Encode: descriptorEncodeN8PSKStruct, Canonical: descriptorCanonicalN8PSKStruct, CanonicalAtLength: descriptorCanonicalAtLengthN8PSKStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeSingleBandSupport, DecodeFrom: descriptorDecodeSingleBandSupportFrom, Encode: descriptorEncodeSingleBandSupport, Canonical: descriptorCanonicalSingleBandSupport, CanonicalAtLength: descriptorCanonicalAtLengthSingleBandSupport},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeClassmark3ValuePart, DecodeFrom: descriptorDecodeClassmark3ValuePartFrom, DecodeWithCollector: descriptorCollectClassmark3ValuePart, Encode: descriptorEncodeClassmark3ValuePart, Canonical: descriptorCanonicalClassmark3ValuePart, CanonicalAtLength: descriptorCanonicalAtLengthClassmark3ValuePart},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeA5Bits), Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeRSupport, DecodeFrom: descriptorDecodeRSupportFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRSupport), Encode: descriptorEncodeRSupport, Canonical: descriptorCanonicalRSupport, CanonicalAtLength: descriptorCanonicalAtLengthRSupport},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "HSCSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeHSCSDMultiSlotCapability, DecodeFrom: descriptorDecodeHSCSDMultiSlotCapabilityFrom, DecodeWithCollector: descriptorCollectHSCSDMultiSlotCapability, Encode: descriptorEncodeHSCSDMultiSlotCapability, Canonical: descriptorCanonicalHSCSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthHSCSDMultiSlotCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Measurement capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 8, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSMeasurementCapability, DecodeFrom: descriptorDecodeMSMeasurementCapabilityFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMSMeasurementCapability), Encode: descriptorEncodeMSMeasurementCapability, Canonical: descriptorCanonicalMSMeasurementCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSMeasurementCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "MS Positioning Method Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeMSPositioningMethodCapability, DecodeFrom: descriptorDecodeMSPositioningMethodCapabilityFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeMSPositioningMethodCapability), Encode: descriptorEncodeMSPositioningMethodCapability, Canonical: descriptorCanonicalMSPositioningMethodCapability, CanonicalAtLength: descriptorCanonicalAtLengthMSPositioningMethodCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "ECSD Multi Slot Capability", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeECSDMultiSlotCapability, DecodeFrom: descriptorDecodeECSDMultiSlotCapabilityFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeECSDMultiSlotCapability), Encode: descriptorEncodeECSDMultiSlotCapability, Canonical: descriptorCanonicalECSDMultiSlotCapability, CanonicalAtLength: descriptorCanonicalAtLengthECSDMultiSlotCapability},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "8-PSK Struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeN8PSKStruct, DecodeFrom: descriptorDecodeN8PSKStructFrom, DecodeWithCollector: descriptorCollectN8PSKStruct, Encode: descriptorEncodeN8PSKStruct, Canonical: descriptorCanonicalN8PSKStruct, CanonicalAtLength: descriptorCanonicalAtLengthN8PSKStruct},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Single Band Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeSingleBandSupport, DecodeFrom: descriptorDecodeSingleBandSupportFrom, DecodeWithCollector: descriptorCollectSingleBandSupport, Encode: descriptorEncodeSingleBandSupport, Canonical: descriptorCanonicalSingleBandSupport, CanonicalAtLength: descriptorCanonicalAtLengthSingleBandSupport},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -5869,9 +6072,17 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceClassmark3ValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+var descriptorCollectLocationClassmark3ValuePart = operationLocation{operation: "decode", path: "Classmark3ValuePart", source: &descriptorSourceClassmark3ValuePart, kind: runtime.InvalidValue}
 
 func descriptorDecodeClassmark3ValuePart(data []byte) (any, error) {
 	return DecodeClassmark3ValuePart(data)
+}
+func descriptorCollectClassmark3ValuePart(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeClassmark3ValuePartBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationClassmark3ValuePart.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapClassmark3ValuePart(value any) (Classmark3ValuePart, bool) {
 	switch v := value.(type) {
@@ -6012,9 +6223,17 @@ func descriptorCanonicalAtLengthRSupport(value any, octets int) ([]byte, error) 
 }
 
 var descriptorSourceHSCSDMultiSlotCapability = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+var descriptorCollectLocationHSCSDMultiSlotCapability = operationLocation{operation: "decode", path: "HSCSDMultiSlotCapability", source: &descriptorSourceHSCSDMultiSlotCapability, kind: runtime.InvalidValue}
 
 func descriptorDecodeHSCSDMultiSlotCapability(data []byte) (any, error) {
 	return DecodeHSCSDMultiSlotCapability(data)
+}
+func descriptorCollectHSCSDMultiSlotCapability(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeHSCSDMultiSlotCapabilityBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationHSCSDMultiSlotCapability.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapHSCSDMultiSlotCapability(value any) (HSCSDMultiSlotCapability, bool) {
 	switch v := value.(type) {
@@ -6224,8 +6443,16 @@ func descriptorCanonicalAtLengthECSDMultiSlotCapability(value any, octets int) (
 }
 
 var descriptorSourceN8PSKStruct = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+var descriptorCollectLocationN8PSKStruct = operationLocation{operation: "decode", path: "N8PSKStruct", source: &descriptorSourceN8PSKStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeN8PSKStruct(data []byte) (any, error) { return DecodeN8PSKStruct(data) }
+func descriptorCollectN8PSKStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeN8PSKStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationN8PSKStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
 func descriptorUnwrapN8PSKStruct(value any) (N8PSKStruct, bool) {
 	switch v := value.(type) {
 	case N8PSKStruct:
@@ -6271,9 +6498,17 @@ func descriptorCanonicalAtLengthN8PSKStruct(value any, octets int) ([]byte, erro
 }
 
 var descriptorSourceSingleBandSupport = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}
+var descriptorCollectLocationSingleBandSupport = operationLocation{operation: "decode", path: "SingleBandSupport", source: &descriptorSourceSingleBandSupport, kind: runtime.InvalidValue}
 
 func descriptorDecodeSingleBandSupport(data []byte) (any, error) {
 	return DecodeSingleBandSupport(data)
+}
+func descriptorCollectSingleBandSupport(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeSingleBandSupportBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationSingleBandSupport.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapSingleBandSupport(value any) (SingleBandSupport, bool) {
 	switch v := value.(type) {
@@ -6318,6 +6553,22 @@ func descriptorCanonicalAtLengthSingleBandSupport(value any, octets int) ([]byte
 	}
 	return EncodeSingleBandSupportCanonicalAtLength(v, octets)
 }
+
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
@@ -6386,7 +6637,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
-	v, err := decodeClassmark3ValuePartBytes(data)
+	v, err := decodeClassmark3ValuePartBytes(data, nil)
 	if err != nil {
 		return v, operationLocation2.failure(err, "", -1, 0)
 	}
@@ -6428,7 +6679,7 @@ func EncodeRSupport(v RSupport) ([]byte, error) {
 	return out, nil
 }
 func DecodeHSCSDMultiSlotCapability(data []byte) (runtime.Decoded[HSCSDMultiSlotCapability], error) {
-	v, err := decodeHSCSDMultiSlotCapabilityBytes(data)
+	v, err := decodeHSCSDMultiSlotCapabilityBytes(data, nil)
 	if err != nil {
 		return v, operationLocation11.failure(err, "", -1, 0)
 	}
@@ -6484,7 +6735,7 @@ func EncodeECSDMultiSlotCapability(v ECSDMultiSlotCapability) ([]byte, error) {
 	return out, nil
 }
 func DecodeN8PSKStruct(data []byte) (runtime.Decoded[N8PSKStruct], error) {
-	v, err := decodeN8PSKStructBytes(data)
+	v, err := decodeN8PSKStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation23.failure(err, "", -1, 0)
 	}
@@ -6498,7 +6749,7 @@ func EncodeN8PSKStruct(v N8PSKStruct) ([]byte, error) {
 	return out, nil
 }
 func DecodeSingleBandSupport(data []byte) (runtime.Decoded[SingleBandSupport], error) {
-	v, err := decodeSingleBandSupportBytes(data)
+	v, err := decodeSingleBandSupportBytes(data, nil)
 	if err != nil {
 		return v, operationLocation26.failure(err, "", -1, 0)
 	}

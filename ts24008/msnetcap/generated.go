@@ -12,6 +12,8 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
+var observationRule0 = observationRule{minimum: 0, maximum: 1, source: runtime.Source{Standard: "TS 24.080", Version: "19.4.0", Clause: "3.7.1", Table: ""}}
+
 type MSNetworkCapabilityValuePart struct {
 	GEA1Bits                                      GEA1Bits
 	SMCapabilitiesViaDedicatedChannels            uint8
@@ -192,9 +194,16 @@ func decodeMSNetworkCapabilityValuePartSSScreeningIndicator(r *runtime.Reader) (
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("SS Screening Indicator", v)
 	return uint8(v), nil
@@ -1661,11 +1670,17 @@ func decodeSpareBitsAlternatives(r *runtime.Reader) (SpareBitsAlternatives, erro
 			v, err := decodeSpareBitsAlternativesAltUnlabeled(candidate)
 			if err == nil {
 				matches++
-				chosen = candidate
+				if matches == 1 {
+					chosen = candidate
+				} else {
+					discardReader(candidate)
+					discardReader(chosen)
+				}
 				_ = v
 				result.Alternative = SpareBitsAlternativesAlternativeAltUnlabeled
 				result.AltUnlabeled = &v
 			} else {
+				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
@@ -1675,11 +1690,17 @@ func decodeSpareBitsAlternatives(r *runtime.Reader) (SpareBitsAlternatives, erro
 		v, err := decodeSpareBitsAlternativesAltUnlabeledVariant2(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = SpareBitsAlternativesAlternativeAltUnlabeledVariant2
 			result.AltUnlabeledVariant2 = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1754,6 +1775,18 @@ func encodeSpareBits(w *runtime.Writer, v SpareBits) error {
 	return nil
 }
 
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
+}
+
 // Maximum encoded extent: TS 24.008 V20.1.0 §10.5.5.12 (10-octet type 4 IE minus IEI and length = 8-octet value part).
 // DecodeMSNetworkCapabilityValuePart decodes TS 24.008 V20.1.0 §10.5.5.12 <MS network capability value part>.
 func DecodeMSNetworkCapabilityValuePartFrom(r *runtime.Reader) (MSNetworkCapabilityValuePart, error) {
@@ -1774,7 +1807,7 @@ func EncodeMSNetworkCapabilityValuePartTo(w *runtime.Writer, v MSNetworkCapabili
 	}
 	return operationLocation3.failure(w.WithWireValue(v.Wire, func() error { return encodeMSNetworkCapabilityValuePart(w, v) }), "", w.Position(), 0)
 }
-func decodeMSNetworkCapabilityValuePartBytes(data []byte) (runtime.Decoded[MSNetworkCapabilityValuePart], error) {
+func decodeMSNetworkCapabilityValuePartBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[MSNetworkCapabilityValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[MSNetworkCapabilityValuePart]{}, err
 	}
@@ -1785,7 +1818,7 @@ func decodeMSNetworkCapabilityValuePartBytes(data []byte) (runtime.Decoded[MSNet
 	if len(data) > 8 {
 		input = data[:8]
 	}
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(true)
 	v, err := decodeMSNetworkCapabilityValuePart(r)
 	if err != nil {
@@ -1824,7 +1857,7 @@ func encodeMSNetworkCapabilityValuePartBytes(v MSNetworkCapabilityValuePart) ([]
 // the grammar cannot carry, or bytes that decode to a different typed value.
 func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 8, true, encodeMSNetworkCapabilityValuePartBytes, decodeMSNetworkCapabilityValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 8, true, encodeMSNetworkCapabilityValuePartBytes, DecodeMSNetworkCapabilityValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
@@ -1844,7 +1877,7 @@ func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart)
 // that decode to a different typed value.
 func EncodeMSNetworkCapabilityValuePartCanonicalAtLength(v MSNetworkCapabilityValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 8, encodeMSNetworkCapabilityValuePartBytes, decodeMSNetworkCapabilityValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 8, encodeMSNetworkCapabilityValuePartBytes, DecodeMSNetworkCapabilityValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation4.failure(operationErr, "", -1, 0)
 		}
@@ -2109,10 +2142,10 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "MS network capability value part", MaxOctets: 8, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 64, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeMSNetworkCapabilityValuePart, DecodeFrom: descriptorDecodeMSNetworkCapabilityValuePartFrom, Encode: descriptorEncodeMSNetworkCapabilityValuePart, Canonical: descriptorCanonicalMSNetworkCapabilityValuePart, CanonicalAtLength: descriptorCanonicalAtLengthMSNetworkCapabilityValuePart},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "GEA1 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeGEA1Bits, DecodeFrom: descriptorDecodeGEA1BitsFrom, Encode: descriptorEncodeGEA1Bits, Canonical: descriptorCanonicalGEA1Bits, CanonicalAtLength: descriptorCanonicalAtLengthGEA1Bits},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Extended GEA bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 6, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeExtendedGEABits, DecodeFrom: descriptorDecodeExtendedGEABitsFrom, Encode: descriptorEncodeExtendedGEABits, Canonical: descriptorCanonicalExtendedGEABits, CanonicalAtLength: descriptorCanonicalAtLengthExtendedGEABits},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Spare bits", MaxOctets: 8, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 64, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeSpareBits, DecodeFrom: descriptorDecodeSpareBitsFrom, Encode: descriptorEncodeSpareBits, Canonical: descriptorCanonicalSpareBits, CanonicalAtLength: descriptorCanonicalAtLengthSpareBits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "MS network capability value part", MaxOctets: 8, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 64, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeMSNetworkCapabilityValuePart, DecodeFrom: descriptorDecodeMSNetworkCapabilityValuePartFrom, DecodeWithCollector: descriptorCollectMSNetworkCapabilityValuePart, Encode: descriptorEncodeMSNetworkCapabilityValuePart, Canonical: descriptorCanonicalMSNetworkCapabilityValuePart, CanonicalAtLength: descriptorCanonicalAtLengthMSNetworkCapabilityValuePart},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "GEA1 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeGEA1Bits, DecodeFrom: descriptorDecodeGEA1BitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGEA1Bits), Encode: descriptorEncodeGEA1Bits, Canonical: descriptorCanonicalGEA1Bits, CanonicalAtLength: descriptorCanonicalAtLengthGEA1Bits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Extended GEA bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 6, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeExtendedGEABits, DecodeFrom: descriptorDecodeExtendedGEABitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeExtendedGEABits), Encode: descriptorEncodeExtendedGEABits, Canonical: descriptorCanonicalExtendedGEABits, CanonicalAtLength: descriptorCanonicalAtLengthExtendedGEABits},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12", Name: "Spare bits", MaxOctets: 8, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 64, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}}, Decode: descriptorDecodeSpareBits, DecodeFrom: descriptorDecodeSpareBitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSpareBits), Encode: descriptorEncodeSpareBits, Canonical: descriptorCanonicalSpareBits, CanonicalAtLength: descriptorCanonicalAtLengthSpareBits},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -2149,9 +2182,17 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceMSNetworkCapabilityValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12"}
+var descriptorCollectLocationMSNetworkCapabilityValuePart = operationLocation{operation: "decode", path: "MSNetworkCapabilityValuePart", source: &descriptorSourceMSNetworkCapabilityValuePart, kind: runtime.InvalidValue}
 
 func descriptorDecodeMSNetworkCapabilityValuePart(data []byte) (any, error) {
 	return DecodeMSNetworkCapabilityValuePart(data)
+}
+func descriptorCollectMSNetworkCapabilityValuePart(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeMSNetworkCapabilityValuePartBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationMSNetworkCapabilityValuePart.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapMSNetworkCapabilityValuePart(value any) (MSNetworkCapabilityValuePart, bool) {
 	switch v := value.(type) {
@@ -2343,6 +2384,22 @@ func descriptorCanonicalAtLengthSpareBits(value any, octets int) ([]byte, error)
 	return EncodeSpareBitsCanonicalAtLength(v, octets)
 }
 
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
+
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
 }
@@ -2410,7 +2467,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeMSNetworkCapabilityValuePart(data []byte) (runtime.Decoded[MSNetworkCapabilityValuePart], error) {
-	v, err := decodeMSNetworkCapabilityValuePartBytes(data)
+	v, err := decodeMSNetworkCapabilityValuePartBytes(data, nil)
 	if err != nil {
 		return v, operationLocation2.failure(err, "", -1, 0)
 	}

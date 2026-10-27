@@ -85,6 +85,9 @@ type UTRANTDDDescriptionStruct struct {
 	TDDIndic0Group *UTRANTDDDescriptionStructTDDIndic0Group
 	Wire           runtime.WireInfo `json:"-"`
 }
+
+var observationRule0 = observationRule{minimum: 0, maximum: 5, source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.54", Table: ""}}
+
 type EUTRANDescriptionStruct struct {
 	EARFCN               uint16
 	MeasurementBandwidth *uint8
@@ -176,7 +179,11 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
+		}
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 		}
@@ -326,7 +333,11 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
+		}
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 		}
@@ -476,7 +487,11 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
+		}
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 		}
@@ -626,7 +641,11 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			break
 		}
 		before := r.Position()
+		if err := r.EnterIndex("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out)); err != nil {
+			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
+		}
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry(r)
+		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 		}
@@ -703,11 +722,17 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeGSMDescription
 			result.GSMDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -716,11 +741,17 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANFDDDescription
 			result.UTRANFDDDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -729,11 +760,17 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANTDDDescription
 			result.UTRANTDDDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -742,11 +779,17 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription(candidate)
 		if err == nil {
 			matches++
-			chosen = candidate
+			if matches == 1 {
+				chosen = candidate
+			} else {
+				discardReader(candidate)
+				discardReader(chosen)
+			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeEUTRANDescription
 			result.EUTRANDescription = &v
 		} else {
+			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
@@ -1027,12 +1070,15 @@ func decodeUTRANFDDDescriptionStructBandwidthFDDSelector(r *runtime.Reader) (*ui
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructBandwidthFDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1236,12 +1282,15 @@ func decodeUTRANFDDDescriptionStructFDDIndic0GroupSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructFDDIndic0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1354,12 +1403,15 @@ func decodeUTRANTDDDescriptionStructBandwidthTDDSelector(r *runtime.Reader) (*ui
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructBandwidthTDDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1563,12 +1615,15 @@ func decodeUTRANTDDDescriptionStructTDDIndic0GroupSelector(r *runtime.Reader) (*
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructTDDIndic0Group(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1684,9 +1739,16 @@ func decodeEUTRANDescriptionStructMeasurementBandwidthValue(r *runtime.Reader) (
 	if err != nil {
 		return 0, err
 	}
+	fieldStart := 0
+	if r.Collecting() {
+		fieldStart = r.Position()
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
+	}
+	if r.Collecting() {
+		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
 	r.Set("Measurement Bandwidth", v)
 	return uint8(v), nil
@@ -1712,12 +1774,15 @@ func decodeEUTRANDescriptionStructMeasurementBandwidthSelector(r *runtime.Reader
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructMeasurementBandwidthValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1744,12 +1809,15 @@ func decodeEUTRANDescriptionStructNotAllowedCellsSelector(r *runtime.Reader) (*i
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructNotAllowedCellsValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1801,12 +1869,15 @@ func decodeEUTRANDescriptionStructTARGETPCIDSelector(r *runtime.Reader) (*uint16
 		r.Commit(candidate)
 		return nil, nil
 	}
+	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("1"); err != nil {
+		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructTARGETPCIDValue(candidate)
 	if err != nil {
+		discardReader(candidate)
 		return nil, err
 	}
 	r.Commit(candidate)
@@ -1896,6 +1967,18 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 	return nil
 }
 
+type observationRule struct {
+	minimum, maximum uint64
+	source           runtime.Source
+}
+
+//go:noinline
+func observeReserved(r *runtime.Reader, offset, width int, value uint64, rule *observationRule) {
+	if value < rule.minimum || value > rule.maximum {
+		_ = r.Observe(offset, width, value, rule.source)
+	}
+}
+
 // DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart decodes TS 44.018 V19.0.0 §10.5.2.1e <Cell Selection Indicator after release of all TCH and SDCCH value part>.
 func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom(r *runtime.Reader) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, error) {
 	if err := r.Check(); err != nil {
@@ -1915,7 +1998,7 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartTo(w *runt
 	}
 	return operationLocation5.failure(w.WithWireValue(v.Wire, func() error { return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w, v) }), "", w.Position(), 0)
 }
-func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data []byte) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
+func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, err
 	}
@@ -1923,7 +2006,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data
 		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart requires at least 16 bits"}
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(r)
 	if err != nil {
@@ -1960,7 +2043,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(v Ce
 // supply the length through EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 0, false, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 2, 0, false, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
@@ -1980,7 +2063,7 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(
 // that decode to a different typed value.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 0, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 0, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
@@ -2257,12 +2340,12 @@ func EncodeEUTRANDescriptionStructTo(w *runtime.Writer, v EUTRANDescriptionStruc
 	}
 	return operationLocation17.failure(w.WithWireValue(v.Wire, func() error { return encodeEUTRANDescriptionStruct(w, v) }), "", w.Position(), 0)
 }
-func decodeEUTRANDescriptionStructBytes(data []byte) (runtime.Decoded[EUTRANDescriptionStruct], error) {
+func decodeEUTRANDescriptionStructBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EUTRANDescriptionStruct], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[EUTRANDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewReaderWithCollector(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEUTRANDescriptionStruct(r)
 	if err != nil {
@@ -2293,7 +2376,7 @@ func encodeEUTRANDescriptionStructBytes(v EUTRANDescriptionStruct) ([]byte, erro
 // supply the length through EncodeEUTRANDescriptionStructCanonicalAtLength.
 func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANDescriptionStructBytes, decodeEUTRANDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 0, false, encodeEUTRANDescriptionStructBytes, DecodeEUTRANDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
@@ -2313,7 +2396,7 @@ func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, 
 // that decode to a different typed value.
 func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANDescriptionStructBytes, decodeEUTRANDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANDescriptionStructBytes, DecodeEUTRANDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
@@ -2325,11 +2408,11 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "Cell Selection Indicator after release of all TCH and SDCCH value part", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeFrom: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom, Encode: descriptorEncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, Canonical: descriptorCanonicalCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, CanonicalAtLength: descriptorCanonicalAtLengthCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeGSMDescriptionStruct, DecodeFrom: descriptorDecodeGSMDescriptionStructFrom, Encode: descriptorEncodeGSMDescriptionStruct, Canonical: descriptorCanonicalGSMDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGSMDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANFDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructFrom, Encode: descriptorEncodeUTRANFDDDescriptionStruct, Canonical: descriptorCanonicalUTRANFDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANTDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructFrom, Encode: descriptorEncodeUTRANTDDDescriptionStruct, Canonical: descriptorCanonicalUTRANTDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "E-UTRAN Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeEUTRANDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANDescriptionStructFrom, Encode: descriptorEncodeEUTRANDescriptionStruct, Canonical: descriptorCanonicalEUTRANDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "Cell Selection Indicator after release of all TCH and SDCCH value part", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, DecodeFrom: descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom, DecodeWithCollector: descriptorCollectCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, Encode: descriptorEncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, Canonical: descriptorCanonicalCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, CanonicalAtLength: descriptorCanonicalAtLengthCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "GSM Description struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeGSMDescriptionStruct, DecodeFrom: descriptorDecodeGSMDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGSMDescriptionStruct), Encode: descriptorEncodeGSMDescriptionStruct, Canonical: descriptorCanonicalGSMDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthGSMDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN FDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANFDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANFDDDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANFDDDescriptionStruct), Encode: descriptorEncodeUTRANFDDDescriptionStruct, Canonical: descriptorCanonicalUTRANFDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANFDDDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "UTRAN TDD Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeUTRANTDDDescriptionStruct, DecodeFrom: descriptorDecodeUTRANTDDDescriptionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeUTRANTDDDescriptionStruct), Encode: descriptorEncodeUTRANTDDDescriptionStruct, Canonical: descriptorCanonicalUTRANTDDDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthUTRANTDDDescriptionStruct},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e", Name: "E-UTRAN Description struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 19, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}}, Decode: descriptorDecodeEUTRANDescriptionStruct, DecodeFrom: descriptorDecodeEUTRANDescriptionStructFrom, DecodeWithCollector: descriptorCollectEUTRANDescriptionStruct, Encode: descriptorEncodeEUTRANDescriptionStruct, Canonical: descriptorCanonicalEUTRANDescriptionStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANDescriptionStruct},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -2366,9 +2449,17 @@ func LookupClause(clause, name string) (runtime.Descriptor, error) {
 }
 
 var descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+var descriptorCollectLocationCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = operationLocation{operation: "decode", path: "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", source: &descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, kind: runtime.InvalidValue}
 
 func descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte) (any, error) {
 	return DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data)
+}
+func descriptorCollectCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(value any) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, bool) {
 	switch v := value.(type) {
@@ -2574,9 +2665,17 @@ func descriptorCanonicalAtLengthUTRANTDDDescriptionStruct(value any, octets int)
 }
 
 var descriptorSourceEUTRANDescriptionStruct = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.1e"}
+var descriptorCollectLocationEUTRANDescriptionStruct = operationLocation{operation: "decode", path: "EUTRANDescriptionStruct", source: &descriptorSourceEUTRANDescriptionStruct, kind: runtime.InvalidValue}
 
 func descriptorDecodeEUTRANDescriptionStruct(data []byte) (any, error) {
 	return DecodeEUTRANDescriptionStruct(data)
+}
+func descriptorCollectEUTRANDescriptionStruct(data []byte, c *runtime.Collector) (any, error) {
+	v, err := decodeEUTRANDescriptionStructBytes(data, c)
+	if err != nil {
+		return v, descriptorCollectLocationEUTRANDescriptionStruct.failure(err, "", -1, 0)
+	}
+	return v, nil
 }
 func descriptorUnwrapEUTRANDescriptionStruct(value any) (EUTRANDescriptionStruct, bool) {
 	switch v := value.(type) {
@@ -2625,6 +2724,22 @@ func descriptorCanonicalAtLengthEUTRANDescriptionStruct(value any, octets int) (
 	}
 	return EncodeEUTRANDescriptionStructCanonicalAtLength(v, octets)
 }
+
+//go:noinline
+func descriptorIgnoreCollector(decode func([]byte) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, _ *runtime.Collector) (any, error) { return decode(data) }
+}
+
+// Keep only the nil check at each abandoned alternative; the rollback body
+// is shared so the compiler does not expand it into every choice arm.
+func discardReader(r *runtime.Reader) {
+	if r.Collecting() {
+		discardObservations(r)
+	}
+}
+
+//go:noinline
+func discardObservations(r *runtime.Reader) { r.Discard() }
 
 func descriptorTypeError(operation, name string, source runtime.Source) error {
 	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
@@ -2693,7 +2808,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	return wire, r.Position() - start, nil
 }
 func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
-	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data)
+	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data, nil)
 	if err != nil {
 		return v, operationLocation4.failure(err, "", -1, 0)
 	}
@@ -2749,7 +2864,7 @@ func EncodeUTRANTDDDescriptionStruct(v UTRANTDDDescriptionStruct) ([]byte, error
 	return out, nil
 }
 func DecodeEUTRANDescriptionStruct(data []byte) (runtime.Decoded[EUTRANDescriptionStruct], error) {
-	v, err := decodeEUTRANDescriptionStructBytes(data)
+	v, err := decodeEUTRANDescriptionStructBytes(data, nil)
 	if err != nil {
 		return v, operationLocation16.failure(err, "", -1, 0)
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go/ast"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -23,6 +24,74 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 	}
 	start, end := file.set.Position(fn.Pos()).Offset, file.set.Position(fn.End()).Offset
 	body := generatedWhitespace.ReplaceAllString(string(file.source[start:end]), "")
+	if fn.Name.Name == "DecodeClassmark2ValuePartFrom" && (f.Expression == "origin + offset" || f.Expression == "uint64(value)") {
+		observation := false
+		ast.Inspect(fn.Body, func(node ast.Node) bool {
+			literal, ok := node.(*ast.FuncLit)
+			if !ok || file.set.Position(literal.Pos()).Line > f.Line || file.set.Position(literal.End()).Line < f.Line {
+				return true
+			}
+			start, end := file.set.Position(literal.Pos()).Offset, file.set.Position(literal.End()).Offset
+			text := strings.ReplaceAll(generatedWhitespace.ReplaceAllString(string(file.source[start:end]), ""), ";", "")
+			observation = text == "func(fieldstring,offset,widthint,valueuint8)error{returnr.Observe(origin+offset,width,uint64(value),source,field)}"
+			return true
+		})
+		if observation {
+			for _, guard := range []string{"r.Check()", "r.Remaining()<24", "start:=r.Fork()", "origin:=start.Position()"} {
+				if !strings.Contains(body, guard) {
+					return fmt.Errorf("manual observation origin guard absent: %s", f.Key())
+				}
+			}
+			calls := 0
+			var callErr error
+			ast.Inspect(fn.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				id, ok := call.Fun.(*ast.Ident)
+				if !ok || id.Name != "observe" {
+					return true
+				}
+				calls++
+				if len(call.Args) != 4 {
+					callErr = fmt.Errorf("manual observation arguments differ")
+					return true
+				}
+				offset, ok := call.Args[1].(*ast.BasicLit)
+				if !ok {
+					callErr = fmt.Errorf("manual observation offset is not fixed")
+					return true
+				}
+				width, ok := call.Args[2].(*ast.BasicLit)
+				if !ok {
+					callErr = fmt.Errorf("manual observation width is not fixed")
+					return true
+				}
+				at, err := strconv.Atoi(offset.Value)
+				if err != nil || at < 0 || at > 24 {
+					callErr = fmt.Errorf("manual observation offset outside received value")
+					return true
+				}
+				bits, err := strconv.Atoi(width.Value)
+				if err != nil || bits < 1 || bits > 24-at {
+					callErr = fmt.Errorf("manual observation width outside received value")
+				}
+				return true
+			})
+			if callErr != nil {
+				return fmt.Errorf("%s: %w", f.Key(), callErr)
+			}
+			if calls != 3 {
+				return fmt.Errorf("manual observation calls differ: %s", f.Key())
+			}
+			return nil
+		}
+		// Existing writer conversions in this function retain their own proof below.
+		if f.Expression == "origin + offset" {
+			return fmt.Errorf("manual observation helper differs: %s", f.Key())
+		}
+	}
 	// These new operations are emitted only in fixed descriptor and location
 	// helpers. Check the complete local guard shape before accepting their
 	// classified arithmetic; other generated functions still use the rules below.
