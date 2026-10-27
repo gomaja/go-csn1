@@ -1042,6 +1042,26 @@ type NetworkSharingEABInformationStruct struct {
 	AdditionalEABAuthorizationMaskGroupList []NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntry
 	Wire                                    runtime.WireInfo `json:"-"`
 }
+
+// SetAdditionalEABAuthorizationMaskGroupList stores AdditionalEABAuthorizationMaskGroupList and sets the repetition count for NbAdditionalPLMNs to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37m <Network Sharing EAB Information struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *NetworkSharingEABInformationStruct) SetAdditionalEABAuthorizationMaskGroupList(items []NetworkSharingEABInformationStructAdditionalEABAuthorizationMaskGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("AdditionalEABAuthorizationMaskGroupList: nil NetworkSharingEABInformationStruct receiver for Nb_Additional_PLMNs count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("AdditionalEABAuthorizationMaskGroupList: %d entries are below the Nb_Additional_PLMNs count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 3 {
+		return fmt.Errorf("AdditionalEABAuthorizationMaskGroupList: %d entries exceed the 2-bit Nb_Additional_PLMNs count", len(items))
+	}
+	v.NbAdditionalPLMNs = uint8(count)
+	v.AdditionalEABAuthorizationMaskGroupList = items
+	return nil
+}
+
 type SI22RestOctets struct {
 	SI22CHANGEMARK            uint8
 	SI22INDEX                 uint8
@@ -1064,6 +1084,26 @@ type NetworkSharingInformationStruct struct {
 	MCCGroupList      []NetworkSharingInformationStructMCCGroupListEntry
 	Wire              runtime.WireInfo `json:"-"`
 }
+
+// SetMCCGroupList stores MCCGroupList and sets the repetition count for NbAdditionalPLMNs to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37n <Network Sharing Information struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *NetworkSharingInformationStruct) SetMCCGroupList(items []NetworkSharingInformationStructMCCGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("MCCGroupList: nil NetworkSharingInformationStruct receiver for Nb_Additional_PLMNs count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("MCCGroupList: %d entries are below the Nb_Additional_PLMNs count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 3 {
+		return fmt.Errorf("MCCGroupList: %d entries exceed the 2-bit Nb_Additional_PLMNs count", len(items))
+	}
+	v.NbAdditionalPLMNs = uint8(count)
+	v.MCCGroupList = items
+	return nil
+}
+
 type SI23RestOctets struct {
 	SI23BAIND                      uint8
 	SI23CHANGEMARK                 uint8
@@ -1084,6 +1124,26 @@ type IRATCellReselectionInformationStruct struct {
 	PLMNIndexGroupList                                     []IRATCellReselectionInformationStructPLMNIndexGroupListEntry
 	Wire                                                   runtime.WireInfo `json:"-"`
 }
+
+// SetPLMNIndexGroupList stores PLMNIndexGroupList and sets the repetition count for NbAdditionalPLMNs to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37o <IRAT Cell Reselection Information struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *IRATCellReselectionInformationStruct) SetPLMNIndexGroupList(items []IRATCellReselectionInformationStructPLMNIndexGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("PLMNIndexGroupList: nil IRATCellReselectionInformationStruct receiver for Nb_Additional_PLMNs count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("PLMNIndexGroupList: %d entries are below the Nb_Additional_PLMNs count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 3 {
+		return fmt.Errorf("PLMNIndexGroupList: %d entries exceed the 2-bit Nb_Additional_PLMNs count", len(items))
+	}
+	v.NbAdditionalPLMNs = uint8(count)
+	v.PLMNIndexGroupList = items
+	return nil
+}
+
 type PriorityAndUTRANParametersDescriptionStructDEFAULTUTRANPRIORITYGroupGroupDEFAULTUTRANPRIORITYGroup struct {
 	DEFAULTUTRANPRIORITY  *uint8
 	DEFAULTTHRESHUTRANLow *uint8
@@ -2254,11 +2314,53 @@ type GPRSBSICDescriptionStruct struct {
 	FrequencyScrollingGroupList []GPRSBSICDescriptionStructFrequencyScrollingGroupListEntry
 	Wire                        runtime.WireInfo `json:"-"`
 }
+
+// SetFrequencyScrollingGroupList stores FrequencyScrollingGroupList and sets the repetition count for NumberRemainingBSIC to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.33b <GPRS BSIC Description struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+func (v *GPRSBSICDescriptionStruct) SetFrequencyScrollingGroupList(items []GPRSBSICDescriptionStructFrequencyScrollingGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("FrequencyScrollingGroupList: nil GPRSBSICDescriptionStruct receiver for Number_Remaining_BSIC count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 127 {
+		return fmt.Errorf("FrequencyScrollingGroupList: %d entries exceed the 7-bit Number_Remaining_BSIC count", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NumberRemainingBSIC = uint8(count)
+	v.FrequencyScrollingGroupList = items
+	return nil
+}
+
 type GPRSREPORTPRIORITYDescriptionStruct struct {
 	NumberCells     uint8
 	REPPRIORITYList []uint8
 	Wire            runtime.WireInfo `json:"-"`
 }
+
+// SetREPPRIORITYList stores REPPRIORITYList and sets the repetition count for NumberCells to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.33b <GPRS REPORT PRIORITY Description struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+func (v *GPRSREPORTPRIORITYDescriptionStruct) SetREPPRIORITYList(items []uint8) error {
+	if v == nil {
+		return fmt.Errorf("REPPRIORITYList: nil GPRSREPORTPRIORITYDescriptionStruct receiver for Number_Cells count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 127 {
+		return fmt.Errorf("REPPRIORITYList: %d entries exceed the 7-bit Number_Cells count", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NumberCells = uint8(count)
+	v.REPPRIORITYList = items
+	return nil
+}
+
 type GPRSMEASUREMENTPARAMETERSDescriptionStructN900REPORTINGOFFSETGroup struct {
 	N900REPORTINGOFFSET    uint8
 	N900REPORTINGTHRESHOLD uint8
@@ -2348,6 +2450,27 @@ type CCNSupportDescriptionStruct struct {
 	CCNSUPPORTEDList []uint8
 	Wire             runtime.WireInfo `json:"-"`
 }
+
+// SetCCNSUPPORTEDList stores CCNSUPPORTEDList and sets the repetition count for NumberCells to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.33b <CCN Support Description struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+func (v *CCNSupportDescriptionStruct) SetCCNSUPPORTEDList(items []uint8) error {
+	if v == nil {
+		return fmt.Errorf("CCNSUPPORTEDList: nil CCNSupportDescriptionStruct receiver for Number_Cells count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 127 {
+		return fmt.Errorf("CCNSUPPORTEDList: %d entries exceed the 7-bit Number_Cells count", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NumberCells = uint8(count)
+	v.CCNSUPPORTEDList = items
+	return nil
+}
+
 type N3GAdditionalMeasurementParametersDescriptionStructClause105233b struct {
 	FDDQminOffset uint8
 	FDDRSCPmin    uint8
@@ -2897,6 +3020,26 @@ type PEOIMMCellGroupSpecificParametersStruct struct {
 	BSICGroupList []PEOIMMCellGroupSpecificParametersStructBSICGroupListEntry
 	Wire          runtime.WireInfo `json:"-"`
 }
+
+// SetBSICGroupList stores BSICGroupList and sets the repetition count for NbNCELL to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37b <PEO IMM Cell Group Specific Parameters struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *PEOIMMCellGroupSpecificParametersStruct) SetBSICGroupList(items []PEOIMMCellGroupSpecificParametersStructBSICGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("BSICGroupList: nil PEOIMMCellGroupSpecificParametersStruct receiver for Nb_NCELL count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("BSICGroupList: %d entries are below the Nb_NCELL count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 15 {
+		return fmt.Errorf("BSICGroupList: %d entries exceed the 4-bit Nb_NCELL count", len(items))
+	}
+	v.NbNCELL = uint8(count)
+	v.BSICGroupList = items
+	return nil
+}
+
 type SI19RestOctets struct {
 	SI19CHANGEMARK                 uint8
 	SI19INDEX                      uint8
@@ -2915,6 +3058,27 @@ type COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry struct {
 	FREQDIFFLENGTH             uint8
 	FREQUENCYDIFFGroupList     []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry
 }
+
+// SetFREQUENCYDIFFGroupList stores FREQUENCYDIFFGroupList and sets the repetition count for NROFREMAININGCELLS to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37g <COMPACT Neighbour Cell params struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+func (v *COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry) SetFREQUENCYDIFFGroupList(items []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntryFREQUENCYDIFFGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("FREQUENCYDIFFGroupList: nil COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry receiver for NR_OF_REMAINING_CELLS count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 15 {
+		return fmt.Errorf("FREQUENCYDIFFGroupList: %d entries exceed the 4-bit NR_OF_REMAINING_CELLS count", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NROFREMAININGCELLS = uint8(count)
+	v.FREQUENCYDIFFGroupList = items
+	return nil
+}
+
 type COMPACTNeighbourCellParamsStruct struct {
 	STARTFREQUENCYGroupList []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry
 	Wire                    runtime.WireInfo `json:"-"`
@@ -2970,6 +3134,31 @@ type NonGSMMessageStruct struct {
 	CONTAINERList               []uint8
 	Wire                        runtime.WireInfo `json:"-"`
 }
+
+// SetCONTAINERList stores CONTAINERList and sets the repetition count for NROFCONTAINEROCTETS to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.37h <Non-GSM Message struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+// It selects literal lengths 0..18, never continuation code 31, which requires an enclosing value bound.
+func (v *NonGSMMessageStruct) SetCONTAINERList(items []uint8) error {
+	if v == nil {
+		return fmt.Errorf("CONTAINERList: nil NonGSMMessageStruct receiver for NR_OF_CONTAINER_OCTETS count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 31 {
+		return fmt.Errorf("CONTAINERList: %d entries exceed the 5-bit NR_OF_CONTAINER_OCTETS count", len(items))
+	}
+	if count > 18 {
+		return fmt.Errorf("CONTAINERList: %d entries need an enclosing continuation bound for the NR_OF_CONTAINER_OCTETS count", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NROFCONTAINEROCTETS = uint8(count)
+	v.CONTAINERList = items
+	return nil
+}
+
 type IPARestOctetsRCCChoiceRCC struct {
 	RCC uint8
 }

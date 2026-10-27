@@ -17,10 +17,10 @@ func resultsBuildUnavailable(serving MeasurementResultsFields) (MeasurementResul
 	return v, err
 }
 func resultsBuildReports(serving MeasurementResultsFields, reports []NCELLReportStruct, csg *ies.UTRANCSGMeasurementReportIE) (MeasurementResultsContents, error) {
-	if len(reports) == 0 {
-		reports = nil
+	arm := &MeasurementResultsReportsArm{}
+	if err := arm.SetNCELLReports(reports); err != nil {
+		return MeasurementResultsContents{}, err
 	}
-	arm := &MeasurementResultsReportsArm{NONCELLM: uint8(len(reports)), NCELLReports: reports}
 	if csg != nil {
 		arm.Suffix = MeasurementResultsReportsSuffix{Alternative: MeasurementResultsReportsSuffixAlternativeCSG, CSG: &MeasurementResultsCSGArm{Report: *csg}}
 	} else {

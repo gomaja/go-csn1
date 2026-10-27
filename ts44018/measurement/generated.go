@@ -191,6 +191,26 @@ type EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH struct {
 	EUTRANMeasurementReport         *EUTRANMeasurementReportStruct
 	UTRANCSGMeasurementReportChoice EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice
 }
+
+// SetREPORTINGQUANTITYList stores REPORTINGQUANTITYList and sets the repetition count for BITMAPLENGTH to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §9.1.55 <Enhanced Measurement report>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH) SetREPORTINGQUANTITYList(items []*uint8) error {
+	if v == nil {
+		return fmt.Errorf("REPORTINGQUANTITYList: nil EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH receiver for BITMAP_LENGTH count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("REPORTINGQUANTITYList: %d entries are below the BITMAP_LENGTH count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 127 {
+		return fmt.Errorf("REPORTINGQUANTITYList: %d entries exceed the 7-bit BITMAP_LENGTH count", len(items))
+	}
+	v.BITMAPLENGTH = uint8(count)
+	v.REPORTINGQUANTITYList = items
+	return nil
+}
+
 type EnhancedMeasurementReportBITMAPLENGTHChoiceAlternative uint8
 
 const (
@@ -244,6 +264,26 @@ type EUTRANMeasurementReportStruct struct {
 	EUTRANFREQUENCYINDEXGroupList []EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry
 	Wire                          runtime.WireInfo `json:"-"`
 }
+
+// SetEUTRANFREQUENCYINDEXGroupList stores EUTRANFREQUENCYINDEXGroupList and sets the repetition count for NEUTRAN to its length minus 1.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §9.1.55 <E-UTRAN Measurement Report struct>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+func (v *EUTRANMeasurementReportStruct) SetEUTRANFREQUENCYINDEXGroupList(items []EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry) error {
+	if v == nil {
+		return fmt.Errorf("EUTRANFREQUENCYINDEXGroupList: nil EUTRANMeasurementReportStruct receiver for N_E-UTRAN count")
+	}
+	if len(items) < 1 {
+		return fmt.Errorf("EUTRANFREQUENCYINDEXGroupList: %d entries are below the N_E-UTRAN count offset 1", len(items))
+	}
+	count := uint64(len(items) - 1)
+	if count > 3 {
+		return fmt.Errorf("EUTRANFREQUENCYINDEXGroupList: %d entries exceed the 2-bit N_E-UTRAN count", len(items))
+	}
+	v.NEUTRAN = uint8(count)
+	v.EUTRANFREQUENCYINDEXGroupList = items
+	return nil
+}
+
 type MeasurementResultsUnavailableArm struct {
 	NONCELLM uint8
 }
@@ -267,6 +307,30 @@ type MeasurementResultsReportsArm struct {
 	NCELLReports []NCELLReportStruct
 	Suffix       MeasurementResultsReportsSuffix
 }
+
+// SetNCELLReports stores NCELLReports and sets the repetition count for NONCELLM to its length minus 0.
+// It checks the count width and source constraints before changing the receiver.
+// TS 44.018 V19.0.0 §10.5.2.20 <Measurement Results Contents>; TS 24.007 V20.0.0 Annex B §B.2.1; representation approved 2026-10-27.
+// Empty lists use the decoder's nil representative.
+func (v *MeasurementResultsReportsArm) SetNCELLReports(items []NCELLReportStruct) error {
+	if v == nil {
+		return fmt.Errorf("NCELLReports: nil MeasurementResultsReportsArm receiver for NO_NCELL_M count")
+	}
+	count := uint64(len(items) - 0)
+	if count > 7 {
+		return fmt.Errorf("NCELLReports: %d entries exceed the 3-bit NO_NCELL_M count", len(items))
+	}
+	if count == 7 {
+		return fmt.Errorf("NCELLReports: %d entries is the excluded NO_NCELL_M code", len(items))
+	}
+	if len(items) == 0 {
+		items = nil
+	}
+	v.NONCELLM = uint8(count)
+	v.NCELLReports = items
+	return nil
+}
+
 type MeasurementResultsCountChoiceAlternative uint8
 
 const (

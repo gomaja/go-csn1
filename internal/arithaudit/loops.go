@@ -13,8 +13,8 @@ import (
 
 // CheckGeneratedLoopArithmetic verifies the two emitted index patterns:
 // counted repeats and recursive-list selectors. Their generator sites are
-// csn1/gen/direct.go:953 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1004
-// `for i:=0;i<count;i++` and csn1/gen/direct.go:1468 `if i+1<len(v.Entries)`.
+// csn1/gen/direct.go:957 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1008
+// `for i:=0;i<count;i++` and csn1/gen/direct.go:1475 `if i+1<len(v.Entries)`.
 func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextIndexes int, err error) {
 	set := token.NewFileSet()
 	file, err := parser.ParseFile(set, name, source, 0)

@@ -89,6 +89,10 @@ func TestMeasurementResultsAllCountsAndCSG(t *testing.T) {
 			for _, encode := range []func(MeasurementResultsContents) ([]byte, error){EncodeMeasurementResultsContents, EncodeMeasurementResultsContentsCanonical, func(v MeasurementResultsContents) ([]byte, error) {
 				return EncodeMeasurementResultsContentsCanonicalAtLength(v, 16)
 			}} {
+				fresh, err := encode(v)
+				if err != nil || !bytes.Equal(fresh, wire) || !runtime.SemanticallyEqual(v, d.Value) {
+					t.Fatalf("fresh typed construction %d/%d: %x %v", count, form, fresh, err)
+				}
 				again, err := encode(d.Value)
 				if err != nil || !bytes.Equal(again, wire) {
 					t.Fatalf("replay/canonical %d/%d: %x %v", count, form, again, err)
@@ -469,6 +473,77 @@ func TestMeasurementResultsSuffixHasNoPaddingCount(t *testing.T) {
 		}
 		if !runtime.SemanticallyEqual(v, d.Value) {
 			t.Fatalf("count %d typed value differs", count)
+		}
+	}
+}
+
+func TestMeasurementResultsSetterKeepsOrdinaryCountCheck(t *testing.T) {
+	var arm MeasurementResultsReportsArm
+	if err := arm.SetNCELLReports([]NCELLReportStruct{{RXLEVNCELL: 30, BCCHFREQNCELL: 5, BSICNCELL: 17}}); err != nil {
+		t.Fatal(err)
+	}
+	if arm.NONCELLM != 1 {
+		t.Fatal("count not derived")
+	}
+	arm.Suffix = MeasurementResultsReportsSuffix{Alternative: MeasurementResultsReportsSuffixAlternativeNull, Null: &struct{}{}}
+	v := MeasurementResultsContents{Content: MeasurementResultsFields{Count: MeasurementResultsCountChoice{Alternative: MeasurementResultsCountChoiceAlternativeReports, Reports: &arm}}}
+	if _, err := EncodeMeasurementResultsContents(v); err != nil {
+		t.Fatal(err)
+	}
+	arm.NCELLReports = append(arm.NCELLReports, NCELLReportStruct{})
+	_, err := EncodeMeasurementResultsContents(v)
+	if err == nil || !strings.Contains(err.Error(), "repeat count mismatch") {
+		t.Fatalf("ordinary encoder changed count semantics: %v", err)
+	}
+}
+
+func TestMeasurementResultsEmptySetterCanonical(t *testing.T) {
+	var arm MeasurementResultsReportsArm
+	if err := arm.SetNCELLReports(make([]NCELLReportStruct, 0, 2)); err != nil {
+		t.Fatal(err)
+	}
+	arm.Suffix = MeasurementResultsReportsSuffix{Alternative: MeasurementResultsReportsSuffixAlternativeNull, Null: &struct{}{}}
+	v := MeasurementResultsContents{Content: MeasurementResultsFields{Count: MeasurementResultsCountChoice{Alternative: MeasurementResultsCountChoiceAlternativeReports, Reports: &arm}}}
+	wire, err := EncodeMeasurementResultsContentsCanonical(v)
+	if err != nil {
+		t.Fatalf("empty setter canonical construction: %v", err)
+	}
+	decoded, err := DecodeMeasurementResultsContents(wire)
+	if err != nil || !runtime.SemanticallyEqual(v, decoded.Value) {
+		t.Fatalf("empty setter typed equality: %v", err)
+	}
+}
+
+// TS 44.018 V19.0.0 table 10.5.2.20.0 fixes the contents at 128 bits;
+// TS 44.060 V19.0.0 §12.61 adds 63 or 87 bits plus the presence selector.
+func TestMeasurementResultsCSGBoundMatrix(t *testing.T) {
+	for count := 0; count <= 6; count++ {
+		for _, plmn := range []bool{false, true} {
+			_, err := resultsBuildReports(resultsServing(), make([]NCELLReportStruct, count), resultsCSG(plmn))
+			fits := count <= 2 && !plmn || count == 0 && plmn
+			if (err == nil) != fits {
+				t.Fatalf("count=%d PLMN-ID=%t fits=%t: %v", count, plmn, fits, err)
+			}
+		}
+	}
+}
+
+func TestMeasurementResultsSetterErrorsNameListAndCount(t *testing.T) {
+	var arm MeasurementResultsReportsArm
+	for _, tc := range []struct {
+		n    int
+		want string
+	}{
+		{7, "NCELLReports: 7 entries is the excluded NO_NCELL_M code"},
+		{8, "NCELLReports: 8 entries exceed the 3-bit NO_NCELL_M count"},
+	} {
+		err := arm.SetNCELLReports(make([]NCELLReportStruct, tc.n))
+		if err == nil || err.Error() != tc.want {
+			t.Fatalf("length %d: %v want %q", tc.n, err, tc.want)
+		}
+		var op *runtime.OperationError
+		if errors.As(err, &op) {
+			t.Fatal("setter error acquired a codec location")
 		}
 	}
 }
