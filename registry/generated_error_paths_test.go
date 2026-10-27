@@ -107,10 +107,14 @@ func TestGeneratedEncoderErrorFamilyInventory(t *testing.T) {
 		"SI message list exceeds fixed IE": true, "choice alternative mismatch": true, "choice requires exactly one alternative": true,
 		"equality constraint failed": true, "excluded value": true, "extension fallback requires exactly one arm": true,
 		"fallback arm mismatch": true, "interpreted field below 1": true, "invalid choice alternative": true, "invalid fallback arm": true,
-		"invalid truncation point": true, "literal-zero padding requires enclosing length bound": true, "pre-Rel-8 reporting bitmap exceeds 96 positions": true,
+		"invalid truncation point": true, "literal-zero padding requires enclosing length bound": true,
 		"recursive list requires an element": true, "repeat count mismatch": true, "reserved CSN.1 alternative": true,
 		"reserved Non-GSM protocol discriminator": true, "reserved container length code": true, "value reserved by source table": true,
 		"zero-length SI stop record belongs in Wire": true,
+		// The public measurement ambiguous-release refusal and nonzero-tail
+		// controls exercise the emitted zero-tail check and its trial rejection.
+		"release additions encode an all-zero tail indistinguishable from redundant legacy bitmap positions": true,
+		"nonzero release tail is not redundant legacy positions":                                             true,
 	}
 	found := map[string]bool{}
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))

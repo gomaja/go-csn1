@@ -534,7 +534,7 @@ func TestMeasurementResultsSetterErrorsNameListAndCount(t *testing.T) {
 		n    int
 		want string
 	}{
-		{7, "NCELLReports: 7 entries is the excluded NO_NCELL_M code"},
+		{7, "NCELLReports: 7 entries map to the excluded NO_NCELL_M code 7"},
 		{8, "NCELLReports: 8 entries exceed the 3-bit NO_NCELL_M count"},
 	} {
 		err := arm.SetNCELLReports(make([]NCELLReportStruct, tc.n))
@@ -545,5 +545,13 @@ func TestMeasurementResultsSetterErrorsNameListAndCount(t *testing.T) {
 		if errors.As(err, &op) {
 			t.Fatal("setter error acquired a codec location")
 		}
+	}
+}
+
+func TestMeasurementResultsExcludedCountText(t *testing.T) {
+	var value MeasurementResultsReportsArm
+	err := value.SetNCELLReports(make([]NCELLReportStruct, 7))
+	if err == nil || err.Error() != "NCELLReports: 7 entries map to the excluded NO_NCELL_M code 7" {
+		t.Fatalf("excluded count: %v", err)
 	}
 }

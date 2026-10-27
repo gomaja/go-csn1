@@ -321,7 +321,7 @@ func (v *MeasurementResultsReportsArm) SetNCELLReports(items []NCELLReportStruct
 		return fmt.Errorf("NCELLReports: %d entries exceed the 3-bit NO_NCELL_M count", len(items))
 	}
 	if count == 7 {
-		return fmt.Errorf("NCELLReports: %d entries is the excluded NO_NCELL_M code", len(items))
+		return fmt.Errorf("NCELLReports: %d entries map to the excluded NO_NCELL_M code 7", len(items))
 	}
 	if len(items) == 0 {
 		items = nil
@@ -790,37 +790,27 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w *r
 // At least 96 neighour cell entries shall be encoded in the bitmap.
 // If this structure is present, some remaining bits indicating no report at the end of the message may be omitted if these bits do not fit into the message. This shall not lead to an error in the receiver of that message.
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(r *runtime.Reader) ([]*uint8, error) {
-	var out []*uint8
-	for i := 0; i < 96 && r.Remaining() > 0; i++ {
-		if err := r.EnterIndex("EnhancedMeasurementReportREPORTINGQUANTITYListValue", i); err != nil {
-			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
+	var out []*uint8 // TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1: after 96 cell positions, only an entirely zero remainder is redundant bitmap.
+	for r.Remaining() > 0 {
+		if len(out) == 96 && !r.AllRemainingZero() {
+			break
+		}
+		if err := r.EnterIndex("EnhancedMeasurementReportREPORTINGQUANTITYListValue", len(out)); err != nil {
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", len(out))
 		}
 		v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r)
 		r.LeaveIndex()
 		if err != nil {
-			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
+			return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", len(out))
 		}
 		out = append(out, v)
 	}
 	return out, nil
 }
 func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer, v []*uint8) error {
-	if len(v) > 96 {
-		return w.ComponentError(runtime.Limit, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, fmt.Errorf("pre-Rel-8 reporting bitmap exceeds 96 positions"))
-	}
 	for itemIndex, item := range v {
 		if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, item); err != nil {
 			return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", itemIndex)
-		}
-	}
-	if _, received := w.ReceivedBits(); !received {
-		for i := len(v); i < 96; i++ {
-			if w.CanonicalTargetReached() {
-				break
-			}
-			if err := encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(w, nil); err != nil {
-				return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportREPORTINGQUANTITYListValue", 0, err), "EnhancedMeasurementReportREPORTINGQUANTITYListValue", i)
-			}
 		}
 	}
 	return nil
@@ -1896,6 +1886,24 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 		}
 		limit = n
 	}
+	carrierEnd := 0
+	_, receivedCarrier := w.ReceivedBits()
+	oldCarrierBound := -1
+	if !receivedCarrier {
+		var err error
+		oldCarrierBound, err = w.PushLimit(168)
+		if err != nil {
+			return err
+		}
+		carrierEnd = w.BoundEndOr(0)
+	}
+
+	if !receivedCarrier {
+		if err := emrLegacyBitmap(w, &v); err != nil {
+			return err
+		}
+	}
+	var releaseMark runtime.FallbackMark
 	if limit <= 0 && !runtime.IsZero(v.RRShortPD) {
 		return w.OmittedFieldError("RRShortPD")
 	}
@@ -1976,6 +1984,26 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 			return err
 		}
 	}
+
+	// TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1: fill redundant zero positions, omitting only those that cannot fit.
+	if !receivedCarrier && v.REPORTINGQUANTITYList != nil {
+		if v.BITMAPLENGTHChoice.BITMAPLENGTH == nil {
+			for w.RemainingLimit() > 0 {
+				if err := w.WriteUint(0, 1); err != nil {
+					return err
+				}
+			}
+		} else {
+			for i := len(*v.REPORTINGQUANTITYList); i < 96 && w.RemainingLimit() > 0; i++ {
+				if err := w.WriteUint(0, 1); err != nil {
+					return locateIndex(w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReport", 0, err), "EnhancedMeasurementReport", i)
+				}
+			}
+		}
+	}
+	if !receivedCarrier && v.REPORTINGQUANTITYList != nil && v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+		releaseMark = w.MarkFallback()
+	}
 	if limit <= 10 && !runtime.IsZero(v.BITMAPLENGTHChoice) {
 		return w.OmittedFieldError("BITMAPLENGTHChoice")
 	}
@@ -1985,7 +2013,36 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 		}
 	}
 	if limit > 11 {
-		if err := encodeEnhancedMeasurementReportSparePadding(w, runtime.BitString{}); err != nil {
+		if !receivedCarrier {
+			if err := w.WritePaddingTo(carrierEnd); err != nil {
+				return err
+			}
+		} else {
+			if err := encodeEnhancedMeasurementReportSparePadding(w, runtime.BitString{}); err != nil {
+				return err
+			}
+		}
+	}
+	if !receivedCarrier {
+		if err := w.WritePaddingTo(carrierEnd); err != nil {
+			return err
+		}
+	}
+
+	// TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1, boundary rule approved 2026-10-27:
+	// an entirely zero tail after position 96 denotes redundant legacy positions.
+	if !receivedCarrier && v.REPORTINGQUANTITYList != nil && v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+		if err := w.CheckIgnoredFallback(releaseMark, false, func(r *runtime.Reader) error {
+			if r.AllRemainingZero() {
+				return nil
+			}
+			return fmt.Errorf("nonzero release tail is not redundant legacy positions")
+		}); err != nil {
+			return w.ComponentError(runtime.InvalidValue, "", 0, fmt.Errorf("release additions encode an all-zero tail indistinguishable from redundant legacy bitmap positions"))
+		}
+	}
+	if !receivedCarrier {
+		if err := w.PopLimit(oldCarrierBound); err != nil {
 			return err
 		}
 	}
@@ -3881,7 +3938,7 @@ func EncodeEnhancedMeasurementReportTo(w *runtime.Writer, v EnhancedMeasurementR
 	if w == nil {
 		return operationLocation5.nilWriter()
 	}
-	return operationLocation5.failure(w.WithWireValue(v.Wire, func() error { return encodeEnhancedMeasurementReport(w, v) }), "", w.Position(), 0)
+	return operationLocation5.failure(w.WithCompleteWireValue(v.Wire, 168, func() error { return encodeEnhancedMeasurementReport(w, v) }), "", w.Position(), 0)
 }
 func decodeEnhancedMeasurementReportBytes(data []byte, collector *runtime.Collector) (runtime.Decoded[EnhancedMeasurementReport], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -3906,9 +3963,13 @@ func decodeEnhancedMeasurementReportBytes(data []byte, collector *runtime.Collec
 func encodeEnhancedMeasurementReportBytes(v EnhancedMeasurementReport) ([]byte, error) {
 	w := runtime.NewWriter()
 	w.WithWire(v.Wire)
-	w.SetZeroExtension(false)
 	if err := encodeEnhancedMeasurementReport(w, v); err != nil {
 		return nil, err
+	}
+	if w.Canonical() {
+		if err := w.WritePadding(); err != nil {
+			return nil, err
+		}
 	}
 	out, err := w.Finish(v.Wire.Tail)
 	if err != nil {
@@ -3920,33 +3981,82 @@ func encodeEnhancedMeasurementReportBytes(v EnhancedMeasurementReport) ([]byte, 
 	return out, nil
 }
 
-// Canonical maximum: TS 44.018 V19.0.0 §9.1.55; TS 44.006 V19.0.0 §§5.1, 5.2, 8.8.3 (Bter SACCH N201 = 21 octets, including the short L2 header).
+// TS 44.018 V19.0.0 table 9.1.55.1: redundant trailing zero positions
+// do not change which neighbours have reported quantities.
+func emrBitmapFields(v *EnhancedMeasurementReport) {
+	if v.REPORTINGQUANTITYList != nil {
+		last := 0
+		for index, report := range *v.REPORTINGQUANTITYList {
+			if report != nil {
+				last = index + 1
+			}
+		}
+		entries := (*v.REPORTINGQUANTITYList)[:last]
+		if last == 0 {
+			entries = nil
+		}
+		v.REPORTINGQUANTITYList = &entries
+	}
+}
+func emrReleaseFields(v *EnhancedMeasurementReport) {
+	if v.BITMAPLENGTHChoice.NoString != nil {
+		v.BITMAPLENGTHChoice = EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+	}
+	if rel8 := v.BITMAPLENGTHChoice.BITMAPLENGTH; rel8 != nil {
+		if rel8.UTRANCSGMeasurementReportChoice.NoString != nil {
+			rel8.UTRANCSGMeasurementReportChoice = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+		if rel9 := rel8.UTRANCSGMeasurementReportChoice.UTRANCSGMeasurementReport; rel9 != nil && rel9.SI23BAUSEDChoice.NoString != nil {
+			rel9.SI23BAUSEDChoice = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+	}
+}
+
+// TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1: reports
+// beyond the cell list and longer bitmaps with additions cannot be returned
+// by the deterministic decoder. Validate before changing an empty arm.
+func emrLegacyBitmap(w *runtime.Writer, v *EnhancedMeasurementReport) error {
+	if v.REPORTINGQUANTITYList != nil {
+		entries := *v.REPORTINGQUANTITYList
+		for index, report := range entries {
+			if index >= 96 && report != nil {
+				return w.ComponentError(runtime.InvalidValue, fmt.Sprintf("REPORTINGQUANTITYList[%d]", index), 0, fmt.Errorf("present report after legacy cell position 96"))
+			}
+		}
+		if len(entries) > 96 && v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+			return w.ComponentError(runtime.InvalidValue, "REPORTINGQUANTITYList", 0, fmt.Errorf("legacy bitmap longer than 96 positions with release additions"))
+		}
+		if v.BITMAPLENGTHChoice.BITMAPLENGTH == nil {
+			choice := v.BITMAPLENGTHChoice
+			null := choice.Alternative == EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled && choice.AltUnlabeled != nil && choice.NoString == nil
+			older := choice.Alternative == EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeNoString && choice.NoString != nil && choice.AltUnlabeled == nil
+			if !null && !older {
+				return w.ComponentError(runtime.InvalidBranch, "BITMAPLENGTHChoice", 0, fmt.Errorf("choice requires one matching release alternative"))
+			}
+			v.BITMAPLENGTHChoice = EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+	}
+	return nil
+}
+
+// Canonical maximum: TS 44.006 V19.0.0 §§5.2, 6.4a, 8.8.3 (SACCH Bter N201 = 21 octets including the short L2 header).
 // EncodeEnhancedMeasurementReportCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
-//   - *runtime.ExtentError when the encoding is longer than 21 octets;
+//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
+//     fit a fixed-size value;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
 func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 21, false, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
+		operationValue, operationErr := runtime.CanonicalEncode(v, 21, 21, false, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
-			if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
-				p := append([]*uint8(nil), (*a.REPORTINGQUANTITYList)...)
-				for len(p) < 96 {
-					p = append(p, nil)
-				}
-				a.REPORTINGQUANTITYList = &p
-			}
-			if b.REPORTINGQUANTITYList != nil && len(*b.REPORTINGQUANTITYList) < 96 {
-				p := append([]*uint8(nil), (*b.REPORTINGQUANTITYList)...)
-				for len(p) < 96 {
-					p = append(p, nil)
-				}
-				b.REPORTINGQUANTITYList = &p
-			}
+			emrReleaseFields(&a)
+			emrReleaseFields(&b)
+			emrBitmapFields(&a)
+			emrBitmapFields(&b)
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {
@@ -3959,7 +4069,7 @@ func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]by
 // EncodeEnhancedMeasurementReportCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..21 octets;
+//   - *runtime.ExtentError when octets is outside 21..21 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -3967,23 +4077,13 @@ func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]by
 // that decode to a different typed value.
 func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementReport, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 21, 21, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
-			if a.REPORTINGQUANTITYList != nil && len(*a.REPORTINGQUANTITYList) < 96 {
-				p := append([]*uint8(nil), (*a.REPORTINGQUANTITYList)...)
-				for len(p) < 96 {
-					p = append(p, nil)
-				}
-				a.REPORTINGQUANTITYList = &p
-			}
-			if b.REPORTINGQUANTITYList != nil && len(*b.REPORTINGQUANTITYList) < 96 {
-				p := append([]*uint8(nil), (*b.REPORTINGQUANTITYList)...)
-				for len(p) < 96 {
-					p = append(p, nil)
-				}
-				b.REPORTINGQUANTITYList = &p
-			}
+			emrReleaseFields(&a)
+			emrReleaseFields(&b)
+			emrBitmapFields(&a)
+			emrBitmapFields(&b)
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {
@@ -4438,7 +4538,7 @@ func Definitions() []string {
 }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 15, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEnhancedMeasurementReport, DecodeFrom: descriptorDecodeEnhancedMeasurementReportFrom, DecodeWithCollector: descriptorCollectEnhancedMeasurementReport, Encode: descriptorEncodeEnhancedMeasurementReport, Canonical: descriptorCanonicalEnhancedMeasurementReport, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedMeasurementReport},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Enhanced Measurement report", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 168, MaximumBits: 168, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEnhancedMeasurementReport, DecodeFrom: descriptorDecodeEnhancedMeasurementReportFrom, DecodeWithCollector: descriptorCollectEnhancedMeasurementReport, Encode: descriptorEncodeEnhancedMeasurementReport, Canonical: descriptorCanonicalEnhancedMeasurementReport, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedMeasurementReport},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeServingCellDataStruct, DecodeFrom: descriptorDecodeServingCellDataStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeServingCellDataStruct), Encode: descriptorEncodeServingCellDataStruct, Canonical: descriptorCanonicalServingCellDataStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellDataStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeRepeatedInvalidBSICInformationStruct, DecodeFrom: descriptorDecodeRepeatedInvalidBSICInformationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedInvalidBSICInformationStruct), Encode: descriptorEncodeRepeatedInvalidBSICInformationStruct, Canonical: descriptorCanonicalRepeatedInvalidBSICInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEUTRANMeasurementReportStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementReportStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEUTRANMeasurementReportStruct), Encode: descriptorEncodeEUTRANMeasurementReportStruct, Canonical: descriptorCanonicalEUTRANMeasurementReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementReportStruct},
@@ -5019,6 +5119,8 @@ func indexParent(path string) string {
 	switch path {
 	case "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList":
 		return "EUTRANMeasurementReportStruct"
+	case "EnhancedMeasurementReport":
+		return "EnhancedMeasurementReport"
 	case "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList":
 		return "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH"
 	case "EnhancedMeasurementReportREPORTINGQUANTITYListValue":

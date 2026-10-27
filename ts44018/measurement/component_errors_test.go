@@ -15,8 +15,18 @@ func TestGeneratedComponentErrorFamilies(t *testing.T) {
 		call              func(*runtime.Writer) error
 	}{
 		{"MeasurementResultsUnavailableArmAlt0List", "literal-zero padding requires enclosing length bound", runtime.InvalidValue, func(w *runtime.Writer) error { return encodeMeasurementResultsUnavailableArmAlt0List(w, struct{}{}) }},
-		{"EnhancedMeasurementReportREPORTINGQUANTITYListValue", "pre-Rel-8 reporting bitmap exceeds 96 positions", runtime.Limit, func(w *runtime.Writer) error {
-			return encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w, make([]*uint8, 97))
+		{"EnhancedMeasurementReport/REPORTINGQUANTITYList[96]", "present report after legacy cell position 96", runtime.InvalidValue, func(w *runtime.Writer) error {
+			entries := make([]*uint8, 97)
+			quantity := uint8(0)
+			entries[96] = &quantity
+			return EncodeEnhancedMeasurementReportTo(w, EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries})
+		}},
+		{"EnhancedMeasurementReport/REPORTINGQUANTITYList", "legacy bitmap longer than 96 positions with release additions", runtime.InvalidValue, func(w *runtime.Writer) error {
+			return EncodeEnhancedMeasurementReportTo(w, legacyWithRelease(97))
+		}},
+		{"EnhancedMeasurementReport/BITMAPLENGTHChoice", "choice requires one matching release alternative", runtime.InvalidBranch, func(w *runtime.Writer) error {
+			entries := make([]*uint8, 96)
+			return EncodeEnhancedMeasurementReportTo(w, EnhancedMeasurementReport{MessageType: 4, REPORTINGQUANTITYList: &entries})
 		}},
 		{"MeasurementResultsNCELLReports", "repeat count mismatch", runtime.InvalidValue, func(w *runtime.Writer) error {
 			w.Set("NO_NCELL_M", 1)

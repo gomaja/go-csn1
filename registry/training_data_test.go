@@ -180,8 +180,17 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 			return "serving cell or invalid BSIC values differ"
 		}
 	case 3:
-		if v.REPORTINGQUANTITYList == nil || len(*v.REPORTINGQUANTITYList) != 96 || v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
-			return "pre-Rel-8 bitmap does not occupy 96 typed positions"
+		// TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1:
+		// the zero remainder adds 16 redundant positions to the 96 cells.
+		if v.REPORTINGQUANTITYList == nil || len(*v.REPORTINGQUANTITYList) != 112 || v.BITMAPLENGTHChoice.AltUnlabeled == nil {
+			return "zero-tail bitmap does not occupy 112 typed positions with Rel-8 null"
+		}
+		quantities := map[int]uint8{1: 21, 5: 63, 6: 0}
+		for index, quantity := range *v.REPORTINGQUANTITYList {
+			want, present := quantities[index]
+			if (quantity != nil) != present || present && *quantity != want {
+				return "legacy reporting quantity differs"
+			}
 		}
 	case 7:
 		if v.REPORTINGQUANTITYList == nil || len(*v.REPORTINGQUANTITYList) != 96 || v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
@@ -222,15 +231,30 @@ func compareEMRExpected(row int, record geranRecord, wire []byte) string {
 
 func equivalentEMR(a, b measurement.EnhancedMeasurementReport) bool {
 	// TS 44.018 V19.0.0 §9.1.55: absent pre-Rel-8 no-report
-	// positions up to 96 are redundant when the bitmap is present.
+	// positions are redundant when the bitmap is present (table 9.1.55.1).
 	normalize := func(v measurement.EnhancedMeasurementReport) measurement.EnhancedMeasurementReport {
 		v = runtime.Canonical(v)
 		if v.REPORTINGQUANTITYList != nil {
-			list := append([]*uint8(nil), (*v.REPORTINGQUANTITYList)...)
-			for len(list) < 96 {
-				list = append(list, nil)
+			list := *v.REPORTINGQUANTITYList
+			for len(list) > 0 && list[len(list)-1] == nil {
+				list = list[:len(list)-1]
+			}
+			if len(list) == 0 {
+				list = nil
 			}
 			v.REPORTINGQUANTITYList = &list
+		}
+		// Figure 9.1.55.1: only null and L have no release fields.
+		if v.BITMAPLENGTHChoice.NoString != nil {
+			v.BITMAPLENGTHChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+		if rel8 := v.BITMAPLENGTHChoice.BITMAPLENGTH; rel8 != nil {
+			if rel8.UTRANCSGMeasurementReportChoice.NoString != nil {
+				rel8.UTRANCSGMeasurementReportChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+			}
+			if rel9 := rel8.UTRANCSGMeasurementReportChoice.UTRANCSGMeasurementReport; rel9 != nil && rel9.SI23BAUSEDChoice.NoString != nil {
+				rel9.SI23BAUSEDChoice = measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice{Alternative: measurement.EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+			}
 		}
 		return v
 	}
