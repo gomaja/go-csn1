@@ -245,37 +245,21 @@ type EUTRANMeasurementReportStruct struct {
 	Wire                          runtime.WireInfo `json:"-"`
 }
 type MeasurementResultsUnavailableArm struct {
-	NONCELLM    uint8
-	ZeroPadding []struct{}
-}
-type MeasurementResultsCSGSuffixAlternative uint8
-
-const (
-	MeasurementResultsCSGSuffixAlternativeNull        MeasurementResultsCSGSuffixAlternative = iota
-	MeasurementResultsCSGSuffixAlternativeZeroPadding MeasurementResultsCSGSuffixAlternative = iota
-)
-
-type MeasurementResultsCSGSuffix struct {
-	Alternative MeasurementResultsCSGSuffixAlternative
-	Null        *struct{}
-	ZeroPadding *[]struct{}
+	NONCELLM uint8
 }
 type MeasurementResultsCSGArm struct {
 	Report ies.UTRANCSGMeasurementReportIE
-	Suffix MeasurementResultsCSGSuffix
 }
 type MeasurementResultsReportsSuffixAlternative uint8
 
 const (
-	MeasurementResultsReportsSuffixAlternativeNull        MeasurementResultsReportsSuffixAlternative = iota
-	MeasurementResultsReportsSuffixAlternativeZeroPadding MeasurementResultsReportsSuffixAlternative = iota
-	MeasurementResultsReportsSuffixAlternativeCSG         MeasurementResultsReportsSuffixAlternative = iota
+	MeasurementResultsReportsSuffixAlternativeNull MeasurementResultsReportsSuffixAlternative = iota
+	MeasurementResultsReportsSuffixAlternativeCSG  MeasurementResultsReportsSuffixAlternative = iota
 )
 
 type MeasurementResultsReportsSuffix struct {
 	Alternative MeasurementResultsReportsSuffixAlternative
 	Null        *struct{}
-	ZeroPadding *[]struct{}
 	CSG         *MeasurementResultsCSGArm
 }
 type MeasurementResultsReportsArm struct {
@@ -2879,35 +2863,23 @@ func encodeMeasurementResultsUnavailableArmNONCELLM(w *runtime.Writer, v uint8) 
 	w.Set("NO_NCELL_M", uint64(v))
 	return nil
 }
-func decodeMeasurementResultsUnavailableArmAlt0ListEntry(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("MeasurementResultsUnavailableArmAlt0ListEntry"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeMeasurementResultsUnavailableArmAlt0ListEntry(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeMeasurementResultsUnavailableArmAlt0List(r *runtime.Reader) ([]struct{}, error) {
-	var out []struct{}
+
+// Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
+func decodeMeasurementResultsUnavailableArmAlt0List(r *runtime.Reader) (struct{}, error) {
 	for r.Remaining() > 0 {
-		before := r.Position()
-		v, err := decodeMeasurementResultsUnavailableArmAlt0ListEntry(r)
-		if err != nil {
-			return nil, locateIndex(measurementResultsOperationLocation1.failure(err, "", r.Position(), 0), "MeasurementResultsUnavailableArmAlt0List", len(out))
+		if err := r.Expect("0"); err != nil {
+			return struct{}{}, err
 		}
-		if r.Position() <= before {
-			return nil, locateIndex(measurementResultsOperationLocation1.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MeasurementResultsUnavailableArmAlt0List", len(out))
-		}
-		out = append(out, v)
 	}
-	return out, nil
+	return struct{}{}, nil
 }
-func encodeMeasurementResultsUnavailableArmAlt0List(w *runtime.Writer, v []struct{}) error {
-	for itemIndex, item := range v {
-		if err := encodeMeasurementResultsUnavailableArmAlt0ListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MeasurementResultsUnavailableArmAlt0List", 0, err), "MeasurementResultsUnavailableArmAlt0List", itemIndex)
+func encodeMeasurementResultsUnavailableArmAlt0List(w *runtime.Writer, _ struct{}) error {
+	if w.RemainingLimit() < 0 {
+		return w.OperationError(runtime.InvalidValue, "MeasurementResultsUnavailableArmAlt0List", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+	}
+	for w.RemainingLimit() > 0 {
+		if err := w.WriteLiteral("0"); err != nil {
+			return err
 		}
 	}
 	return nil
@@ -2927,7 +2899,7 @@ func decodeMeasurementResultsUnavailableArm(r *runtime.Reader) (MeasurementResul
 	if err != nil {
 		return MeasurementResultsUnavailableArm{}, err
 	}
-	v.ZeroPadding = x1
+	_ = x1
 	return v, nil
 }
 func encodeMeasurementResultsUnavailableArm(w *runtime.Writer, v MeasurementResultsUnavailableArm) error {
@@ -2950,11 +2922,8 @@ func encodeMeasurementResultsUnavailableArm(w *runtime.Writer, v MeasurementResu
 			return err
 		}
 	}
-	if limit <= 1 && !runtime.IsZero(v.ZeroPadding) {
-		return w.OmittedFieldError("ZeroPadding")
-	}
 	if limit > 1 {
-		if err := encodeMeasurementResultsUnavailableArmAlt0List(w, v.ZeroPadding); err != nil {
+		if err := encodeMeasurementResultsUnavailableArmAlt0List(w, struct{}{}); err != nil {
 			return err
 		}
 	}
@@ -2975,7 +2944,7 @@ func decodeMeasurementResultsReportsArmNONCELLM(r *runtime.Reader) (uint8, error
 		return 0, err
 	}
 	if v == 7 {
-		return 0, measurementResultsOperationLocation2.failure(constraintFailure(r, fieldStart, width, "excluded value"), "", r.Position(), width)
+		return 0, measurementResultsOperationLocation1.failure(constraintFailure(r, fieldStart, width, "excluded value"), "", r.Position(), width)
 	}
 	r.Set("NO_NCELL_M", v)
 	return uint8(v), nil
@@ -3013,7 +2982,7 @@ func decodeMeasurementResultsNCELLReports(r *runtime.Reader) ([]NCELLReportStruc
 	for i := 0; i < count; i++ {
 		v, err := decodeMeasurementResultsNCELLReportsEntry(r)
 		if err != nil {
-			return nil, locateIndex(measurementResultsOperationLocation3.failure(err, "", r.Position(), 0), "MeasurementResultsNCELLReports", i)
+			return nil, locateIndex(measurementResultsOperationLocation2.failure(err, "", r.Position(), 0), "MeasurementResultsNCELLReports", i)
 		}
 		out = append(out, v)
 	}
@@ -3034,37 +3003,23 @@ func encodeMeasurementResultsNCELLReports(w *runtime.Writer, v []NCELLReportStru
 	}
 	return nil
 }
-func decodeMeasurementResultsSuffixNull(_ *runtime.Reader) (struct{}, error) { return struct{}{}, nil }
-func encodeMeasurementResultsSuffixNull(_ *runtime.Writer, _ struct{}) error { return nil }
-func decodeMeasurementResultsSuffixZeroPaddingEntry(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("MeasurementResultsSuffixZeroPaddingEntry"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeMeasurementResultsSuffixZeroPaddingEntry(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeMeasurementResultsSuffixZeroPadding(r *runtime.Reader) ([]struct{}, error) {
-	var out []struct{}
+
+// Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
+func decodeMeasurementResultsSuffixNull(r *runtime.Reader) (struct{}, error) {
 	for r.Remaining() > 0 {
-		before := r.Position()
-		v, err := decodeMeasurementResultsSuffixZeroPaddingEntry(r)
-		if err != nil {
-			return nil, locateIndex(measurementResultsOperationLocation4.failure(err, "", r.Position(), 0), "MeasurementResultsSuffixZeroPadding", len(out))
+		if err := r.Expect("0"); err != nil {
+			return struct{}{}, err
 		}
-		if r.Position() <= before {
-			return nil, locateIndex(measurementResultsOperationLocation4.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MeasurementResultsSuffixZeroPadding", len(out))
-		}
-		out = append(out, v)
 	}
-	return out, nil
+	return struct{}{}, nil
 }
-func encodeMeasurementResultsSuffixZeroPadding(w *runtime.Writer, v []struct{}) error {
-	for itemIndex, item := range v {
-		if err := encodeMeasurementResultsSuffixZeroPaddingEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MeasurementResultsSuffixZeroPadding", 0, err), "MeasurementResultsSuffixZeroPadding", itemIndex)
+func encodeMeasurementResultsSuffixNull(w *runtime.Writer, _ struct{}) error {
+	if w.RemainingLimit() < 0 {
+		return w.OperationError(runtime.InvalidValue, "MeasurementResultsSuffixNull", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+	}
+	for w.RemainingLimit() > 0 {
+		if err := w.WriteLiteral("0"); err != nil {
+			return err
 		}
 	}
 	return nil
@@ -3085,113 +3040,26 @@ func decodeMeasurementResultsCSGArmUTRANCSGMeasurementReport(r *runtime.Reader) 
 func encodeMeasurementResultsCSGArmUTRANCSGMeasurementReport(w *runtime.Writer, v ies.UTRANCSGMeasurementReportIE) error {
 	return ies.EncodeUTRANCSGMeasurementReportIETo(w, v)
 }
-func decodeMeasurementResultsCSGNull(_ *runtime.Reader) (struct{}, error) { return struct{}{}, nil }
-func encodeMeasurementResultsCSGNull(_ *runtime.Writer, _ struct{}) error { return nil }
-func decodeMeasurementResultsCSGZeroPaddingEntry(r *runtime.Reader) (struct{}, error) {
-	if err := r.Enter("MeasurementResultsCSGZeroPaddingEntry"); err != nil {
-		return struct{}{}, err
-	}
-	defer r.Leave()
-	return struct{}{}, r.Expect("0")
-}
-func encodeMeasurementResultsCSGZeroPaddingEntry(w *runtime.Writer, _ struct{}) error {
-	return w.WriteLiteral("0")
-}
-func decodeMeasurementResultsCSGZeroPadding(r *runtime.Reader) ([]struct{}, error) {
-	var out []struct{}
+
+// Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
+func decodeMeasurementResultsCSGSuffix(r *runtime.Reader) (struct{}, error) {
 	for r.Remaining() > 0 {
-		before := r.Position()
-		v, err := decodeMeasurementResultsCSGZeroPaddingEntry(r)
-		if err != nil {
-			return nil, locateIndex(measurementResultsOperationLocation5.failure(err, "", r.Position(), 0), "MeasurementResultsCSGZeroPadding", len(out))
+		if err := r.Expect("0"); err != nil {
+			return struct{}{}, err
 		}
-		if r.Position() <= before {
-			return nil, locateIndex(measurementResultsOperationLocation5.failure(r.Error(runtime.Limit, "non-progressing repetition"), "", r.Position(), 0), "MeasurementResultsCSGZeroPadding", len(out))
-		}
-		out = append(out, v)
 	}
-	return out, nil
+	return struct{}{}, nil
 }
-func encodeMeasurementResultsCSGZeroPadding(w *runtime.Writer, v []struct{}) error {
-	for itemIndex, item := range v {
-		if err := encodeMeasurementResultsCSGZeroPaddingEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "MeasurementResultsCSGZeroPadding", 0, err), "MeasurementResultsCSGZeroPadding", itemIndex)
+func encodeMeasurementResultsCSGSuffix(w *runtime.Writer, _ struct{}) error {
+	if w.RemainingLimit() < 0 {
+		return w.OperationError(runtime.InvalidValue, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
+	}
+	for w.RemainingLimit() > 0 {
+		if err := w.WriteLiteral("0"); err != nil {
+			return err
 		}
 	}
 	return nil
-}
-func decodeMeasurementResultsCSGSuffix(r *runtime.Reader) (MeasurementResultsCSGSuffix, error) {
-	var result MeasurementResultsCSGSuffix
-	matches := 0
-	var chosen *runtime.Reader
-	var truncatedErr error
-	if r.Remaining() == 0 {
-		{
-			candidate := r.Fork()
-			v, err := decodeMeasurementResultsCSGNull(candidate)
-			if err == nil {
-				matches++
-				chosen = candidate
-				_ = v
-				result.Alternative = MeasurementResultsCSGSuffixAlternativeNull
-				result.Null = &v
-			} else {
-				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
-			}
-		}
-	}
-	if r.Remaining() > 0 {
-		{
-			candidate := r.Fork()
-			v, err := decodeMeasurementResultsCSGZeroPadding(candidate)
-			if err == nil {
-				matches++
-				chosen = candidate
-				_ = v
-				result.Alternative = MeasurementResultsCSGSuffixAlternativeZeroPadding
-				result.ZeroPadding = &v
-			} else {
-				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
-			}
-		}
-	}
-	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
-	}
-	if matches != 1 {
-		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
-	}
-	r.Commit(chosen)
-	return result, nil
-}
-func encodeMeasurementResultsCSGSuffix(w *runtime.Writer, v MeasurementResultsCSGSuffix) error {
-	count := 0
-	if v.Null != nil {
-		count++
-	}
-	if v.ZeroPadding != nil {
-		count++
-	}
-	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("choice requires exactly one alternative"))
-	}
-	switch v.Alternative {
-	case MeasurementResultsCSGSuffixAlternativeNull:
-		if v.Null == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("choice alternative mismatch"))
-		}
-		return encodeMeasurementResultsCSGNull(w, *v.Null)
-	case MeasurementResultsCSGSuffixAlternativeZeroPadding:
-		if v.ZeroPadding == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("choice alternative mismatch"))
-		}
-		if len(*v.ZeroPadding) == 0 {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("choice requires null for a zero-length zero-padding run"))
-		}
-		return encodeMeasurementResultsCSGZeroPadding(w, *v.ZeroPadding)
-	default:
-		return w.OperationError(runtime.InvalidBranch, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("invalid choice alternative"))
-	}
 }
 func decodeMeasurementResultsCSGArm(r *runtime.Reader) (MeasurementResultsCSGArm, error) {
 	if err := r.Enter("MeasurementResultsCSGArm"); err != nil {
@@ -3213,7 +3081,7 @@ func decodeMeasurementResultsCSGArm(r *runtime.Reader) (MeasurementResultsCSGArm
 	if err != nil {
 		return MeasurementResultsCSGArm{}, err
 	}
-	v.Suffix = x2
+	_ = x2
 	return v, nil
 }
 func encodeMeasurementResultsCSGArm(w *runtime.Writer, v MeasurementResultsCSGArm) error {
@@ -3241,11 +3109,8 @@ func encodeMeasurementResultsCSGArm(w *runtime.Writer, v MeasurementResultsCSGAr
 			return err
 		}
 	}
-	if limit <= 2 && !runtime.IsZero(v.Suffix) {
-		return w.OmittedFieldError("Suffix")
-	}
 	if limit > 2 {
-		if err := encodeMeasurementResultsCSGSuffix(w, v.Suffix); err != nil {
+		if err := encodeMeasurementResultsCSGSuffix(w, struct{}{}); err != nil {
 			return err
 		}
 	}
@@ -3256,34 +3121,17 @@ func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResult
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
-	if r.Remaining() == 0 {
-		{
-			candidate := r.Fork()
-			v, err := decodeMeasurementResultsSuffixNull(candidate)
-			if err == nil {
-				matches++
-				chosen = candidate
-				_ = v
-				result.Alternative = MeasurementResultsReportsSuffixAlternativeNull
-				result.Null = &v
-			} else {
-				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
-			}
-		}
-	}
-	if r.Remaining() > 0 {
-		{
-			candidate := r.Fork()
-			v, err := decodeMeasurementResultsSuffixZeroPadding(candidate)
-			if err == nil {
-				matches++
-				chosen = candidate
-				_ = v
-				result.Alternative = MeasurementResultsReportsSuffixAlternativeZeroPadding
-				result.ZeroPadding = &v
-			} else {
-				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
-			}
+	{
+		candidate := r.Fork()
+		v, err := decodeMeasurementResultsSuffixNull(candidate)
+		if err == nil {
+			matches++
+			chosen = candidate
+			_ = v
+			result.Alternative = MeasurementResultsReportsSuffixAlternativeNull
+			result.Null = &v
+		} else {
+			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
@@ -3313,9 +3161,6 @@ func encodeMeasurementResultsReportsSuffix(w *runtime.Writer, v MeasurementResul
 	if v.Null != nil {
 		count++
 	}
-	if v.ZeroPadding != nil {
-		count++
-	}
 	if v.CSG != nil {
 		count++
 	}
@@ -3328,14 +3173,6 @@ func encodeMeasurementResultsReportsSuffix(w *runtime.Writer, v MeasurementResul
 			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeMeasurementResultsSuffixNull(w, *v.Null)
-	case MeasurementResultsReportsSuffixAlternativeZeroPadding:
-		if v.ZeroPadding == nil {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
-		}
-		if len(*v.ZeroPadding) == 0 {
-			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice requires null for a zero-length zero-padding run"))
-		}
-		return encodeMeasurementResultsSuffixZeroPadding(w, *v.ZeroPadding)
 	case MeasurementResultsReportsSuffixAlternativeCSG:
 		if v.CSG == nil {
 			return w.OperationError(runtime.InvalidBranch, "MeasurementResultsReportsSuffix", 0, fmt.Errorf("choice alternative mismatch"))
@@ -4233,21 +4070,21 @@ func EncodeEUTRANMeasurementReportStructCanonicalAtLength(v EUTRANMeasurementRep
 // DecodeMeasurementResultsContents decodes TS 44.018 V19.0.0 §10.5.2.20 <Measurement Results Contents>.
 func DecodeMeasurementResultsContentsFrom(r *runtime.Reader) (MeasurementResultsContents, error) {
 	if err := r.Check(); err != nil {
-		return MeasurementResultsContents{}, measurementResultsOperationLocation6.failure(err, "", r.Position(), 0)
+		return MeasurementResultsContents{}, measurementResultsOperationLocation3.failure(err, "", r.Position(), 0)
 	}
 	{
 		operationValue, operationErr := decodeMeasurementResultsContents(r)
 		if operationErr != nil {
-			return operationValue, measurementResultsOperationLocation6.failure(operationErr, "", r.Position(), 0)
+			return operationValue, measurementResultsOperationLocation3.failure(operationErr, "", r.Position(), 0)
 		}
 		return operationValue, nil
 	}
 }
 func EncodeMeasurementResultsContentsTo(w *runtime.Writer, v MeasurementResultsContents) error {
 	if w == nil {
-		return measurementResultsOperationLocation7.nilWriter()
+		return measurementResultsOperationLocation4.nilWriter()
 	}
-	return measurementResultsOperationLocation7.failure(w.WithWireValue(v.Wire, func() error { return encodeMeasurementResultsContents(w, v) }), "", w.Position(), 0)
+	return measurementResultsOperationLocation4.failure(w.WithWireValue(v.Wire, func() error { return encodeMeasurementResultsContents(w, v) }), "", w.Position(), 0)
 }
 func decodeMeasurementResultsContentsBytes(data []byte) (runtime.Decoded[MeasurementResultsContents], error) {
 	if err := runtime.CheckInput(data); err != nil {
@@ -4308,7 +4145,7 @@ func EncodeMeasurementResultsContentsCanonical(v MeasurementResultsContents) ([]
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 16, 16, false, encodeMeasurementResultsContentsBytes, decodeMeasurementResultsContentsBytes, nil)
 		if operationErr != nil {
-			return operationValue, measurementResultsOperationLocation8.failure(operationErr, "", -1, 0)
+			return operationValue, measurementResultsOperationLocation5.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -4320,8 +4157,6 @@ func EncodeMeasurementResultsContentsCanonical(v MeasurementResultsContents) ([]
 //   - *runtime.ExtentError when octets is outside 16..16 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
-//   - *runtime.BoundError with Kind runtime.LengthBound when content does not
-//     fit a length-delimited value;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -4329,7 +4164,7 @@ func EncodeMeasurementResultsContentsCanonicalAtLength(v MeasurementResultsConte
 	{
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 16, 16, encodeMeasurementResultsContentsBytes, decodeMeasurementResultsContentsBytes, nil)
 		if operationErr != nil {
-			return operationValue, measurementResultsOperationLocation8.failure(operationErr, "", -1, 0)
+			return operationValue, measurementResultsOperationLocation5.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -4899,14 +4734,14 @@ func EncodeEUTRANMeasurementReportStruct(v EUTRANMeasurementReportStruct) ([]byt
 func DecodeMeasurementResultsContents(data []byte) (runtime.Decoded[MeasurementResultsContents], error) {
 	v, err := decodeMeasurementResultsContentsBytes(data)
 	if err != nil {
-		return v, measurementResultsOperationLocation6.failure(err, "", -1, 0)
+		return v, measurementResultsOperationLocation3.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeMeasurementResultsContents(v MeasurementResultsContents) ([]byte, error) {
 	out, err := encodeMeasurementResultsContentsBytes(v)
 	if err != nil {
-		return nil, measurementResultsOperationLocation7.failure(err, "", -1, 0)
+		return nil, measurementResultsOperationLocation4.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
@@ -4932,11 +4767,8 @@ var operationLocation2 = operationLocation{"decode", "EnhancedMeasurementReportB
 var operationLocation3 = operationLocation{"decode", "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", &sourceClause0, runtime.InvalidValue}
 var measurementResultsSourceClause0 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}
 var measurementResultsOperationLocation0 = operationLocation{"decode", "MeasurementResultsUnavailableArmNONCELLM", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation1 = operationLocation{"decode", "MeasurementResultsUnavailableArmAlt0List", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation2 = operationLocation{"decode", "MeasurementResultsReportsArmNONCELLM", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation3 = operationLocation{"decode", "MeasurementResultsNCELLReports", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation4 = operationLocation{"decode", "MeasurementResultsSuffixZeroPadding", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation5 = operationLocation{"decode", "MeasurementResultsCSGZeroPadding", &measurementResultsSourceClause0, runtime.InvalidValue}
+var measurementResultsOperationLocation1 = operationLocation{"decode", "MeasurementResultsReportsArmNONCELLM", &measurementResultsSourceClause0, runtime.InvalidValue}
+var measurementResultsOperationLocation2 = operationLocation{"decode", "MeasurementResultsNCELLReports", &measurementResultsSourceClause0, runtime.InvalidValue}
 var ncellReportSourceClause0 = runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}
 var operationLocation4 = operationLocation{"decode", "EnhancedMeasurementReport", &sourceClause0, runtime.InvalidValue}
 var operationLocation5 = operationLocation{"encode", "EnhancedMeasurementReport", &sourceClause0, runtime.InvalidValue}
@@ -4950,9 +4782,9 @@ var operationLocation12 = operationLocation{"canonical", "RepeatedInvalidBSICInf
 var operationLocation13 = operationLocation{"decode", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
 var operationLocation14 = operationLocation{"encode", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
 var operationLocation15 = operationLocation{"canonical", "EUTRANMeasurementReportStruct", &sourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation6 = operationLocation{"decode", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation7 = operationLocation{"encode", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
-var measurementResultsOperationLocation8 = operationLocation{"canonical", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
+var measurementResultsOperationLocation3 = operationLocation{"decode", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
+var measurementResultsOperationLocation4 = operationLocation{"encode", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
+var measurementResultsOperationLocation5 = operationLocation{"canonical", "MeasurementResultsContents", &measurementResultsSourceClause0, runtime.InvalidValue}
 var ncellReportOperationLocation0 = operationLocation{"decode", "NCELLReportStruct", &ncellReportSourceClause0, runtime.InvalidValue}
 var ncellReportOperationLocation1 = operationLocation{"encode", "NCELLReportStruct", &ncellReportSourceClause0, runtime.InvalidValue}
 var ncellReportOperationLocation2 = operationLocation{"canonical", "NCELLReportStruct", &ncellReportSourceClause0, runtime.InvalidValue}
@@ -4981,14 +4813,8 @@ func indexParent(path string) string {
 		return "EnhancedMeasurementReport"
 	case "EnhancedMeasurementReportRepeatedInvalidBSICInformationList":
 		return "EnhancedMeasurementReport"
-	case "MeasurementResultsCSGZeroPadding":
-		return "MeasurementResultsCSGArm"
 	case "MeasurementResultsNCELLReports":
 		return "MeasurementResultsReportsArm"
-	case "MeasurementResultsSuffixZeroPadding":
-		return "MeasurementResultsReportsArm"
-	case "MeasurementResultsUnavailableArmAlt0List":
-		return "MeasurementResultsUnavailableArm"
 	}
 	return ""
 }

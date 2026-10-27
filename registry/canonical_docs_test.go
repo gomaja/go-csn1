@@ -740,7 +740,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				// A consistent count/list plus CSG exceeds the root bound;
 				// random list growth instead trips the count mismatch first.
 				// TS 44.018 V19.0.0 table 10.5.2.20.0; TS 44.060 §12.61.
-				v := measurement.MeasurementResultsContents{Content: measurement.MeasurementResultsFields{Count: measurement.MeasurementResultsCountChoice{Alternative: measurement.MeasurementResultsCountChoiceAlternativeReports, Reports: &measurement.MeasurementResultsReportsArm{NONCELLM: 3, NCELLReports: make([]measurement.NCELLReportStruct, 3), Suffix: measurement.MeasurementResultsReportsSuffix{Alternative: measurement.MeasurementResultsReportsSuffixAlternativeCSG, CSG: &measurement.MeasurementResultsCSGArm{Report: ies.UTRANCSGMeasurementReportIE{}, Suffix: measurement.MeasurementResultsCSGSuffix{Alternative: measurement.MeasurementResultsCSGSuffixAlternativeNull, Null: &struct{}{}}}}}}}}
+				v := measurement.MeasurementResultsContents{Content: measurement.MeasurementResultsFields{Count: measurement.MeasurementResultsCountChoice{Alternative: measurement.MeasurementResultsCountChoiceAlternativeReports, Reports: &measurement.MeasurementResultsReportsArm{NONCELLM: 3, NCELLReports: make([]measurement.NCELLReportStruct, 3), Suffix: measurement.MeasurementResultsReportsSuffix{Alternative: measurement.MeasurementResultsReportsSuffixAlternativeCSG, CSG: &measurement.MeasurementResultsCSGArm{Report: ies.UTRANCSGMeasurementReportIE{}}}}}}}
 				_, err := d.Canonical(v)
 				record(entryCanonical, err, 0)
 				_, err = d.CanonicalAtLength(v, 16)

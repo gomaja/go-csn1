@@ -452,18 +452,23 @@ func TestMeasurementResultsConstructionChecksIndependently(t *testing.T) {
 }
 
 // TS 24.007 V20.0.0 Annex B §§B.1.1.2, B.1.1.4 and B.2.1:
-// null is the representative of the equivalent empty derivations. The
-// separate literal-zero arm represents positive runs only, in both directions.
-func TestMeasurementResultsEmptySuffixUsesNull(t *testing.T) {
-	v, err := resultsBuildReports(resultsServing(), make([]NCELLReportStruct, 6), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	zeroes := []struct{}{}
-	v.Content.Count.Reports.Suffix = MeasurementResultsReportsSuffix{Alternative: MeasurementResultsReportsSuffixAlternativeZeroPadding, ZeroPadding: &zeroes}
-	_, err = EncodeMeasurementResultsContents(v)
-	var op *runtime.OperationError
-	if !errors.As(err, &op) || op.Kind != runtime.InvalidBranch {
-		t.Fatalf("zero-length zero run must use null: %v", err)
+// null and a bounded literal-zero tail have one typed representative.
+func TestMeasurementResultsSuffixHasNoPaddingCount(t *testing.T) {
+	for count := 0; count <= 6; count++ {
+		v, err := resultsBuildReports(resultsServing(), make([]NCELLReportStruct, count), nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		wire, err := EncodeMeasurementResultsContents(v)
+		if err != nil {
+			t.Fatal(err)
+		}
+		d, err := DecodeMeasurementResultsContents(wire)
+		if err != nil || d.Value.Content.Count.Reports.Suffix.Alternative != MeasurementResultsReportsSuffixAlternativeNull || d.Value.Content.Count.Reports.Suffix.Null == nil {
+			t.Fatalf("count %d: %+v %v", count, d, err)
+		}
+		if !runtime.SemanticallyEqual(v, d.Value) {
+			t.Fatalf("count %d typed value differs", count)
+		}
 	}
 }
