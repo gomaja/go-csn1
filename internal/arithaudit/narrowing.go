@@ -25,7 +25,27 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 			continue
 		}
 		width, readWidth, offset := -1, -1, uint64(0)
-		readUint := false
+		readUint, unreviewedWidthWrite := false, false
+		var mutatingBodies []*ast.BlockStmt
+		ast.Inspect(fn.Body, func(node ast.Node) bool {
+			if writesName(node, "width") {
+				assign, ok := node.(*ast.AssignStmt)
+				if !ok || assignedReadWidth(assign) < 0 {
+					unreviewedWidthWrite = true
+				}
+			}
+			var body *ast.BlockStmt
+			switch loop := node.(type) {
+			case *ast.ForStmt:
+				body = loop.Body
+			case *ast.RangeStmt:
+				body = loop.Body
+			}
+			if body != nil && hasNameWrite(body, "width") {
+				mutatingBodies = append(mutatingBodies, body)
+			}
+			return true
+		})
 		var failure error
 		ast.Inspect(fn.Body, func(node ast.Node) bool {
 			if failure != nil {
@@ -33,15 +53,8 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 			}
 			switch value := node.(type) {
 			case *ast.AssignStmt:
-				if len(value.Lhs) > 0 && isName(value.Lhs[0], "width") {
-					width = -1
-					if len(value.Rhs) == 1 {
-						if literal, ok := value.Rhs[0].(*ast.BasicLit); ok && literal.Kind == token.INT {
-							if n, err := strconv.ParseInt(literal.Value, 0, 32); err == nil && n >= 0 && n <= 64 {
-								width = int(n)
-							}
-						}
-					}
+				if writesName(value, "width") {
+					width = assignedReadWidth(value)
 				}
 				if len(value.Lhs) == 0 || !isName(value.Lhs[0], "v") {
 					break
@@ -53,6 +66,14 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 					if call, ok := value.Rhs[0].(*ast.CallExpr); ok {
 						if selector, ok := call.Fun.(*ast.SelectorExpr); ok && isName(selector.X, "r") && selector.Sel.Name == "ReadUint" && len(call.Args) == 1 && isName(call.Args[0], "width") {
 							readUint, readWidth, offset = true, width, 0
+							if unreviewedWidthWrite {
+								readWidth = -1
+							}
+							for _, body := range mutatingBodies {
+								if body.Pos() <= call.Pos() && call.End() <= body.End() {
+									readWidth = -1
+								}
+							}
 							break
 						}
 					}
@@ -73,25 +94,6 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 				}
 				offset += increment
 			case *ast.CallExpr:
-				if selector, ok := value.Fun.(*ast.SelectorExpr); ok {
-					if isName(selector.X, "r") && selector.Sel.Name == "Eval" && len(value.Args) == 1 {
-						literal, ok := value.Args[0].(*ast.BasicLit)
-						if !ok {
-							failure = fmt.Errorf("%s: nonliteral read width at %s", name, fset.Position(value.Pos()))
-							break
-						}
-						raw, err := strconv.Unquote(literal.Value)
-						if err != nil {
-							failure = err
-							break
-						}
-						width, err = strconv.Atoi(raw)
-						if err != nil {
-							width = -1
-						}
-					}
-					break
-				}
 				cast, ok := value.Fun.(*ast.Ident)
 				if !ok || len(value.Args) != 1 || !isName(value.Args[0], "v") {
 					break
@@ -104,8 +106,6 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 					bits = 16
 				case "uint32":
 					bits = 32
-				default:
-					break
 				}
 				if bits == 0 {
 					break
@@ -129,6 +129,37 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 		}
 	}
 	return checked, nil
+}
+
+func assignedReadWidth(assign *ast.AssignStmt) int {
+	expr, ok := plainAssignmentValue(assign, "width")
+	if !ok {
+		return -1
+	}
+	if literal, ok := expr.(*ast.BasicLit); ok && literal.Kind == token.INT && len(assign.Lhs) == 1 {
+		if n, err := strconv.ParseInt(literal.Value, 0, 32); err == nil && n >= 0 && n <= 64 {
+			return int(n)
+		}
+	}
+	call, ok := expr.(*ast.CallExpr)
+	if !ok || len(call.Args) != 1 || len(assign.Lhs) > 2 {
+		return -1
+	}
+	selector, ok := call.Fun.(*ast.SelectorExpr)
+	if !ok || !isName(selector.X, "r") || selector.Sel.Name != "Eval" {
+		return -1
+	}
+	literal, ok := call.Args[0].(*ast.BasicLit)
+	if !ok || literal.Kind != token.STRING {
+		return -1
+	}
+	raw, err := strconv.Unquote(literal.Value)
+	if err == nil {
+		if n, err := strconv.Atoi(raw); err == nil && n >= 0 && n <= 64 {
+			return n
+		}
+	}
+	return -1
 }
 
 func isLHBitMask(expr ast.Expr) bool {

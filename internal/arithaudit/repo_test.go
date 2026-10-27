@@ -115,4 +115,5 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 	if loopIncrements != wantLoopIncrements || rangeNext != wantRangeNext {
 		t.Fatalf("checked %d generated loop increments and %d range successors; scanner found %d and %d", loopIncrements, rangeNext, wantLoopIncrements, wantRangeNext)
 	}
+	t.Logf("generated arithmetic: checked=%d increments=%d nextIndexes=%d", checked, loopIncrements, rangeNext)
 }
