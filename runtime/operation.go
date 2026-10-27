@@ -22,10 +22,7 @@ func operationFailure(cause error, operation, path string, position, width int, 
 		kind = de.Kind
 	case errors.As(cause, &be):
 		position = be.Position
-		path = be.Path
-		if be.Field != "" {
-			path += "/" + be.Field
-		}
+		path = errorPath(be.Path, be.Field)
 		if be.Limit >= 0 && be.Limit <= maxBits && be.Position >= 0 && be.Position <= maxBits {
 			width = be.Limit - be.Position
 			if width < 0 {

@@ -21,10 +21,7 @@ func operationCauseDetail(cause error, outer *OperationError) string {
 	case *DecodeError:
 		return causeFacts("", e.Kind, Location{Path: e.Path, BitOffset: e.Offset}, e.Detail, outer)
 	case *BoundError:
-		path := e.Path
-		if e.Field != "" {
-			path = fmt.Sprintf("%s/%s", path, e.Field)
-		}
+		path := errorPath(e.Path, e.Field)
 		detail := fmt.Sprintf("%s bound (limit %d): %s", e.Kind, e.Limit, e.Detail)
 		return causeFacts("", "", Location{Path: path, BitOffset: e.Position}, detail, outer)
 	case *FallbackError:
@@ -76,7 +73,21 @@ func causeFacts(operation string, kind ErrorKind, location Location, detail stri
 }
 
 func causePathIncluded(outer, inner string) bool {
-	return inner == "" || outer == inner || strings.HasSuffix(outer, "/"+inner)
+	innerHead, innerTail := splitErrorPath(inner)
+	for inner != "" {
+		outerHead, outerTail := splitErrorPath(outer)
+		if outerTail == innerTail || unindexedPathComponent(outerTail) == innerTail {
+			inner = innerHead
+			innerHead, innerTail = splitErrorPath(inner)
+		} else if unindexedPathComponent(outerTail) == outerTail {
+			return false
+		}
+		if outer == "" {
+			return false
+		}
+		outer = outerHead
+	}
+	return true
 }
 
 func joinCauseFact(facts, fact string) string {
@@ -100,4 +111,32 @@ func lookupCauseDetail(message, name string) string {
 		}
 	}
 	return message
+}
+
+// errorPath appends a child only when the parent does not already end in it.
+func errorPath(parent, child string) string {
+	if child == "" || parent == child || strings.HasSuffix(parent, "/"+child) {
+		return parent
+	}
+	if parent == "" {
+		return child
+	}
+	return parent + "/" + child
+}
+
+func splitErrorPath(path string) (string, string) {
+	if i := strings.LastIndexByte(path, '/'); i >= 0 {
+		return path[:i], path[i+1:]
+	}
+	return "", path
+}
+
+func unindexedPathComponent(component string) string {
+	if head, tail, ok := strings.Cut(component, "["); ok && strings.HasSuffix(tail, "]") {
+		digits := strings.TrimSuffix(tail, "]")
+		if digits != "" && strings.Trim(digits, "0123456789") == "" {
+			return head
+		}
+	}
+	return component
 }
