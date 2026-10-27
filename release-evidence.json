@@ -2,10 +2,10 @@
   "runtime_contract": {
     "revision": "2403eb7654e7ef0dc229c58af67058c32bae37bb",
     "api_sha256": "ca33b92d451b29c34494ba1c535ff1734a0fd18b2fe2e88d593f0862260b368a",
-    "api_ledger_sha256": "abc28066a4fe971011cadde083023f1a427584237e8d8cc967c2032eacd2942c"
+    "api_ledger_sha256": "625b8b9bab769050c969101c527fa225071a67ae2bb7656515d84f410b63116b"
   },
   "schema_version": 1,
-  "compiler_commit": "fabfbb5a0bcaf52ac25d0e8defcbc1786b71d31a",
+  "compiler_commit": "a1ecbbb7605d5112356389bd86d25097ba9fdfdb",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1806,11 +1806,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "f8698ba45e3c3ef848fa36a54e094559318dda8d94a6b98587d1428577f094c8"
+      "sha256": "c4f5a00b4dbb7fe869220c90d964cc83af13e6aabfb0b7db8b1c7b286dacc8bc"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "6f603eca80562cab707bc057dd48d928d9e1ee872b9e676f50c53a46f54ecdae"
+      "sha256": "77ae95f32cb0f650125595cd7b0fa431cd1eeb2683a3e745c0f5fa1a07e742d6"
     },
     {
       "path": "ts44060/ies/generated.go",

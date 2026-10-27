@@ -45,6 +45,9 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		}
 		return nil
 	}
+	if fn.Recv != nil && strings.HasPrefix(fn.Name.Name, "Set") {
+		return checkGeneratedCountSetter(fn, f.Expression)
+	}
 	var ordered []string
 	switch f.Expression {
 	case "uint64(value)", "uint8(value)":
