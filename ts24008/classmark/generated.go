@@ -259,7 +259,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(w *runtime.Writer, 
 	limit := 2
 	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceA5Bits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceA5Bits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceA5Bits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -347,21 +347,21 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101:
 		if v.Alt101 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(w, *v.Alt101)
 	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110:
 		if v.Alt110 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(w, *v.Alt110)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2A5Bits(r *runtime.Reader) (A5Bits, error) {
@@ -468,7 +468,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 	limit := 4
 	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -601,26 +601,26 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001:
 		if v.Alt001 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(w, *v.Alt001)
 	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010:
 		if v.Alt010 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(w, *v.Alt010)
 	case Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100:
 		if v.Alt100 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(w, *v.Alt100)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1A5Bits(r *runtime.Reader) (A5Bits, error) {
@@ -657,7 +657,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", 0, err), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", 0, err), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
 		}
 	}
 	return nil
@@ -729,7 +729,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	limit := 4
 	if n, ok := w.Truncation("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -829,26 +829,26 @@ func encodeClassmark3ValuePartMultibandSupportedChoice(w *runtime.Writer, v Clas
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits:
 		if v.A5Bits == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(w, *v.A5Bits)
 	case Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2:
 		if v.AssociatedRadioCapability2 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(w, *v.AssociatedRadioCapability2)
 	case Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1:
 		if v.AssociatedRadioCapability1 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(w, *v.AssociatedRadioCapability1)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartMultibandSupportedChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeClassmark3ValuePartRSupportValue(r *runtime.Reader) (RSupport, error) {
@@ -1200,26 +1200,26 @@ func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(w *r
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01:
 		if v.Alt01 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(w, *v.Alt01)
 	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10:
 		if v.Alt10 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(w, *v.Alt10)
 	case Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11:
 		if v.Alt11 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(w, *v.Alt11)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(r *runtime.Reader) (uint8, error) {
@@ -1279,7 +1279,7 @@ func encodeClassmark3ValuePartGSM400BandsSupportedGroup(w *runtime.Writer, v Cla
 	limit := 2
 	if n, ok := w.Truncation("Classmark3ValuePartGSM400BandsSupportedGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartGSM400BandsSupportedGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartGSM400BandsSupportedGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1684,7 +1684,7 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Cl
 	limit := 3
 	if n, ok := w.Truncation("Classmark3ValuePartDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1979,7 +1979,7 @@ func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(w *runtime.Writ
 	limit := 2
 	if n, ok := w.Truncation("Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2280,26 +2280,26 @@ func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(w 
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01:
 		if v.Alt01 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(w, *v.Alt01)
 	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10:
 		if v.Alt10 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(w, *v.Alt10)
 	case Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11:
 		if v.Alt11 == nil {
-			return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(w, *v.Alt11)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(r *runtime.Reader) (uint8, error) {
@@ -2359,7 +2359,7 @@ func encodeClassmark3ValuePartTGSM400BandsSupportedGroup(w *runtime.Writer, v Cl
 	limit := 2
 	if n, ok := w.Truncation("Classmark3ValuePartTGSM400BandsSupportedGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartTGSM400BandsSupportedGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartTGSM400BandsSupportedGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2629,7 +2629,7 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(w *runtime.Writer, 
 	limit := 3
 	if n, ok := w.Truncation("Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -3444,7 +3444,7 @@ func encodeClassmark3ValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitSt
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeClassmark3ValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "Classmark3ValuePartSpareBitsList", 0, err), "Classmark3ValuePartSpareBitsList", i)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartSpareBitsList", 0, err), "Classmark3ValuePartSpareBitsList", i)
 		}
 	}
 	return nil
@@ -3740,7 +3740,7 @@ func encodeClassmark3ValuePart(w *runtime.Writer, v Classmark3ValuePart) error {
 	limit := 55
 	if n, ok := w.Truncation("Classmark3ValuePart"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "Classmark3ValuePart", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "Classmark3ValuePart", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4334,7 +4334,7 @@ func encodeA5Bits(w *runtime.Writer, v A5Bits) error {
 	limit := 4
 	if n, ok := w.Truncation("A5Bits"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "A5Bits", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "A5Bits", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4424,7 +4424,7 @@ func encodeRSupport(w *runtime.Writer, v RSupport) error {
 	limit := 1
 	if n, ok := w.Truncation("RSupport"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "RSupport", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "RSupport", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4467,10 +4467,10 @@ func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "HSCSDMultiSlotCapabilityHSCSDMultiSlotClass", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "HSCSDMultiSlotCapabilityHSCSDMultiSlotClass", width, fmt.Errorf("value reserved by source table"))
 		}
 		if uint64(v) > 18 {
-			return w.OperationError(runtime.InvalidValue, "HSCSDMultiSlotCapabilityHSCSDMultiSlotClass", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "HSCSDMultiSlotCapabilityHSCSDMultiSlotClass", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -4500,7 +4500,7 @@ func encodeHSCSDMultiSlotCapability(w *runtime.Writer, v HSCSDMultiSlotCapabilit
 	limit := 1
 	if n, ok := w.Truncation("HSCSDMultiSlotCapability"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "HSCSDMultiSlotCapability", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "HSCSDMultiSlotCapability", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4602,7 +4602,7 @@ func encodeMSMeasurementCapability(w *runtime.Writer, v MSMeasurementCapability)
 	limit := 2
 	if n, ok := w.Truncation("MSMeasurementCapability"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSMeasurementCapability", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSMeasurementCapability", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4676,7 +4676,7 @@ func encodeMSPositioningMethodCapability(w *runtime.Writer, v MSPositioningMetho
 	limit := 1
 	if n, ok := w.Truncation("MSPositioningMethodCapability"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "MSPositioningMethodCapability", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "MSPositioningMethodCapability", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4742,7 +4742,7 @@ func encodeECSDMultiSlotCapability(w *runtime.Writer, v ECSDMultiSlotCapability)
 	limit := 1
 	if n, ok := w.Truncation("ECSDMultiSlotCapability"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "ECSDMultiSlotCapability", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "ECSDMultiSlotCapability", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -4816,7 +4816,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) e
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability1Value", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability1Value", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -4880,7 +4880,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) e
 	}
 	if w.Canonical() {
 		if uint64(v) < 1 {
-			return w.OperationError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability2Value", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability2Value", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -4946,7 +4946,7 @@ func encodeN8PSKStruct(w *runtime.Writer, v N8PSKStruct) error {
 	limit := 3
 	if n, ok := w.Truncation("N8PSKStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "N8PSKStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "N8PSKStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -5005,7 +5005,7 @@ func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
 	}
 	if w.Canonical() {
 		if uint64(v) > 9 {
-			return w.OperationError(runtime.InvalidValue, "SingleBandSupportGSMBand", width, fmt.Errorf("value reserved by source table"))
+			return w.ComponentError(runtime.InvalidValue, "SingleBandSupportGSMBand", width, fmt.Errorf("value reserved by source table"))
 		}
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
@@ -5035,7 +5035,7 @@ func encodeSingleBandSupport(w *runtime.Writer, v SingleBandSupport) error {
 	limit := 1
 	if n, ok := w.Truncation("SingleBandSupport"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "SingleBandSupport", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "SingleBandSupport", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -6616,7 +6616,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -6626,6 +6626,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}

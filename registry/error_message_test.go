@@ -119,7 +119,7 @@ func TestGeneratedOperationCauseMessages(t *testing.T) {
 		{"generated/context sentinel", func() error {
 			_, e := restoctets.EncodeNonGSMMessageStructCanonicalAtLength(restoctets.NonGSMMessageStruct{NonGSMProtocolDiscriminator: 1, NROFCONTAINEROCTETS: 31}, 2)
 			return e
-		}, "CSN.1 canonical invalid-value in NonGSMMessageStructCONTAINERList: encode: CSN.1 context required: continuation count requires enclosing SI value"},
+		}, "CSN.1 canonical invalid-value in NonGSMMessageStruct/NonGSMMessageStructCONTAINERList: encode: CSN.1 context required: continuation count requires enclosing SI value"},
 		{"generated/extent required", func() error { _, e := ies.EncodeGPRSCellOptionsIECanonical(gprs.Value); return e }, "CSN.1 canonical invalid-value in GPRSCellOptionsIE: CSN.1 canonical encoding requires an explicit containing-message length"},
 		{"generated/extent range", func() error { _, e := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, -1); return e }, "CSN.1 canonical invalid-value in GPRSCellOptionsIE: CSN.1 extent -1 outside 0..131072 octets"},
 		{"generated/bound", func() error { _, e := ies.EncodeGPRSCellOptionsIE(bound); return e }, "CSN.1 encode invalid-value at bit 43 in GPRSCellOptionsIE/GPRSCellOptionsIEExtensionLengthGroup/ExtensionInformation/Group2: length bound (limit 43): nonzero field omitted from a truncated concatenation; only zero components may be omitted"},
@@ -129,7 +129,7 @@ func TestGeneratedOperationCauseMessages(t *testing.T) {
 		{"generated/canonical encode failure", func() error {
 			_, e := classmark.EncodeClassmark3ValuePartCanonical(classmark.Classmark3ValuePart{})
 			return e
-		}, "CSN.1 canonical invalid-branch at bit 1 in Classmark3ValuePartMultibandSupportedChoice: encode: choice requires exactly one alternative"},
+		}, "CSN.1 canonical invalid-branch at bit 1 in Classmark3ValuePart/Classmark3ValuePartMultibandSupportedChoice: encode: choice requires exactly one alternative"},
 		{"generated/wrong Go type", func() error {
 			d, e := Lookup("TS 24.008", "Classmark 3 Value part")
 			if e != nil {

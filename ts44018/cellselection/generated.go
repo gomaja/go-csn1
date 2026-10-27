@@ -145,7 +145,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -193,7 +193,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList(w *runtime.Writer, v []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -224,7 +224,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -295,7 +295,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -343,7 +343,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList(w *runtime.Writer, v []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -374,7 +374,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -445,7 +445,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -493,7 +493,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList(w *runtime.Writer, v []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -524,7 +524,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -595,7 +595,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -643,7 +643,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList(w *runtime.Writer, v []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry) error {
 	for itemIndex, item := range v {
 		if err := encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry(w, item); err != nil {
-			return locateIndex(w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", itemIndex)
+			return locateIndex(w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", 0, err), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", itemIndex)
 		}
 	}
 	return w.WriteLiteral("0")
@@ -674,7 +674,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	limit := 2
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -774,31 +774,31 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 		count++
 	}
 	if count != 1 {
-		return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice requires exactly one alternative"))
 	}
 	switch v.Alternative {
 	case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeGSMDescription:
 		if v.GSMDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription(w, *v.GSMDescription)
 	case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANFDDDescription:
 		if v.UTRANFDDDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription(w, *v.UTRANFDDDescription)
 	case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANTDDDescription:
 		if v.UTRANTDDDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription(w, *v.UTRANTDDDescription)
 	case CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeEUTRANDescription:
 		if v.EUTRANDescription == nil {
-			return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+			return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
 		}
 		return encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription(w, *v.EUTRANDescription)
 	default:
-		return w.OperationError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("invalid choice alternative"))
+		return w.ComponentError(runtime.InvalidBranch, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice", 0, fmt.Errorf("invalid choice alternative"))
 	}
 }
 func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(r *runtime.Reader) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, error) {
@@ -822,7 +822,7 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(w *runtim
 	limit := 1
 	if n, ok := w.Truncation("CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -960,7 +960,7 @@ func encodeGSMDescriptionStruct(w *runtime.Writer, v GSMDescriptionStruct) error
 	limit := 3
 	if n, ok := w.Truncation("GSMDescriptionStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "GSMDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "GSMDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1200,7 +1200,7 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 	limit := 3
 	if n, ok := w.Truncation("UTRANFDDDescriptionStructFDDIndic0Group"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "UTRANFDDDescriptionStructFDDIndic0Group", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "UTRANFDDDescriptionStructFDDIndic0Group", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1287,7 +1287,7 @@ func encodeUTRANFDDDescriptionStruct(w *runtime.Writer, v UTRANFDDDescriptionStr
 	limit := 3
 	if n, ok := w.Truncation("UTRANFDDDescriptionStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "UTRANFDDDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "UTRANFDDDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1527,7 +1527,7 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 	limit := 3
 	if n, ok := w.Truncation("UTRANTDDDescriptionStructTDDIndic0Group"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "UTRANTDDDescriptionStructTDDIndic0Group", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "UTRANTDDDescriptionStructTDDIndic0Group", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1614,7 +1614,7 @@ func encodeUTRANTDDDescriptionStruct(w *runtime.Writer, v UTRANTDDDescriptionStr
 	limit := 3
 	if n, ok := w.Truncation("UTRANTDDDescriptionStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "UTRANTDDDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "UTRANTDDDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -1857,7 +1857,7 @@ func encodeEUTRANDescriptionStruct(w *runtime.Writer, v EUTRANDescriptionStruct)
 	limit := 4
 	if n, ok := w.Truncation("EUTRANDescriptionStruct"); ok {
 		if n < 0 || n > limit {
-			return w.OperationError(runtime.InvalidValue, "EUTRANDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
+			return w.ComponentError(runtime.InvalidValue, "EUTRANDescriptionStruct", 0, fmt.Errorf("invalid truncation point"))
 		}
 		limit = n
 	}
@@ -2861,7 +2861,7 @@ func locateIndex(err error, path string, index int) error {
 }
 
 // indexedPath inserts the list immediately after its enclosing codec level.
-// A list that enters its own level receives the index on that component.
+// A list already present in the path receives the index on that component.
 func indexedPath(full, path string, index int) string {
 	parent := indexParent(path)
 	start := 0
@@ -2871,6 +2871,10 @@ func indexedPath(full, path string, index int) string {
 		if component == parent {
 			if parent == path {
 				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
+			}
+			next, _, _ := strings.Cut(tail, "/")
+			if next == path {
+				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
 			}
 			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
 		}
