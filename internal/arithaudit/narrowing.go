@@ -33,6 +33,16 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 			}
 			switch value := node.(type) {
 			case *ast.AssignStmt:
+				if len(value.Lhs) > 0 && isName(value.Lhs[0], "width") {
+					width = -1
+					if len(value.Rhs) == 1 {
+						if literal, ok := value.Rhs[0].(*ast.BasicLit); ok && literal.Kind == token.INT {
+							if n, err := strconv.ParseInt(literal.Value, 0, 32); err == nil && n >= 0 && n <= 64 {
+								width = int(n)
+							}
+						}
+					}
+				}
 				if len(value.Lhs) == 0 || !isName(value.Lhs[0], "v") {
 					break
 				}

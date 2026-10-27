@@ -3,6 +3,7 @@ package arithaudit
 import (
 	"fmt"
 	"go/ast"
+	"go/token"
 	"regexp"
 	"strconv"
 	"strings"
@@ -158,8 +159,14 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		ordered = []string{"before:=w.Position()", "iferr:=encode", "ifw.Position()-before!=length"}
 	case "r.Position() - 1", "uint64(runtime.LHBit('H', r.Position()-1))", "uint64(runtime.LHBit('L', r.Position()-1))":
 		ordered = []string{"r.Eval(\"1\")", "r.ReadUint(width)", "iferr!=nil{return", "r.Position()-1"}
+		if directLiteralWidth(fn, "1") {
+			ordered[0] = "width:=1"
+		}
 	case "uint64(runtime.LHBit('H', w.Position()))", "uint64(runtime.LHBit('L', w.Position()))":
 		ordered = []string{"w.Eval(\"1\")", "runtime.LHBit(", "w.Position()"}
+		if directLiteralWidth(fn, "1") {
+			ordered[0] = "width:=1"
+		}
 	case "(len(data) - 3) * 8", "len(data) - 3":
 		ordered = []string{"runtime.CheckInput(data)", "iflen(data)<3", "len(data)-3"}
 	case "40 + cm3.BitsConsumed":
@@ -182,6 +189,9 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		ordered = []string{"^uint64(0)-1"}
 	case "v += 1":
 		ordered = []string{"r.Eval(\"3\")", "r.ReadUint(width)", "v+=1"}
+		if directLiteralWidth(fn, "3") {
+			ordered[0] = "width:=3"
+		}
 	case "uint64(v) - 1":
 		ordered = []string{"ifuint64(v)<1", "raw:=uint64(v)-1"}
 	case "len(out.Entries) - 1":
@@ -197,6 +207,38 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		body = body[at+len(part):]
 	}
 	return nil
+}
+
+// directLiteralWidth accepts a single literal declaration and rejects later
+// assignments or increments to the identifier, including nested blocks.
+func directLiteralWidth(fn *ast.FuncDecl, want string) bool {
+	found, valid := false, true
+	ast.Inspect(fn.Body, func(node ast.Node) bool {
+		if !valid {
+			return false
+		}
+		switch statement := node.(type) {
+		case *ast.AssignStmt:
+			for _, lhs := range statement.Lhs {
+				if !isName(lhs, "width") {
+					continue
+				}
+				if found || statement.Tok != token.DEFINE || len(statement.Lhs) != 1 || len(statement.Rhs) != 1 {
+					valid = false
+					break
+				}
+				literal, ok := statement.Rhs[0].(*ast.BasicLit)
+				valid = ok && literal.Kind == token.INT && literal.Value == want
+				found = true
+			}
+		case *ast.IncDecStmt:
+			if isName(statement.X, "width") {
+				valid = false
+			}
+		}
+		return valid
+	})
+	return found && valid
 }
 
 var reviewedHelperExpressions = map[string]map[string]bool{

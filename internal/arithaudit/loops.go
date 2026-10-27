@@ -120,9 +120,16 @@ func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.Inc
 				return true
 			}
 			valid := false
+			if literal, ok := assign.Rhs[0].(*ast.BasicLit); ok && literal.Kind == token.INT {
+				n, err := strconv.ParseUint(literal.Value, 0, 32)
+				valid = err == nil && n <= 1<<20
+			}
 			call, ok := assign.Rhs[0].(*ast.CallExpr)
 			if ok {
 				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount" || selector.Sel.Name == "SpareFillCount") {
+					valid = true
+				}
+				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && selector.Sel.Name == "ExpressionResult" && len(call.Args) == 1 && (isName(selector.X, "r") || isName(selector.X, "w")) {
 					valid = true
 				}
 			}
