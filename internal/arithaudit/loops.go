@@ -92,54 +92,61 @@ func boundedForIncrement(body *ast.BlockStmt, loops []*ast.ForStmt, inc *ast.Inc
 		if !zeroLoopInit(loop.Init) || !countLoopCondition(loop.Cond) {
 			continue
 		}
-		countMutated := false
-		ast.Inspect(loop.Body, func(node ast.Node) bool {
-			switch stmt := node.(type) {
-			case *ast.IncDecStmt:
-				id, ok := stmt.X.(*ast.Ident)
-				countMutated = countMutated || ok && id.Name == "count"
-			case *ast.AssignStmt:
-				for _, lhs := range stmt.Lhs {
-					id, ok := lhs.(*ast.Ident)
-					countMutated = countMutated || ok && id.Name == "count"
-				}
-			}
-			return !countMutated
-		})
-		if countMutated {
+		if hasNameWrite(loop.Body, "count") {
 			continue
 		}
 		bounded, unsafe := false, false
 		ast.Inspect(body, func(node ast.Node) bool {
+			if !writesName(node, "count") {
+				return true
+			}
 			assign, ok := node.(*ast.AssignStmt)
-			if !ok || assign.Pos() >= loop.Pos() || len(assign.Lhs) == 0 || len(assign.Rhs) == 0 {
-				return true
-			}
-			id, ok := assign.Lhs[0].(*ast.Ident)
-			if !ok || id.Name != "count" {
-				return true
-			}
-			valid := false
-			call, ok := assign.Rhs[0].(*ast.CallExpr)
-			if ok {
-				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Eval" || selector.Sel.Name == "SpareCount" || selector.Sel.Name == "SpareFillCount") {
-					valid = true
-				}
-			}
-			if binary, ok := assign.Rhs[0].(*ast.BinaryExpr); ok && binary.Op == token.QUO {
-				lhs, lhsOK := binary.X.(*ast.Ident)
-				divisor, divisorOK := binary.Y.(*ast.BasicLit)
-				if lhsOK && lhs.Name == "remaining" && divisorOK && divisor.Value == "8" && boundedRemainingAssignment(body, assign.Pos()) {
-					valid = true // BoundedRemaining is at most the checked input length.
-				}
-			}
-			bounded = true
+			valid := ok && boundedCountAssignment(body, assign)
+			bounded = bounded || valid && assign.Pos() < loop.Pos()
+			// A write after this loop can reach it on an enclosing loop's
+			// next iteration, so every write in the function must be bounded.
 			unsafe = unsafe || !valid
 			return true
 		})
 		if bounded && !unsafe {
 			return true
 		}
+	}
+	return false
+}
+
+// boundedCountAssignment accepts only the first result of reviewed runtime
+// sources, or a single literal/divided remaining count. A multi-assignment
+// of unrelated values does not bind the first RHS to count.
+//
+// This is a deliberately conservative syntax proof, not data-flow analysis:
+// every count write in a function containing a counted loop is reviewed,
+// including writes lexically after it. Choice counters without counted
+// loops are checked separately by CheckGeneratedChoiceCounters.
+func boundedCountAssignment(body *ast.BlockStmt, assign *ast.AssignStmt) bool {
+	expr, ok := plainAssignmentValue(assign, "count")
+	if !ok {
+		return false
+	}
+	if literal, ok := expr.(*ast.BasicLit); ok && literal.Kind == token.INT && len(assign.Lhs) == 1 {
+		n, err := strconv.ParseUint(literal.Value, 0, 32)
+		return err == nil && n <= 1<<20
+	}
+	if call, ok := expr.(*ast.CallExpr); ok && len(assign.Lhs) <= 2 {
+		if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (isName(selector.X, "r") || isName(selector.X, "w")) {
+			switch selector.Sel.Name {
+			case "Eval", "SpareCount", "ExpressionResult":
+				return len(call.Args) == 1
+			case "SpareFillCount":
+				return len(call.Args) == 0
+			}
+		}
+	}
+	if binary, ok := expr.(*ast.BinaryExpr); ok && binary.Op == token.QUO && len(assign.Lhs) == 1 {
+		lhs, lhsOK := binary.X.(*ast.Ident)
+		divisor, divisorOK := binary.Y.(*ast.BasicLit)
+		// BoundedRemaining is at most the checked input length.
+		return lhsOK && lhs.Name == "remaining" && divisorOK && divisor.Value == "8" && boundedRemainingAssignment(body, assign.Pos())
 	}
 	return false
 }
