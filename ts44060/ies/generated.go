@@ -379,15 +379,12 @@ func decodeUTRANCSGMeasurementReportIEUTRANCGI(r *runtime.Reader) (uint32, error
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("28")
-	if err != nil {
-		return 0, err
-	}
+	width := 28
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UTRAN CGI", v)
+	r.Set("utran cgi", v)
 	return uint32(v), nil
 }
 func encodeUTRANCSGMeasurementReportIEUTRANCGI(w *runtime.Writer, v uint32) error {
@@ -395,14 +392,11 @@ func encodeUTRANCSGMeasurementReportIEUTRANCGI(w *runtime.Writer, v uint32) erro
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("28")
-	if err != nil {
-		return err
-	}
+	width := 28
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UTRAN CGI", uint64(v))
+	w.Set("utran cgi", uint64(v))
 	return nil
 }
 func decodeUTRANCSGMeasurementReportIEPLMNIDValue(r *runtime.Reader) (PLMNIDStruct, error) {
@@ -445,15 +439,12 @@ func decodeUTRANCSGMeasurementReportIECSGID(r *runtime.Reader) (uint32, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("27")
-	if err != nil {
-		return 0, err
-	}
+	width := 27
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CSG-ID", v)
+	r.Set("csg-id", v)
 	return uint32(v), nil
 }
 func encodeUTRANCSGMeasurementReportIECSGID(w *runtime.Writer, v uint32) error {
@@ -461,14 +452,11 @@ func encodeUTRANCSGMeasurementReportIECSGID(w *runtime.Writer, v uint32) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("27")
-	if err != nil {
-		return err
-	}
+	width := 27
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CSG-ID", uint64(v))
+	w.Set("csg-id", uint64(v))
 	return nil
 }
 func decodeUTRANCSGMeasurementReportIEAccessMode(r *runtime.Reader) (uint8, error) {
@@ -476,15 +464,12 @@ func decodeUTRANCSGMeasurementReportIEAccessMode(r *runtime.Reader) (uint8, erro
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Access Mode", v)
+	r.Set("access mode", v)
 	return uint8(v), nil
 }
 func encodeUTRANCSGMeasurementReportIEAccessMode(w *runtime.Writer, v uint8) error {
@@ -492,14 +477,11 @@ func encodeUTRANCSGMeasurementReportIEAccessMode(w *runtime.Writer, v uint8) err
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Access Mode", uint64(v))
+	w.Set("access mode", uint64(v))
 	return nil
 }
 func decodeUTRANCSGMeasurementReportIEREPORTINGQUANTITY(r *runtime.Reader) (uint8, error) {
@@ -507,15 +489,12 @@ func decodeUTRANCSGMeasurementReportIEREPORTINGQUANTITY(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("REPORTING_QUANTITY", v)
+	r.Set("reporting_quantity", v)
 	return uint8(v), nil
 }
 func encodeUTRANCSGMeasurementReportIEREPORTINGQUANTITY(w *runtime.Writer, v uint8) error {
@@ -523,14 +502,11 @@ func encodeUTRANCSGMeasurementReportIEREPORTINGQUANTITY(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("REPORTING_QUANTITY", uint64(v))
+	w.Set("reporting_quantity", uint64(v))
 	return nil
 }
 func decodeUTRANCSGMeasurementReportIE(r *runtime.Reader) (UTRANCSGMeasurementReportIE, error) {
@@ -625,15 +601,12 @@ func decodePLMNIDStructMCC(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("12")
-	if err != nil {
-		return 0, err
-	}
+	width := 12
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MCC", v)
+	r.Set("mcc", v)
 	return uint16(v), nil
 }
 func encodePLMNIDStructMCC(w *runtime.Writer, v uint16) error {
@@ -641,14 +614,11 @@ func encodePLMNIDStructMCC(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("12")
-	if err != nil {
-		return err
-	}
+	width := 12
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MCC", uint64(v))
+	w.Set("mcc", uint64(v))
 	return nil
 }
 func decodePLMNIDStructMNC(r *runtime.Reader) (uint16, error) {
@@ -656,15 +626,12 @@ func decodePLMNIDStructMNC(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("12")
-	if err != nil {
-		return 0, err
-	}
+	width := 12
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MNC", v)
+	r.Set("mnc", v)
 	return uint16(v), nil
 }
 func encodePLMNIDStructMNC(w *runtime.Writer, v uint16) error {
@@ -672,14 +639,11 @@ func encodePLMNIDStructMNC(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("12")
-	if err != nil {
-		return err
-	}
+	width := 12
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MNC", uint64(v))
+	w.Set("mnc", uint64(v))
 	return nil
 }
 func decodePLMNIDStruct(r *runtime.Reader) (PLMNIDStruct, error) {
@@ -745,15 +709,12 @@ func decodePSCGroupIEPSCListEntryPSC(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("9")
-	if err != nil {
-		return 0, err
-	}
+	width := 9
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PSC", v)
+	r.Set("psc", v)
 	return uint16(v), nil
 }
 func encodePSCGroupIEPSCListEntryPSC(w *runtime.Writer, v uint16) error {
@@ -761,14 +722,11 @@ func encodePSCGroupIEPSCListEntryPSC(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("9")
-	if err != nil {
-		return err
-	}
+	width := 9
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PSC", uint64(v))
+	w.Set("psc", uint64(v))
 	return nil
 }
 func decodePSCGroupIEPSCListEntry(r *runtime.Reader) (PSCGroupIEPSCListEntry, error) {
@@ -869,15 +827,12 @@ func decodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternLength(r *runtime.R
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PSC_Pattern_length", v)
+	r.Set("psc_pattern_length", v)
 	return uint8(v), nil
 }
 func encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternLength(w *runtime.Writer, v uint8) error {
@@ -885,14 +840,11 @@ func encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternLength(w *runtime.W
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PSC_Pattern_length", uint64(v))
+	w.Set("psc_pattern_length", uint64(v))
 	return nil
 }
 func decodePSCGroupIEPSCPatternLengthGroupListEntryPSCPattern(r *runtime.Reader) (runtime.BitString, error) {
@@ -900,7 +852,8 @@ func decodePSCGroupIEPSCPatternLengthGroupListEntryPSCPattern(r *runtime.Reader)
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("val(PSC_Pattern_length + 1)")
+	width, err := r.ExpressionResult(r.ExpressionVariable("PSC_Pattern_length").Operand().Add(runtime.ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -915,7 +868,8 @@ func encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPattern(w *runtime.Writer,
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("val(PSC_Pattern_length + 1)")
+	width, err := w.ExpressionResult(w.ExpressionVariable("PSC_Pattern_length").Operand().Add(runtime.ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return err
 	}
@@ -929,15 +883,12 @@ func decodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternSense(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PSC_pattern_sense", v)
+	r.Set("psc_pattern_sense", v)
 	return uint8(v), nil
 }
 func encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternSense(w *runtime.Writer, v uint8) error {
@@ -945,14 +896,11 @@ func encodePSCGroupIEPSCPatternLengthGroupListEntryPSCPatternSense(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PSC_pattern_sense", uint64(v))
+	w.Set("psc_pattern_sense", uint64(v))
 	return nil
 }
 func decodePSCGroupIEPSCPatternLengthGroupListEntry(r *runtime.Reader) (PSCGroupIEPSCPatternLengthGroupListEntry, error) {
@@ -1509,15 +1457,12 @@ func decodeMBMSPTMChannelDescriptionIEDLTIMESLOTALLOCATION(r *runtime.Reader) (u
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("8")
-	if err != nil {
-		return 0, err
-	}
+	width := 8
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DL_TIMESLOT_ALLOCATION", v)
+	r.Set("dl_timeslot_allocation", v)
 	return uint8(v), nil
 }
 func encodeMBMSPTMChannelDescriptionIEDLTIMESLOTALLOCATION(w *runtime.Writer, v uint8) error {
@@ -1525,14 +1470,11 @@ func encodeMBMSPTMChannelDescriptionIEDLTIMESLOTALLOCATION(w *runtime.Writer, v 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("8")
-	if err != nil {
-		return err
-	}
+	width := 8
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DL_TIMESLOT_ALLOCATION", uint64(v))
+	w.Set("dl_timeslot_allocation", uint64(v))
 	return nil
 }
 func decodeMBMSPTMChannelDescriptionIE(r *runtime.Reader) (MBMSPTMChannelDescriptionIE, error) {
@@ -1623,15 +1565,12 @@ func decodeMPRACHDescriptionIEMPRACHTIMESLOTNUMBER(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MPRACH_TIMESLOT NUMBER", v)
+	r.Set("mprach_timeslot number", v)
 	return uint8(v), nil
 }
 func encodeMPRACHDescriptionIEMPRACHTIMESLOTNUMBER(w *runtime.Writer, v uint8) error {
@@ -1639,14 +1578,11 @@ func encodeMPRACHDescriptionIEMPRACHTIMESLOTNUMBER(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MPRACH_TIMESLOT NUMBER", uint64(v))
+	w.Set("mprach_timeslot number", uint64(v))
 	return nil
 }
 func decodeMPRACHDescriptionIEUSF(r *runtime.Reader) (uint8, error) {
@@ -1654,15 +1590,12 @@ func decodeMPRACHDescriptionIEUSF(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("USF", v)
+	r.Set("usf", v)
 	return uint8(v), nil
 }
 func encodeMPRACHDescriptionIEUSF(w *runtime.Writer, v uint8) error {
@@ -1670,14 +1603,11 @@ func encodeMPRACHDescriptionIEUSF(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("USF", uint64(v))
+	w.Set("usf", uint64(v))
 	return nil
 }
 func decodeMPRACHDescriptionIEMPRACHControlParametersValue(r *runtime.Reader) (MPRACHControlParametersIE, error) {
@@ -1810,15 +1740,12 @@ func decodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentityValue(r *runtim
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("8")
-	if err != nil {
-		return 0, err
-	}
+	width := 8
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MBMS Session Identity", v)
+	r.Set("mbms session identity", v)
 	return uint8(v), nil
 }
 func encodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentityValue(w *runtime.Writer, v uint8) error {
@@ -1826,14 +1753,11 @@ func encodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentityValue(w *runtim
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("8")
-	if err != nil {
-		return err
-	}
+	width := 8
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MBMS Session Identity", uint64(v))
+	w.Set("mbms session identity", uint64(v))
 	return nil
 }
 func decodeMBMSSessionListIETMGIGroupListEntryMBMSSessionIdentitySelector(r *runtime.Reader) (*uint8, error) {
@@ -2013,10 +1937,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -2028,7 +1949,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 	if uint64(v) > 5 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("Length of MBMS Bearer Identity", v)
+	r.Set("length of mbms bearer identity", v)
 	return uint8(v), nil
 }
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity(w *runtime.Writer, v uint8) error {
@@ -2036,10 +1957,7 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if uint64(v) < 1 {
 		return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLengthOfMBMSBearerIdentity", width, fmt.Errorf("value reserved by source table"))
 	}
@@ -2049,7 +1967,7 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryLe
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Length of MBMS Bearer Identity", uint64(v))
+	w.Set("length of mbms bearer identity", uint64(v))
 	return nil
 }
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSBearerIdentity(r *runtime.Reader) (runtime.BitString, error) {
@@ -2086,15 +2004,12 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEs
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("8")
-	if err != nil {
-		return 0, err
-	}
+	width := 8
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Estimated Session Duration", v)
+	r.Set("estimated session duration", v)
 	return uint8(v), nil
 }
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEstimatedSessionDuration(w *runtime.Writer, v uint8) error {
@@ -2102,14 +2017,11 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryEs
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("8")
-	if err != nil {
-		return err
-	}
+	width := 8
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Estimated Session Duration", uint64(v))
+	w.Set("estimated session duration", uint64(v))
 	return nil
 }
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSRadioBearerStartingTimeValue(r *runtime.Reader) (uint16, error) {
@@ -2117,15 +2029,12 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMB
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("16")
-	if err != nil {
-		return 0, err
-	}
+	width := 16
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MBMS Radio Bearer Starting Time", v)
+	r.Set("mbms radio bearer starting time", v)
 	return uint16(v), nil
 }
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSRadioBearerStartingTimeValue(w *runtime.Writer, v uint16) error {
@@ -2133,14 +2042,11 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMB
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("16")
-	if err != nil {
-		return err
-	}
+	width := 16
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MBMS Radio Bearer Starting Time", uint64(v))
+	w.Set("mbms radio bearer starting time", uint64(v))
 	return nil
 }
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryMBMSRadioBearerStartingTimeSelector(r *runtime.Reader) (*uint16, error) {
@@ -2214,10 +2120,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -2226,7 +2129,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 	if uint64(v) > 30 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("NPM Transfer Time", v)
+	r.Set("npm transfer time", v)
 	return uint8(v), nil
 }
 func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue(w *runtime.Writer, v uint8) error {
@@ -2234,17 +2137,14 @@ func encodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNP
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if uint64(v) > 30 {
 		return w.ComponentError(runtime.InvalidValue, "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeValue", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NPM Transfer Time", uint64(v))
+	w.Set("npm transfer time", uint64(v))
 	return nil
 }
 func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntryNPMTransferTimeSelector(r *runtime.Reader) (*uint8, error) {
@@ -2464,15 +2364,12 @@ func decodeMPRACHControlParametersIEACCCONTRCLASSValue(r *runtime.Reader) (uint1
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("16")
-	if err != nil {
-		return 0, err
-	}
+	width := 16
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ACC_CONTR_CLASS", v)
+	r.Set("acc_contr_class", v)
 	return uint16(v), nil
 }
 func encodeMPRACHControlParametersIEACCCONTRCLASSValue(w *runtime.Writer, v uint16) error {
@@ -2480,14 +2377,11 @@ func encodeMPRACHControlParametersIEACCCONTRCLASSValue(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("16")
-	if err != nil {
-		return err
-	}
+	width := 16
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ACC_CONTR_CLASS", uint64(v))
+	w.Set("acc_contr_class", uint64(v))
 	return nil
 }
 func decodeMPRACHControlParametersIEACCCONTRCLASSSelector(r *runtime.Reader) (*uint16, error) {
@@ -2524,15 +2418,12 @@ func decodeMPRACHControlParametersIEMAXRETRANSValue(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MAX_RETRANS", v)
+	r.Set("max_retrans", v)
 	return uint8(v), nil
 }
 func encodeMPRACHControlParametersIEMAXRETRANSValue(w *runtime.Writer, v uint8) error {
@@ -2540,14 +2431,11 @@ func encodeMPRACHControlParametersIEMAXRETRANSValue(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MAX_RETRANS", uint64(v))
+	w.Set("max_retrans", uint64(v))
 	return nil
 }
 func decodeMPRACHControlParametersIEMAXRETRANSSelector(r *runtime.Reader) (*uint8, error) {
@@ -2586,10 +2474,7 @@ func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -2598,7 +2483,7 @@ func decodeMPRACHControlParametersIES(r *runtime.Reader) (uint8, error) {
 	if uint64(v) > 9 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("S", v)
+	r.Set("s", v)
 	return uint8(v), nil
 }
 func encodeMPRACHControlParametersIES(w *runtime.Writer, v uint8) error {
@@ -2606,17 +2491,14 @@ func encodeMPRACHControlParametersIES(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if uint64(v) > 9 {
 		return w.ComponentError(runtime.InvalidValue, "MPRACHControlParametersIES", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("S", uint64(v))
+	w.Set("s", uint64(v))
 	return nil
 }
 func decodeMPRACHControlParametersIETXINTValue(r *runtime.Reader) (uint8, error) {
@@ -2624,15 +2506,12 @@ func decodeMPRACHControlParametersIETXINTValue(r *runtime.Reader) (uint8, error)
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TX_INT", v)
+	r.Set("tx_int", v)
 	return uint8(v), nil
 }
 func encodeMPRACHControlParametersIETXINTValue(w *runtime.Writer, v uint8) error {
@@ -2640,14 +2519,11 @@ func encodeMPRACHControlParametersIETXINTValue(w *runtime.Writer, v uint8) error
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TX_INT", uint64(v))
+	w.Set("tx_int", uint64(v))
 	return nil
 }
 func decodeMPRACHControlParametersIETXINTSelector(r *runtime.Reader) (*uint8, error) {
@@ -2684,15 +2560,12 @@ func decodeMPRACHControlParametersIEPERSISTENCELEVELValue(r *runtime.Reader) (ui
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PERSISTENCE_LEVEL", v)
+	r.Set("persistence_level", v)
 	return uint8(v), nil
 }
 func encodeMPRACHControlParametersIEPERSISTENCELEVELValue(w *runtime.Writer, v uint8) error {
@@ -2700,14 +2573,11 @@ func encodeMPRACHControlParametersIEPERSISTENCELEVELValue(w *runtime.Writer, v u
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PERSISTENCE_LEVEL", uint64(v))
+	w.Set("persistence_level", uint64(v))
 	return nil
 }
 func decodeMPRACHControlParametersIEPERSISTENCELEVELSelector(r *runtime.Reader) (*uint8, error) {
@@ -2831,10 +2701,7 @@ func decodeGPRSPowerControlParametersIEALPHA(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -2846,7 +2713,7 @@ func decodeGPRSPowerControlParametersIEALPHA(r *runtime.Reader) (uint8, error) {
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
-	r.Set("ALPHA", v)
+	r.Set("alpha", v)
 	return uint8(v), nil
 }
 func encodeGPRSPowerControlParametersIEALPHA(w *runtime.Writer, v uint8) error {
@@ -2854,14 +2721,11 @@ func encodeGPRSPowerControlParametersIEALPHA(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ALPHA", uint64(v))
+	w.Set("alpha", uint64(v))
 	return nil
 }
 func decodeGPRSPowerControlParametersIETAVGW(r *runtime.Reader) (uint8, error) {
@@ -2869,15 +2733,12 @@ func decodeGPRSPowerControlParametersIETAVGW(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T_AVG_W", v)
+	r.Set("t_avg_w", v)
 	return uint8(v), nil
 }
 func encodeGPRSPowerControlParametersIETAVGW(w *runtime.Writer, v uint8) error {
@@ -2885,14 +2746,11 @@ func encodeGPRSPowerControlParametersIETAVGW(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T_AVG_W", uint64(v))
+	w.Set("t_avg_w", uint64(v))
 	return nil
 }
 func decodeGPRSPowerControlParametersIETAVGT(r *runtime.Reader) (uint8, error) {
@@ -2900,15 +2758,12 @@ func decodeGPRSPowerControlParametersIETAVGT(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T_AVG_T", v)
+	r.Set("t_avg_t", v)
 	return uint8(v), nil
 }
 func encodeGPRSPowerControlParametersIETAVGT(w *runtime.Writer, v uint8) error {
@@ -2916,14 +2771,11 @@ func encodeGPRSPowerControlParametersIETAVGT(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T_AVG_T", uint64(v))
+	w.Set("t_avg_t", uint64(v))
 	return nil
 }
 func decodeGPRSPowerControlParametersIEPCMEASCHAN(r *runtime.Reader) (uint8, error) {
@@ -2931,15 +2783,12 @@ func decodeGPRSPowerControlParametersIEPCMEASCHAN(r *runtime.Reader) (uint8, err
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PC_MEAS_CHAN", v)
+	r.Set("pc_meas_chan", v)
 	return uint8(v), nil
 }
 func encodeGPRSPowerControlParametersIEPCMEASCHAN(w *runtime.Writer, v uint8) error {
@@ -2947,14 +2796,11 @@ func encodeGPRSPowerControlParametersIEPCMEASCHAN(w *runtime.Writer, v uint8) er
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PC_MEAS_CHAN", uint64(v))
+	w.Set("pc_meas_chan", uint64(v))
 	return nil
 }
 func decodeGPRSPowerControlParametersIENAVGI(r *runtime.Reader) (uint8, error) {
@@ -2962,15 +2808,12 @@ func decodeGPRSPowerControlParametersIENAVGI(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("N_AVG_I", v)
+	r.Set("n_avg_i", v)
 	return uint8(v), nil
 }
 func encodeGPRSPowerControlParametersIENAVGI(w *runtime.Writer, v uint8) error {
@@ -2978,14 +2821,11 @@ func encodeGPRSPowerControlParametersIENAVGI(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("N_AVG_I", uint64(v))
+	w.Set("n_avg_i", uint64(v))
 	return nil
 }
 func decodeGPRSPowerControlParametersIE(r *runtime.Reader) (GPRSPowerControlParametersIE, error) {
@@ -3082,10 +2922,7 @@ func decodeGPRSCellOptionsIENMO(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -3094,7 +2931,7 @@ func decodeGPRSCellOptionsIENMO(r *runtime.Reader) (uint8, error) {
 	if uint64(v) > 2 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("NMO", v)
+	r.Set("nmo", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIENMO(w *runtime.Writer, v uint8) error {
@@ -3102,17 +2939,14 @@ func encodeGPRSCellOptionsIENMO(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if uint64(v) > 2 {
 		return w.ComponentError(runtime.InvalidValue, "GPRSCellOptionsIENMO", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NMO", uint64(v))
+	w.Set("nmo", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIET3168(r *runtime.Reader) (uint8, error) {
@@ -3120,15 +2954,12 @@ func decodeGPRSCellOptionsIET3168(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T3168", v)
+	r.Set("t3168", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIET3168(w *runtime.Writer, v uint8) error {
@@ -3136,14 +2967,11 @@ func encodeGPRSCellOptionsIET3168(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T3168", uint64(v))
+	w.Set("t3168", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIET3192(r *runtime.Reader) (uint8, error) {
@@ -3151,15 +2979,12 @@ func decodeGPRSCellOptionsIET3192(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T3192", v)
+	r.Set("t3192", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIET3192(w *runtime.Writer, v uint8) error {
@@ -3167,14 +2992,11 @@ func encodeGPRSCellOptionsIET3192(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T3192", uint64(v))
+	w.Set("t3192", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEDRXTIMERMAX(r *runtime.Reader) (uint8, error) {
@@ -3182,15 +3004,12 @@ func decodeGPRSCellOptionsIEDRXTIMERMAX(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DRX_TIMER_MAX", v)
+	r.Set("drx_timer_max", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEDRXTIMERMAX(w *runtime.Writer, v uint8) error {
@@ -3198,14 +3017,11 @@ func encodeGPRSCellOptionsIEDRXTIMERMAX(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DRX_TIMER_MAX", uint64(v))
+	w.Set("drx_timer_max", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEACCESSBURSTTYPE(r *runtime.Reader) (uint8, error) {
@@ -3213,15 +3029,12 @@ func decodeGPRSCellOptionsIEACCESSBURSTTYPE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ACCESS_BURST_TYPE", v)
+	r.Set("access_burst_type", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEACCESSBURSTTYPE(w *runtime.Writer, v uint8) error {
@@ -3229,14 +3042,11 @@ func encodeGPRSCellOptionsIEACCESSBURSTTYPE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ACCESS_BURST_TYPE", uint64(v))
+	w.Set("access_burst_type", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIECONTROLACKTYPE(r *runtime.Reader) (uint8, error) {
@@ -3244,15 +3054,12 @@ func decodeGPRSCellOptionsIECONTROLACKTYPE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CONTROL_ACK_TYPE", v)
+	r.Set("control_ack_type", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIECONTROLACKTYPE(w *runtime.Writer, v uint8) error {
@@ -3260,14 +3067,11 @@ func encodeGPRSCellOptionsIECONTROLACKTYPE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CONTROL_ACK_TYPE", uint64(v))
+	w.Set("control_ack_type", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEBSCVMAX(r *runtime.Reader) (uint8, error) {
@@ -3275,15 +3079,12 @@ func decodeGPRSCellOptionsIEBSCVMAX(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BS_CV_MAX", v)
+	r.Set("bs_cv_max", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEBSCVMAX(w *runtime.Writer, v uint8) error {
@@ -3291,14 +3092,11 @@ func encodeGPRSCellOptionsIEBSCVMAX(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BS_CV_MAX", uint64(v))
+	w.Set("bs_cv_max", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEPANDECGroupPANDEC(r *runtime.Reader) (uint8, error) {
@@ -3306,15 +3104,12 @@ func decodeGPRSCellOptionsIEPANDECGroupPANDEC(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PAN_DEC", v)
+	r.Set("pan_dec", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEPANDECGroupPANDEC(w *runtime.Writer, v uint8) error {
@@ -3322,14 +3117,11 @@ func encodeGPRSCellOptionsIEPANDECGroupPANDEC(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PAN_DEC", uint64(v))
+	w.Set("pan_dec", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEPANDECGroupPANINC(r *runtime.Reader) (uint8, error) {
@@ -3337,15 +3129,12 @@ func decodeGPRSCellOptionsIEPANDECGroupPANINC(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PAN_INC", v)
+	r.Set("pan_inc", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEPANDECGroupPANINC(w *runtime.Writer, v uint8) error {
@@ -3353,14 +3142,11 @@ func encodeGPRSCellOptionsIEPANDECGroupPANINC(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PAN_INC", uint64(v))
+	w.Set("pan_inc", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEPANDECGroupPANMAX(r *runtime.Reader) (uint8, error) {
@@ -3368,15 +3154,12 @@ func decodeGPRSCellOptionsIEPANDECGroupPANMAX(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PAN_MAX", v)
+	r.Set("pan_max", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEPANDECGroupPANMAX(w *runtime.Writer, v uint8) error {
@@ -3384,14 +3167,11 @@ func encodeGPRSCellOptionsIEPANDECGroupPANMAX(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PAN_MAX", uint64(v))
+	w.Set("pan_max", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEPANDECGroup(r *runtime.Reader) (GPRSCellOptionsIEPANDECGroup, error) {
@@ -3489,15 +3269,12 @@ func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionLength(r *runtime.Reade
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extension Length", v)
+	r.Set("extension length", v)
 	return uint8(v), nil
 }
 func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionLength(w *runtime.Writer, v uint8) error {
@@ -3505,14 +3282,11 @@ func encodeGPRSCellOptionsIEExtensionLengthGroupExtensionLength(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extension Length", uint64(v))
+	w.Set("extension length", uint64(v))
 	return nil
 }
 func decodeGPRSCellOptionsIEExtensionLengthGroupExtensionInformationExtensionInformationFallbackKnown(r *runtime.Reader) (ExtensionInformation, error) {
@@ -3826,15 +3600,12 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("EGPRS_PACKET_CHANNEL_REQUEST", v)
+	r.Set("egprs_packet_channel_request", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUEST(w *runtime.Writer, v uint8) error {
@@ -3842,14 +3613,11 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EGPRS_PACKET_CHANNEL_REQUEST", uint64(v))
+	w.Set("egprs_packet_channel_request", uint64(v))
 	return nil
 }
 
@@ -3859,10 +3627,7 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -3871,7 +3636,7 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 	if uint64(v) > 10 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("BEP_PERIOD", v)
+	r.Set("bep_period", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD(w *runtime.Writer, v uint8) error {
@@ -3879,17 +3644,14 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELR
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if uint64(v) > 10 {
 		return w.ComponentError(runtime.InvalidValue, "ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroupBEPPERIOD", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BEP_PERIOD", uint64(v))
+	w.Set("bep_period", uint64(v))
 	return nil
 }
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup(r *runtime.Reader) (ExtensionInformationEGPRSPACKETCHANNELREQUESTGroupEGPRSPACKETCHANNELREQUESTGroup, error) {
@@ -3974,15 +3736,12 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupPFCFEATUREMODE(r *r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PFC_FEATURE_MODE", v)
+	r.Set("pfc_feature_mode", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupPFCFEATUREMODE(w *runtime.Writer, v uint8) error {
@@ -3990,14 +3749,11 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupPFCFEATUREMODE(w *r
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PFC_FEATURE_MODE", uint64(v))
+	w.Set("pfc_feature_mode", uint64(v))
 	return nil
 }
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupDTMSUPPORT(r *runtime.Reader) (uint8, error) {
@@ -4005,15 +3761,12 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupDTMSUPPORT(r *runti
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM_SUPPORT", v)
+	r.Set("dtm_support", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupDTMSUPPORT(w *runtime.Writer, v uint8) error {
@@ -4021,14 +3774,11 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupDTMSUPPORT(w *runti
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM_SUPPORT", uint64(v))
+	w.Set("dtm_support", uint64(v))
 	return nil
 }
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATION(r *runtime.Reader) (uint8, error) {
@@ -4036,15 +3786,12 @@ func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATI
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BSS_PAGING_COORDINATION", v)
+	r.Set("bss_paging_coordination", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATION(w *runtime.Writer, v uint8) error {
@@ -4052,14 +3799,11 @@ func encodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroupBSSPAGINGCOORDINATI
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BSS_PAGING_COORDINATION", uint64(v))
+	w.Set("bss_paging_coordination", uint64(v))
 	return nil
 }
 func decodeExtensionInformationEGPRSPACKETCHANNELREQUESTGroup(r *runtime.Reader) (ExtensionInformationEGPRSPACKETCHANNELREQUESTGroup, error) {
@@ -4141,15 +3885,12 @@ func decodeExtensionInformationCCNACTIVEGroupCCNACTIVE(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CCN_ACTIVE", v)
+	r.Set("ccn_active", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationCCNACTIVEGroupCCNACTIVE(w *runtime.Writer, v uint8) error {
@@ -4157,14 +3898,11 @@ func encodeExtensionInformationCCNACTIVEGroupCCNACTIVE(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CCN_ACTIVE", uint64(v))
+	w.Set("ccn_active", uint64(v))
 	return nil
 }
 func decodeExtensionInformationCCNACTIVEGroupNWEXTUTBF(r *runtime.Reader) (uint8, error) {
@@ -4172,15 +3910,12 @@ func decodeExtensionInformationCCNACTIVEGroupNWEXTUTBF(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NW_EXT_UTBF", v)
+	r.Set("nw_ext_utbf", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationCCNACTIVEGroupNWEXTUTBF(w *runtime.Writer, v uint8) error {
@@ -4188,14 +3923,11 @@ func encodeExtensionInformationCCNACTIVEGroupNWEXTUTBF(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NW_EXT_UTBF", uint64(v))
+	w.Set("nw_ext_utbf", uint64(v))
 	return nil
 }
 func decodeExtensionInformationCCNACTIVEGroup(r *runtime.Reader) (ExtensionInformationCCNACTIVEGroup, error) {
@@ -4251,15 +3983,12 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupMULTIPLETBFCAPABILITY(r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MULTIPLE_TBF_CAPABILITY", v)
+	r.Set("multiple_tbf_capability", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupMULTIPLETBFCAPABILITY(w *runtime.Writer, v uint8) error {
@@ -4267,14 +3996,11 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupMULTIPLETBFCAPABILITY(w
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MULTIPLE_TBF_CAPABILITY", uint64(v))
+	w.Set("multiple_tbf_capability", uint64(v))
 	return nil
 }
 func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupEXTUTBFNODATA(r *runtime.Reader) (uint8, error) {
@@ -4282,15 +4008,12 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupEXTUTBFNODATA(r *runtim
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("EXT_UTBF_NODATA", v)
+	r.Set("ext_utbf_nodata", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupEXTUTBFNODATA(w *runtime.Writer, v uint8) error {
@@ -4298,14 +4021,11 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupEXTUTBFNODATA(w *runtim
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EXT_UTBF_NODATA", uint64(v))
+	w.Set("ext_utbf_nodata", uint64(v))
 	return nil
 }
 func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDTMENHANCEMENTSCAPABILITY(r *runtime.Reader) (uint8, error) {
@@ -4313,15 +4033,12 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDTMENHANCEMENTSCAPABILI
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM_ENHANCEMENTS_CAPABILITY", v)
+	r.Set("dtm_enhancements_capability", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDTMENHANCEMENTSCAPABILITY(w *runtime.Writer, v uint8) error {
@@ -4329,14 +4046,11 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDTMENHANCEMENTSCAPABILI
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM_ENHANCEMENTS_CAPABILITY", uint64(v))
+	w.Set("dtm_enhancements_capability", uint64(v))
 	return nil
 }
 func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORT(r *runtime.Reader) (uint8, error) {
@@ -4344,15 +4058,12 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DEDICATED_MODE_MBMS_NOTIFICATION_SUPPORT", v)
+	r.Set("dedicated_mode_mbms_notification_support", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORT(w *runtime.Writer, v uint8) error {
@@ -4360,14 +4071,11 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DEDICATED_MODE_MBMS_NOTIFICATION_SUPPORT", uint64(v))
+	w.Set("dedicated_mode_mbms_notification_support", uint64(v))
 	return nil
 }
 func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupMNCISUPPORT(r *runtime.Reader) (uint8, error) {
@@ -4375,15 +4083,12 @@ func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MNCI_SUPPORT", v)
+	r.Set("mnci_support", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupMNCISUPPORT(w *runtime.Writer, v uint8) error {
@@ -4391,14 +4096,11 @@ func encodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFI
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MNCI_SUPPORT", uint64(v))
+	w.Set("mnci_support", uint64(v))
 	return nil
 }
 func decodeExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup(r *runtime.Reader) (ExtensionInformationMULTIPLETBFCAPABILITYGroupDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroup, error) {
@@ -4557,15 +4259,12 @@ func decodeExtensionInformationREDUCEDLATENCYACCESS(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("REDUCED_LATENCY_ACCESS", v)
+	r.Set("reduced_latency_access", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationREDUCEDLATENCYACCESS(w *runtime.Writer, v uint8) error {
@@ -4573,14 +4272,11 @@ func encodeExtensionInformationREDUCEDLATENCYACCESS(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("REDUCED_LATENCY_ACCESS", uint64(v))
+	w.Set("reduced_latency_access", uint64(v))
 	return nil
 }
 func decodeExtensionInformationNMOIALTERNATE(r *runtime.Reader) (uint8, error) {
@@ -4588,15 +4284,12 @@ func decodeExtensionInformationNMOIALTERNATE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NMO_I_ALTERNATE", v)
+	r.Set("nmo_i_alternate", v)
 	return uint8(v), nil
 }
 func encodeExtensionInformationNMOIALTERNATE(w *runtime.Writer, v uint8) error {
@@ -4604,14 +4297,11 @@ func encodeExtensionInformationNMOIALTERNATE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NMO_I_ALTERNATE", uint64(v))
+	w.Set("nmo_i_alternate", uint64(v))
 	return nil
 }
 func decodeExtensionInformationSpareBitListEntry(r *runtime.Reader) (runtime.BitString, error) {
@@ -4789,15 +4479,12 @@ func decodeFrequencyParametersIETSC(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TSC", v)
+	r.Set("tsc", v)
 	return uint8(v), nil
 }
 func encodeFrequencyParametersIETSC(w *runtime.Writer, v uint8) error {
@@ -4805,14 +4492,11 @@ func encodeFrequencyParametersIETSC(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TSC", uint64(v))
+	w.Set("tsc", uint64(v))
 	return nil
 }
 func decodeFrequencyParametersIEARFCNChoiceARFCNAlt00(r *runtime.Reader) (struct{}, error) {
@@ -4830,15 +4514,12 @@ func decodeFrequencyParametersIEARFCNChoiceARFCNARFCN(r *runtime.Reader) (uint16
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("10")
-	if err != nil {
-		return 0, err
-	}
+	width := 10
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ARFCN", v)
+	r.Set("arfcn", v)
 	return uint16(v), nil
 }
 func encodeFrequencyParametersIEARFCNChoiceARFCNARFCN(w *runtime.Writer, v uint16) error {
@@ -4846,14 +4527,11 @@ func encodeFrequencyParametersIEARFCNChoiceARFCNARFCN(w *runtime.Writer, v uint1
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("10")
-	if err != nil {
-		return err
-	}
+	width := 10
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ARFCN", uint64(v))
+	w.Set("arfcn", uint64(v))
 	return nil
 }
 func decodeFrequencyParametersIEARFCNChoiceARFCN(r *runtime.Reader) (FrequencyParametersIEARFCNChoiceARFCN, error) {
@@ -5269,15 +4947,12 @@ func decodeIndirectEncodingStructMAIO(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MAIO", v)
+	r.Set("maio", v)
 	return uint8(v), nil
 }
 func encodeIndirectEncodingStructMAIO(w *runtime.Writer, v uint8) error {
@@ -5285,14 +4960,11 @@ func encodeIndirectEncodingStructMAIO(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MAIO", uint64(v))
+	w.Set("maio", uint64(v))
 	return nil
 }
 func decodeIndirectEncodingStructMANUMBER(r *runtime.Reader) (uint8, error) {
@@ -5300,15 +4972,12 @@ func decodeIndirectEncodingStructMANUMBER(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MA_NUMBER", v)
+	r.Set("ma_number", v)
 	return uint8(v), nil
 }
 func encodeIndirectEncodingStructMANUMBER(w *runtime.Writer, v uint8) error {
@@ -5316,14 +4985,11 @@ func encodeIndirectEncodingStructMANUMBER(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MA_NUMBER", uint64(v))
+	w.Set("ma_number", uint64(v))
 	return nil
 }
 func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK1(r *runtime.Reader) (uint8, error) {
@@ -5331,15 +4997,12 @@ func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK1(r *runtime.Reader) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CHANGE_MARK_1", v)
+	r.Set("change_mark_1", v)
 	return uint8(v), nil
 }
 func encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK1(w *runtime.Writer, v uint8) error {
@@ -5347,14 +5010,11 @@ func encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK1(w *runtime.Writer, 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CHANGE_MARK_1", uint64(v))
+	w.Set("change_mark_1", uint64(v))
 	return nil
 }
 func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Value(r *runtime.Reader) (uint8, error) {
@@ -5362,15 +5022,12 @@ func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Value(r *runtime.Rea
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CHANGE_MARK_2", v)
+	r.Set("change_mark_2", v)
 	return uint8(v), nil
 }
 func encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Value(w *runtime.Writer, v uint8) error {
@@ -5378,14 +5035,11 @@ func encodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Value(w *runtime.Wri
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CHANGE_MARK_2", uint64(v))
+	w.Set("change_mark_2", uint64(v))
 	return nil
 }
 func decodeIndirectEncodingStructCHANGEMARK1GroupCHANGEMARK2Selector(r *runtime.Reader) (*uint8, error) {
@@ -5560,15 +5214,12 @@ func decodeDirectEncoding1StructMAIO(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MAIO", v)
+	r.Set("maio", v)
 	return uint8(v), nil
 }
 func encodeDirectEncoding1StructMAIO(w *runtime.Writer, v uint8) error {
@@ -5576,14 +5227,11 @@ func encodeDirectEncoding1StructMAIO(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MAIO", uint64(v))
+	w.Set("maio", uint64(v))
 	return nil
 }
 func decodeDirectEncoding1StructGPRSMobileAllocation(r *runtime.Reader) (GPRSMobileAllocationIE, error) {
@@ -5645,15 +5293,12 @@ func decodeDirectEncoding2StructMAIO(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MAIO", v)
+	r.Set("maio", v)
 	return uint8(v), nil
 }
 func encodeDirectEncoding2StructMAIO(w *runtime.Writer, v uint8) error {
@@ -5661,14 +5306,11 @@ func encodeDirectEncoding2StructMAIO(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MAIO", uint64(v))
+	w.Set("maio", uint64(v))
 	return nil
 }
 func decodeDirectEncoding2StructHSN(r *runtime.Reader) (uint8, error) {
@@ -5676,15 +5318,12 @@ func decodeDirectEncoding2StructHSN(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("HSN", v)
+	r.Set("hsn", v)
 	return uint8(v), nil
 }
 func encodeDirectEncoding2StructHSN(w *runtime.Writer, v uint8) error {
@@ -5692,14 +5331,11 @@ func encodeDirectEncoding2StructHSN(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("HSN", uint64(v))
+	w.Set("hsn", uint64(v))
 	return nil
 }
 func decodeDirectEncoding2StructLengthOfMAFrequencyListContents(r *runtime.Reader) (uint8, error) {
@@ -5707,15 +5343,12 @@ func decodeDirectEncoding2StructLengthOfMAFrequencyListContents(r *runtime.Reade
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Length of MA Frequency List contents", v)
+	r.Set("length of ma frequency list contents", v)
 	return uint8(v), nil
 }
 func encodeDirectEncoding2StructLengthOfMAFrequencyListContents(w *runtime.Writer, v uint8) error {
@@ -5723,14 +5356,11 @@ func encodeDirectEncoding2StructLengthOfMAFrequencyListContents(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Length of MA Frequency List contents", uint64(v))
+	w.Set("length of ma frequency list contents", uint64(v))
 	return nil
 }
 func decodeDirectEncoding2StructMAFrequencyListContents(r *runtime.Reader) (runtime.BitString, error) {
@@ -5738,7 +5368,9 @@ func decodeDirectEncoding2StructMAFrequencyListContents(r *runtime.Reader) (runt
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("8*(val(LengthofMAFrequencyListcontents)+3)")
+	width, err := r.ExpressionResult(runtime.ExpressionConstant(8).Operand().Multiply(r.
+		ExpressionVariable("LengthofMAFrequencyListcontents").Operand().Operand().Add(runtime.ExpressionConstant(3).Operand()).Operand()))
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -5753,7 +5385,9 @@ func encodeDirectEncoding2StructMAFrequencyListContents(w *runtime.Writer, v run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("8*(val(LengthofMAFrequencyListcontents)+3)")
+	width, err := w.ExpressionResult(runtime.ExpressionConstant(8).Operand().Multiply(w.
+		ExpressionVariable("LengthofMAFrequencyListcontents").Operand().Operand().Add(runtime.ExpressionConstant(3).Operand()).Operand()))
+
 	if err != nil {
 		return err
 	}
@@ -5841,15 +5475,12 @@ func decodeGPRSMobileAllocationIEHSN(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("HSN", v)
+	r.Set("hsn", v)
 	return uint8(v), nil
 }
 func encodeGPRSMobileAllocationIEHSN(w *runtime.Writer, v uint8) error {
@@ -5857,14 +5488,11 @@ func encodeGPRSMobileAllocationIEHSN(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("HSN", uint64(v))
+	w.Set("hsn", uint64(v))
 	return nil
 }
 func decodeGPRSMobileAllocationIERFLNumberListValue(r *runtime.Reader) (RFLNumberListStruct, error) {
@@ -5917,15 +5545,12 @@ func decodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMALENGTH(r *runtime.Reade
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MA_LENGTH", v)
+	r.Set("ma_length", v)
 	return uint8(v), nil
 }
 func encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMALENGTH(w *runtime.Writer, v uint8) error {
@@ -5933,14 +5558,11 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMALENGTH(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MA_LENGTH", uint64(v))
+	w.Set("ma_length", uint64(v))
 	return nil
 }
 func decodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMABITMAP(r *runtime.Reader) (runtime.BitString, error) {
@@ -5948,7 +5570,8 @@ func decodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMABITMAP(r *runtime.Reade
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("val(MA_LENGTH) + 1")
+	width, err := r.ExpressionResult(r.ExpressionVariable("MA_LENGTH").Operand().Operand().Add(runtime.ExpressionConstant(1).Operand()))
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -5963,7 +5586,8 @@ func encodeGPRSMobileAllocationIEMALENGTHChoiceMALENGTHMABITMAP(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("val(MA_LENGTH) + 1")
+	width, err := w.ExpressionResult(w.ExpressionVariable("MA_LENGTH").Operand().Operand().Add(runtime.ExpressionConstant(1).Operand()))
+
 	if err != nil {
 		return err
 	}
@@ -6264,15 +5888,12 @@ func decodeRFLNumberListStructElementRFLNUMBER(r *runtime.Reader) (uint8, error)
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RFL_NUMBER", v)
+	r.Set("rfl_number", v)
 	return uint8(v), nil
 }
 func encodeRFLNumberListStructElementRFLNUMBER(w *runtime.Writer, v uint8) error {
@@ -6280,14 +5901,11 @@ func encodeRFLNumberListStructElementRFLNUMBER(w *runtime.Writer, v uint8) error
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RFL_NUMBER", uint64(v))
+	w.Set("rfl_number", uint64(v))
 	return nil
 }
 func decodeRFLNumberListStructElement(r *runtime.Reader) (RFLNumberListStructElement, error) {
@@ -6382,15 +6000,12 @@ func decodeARFCNIndexListStructElementARFCNINDEX(r *runtime.Reader) (uint8, erro
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ARFCN_INDEX", v)
+	r.Set("arfcn_index", v)
 	return uint8(v), nil
 }
 func encodeARFCNIndexListStructElementARFCNINDEX(w *runtime.Writer, v uint8) error {
@@ -6398,14 +6013,11 @@ func encodeARFCNIndexListStructElementARFCNINDEX(w *runtime.Writer, v uint8) err
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ARFCN_INDEX", uint64(v))
+	w.Set("arfcn_index", uint64(v))
 	return nil
 }
 func decodeARFCNIndexListStructElement(r *runtime.Reader) (ARFCNIndexListStructElement, error) {
@@ -6510,15 +6122,12 @@ func decodePCIDGroupIEPCIDListEntryPCID(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("9")
-	if err != nil {
-		return 0, err
-	}
+	width := 9
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PCID", v)
+	r.Set("pcid", v)
 	return uint16(v), nil
 }
 func encodePCIDGroupIEPCIDListEntryPCID(w *runtime.Writer, v uint16) error {
@@ -6526,14 +6135,11 @@ func encodePCIDGroupIEPCIDListEntryPCID(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("9")
-	if err != nil {
-		return err
-	}
+	width := 9
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PCID", uint64(v))
+	w.Set("pcid", uint64(v))
 	return nil
 }
 func decodePCIDGroupIEPCIDListEntry(r *runtime.Reader) (PCIDGroupIEPCIDListEntry, error) {
@@ -6624,15 +6230,12 @@ func decodePCIDGroupIEPCIDBITMAPGROUPValue(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PCID_BITMAP_GROUP", v)
+	r.Set("pcid_bitmap_group", v)
 	return uint8(v), nil
 }
 func encodePCIDGroupIEPCIDBITMAPGROUPValue(w *runtime.Writer, v uint8) error {
@@ -6640,14 +6243,11 @@ func encodePCIDGroupIEPCIDBITMAPGROUPValue(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PCID_BITMAP_GROUP", uint64(v))
+	w.Set("pcid_bitmap_group", uint64(v))
 	return nil
 }
 func decodePCIDGroupIEPCIDBITMAPGROUPSelector(r *runtime.Reader) (*uint8, error) {
@@ -6694,15 +6294,12 @@ func decodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternLength(r *runtim
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PCID_Pattern_length", v)
+	r.Set("pcid_pattern_length", v)
 	return uint8(v), nil
 }
 func encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternLength(w *runtime.Writer, v uint8) error {
@@ -6710,14 +6307,11 @@ func encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternLength(w *runtim
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PCID_Pattern_length", uint64(v))
+	w.Set("pcid_pattern_length", uint64(v))
 	return nil
 }
 func decodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPattern(r *runtime.Reader) (runtime.BitString, error) {
@@ -6725,7 +6319,8 @@ func decodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPattern(r *runtime.Read
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("val(PCID_Pattern_length + 1)")
+	width, err := r.ExpressionResult(r.ExpressionVariable("PCID_Pattern_length").Operand().Add(runtime.ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -6740,7 +6335,8 @@ func encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPattern(w *runtime.Writ
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("val(PCID_Pattern_length + 1)")
+	width, err := w.ExpressionResult(w.ExpressionVariable("PCID_Pattern_length").Operand().Add(runtime.ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return err
 	}
@@ -6754,15 +6350,12 @@ func decodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternSense(r *runtime
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PCID_pattern_sense", v)
+	r.Set("pcid_pattern_sense", v)
 	return uint8(v), nil
 }
 func encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternSense(w *runtime.Writer, v uint8) error {
@@ -6770,14 +6363,11 @@ func encodePCIDGroupIEPCIDPatternLengthGroupListEntryPCIDPatternSense(w *runtime
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PCID_pattern_sense", uint64(v))
+	w.Set("pcid_pattern_sense", uint64(v))
 	return nil
 }
 func decodePCIDGroupIEPCIDPatternLengthGroupListEntry(r *runtime.Reader) (PCIDGroupIEPCIDPatternLengthGroupListEntry, error) {
@@ -7099,15 +6689,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRAN_FREQUENCY_INDEX", v)
+	r.Set("e-utran_frequency_index", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntryEUTRANFREQUENCYINDEX(w *runtime.Writer, v uint8) error {
@@ -7115,14 +6702,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRAN_FREQUENCY_INDEX", uint64(v))
+	w.Set("e-utran_frequency_index", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry(r *runtime.Reader) (RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry, error) {
@@ -7223,15 +6807,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRAN_Qmin", v)
+	r.Set("e-utran_qmin", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQminEUTRANQmin(w *runtime.Writer, v uint8) error {
@@ -7239,14 +6820,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRAN_Qmin", uint64(v))
+	w.Set("e-utran_qmin", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin(r *runtime.Reader) (RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceEUTRANQmin, error) {
@@ -7309,15 +6887,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("THRESH_E-UTRAN_high_Q", v)
+	r.Set("thresh_e-utran_high_q", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANHighQ(w *runtime.Writer, v uint8) error {
@@ -7325,14 +6900,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("THRESH_E-UTRAN_high_Q", uint64(v))
+	w.Set("thresh_e-utran_high_q", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANLowQValue(r *runtime.Reader) (uint8, error) {
@@ -7340,15 +6912,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("THRESH_E-UTRAN_low_Q", v)
+	r.Set("thresh_e-utran_low_q", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANLowQValue(w *runtime.Writer, v uint8) error {
@@ -7356,14 +6925,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("THRESH_E-UTRAN_low_Q", uint64(v))
+	w.Set("thresh_e-utran_low_q", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQTHRESHEUTRANLowQSelector(r *runtime.Reader) (*uint8, error) {
@@ -7400,15 +6966,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRAN_QQUALMIN", v)
+	r.Set("e-utran_qqualmin", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANQQUALMINValue(w *runtime.Writer, v uint8) error {
@@ -7416,14 +6979,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRAN_QQUALMIN", uint64(v))
+	w.Set("e-utran_qqualmin", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANQQUALMINSelector(r *runtime.Reader) (*uint8, error) {
@@ -7460,15 +7020,12 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRAN_RSRPmin", v)
+	r.Set("e-utran_rsrpmin", v)
 	return uint8(v), nil
 }
 func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANRSRPminValue(w *runtime.Writer, v uint8) error {
@@ -7476,14 +7033,11 @@ func encodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoice
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRAN_RSRPmin", uint64(v))
+	w.Set("e-utran_rsrpmin", uint64(v))
 	return nil
 }
 func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANQminChoiceTHRESHEUTRANHighQEUTRANRSRPminSelector(r *runtime.Reader) (*uint8, error) {
@@ -7730,10 +7284,7 @@ func decodeEGPRSWindowSizeIEEGPRSWindowSize(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -7742,7 +7293,7 @@ func decodeEGPRSWindowSizeIEEGPRSWindowSize(r *runtime.Reader) (uint8, error) {
 	if v == 31 {
 		return 0, constraintFailure(r, fieldStart, width, "excluded value")
 	}
-	r.Set("EGPRS Window Size", v)
+	r.Set("egprs window size", v)
 	return uint8(v), nil
 }
 func encodeEGPRSWindowSizeIEEGPRSWindowSize(w *runtime.Writer, v uint8) error {
@@ -7750,17 +7301,14 @@ func encodeEGPRSWindowSizeIEEGPRSWindowSize(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if uint64(v) == 31 {
 		return w.ComponentError(runtime.InvalidValue, "EGPRSWindowSizeIEEGPRSWindowSize", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EGPRS Window Size", uint64(v))
+	w.Set("egprs window size", uint64(v))
 	return nil
 }
 func decodeEGPRSWindowSizeIE(r *runtime.Reader) (EGPRSWindowSizeIE, error) {
@@ -7803,10 +7351,7 @@ func decodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(r *runtime.R
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -7815,7 +7360,7 @@ func decodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(r *runtime.R
 	if uint64(v) > 11 {
 		return 0, constraintFailure(r, fieldStart, width, "value reserved by source table")
 	}
-	r.Set("EGPRS Modulation and Coding Scheme", v)
+	r.Set("egprs modulation and coding scheme", v)
 	return uint8(v), nil
 }
 func encodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(w *runtime.Writer, v uint8) error {
@@ -7823,17 +7368,14 @@ func encodeEGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme(w *runtime.W
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if uint64(v) > 11 {
 		return w.ComponentError(runtime.InvalidValue, "EGPRSModulationAndCodingIEEGPRSModulationAndCodingScheme", width, fmt.Errorf("value reserved by source table"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EGPRS Modulation and Coding Scheme", uint64(v))
+	w.Set("egprs modulation and coding scheme", uint64(v))
 	return nil
 }
 func decodeEGPRSModulationAndCodingIE(r *runtime.Reader) (EGPRSModulationAndCodingIE, error) {
@@ -7876,10 +7418,7 @@ func decodeEGPRSLevelIEEGPRSLevel(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -7888,7 +7427,7 @@ func decodeEGPRSLevelIEEGPRSLevel(r *runtime.Reader) (uint8, error) {
 	if v == 3 {
 		return 0, constraintFailure(r, fieldStart, width, "excluded value")
 	}
-	r.Set("EGPRS Level", v)
+	r.Set("egprs level", v)
 	return uint8(v), nil
 }
 func encodeEGPRSLevelIEEGPRSLevel(w *runtime.Writer, v uint8) error {
@@ -7896,17 +7435,14 @@ func encodeEGPRSLevelIEEGPRSLevel(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if uint64(v) == 3 {
 		return w.ComponentError(runtime.InvalidValue, "EGPRSLevelIEEGPRSLevel", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EGPRS Level", uint64(v))
+	w.Set("egprs level", uint64(v))
 	return nil
 }
 func decodeEGPRSLevelIE(r *runtime.Reader) (EGPRSLevelIE, error) {
@@ -7949,15 +7485,12 @@ func decodePacketTimingAdvanceIETIMINGADVANCEVALUEValue(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TIMING_ADVANCE_VALUE", v)
+	r.Set("timing_advance_value", v)
 	return uint8(v), nil
 }
 func encodePacketTimingAdvanceIETIMINGADVANCEVALUEValue(w *runtime.Writer, v uint8) error {
@@ -7965,14 +7498,11 @@ func encodePacketTimingAdvanceIETIMINGADVANCEVALUEValue(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TIMING_ADVANCE_VALUE", uint64(v))
+	w.Set("timing_advance_value", uint64(v))
 	return nil
 }
 func decodePacketTimingAdvanceIETIMINGADVANCEVALUESelector(r *runtime.Reader) (*uint8, error) {
@@ -8009,15 +7539,12 @@ func decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCEINDEX(r *run
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TIMING_ADVANCE_INDEX", v)
+	r.Set("timing_advance_index", v)
 	return uint8(v), nil
 }
 func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCEINDEX(w *runtime.Writer, v uint8) error {
@@ -8025,14 +7552,11 @@ func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCEINDEX(w *run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TIMING_ADVANCE_INDEX", uint64(v))
+	w.Set("timing_advance_index", uint64(v))
 	return nil
 }
 func decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCETIMESLOTNUMBER(r *runtime.Reader) (uint8, error) {
@@ -8040,15 +7564,12 @@ func decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCETIMESLOTNUMB
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TIMING_ADVANCE_TIMESLOT_NUMBER", v)
+	r.Set("timing_advance_timeslot_number", v)
 	return uint8(v), nil
 }
 func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCETIMESLOTNUMBER(w *runtime.Writer, v uint8) error {
@@ -8056,14 +7577,11 @@ func encodePacketTimingAdvanceIETIMINGADVANCEINDEXGroupTIMINGADVANCETIMESLOTNUMB
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TIMING_ADVANCE_TIMESLOT_NUMBER", uint64(v))
+	w.Set("timing_advance_timeslot_number", uint64(v))
 	return nil
 }
 func decodePacketTimingAdvanceIETIMINGADVANCEINDEXGroup(r *runtime.Reader) (PacketTimingAdvanceIETIMINGADVANCEINDEXGroup, error) {
@@ -8206,15 +7724,12 @@ func decodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEIDMBMSSERVICEID(r *runtime.Reader
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("24")
-	if err != nil {
-		return 0, err
-	}
+	width := 24
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MBMS SERVICE ID", v)
+	r.Set("mbms service id", v)
 	return uint32(v), nil
 }
 func encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEIDMBMSSERVICEID(w *runtime.Writer, v uint32) error {
@@ -8222,14 +7737,11 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEIDMBMSSERVICEID(w *runtime.Writer
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("24")
-	if err != nil {
-		return err
-	}
+	width := 24
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MBMS SERVICE ID", uint64(v))
+	w.Set("mbms service id", uint64(v))
 	return nil
 }
 func decodeTMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoiceMBMSSERVICEID, error) {
@@ -8292,15 +7804,12 @@ func decodeTMGIIEMBMSSERVICEIDChoiceMCCMBMSSERVICEID(r *runtime.Reader) (uint32,
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("24")
-	if err != nil {
-		return 0, err
-	}
+	width := 24
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MBMS SERVICE ID", v)
+	r.Set("mbms service id", v)
 	return uint32(v), nil
 }
 func encodeTMGIIEMBMSSERVICEIDChoiceMCCMBMSSERVICEID(w *runtime.Writer, v uint32) error {
@@ -8308,14 +7817,11 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMCCMBMSSERVICEID(w *runtime.Writer, v uint32
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("24")
-	if err != nil {
-		return err
-	}
+	width := 24
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MBMS SERVICE ID", uint64(v))
+	w.Set("mbms service id", uint64(v))
 	return nil
 }
 func decodeTMGIIEMBMSSERVICEIDChoiceMCCMCC(r *runtime.Reader) (uint16, error) {
@@ -8323,15 +7829,12 @@ func decodeTMGIIEMBMSSERVICEIDChoiceMCCMCC(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("12")
-	if err != nil {
-		return 0, err
-	}
+	width := 12
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MCC", v)
+	r.Set("mcc", v)
 	return uint16(v), nil
 }
 func encodeTMGIIEMBMSSERVICEIDChoiceMCCMCC(w *runtime.Writer, v uint16) error {
@@ -8339,14 +7842,11 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMCCMCC(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("12")
-	if err != nil {
-		return err
-	}
+	width := 12
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MCC", uint64(v))
+	w.Set("mcc", uint64(v))
 	return nil
 }
 func decodeTMGIIEMBMSSERVICEIDChoiceMCCMNC(r *runtime.Reader) (uint16, error) {
@@ -8354,15 +7854,12 @@ func decodeTMGIIEMBMSSERVICEIDChoiceMCCMNC(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("12")
-	if err != nil {
-		return 0, err
-	}
+	width := 12
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MNC", v)
+	r.Set("mnc", v)
 	return uint16(v), nil
 }
 func encodeTMGIIEMBMSSERVICEIDChoiceMCCMNC(w *runtime.Writer, v uint16) error {
@@ -8370,14 +7867,11 @@ func encodeTMGIIEMBMSSERVICEIDChoiceMCCMNC(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("12")
-	if err != nil {
-		return err
-	}
+	width := 12
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MNC", uint64(v))
+	w.Set("mnc", uint64(v))
 	return nil
 }
 func decodeTMGIIEMBMSSERVICEIDChoiceMCC(r *runtime.Reader) (TMGIIEMBMSSERVICEIDChoiceMCC, error) {

@@ -371,15 +371,12 @@ func decodeEnhancedMeasurementReportRRShortPD(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RR short PD", v)
+	r.Set("rr short pd", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportRRShortPD(w *runtime.Writer, v uint8) error {
@@ -387,14 +384,11 @@ func encodeEnhancedMeasurementReportRRShortPD(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RR short PD", uint64(v))
+	w.Set("rr short pd", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportMessageType(r *runtime.Reader) (uint8, error) {
@@ -402,10 +396,7 @@ func decodeEnhancedMeasurementReportMessageType(r *runtime.Reader) (uint8, error
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -414,7 +405,7 @@ func decodeEnhancedMeasurementReportMessageType(r *runtime.Reader) (uint8, error
 	if v != 4 {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	r.Set("Message type", v)
+	r.Set("message type", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportMessageType(w *runtime.Writer, v uint8) error {
@@ -422,17 +413,14 @@ func encodeEnhancedMeasurementReportMessageType(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if uint64(v) != 4 {
 		return w.ComponentError(runtime.InvalidValue, "EnhancedMeasurementReportMessageType", width, fmt.Errorf("equality constraint failed"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Message type", uint64(v))
+	w.Set("message type", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportShortLayer2Header(r *runtime.Reader) (uint8, error) {
@@ -440,15 +428,12 @@ func decodeEnhancedMeasurementReportShortLayer2Header(r *runtime.Reader) (uint8,
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Short layer 2 header", v)
+	r.Set("short layer 2 header", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportShortLayer2Header(w *runtime.Writer, v uint8) error {
@@ -456,14 +441,11 @@ func encodeEnhancedMeasurementReportShortLayer2Header(w *runtime.Writer, v uint8
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Short layer 2 header", uint64(v))
+	w.Set("short layer 2 header", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportBAUSED(r *runtime.Reader) (uint8, error) {
@@ -471,15 +453,12 @@ func decodeEnhancedMeasurementReportBAUSED(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BA_USED", v)
+	r.Set("ba_used", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportBAUSED(w *runtime.Writer, v uint8) error {
@@ -487,14 +466,11 @@ func encodeEnhancedMeasurementReportBAUSED(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BA_USED", uint64(v))
+	w.Set("ba_used", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportN3GBAUSED(r *runtime.Reader) (uint8, error) {
@@ -502,15 +478,12 @@ func decodeEnhancedMeasurementReportN3GBAUSED(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("3G_BA_USED", v)
+	r.Set("3g_ba_used", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportN3GBAUSED(w *runtime.Writer, v uint8) error {
@@ -518,14 +491,11 @@ func encodeEnhancedMeasurementReportN3GBAUSED(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("3G_BA_USED", uint64(v))
+	w.Set("3g_ba_used", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportBSICSeen(r *runtime.Reader) (uint8, error) {
@@ -533,15 +503,12 @@ func decodeEnhancedMeasurementReportBSICSeen(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BSIC_Seen", v)
+	r.Set("bsic_seen", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportBSICSeen(w *runtime.Writer, v uint8) error {
@@ -549,14 +516,11 @@ func encodeEnhancedMeasurementReportBSICSeen(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BSIC_Seen", uint64(v))
+	w.Set("bsic_seen", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportSCALE(r *runtime.Reader) (uint8, error) {
@@ -564,15 +528,12 @@ func decodeEnhancedMeasurementReportSCALE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SCALE", v)
+	r.Set("scale", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportSCALE(w *runtime.Writer, v uint8) error {
@@ -580,14 +541,11 @@ func encodeEnhancedMeasurementReportSCALE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SCALE", uint64(v))
+	w.Set("scale", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportServingCellDataValue(r *runtime.Reader) (ServingCellDataStruct, error) {
@@ -729,15 +687,12 @@ func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(r *runt
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("REPORTING_QUANTITY", v)
+	r.Set("reporting_quantity", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(w *runtime.Writer, v uint8) error {
@@ -745,14 +700,11 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(w *runt
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("REPORTING_QUANTITY", uint64(v))
+	w.Set("reporting_quantity", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r *runtime.Reader) (*uint8, error) {
@@ -923,15 +875,12 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHBITMAPLENGTH(r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("7")
-	if err != nil {
-		return 0, err
-	}
+	width := 7
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BITMAP_LENGTH", v)
+	r.Set("bitmap_length", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHBITMAPLENGTH(w *runtime.Writer, v uint8) error {
@@ -939,14 +888,11 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHBITMAPLENGTH(w
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("7")
-	if err != nil {
-		return err
-	}
+	width := 7
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BITMAP_LENGTH", uint64(v))
+	w.Set("bitmap_length", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntryValue(r *runtime.Reader) (uint8, error) {
@@ -954,15 +900,12 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("REPORTING_QUANTITY", v)
+	r.Set("reporting_quantity", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntryValue(w *runtime.Writer, v uint8) error {
@@ -970,14 +913,11 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("REPORTING_QUANTITY", uint64(v))
+	w.Set("reporting_quantity", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(r *runtime.Reader) (*uint8, error) {
@@ -1011,7 +951,9 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList(r *runtime.Reader) ([]*uint8, error) {
 	var out []*uint8
-	count, err := r.Eval("val(BITMAP_LENGTH+1)")
+	count, err := r.ExpressionResult(r.ExpressionVariable("BITMAP_LENGTH").Operand().Add(runtime.
+		ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return nil, err
 	}
@@ -1029,7 +971,9 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 	return out, nil
 }
 func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList(w *runtime.Writer, v []*uint8) error {
-	count, err := w.Eval("val(BITMAP_LENGTH+1)")
+	count, err := w.ExpressionResult(w.ExpressionVariable("BITMAP_LENGTH").Operand().Add(runtime.
+		ExpressionConstant(1).Operand()).Operand())
+
 	if err != nil {
 		return err
 	}
@@ -1266,15 +1210,12 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SI23_BA_USED", v)
+	r.Set("si23_ba_used", v)
 	return uint8(v), nil
 }
 func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSEDSI23BAUSED(w *runtime.Writer, v uint8) error {
@@ -1282,14 +1223,11 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SI23_BA_USED", uint64(v))
+	w.Set("si23_ba_used", uint64(v))
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED, error) {
@@ -2053,15 +1991,12 @@ func decodeServingCellDataStructDTXUSED(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTX_USED", v)
+	r.Set("dtx_used", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructDTXUSED(w *runtime.Writer, v uint8) error {
@@ -2069,14 +2004,11 @@ func encodeServingCellDataStructDTXUSED(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTX_USED", uint64(v))
+	w.Set("dtx_used", uint64(v))
 	return nil
 }
 func decodeServingCellDataStructRXLEVVAL(r *runtime.Reader) (uint8, error) {
@@ -2084,15 +2016,12 @@ func decodeServingCellDataStructRXLEVVAL(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXLEV_VAL", v)
+	r.Set("rxlev_val", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructRXLEVVAL(w *runtime.Writer, v uint8) error {
@@ -2100,14 +2029,11 @@ func encodeServingCellDataStructRXLEVVAL(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXLEV_VAL", uint64(v))
+	w.Set("rxlev_val", uint64(v))
 	return nil
 }
 func decodeServingCellDataStructRXQUALFULL(r *runtime.Reader) (uint8, error) {
@@ -2115,15 +2041,12 @@ func decodeServingCellDataStructRXQUALFULL(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RX_QUAL_FULL", v)
+	r.Set("rx_qual_full", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructRXQUALFULL(w *runtime.Writer, v uint8) error {
@@ -2131,14 +2054,11 @@ func encodeServingCellDataStructRXQUALFULL(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RX_QUAL_FULL", uint64(v))
+	w.Set("rx_qual_full", uint64(v))
 	return nil
 }
 func decodeServingCellDataStructMEANBEP(r *runtime.Reader) (uint8, error) {
@@ -2146,15 +2066,12 @@ func decodeServingCellDataStructMEANBEP(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MEAN_BEP", v)
+	r.Set("mean_bep", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructMEANBEP(w *runtime.Writer, v uint8) error {
@@ -2162,14 +2079,11 @@ func encodeServingCellDataStructMEANBEP(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MEAN_BEP", uint64(v))
+	w.Set("mean_bep", uint64(v))
 	return nil
 }
 func decodeServingCellDataStructCVBEP(r *runtime.Reader) (uint8, error) {
@@ -2177,15 +2091,12 @@ func decodeServingCellDataStructCVBEP(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CV_BEP", v)
+	r.Set("cv_bep", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructCVBEP(w *runtime.Writer, v uint8) error {
@@ -2193,14 +2104,11 @@ func encodeServingCellDataStructCVBEP(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CV_BEP", uint64(v))
+	w.Set("cv_bep", uint64(v))
 	return nil
 }
 func decodeServingCellDataStructNBRRCVDBLOCKS(r *runtime.Reader) (uint8, error) {
@@ -2208,15 +2116,12 @@ func decodeServingCellDataStructNBRRCVDBLOCKS(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NBR_RCVD_BLOCKS", v)
+	r.Set("nbr_rcvd_blocks", v)
 	return uint8(v), nil
 }
 func encodeServingCellDataStructNBRRCVDBLOCKS(w *runtime.Writer, v uint8) error {
@@ -2224,14 +2129,11 @@ func encodeServingCellDataStructNBRRCVDBLOCKS(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NBR_RCVD_BLOCKS", uint64(v))
+	w.Set("nbr_rcvd_blocks", uint64(v))
 	return nil
 }
 func decodeServingCellDataStruct(r *runtime.Reader) (ServingCellDataStruct, error) {
@@ -2339,15 +2241,12 @@ func decodeRepeatedInvalidBSICInformationStructBCCHFREQNCELL(r *runtime.Reader) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BCCH-FREQ-NCELL", v)
+	r.Set("bcch-freq-ncell", v)
 	return uint8(v), nil
 }
 func encodeRepeatedInvalidBSICInformationStructBCCHFREQNCELL(w *runtime.Writer, v uint8) error {
@@ -2355,14 +2254,11 @@ func encodeRepeatedInvalidBSICInformationStructBCCHFREQNCELL(w *runtime.Writer, 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BCCH-FREQ-NCELL", uint64(v))
+	w.Set("bcch-freq-ncell", uint64(v))
 	return nil
 }
 func decodeRepeatedInvalidBSICInformationStructBSIC(r *runtime.Reader) (uint8, error) {
@@ -2370,15 +2266,12 @@ func decodeRepeatedInvalidBSICInformationStructBSIC(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BSIC", v)
+	r.Set("bsic", v)
 	return uint8(v), nil
 }
 func encodeRepeatedInvalidBSICInformationStructBSIC(w *runtime.Writer, v uint8) error {
@@ -2386,14 +2279,11 @@ func encodeRepeatedInvalidBSICInformationStructBSIC(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BSIC", uint64(v))
+	w.Set("bsic", uint64(v))
 	return nil
 }
 func decodeRepeatedInvalidBSICInformationStructRXLEVNCELL(r *runtime.Reader) (uint8, error) {
@@ -2401,15 +2291,12 @@ func decodeRepeatedInvalidBSICInformationStructRXLEVNCELL(r *runtime.Reader) (ui
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXLEV-NCELL", v)
+	r.Set("rxlev-ncell", v)
 	return uint8(v), nil
 }
 func encodeRepeatedInvalidBSICInformationStructRXLEVNCELL(w *runtime.Writer, v uint8) error {
@@ -2417,14 +2304,11 @@ func encodeRepeatedInvalidBSICInformationStructRXLEVNCELL(w *runtime.Writer, v u
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXLEV-NCELL", uint64(v))
+	w.Set("rxlev-ncell", uint64(v))
 	return nil
 }
 func decodeRepeatedInvalidBSICInformationStruct(r *runtime.Reader) (RepeatedInvalidBSICInformationStruct, error) {
@@ -2493,15 +2377,12 @@ func decodeEUTRANMeasurementReportStructNEUTRAN(r *runtime.Reader) (uint8, error
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("N_E-UTRAN", v)
+	r.Set("n_e-utran", v)
 	return uint8(v), nil
 }
 func encodeEUTRANMeasurementReportStructNEUTRAN(w *runtime.Writer, v uint8) error {
@@ -2509,14 +2390,11 @@ func encodeEUTRANMeasurementReportStructNEUTRAN(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("N_E-UTRAN", uint64(v))
+	w.Set("n_e-utran", uint64(v))
 	return nil
 }
 func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryEUTRANFREQUENCYINDEX(r *runtime.Reader) (uint8, error) {
@@ -2524,15 +2402,12 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryEUTRAN
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRAN_FREQUENCY_INDEX", v)
+	r.Set("e-utran_frequency_index", v)
 	return uint8(v), nil
 }
 func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryEUTRANFREQUENCYINDEX(w *runtime.Writer, v uint8) error {
@@ -2540,14 +2415,11 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryEUTRAN
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRAN_FREQUENCY_INDEX", uint64(v))
+	w.Set("e-utran_frequency_index", uint64(v))
 	return nil
 }
 func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryCELLIDENTITY(r *runtime.Reader) (uint16, error) {
@@ -2555,15 +2427,12 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryCELLID
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("9")
-	if err != nil {
-		return 0, err
-	}
+	width := 9
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CELL IDENTITY", v)
+	r.Set("cell identity", v)
 	return uint16(v), nil
 }
 func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryCELLIDENTITY(w *runtime.Writer, v uint16) error {
@@ -2571,14 +2440,11 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryCELLID
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("9")
-	if err != nil {
-		return err
-	}
+	width := 9
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CELL IDENTITY", uint64(v))
+	w.Set("cell identity", uint64(v))
 	return nil
 }
 func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryREPORTINGQUANTITY(r *runtime.Reader) (uint8, error) {
@@ -2586,15 +2452,12 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryREPORT
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("REPORTING_QUANTITY", v)
+	r.Set("reporting_quantity", v)
 	return uint8(v), nil
 }
 func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryREPORTINGQUANTITY(w *runtime.Writer, v uint8) error {
@@ -2602,14 +2465,11 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntryREPORT
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("REPORTING_QUANTITY", uint64(v))
+	w.Set("reporting_quantity", uint64(v))
 	return nil
 }
 func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(r *runtime.Reader) (EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry, error) {
@@ -2760,15 +2620,12 @@ func decodeMeasurementResultsFieldsBAUSED(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BA_USED", v)
+	r.Set("ba_used", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsBAUSED(w *runtime.Writer, v uint8) error {
@@ -2776,14 +2633,11 @@ func encodeMeasurementResultsFieldsBAUSED(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BA_USED", uint64(v))
+	w.Set("ba_used", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsDTXUSED(r *runtime.Reader) (uint8, error) {
@@ -2791,15 +2645,12 @@ func decodeMeasurementResultsFieldsDTXUSED(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTX_USED", v)
+	r.Set("dtx_used", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsDTXUSED(w *runtime.Writer, v uint8) error {
@@ -2807,14 +2658,11 @@ func encodeMeasurementResultsFieldsDTXUSED(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTX_USED", uint64(v))
+	w.Set("dtx_used", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsRXLEVFULLSERVINGCELL(r *runtime.Reader) (uint8, error) {
@@ -2822,15 +2670,12 @@ func decodeMeasurementResultsFieldsRXLEVFULLSERVINGCELL(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXLEV_FULL_SERVING_CELL", v)
+	r.Set("rxlev_full_serving_cell", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsRXLEVFULLSERVINGCELL(w *runtime.Writer, v uint8) error {
@@ -2838,14 +2683,11 @@ func encodeMeasurementResultsFieldsRXLEVFULLSERVINGCELL(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXLEV_FULL_SERVING_CELL", uint64(v))
+	w.Set("rxlev_full_serving_cell", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsN3GBAUSED(r *runtime.Reader) (uint8, error) {
@@ -2853,15 +2695,12 @@ func decodeMeasurementResultsFieldsN3GBAUSED(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("3G_BA_USED", v)
+	r.Set("3g_ba_used", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsN3GBAUSED(w *runtime.Writer, v uint8) error {
@@ -2869,14 +2708,11 @@ func encodeMeasurementResultsFieldsN3GBAUSED(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("3G_BA_USED", uint64(v))
+	w.Set("3g_ba_used", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsMEASVALID(r *runtime.Reader) (uint8, error) {
@@ -2884,15 +2720,12 @@ func decodeMeasurementResultsFieldsMEASVALID(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MEAS_VALID", v)
+	r.Set("meas_valid", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsMEASVALID(w *runtime.Writer, v uint8) error {
@@ -2900,14 +2733,11 @@ func encodeMeasurementResultsFieldsMEASVALID(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MEAS_VALID", uint64(v))
+	w.Set("meas_valid", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsRXLEVSUBSERVINGCELL(r *runtime.Reader) (uint8, error) {
@@ -2915,15 +2745,12 @@ func decodeMeasurementResultsFieldsRXLEVSUBSERVINGCELL(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXLEV_SUB_SERVING_CELL", v)
+	r.Set("rxlev_sub_serving_cell", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsRXLEVSUBSERVINGCELL(w *runtime.Writer, v uint8) error {
@@ -2931,14 +2758,11 @@ func encodeMeasurementResultsFieldsRXLEVSUBSERVINGCELL(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXLEV_SUB_SERVING_CELL", uint64(v))
+	w.Set("rxlev_sub_serving_cell", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsSI23BAUSED(r *runtime.Reader) (uint8, error) {
@@ -2946,15 +2770,12 @@ func decodeMeasurementResultsFieldsSI23BAUSED(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SI23_BA_USED", v)
+	r.Set("si23_ba_used", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsSI23BAUSED(w *runtime.Writer, v uint8) error {
@@ -2962,14 +2783,11 @@ func encodeMeasurementResultsFieldsSI23BAUSED(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SI23_BA_USED", uint64(v))
+	w.Set("si23_ba_used", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsRXQUALFULLSERVINGCELL(r *runtime.Reader) (uint8, error) {
@@ -2977,15 +2795,12 @@ func decodeMeasurementResultsFieldsRXQUALFULLSERVINGCELL(r *runtime.Reader) (uin
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXQUAL_FULL_SERVING_CELL", v)
+	r.Set("rxqual_full_serving_cell", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsRXQUALFULLSERVINGCELL(w *runtime.Writer, v uint8) error {
@@ -2993,14 +2808,11 @@ func encodeMeasurementResultsFieldsRXQUALFULLSERVINGCELL(w *runtime.Writer, v ui
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXQUAL_FULL_SERVING_CELL", uint64(v))
+	w.Set("rxqual_full_serving_cell", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsFieldsRXQUALSUBSERVINGCELL(r *runtime.Reader) (uint8, error) {
@@ -3008,15 +2820,12 @@ func decodeMeasurementResultsFieldsRXQUALSUBSERVINGCELL(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXQUAL_SUB_SERVING_CELL", v)
+	r.Set("rxqual_sub_serving_cell", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsFieldsRXQUALSUBSERVINGCELL(w *runtime.Writer, v uint8) error {
@@ -3024,14 +2833,11 @@ func encodeMeasurementResultsFieldsRXQUALSUBSERVINGCELL(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXQUAL_SUB_SERVING_CELL", uint64(v))
+	w.Set("rxqual_sub_serving_cell", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsUnavailableArmNONCELLM(r *runtime.Reader) (uint8, error) {
@@ -3039,10 +2845,7 @@ func decodeMeasurementResultsUnavailableArmNONCELLM(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -3051,7 +2854,7 @@ func decodeMeasurementResultsUnavailableArmNONCELLM(r *runtime.Reader) (uint8, e
 	if v != 7 {
 		return 0, measurementResultsOperationLocation0.failure(constraintFailure(r, fieldStart, width, "equality constraint failed"), "", r.Position(), width)
 	}
-	r.Set("NO_NCELL_M", v)
+	r.Set("no_ncell_m", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsUnavailableArmNONCELLM(w *runtime.Writer, v uint8) error {
@@ -3059,35 +2862,27 @@ func encodeMeasurementResultsUnavailableArmNONCELLM(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if uint64(v) != 7 {
 		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsUnavailableArmNONCELLM", width, fmt.Errorf("equality constraint failed"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NO_NCELL_M", uint64(v))
+	w.Set("no_ncell_m", uint64(v))
 	return nil
 }
 
 // Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
 func decodeMeasurementResultsUnavailableArmAlt0List(r *runtime.Reader) (struct{}, error) {
-	for r.Remaining() > 0 {
-		if err := r.Expect("0"); err != nil {
-			return struct{}{}, err
-		}
-	}
-	return struct{}{}, nil
+	return struct{}{}, r.ExpectZeros(r.Remaining())
 }
 func encodeMeasurementResultsUnavailableArmAlt0List(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
 		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsUnavailableArmAlt0List", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
-		if err := w.WriteLiteral("0"); err != nil {
+		if err := w.WriteZeros(w.RemainingLimit()); err != nil {
 			return err
 		}
 	}
@@ -3143,10 +2938,7 @@ func decodeMeasurementResultsReportsArmNONCELLM(r *runtime.Reader) (uint8, error
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	fieldStart := r.Position()
 	v, err := r.ReadUint(width)
 	if err != nil {
@@ -3155,7 +2947,7 @@ func decodeMeasurementResultsReportsArmNONCELLM(r *runtime.Reader) (uint8, error
 	if v == 7 {
 		return 0, measurementResultsOperationLocation1.failure(constraintFailure(r, fieldStart, width, "excluded value"), "", r.Position(), width)
 	}
-	r.Set("NO_NCELL_M", v)
+	r.Set("no_ncell_m", v)
 	return uint8(v), nil
 }
 func encodeMeasurementResultsReportsArmNONCELLM(w *runtime.Writer, v uint8) error {
@@ -3163,17 +2955,14 @@ func encodeMeasurementResultsReportsArmNONCELLM(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if uint64(v) == 7 {
 		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsReportsArmNONCELLM", width, fmt.Errorf("excluded value"))
 	}
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NO_NCELL_M", uint64(v))
+	w.Set("no_ncell_m", uint64(v))
 	return nil
 }
 func decodeMeasurementResultsNCELLReportsEntry(r *runtime.Reader) (NCELLReportStruct, error) {
@@ -3184,7 +2973,8 @@ func encodeMeasurementResultsNCELLReportsEntry(w *runtime.Writer, v NCELLReportS
 }
 func decodeMeasurementResultsNCELLReports(r *runtime.Reader) ([]NCELLReportStruct, error) {
 	var out []NCELLReportStruct
-	count, err := r.Eval("val(NO_NCELL_M)")
+	count, err := r.ExpressionResult(r.ExpressionVariable("NO_NCELL_M").Operand().Operand())
+
 	if err != nil {
 		return nil, err
 	}
@@ -3202,7 +2992,8 @@ func decodeMeasurementResultsNCELLReports(r *runtime.Reader) ([]NCELLReportStruc
 	return out, nil
 }
 func encodeMeasurementResultsNCELLReports(w *runtime.Writer, v []NCELLReportStruct) error {
-	count, err := w.Eval("val(NO_NCELL_M)")
+	count, err := w.ExpressionResult(w.ExpressionVariable("NO_NCELL_M").Operand().Operand())
+
 	if err != nil {
 		return err
 	}
@@ -3219,19 +3010,14 @@ func encodeMeasurementResultsNCELLReports(w *runtime.Writer, v []NCELLReportStru
 
 // Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
 func decodeMeasurementResultsSuffixNull(r *runtime.Reader) (struct{}, error) {
-	for r.Remaining() > 0 {
-		if err := r.Expect("0"); err != nil {
-			return struct{}{}, err
-		}
-	}
-	return struct{}{}, nil
+	return struct{}{}, r.ExpectZeros(r.Remaining())
 }
 func encodeMeasurementResultsSuffixNull(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
 		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsSuffixNull", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
-		if err := w.WriteLiteral("0"); err != nil {
+		if err := w.WriteZeros(w.RemainingLimit()); err != nil {
 			return err
 		}
 	}
@@ -3256,19 +3042,14 @@ func encodeMeasurementResultsCSGArmUTRANCSGMeasurementReport(w *runtime.Writer, 
 
 // Terminal literal-zero padding; TS 24.007 V20.0.0 Annex B §§B.1.1.1, B.2.1; representation approved 2026-10-27.
 func decodeMeasurementResultsCSGSuffix(r *runtime.Reader) (struct{}, error) {
-	for r.Remaining() > 0 {
-		if err := r.Expect("0"); err != nil {
-			return struct{}{}, err
-		}
-	}
-	return struct{}{}, nil
+	return struct{}{}, r.ExpectZeros(r.Remaining())
 }
 func encodeMeasurementResultsCSGSuffix(w *runtime.Writer, _ struct{}) error {
 	if w.RemainingLimit() < 0 {
 		return w.ComponentError(runtime.InvalidValue, "MeasurementResultsCSGSuffix", 0, fmt.Errorf("literal-zero padding requires enclosing length bound"))
 	}
 	for w.RemainingLimit() > 0 {
-		if err := w.WriteLiteral("0"); err != nil {
+		if err := w.WriteZeros(w.RemainingLimit()); err != nil {
 			return err
 		}
 	}
@@ -3699,7 +3480,9 @@ func encodeMeasurementResultsFields(w *runtime.Writer, v MeasurementResultsField
 	return nil
 }
 func decodeMeasurementResultsContentsBAUSED(r *runtime.Reader) (MeasurementResultsFields, error) {
-	length, err := r.Eval("8*(16)")
+	length, err := r.ExpressionResult(runtime.ExpressionConstant(8).Operand().Multiply(runtime.
+		ExpressionConstant(16).Operand().Operand()))
+
 	if err != nil {
 		return MeasurementResultsFields{}, err
 	}
@@ -3717,7 +3500,9 @@ func decodeMeasurementResultsContentsBAUSED(r *runtime.Reader) (MeasurementResul
 	return v, nil
 }
 func encodeMeasurementResultsContentsBAUSED(w *runtime.Writer, v MeasurementResultsFields) error {
-	length, err := w.Eval("8*(16)")
+	length, err := w.ExpressionResult(runtime.ExpressionConstant(8).Operand().Multiply(runtime.
+		ExpressionConstant(16).Operand().Operand()))
+
 	if err != nil {
 		return err
 	}
@@ -3770,15 +3555,12 @@ func decodeNCELLReportStructRXLEVNCELL(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("RXLEV-NCELL", v)
+	r.Set("rxlev-ncell", v)
 	return uint8(v), nil
 }
 func encodeNCELLReportStructRXLEVNCELL(w *runtime.Writer, v uint8) error {
@@ -3786,14 +3568,11 @@ func encodeNCELLReportStructRXLEVNCELL(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("RXLEV-NCELL", uint64(v))
+	w.Set("rxlev-ncell", uint64(v))
 	return nil
 }
 func decodeNCELLReportStructBCCHFREQNCELL(r *runtime.Reader) (uint8, error) {
@@ -3801,15 +3580,12 @@ func decodeNCELLReportStructBCCHFREQNCELL(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BCCH-FREQ-NCELL", v)
+	r.Set("bcch-freq-ncell", v)
 	return uint8(v), nil
 }
 func encodeNCELLReportStructBCCHFREQNCELL(w *runtime.Writer, v uint8) error {
@@ -3817,14 +3593,11 @@ func encodeNCELLReportStructBCCHFREQNCELL(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BCCH-FREQ-NCELL", uint64(v))
+	w.Set("bcch-freq-ncell", uint64(v))
 	return nil
 }
 func decodeNCELLReportStructBSICNCELL(r *runtime.Reader) (uint8, error) {
@@ -3832,15 +3605,12 @@ func decodeNCELLReportStructBSICNCELL(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BSIC-NCELL", v)
+	r.Set("bsic-ncell", v)
 	return uint8(v), nil
 }
 func encodeNCELLReportStructBSICNCELL(w *runtime.Writer, v uint8) error {
@@ -3848,14 +3618,11 @@ func encodeNCELLReportStructBSICNCELL(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BSIC-NCELL", uint64(v))
+	w.Set("bsic-ncell", uint64(v))
 	return nil
 }
 func decodeNCELLReportStruct(r *runtime.Reader) (NCELLReportStruct, error) {

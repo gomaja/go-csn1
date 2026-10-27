@@ -884,15 +884,12 @@ func decodeGSMDescriptionStructBandIndicator(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Band_Indicator", v)
+	r.Set("band_indicator", v)
 	return uint8(v), nil
 }
 func encodeGSMDescriptionStructBandIndicator(w *runtime.Writer, v uint8) error {
@@ -900,14 +897,11 @@ func encodeGSMDescriptionStructBandIndicator(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Band_Indicator", uint64(v))
+	w.Set("band_indicator", uint64(v))
 	return nil
 }
 func decodeGSMDescriptionStructARFCN(r *runtime.Reader) (uint16, error) {
@@ -915,15 +909,12 @@ func decodeGSMDescriptionStructARFCN(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("10")
-	if err != nil {
-		return 0, err
-	}
+	width := 10
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ARFCN", v)
+	r.Set("arfcn", v)
 	return uint16(v), nil
 }
 func encodeGSMDescriptionStructARFCN(w *runtime.Writer, v uint16) error {
@@ -931,14 +922,11 @@ func encodeGSMDescriptionStructARFCN(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("10")
-	if err != nil {
-		return err
-	}
+	width := 10
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ARFCN", uint64(v))
+	w.Set("arfcn", uint64(v))
 	return nil
 }
 func decodeGSMDescriptionStructBSIC(r *runtime.Reader) (uint8, error) {
@@ -946,15 +934,12 @@ func decodeGSMDescriptionStructBSIC(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("6")
-	if err != nil {
-		return 0, err
-	}
+	width := 6
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("BSIC", v)
+	r.Set("bsic", v)
 	return uint8(v), nil
 }
 func encodeGSMDescriptionStructBSIC(w *runtime.Writer, v uint8) error {
@@ -962,14 +947,11 @@ func encodeGSMDescriptionStructBSIC(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("6")
-	if err != nil {
-		return err
-	}
+	width := 6
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("BSIC", uint64(v))
+	w.Set("bsic", uint64(v))
 	return nil
 }
 func decodeGSMDescriptionStruct(r *runtime.Reader) (GSMDescriptionStruct, error) {
@@ -1038,15 +1020,12 @@ func decodeUTRANFDDDescriptionStructBandwidthFDDValue(r *runtime.Reader) (uint8,
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Bandwidth_FDD", v)
+	r.Set("bandwidth_fdd", v)
 	return uint8(v), nil
 }
 func encodeUTRANFDDDescriptionStructBandwidthFDDValue(w *runtime.Writer, v uint8) error {
@@ -1054,14 +1033,11 @@ func encodeUTRANFDDDescriptionStructBandwidthFDDValue(w *runtime.Writer, v uint8
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Bandwidth_FDD", uint64(v))
+	w.Set("bandwidth_fdd", uint64(v))
 	return nil
 }
 func decodeUTRANFDDDescriptionStructBandwidthFDDSelector(r *runtime.Reader) (*uint8, error) {
@@ -1098,15 +1074,12 @@ func decodeUTRANFDDDescriptionStructFDDARFCN(r *runtime.Reader) (uint16, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("14")
-	if err != nil {
-		return 0, err
-	}
+	width := 14
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("FDD-ARFCN", v)
+	r.Set("fdd-arfcn", v)
 	return uint16(v), nil
 }
 func encodeUTRANFDDDescriptionStructFDDARFCN(w *runtime.Writer, v uint16) error {
@@ -1114,14 +1087,11 @@ func encodeUTRANFDDDescriptionStructFDDARFCN(w *runtime.Writer, v uint16) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("14")
-	if err != nil {
-		return err
-	}
+	width := 14
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("FDD-ARFCN", uint64(v))
+	w.Set("fdd-arfcn", uint64(v))
 	return nil
 }
 func decodeUTRANFDDDescriptionStructFDDIndic0GroupFDDIndic0(r *runtime.Reader) (uint8, error) {
@@ -1129,15 +1099,12 @@ func decodeUTRANFDDDescriptionStructFDDIndic0GroupFDDIndic0(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("FDD_Indic0", v)
+	r.Set("fdd_indic0", v)
 	return uint8(v), nil
 }
 func encodeUTRANFDDDescriptionStructFDDIndic0GroupFDDIndic0(w *runtime.Writer, v uint8) error {
@@ -1145,14 +1112,11 @@ func encodeUTRANFDDDescriptionStructFDDIndic0GroupFDDIndic0(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("FDD_Indic0", uint64(v))
+	w.Set("fdd_indic0", uint64(v))
 	return nil
 }
 func decodeUTRANFDDDescriptionStructFDDIndic0GroupNROFFDDCELLS(r *runtime.Reader) (uint8, error) {
@@ -1160,15 +1124,12 @@ func decodeUTRANFDDDescriptionStructFDDIndic0GroupNROFFDDCELLS(r *runtime.Reader
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NR_OF_FDD_CELLS", v)
+	r.Set("nr_of_fdd_cells", v)
 	return uint8(v), nil
 }
 func encodeUTRANFDDDescriptionStructFDDIndic0GroupNROFFDDCELLS(w *runtime.Writer, v uint8) error {
@@ -1176,14 +1137,11 @@ func encodeUTRANFDDDescriptionStructFDDIndic0GroupNROFFDDCELLS(w *runtime.Writer
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NR_OF_FDD_CELLS", uint64(v))
+	w.Set("nr_of_fdd_cells", uint64(v))
 	return nil
 }
 func decodeUTRANFDDDescriptionStructFDDIndic0GroupFDDCELLINFORMATIONField(r *runtime.Reader) (runtime.BitString, error) {
@@ -1191,7 +1149,8 @@ func decodeUTRANFDDDescriptionStructFDDIndic0GroupFDDCELLINFORMATIONField(r *run
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("p(NR_OF_FDD_CELLS)")
+	width, err := r.ExpressionResult(r.ExpressionVariable("NR_OF_FDD_CELLS").Operand().CellWidth("p").Operand())
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -1206,7 +1165,8 @@ func encodeUTRANFDDDescriptionStructFDDIndic0GroupFDDCELLINFORMATIONField(w *run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("p(NR_OF_FDD_CELLS)")
+	width, err := w.ExpressionResult(w.ExpressionVariable("NR_OF_FDD_CELLS").Operand().CellWidth("p").Operand())
+
 	if err != nil {
 		return err
 	}
@@ -1371,15 +1331,12 @@ func decodeUTRANTDDDescriptionStructBandwidthTDDValue(r *runtime.Reader) (uint8,
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Bandwidth_TDD", v)
+	r.Set("bandwidth_tdd", v)
 	return uint8(v), nil
 }
 func encodeUTRANTDDDescriptionStructBandwidthTDDValue(w *runtime.Writer, v uint8) error {
@@ -1387,14 +1344,11 @@ func encodeUTRANTDDDescriptionStructBandwidthTDDValue(w *runtime.Writer, v uint8
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Bandwidth_TDD", uint64(v))
+	w.Set("bandwidth_tdd", uint64(v))
 	return nil
 }
 func decodeUTRANTDDDescriptionStructBandwidthTDDSelector(r *runtime.Reader) (*uint8, error) {
@@ -1431,15 +1385,12 @@ func decodeUTRANTDDDescriptionStructTDDARFCN(r *runtime.Reader) (uint16, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("14")
-	if err != nil {
-		return 0, err
-	}
+	width := 14
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TDD-ARFCN", v)
+	r.Set("tdd-arfcn", v)
 	return uint16(v), nil
 }
 func encodeUTRANTDDDescriptionStructTDDARFCN(w *runtime.Writer, v uint16) error {
@@ -1447,14 +1398,11 @@ func encodeUTRANTDDDescriptionStructTDDARFCN(w *runtime.Writer, v uint16) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("14")
-	if err != nil {
-		return err
-	}
+	width := 14
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TDD-ARFCN", uint64(v))
+	w.Set("tdd-arfcn", uint64(v))
 	return nil
 }
 func decodeUTRANTDDDescriptionStructTDDIndic0GroupTDDIndic0(r *runtime.Reader) (uint8, error) {
@@ -1462,15 +1410,12 @@ func decodeUTRANTDDDescriptionStructTDDIndic0GroupTDDIndic0(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TDD_Indic0", v)
+	r.Set("tdd_indic0", v)
 	return uint8(v), nil
 }
 func encodeUTRANTDDDescriptionStructTDDIndic0GroupTDDIndic0(w *runtime.Writer, v uint8) error {
@@ -1478,14 +1423,11 @@ func encodeUTRANTDDDescriptionStructTDDIndic0GroupTDDIndic0(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TDD_Indic0", uint64(v))
+	w.Set("tdd_indic0", uint64(v))
 	return nil
 }
 func decodeUTRANTDDDescriptionStructTDDIndic0GroupNROFTDDCELLS(r *runtime.Reader) (uint8, error) {
@@ -1493,15 +1435,12 @@ func decodeUTRANTDDDescriptionStructTDDIndic0GroupNROFTDDCELLS(r *runtime.Reader
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NR_OF_TDD_CELLS", v)
+	r.Set("nr_of_tdd_cells", v)
 	return uint8(v), nil
 }
 func encodeUTRANTDDDescriptionStructTDDIndic0GroupNROFTDDCELLS(w *runtime.Writer, v uint8) error {
@@ -1509,14 +1448,11 @@ func encodeUTRANTDDDescriptionStructTDDIndic0GroupNROFTDDCELLS(w *runtime.Writer
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NR_OF_TDD_CELLS", uint64(v))
+	w.Set("nr_of_tdd_cells", uint64(v))
 	return nil
 }
 func decodeUTRANTDDDescriptionStructTDDIndic0GroupTDDCELLINFORMATIONField(r *runtime.Reader) (runtime.BitString, error) {
@@ -1524,7 +1460,8 @@ func decodeUTRANTDDDescriptionStructTDDIndic0GroupTDDCELLINFORMATIONField(r *run
 		return runtime.BitString{}, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("q(NR_OF_TDD_CELLS)")
+	width, err := r.ExpressionResult(r.ExpressionVariable("NR_OF_TDD_CELLS").Operand().CellWidth("q").Operand())
+
 	if err != nil {
 		return runtime.BitString{}, err
 	}
@@ -1539,7 +1476,8 @@ func encodeUTRANTDDDescriptionStructTDDIndic0GroupTDDCELLINFORMATIONField(w *run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("q(NR_OF_TDD_CELLS)")
+	width, err := w.ExpressionResult(w.ExpressionVariable("NR_OF_TDD_CELLS").Operand().CellWidth("q").Operand())
+
 	if err != nil {
 		return err
 	}
@@ -1704,15 +1642,12 @@ func decodeEUTRANDescriptionStructEARFCN(r *runtime.Reader) (uint16, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("16")
-	if err != nil {
-		return 0, err
-	}
+	width := 16
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("EARFCN", v)
+	r.Set("earfcn", v)
 	return uint16(v), nil
 }
 func encodeEUTRANDescriptionStructEARFCN(w *runtime.Writer, v uint16) error {
@@ -1720,14 +1655,11 @@ func encodeEUTRANDescriptionStructEARFCN(w *runtime.Writer, v uint16) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("16")
-	if err != nil {
-		return err
-	}
+	width := 16
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EARFCN", uint64(v))
+	w.Set("earfcn", uint64(v))
 	return nil
 }
 func decodeEUTRANDescriptionStructMeasurementBandwidthValue(r *runtime.Reader) (uint8, error) {
@@ -1735,10 +1667,7 @@ func decodeEUTRANDescriptionStructMeasurementBandwidthValue(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -1750,7 +1679,7 @@ func decodeEUTRANDescriptionStructMeasurementBandwidthValue(r *runtime.Reader) (
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
-	r.Set("Measurement Bandwidth", v)
+	r.Set("measurement bandwidth", v)
 	return uint8(v), nil
 }
 func encodeEUTRANDescriptionStructMeasurementBandwidthValue(w *runtime.Writer, v uint8) error {
@@ -1758,14 +1687,11 @@ func encodeEUTRANDescriptionStructMeasurementBandwidthValue(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Measurement Bandwidth", uint64(v))
+	w.Set("measurement bandwidth", uint64(v))
 	return nil
 }
 func decodeEUTRANDescriptionStructMeasurementBandwidthSelector(r *runtime.Reader) (*uint8, error) {
@@ -1837,15 +1763,12 @@ func decodeEUTRANDescriptionStructTARGETPCIDValue(r *runtime.Reader) (uint16, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("9")
-	if err != nil {
-		return 0, err
-	}
+	width := 9
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TARGET_PCID", v)
+	r.Set("target_pcid", v)
 	return uint16(v), nil
 }
 func encodeEUTRANDescriptionStructTARGETPCIDValue(w *runtime.Writer, v uint16) error {
@@ -1853,14 +1776,11 @@ func encodeEUTRANDescriptionStructTARGETPCIDValue(w *runtime.Writer, v uint16) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("9")
-	if err != nil {
-		return err
-	}
+	width := 9
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TARGET_PCID", uint64(v))
+	w.Set("target_pcid", uint64(v))
 	return nil
 }
 func decodeEUTRANDescriptionStructTARGETPCIDSelector(r *runtime.Reader) (*uint16, error) {
