@@ -70,7 +70,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 		}
 	}
 	t.Logf("definitions=%d vectors=%d accepted=%d rejected=%d failures=%d", len(defs), len(vectors), accepted, rejected, failures)
-	if len(defs) != 235 || len(vectors) != 38 {
+	if len(defs) != 237 || len(vectors) != 38 {
 		t.Fatalf("unexpected probe breadth: %d definitions and %d vectors", len(defs), len(vectors))
 	}
 }

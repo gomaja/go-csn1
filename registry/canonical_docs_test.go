@@ -22,7 +22,9 @@ import (
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts44018/measurement"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
+	"github.com/gomaja/go-csn1/ts44060/ies"
 )
 
 // Typed error classes of the generated canonical entry points.
@@ -582,6 +584,10 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 	documented, packages := documentedClasses(t)
 	functions := canonicalFunctions(t, packages)
 	definitions := descriptors()
+	// Append the newly published clause to this test's discovery order so its
+	// addition does not change any existing descriptor's seeded random stream.
+	isResults := func(d runtime.Descriptor) bool { return d.Standard == "TS 44.018" && d.Clause == "10.5.2.20" }
+	sort.SliceStable(definitions, func(i, j int) bool { return !isResults(definitions[i]) && isResults(definitions[j]) })
 
 	// Decode-guided values, then nested values harvested by type.
 	values := make([][]any, len(definitions))
@@ -730,6 +736,27 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					}
 				})
 			}
+			if d.Standard == "TS 44.018" && d.Clause == "10.5.2.20" && d.Name == "Measurement Results Contents" {
+				// A consistent count/list plus CSG exceeds the root bound;
+				// random list growth instead trips the count mismatch first.
+				// TS 44.018 V19.0.0 table 10.5.2.20.0; TS 44.060 §12.61.
+				v := measurement.MeasurementResultsContents{Content: measurement.MeasurementResultsFields{Count: measurement.MeasurementResultsCountChoice{Alternative: measurement.MeasurementResultsCountChoiceAlternativeReports, Reports: &measurement.MeasurementResultsReportsArm{NONCELLM: 3, NCELLReports: make([]measurement.NCELLReportStruct, 3), Suffix: measurement.MeasurementResultsReportsSuffix{Alternative: measurement.MeasurementResultsReportsSuffixAlternativeCSG, CSG: &measurement.MeasurementResultsCSGArm{Report: ies.UTRANCSGMeasurementReportIE{}, Suffix: measurement.MeasurementResultsCSGSuffix{Alternative: measurement.MeasurementResultsCSGSuffixAlternativeNull, Null: &struct{}{}}}}}}}}
+				_, err := d.Canonical(v)
+				record(entryCanonical, err, 0)
+				_, err = d.CanonicalAtLength(v, 16)
+				record(entryAtLength, err, 16)
+				// A correctly selected unavailable arm with no zero run
+				// underfills the source intersection, independently of overflow.
+				short := measurement.MeasurementResultsContents{Content: measurement.MeasurementResultsFields{Count: measurement.MeasurementResultsCountChoice{Alternative: measurement.MeasurementResultsCountChoiceAlternativeUnavailable, Unavailable: &measurement.MeasurementResultsUnavailableArm{NONCELLM: 7}}}}
+				_, err = d.Canonical(short)
+				record(entryCanonical, err, 0)
+				_, err = d.CanonicalAtLength(short, 16)
+				record(entryAtLength, err, 16)
+				for _, octets := range []int{-1, 0, 15, 17} {
+					_, err = d.CanonicalAtLength(v, octets)
+					record(entryAtLength, err, octets)
+				}
+			}
 			results[index] = result{d.Standard + " §" + d.Clause + " <" + d.Name + ">", observed}
 		}()
 	}
@@ -819,6 +846,9 @@ func structTypes(t reflect.Type, into map[reflect.Type]bool) {
 // entry and a valid multiblock assignment; growing that list reaches the
 // IA extent error without selecting a reserved alternative.
 var canonicalSeeds = map[string][]string{
+	// TS 44.018 V19.0.0 §10.5.2.20: unavailable and two-neighbour
+	// source shapes, independently decoded with the same field values.
+	"10.5.2.20\x00Measurement Results Contents": {"95aabbc0000000000000000000000000", "95aabaad8ca625200000000000000000"},
 	// TS 36.331 V19.4.0 §6.3.6 carries GERAN Classmark 2 and 3 after
 	// the RAT marker; this minimum value reaches the new manual length slot.
 	"UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs": {"330320000000"},

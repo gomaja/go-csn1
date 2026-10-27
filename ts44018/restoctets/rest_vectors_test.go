@@ -609,7 +609,7 @@ func TestNonGSMContinuationRequiresEnclosingSIValue(t *testing.T) {
 	// TS 44.018 V19.0.0 §10.5.2.37h table 10.5.2.37h.2
 	// defines code 31 relative to the containing SI message instance.
 	standalone := append([]byte{0x3f}, bytes.Repeat([]byte{0xaa}, 18)...)
-	if _, err := DecodeNonGSMMessageStruct(standalone); err == nil || !strings.Contains(err.Error(), "requires enclosing SI value") {
+	if _, err := DecodeNonGSMMessageStruct(standalone); !errors.Is(err, runtime.ErrContextRequired) {
 		t.Fatalf("standalone count 31: %v", err)
 	}
 	if _, err := EncodeNonGSMMessageStruct(NonGSMMessageStruct{

@@ -3,10 +3,10 @@ package registry_test
 import (
 	"bytes"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"math/rand"
 	"reflect"
-	"strings"
 	"testing"
 
 	"github.com/gomaja/go-csn1/registry"
@@ -59,8 +59,8 @@ func readerBoundTo(t *testing.T, data []byte) *runtime.Reader {
 // container run to the end of the enclosing SI value. The byte entry point has
 // no enclosing value and refuses it; a bounded reader supplies one.
 func knownReaderDifference(d runtime.Descriptor, byteErr error) bool {
-	return d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" && byteErr != nil &&
-		strings.Contains(byteErr.Error(), "continuation count requires enclosing SI value")
+	return d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" &&
+		errors.Is(byteErr, runtime.ErrContextRequired)
 }
 
 // TestReaderEntryMatchesByteEntry decodes the same octets through every
