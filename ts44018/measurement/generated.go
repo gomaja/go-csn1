@@ -3964,7 +3964,7 @@ func encodeEnhancedMeasurementReportBytes(v EnhancedMeasurementReport) ([]byte, 
 
 // TS 44.018 V19.0.0 table 9.1.55.1: redundant trailing zero positions
 // do not change which neighbours have reported quantities.
-func emrBitmapFields(v EnhancedMeasurementReport) EnhancedMeasurementReport {
+func emrBitmapFields(v *EnhancedMeasurementReport) {
 	if v.REPORTINGQUANTITYList != nil {
 		last := 0
 		for index, report := range *v.REPORTINGQUANTITYList {
@@ -3978,9 +3978,8 @@ func emrBitmapFields(v EnhancedMeasurementReport) EnhancedMeasurementReport {
 		}
 		v.REPORTINGQUANTITYList = &entries
 	}
-	return v
 }
-func emrReleaseFields(v EnhancedMeasurementReport) EnhancedMeasurementReport {
+func emrReleaseFields(v *EnhancedMeasurementReport) {
 	if v.BITMAPLENGTHChoice.NoString != nil {
 		v.BITMAPLENGTHChoice = EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
 	}
@@ -3992,7 +3991,6 @@ func emrReleaseFields(v EnhancedMeasurementReport) EnhancedMeasurementReport {
 			rel9.SI23BAUSEDChoice = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
 		}
 	}
-	return v
 }
 
 // TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1: reports
@@ -4036,8 +4034,10 @@ func EncodeEnhancedMeasurementReportCanonical(v EnhancedMeasurementReport) ([]by
 		operationValue, operationErr := runtime.CanonicalEncode(v, 21, 21, false, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
-			a = emrBitmapFields(emrReleaseFields(a))
-			b = emrBitmapFields(emrReleaseFields(b))
+			emrReleaseFields(&a)
+			emrReleaseFields(&b)
+			emrBitmapFields(&a)
+			emrBitmapFields(&b)
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {
@@ -4061,8 +4061,10 @@ func EncodeEnhancedMeasurementReportCanonicalAtLength(v EnhancedMeasurementRepor
 		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 21, 21, encodeEnhancedMeasurementReportBytes, DecodeEnhancedMeasurementReport, func(a, b EnhancedMeasurementReport) bool {
 			a = runtime.Canonical(a)
 			b = runtime.Canonical(b)
-			a = emrBitmapFields(emrReleaseFields(a))
-			b = emrBitmapFields(emrReleaseFields(b))
+			emrReleaseFields(&a)
+			emrReleaseFields(&b)
+			emrBitmapFields(&a)
+			emrBitmapFields(&b)
 			return runtime.SemanticallyEqual(a, b)
 		})
 		if operationErr != nil {

@@ -5,7 +5,7 @@
     "api_ledger_sha256": "568d5413d5dc7bbdca743165a524517b4fa2f92ebc2eddd399da10b5e33120e6"
   },
   "schema_version": 1,
-  "compiler_commit": "abc2680b553221be01aa0d1cf2d660727e9c7306",
+  "compiler_commit": "e6fbd77436e6ff6913e42c85818825143e449b5f",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1806,7 +1806,7 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "17b5b8278749ba893f980ef0703abdf0ab4eae85e6a6e03f8c4ca483beacb0bd"
+      "sha256": "08d2420f6f0a062e7d5d62750c3a04791fbc410f888ede849be62916dad228af"
     },
     {
       "path": "ts44018/restoctets/generated.go",
