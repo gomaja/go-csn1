@@ -111,6 +111,10 @@ func TestGeneratedEncoderErrorFamilyInventory(t *testing.T) {
 		"recursive list requires an element": true, "repeat count mismatch": true, "reserved CSN.1 alternative": true,
 		"reserved Non-GSM protocol discriminator": true, "reserved container length code": true, "value reserved by source table": true,
 		"zero-length SI stop record belongs in Wire": true,
+		// The public measurement ambiguous-release refusal and nonzero-tail
+		// controls exercise the emitted zero-tail check and its trial rejection.
+		"release additions encode an all-zero tail indistinguishable from redundant legacy bitmap positions": true,
+		"nonzero release tail is not redundant legacy positions":                                             true,
 	}
 	found := map[string]bool{}
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))

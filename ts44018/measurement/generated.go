@@ -1903,6 +1903,7 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 			return err
 		}
 	}
+	var releaseMark runtime.FallbackMark
 	if limit <= 0 && !runtime.IsZero(v.RRShortPD) {
 		return w.OmittedFieldError("RRShortPD")
 	}
@@ -2000,6 +2001,9 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 			}
 		}
 	}
+	if !receivedCarrier && v.REPORTINGQUANTITYList != nil && v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+		releaseMark = w.MarkFallback()
+	}
 	if limit <= 10 && !runtime.IsZero(v.BITMAPLENGTHChoice) {
 		return w.OmittedFieldError("BITMAPLENGTHChoice")
 	}
@@ -2023,6 +2027,21 @@ func encodeEnhancedMeasurementReport(w *runtime.Writer, v EnhancedMeasurementRep
 		if err := w.WritePaddingTo(carrierEnd); err != nil {
 			return err
 		}
+	}
+
+	// TS 44.018 V19.0.0 §3.4.1.2.1.3 and table 9.1.55.1, boundary rule approved 2026-10-27:
+	// an entirely zero tail after position 96 denotes redundant legacy positions.
+	if !receivedCarrier && v.REPORTINGQUANTITYList != nil && v.BITMAPLENGTHChoice.BITMAPLENGTH != nil {
+		if err := w.CheckIgnoredFallback(releaseMark, false, func(r *runtime.Reader) error {
+			if r.AllRemainingZero() {
+				return nil
+			}
+			return fmt.Errorf("nonzero release tail is not redundant legacy positions")
+		}); err != nil {
+			return w.ComponentError(runtime.InvalidValue, "", 0, fmt.Errorf("release additions encode an all-zero tail indistinguishable from redundant legacy bitmap positions"))
+		}
+	}
+	if !receivedCarrier {
 		if err := w.PopLimit(oldCarrierBound); err != nil {
 			return err
 		}
