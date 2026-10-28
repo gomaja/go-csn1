@@ -85231,7 +85231,7 @@ func descriptorUnwrapFrequencyParametersBeforeTime(value any) (FrequencyParamete
 	}
 }
 
-var descriptorPolicyFrequencyParametersBeforeTime = descriptorReadPolicy{true, 0, 0, 0, false, false, "Frequency Parameters, before time", "FrequencyParametersBeforeTime", descriptorSourceFrequencyParametersBeforeTime, false}
+var descriptorPolicyFrequencyParametersBeforeTime = descriptorReadPolicy{false, 0, 0, 0, false, false, "Frequency Parameters, before time", "FrequencyParametersBeforeTime", descriptorSourceFrequencyParametersBeforeTime, false}
 
 func descriptorDecodeFrequencyParametersBeforeTimeFrom(r *runtime.Reader) (any, error) {
 	var v FrequencyParametersBeforeTime
