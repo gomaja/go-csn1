@@ -257,9 +257,27 @@ func equivalentCanonicalEMR(a, b EnhancedMeasurementReport) bool {
 			}
 			v.REPORTINGQUANTITYList = &list
 		}
-		// Null and L have no release additions (figure 9.1.55.1).
+		// TS 44.018 V19.0.0 figure 9.1.55.1: null and L/no-string
+		// have no release additions at each of the three release gates.
+		// TS 24.007 V20.0.0 §§B.1.1.2, B.1.1.4, B.1.2.2: extending
+		// an empty release suffix with L padding adds no reported fields.
+		// The counted Rel-8 bitmap and all H-arm fields remain significant.
 		if v.BITMAPLENGTHChoice.NoString != nil {
 			v.BITMAPLENGTHChoice = EnhancedMeasurementReportBITMAPLENGTHChoice{Alternative: EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled, AltUnlabeled: &struct{}{}}
+		}
+		if rel8 := v.BITMAPLENGTHChoice.BITMAPLENGTH; rel8 != nil {
+			if rel8.UTRANCSGMeasurementReportChoice.NoString != nil {
+				rel8.UTRANCSGMeasurementReportChoice = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice{
+					Alternative:  EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled,
+					AltUnlabeled: &struct{}{},
+				}
+			}
+			if rel9 := rel8.UTRANCSGMeasurementReportChoice.UTRANCSGMeasurementReport; rel9 != nil && rel9.SI23BAUSEDChoice.NoString != nil {
+				rel9.SI23BAUSEDChoice = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice{
+					Alternative:  EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled,
+					AltUnlabeled: &struct{}{},
+				}
+			}
 		}
 		return v
 	}
