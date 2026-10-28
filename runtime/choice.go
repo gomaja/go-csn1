@@ -487,6 +487,9 @@ func IsReservedAlternative(err error) bool {
 }
 
 func choiceFailurePosition(err error) (ErrorKind, int, bool) {
+	if err == nil {
+		return "", 0, false
+	}
 	if f, ok := err.(*deferredFailure); ok {
 		return f.cause.Kind, f.cause.Offset, true
 	}
