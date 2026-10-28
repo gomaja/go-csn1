@@ -165,3 +165,35 @@ func TestCanonicalExactLengthRejectsBeforeDecoding(t *testing.T) {
 		t.Fatalf("err=%v encodes=%d decodes=%d", err, encodes, decodes)
 	}
 }
+
+func TestCanonicalCompoundCopiesSharePointerIdentity(t *testing.T) {
+	type node struct {
+		Value uint8
+		Next  *node
+		Wire  WireInfo
+	}
+	type compound struct {
+		Child   *node
+		Array   [2]*node
+		Any     any
+		Map     map[string]*node
+		NilMap  map[string]*node
+		List    []*node
+		NilList []*node
+		hidden  string
+	}
+	child := &node{Value: 7, Wire: WireInfo{BitsConsumed: 8}}
+	child.Next = child
+	original := compound{Child: child, Array: [2]*node{child, child}, Any: child, Map: map[string]*node{"child": child}, List: []*node{}, hidden: "retained"}
+	copied := Canonical(original)
+	if copied.Child == child || copied.Child.Next != copied.Child || copied.Array[0] != copied.Child || copied.Array[1] != copied.Child || copied.Any != copied.Child || copied.Map["child"] != copied.Child {
+		t.Fatal("compound branches changed pointer identity")
+	}
+	if copied.Child.Wire.BitsConsumed != 0 || copied.hidden != "retained" || copied.NilMap != nil || copied.NilList != nil || copied.List == nil {
+		t.Fatal("compound copy changed wire, private value or nilness")
+	}
+	copied.Child.Value = 9
+	if child.Value != 7 || child.Wire.BitsConsumed != 8 {
+		t.Fatal("compound copy modified its source")
+	}
+}

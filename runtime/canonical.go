@@ -227,61 +227,82 @@ func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value
 	}
 	switch value.Kind() {
 	case reflect.Pointer:
-		if value.IsNil() {
-			return reflect.Zero(value.Type())
-		}
-		key := canonicalPointer{value.Type(), value.Pointer()}
-		if prior, ok := seen[key]; ok {
-			return prior
-		}
-		out := reflect.New(value.Type().Elem())
-		seen[key] = out
-		out.Elem().Set(canonicalValue(value.Elem(), seen, rawErrors))
-		return out
+		return canonicalPointerValue(value, seen, rawErrors)
 	case reflect.Interface:
-		if value.IsNil() {
-			return reflect.Zero(value.Type())
-		}
-		out := reflect.New(value.Type()).Elem()
-		out.Set(canonicalValue(value.Elem(), seen, rawErrors))
-		return out
+		return canonicalInterfaceValue(value, seen, rawErrors)
 	case reflect.Struct:
-		out := reflect.New(value.Type()).Elem()
-		out.Set(value)
-		for i := range value.NumField() {
-			if out.Field(i).CanSet() && value.Field(i).CanInterface() {
-				out.Field(i).Set(canonicalValue(value.Field(i), seen, rawErrors))
-			}
-		}
-		return out
+		return canonicalStructValue(value, seen, rawErrors)
 	case reflect.Slice:
-		if value.IsNil() {
-			return reflect.Zero(value.Type())
-		}
-		out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-		for i := range value.Len() {
-			out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
-		}
-		return out
+		return canonicalSliceValue(value, seen, rawErrors)
 	case reflect.Array:
-		out := reflect.New(value.Type()).Elem()
-		for i := range value.Len() {
-			out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
-		}
-		return out
+		return canonicalArrayValue(value, seen, rawErrors)
 	case reflect.Map:
-		if value.IsNil() {
-			return reflect.Zero(value.Type())
-		}
-		out := reflect.MakeMapWithSize(value.Type(), value.Len())
-		iter := value.MapRange()
-		for iter.Next() {
-			out.SetMapIndex(iter.Key(), canonicalValue(iter.Value(), seen, rawErrors))
-		}
-		return out
+		return canonicalMapValue(value, seen, rawErrors)
 	default:
 		return value
 	}
+}
+
+// Keep each reflection branch in a separate compilation body. Recursive
+// copies retain one shared pointer-identity map and the same wire policy.
+func canonicalPointerValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	if value.IsNil() {
+		return reflect.Zero(value.Type())
+	}
+	key := canonicalPointer{value.Type(), value.Pointer()}
+	if prior, ok := seen[key]; ok {
+		return prior
+	}
+	out := reflect.New(value.Type().Elem())
+	seen[key] = out
+	out.Elem().Set(canonicalValue(value.Elem(), seen, rawErrors))
+	return out
+}
+func canonicalInterfaceValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	if value.IsNil() {
+		return reflect.Zero(value.Type())
+	}
+	out := reflect.New(value.Type()).Elem()
+	out.Set(canonicalValue(value.Elem(), seen, rawErrors))
+	return out
+}
+func canonicalStructValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	out := reflect.New(value.Type()).Elem()
+	out.Set(value)
+	for i := range value.NumField() {
+		if out.Field(i).CanSet() && value.Field(i).CanInterface() {
+			out.Field(i).Set(canonicalValue(value.Field(i), seen, rawErrors))
+		}
+	}
+	return out
+}
+func canonicalSliceValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	if value.IsNil() {
+		return reflect.Zero(value.Type())
+	}
+	out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+	for i := range value.Len() {
+		out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
+	}
+	return out
+}
+func canonicalArrayValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	out := reflect.New(value.Type()).Elem()
+	for i := range value.Len() {
+		out.Index(i).Set(canonicalValue(value.Index(i), seen, rawErrors))
+	}
+	return out
+}
+func canonicalMapValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
+	if value.IsNil() {
+		return reflect.Zero(value.Type())
+	}
+	out := reflect.MakeMapWithSize(value.Type(), value.Len())
+	iter := value.MapRange()
+	for iter.Next() {
+		out.SetMapIndex(iter.Key(), canonicalValue(iter.Value(), seen, rawErrors))
+	}
+	return out
 }
 
 func canonicalFailure(cause error) error {
