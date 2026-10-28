@@ -343,3 +343,26 @@ func TestChoiceCompiledBindingsMatchInterpreter(t *testing.T) {
 		}
 	}
 }
+
+func TestChoiceRejectedOverflowBindingsReuseStorage(t *testing.T) {
+	if raceEnabled {
+		t.Skip("pool entries can be dropped under race instrumentation")
+	}
+	r := NewReader(nil)
+	names := make([]string, 24)
+	for i := range names {
+		names[i] = fmt.Sprintf("binding%d", i)
+	}
+	allocs := testing.AllocsPerRun(100, func() {
+		var trials ChoiceErrors
+		candidate := trials.Fork(r)
+		for i, name := range names {
+			candidate.Set(name, uint64(i))
+		}
+		trials.Track(candidate.Error(InvalidValue, "rejected"))
+		trials.Release()
+	})
+	if allocs != 0 {
+		t.Fatalf("rejected overflow bindings allocated: %g", allocs)
+	}
+}

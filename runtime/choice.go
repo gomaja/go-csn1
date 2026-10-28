@@ -70,7 +70,10 @@ func (c *ChoiceErrors) Release() {
 		for c.readers != nil {
 			r := c.readers
 			c.readers = r.choiceNext
+			extra := r.bindings.extra
+			clear(extra)
 			*r = Reader{}
+			r.bindings.extra = extra[:0]
 			choiceReaders.Put(r)
 		}
 	}()
@@ -174,11 +177,12 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader {
 	}
 	r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true
 	fork := choiceReaders.Get().(*Reader)
+	extra := fork.bindings.extra
 	*fork = *r
 	fork.choiceNext, c.readers = c.readers, fork
 	fork.choice = true
 	fork.pathShared = false
-	fork.bindings = choiceBindings{base: r}
+	fork.bindings = choiceBindings{base: r, extra: extra[:0]}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
 		fork.observationDropped = r.collector.dropped
