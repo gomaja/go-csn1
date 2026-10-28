@@ -153,7 +153,12 @@ func manualDescriptor(source runtime.Source, name string, minBits, maxBits, maxO
 			if _, err := r.PushLimit(len(data) * 8); err != nil {
 				return nil, err
 			}
-			return from(r)
+			// Keep the report entry point's existing nil value on failure.
+			value, err := from(r)
+			if err != nil {
+				return nil, err
+			}
+			return value, nil
 		}}
 }
 func manualTypeError(operation, name string, source runtime.Source) error {
@@ -173,21 +178,21 @@ func manualDecodeClassmark2ValuePart(data []byte) (any, error) {
 }
 func manualDecodeClassmark2ValuePartFrom(r *runtime.Reader) (any, error) {
 	if err := manualReaderCheck(r, "Mobile Station Classmark 2 value part", manualSourceClassmark2ValuePart); err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.Classmark2ValuePart]{}, err
 	}
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
 	v, err := uecapability.DecodeClassmark2ValuePartFrom(r)
 	if err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.Classmark2ValuePart]{}, err
 	}
 	// The typed reader stops after the three octets, so a containing value can
 	// continue; the descriptor keeps the rest of a bounded reader in Tail and in
 	// the value's received form, as its byte entry point does.
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.Classmark2ValuePart]{}, err
 	}
 	// TS 24.008 V20.1.0 §10.5.1.6 fixes the value at three octets.
 	// Extend only its received tail; keep the typed reader's wire conventions.
@@ -232,12 +237,12 @@ var manualSourceGERANCS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0
 func manualDecodeGERANCS(data []byte) (any, error) { return uecapability.DecodeGERANCS(data) }
 func manualDecodeGERANCSFrom(r *runtime.Reader) (any, error) {
 	if err := manualReaderCheck(r, "geran-cs", manualSourceGERANCS); err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.GERANCS]{}, err
 	}
 	start := r.Position()
 	v, err := uecapability.DecodeGERANCSFrom(r)
 	if err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.GERANCS]{}, err
 	}
 	return runtime.Decoded[uecapability.GERANCS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
 }
@@ -278,12 +283,12 @@ var manualSourceGERANPS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0
 func manualDecodeGERANPS(data []byte) (any, error) { return uecapability.DecodeGERANPS(data) }
 func manualDecodeGERANPSFrom(r *runtime.Reader) (any, error) {
 	if err := manualReaderCheck(r, "geran-ps", manualSourceGERANPS); err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.GERANPS]{}, err
 	}
 	start := r.Position()
 	v, err := uecapability.DecodeGERANPSFrom(r)
 	if err != nil {
-		return nil, err
+		return runtime.Decoded[uecapability.GERANPS]{}, err
 	}
 	return runtime.Decoded[uecapability.GERANPS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
 }
