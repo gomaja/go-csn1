@@ -221,10 +221,20 @@ func (r *Reader) Leave() {
 	}
 }
 func (r *Reader) Fork() *Reader {
+	var fork Reader
+	r.forkInto(&fork)
+	return &fork
+}
+
+// Keep the public snapshot wrapper small enough for caller inlining. The
+// copied reader may stay on the caller's stack; trial snapshots still detach
+// pooled bindings and borrowed paths before escaping their choice scope.
+// TS 24.007 V20.0.0 Annex B §§B.1.1.3–B.1.1.5.
+func (r *Reader) forkInto(fork *Reader) {
 	r.ensureTruncations()
 	priorVars, priorPath := r.varsShared, r.pathShared
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
-	fork := *r
+	*fork = *r
 	if r.trial != nil {
 		fork.freezeChoiceSnapshot()
 		r.varsShared, r.pathShared = priorVars, priorPath
@@ -234,7 +244,6 @@ func (r *Reader) Fork() *Reader {
 		fork.observationDropped = r.collector.dropped
 	}
 	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
-	return &fork
 }
 func (r *Reader) Commit(other *Reader) {
 	if r.trial != nil || other.trial != nil {
