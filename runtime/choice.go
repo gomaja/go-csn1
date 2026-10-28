@@ -275,6 +275,9 @@ func (r *Reader) applyBindings(target *Reader, stop *Reader) {
 }
 
 func (r *Reader) commitChoice(other *Reader) {
+	if r == other {
+		return
+	}
 	if !other.choice {
 		next := r.choiceNext
 		if r.collector != nil {
@@ -289,6 +292,17 @@ func (r *Reader) commitChoice(other *Reader) {
 	// Apply into a separate receiver so inherited overlay links to r remain
 	// immutable until all writes have been read.
 	target := Reader{choice: mode, vars: vars, varsShared: shared, bindings: bindings}
+	base := other
+	for base.choice && base.bindings.base != nil && base.bindings.base != r {
+		base = base.bindings.base
+	}
+	if base.bindings.base == nil {
+		// A detached snapshot replaces the complete visible variable state.
+		target.vars, target.varsShared = base.vars, true
+		if mode {
+			target.bindings = choiceBindings{}
+		}
+	}
 	other.applyBindings(&target, r)
 	if r.collector != nil {
 		r.commitCollected(other)
