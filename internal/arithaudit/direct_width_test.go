@@ -2,8 +2,6 @@ package arithaudit
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 	"testing"
 )
 
@@ -64,8 +62,8 @@ func TestDirectWidthNarrowingProof(t *testing.T) {
 		{"value reread resets offset", `width:=3;v,_:=r.ReadUint(width);v+=200;v,_=r.ReadUint(width);return uint8(v)`, true},
 		{"value repeated bounded offset", `width:=3;v,_:=r.ReadUint(width);v+=1;v+=2;return uint8(v)`, true},
 		{"value nested cast without write", `width:=8;v,_:=r.ReadUint(width);if n>0{return uint8(v)};return 0`, true},
-		{"value LH conversion", `width:=1;v,_:=r.ReadUint(width);v^=uint64(runtime.LHBit('L',r.Position()-1));return uint8(v)`, true},
-		{"value H conversion", `width:=1;v,_:=r.ReadUint(width);v^=uint64(runtime.LHBit('H',r.Position()-1));return uint8(v)`, true},
+		{"value LH conversion", `width:=1;v,_:=r.ReadUint(width);v^=uint64(runtime.LHBit('L',r.Position()-1));return uint8(v)`, false},
+		{"value H conversion", `width:=1;v,_:=r.ReadUint(width);v^=uint64(runtime.LHBit('H',r.Position()-1));return uint8(v)`, false},
 		{"value cast in unchanged loop", `width:=8;v,_:=r.ReadUint(width);for j:=0;j<2;j++{_ = uint8(v)};return 0`, true},
 		{"value increment", `width:=8;v,_:=r.ReadUint(width);v++;return uint8(v)`, false},
 		{"value decrement", `width:=8;v,_:=r.ReadUint(width);v--;return uint8(v)`, false},
@@ -180,31 +178,9 @@ func TestDirectCountLoopProof(t *testing.T) {
 
 func TestDirectLHWidthProofRejectsLongerLiterals(t *testing.T) {
 	for _, width := range []string{"1", "10", "11", "16", "1+1", "1*16", "1; width=2", "1; width++"} {
-		source := fmt.Appendf(nil, "package sample;func encodeField(w *runtime.Writer){width:=%s;_ = width;_ = uint64(runtime.LHBit('L',w.Position()))}", width)
-		dir := t.TempDir()
-		if err := os.Mkdir(filepath.Join(dir, "sample"), 0o700); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(filepath.Join(dir, "sample", "generated.go"), source, 0o600); err != nil {
-			t.Fatal(err)
-		}
-		findings, err := ScanSource("sample/generated.go", source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		checker := &citationChecker{root: dir, files: make(map[string]citationFile)}
-		checked := 0
-		for _, finding := range findings {
-			if finding.Expression != "uint64(runtime.LHBit('L', w.Position()))" {
-				continue
-			}
-			checked++
-			if err := checker.checkGeneratedResidual(finding); (err == nil) != (width == "1") {
-				t.Fatalf("literal %s: %v", width, err)
-			}
-		}
-		if checked != 1 {
-			t.Fatalf("literal %s: checked %d expressions: %+v", width, checked, findings)
+		source := fmt.Appendf(nil, `package sample;import "github.com/gomaja/go-csn1/runtime";func decodeField(r *runtime.Reader)uint8{lhL,_:=r.LHBit('L');width:=%s;v,_:=r.ReadUint(width);v^=uint64(lhL);return uint8(v)}`, width)
+		if _, err := CheckGeneratedNarrowing("sample/generated.go", source); (err == nil) != (width == "1") {
+			t.Fatalf("width %s: %v", width, err)
 		}
 	}
 }

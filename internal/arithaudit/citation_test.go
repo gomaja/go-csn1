@@ -119,37 +119,3 @@ func TestIntrinsicBoundCitationsMatchTheirOperation(t *testing.T) {
 		})
 	}
 }
-
-func TestGeneratedResidualRequiresItsLocalGuard(t *testing.T) {
-	root := t.TempDir()
-	if err := os.MkdirAll(filepath.Join(root, "ts44018"), 0o755); err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(root, "ts44018", "generated.go")
-	good := `package ts44018
-func decode(r Reader) error {
-	width, err := r.Eval("1")
-	if err != nil { return err }
-	v, err := r.ReadUint(width)
-	if err != nil { return err }
-	_ = v
-	_ = r.Position() - 1
-	return nil
-}`
-	finding := Finding{File: "ts44018/generated.go", Line: 8, Kind: "arithmetic", Expression: "r.Position() - 1"}
-	for _, tc := range []struct {
-		source string
-		valid  bool
-	}{
-		{good, true},
-		{strings.Replace(good, "if err != nil { return err }\n\t_ = v", "_ = err\n\t_ = v", 1), false},
-	} {
-		if err := os.WriteFile(path, []byte(tc.source), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		checker := &citationChecker{root: root, files: make(map[string]citationFile)}
-		if err := checker.checkGeneratedResidual(finding); (err == nil) != tc.valid {
-			t.Fatalf("guard check err=%v, valid=%t", err, tc.valid)
-		}
-	}
-}

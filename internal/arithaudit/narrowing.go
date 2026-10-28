@@ -45,7 +45,7 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 			}
 			return true
 		})
-		if !reviewedValueWrites(fn, directWrites) || hasClosureNarrowing(fn.Body) {
+		if !reviewedValueWrites(fn, directWrites) || hasClosureNarrowing(fn.Body) || !reviewedLHMaskWrites(citationFile{set: fset, file: file, source: source}, fn) {
 			return checked, fmt.Errorf("%s: unreviewed generated v write or closure cast in %s", name, fn.Name.Name)
 		}
 		var failure error
@@ -167,28 +167,10 @@ func isLHBitMask(expr ast.Expr) bool {
 	if !ok || len(outer.Args) != 1 || !isName(outer.Fun, "uint64") {
 		return false
 	}
-	inner, ok := outer.Args[0].(*ast.CallExpr)
-	if !ok || len(inner.Args) != 2 {
-		return false
+	if isName(outer.Args[0], "lhL") {
+		return true
 	}
-	selector, ok := inner.Fun.(*ast.SelectorExpr)
-	if !ok || !isName(selector.X, "runtime") || selector.Sel.Name != "LHBit" {
-		return false
-	}
-	literal, ok := inner.Args[0].(*ast.BasicLit)
-	if !ok || (literal.Value != "'L'" && literal.Value != "'H'") {
-		return false
-	}
-	position, ok := inner.Args[1].(*ast.BinaryExpr)
-	if !ok || position.Op != token.SUB || !isOneLiteral(position.Y) {
-		return false
-	}
-	call, ok := position.X.(*ast.CallExpr)
-	if !ok || len(call.Args) != 0 {
-		return false
-	}
-	method, ok := call.Fun.(*ast.SelectorExpr)
-	return ok && isName(method.X, "r") && method.Sel.Name == "Position"
+	return false
 }
 
 func hasNarrowingCast(body *ast.BlockStmt) bool {

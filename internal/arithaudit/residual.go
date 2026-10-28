@@ -157,16 +157,8 @@ func (c *citationChecker) checkGeneratedResidual(f Finding) error {
 		return nil
 	case "w.Position() - before":
 		ordered = []string{"before:=w.Position()", "iferr:=encode", "ifw.Position()-before!=length"}
-	case "r.Position() - 1", "uint64(runtime.LHBit('H', r.Position()-1))", "uint64(runtime.LHBit('L', r.Position()-1))":
-		ordered = []string{"r.Eval(\"1\")", "r.ReadUint(width)", "iferr!=nil{return", "r.Position()-1"}
-		if directLiteralWidth(fn, "1") {
-			ordered[0] = "width:=1"
-		}
-	case "uint64(runtime.LHBit('H', w.Position()))", "uint64(runtime.LHBit('L', w.Position()))":
-		ordered = []string{"w.Eval(\"1\")", "runtime.LHBit(", "w.Position()"}
-		if directLiteralWidth(fn, "1") {
-			ordered[0] = "width:=1"
-		}
+	case "uint64(lhL)", "uint64(lhL ^ 1)":
+		return checkLHUnsignedSource(file, fn, f)
 	case "(len(data) - 3) * 8", "len(data) - 3":
 		ordered = []string{"runtime.CheckInput(data)", "iflen(data)<3", "len(data)-3"}
 	case "40 + cm3.BitsConsumed":

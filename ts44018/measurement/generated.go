@@ -648,7 +648,7 @@ func decodeEnhancedMeasurementReportRepeatedInvalidBSICInformationList(r *runtim
 	var out []EnhancedMeasurementReportRepeatedInvalidBSICInformationListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportRepeatedInvalidBSICInformationList", len(out))
 			}
@@ -1339,6 +1339,10 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -1503,6 +1507,10 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -1694,6 +1702,10 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
