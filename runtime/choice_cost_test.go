@@ -141,6 +141,7 @@ func TestChoiceBindingsMatchMapResolution(t *testing.T) {
 		vars["local 15"], vars["a b"], vars["ab"] = 91, 9, 8
 		want, we := eval(expression, vars)
 		got, ge := b.Eval(expression)
+		failures.Track(ge)
 		if got != want || (ge == nil) != (we == nil) || ge != nil && !strings.Contains(ge.Error(), we.Error()) {
 			t.Fatalf("%s: %d %v; want %d %v", expression, got, ge, want, we)
 		}
@@ -156,7 +157,9 @@ func TestChoiceBindingsMatchMapResolution(t *testing.T) {
 	r.Set("ab c", 2)
 	c := failures.Fork(r)
 	c.Set("a bc", 3)
-	if _, err := c.Eval("abc"); err == nil {
+	_, err := c.Eval("abc")
+	failures.Track(err)
+	if err == nil {
 		t.Fatal("compact ambiguity accepted")
 	}
 }
@@ -184,7 +187,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 	candidate.Leave()
 	got := failures.Keep(r, err)
 	want := normalizeChoiceTest(&fieldDecodeError{DecodeError: DecodeError{Kind: Truncated, Offset: 5, Path: "Kept", Detail: "missing"}, width: 3}, "decode", "leaf", 5, 3, source, Truncated)
-	if !reflect.DeepEqual(struct{ Chain error }{got}, struct{ Chain error }{want}) {
+	if !equalChoiceDiagnostic(got, want) {
 		t.Fatalf("diagnostic changed: %#v / %#v", got, want)
 	}
 	for range 100 {
@@ -193,7 +196,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 		discarded.Track(other.Error(InvalidValue, "replacement"))
 		discarded.Release()
 	}
-	if !reflect.DeepEqual(struct{ Chain error }{got}, struct{ Chain error }{want}) {
+	if !equalChoiceDiagnostic(got, want) {
 		t.Fatal("returned error changed after scratch reuse")
 	}
 }
@@ -291,5 +294,52 @@ func TestPublicForkOfTrialOwnsItsActivePath(t *testing.T) {
 	var de *DecodeError
 	if !errors.As(err, &de) || de.Path != "Root/Trial" {
 		t.Fatalf("public fork path overwritten: %v", err)
+	}
+}
+
+// The independently constructed chains have distinct identities. Compare
+// their exact concrete leaf representation and every operation field.
+func equalChoiceDiagnostic(got, want error) bool {
+	left, lok := got.(*OperationError)
+	right, rok := want.(*OperationError)
+	if !lok || !rok {
+		return false
+	}
+	leftLeaf, lok := left.Cause.(*fieldDecodeError)
+	rightLeaf, rok := right.Cause.(*fieldDecodeError)
+	if !lok || !rok {
+		return false
+	}
+	a, b := *left, *right
+	a.Cause, b.Cause = nil, nil
+	return a == b && *leftLeaf == *rightLeaf
+}
+
+func TestChoiceCompiledBindingsMatchInterpreter(t *testing.T) {
+	r := NewReader(nil)
+	r.Set("a b", 3)
+	var trials ChoiceErrors
+	defer trials.Release()
+	candidate := trials.Fork(r)
+	candidate.Set("a b", 5)
+	candidate.Set("ab", 7)
+	candidate.Set("a bc", 9)
+	candidate.Set("ab c", 11)
+	for _, name := range []string{"A B", "ab", "ABC", "absent"} {
+		interpreted, ie := candidate.Eval("val(" + name + ")")
+		compiled, ce := candidate.ExpressionResult(candidate.ExpressionVariable(name).Operand())
+		trials.Track(ie)
+		trials.Track(ce)
+		if interpreted != compiled || (ie == nil) != (ce == nil) {
+			t.Fatalf("%s: interpreter %d %v; compiled %d %v", name, interpreted, ie, compiled, ce)
+		}
+		if ie == nil {
+			continue
+		}
+		ie, ce = trials.Keep(r, ie), trials.Keep(r, ce)
+		var a, b *DecodeError
+		if !errors.As(ie, &a) || !errors.As(ce, &b) || *a != *b {
+			t.Fatalf("%s: interpreter %v; compiled %v", name, ie, ce)
+		}
 	}
 }
