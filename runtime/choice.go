@@ -225,7 +225,28 @@ func (r *Reader) binding(name string) (uint64, bool) {
 	return n, ok
 }
 
-func (r *Reader) applyBindings(target *Reader, stop *Reader) {
+// bindingTarget carries only the variable state of a commit. A complete Reader
+// would also copy wire and path state that binding application never reads.
+// Names in the source maps are already canonical under TS 24.007 V20.0.0
+// Annex B §B.1.1.5; applying them must not normalize or retain a trial reader.
+type bindingTarget struct {
+	values map[string]uint64
+	shared bool
+}
+
+//go:noinline
+func (b *bindingTarget) set(name string, value uint64) {
+	if b.shared {
+		b.values = cloneVars(b.values)
+		b.shared = false
+	}
+	if b.values == nil {
+		b.values = make(map[string]uint64)
+	}
+	b.values[name] = value
+}
+
+func (r *Reader) applyBindings(target *bindingTarget, stop *Reader) {
 	if r.trial == nil {
 		return
 	}
@@ -233,7 +254,7 @@ func (r *Reader) applyBindings(target *Reader, stop *Reader) {
 		r.trial.base.applyBindings(target, stop)
 	}
 	for name, value := range r.trial.values {
-		target.Set(name, value)
+		target.set(name, value)
 	}
 }
 
@@ -255,7 +276,7 @@ func (r *Reader) commitChoice(other *Reader) {
 	}
 	// Apply into a separate receiver so inherited overlay links to r remain
 	// immutable until all writes have been read.
-	target := Reader{vars: r.vars, varsShared: r.varsShared}
+	target := bindingTarget{values: r.vars, shared: r.varsShared}
 	var state choiceTrial
 	if owned != nil {
 		state = *owned
@@ -267,7 +288,7 @@ func (r *Reader) commitChoice(other *Reader) {
 	if base.trial == nil || base.trial.base == nil {
 		// A detached snapshot supplies the complete variable state, including
 		// the absence of names that only the receiving reader had retained.
-		target.vars, target.varsShared = base.vars, true
+		target.values, target.shared = base.vars, true
 		if owned != nil {
 			clear(state.values)
 			state.base = nil
@@ -278,7 +299,7 @@ func (r *Reader) commitChoice(other *Reader) {
 	} else {
 		// Set writes through this already-owned map without retaining a
 		// pointer to the stack copy of the trial metadata.
-		overlay := Reader{vars: state.values}
+		overlay := bindingTarget{values: state.values}
 		other.applyBindings(&overlay, r)
 	}
 	if r.collector != nil {
@@ -286,7 +307,7 @@ func (r *Reader) commitChoice(other *Reader) {
 	} else {
 		*r = *other
 	}
-	r.vars, r.varsShared, r.trial = target.vars, target.varsShared, owned
+	r.vars, r.varsShared, r.trial = target.values, target.shared, owned
 	if owned != nil {
 		*owned = state
 	}
@@ -315,42 +336,32 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 	compact := strings.ReplaceAll(canonical, " ", "")
 	var value uint64
 	found := false
-	accept := func(label string, n uint64) bool {
-		if strings.ReplaceAll(label, " ", "") != compact {
-			return true
-		}
-		if found {
-			return false
-		}
-		value, found = n, true
-		return true
-	}
 	root := r
 	for root.trial != nil && root.trial.base != nil {
 		root = root.trial.base
 	}
 	for label := range root.vars {
-		n, _ := r.binding(label)
-		if !accept(label, n) {
+		if strings.ReplaceAll(label, " ", "") != compact {
+			continue
+		}
+		if found {
 			return 0, false, fmt.Errorf("ambiguous width variable %q", name)
 		}
+		value, _ = r.binding(label)
+		found = true
 	}
 	for owner := r; owner.trial != nil; owner = owner.trial.base {
-		check := func(label string, n uint64) bool {
-			if _, exists := root.vars[label]; exists {
-				return true
-			}
-			for newer := r; newer != owner; newer = newer.trial.base {
-				if newer.trial.has(label) {
-					return true
-				}
-			}
-			return accept(label, n)
-		}
 		for label, n := range owner.trial.values {
-			if !check(label, n) {
+			if strings.ReplaceAll(label, " ", "") != compact {
+				continue
+			}
+			if _, exists := root.vars[label]; exists || r.bindingShadowed(owner, label) {
+				continue
+			}
+			if found {
 				return 0, false, fmt.Errorf("ambiguous width variable %q", name)
 			}
+			value, found = n, true
 		}
 		if owner.trial.base == nil {
 			break
@@ -358,9 +369,17 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 	}
 	return value, found, nil
 }
-func (b *choiceTrial) has(name string) bool {
-	_, exists := b.values[name]
-	return exists
+
+// bindingShadowed skips a name already supplied by a newer overlay. Keep this
+// walk separate from compact matching so the compiler does not duplicate the
+// nested traversal in the resolver's map loop.
+func (r *Reader) bindingShadowed(owner *Reader, name string) bool {
+	for newer := r; newer != owner; newer = newer.trial.base {
+		if _, exists := newer.trial.values[name]; exists {
+			return true
+		}
+	}
+	return false
 }
 
 // A public Fork must remain independent even when its source is a borrowed
@@ -371,9 +390,9 @@ func (r *Reader) freezeChoiceSnapshot() {
 	for root.trial != nil && root.trial.base != nil {
 		root = root.trial.base
 	}
-	snapshot := Reader{vars: cloneVars(root.vars)}
+	snapshot := bindingTarget{values: cloneVars(root.vars)}
 	r.applyBindings(&snapshot, nil)
-	r.vars, r.varsShared, r.trial = snapshot.vars, true, nil
+	r.vars, r.varsShared, r.trial = snapshot.values, true, nil
 	path := make([]string, len(r.path), max(16, len(r.path)))
 	copy(path, r.path)
 	r.path, r.pathShared = path, false
