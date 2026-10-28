@@ -352,10 +352,10 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 	}
 	for owner := r; owner.trial != nil; owner = owner.trial.base {
 		for label, n := range owner.trial.values {
-			if strings.ReplaceAll(label, " ", "") != compact {
+			if _, exists := root.vars[label]; exists || r.bindingShadowed(owner, label) {
 				continue
 			}
-			if _, exists := root.vars[label]; exists || r.bindingShadowed(owner, label) {
+			if strings.ReplaceAll(label, " ", "") != compact {
 				continue
 			}
 			if found {
