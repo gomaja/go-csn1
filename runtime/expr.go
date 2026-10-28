@@ -241,26 +241,11 @@ func (p *expression) primary() (int64, error) {
 
 func (p *expression) resolveVar(name string) (uint64, bool, error) {
 	canonical := key(name)
-	if p.reader != nil && p.reader.choice {
+	// Both plain maps and trial overlays prefer exact canonical names and
+	// reject ambiguous compact spellings through the same resolver.
+	if p.reader != nil {
 		return p.reader.resolveBinding(name, canonical)
 	}
-	if n, ok := p.vars[canonical]; ok {
-		return n, true, nil
-	}
-	// Word extraction can omit spaces inside a val(...) reference while
-	// preserving them in its printed field declaration. Ambiguous compact
-	// spellings fail closed instead of selecting whichever map entry wins.
-	compact := strings.ReplaceAll(canonical, " ", "")
-	var value uint64
-	found := false
-	for label, n := range p.vars {
-		if strings.ReplaceAll(label, " ", "") != compact {
-			continue
-		}
-		if found {
-			return 0, false, fmt.Errorf("ambiguous width variable %q", name)
-		}
-		value, found = n, true
-	}
-	return value, found, nil
+	plain := Reader{vars: p.vars}
+	return plain.resolveBinding(name, canonical)
 }

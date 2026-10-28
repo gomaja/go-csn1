@@ -69,9 +69,7 @@ type Reader struct {
 	depth                                          int
 	wire                                           WireInfo
 	collector                                      *Collector
-	choice                                         bool
-	bindings                                       choiceBindings
-	choiceNext                                     *Reader
+	trial                                          *choiceTrial
 	observationDropped                             uint64
 	observationStart                               int32
 	fieldWidthLo                                   uint16
@@ -88,6 +86,7 @@ type readerStorage struct {
 	path   [16]string
 }
 
+//go:noinline
 func NewReader(data []byte) *Reader {
 	storage := new(readerStorage)
 	r := &storage.reader
@@ -163,8 +162,8 @@ func (r *Reader) Tail() BitString {
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
-	if r.choice {
-		r.bindings.set(key(name), value)
+	if r.trial != nil {
+		r.trial.values[key(name)] = value
 		return
 	}
 	if r.varsShared {
@@ -187,7 +186,7 @@ func (r *Reader) fail(kind ErrorKind, detail string) error {
 	return r.failAt(kind, r.pos, detail)
 }
 func (r *Reader) failAt(kind ErrorKind, offset int, detail string) error {
-	if r.choice {
+	if r.trial != nil {
 		return r.deferredFailure(kind, offset, detail)
 	}
 	path := strings.Join(r.path, "/")
@@ -223,14 +222,12 @@ func (r *Reader) Leave() {
 }
 func (r *Reader) Fork() *Reader {
 	r.ensureTruncations()
-	priorVars, priorPath, priorBindings := r.varsShared, r.pathShared, r.bindings.shared
+	priorVars, priorPath := r.varsShared, r.pathShared
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
-	r.bindings.shared = true
 	fork := *r
-	fork.bindings.extra = fork.bindings.extra[:len(fork.bindings.extra):len(fork.bindings.extra)]
-	if r.choice {
+	if r.trial != nil {
 		fork.freezeChoiceSnapshot()
-		r.varsShared, r.pathShared, r.bindings.shared = priorVars, priorPath, priorBindings
+		r.varsShared, r.pathShared = priorVars, priorPath
 	}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
@@ -240,7 +237,7 @@ func (r *Reader) Fork() *Reader {
 	return &fork
 }
 func (r *Reader) Commit(other *Reader) {
-	if r.choice || other.choice {
+	if r.trial != nil || other.trial != nil {
 		r.commitChoice(other)
 		return
 	}
@@ -360,7 +357,7 @@ func (r *Reader) Expect(pattern string) error {
 		}
 		if bit != expected {
 			detail := ""
-			if !r.choice {
+			if r.trial == nil {
 				detail = fmt.Sprintf("literal %c differs", symbol)
 			}
 			err := r.failAt(InvalidValue, start, detail)

@@ -58,6 +58,8 @@ func releaseFailure(f *deferredFailure) {
 
 // Track retains a trial error until the choice is resolved. Ordinary errors
 // need no scratch ownership and are left untouched.
+//
+//go:noinline
 func (c *ChoiceErrors) Track(err error) {
 	if f, ok := err.(*deferredFailure); ok && !f.tracked {
 		f.next, c.head, f.tracked = c.head, f, true
@@ -69,11 +71,11 @@ func (c *ChoiceErrors) Release() {
 	defer func() {
 		for c.readers != nil {
 			r := c.readers
-			c.readers = r.choiceNext
-			extra := r.bindings.extra
-			clear(extra)
-			*r = Reader{}
-			r.bindings.extra = extra[:0]
+			state := r.trial
+			c.readers = state.next
+			clear(state.values)
+			*state = choiceTrial{values: state.values}
+			*r = Reader{trial: state}
 			choiceReaders.Put(r)
 		}
 	}()
@@ -100,7 +102,7 @@ func (c *ChoiceErrors) Keep(r *Reader, err error) error {
 		}
 	}
 	f.next, f.tracked = nil, false
-	if r.choice {
+	if r.trial != nil {
 		return f
 	}
 	f.cause.Path = strings.Join(f.path[:f.pathLen], "/")
@@ -167,7 +169,15 @@ func (r *Reader) deferredFailure(kind ErrorKind, offset int, detail string) erro
 // snapshot their path before a later arm can write that stack. Bindings remain
 // isolated overlays until Commit. Public Fork retains independent COW paths.
 // TS 24.007 V20.0.0 Annex B §§B.1.1.3–B.1.1.5.
-var choiceReaders = sync.Pool{New: func() any { return new(Reader) }}
+var choiceReaders = sync.Pool{New: func() any {
+	slot := new(struct {
+		reader Reader
+		trial  choiceTrial
+	})
+	slot.reader.trial = &slot.trial
+	slot.trial.values = make(map[string]uint64)
+	return &slot.reader
+}}
 
 // Fork borrows a trial reader until Release. Generated alternatives must
 // balance their path scopes before Commit or another call to Fork.
@@ -177,12 +187,11 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader {
 	}
 	r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true
 	fork := choiceReaders.Get().(*Reader)
-	extra := fork.bindings.extra
+	state := fork.trial
 	*fork = *r
-	fork.choiceNext, c.readers = c.readers, fork
-	fork.choice = true
+	*state = choiceTrial{base: r, next: c.readers, values: state.values}
+	fork.trial, c.readers = state, fork
 	fork.pathShared = false
-	fork.bindings = choiceBindings{base: r, extra: extra[:0]}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
 		fork.observationDropped = r.collector.dropped
@@ -197,61 +206,19 @@ func (r *Reader) ownPath() {
 	r.path, r.pathShared = fresh, false
 }
 
-type choiceBinding struct {
-	name  string
-	value uint64
-}
-type choiceBindings struct {
+type choiceTrial struct {
 	base   *Reader
-	inline [8]choiceBinding
-	count  int
-	extra  []choiceBinding
-	shared bool
-}
-
-func (b *choiceBindings) set(name string, value uint64) {
-	for i := 0; i < b.count; i++ {
-		if b.inline[i].name == name {
-			b.inline[i].value = value
-			return
-		}
-	}
-	for i := range b.extra {
-		if b.extra[i].name == name {
-			if b.shared {
-				b.extra = append([]choiceBinding(nil), b.extra...)
-				b.shared = false
-			}
-			b.extra[i].value = value
-			return
-		}
-	}
-	if b.count < len(b.inline) {
-		b.inline[b.count] = choiceBinding{name, value}
-		b.count++
-		return
-	}
-	if b.shared {
-		b.extra = append([]choiceBinding(nil), b.extra...)
-		b.shared = false
-	}
-	b.extra = append(b.extra, choiceBinding{name, value})
+	next   *Reader
+	values map[string]uint64
 }
 
 func (r *Reader) binding(name string) (uint64, bool) {
-	if r.choice {
-		for i := 0; i < r.bindings.count; i++ {
-			if r.bindings.inline[i].name == name {
-				return r.bindings.inline[i].value, true
-			}
+	if r.trial != nil {
+		if value, ok := r.trial.values[name]; ok {
+			return value, true
 		}
-		for _, entry := range r.bindings.extra {
-			if entry.name == name {
-				return entry.value, true
-			}
-		}
-		if r.bindings.base != nil {
-			return r.bindings.base.binding(name)
+		if r.trial.base != nil {
+			return r.trial.base.binding(name)
 		}
 	}
 	n, ok := r.vars[name]
@@ -259,18 +226,14 @@ func (r *Reader) binding(name string) (uint64, bool) {
 }
 
 func (r *Reader) applyBindings(target *Reader, stop *Reader) {
-	if !r.choice {
+	if r.trial == nil {
 		return
 	}
-	if r.bindings.base != nil && r.bindings.base != stop {
-		r.bindings.base.applyBindings(target, stop)
+	if r.trial.base != nil && r.trial.base != stop {
+		r.trial.base.applyBindings(target, stop)
 	}
-	for i := 0; i < r.bindings.count; i++ {
-		e := r.bindings.inline[i]
-		target.Set(e.name, e.value)
-	}
-	for _, e := range r.bindings.extra {
-		target.Set(e.name, e.value)
+	for name, value := range r.trial.values {
+		target.Set(name, value)
 	}
 }
 
@@ -278,38 +241,55 @@ func (r *Reader) commitChoice(other *Reader) {
 	if r == other {
 		return
 	}
-	if !other.choice {
-		next := r.choiceNext
+	owned := r.trial
+	if other.trial == nil {
 		if r.collector != nil {
 			r.commitCollected(other)
 		} else {
 			*r = *other
 		}
-		r.choice, r.bindings, r.choiceNext = true, choiceBindings{}, next
+		clear(owned.values)
+		owned.base = nil
+		r.trial = owned
 		return
 	}
-	mode, vars, shared, bindings, next := r.choice, r.vars, r.varsShared, r.bindings, r.choiceNext
 	// Apply into a separate receiver so inherited overlay links to r remain
 	// immutable until all writes have been read.
-	target := Reader{choice: mode, vars: vars, varsShared: shared, bindings: bindings}
-	base := other
-	for base.choice && base.bindings.base != nil && base.bindings.base != r {
-		base = base.bindings.base
+	target := Reader{vars: r.vars, varsShared: r.varsShared}
+	var state choiceTrial
+	if owned != nil {
+		state = *owned
 	}
-	if base.bindings.base == nil {
-		// A detached snapshot replaces the complete visible variable state.
+	base := other
+	for base.trial != nil && base.trial.base != nil && base.trial.base != r {
+		base = base.trial.base
+	}
+	if base.trial == nil || base.trial.base == nil {
+		// A detached snapshot supplies the complete variable state, including
+		// the absence of names that only the receiving reader had retained.
 		target.vars, target.varsShared = base.vars, true
-		if mode {
-			target.bindings = choiceBindings{}
+		if owned != nil {
+			clear(state.values)
+			state.base = nil
 		}
 	}
-	other.applyBindings(&target, r)
+	if owned == nil {
+		other.applyBindings(&target, r)
+	} else {
+		// Set writes through this already-owned map without retaining a
+		// pointer to the stack copy of the trial metadata.
+		overlay := Reader{vars: state.values}
+		other.applyBindings(&overlay, r)
+	}
 	if r.collector != nil {
 		r.commitCollected(other)
 	} else {
 		*r = *other
 	}
-	r.choice, r.vars, r.varsShared, r.bindings, r.choiceNext = mode, target.vars, target.varsShared, target.bindings, next
+	r.vars, r.varsShared, r.trial = target.vars, target.varsShared, owned
+	if owned != nil {
+		*owned = state
+	}
 }
 
 func literalDifference(symbol rune) string {
@@ -346,8 +326,8 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 		return true
 	}
 	root := r
-	for root.choice && root.bindings.base != nil {
-		root = root.bindings.base
+	for root.trial != nil && root.trial.base != nil {
+		root = root.trial.base
 	}
 	for label := range root.vars {
 		n, _ := r.binding(label)
@@ -355,46 +335,32 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 			return 0, false, fmt.Errorf("ambiguous width variable %q", name)
 		}
 	}
-	for owner := r; owner.choice; owner = owner.bindings.base {
-		check := func(e choiceBinding) bool {
-			if _, exists := root.vars[e.name]; exists {
+	for owner := r; owner.trial != nil; owner = owner.trial.base {
+		check := func(label string, n uint64) bool {
+			if _, exists := root.vars[label]; exists {
 				return true
 			}
-			for newer := r; newer != owner; newer = newer.bindings.base {
-				if newer.bindings.has(e.name) {
+			for newer := r; newer != owner; newer = newer.trial.base {
+				if newer.trial.has(label) {
 					return true
 				}
 			}
-			return accept(e.name, e.value)
+			return accept(label, n)
 		}
-		for i := 0; i < owner.bindings.count; i++ {
-			if !check(owner.bindings.inline[i]) {
+		for label, n := range owner.trial.values {
+			if !check(label, n) {
 				return 0, false, fmt.Errorf("ambiguous width variable %q", name)
 			}
 		}
-		for _, e := range owner.bindings.extra {
-			if !check(e) {
-				return 0, false, fmt.Errorf("ambiguous width variable %q", name)
-			}
-		}
-		if owner.bindings.base == nil {
+		if owner.trial.base == nil {
 			break
 		}
 	}
 	return value, found, nil
 }
-func (b *choiceBindings) has(name string) bool {
-	for i := 0; i < b.count; i++ {
-		if b.inline[i].name == name {
-			return true
-		}
-	}
-	for _, e := range b.extra {
-		if e.name == name {
-			return true
-		}
-	}
-	return false
+func (b *choiceTrial) has(name string) bool {
+	_, exists := b.values[name]
+	return exists
 }
 
 // A public Fork must remain independent even when its source is a borrowed
@@ -402,13 +368,12 @@ func (b *choiceBindings) has(name string) bool {
 // ancestor before another alternative can reuse the borrowed stack.
 func (r *Reader) freezeChoiceSnapshot() {
 	root := r
-	for root.choice && root.bindings.base != nil {
-		root = root.bindings.base
+	for root.trial != nil && root.trial.base != nil {
+		root = root.trial.base
 	}
 	snapshot := Reader{vars: cloneVars(root.vars)}
 	r.applyBindings(&snapshot, nil)
-	r.vars, r.varsShared, r.choice, r.bindings = snapshot.vars, true, false, choiceBindings{}
-	r.choiceNext = nil
+	r.vars, r.varsShared, r.trial = snapshot.vars, true, nil
 	path := make([]string, len(r.path), max(16, len(r.path)))
 	copy(path, r.path)
 	r.path, r.pathShared = path, false
