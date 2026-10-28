@@ -40,7 +40,9 @@ func TestValueWireRejectsCountPrefixOverrun(t *testing.T) {
 	for _, name := range []string{"truncation", "spare"} {
 		t.Run(name, func(t *testing.T) {
 			r := NewReader(nil)
-			r.Enter("parent")
+			if err := r.Enter("parent"); err != nil {
+				t.Fatal(err)
+			}
 			r.wire.TruncatedAt = map[string][]int{"key": {}}
 			r.wire.SpareCounts = map[string][]int{"key": {}}
 			before := WireInfo{}
