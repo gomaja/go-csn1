@@ -80,6 +80,8 @@ func (c *ChoiceErrors) Track(err error) {
 }
 
 // Release returns discarded diagnostic scratch. Kept errors are detached first.
+// All released handles are dead and must not be reused. Keep detects a handle
+// still in the pool, but reuse after another trial acquires it cannot be detected.
 func (c *ChoiceErrors) Release() {
 	defer func() {
 		for c.readers != nil {
@@ -103,10 +105,16 @@ func (c *ChoiceErrors) Release() {
 // Keep transfers the chosen diagnostic to its containing trial, or builds its
 // original error chain when returning to a nontrial caller. Only diagnostic
 // normalization is replayed: decoder work and observations are never replayed.
+// Keep consumes the input handle; use only its returned error afterwards. A
+// handle is dead after Keep or Release. Keep panics if the handle is still in
+// the pool; reuse after another trial acquires it cannot be detected.
 func (c *ChoiceErrors) Keep(r *Reader, err error) error {
 	f, ok := err.(*deferredFailure)
 	if !ok {
 		return err
+	}
+	if f.cause.Kind == "" {
+		panic("CSN.1 choice diagnostic already consumed or released")
 	}
 	// A diagnostic owned by a different live choice must not be detached or
 	// recycled here. Build an independent chain without changing its owner.
@@ -223,6 +231,10 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader { return r.Fork() }
 // DeferReaderPath, PreferTruncation, IsReservedAlternative and
 // IsLHPositionUndefined may inspect them inside the active scope. Neither a
 // reader nor an opaque handle may be used by these operations after Release.
+// Keep consumes its input handle; that handle is dead after Keep or Release.
+// Keep detects a handle still in the pool, but cannot detect reuse after another
+// trial acquires it. Never format or wrap a scoped failure before Keep: fmt
+// recovers its Error panic and prints a %!v(PANIC=Error method: ...) marker.
 // TS 24.007 V20.0.0 Annex B §§B.1.1.3-B.1.1.5.
 func (c *ChoiceErrors) ForkScoped(r *Reader) *Reader {
 	r.checkTrialIdentity()

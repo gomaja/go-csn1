@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"errors"
+	"fmt"
 	goruntime "runtime"
 	"strings"
 	"testing"
@@ -307,5 +308,111 @@ func TestChoicePredicatesAndMixedTruncationKeepSemantics(t *testing.T) {
 	trials.Track(refusal)
 	if !IsLHPositionUndefined(refusal) || !IsLHPositionUndefined(trials.Keep(r, refusal)) {
 		t.Fatal("lost refusal predicate")
+	}
+}
+
+func TestChoiceKeepRejectsRecycledHandle(t *testing.T) {
+	prior := goruntime.GOMAXPROCS(1)
+	defer goruntime.GOMAXPROCS(prior)
+	for _, mode := range []string{"keep", "release", "trial"} {
+		t.Run(mode, func(t *testing.T) {
+			r := NewReader(nil)
+			if err := r.Enter("Root"); err != nil {
+				t.Fatal(err)
+			}
+			var trials, parent ChoiceErrors
+			a := trials.ForkScoped(r)
+			_, handle := a.ReadUint(2)
+			trials.Track(handle)
+			switch mode {
+			case "keep":
+				_ = trials.Keep(r, handle)
+			case "release":
+				trials.Release()
+			case "trial":
+				outer := parent.ForkScoped(r)
+				forwarded := trials.Keep(outer, handle)
+				parent.Track(forwarded)
+				_ = parent.Keep(r, forwarded)
+			}
+			func() {
+				defer func() {
+					recovered := recover()
+					if recovered == nil {
+						t.Error("Keep accepted a recycled diagnostic")
+					} else if message, ok := recovered.(string); !ok || !strings.Contains(message, "consumed or released") {
+						t.Errorf("unclear panic: %v", recovered)
+					}
+				}()
+				_ = trials.Keep(r, handle)
+			}()
+			trials.Release()
+			parent.Release()
+			var next ChoiceErrors
+			b := next.ForkScoped(r)
+			_, x := b.ReadUint(1)
+			_, y := b.ReadUint(2)
+			if x == y {
+				t.Fatal("two live failures share a pooled object")
+			}
+			next.Track(x)
+			next.Track(y)
+			next.Release()
+		})
+	}
+}
+
+func TestChoiceCommitRejectsCopiedTrial(t *testing.T) {
+	for _, mode := range []string{"receiver", "receiver-to-trial", "argument"} {
+		t.Run(mode, func(t *testing.T) {
+			r := NewReader(nil)
+			var trials ChoiceErrors
+			defer trials.Release()
+			arm := trials.ForkScoped(r)
+			arm.Set("v", 1)
+			copied := *arm
+			destination := NewReader(nil)
+			if mode == "receiver-to-trial" {
+				destination = trials.ForkScoped(r)
+				destination.Set("other", 2)
+			}
+			func() {
+				defer func() {
+					recovered := recover()
+					if recovered == nil {
+						t.Error("Commit accepted a copied trial")
+					} else if message, ok := recovered.(string); !ok || !strings.Contains(message, "copied by value") {
+						t.Errorf("unclear panic: %v", recovered)
+					}
+				}()
+				if mode == "argument" {
+					destination.Commit(&copied)
+				} else {
+					copied.Commit(destination)
+				}
+			}()
+			if got, err := arm.Eval("v"); err != nil || got != 1 {
+				t.Error("copied commit changed original binding")
+			}
+			if mode == "receiver-to-trial" {
+				if _, exists := arm.trial.values["other"]; exists {
+					t.Error("copied commit wrote another trial's bindings")
+				}
+			}
+		})
+	}
+}
+
+func TestChoiceOpaqueFormattingPrintsPanicMarker(t *testing.T) {
+	r := NewReader(nil)
+	var trials ChoiceErrors
+	defer trials.Release()
+	arm := trials.ForkScoped(r)
+	_, handle := arm.ReadUint(1)
+	trials.Track(handle)
+	for _, text := range []string{fmt.Sprintf("%v", handle), fmt.Errorf("ctx: %w", handle).Error()} {
+		if !strings.Contains(text, "%!v(PANIC=Error method: CSN.1 opaque choice diagnostic") {
+			t.Fatalf("missing panic marker: %s", text)
+		}
 	}
 }

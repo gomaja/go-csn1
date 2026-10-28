@@ -272,6 +272,8 @@ func (r *Reader) forkInto(fork *Reader) {
 }
 func (r *Reader) Commit(other *Reader) {
 	if r.trial != nil || other.trial != nil {
+		r.checkTrialIdentity()
+		other.checkTrialIdentity()
 		r.commitChoice(other)
 		return
 	}
