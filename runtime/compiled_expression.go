@@ -14,7 +14,11 @@ type ExpressionValue struct {
 func ExpressionConstant(n int64) ExpressionValue { return ExpressionValue{n: n} }
 
 func expressionVariable(name string, vars map[string]uint64) ExpressionValue {
-	p := expression{vars: vars}
+	return expressionVariableFrom(name, vars, nil)
+}
+
+func expressionVariableFrom(name string, vars map[string]uint64, reader *Reader) ExpressionValue {
+	p := expression{vars: vars, reader: reader}
 	n, ok, err := p.resolveVar(name)
 	if err != nil {
 		return ExpressionValue{err: err}
@@ -31,7 +35,7 @@ func expressionVariable(name string, vars map[string]uint64) ExpressionValue {
 // ExpressionVariable resolves a single-token reference using Eval's exact and
 // compact name matching, including its ambiguity and variable-bound checks.
 func (r *Reader) ExpressionVariable(name string) ExpressionValue {
-	return expressionVariable(name, r.vars)
+	return expressionVariableFrom(name, r.vars, r)
 }
 
 // ExpressionVariable resolves a single-token reference using Eval's exact and

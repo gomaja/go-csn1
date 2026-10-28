@@ -13,6 +13,7 @@ type expression struct {
 	tokens   []string
 	position int
 	vars     map[string]uint64
+	reader   *Reader
 }
 
 // TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
@@ -23,7 +24,11 @@ var cellInformationWidths = map[string][]int64{
 	"q": {0, 9, 17, 25, 32, 39, 46, 53, 59, 65, 71, 77, 83, 89, 95, 101, 106, 111, 116, 121, 126},
 }
 
-func eval(raw string, vars map[string]uint64) (int, error) {
+func eval(raw string, vars map[string]uint64) (int, error) { return evalExpression(raw, vars, nil) }
+
+func evalReader(raw string, r *Reader) (int, error) { return evalExpression(raw, r.vars, r) }
+
+func evalExpression(raw string, vars map[string]uint64, reader *Reader) (int, error) {
 	var tokens []string
 	for i := 0; i < len(raw); {
 		r := rune(raw[i])
@@ -45,7 +50,7 @@ func eval(raw string, vars map[string]uint64) (int, error) {
 		}
 		tokens = append(tokens, raw[start:i])
 	}
-	p := expression{tokens: tokens, vars: vars}
+	p := expression{tokens: tokens, vars: vars, reader: reader}
 	n, err := p.sum()
 	if err != nil {
 		return 0, err
@@ -236,6 +241,9 @@ func (p *expression) primary() (int64, error) {
 
 func (p *expression) resolveVar(name string) (uint64, bool, error) {
 	canonical := key(name)
+	if p.reader != nil && p.reader.choice {
+		return p.reader.resolveBinding(name, canonical)
+	}
 	if n, ok := p.vars[canonical]; ok {
 		return n, true, nil
 	}

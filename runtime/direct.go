@@ -69,6 +69,9 @@ type Reader struct {
 	depth                                          int
 	wire                                           WireInfo
 	collector                                      *Collector
+	choice                                         bool
+	bindings                                       choiceBindings
+	choiceNext                                     *Reader
 	observationDropped                             uint64
 	observationStart                               int32
 	fieldWidthLo                                   uint16
@@ -77,14 +80,23 @@ type Reader struct {
 	implicitShared, truncShared, spareCountsShared bool
 }
 
+// readerStorage keeps the shared work counter and initial path in the same
+// allocation as the reader. Forks retain pointers into this storage.
+type readerStorage struct {
+	reader Reader
+	steps  int
+	path   [16]string
+}
+
 func NewReader(data []byte) *Reader {
-	steps := 0
+	storage := new(readerStorage)
+	r := &storage.reader
 	end := 0
 	if len(data) <= maxBits/8 {
 		end = len(data) * 8
 	}
-	return &Reader{observationStart: -1, data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
-		wire: WireInfo{TruncatedAt: make(map[string][]int)}}
+	*r = Reader{observationStart: -1, data: data, end: end, path: storage.path[:0], steps: &storage.steps}
+	return r
 }
 
 func CheckInput(data []byte) error {
@@ -137,7 +149,11 @@ func (r *Reader) BoundedRemaining() int {
 	return r.Remaining()
 }
 func (r *Reader) VirtualBits() int { return r.virtual }
-func (r *Reader) Wire() WireInfo   { r.wire.ImplicitZeros = r.virtual; return r.wire }
+func (r *Reader) Wire() WireInfo {
+	r.ensureTruncations()
+	r.wire.ImplicitZeros = r.virtual
+	return r.wire
+}
 func (r *Reader) Tail() BitString {
 	if r.Check() != nil {
 		return BitString{}
@@ -147,14 +163,21 @@ func (r *Reader) Tail() BitString {
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
+	if r.choice {
+		r.bindings.set(key(name), value)
+		return
+	}
 	if r.varsShared {
 		r.vars = cloneVars(r.vars)
 		r.varsShared = false
 	}
+	if r.vars == nil {
+		r.vars = make(map[string]uint64)
+	}
 	r.vars[key(name)] = value
 }
 func (r *Reader) Eval(expression string) (int, error) {
-	v, err := eval(expression, r.vars)
+	v, err := evalReader(expression, r)
 	if err != nil {
 		return 0, r.fail(InvalidSchema, err.Error())
 	}
@@ -164,6 +187,9 @@ func (r *Reader) fail(kind ErrorKind, detail string) error {
 	return r.failAt(kind, r.pos, detail)
 }
 func (r *Reader) failAt(kind ErrorKind, offset int, detail string) error {
+	if r.choice {
+		return r.deferredFailure(kind, offset, detail)
+	}
 	path := strings.Join(r.path, "/")
 	width := int(r.fieldWidthHi)<<16 | int(r.fieldWidthLo)
 	if width != 0 {
@@ -182,10 +208,7 @@ func (r *Reader) Enter(name string) error {
 	*r.steps++
 	r.depth++
 	if r.pathShared {
-		fresh := make([]string, len(r.path), max(16, len(r.path)))
-		copy(fresh, r.path)
-		r.path = fresh
-		r.pathShared = false
+		r.ownPath()
 	}
 	r.path = append(r.path, name)
 	return nil
@@ -199,8 +222,11 @@ func (r *Reader) Leave() {
 	}
 }
 func (r *Reader) Fork() *Reader {
+	r.ensureTruncations()
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
+	r.bindings.shared = true
 	fork := *r
+	fork.bindings.extra = fork.bindings.extra[:len(fork.bindings.extra):len(fork.bindings.extra)]
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
 		fork.observationDropped = r.collector.dropped
@@ -209,6 +235,10 @@ func (r *Reader) Fork() *Reader {
 	return &fork
 }
 func (r *Reader) Commit(other *Reader) {
+	if r.choice || other.choice {
+		r.commitChoice(other)
+		return
+	}
 	if r.collector != nil {
 		r.commitCollected(other)
 		return
@@ -324,7 +354,14 @@ func (r *Reader) Expect(pattern string) error {
 			return err
 		}
 		if bit != expected {
-			err := r.failAt(InvalidValue, start, fmt.Sprintf("literal %c differs", symbol))
+			detail := ""
+			if !r.choice {
+				detail = fmt.Sprintf("literal %c differs", symbol)
+			}
+			err := r.failAt(InvalidValue, start, detail)
+			if f, ok := err.(*deferredFailure); ok {
+				f.cause.Detail = literalDifference(symbol)
+			}
 			r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
 			return err
 		}
@@ -463,6 +500,12 @@ func (r *Reader) RecordTruncation(path string, slot, child int) {
 
 // ownTruncations copies truncation entries shared with a fork before they
 // change.
+func (r *Reader) ensureTruncations() {
+	if r.wire.TruncatedAt == nil {
+		r.wire.TruncatedAt = make(map[string][]int)
+	}
+}
+
 func (r *Reader) ownTruncations() {
 	if r.truncShared || r.wire.TruncatedAt == nil {
 		copy := make(map[string][]int, len(r.wire.TruncatedAt))

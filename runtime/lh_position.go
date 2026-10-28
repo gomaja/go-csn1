@@ -84,7 +84,12 @@ func (r *Reader) LHBit(symbol rune) (uint8, error) {
 
 func (r *Reader) lhPositionFailure(err error) error {
 	if err == ErrLHPositionUndefined {
-		return &lhPositionError{cause: r.fail(InvalidSchema, err.Error())}
+		cause := r.fail(InvalidSchema, err.Error())
+		if f, ok := cause.(*deferredFailure); ok {
+			f.lh = true
+			return f
+		}
+		return &lhPositionError{cause: cause}
 	}
 	return r.fail(Limit, err.Error())
 }
