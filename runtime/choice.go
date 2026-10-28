@@ -95,22 +95,35 @@ func (c *ChoiceErrors) Keep(r *Reader, err error) error {
 	if !ok {
 		return err
 	}
+	// A diagnostic owned by a different live choice must not be detached or
+	// recycled here. Build an independent chain without changing its owner.
+	found := false
 	for link := &c.head; *link != nil; link = &(*link).next {
 		if *link == f {
 			*link = f.next
+			found = true
 			break
 		}
+	}
+	if !found && f.tracked {
+		return f.materialize()
 	}
 	f.next, f.tracked = nil, false
 	if r.trial != nil {
 		return f
 	}
-	f.cause.Path = strings.Join(f.path[:f.pathLen], "/")
+	out := f.materialize()
+	releaseFailure(f)
+	return out
+}
+
+func (f *deferredFailure) materialize() error {
+	cause := f.cause
+	cause.Path = strings.Join(f.path[:f.pathLen], "/")
 	var out error
 	if f.width != 0 {
-		out = &fieldDecodeError{DecodeError: f.cause, width: f.width - 1}
+		out = &fieldDecodeError{DecodeError: cause, width: f.width - 1}
 	} else {
-		cause := f.cause
 		out = &cause
 	}
 	if f.lh {
@@ -123,7 +136,6 @@ func (c *ChoiceErrors) Keep(r *Reader, err error) error {
 			out = frame.indexFn(out, frame.path, frame.offset)
 		}
 	}
-	releaseFailure(f)
 	return out
 }
 
@@ -182,6 +194,7 @@ var choiceReaders = sync.Pool{New: func() any {
 // Fork borrows a trial reader until Release. Generated alternatives must
 // balance their path scopes before Commit or another call to Fork.
 func (c *ChoiceErrors) Fork(r *Reader) *Reader {
+	r.checkTrialIdentity()
 	if r.pathShared {
 		r.ownPath()
 	}
@@ -189,7 +202,7 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader {
 	fork := choiceReaders.Get().(*Reader)
 	state := fork.trial
 	*fork = *r
-	*state = choiceTrial{base: r, next: c.readers, values: state.values}
+	*state = choiceTrial{base: r, next: c.readers, values: state.values, pathFloor: len(r.path), reader: fork}
 	fork.trial, c.readers = state, fork
 	fork.pathShared = false
 	if r.collector != nil {
@@ -207,9 +220,11 @@ func (r *Reader) ownPath() {
 }
 
 type choiceTrial struct {
-	base   *Reader
-	next   *Reader
-	values map[string]uint64
+	base      *Reader
+	next      *Reader
+	values    map[string]uint64
+	pathFloor int
+	reader    *Reader
 }
 
 func (r *Reader) binding(name string) (uint64, bool) {
@@ -289,6 +304,16 @@ func (r *Reader) commitChoice(other *Reader) {
 		// A detached snapshot supplies the complete variable state, including
 		// the absence of names that only the receiving reader had retained.
 		target.values, target.shared = base.vars, true
+		base.varsShared = true
+		// The destination also retains a borrowed prefix. Every source
+		// sharing that storage must detach before changing that prefix.
+		for owner := other; owner != nil; {
+			owner.pathShared = true
+			if owner.trial == nil {
+				break
+			}
+			owner = owner.trial.base
+		}
 		if owned != nil {
 			clear(state.values)
 			state.base = nil
@@ -398,4 +423,12 @@ func (r *Reader) freezeChoiceSnapshot() {
 	path := make([]string, len(r.path), max(16, len(r.path)))
 	copy(path, r.path)
 	r.path, r.pathShared = path, false
+}
+
+// Trial readers own pooled mutable binding overlays. Copying a trial Reader by
+// value would alias that overlay; use Reader.Fork for an independent snapshot.
+func (r *Reader) checkTrialIdentity() {
+	if r.trial != nil && r.trial.reader != r {
+		panic("CSN.1 trial reader copied by value; use Reader.Fork")
+	}
 }

@@ -52,12 +52,16 @@ func (c *Collector) TakeReport() Report {
 // A nil collector has the same behavior as NewReader.
 func NewReaderWithCollector(data []byte, c *Collector) *Reader {
 	r := NewReader(data)
+	r.attachCollector(c)
+	return r
+}
+
+func (r *Reader) attachCollector(c *Collector) {
 	r.collector = c
 	if c != nil {
 		c.eventLimit = r.end
 		c.pathBudget = c.eventLimit * 128
 	}
-	return r
 }
 
 // Collecting reports whether observation collection is enabled. Generated

@@ -58,6 +58,7 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
 // budget but isolates position and expression bindings for choice resolution.
+// A reader borrowed from ChoiceErrors must not be copied by value; use Fork.
 type Reader struct {
 	data                                           []byte
 	pos, end, virtual                              int
@@ -86,8 +87,24 @@ type readerStorage struct {
 	path   [16]string
 }
 
-//go:noinline
+// NewReader constructs a reader whose state can remain on the caller's stack.
+// Unused bindings and truncation maps are initialized on first use.
 func NewReader(data []byte) *Reader {
+	end := 0
+	if len(data) <= maxBits/8 {
+		end = len(data) * 8
+	}
+	steps := 0
+	return &Reader{observationStart: -1, data: data, end: end, path: make([]string, 0, 16), steps: &steps}
+}
+
+// NewChoiceReader co-locates state retained by generated speculative choices.
+// Such choices retain the reader beyond a leaf call; sharing one allocation
+// avoids separate escaped work-counter and path allocations.
+// TS 24.007 V20.0.0 Annex B §B.1.1.4 defines the alternatives.
+//
+//go:noinline
+func NewChoiceReader(data []byte, collector *Collector) *Reader {
 	storage := new(readerStorage)
 	r := &storage.reader
 	end := 0
@@ -95,6 +112,7 @@ func NewReader(data []byte) *Reader {
 		end = len(data) * 8
 	}
 	*r = Reader{observationStart: -1, data: data, end: end, path: storage.path[:0], steps: &storage.steps}
+	r.attachCollector(collector)
 	return r
 }
 
@@ -162,6 +180,7 @@ func (r *Reader) Tail() BitString {
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
+	r.checkTrialIdentity()
 	if r.trial != nil {
 		r.trial.values[key(name)] = value
 		return
@@ -213,6 +232,12 @@ func (r *Reader) Enter(name string) error {
 	return nil
 }
 func (r *Reader) Leave() {
+	// A trial may shorten its view of the inherited prefix, but must detach
+	// before a subsequent Enter can replace any of that borrowed prefix.
+	// TS 24.007 V20.0.0 Annex B §B.1.1.3 preserves concatenation order.
+	if r.trial != nil && len(r.path) <= r.trial.pathFloor {
+		r.pathShared = true
+	}
 	if r.depth > 0 {
 		r.depth--
 	}
@@ -509,14 +534,14 @@ func (r *Reader) RecordTruncation(path string, slot, child int) {
 	}
 }
 
-// ownTruncations copies truncation entries shared with a fork before they
-// change.
+// ensureTruncations supplies the public non-nil truncation map lazily.
 func (r *Reader) ensureTruncations() {
 	if r.wire.TruncatedAt == nil {
 		r.wire.TruncatedAt = make(map[string][]int)
 	}
 }
 
+// ownTruncations copies entries shared with a fork before they change.
 func (r *Reader) ownTruncations() {
 	if r.truncShared || r.wire.TruncatedAt == nil {
 		copy := make(map[string][]int, len(r.wire.TruncatedAt))
