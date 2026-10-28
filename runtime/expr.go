@@ -195,6 +195,10 @@ func (p *expression) primary() (int64, error) {
 	if n, err := strconv.ParseInt(t, 10, 64); err == nil {
 		return n, nil
 	}
+	return p.namedValue(t)
+}
+
+func (p *expression) namedValue(t string) (int64, error) {
 	// TS 44.018 V19.0.0 §10.5.2.16 references printed field labels
 	// containing spaces inside val(...). Match the longest bound label so
 	// arithmetic after it remains a separate expression.

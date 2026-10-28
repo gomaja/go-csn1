@@ -140,30 +140,18 @@ func (r *Reader) Observe(offset, width int, value uint64, source Source, field .
 	c.pathUsed += length
 	var path strings.Builder
 	path.Grow(length)
-	appendPart := func(part string) {
-		if path.Len() != 0 {
-			path.WriteByte('/')
-		}
-		path.WriteString(part)
-	}
 	for depth := 0; depth <= len(r.path); depth++ {
 		for _, scope := range c.indices {
 			if scope.depth == depth {
-				appendPart(scope.path)
-				if scope.index >= 0 {
-					path.WriteByte('[')
-					var digits [24]byte
-					path.Write(strconv.AppendInt(digits[:0], int64(scope.index), 10))
-					path.WriteByte(']')
-				}
+				appendObservationPart(&path, scope.path, scope.index)
 			}
 		}
 		if depth < len(r.path) {
-			appendPart(r.path[depth])
+			appendObservationPart(&path, r.path[depth], -1)
 		}
 	}
 	if len(field) == 1 {
-		appendPart(field[0])
+		appendObservationPart(&path, field[0], -1)
 	}
 	c.observations = append(c.observations, Observation{Location: Location{Path: path.String(), BitOffset: offset, Width: width, Source: source}, Value: value})
 	return nil
@@ -253,4 +241,21 @@ func (r *Reader) commitCollected(other *Reader) {
 	other.observationStart = -1
 	*r = *other
 	r.observationStart, r.observationDropped = start, dropped
+}
+
+// appendObservationPart preserves the established path and index format while
+// keeping the builder operations in one compiled body.
+//
+//go:noinline
+func appendObservationPart(path *strings.Builder, part string, index int) {
+	if path.Len() != 0 {
+		path.WriteByte('/')
+	}
+	path.WriteString(part)
+	if index >= 0 {
+		path.WriteByte('[')
+		var digits [24]byte
+		path.Write(strconv.AppendInt(digits[:0], int64(index), 10))
+		path.WriteByte(']')
+	}
 }
