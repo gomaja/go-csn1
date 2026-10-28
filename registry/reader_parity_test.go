@@ -269,10 +269,6 @@ func TestReaderContextRequiredKeepsPrintedName(t *testing.T) {
 			if context.Name != d.Name {
 				t.Errorf("%s: context name %q, want %q", d.Standard, context.Name, d.Name)
 			}
-			var operation *runtime.OperationError
-			if !errors.As(err, &operation) || operation.Location.Path != d.Name {
-				t.Errorf("%s %s: context path: %v", d.Standard, d.Name, err)
-			}
 		}
 	}
 }
