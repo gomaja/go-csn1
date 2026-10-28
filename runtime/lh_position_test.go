@@ -26,6 +26,13 @@ func TestLHTransmittedAfterInferred(t *testing.T) {
 	for _, b := range []byte{0x2b, 0x56} {
 		r := NewReader([]byte{b})
 		inferPrefix(t, r)
+		numeric := r.Fork()
+		if _, err := numeric.ReadUint(2); err != nil {
+			t.Fatal(err)
+		}
+		if bit, err := numeric.LHBit('L'); err != nil || bit != 1 {
+			t.Fatalf("numeric transmitted L at position 2: %d %v", bit, err)
+		}
 		match, matchErr := r.LookaheadLiteral("LLLLLLLL")
 		if matchErr != nil {
 			t.Fatal(matchErr)
