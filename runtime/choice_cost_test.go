@@ -184,7 +184,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 	candidate.Leave()
 	got := failures.Keep(r, err)
 	want := normalizeChoiceTest(&fieldDecodeError{DecodeError: DecodeError{Kind: Truncated, Offset: 5, Path: "Kept", Detail: "missing"}, width: 3}, "decode", "leaf", 5, 3, source, Truncated)
-	if !reflect.DeepEqual(got, want) {
+	if !reflect.DeepEqual(struct{ Chain error }{got}, struct{ Chain error }{want}) {
 		t.Fatalf("diagnostic changed: %#v / %#v", got, want)
 	}
 	for range 100 {
@@ -193,7 +193,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 		discarded.Track(other.Error(InvalidValue, "replacement"))
 		discarded.Release()
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !reflect.DeepEqual(struct{ Chain error }{got}, struct{ Chain error }{want}) {
 		t.Fatal("returned error changed after scratch reuse")
 	}
 }
@@ -266,5 +266,30 @@ func TestDeferredPreferTruncationUsesExistingDecodeOffset(t *testing.T) {
 	trials.Track(candidate)
 	if got := PreferTruncation(current, candidate); got != current {
 		t.Fatal("changed existing DecodeError offset precedence")
+	}
+}
+
+func TestPublicForkOfTrialOwnsItsActivePath(t *testing.T) {
+	r := NewReader(nil)
+	if err := r.Enter("Root"); err != nil {
+		t.Fatal(err)
+	}
+	var trials ChoiceErrors
+	a := trials.Fork(r)
+	if err := a.Enter("Trial"); err != nil {
+		t.Fatal(err)
+	}
+	snapshot := a.Fork()
+	a.Leave()
+	b := trials.Fork(r)
+	if err := b.Enter("Later"); err != nil {
+		t.Fatal(err)
+	}
+	b.Leave()
+	trials.Release()
+	err := snapshot.Error(Truncated, "missing")
+	var de *DecodeError
+	if !errors.As(err, &de) || de.Path != "Root/Trial" {
+		t.Fatalf("public fork path overwritten: %v", err)
 	}
 }

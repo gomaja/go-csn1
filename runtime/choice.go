@@ -380,8 +380,9 @@ func (b *choiceBindings) has(name string) bool {
 }
 
 // A public Fork must remain independent even when its source is a borrowed
-// trial. Freezing its visible bindings also detaches every pooled ancestor.
-func (r *Reader) freezeChoiceBindings() {
+// trial. Copying its active path and visible bindings detaches every pooled
+// ancestor before another alternative can reuse the borrowed stack.
+func (r *Reader) freezeChoiceSnapshot() {
 	root := r
 	for root.choice && root.bindings.base != nil {
 		root = root.bindings.base
@@ -390,4 +391,7 @@ func (r *Reader) freezeChoiceBindings() {
 	r.applyBindings(&snapshot, nil)
 	r.vars, r.varsShared, r.choice, r.bindings = snapshot.vars, true, false, choiceBindings{}
 	r.choiceNext = nil
+	path := make([]string, len(r.path), max(16, len(r.path)))
+	copy(path, r.path)
+	r.path, r.pathShared = path, false
 }

@@ -223,12 +223,14 @@ func (r *Reader) Leave() {
 }
 func (r *Reader) Fork() *Reader {
 	r.ensureTruncations()
+	priorVars, priorPath, priorBindings := r.varsShared, r.pathShared, r.bindings.shared
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
 	r.bindings.shared = true
 	fork := *r
 	fork.bindings.extra = fork.bindings.extra[:len(fork.bindings.extra):len(fork.bindings.extra)]
 	if r.choice {
-		fork.freezeChoiceBindings()
+		fork.freezeChoiceSnapshot()
+		r.varsShared, r.pathShared, r.bindings.shared = priorVars, priorPath, priorBindings
 	}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
