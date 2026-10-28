@@ -159,7 +159,7 @@ func TestPublicReaderStateQueriesRejectUninitializedReader(t *testing.T) {
 	if got := r.Remaining(); got != -1 {
 		t.Fatalf("uninitialized remaining=%d", got)
 	}
-	if r.Matches("") {
+	if match, err := r.LookaheadLiteral(""); match || err == nil {
 		t.Fatal("uninitialized reader matched empty pattern")
 	}
 	if err := r.Expect(""); err == nil {

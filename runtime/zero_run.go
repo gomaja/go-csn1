@@ -62,6 +62,7 @@ func (r *Reader) ExpectZeros(width int) error {
 	width--
 	inferred := min(width, maxBits-r.pos-r.virtual)
 	r.virtual += inferred
+	r.lh.infer(r.pos, inferred)
 	r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count += inferred
 	if width > inferred {
 		return r.Expect("0")
@@ -88,6 +89,7 @@ func (w *Writer) WriteZeros(width int) error {
 		run := min(width, maxBits-position)
 		if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 			w.virtual += run
+			w.lh.infer(w.bits, run)
 			width -= run
 			continue
 		}
@@ -103,6 +105,7 @@ func (w *Writer) WriteZeros(width int) error {
 			if position >= span.At && position < end {
 				run = min(run, end-position)
 				w.virtual += run
+				w.lh.infer(w.bits, run)
 				if position+run == end {
 					w.implicitSpan++
 				}

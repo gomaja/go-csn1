@@ -188,7 +188,15 @@ func (e *FallbackError) Unwrap() error { return ErrFallbackKnown }
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007
 // V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm
 // matches because input ends inside one, that boundary is the useful error.
+// ErrLHPositionUndefined takes priority, even in a non-selected trial arm:
+// accepting another arm would hide an evaluation without a source-defined position.
 func PreferTruncation(current, candidate error) error {
+	if errors.Is(current, ErrLHPositionUndefined) {
+		return current
+	}
+	if errors.Is(candidate, ErrLHPositionUndefined) {
+		return candidate
+	}
 	var next *DecodeError
 	if !errors.As(candidate, &next) || next.Kind != Truncated {
 		return current
