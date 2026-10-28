@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/gomaja/go-csn1/registry"
 	"github.com/gomaja/go-csn1/runtime"
@@ -57,22 +58,53 @@ func readerBoundTo(t *testing.T, data []byte) *runtime.Reader {
 // knownReaderDifference reports the one entry-point difference the catalogue
 // keeps: in TS 44.018 V19.0.0 §10.5.2.37h, NR OF CONTAINER OCTETS 31 makes the
 // container run to the end of the enclosing SI value. The byte entry point has
-// no enclosing value and refuses it; a bounded reader supplies one.
+// no enclosing value and refuses it; a bounded reader supplies one, and can
+// then either decode the container or reject its content under that extent.
 func knownReaderDifference(d runtime.Descriptor, byteErr error) bool {
-	return d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" &&
+	return d.Standard == "TS 44.018" && d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" &&
 		errors.Is(byteErr, runtime.ErrContextRequired)
+}
+
+// sameReaderError compares the public diagnostics, including errors wrapped by
+// OperationError. An identical message alone can hide a different error kind.
+func sameReaderError(a, b error) bool {
+	var ao, bo *runtime.OperationError
+	if errors.As(a, &ao) != errors.As(b, &bo) {
+		return false
+	}
+	if ao != nil && (ao.Operation != bo.Operation || ao.Kind != bo.Kind || ao.Location != bo.Location) {
+		return false
+	}
+	var ad, bd *runtime.DecodeError
+	if errors.As(a, &ad) != errors.As(b, &bd) {
+		return false
+	}
+	return ad == nil || *ad == *bd
 }
 
 // TestReaderEntryMatchesByteEntry decodes the same octets through every
 // descriptor's byte entry point and through its reader entry point bounded to
 // those octets, and requires the same acceptance, bits consumed, tail, replay
-// and canonical bytes. Inputs are fixed fills and seeded random octets at every
-// length up to two octets past the canonical ceiling (40 octets when unbounded).
+// and canonical bytes. The bounded reader must also preserve every typed field
+// and diagnostic. Each definition receives 2,000 fixed-fill and seeded random
+// inputs through two octets past its canonical ceiling (40 when unbounded).
 func TestReaderEntryMatchesByteEntry(t *testing.T) {
+	started := time.Now()
 	rng := rand.New(rand.NewSource(20261026))
 	compare := func(d runtime.Descriptor, form string, data []byte, byteValue any, byteErr error, readerValue any, readerErr error) {
 		t.Helper()
-		if form != "report" && form != "report context" && (byteErr == nil) != (readerErr == nil) && knownReaderDifference(d, byteErr) {
+		if form != "report" && form != "report context" && knownReaderDifference(d, byteErr) {
+			return
+		}
+		if form != "report" && form != "report context" {
+			if (byteErr == nil) != (readerErr == nil) || (byteErr != nil && (byteErr.Error() != readerErr.Error() || !sameReaderError(byteErr, readerErr))) {
+				t.Fatalf("%s §%s %s (%s) on %x: byte error %#v (%v), reader error %#v (%v)", d.Standard, d.Clause, d.Name, form, data, byteErr, byteErr, readerErr, readerErr)
+				return
+			}
+			if !reflect.DeepEqual(byteValue, readerValue) {
+				t.Fatalf("%s §%s %s (%s) on %x: typed value differs", d.Standard, d.Clause, d.Name, form, data)
+				return
+			}
 			return
 		}
 		b, r := observeDecode(d, byteValue, byteErr), observeDecode(d, readerValue, readerErr)
@@ -86,34 +118,45 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 		if d.MaxOctets == 0 {
 			limit = 40
 		}
-		for n := 0; n <= limit; n++ {
-			fills := [][]byte{bytes.Repeat([]byte{0}, n), bytes.Repeat([]byte{0xff}, n), bytes.Repeat([]byte{0x55}, n), bytes.Repeat([]byte{0xaa}, n)}
-			for i := 0; i < 12; i++ {
-				random := make([]byte, n)
-				rng.Read(random)
-				fills = append(fills, random)
-			}
-			for _, data := range fills {
-				inputs++
-				if d.Decode != nil && d.DecodeFrom != nil {
-					bv, be := d.Decode(data)
-					rv, re := d.DecodeFrom(readerBoundTo(t, data))
-					compare(d, "plain", data, bv, be, rv, re)
-					pv, _, pe := d.DecodeWithReport(data)
-					compare(d, "report", data, bv, be, pv, pe)
-					if be == nil && pe == nil && !runtime.SemanticallyEqual(bv, pv) {
-						t.Errorf("%s %s: report changes typed value", d.Standard, d.Name)
-					}
-					var before, after *runtime.DecodeError
-					if errors.As(be, &before) && errors.As(pe, &after) && (before.Kind != after.Kind || before.Offset != after.Offset) {
-						t.Errorf("%s %s: report decode error %v differs from %v", d.Standard, d.Name, pe, be)
-					}
+		for i := 0; i < 2000; i++ {
+			n := i % (limit + 1)
+			data := make([]byte, n)
+			fills := []byte{0, 0xff, 0x55, 0xaa}
+			if group := i / (limit + 1); group < len(fills) {
+				for j := range data {
+					data[j] = fills[group]
 				}
-				if d.DecodeWithContext != nil && d.DecodeFromWithContext != nil {
-					for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
-						bv, be := d.DecodeWithContext(data, acs)
-						rv, re := d.DecodeFromWithContext(readerBoundTo(t, data), acs)
-						compare(d, fmt.Sprintf("SI4 ACS %d", acs), data, bv, be, rv, re)
+			} else {
+				rng.Read(data)
+			}
+			inputs++
+			if d.Decode == nil || d.DecodeFrom == nil {
+				t.Fatalf("%s %s: missing entry point", d.Standard, d.Name)
+			}
+			bv, be := d.Decode(data)
+			rv, re := d.DecodeFrom(readerBoundTo(t, data))
+			compare(d, "plain", data, bv, be, rv, re)
+			if i < 16*(limit+1) {
+				// Keep four fills and twelve random report cases at every length.
+				pv, _, pe := d.DecodeWithReport(data)
+				compare(d, "report", data, bv, be, pv, pe)
+				if be == nil && pe == nil && !runtime.SemanticallyEqual(bv, pv) {
+					t.Errorf("%s %s: report changes typed value", d.Standard, d.Name)
+				}
+				var before, after *runtime.DecodeError
+				if errors.As(be, &before) && errors.As(pe, &after) && (before.Kind != after.Kind || before.Offset != after.Offset) {
+					t.Errorf("%s %s: report decode error %v differs from %v", d.Standard, d.Name, pe, be)
+				}
+			}
+			if d.DecodeWithContext != nil {
+				if d.DecodeFromWithContext == nil {
+					t.Fatalf("%s %s: missing context reader", d.Standard, d.Name)
+				}
+				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne, runtime.SI4ACS(2)} {
+					bv, be := d.DecodeWithContext(data, acs)
+					rv, re := d.DecodeFromWithContext(readerBoundTo(t, data), acs)
+					compare(d, fmt.Sprintf("SI4 ACS %d", acs), data, bv, be, rv, re)
+					if i < 16*(limit+1) {
 						pv, _, pe := d.DecodeWithReportWithContext(data, acs)
 						compare(d, "report context", data, bv, be, pv, pe)
 					}
@@ -121,6 +164,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 			}
 		}
 	}
+	t.Logf("%d definitions, %d inputs, 2000 per definition; elapsed %s", len(registry.Descriptors()), inputs, time.Since(started))
 	if inputs < 60000 {
 		t.Fatalf("only %d inputs compared", inputs)
 	}

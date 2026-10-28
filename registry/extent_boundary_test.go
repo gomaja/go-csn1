@@ -10,27 +10,16 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
-func TestDescriptorReaderKeepsExistingEmptyFailures(t *testing.T) {
-	for _, tc := range []struct {
-		name, path string
-		width      int
-	}{
-		{"SI1 Rest Octets", "SI1 Rest Octets", 8},
-		{"IA Rest Octets", "IARestOctets/IARestOctetsCompressedInterRATHOINFOINDChoiceRCC/IARestOctetsCompressedInterRATHOINFOINDChoiceRCCAltLL", 2},
-		{"IAR Rest Octets", "IAR Rest Octets", 24},
-	} {
-		d, err := registry.Lookup("TS 44.018", tc.name)
+func TestDescriptorReaderEmptyMatchesByte(t *testing.T) {
+	for _, name := range []string{"SI1 Rest Octets", "IA Rest Octets", "IAR Rest Octets"} {
+		d, err := registry.Lookup("TS 44.018", name)
 		if err != nil {
 			t.Fatal(err)
 		}
-		r := runtime.NewReader(nil)
-		if _, err := r.PushLimit(0); err != nil {
-			t.Fatal(err)
-		}
-		_, err = d.DecodeFrom(r)
-		var located *runtime.OperationError
-		if !errors.As(err, &located) || located.Kind != runtime.Truncated || located.Location.Path != tc.path || located.Location.BitOffset != 0 || located.Location.Width != tc.width || errors.Is(err, runtime.ErrEmptyValue) {
-			t.Errorf("%s: empty reader failure changed: %v", tc.name, err)
+		want, byteErr := d.Decode(nil)
+		got, readerErr := d.DecodeFrom(readerBoundTo(t, nil))
+		if !errors.Is(byteErr, runtime.ErrEmptyValue) || !errors.Is(readerErr, runtime.ErrEmptyValue) || byteErr.Error() != readerErr.Error() || !sameReaderError(byteErr, readerErr) || !reflect.DeepEqual(want, got) {
+			t.Errorf("%s: byte entry %v, bounded reader %v", name, byteErr, readerErr)
 		}
 	}
 }
