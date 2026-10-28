@@ -4309,7 +4309,7 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Serving cell data struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 23, MaximumBits: 23, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeServingCellDataStruct, DecodeFrom: descriptorDecodeServingCellDataStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeServingCellDataStruct), Encode: descriptorEncodeServingCellDataStruct, Canonical: descriptorCanonicalServingCellDataStruct, CanonicalAtLength: descriptorCanonicalAtLengthServingCellDataStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "Repeated Invalid_BSIC_Information struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeRepeatedInvalidBSICInformationStruct, DecodeFrom: descriptorDecodeRepeatedInvalidBSICInformationStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRepeatedInvalidBSICInformationStruct), Encode: descriptorEncodeRepeatedInvalidBSICInformationStruct, Canonical: descriptorCanonicalRepeatedInvalidBSICInformationStruct, CanonicalAtLength: descriptorCanonicalAtLengthRepeatedInvalidBSICInformationStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55", Name: "E-UTRAN Measurement Report struct", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 20, MaximumBits: 168, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.55"}}, Decode: descriptorDecodeEUTRANMeasurementReportStruct, DecodeFrom: descriptorDecodeEUTRANMeasurementReportStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEUTRANMeasurementReportStruct), Encode: descriptorEncodeEUTRANMeasurementReportStruct, Canonical: descriptorCanonicalEUTRANMeasurementReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthEUTRANMeasurementReportStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "Measurement Results Contents", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeMeasurementResultsContents, DecodeFrom: descriptorDecodeMeasurementResultsContentsFrom, DecodeWithCollector: descriptorCollectMeasurementResultsContents, Encode: descriptorEncodeMeasurementResultsContents, Canonical: descriptorCanonicalMeasurementResultsContents, CanonicalAtLength: descriptorCanonicalAtLengthMeasurementResultsContents},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "Measurement Results Contents", MaxOctets: 16, Extent: runtime.Extent{MinimumBits: 128, MaximumBits: 128, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeMeasurementResultsContents, DecodeFrom: descriptorDecodeMeasurementResultsContentsFrom, DecodeWithCollector: descriptorCollectMeasurementResultsContents, Encode: descriptorEncodeMeasurementResultsContents, Canonical: descriptorCanonicalMeasurementResultsContents, CanonicalAtLength: descriptorCanonicalAtLengthMeasurementResultsContents},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20", Name: "NCELL Report struct", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 17, MaximumBits: 17, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.20"}}, Decode: descriptorDecodeNCELLReportStruct, DecodeFrom: descriptorDecodeNCELLReportStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNCELLReportStruct), Encode: descriptorEncodeNCELLReportStruct, Canonical: descriptorCanonicalNCELLReportStruct, CanonicalAtLength: descriptorCanonicalAtLengthNCELLReportStruct},
 }
 
@@ -4370,7 +4370,7 @@ func descriptorUnwrapEnhancedMeasurementReport(value any) (EnhancedMeasurementRe
 	}
 }
 
-var descriptorPolicyEnhancedMeasurementReport = descriptorReadPolicy{true, 0, 0, 168, 0, false, false, "Enhanced Measurement report", descriptorSourceEnhancedMeasurementReport}
+var descriptorPolicyEnhancedMeasurementReport = descriptorReadPolicy{true, 0, 168, 0, false, false, "Enhanced Measurement report", "EnhancedMeasurementReport", descriptorSourceEnhancedMeasurementReport, false}
 
 func descriptorDecodeEnhancedMeasurementReportFrom(r *runtime.Reader) (any, error) {
 	var v EnhancedMeasurementReport
@@ -4423,7 +4423,7 @@ func descriptorUnwrapServingCellDataStruct(value any) (ServingCellDataStruct, bo
 	}
 }
 
-var descriptorPolicyServingCellDataStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Serving cell data struct", descriptorSourceServingCellDataStruct}
+var descriptorPolicyServingCellDataStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Serving cell data struct", "ServingCellDataStruct", descriptorSourceServingCellDataStruct, false}
 
 func descriptorDecodeServingCellDataStructFrom(r *runtime.Reader) (any, error) {
 	var v ServingCellDataStruct
@@ -4472,7 +4472,7 @@ func descriptorUnwrapRepeatedInvalidBSICInformationStruct(value any) (RepeatedIn
 	}
 }
 
-var descriptorPolicyRepeatedInvalidBSICInformationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated Invalid_BSIC_Information struct", descriptorSourceRepeatedInvalidBSICInformationStruct}
+var descriptorPolicyRepeatedInvalidBSICInformationStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated Invalid_BSIC_Information struct", "RepeatedInvalidBSICInformationStruct", descriptorSourceRepeatedInvalidBSICInformationStruct, false}
 
 func descriptorDecodeRepeatedInvalidBSICInformationStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedInvalidBSICInformationStruct
@@ -4525,7 +4525,7 @@ func descriptorUnwrapEUTRANMeasurementReportStruct(value any) (EUTRANMeasurement
 	}
 }
 
-var descriptorPolicyEUTRANMeasurementReportStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN Measurement Report struct", descriptorSourceEUTRANMeasurementReportStruct}
+var descriptorPolicyEUTRANMeasurementReportStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN Measurement Report struct", "EUTRANMeasurementReportStruct", descriptorSourceEUTRANMeasurementReportStruct, false}
 
 func descriptorDecodeEUTRANMeasurementReportStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANMeasurementReportStruct
@@ -4586,7 +4586,7 @@ func descriptorUnwrapMeasurementResultsContents(value any) (MeasurementResultsCo
 	}
 }
 
-var descriptorPolicyMeasurementResultsContents = descriptorReadPolicy{false, 128, 0, 128, 0, false, false, "Measurement Results Contents", descriptorSourceMeasurementResultsContents}
+var descriptorPolicyMeasurementResultsContents = descriptorReadPolicy{true, 128, 128, 0, false, false, "Measurement Results Contents", "MeasurementResultsContents", descriptorSourceMeasurementResultsContents, false}
 
 func descriptorDecodeMeasurementResultsContentsFrom(r *runtime.Reader) (any, error) {
 	var v MeasurementResultsContents
@@ -4639,7 +4639,7 @@ func descriptorUnwrapNCELLReportStruct(value any) (NCELLReportStruct, bool) {
 	}
 }
 
-var descriptorPolicyNCELLReportStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "NCELL Report struct", descriptorSourceNCELLReportStruct}
+var descriptorPolicyNCELLReportStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "NCELL Report struct", "NCELLReportStruct", descriptorSourceNCELLReportStruct, false}
 
 func descriptorDecodeNCELLReportStructFrom(r *runtime.Reader) (any, error) {
 	var v NCELLReportStruct
@@ -4693,31 +4693,35 @@ func descriptorTypeError(operation, name string, source runtime.Source) error {
 }
 
 type descriptorReadPolicy struct {
-	needsLimit                               bool
-	minBits, postMinBits, maxBits, maxWindow int
-	zeroExtension, emptyValue                bool
-	name                                     string
-	source                                   runtime.Source
+	needsLimit                  bool
+	minBits, maxBits, maxWindow int
+	zeroExtension, emptyValue   bool
+	name, valueName             string
+	source                      runtime.Source
+	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
-	emptyInput := emptyValue && r.Remaining() == 0
+	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
+	if emptyValue && r.Remaining() == 0 {
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+	}
 	if r.Remaining() < minBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+r.Remaining(), minBits, false)
 	}
-	originalRemaining := r.Remaining()
+	if maxBits > 0 && r.Remaining() > maxBits {
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
+	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -4727,32 +4731,46 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
-	if originalRemaining < postMinBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
-	}
-	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
-	}
-	if emptyInput {
-		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
-	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
+	if len(wire.SpareCounts) == 0 {
+		wire.SpareCounts = nil
+	}
+	if len(wire.ImplicitSpans) == 0 {
+		wire.ImplicitSpans = nil
+	}
 	return wire, r.Position() - start, nil
+}
+
+// descriptorExtentError uses the byte entry point's diagnostic and location.
+func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
+	kind := runtime.Truncated
+	if maximum {
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
+		kind = runtime.Limit
+	}
+	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
+	// The ACS byte API reports source bounds as value errors without a bit offset.
+	if p.context {
+		err = fmt.Errorf("%s", detail)
+		offset = -1
+	}
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeEnhancedMeasurementReport(data []byte) (runtime.Decoded[EnhancedMeasurementReport], error) {
 	v, err := decodeEnhancedMeasurementReportBytes(data, nil)

@@ -75,8 +75,10 @@ func TestContinuationCountRequiresLocatedContext(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if d.Extent.NeedsContext {
-			t.Fatalf("fixed containing value %s needs external context", name)
+		// The fixed grammar supplies continuation-count context, but the
+		// descriptor's source size check still needs the received IE extent.
+		if !d.Extent.NeedsContext {
+			t.Fatalf("source size check for %s omits reader context", name)
 		}
 	}
 }

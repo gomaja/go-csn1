@@ -30,9 +30,9 @@ func compareDescriptorEntries(t *testing.T, d runtime.Descriptor, data []byte) {
 	compareEntryResult(t, "report", want, wantErr, got, err)
 	got, err = d.DecodeWithCollector(data, nil)
 	compareEntryResult(t, "nil collector", want, wantErr, got, err)
-	// The hand-written descriptors are the reader parity contract here.
-	// Generated descriptors have separate reader framing/error conventions;
-	// TestReaderEntryMatchesByteEntry covers their received byte behavior.
+	// These hand-written descriptors also check report parity here.
+	// TestReaderEntryMatchesByteEntry checks bounded reader value and error
+	// parity for every descriptor in the catalogue.
 	if d.Name == "Mobile Station Classmark 2 value part" || d.Name == "geran-cs" || d.Name == "geran-ps" {
 		got, err = d.DecodeFrom(readerBoundTo(t, data))
 		compareEntryResult(t, "reader", want, wantErr, got, err)

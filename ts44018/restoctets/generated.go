@@ -84722,10 +84722,10 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "IA Rest Octets", MaxOctets: 11, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 88, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeIARestOctets, DecodeFrom: descriptorDecodeIARestOctetsFrom, DecodeWithCollector: descriptorCollectIARestOctets, Encode: descriptorEncodeIARestOctets, Canonical: descriptorCanonicalIARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARestOctets},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "EGPRS Packet Uplink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 32, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeEGPRSPacketUplinkAssignment, DecodeFrom: descriptorDecodeEGPRSPacketUplinkAssignmentFrom, DecodeWithCollector: descriptorCollectEGPRSPacketUplinkAssignment, Encode: descriptorEncodeEGPRSPacketUplinkAssignment, Canonical: descriptorCanonicalEGPRSPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthEGPRSPacketUplinkAssignment},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Access Technologies Request struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeAccessTechnologiesRequestStruct, DecodeFrom: descriptorDecodeAccessTechnologiesRequestStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAccessTechnologiesRequestStruct), Encode: descriptorEncodeAccessTechnologiesRequestStruct, Canonical: descriptorCanonicalAccessTechnologiesRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessTechnologiesRequestStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 9, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 69, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketUplinkAssignment, DecodeFrom: descriptorDecodePacketUplinkAssignmentFrom, DecodeWithCollector: descriptorCollectPacketUplinkAssignment, Encode: descriptorEncodePacketUplinkAssignment, Canonical: descriptorCanonicalPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketUplinkAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Uplink Assignment", MaxOctets: 9, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 69, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketUplinkAssignment, DecodeFrom: descriptorDecodePacketUplinkAssignmentFrom, DecodeWithCollector: descriptorCollectPacketUplinkAssignment, Encode: descriptorEncodePacketUplinkAssignment, Canonical: descriptorCanonicalPacketUplinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketUplinkAssignment},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Packet Downlink Assignment", MaxOctets: 15, Extent: runtime.Extent{MinimumBits: 36, MaximumBits: 116, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePacketDownlinkAssignment, DecodeFrom: descriptorDecodePacketDownlinkAssignmentFrom, DecodeWithCollector: descriptorCollectPacketDownlinkAssignment, Encode: descriptorEncodePacketDownlinkAssignment, Canonical: descriptorCanonicalPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthPacketDownlinkAssignment},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Frequency Parameters, before time", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeFrequencyParametersBeforeTime, DecodeFrom: descriptorDecodeFrequencyParametersBeforeTimeFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeFrequencyParametersBeforeTime), Encode: descriptorEncodeFrequencyParametersBeforeTime, Canonical: descriptorCanonicalFrequencyParametersBeforeTime, CanonicalAtLength: descriptorCanonicalAtLengthFrequencyParametersBeforeTime},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeSecondPartPacketAssignment, DecodeFrom: descriptorDecodeSecondPartPacketAssignmentFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSecondPartPacketAssignment), Encode: descriptorEncodeSecondPartPacketAssignment, Canonical: descriptorCanonicalSecondPartPacketAssignment, CanonicalAtLength: descriptorCanonicalAtLengthSecondPartPacketAssignment},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Second Part Packet Assignment", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 7, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeSecondPartPacketAssignment, DecodeFrom: descriptorDecodeSecondPartPacketAssignmentFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSecondPartPacketAssignment), Encode: descriptorEncodeSecondPartPacketAssignment, Canonical: descriptorCanonicalSecondPartPacketAssignment, CanonicalAtLength: descriptorCanonicalAtLengthSecondPartPacketAssignment},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "Multiple Blocks Packet Downlink Assignment", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 48, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodeMultipleBlocksPacketDownlinkAssignment, DecodeFrom: descriptorDecodeMultipleBlocksPacketDownlinkAssignmentFrom, DecodeWithCollector: descriptorCollectMultipleBlocksPacketDownlinkAssignment, Encode: descriptorEncodeMultipleBlocksPacketDownlinkAssignment, Canonical: descriptorCanonicalMultipleBlocksPacketDownlinkAssignment, CanonicalAtLength: descriptorCanonicalAtLengthMultipleBlocksPacketDownlinkAssignment},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.16"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105216, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105216From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105216), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105216, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105216, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105216},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17", Name: "IAR Rest Octets", MaxOctets: 3, Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.17"}}, Decode: descriptorDecodeIARRestOctets, DecodeFrom: descriptorDecodeIARRestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeIARRestOctets), Encode: descriptorEncodeIARRestOctets, Canonical: descriptorCanonicalIARRestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIARRestOctets},
@@ -84868,7 +84868,7 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Neighbour Cell params struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTNeighbourCellParamsStruct, DecodeFrom: descriptorDecodeCOMPACTNeighbourCellParamsStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCOMPACTNeighbourCellParamsStruct), Encode: descriptorEncodeCOMPACTNeighbourCellParamsStruct, Canonical: descriptorCanonicalCOMPACTNeighbourCellParamsStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTNeighbourCellParamsStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "COMPACT Cell Selection struct", MaxOctets: 7, Extent: runtime.Extent{MinimumBits: 14, MaximumBits: 49, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeCOMPACTCellSelectionStruct, DecodeFrom: descriptorDecodeCOMPACTCellSelectionStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeCOMPACTCellSelectionStruct), Encode: descriptorEncodeCOMPACTCellSelectionStruct, Canonical: descriptorCanonicalCOMPACTCellSelectionStruct, CanonicalAtLength: descriptorCanonicalAtLengthCOMPACTCellSelectionStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g", Name: "LA Different struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 4, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37g"}}, Decode: descriptorDecodeLADifferentStruct, DecodeFrom: descriptorDecodeLADifferentStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeLADifferentStruct), Encode: descriptorEncodeLADifferentStruct, Canonical: descriptorCanonicalLADifferentStruct, CanonicalAtLength: descriptorCanonicalAtLengthLADifferentStruct},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeSI18RestOctets, DecodeFrom: descriptorDecodeSI18RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI18RestOctets), Encode: descriptorEncodeSI18RestOctets, Canonical: descriptorCanonicalSI18RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI18RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "SI 18 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeSI18RestOctets, DecodeFrom: descriptorDecodeSI18RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI18RestOctets), Encode: descriptorEncodeSI18RestOctets, Canonical: descriptorCanonicalSI18RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI18RestOctets},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h", Name: "Non-GSM Message struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37h"}}, Decode: descriptorDecodeNonGSMMessageStruct, DecodeFrom: descriptorDecodeNonGSMMessageStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeNonGSMMessageStruct), Encode: descriptorEncodeNonGSMMessageStruct, Canonical: descriptorCanonicalNonGSMMessageStruct, CanonicalAtLength: descriptorCanonicalAtLengthNonGSMMessageStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Rest Octets", MaxOctets: 19, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 152, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPARestOctets, DecodeFrom: descriptorDecodeIPARestOctetsFrom, DecodeWithCollector: descriptorCollectIPARestOctets, Encode: descriptorEncodeIPARestOctets, Canonical: descriptorCanonicalIPARestOctets, CanonicalAtLength: descriptorCanonicalAtLengthIPARestOctets},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPAUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPAUplinkAssignmentStructFrom, DecodeWithCollector: descriptorCollectIPAUplinkAssignmentStruct, Encode: descriptorEncodeIPAUplinkAssignmentStruct, Canonical: descriptorCanonicalIPAUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPAUplinkAssignmentStruct},
@@ -84876,7 +84876,7 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "IPA Single Block Uplink Assignment struct", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeIPASingleBlockUplinkAssignmentStruct, DecodeFrom: descriptorDecodeIPASingleBlockUplinkAssignmentStructFrom, DecodeWithCollector: descriptorCollectIPASingleBlockUplinkAssignmentStruct, Encode: descriptorEncodeIPASingleBlockUplinkAssignmentStruct, Canonical: descriptorCanonicalIPASingleBlockUplinkAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthIPASingleBlockUplinkAssignmentStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "Acknowledged Access Request struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 14, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodeAcknowledgedAccessRequestStruct, DecodeFrom: descriptorDecodeAcknowledgedAccessRequestStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAcknowledgedAccessRequestStruct), Encode: descriptorEncodeAcknowledgedAccessRequestStruct, Canonical: descriptorCanonicalAcknowledgedAccessRequestStruct, CanonicalAtLength: descriptorCanonicalAtLengthAcknowledgedAccessRequestStruct},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78", Name: "PEO IMM Cell Group Details struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 5, MaximumBits: 5, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.78"}}, Decode: descriptorDecodePEOIMMCellGroupDetailsStructClause105278, DecodeFrom: descriptorDecodePEOIMMCellGroupDetailsStructClause105278From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodePEOIMMCellGroupDetailsStructClause105278), Encode: descriptorEncodePEOIMMCellGroupDetailsStructClause105278, Canonical: descriptorCanonicalPEOIMMCellGroupDetailsStructClause105278, CanonicalAtLength: descriptorCanonicalAtLengthPEOIMMCellGroupDetailsStructClause105278},
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"}}, Decode: descriptorDecodeSI20RestOctets, DecodeFrom: descriptorDecodeSI20RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI20RestOctets), Encode: descriptorEncodeSI20RestOctets, Canonical: descriptorCanonicalSI20RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI20RestOctets},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i", Name: "SI 20 Rest Octets", MaxOctets: 20, Extent: runtime.Extent{MinimumBits: 160, MaximumBits: 160, Finite: true, Fixed: true, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "10.5.2.37i"}}, Decode: descriptorDecodeSI20RestOctets, DecodeFrom: descriptorDecodeSI20RestOctetsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeSI20RestOctets), Encode: descriptorEncodeSI20RestOctets, Canonical: descriptorCanonicalSI20RestOctets, CanonicalAtLength: descriptorCanonicalAtLengthSI20RestOctets},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Call information", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 37, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupCallInformation, DecodeFrom: descriptorDecodeGroupCallInformationFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGroupCallInformation), Encode: descriptorEncodeGroupCallInformation, Canonical: descriptorCanonicalGroupCallInformation, CanonicalAtLength: descriptorCanonicalAtLengthGroupCallInformation},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Emergency_Ind", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 1, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeEmergencyInd, DecodeFrom: descriptorDecodeEmergencyIndFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeEmergencyInd), Encode: descriptorEncodeEmergencyInd, Canonical: descriptorCanonicalEmergencyInd, CanonicalAtLength: descriptorCanonicalAtLengthEmergencyInd},
 	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a", Name: "Group Channel Description", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 25, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21a"}}, Decode: descriptorDecodeGroupChannelDescription, DecodeFrom: descriptorDecodeGroupChannelDescriptionFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeGroupChannelDescription), Encode: descriptorEncodeGroupChannelDescription, Canonical: descriptorCanonicalGroupChannelDescription, CanonicalAtLength: descriptorCanonicalAtLengthGroupChannelDescription},
@@ -84950,7 +84950,7 @@ func descriptorUnwrapIARestOctets(value any) (IARestOctets, bool) {
 	}
 }
 
-var descriptorPolicyIARestOctets = descriptorReadPolicy{true, 0, 0, 88, 0, false, true, "IA Rest Octets", descriptorSourceIARestOctets}
+var descriptorPolicyIARestOctets = descriptorReadPolicy{true, 0, 88, 0, false, true, "IA Rest Octets", "IARestOctets", descriptorSourceIARestOctets, false}
 
 func descriptorDecodeIARestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v IARestOctets
@@ -85007,7 +85007,7 @@ func descriptorUnwrapEGPRSPacketUplinkAssignment(value any) (EGPRSPacketUplinkAs
 	}
 }
 
-var descriptorPolicyEGPRSPacketUplinkAssignment = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "EGPRS Packet Uplink Assignment", descriptorSourceEGPRSPacketUplinkAssignment}
+var descriptorPolicyEGPRSPacketUplinkAssignment = descriptorReadPolicy{true, 0, 0, 0, false, false, "EGPRS Packet Uplink Assignment", "EGPRSPacketUplinkAssignment", descriptorSourceEGPRSPacketUplinkAssignment, false}
 
 func descriptorDecodeEGPRSPacketUplinkAssignmentFrom(r *runtime.Reader) (any, error) {
 	var v EGPRSPacketUplinkAssignment
@@ -85060,7 +85060,7 @@ func descriptorUnwrapAccessTechnologiesRequestStruct(value any) (AccessTechnolog
 	}
 }
 
-var descriptorPolicyAccessTechnologiesRequestStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Access Technologies Request struct", descriptorSourceAccessTechnologiesRequestStruct}
+var descriptorPolicyAccessTechnologiesRequestStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Access Technologies Request struct", "AccessTechnologiesRequestStruct", descriptorSourceAccessTechnologiesRequestStruct, false}
 
 func descriptorDecodeAccessTechnologiesRequestStructFrom(r *runtime.Reader) (any, error) {
 	var v AccessTechnologiesRequestStruct
@@ -85121,7 +85121,7 @@ func descriptorUnwrapPacketUplinkAssignment(value any) (PacketUplinkAssignment, 
 	}
 }
 
-var descriptorPolicyPacketUplinkAssignment = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Packet Uplink Assignment", descriptorSourcePacketUplinkAssignment}
+var descriptorPolicyPacketUplinkAssignment = descriptorReadPolicy{true, 0, 0, 0, false, false, "Packet Uplink Assignment", "PacketUplinkAssignment", descriptorSourcePacketUplinkAssignment, false}
 
 func descriptorDecodePacketUplinkAssignmentFrom(r *runtime.Reader) (any, error) {
 	var v PacketUplinkAssignment
@@ -85178,7 +85178,7 @@ func descriptorUnwrapPacketDownlinkAssignment(value any) (PacketDownlinkAssignme
 	}
 }
 
-var descriptorPolicyPacketDownlinkAssignment = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Packet Downlink Assignment", descriptorSourcePacketDownlinkAssignment}
+var descriptorPolicyPacketDownlinkAssignment = descriptorReadPolicy{true, 0, 0, 0, false, false, "Packet Downlink Assignment", "PacketDownlinkAssignment", descriptorSourcePacketDownlinkAssignment, false}
 
 func descriptorDecodePacketDownlinkAssignmentFrom(r *runtime.Reader) (any, error) {
 	var v PacketDownlinkAssignment
@@ -85231,7 +85231,7 @@ func descriptorUnwrapFrequencyParametersBeforeTime(value any) (FrequencyParamete
 	}
 }
 
-var descriptorPolicyFrequencyParametersBeforeTime = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Frequency Parameters, before time", descriptorSourceFrequencyParametersBeforeTime}
+var descriptorPolicyFrequencyParametersBeforeTime = descriptorReadPolicy{false, 0, 0, 0, false, false, "Frequency Parameters, before time", "FrequencyParametersBeforeTime", descriptorSourceFrequencyParametersBeforeTime, false}
 
 func descriptorDecodeFrequencyParametersBeforeTimeFrom(r *runtime.Reader) (any, error) {
 	var v FrequencyParametersBeforeTime
@@ -85284,7 +85284,7 @@ func descriptorUnwrapSecondPartPacketAssignment(value any) (SecondPartPacketAssi
 	}
 }
 
-var descriptorPolicySecondPartPacketAssignment = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Second Part Packet Assignment", descriptorSourceSecondPartPacketAssignment}
+var descriptorPolicySecondPartPacketAssignment = descriptorReadPolicy{true, 0, 0, 0, false, false, "Second Part Packet Assignment", "SecondPartPacketAssignment", descriptorSourceSecondPartPacketAssignment, false}
 
 func descriptorDecodeSecondPartPacketAssignmentFrom(r *runtime.Reader) (any, error) {
 	var v SecondPartPacketAssignment
@@ -85345,7 +85345,7 @@ func descriptorUnwrapMultipleBlocksPacketDownlinkAssignment(value any) (Multiple
 	}
 }
 
-var descriptorPolicyMultipleBlocksPacketDownlinkAssignment = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Multiple Blocks Packet Downlink Assignment", descriptorSourceMultipleBlocksPacketDownlinkAssignment}
+var descriptorPolicyMultipleBlocksPacketDownlinkAssignment = descriptorReadPolicy{false, 0, 0, 0, false, false, "Multiple Blocks Packet Downlink Assignment", "MultipleBlocksPacketDownlinkAssignment", descriptorSourceMultipleBlocksPacketDownlinkAssignment, false}
 
 func descriptorDecodeMultipleBlocksPacketDownlinkAssignmentFrom(r *runtime.Reader) (any, error) {
 	var v MultipleBlocksPacketDownlinkAssignment
@@ -85398,7 +85398,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105216(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105216 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105216}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105216 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105216", descriptorSourcePEOIMMCellGroupDetailsStructClause105216, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105216From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105216
@@ -85449,7 +85449,7 @@ func descriptorUnwrapIARRestOctets(value any) (IARRestOctets, bool) {
 	}
 }
 
-var descriptorPolicyIARRestOctets = descriptorReadPolicy{true, 24, 0, 24, 0, false, true, "IAR Rest Octets", descriptorSourceIARRestOctets}
+var descriptorPolicyIARRestOctets = descriptorReadPolicy{true, 24, 24, 0, false, true, "IAR Rest Octets", "IARRestOctets", descriptorSourceIARRestOctets, false}
 
 func descriptorDecodeIARRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v IARRestOctets
@@ -85498,7 +85498,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105217(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105217 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105217}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105217 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105217", descriptorSourcePEOIMMCellGroupDetailsStructClause105217, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105217From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105217
@@ -85549,7 +85549,7 @@ func descriptorUnwrapIAXRestOctets(value any) (IAXRestOctets, bool) {
 	}
 }
 
-var descriptorPolicyIAXRestOctets = descriptorReadPolicy{true, 0, 0, 32, 0, false, true, "IAX Rest Octets", descriptorSourceIAXRestOctets}
+var descriptorPolicyIAXRestOctets = descriptorReadPolicy{true, 0, 32, 0, false, true, "IAX Rest Octets", "IAXRestOctets", descriptorSourceIAXRestOctets, false}
 
 func descriptorDecodeIAXRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v IAXRestOctets
@@ -85598,7 +85598,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105218(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105218 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105218}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105218 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105218", descriptorSourcePEOIMMCellGroupDetailsStructClause105218, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105218From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105218
@@ -85649,7 +85649,7 @@ func descriptorUnwrapSI1RestOctets(value any) (SI1RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI1RestOctets = descriptorReadPolicy{true, 8, 0, 8, 0, false, true, "SI1 Rest Octets", descriptorSourceSI1RestOctets}
+var descriptorPolicySI1RestOctets = descriptorReadPolicy{true, 8, 8, 0, false, true, "SI1 Rest Octets", "SI1RestOctets", descriptorSourceSI1RestOctets, false}
 
 func descriptorDecodeSI1RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI1RestOctets
@@ -85698,7 +85698,7 @@ func descriptorUnwrapBandIndicatorClause105232(value any) (BandIndicatorClause10
 	}
 }
 
-var descriptorPolicyBandIndicatorClause105232 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Band indicator", descriptorSourceBandIndicatorClause105232}
+var descriptorPolicyBandIndicatorClause105232 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Band indicator", "BandIndicatorClause105232", descriptorSourceBandIndicatorClause105232, false}
 
 func descriptorDecodeBandIndicatorClause105232From(r *runtime.Reader) (any, error) {
 	var v BandIndicatorClause105232
@@ -85749,7 +85749,7 @@ func descriptorUnwrapSI2bisRestOctets(value any) (SI2bisRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI2bisRestOctets = descriptorReadPolicy{true, 8, 0, 8, 0, false, true, "SI2bis Rest Octets", descriptorSourceSI2bisRestOctets}
+var descriptorPolicySI2bisRestOctets = descriptorReadPolicy{true, 8, 8, 0, false, true, "SI2bis Rest Octets", "SI2bisRestOctets", descriptorSourceSI2bisRestOctets, false}
 
 func descriptorDecodeSI2bisRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI2bisRestOctets
@@ -85796,7 +85796,7 @@ func descriptorUnwrapSI2nRestOctets(value any) (SI2nRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI2nRestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI2n Rest Octets", descriptorSourceSI2nRestOctets}
+var descriptorPolicySI2nRestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI2n Rest Octets", "SI2nRestOctets", descriptorSourceSI2nRestOctets, false}
 
 func descriptorDecodeSI2nRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI2nRestOctets
@@ -85845,7 +85845,7 @@ func descriptorUnwrapGSMNeighbourCellSelectionParamsStruct(value any) (GSMNeighb
 	}
 }
 
-var descriptorPolicyGSMNeighbourCellSelectionParamsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GSM Neighbour Cell Selection params struct", descriptorSourceGSMNeighbourCellSelectionParamsStruct}
+var descriptorPolicyGSMNeighbourCellSelectionParamsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GSM Neighbour Cell Selection params struct", "GSMNeighbourCellSelectionParamsStruct", descriptorSourceGSMNeighbourCellSelectionParamsStruct, false}
 
 func descriptorDecodeGSMNeighbourCellSelectionParamsStructFrom(r *runtime.Reader) (any, error) {
 	var v GSMNeighbourCellSelectionParamsStruct
@@ -85898,7 +85898,7 @@ func descriptorUnwrapGPRSSupportIndicatorStruct(value any) (GPRSSupportIndicator
 	}
 }
 
-var descriptorPolicyGPRSSupportIndicatorStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Support Indicator struct", descriptorSourceGPRSSupportIndicatorStruct}
+var descriptorPolicyGPRSSupportIndicatorStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Support Indicator struct", "GPRSSupportIndicatorStruct", descriptorSourceGPRSSupportIndicatorStruct, false}
 
 func descriptorDecodeGPRSSupportIndicatorStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSSupportIndicatorStruct
@@ -85949,7 +85949,7 @@ func descriptorUnwrapSI3RestOctet(value any) (SI3RestOctet, bool) {
 	}
 }
 
-var descriptorPolicySI3RestOctet = descriptorReadPolicy{true, 32, 0, 32, 0, false, true, "SI3 Rest Octet", descriptorSourceSI3RestOctet}
+var descriptorPolicySI3RestOctet = descriptorReadPolicy{true, 32, 32, 0, false, true, "SI3 Rest Octet", "SI3RestOctet", descriptorSourceSI3RestOctet, false}
 
 func descriptorDecodeSI3RestOctetFrom(r *runtime.Reader) (any, error) {
 	var v SI3RestOctet
@@ -85998,7 +85998,7 @@ func descriptorUnwrapOptionalSelectionParametersClause105234(value any) (Optiona
 	}
 }
 
-var descriptorPolicyOptionalSelectionParametersClause105234 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Optional Selection Parameters", descriptorSourceOptionalSelectionParametersClause105234}
+var descriptorPolicyOptionalSelectionParametersClause105234 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Optional Selection Parameters", "OptionalSelectionParametersClause105234", descriptorSourceOptionalSelectionParametersClause105234, false}
 
 func descriptorDecodeOptionalSelectionParametersClause105234From(r *runtime.Reader) (any, error) {
 	var v OptionalSelectionParametersClause105234
@@ -86051,7 +86051,7 @@ func descriptorUnwrapSelectionParametersClause105234(value any) (SelectionParame
 	}
 }
 
-var descriptorPolicySelectionParametersClause105234 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Selection Parameters", descriptorSourceSelectionParametersClause105234}
+var descriptorPolicySelectionParametersClause105234 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Selection Parameters", "SelectionParametersClause105234", descriptorSourceSelectionParametersClause105234, false}
 
 func descriptorDecodeSelectionParametersClause105234From(r *runtime.Reader) (any, error) {
 	var v SelectionParametersClause105234
@@ -86104,7 +86104,7 @@ func descriptorUnwrapOptionalPowerOffsetClause105234(value any) (OptionalPowerOf
 	}
 }
 
-var descriptorPolicyOptionalPowerOffsetClause105234 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Optional Power Offset", descriptorSourceOptionalPowerOffsetClause105234}
+var descriptorPolicyOptionalPowerOffsetClause105234 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Optional Power Offset", "OptionalPowerOffsetClause105234", descriptorSourceOptionalPowerOffsetClause105234, false}
 
 func descriptorDecodeOptionalPowerOffsetClause105234From(r *runtime.Reader) (any, error) {
 	var v OptionalPowerOffsetClause105234
@@ -86157,7 +86157,7 @@ func descriptorUnwrapSystemInformation2terIndicator(value any) (SystemInformatio
 	}
 }
 
-var descriptorPolicySystemInformation2terIndicator = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "System Information 2ter Indicator", descriptorSourceSystemInformation2terIndicator}
+var descriptorPolicySystemInformation2terIndicator = descriptorReadPolicy{false, 0, 0, 0, false, false, "System Information 2ter Indicator", "SystemInformation2terIndicator", descriptorSourceSystemInformation2terIndicator, false}
 
 func descriptorDecodeSystemInformation2terIndicatorFrom(r *runtime.Reader) (any, error) {
 	var v SystemInformation2terIndicator
@@ -86210,7 +86210,7 @@ func descriptorUnwrapEarlyClassmarkSendingControl(value any) (EarlyClassmarkSend
 	}
 }
 
-var descriptorPolicyEarlyClassmarkSendingControl = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Early Classmark Sending Control", descriptorSourceEarlyClassmarkSendingControl}
+var descriptorPolicyEarlyClassmarkSendingControl = descriptorReadPolicy{false, 0, 0, 0, false, false, "Early Classmark Sending Control", "EarlyClassmarkSendingControl", descriptorSourceEarlyClassmarkSendingControl, false}
 
 func descriptorDecodeEarlyClassmarkSendingControlFrom(r *runtime.Reader) (any, error) {
 	var v EarlyClassmarkSendingControl
@@ -86263,7 +86263,7 @@ func descriptorUnwrapSchedulingIfAndWhere(value any) (SchedulingIfAndWhere, bool
 	}
 }
 
-var descriptorPolicySchedulingIfAndWhere = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Scheduling if and where", descriptorSourceSchedulingIfAndWhere}
+var descriptorPolicySchedulingIfAndWhere = descriptorReadPolicy{false, 0, 0, 0, false, false, "Scheduling if and where", "SchedulingIfAndWhere", descriptorSourceSchedulingIfAndWhere, false}
 
 func descriptorDecodeSchedulingIfAndWhereFrom(r *runtime.Reader) (any, error) {
 	var v SchedulingIfAndWhere
@@ -86312,7 +86312,7 @@ func descriptorUnwrapGPRSIndicatorClause105234(value any) (GPRSIndicatorClause10
 	}
 }
 
-var descriptorPolicyGPRSIndicatorClause105234 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Indicator", descriptorSourceGPRSIndicatorClause105234}
+var descriptorPolicyGPRSIndicatorClause105234 = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Indicator", "GPRSIndicatorClause105234", descriptorSourceGPRSIndicatorClause105234, false}
 
 func descriptorDecodeGPRSIndicatorClause105234From(r *runtime.Reader) (any, error) {
 	var v GPRSIndicatorClause105234
@@ -86365,7 +86365,7 @@ func descriptorUnwrapN3GEarlyClassmarkSendingRestriction(value any) (N3GEarlyCla
 	}
 }
 
-var descriptorPolicyN3GEarlyClassmarkSendingRestriction = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Early Classmark Sending Restriction", descriptorSourceN3GEarlyClassmarkSendingRestriction}
+var descriptorPolicyN3GEarlyClassmarkSendingRestriction = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Early Classmark Sending Restriction", "N3GEarlyClassmarkSendingRestriction", descriptorSourceN3GEarlyClassmarkSendingRestriction, false}
 
 func descriptorDecodeN3GEarlyClassmarkSendingRestrictionFrom(r *runtime.Reader) (any, error) {
 	var v N3GEarlyClassmarkSendingRestriction
@@ -86418,7 +86418,7 @@ func descriptorUnwrapSI2quaterIndicatorStruct(value any) (SI2quaterIndicatorStru
 	}
 }
 
-var descriptorPolicySI2quaterIndicatorStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "SI2quater Indicator struct", descriptorSourceSI2quaterIndicatorStruct}
+var descriptorPolicySI2quaterIndicatorStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "SI2quater Indicator struct", "SI2quaterIndicatorStruct", descriptorSourceSI2quaterIndicatorStruct, false}
 
 func descriptorDecodeSI2quaterIndicatorStructFrom(r *runtime.Reader) (any, error) {
 	var v SI2quaterIndicatorStruct
@@ -86469,7 +86469,7 @@ func descriptorUnwrapIuIndicator(value any) (IuIndicator, bool) {
 	}
 }
 
-var descriptorPolicyIuIndicator = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Iu Indicator", descriptorSourceIuIndicator}
+var descriptorPolicyIuIndicator = descriptorReadPolicy{false, 0, 0, 0, false, false, "Iu Indicator", "IuIndicator", descriptorSourceIuIndicator, false}
 
 func descriptorDecodeIuIndicatorFrom(r *runtime.Reader) (any, error) {
 	var v IuIndicator
@@ -86518,7 +86518,7 @@ func descriptorUnwrapSystemInformation21Indicator(value any) (SystemInformation2
 	}
 }
 
-var descriptorPolicySystemInformation21Indicator = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "System Information 21 Indicator", descriptorSourceSystemInformation21Indicator}
+var descriptorPolicySystemInformation21Indicator = descriptorReadPolicy{false, 0, 0, 0, false, false, "System Information 21 Indicator", "SystemInformation21Indicator", descriptorSourceSystemInformation21Indicator, false}
 
 func descriptorDecodeSystemInformation21IndicatorFrom(r *runtime.Reader) (any, error) {
 	var v SystemInformation21Indicator
@@ -86569,7 +86569,7 @@ func descriptorUnwrapSI16RestOctets(value any) (SI16RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI16RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI16 Rest Octets", descriptorSourceSI16RestOctets}
+var descriptorPolicySI16RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI16 Rest Octets", "SI16RestOctets", descriptorSourceSI16RestOctets, false}
 
 func descriptorDecodeSI16RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI16RestOctets
@@ -86616,7 +86616,7 @@ func descriptorUnwrapSI17RestOctets(value any) (SI17RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI17RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI17 Rest Octets", descriptorSourceSI17RestOctets}
+var descriptorPolicySI17RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI17 Rest Octets", "SI17RestOctets", descriptorSourceSI17RestOctets, false}
 
 func descriptorDecodeSI17RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI17RestOctets
@@ -86665,7 +86665,7 @@ func descriptorUnwrapLSAParametersClause105237e(value any) (LSAParametersClause1
 	}
 }
 
-var descriptorPolicyLSAParametersClause105237e = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA Parameters", descriptorSourceLSAParametersClause105237e}
+var descriptorPolicyLSAParametersClause105237e = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA Parameters", "LSAParametersClause105237e", descriptorSourceLSAParametersClause105237e, false}
 
 func descriptorDecodeLSAParametersClause105237eFrom(r *runtime.Reader) (any, error) {
 	var v LSAParametersClause105237e
@@ -86718,7 +86718,7 @@ func descriptorUnwrapLSAIDInformationClause105237e(value any) (LSAIDInformationC
 	}
 }
 
-var descriptorPolicyLSAIDInformationClause105237e = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA ID information", descriptorSourceLSAIDInformationClause105237e}
+var descriptorPolicyLSAIDInformationClause105237e = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA ID information", "LSAIDInformationClause105237e", descriptorSourceLSAIDInformationClause105237e, false}
 
 func descriptorDecodeLSAIDInformationClause105237eFrom(r *runtime.Reader) (any, error) {
 	var v LSAIDInformationClause105237e
@@ -86771,7 +86771,7 @@ func descriptorUnwrapLSAIdentityClause105237e(value any) (LSAIdentityClause10523
 	}
 }
 
-var descriptorPolicyLSAIdentityClause105237e = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA identity", descriptorSourceLSAIdentityClause105237e}
+var descriptorPolicyLSAIdentityClause105237e = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA identity", "LSAIdentityClause105237e", descriptorSourceLSAIdentityClause105237e, false}
 
 func descriptorDecodeLSAIdentityClause105237eFrom(r *runtime.Reader) (any, error) {
 	var v LSAIdentityClause105237e
@@ -86822,7 +86822,7 @@ func descriptorUnwrapSI14RestOctets(value any) (SI14RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI14RestOctets = descriptorReadPolicy{true, 128, 0, 128, 0, false, true, "SI14 Rest Octets", descriptorSourceSI14RestOctets}
+var descriptorPolicySI14RestOctets = descriptorReadPolicy{true, 128, 128, 0, false, true, "SI14 Rest Octets", "SI14RestOctets", descriptorSourceSI14RestOctets, false}
 
 func descriptorDecodeSI14RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI14RestOctets
@@ -86871,7 +86871,7 @@ func descriptorUnwrapDYNAMICARFCNMAPPINGClause105237j(value any) (DYNAMICARFCNMA
 	}
 }
 
-var descriptorPolicyDYNAMICARFCNMAPPINGClause105237j = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", descriptorSourceDYNAMICARFCNMAPPINGClause105237j}
+var descriptorPolicyDYNAMICARFCNMAPPINGClause105237j = descriptorReadPolicy{false, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", "DYNAMICARFCNMAPPINGClause105237j", descriptorSourceDYNAMICARFCNMAPPINGClause105237j, false}
 
 func descriptorDecodeDYNAMICARFCNMAPPINGClause105237jFrom(r *runtime.Reader) (any, error) {
 	var v DYNAMICARFCNMAPPINGClause105237j
@@ -86922,7 +86922,7 @@ func descriptorUnwrapSI15RestOctets(value any) (SI15RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI15RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI15 Rest Octets", descriptorSourceSI15RestOctets}
+var descriptorPolicySI15RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI15 Rest Octets", "SI15RestOctets", descriptorSourceSI15RestOctets, false}
 
 func descriptorDecodeSI15RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI15RestOctets
@@ -86971,7 +86971,7 @@ func descriptorUnwrapDYNAMICARFCNMAPPINGClause105237k(value any) (DYNAMICARFCNMA
 	}
 }
 
-var descriptorPolicyDYNAMICARFCNMAPPINGClause105237k = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", descriptorSourceDYNAMICARFCNMAPPINGClause105237k}
+var descriptorPolicyDYNAMICARFCNMAPPINGClause105237k = descriptorReadPolicy{false, 0, 0, 0, false, false, "DYNAMIC ARFCN MAPPING", "DYNAMICARFCNMAPPINGClause105237k", descriptorSourceDYNAMICARFCNMAPPINGClause105237k, false}
 
 func descriptorDecodeDYNAMICARFCNMAPPINGClause105237kFrom(r *runtime.Reader) (any, error) {
 	var v DYNAMICARFCNMAPPINGClause105237k
@@ -87022,7 +87022,7 @@ func descriptorUnwrapSI21RestOctets(value any) (SI21RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI21RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 21 Rest Octets", descriptorSourceSI21RestOctets}
+var descriptorPolicySI21RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 21 Rest Octets", "SI21RestOctets", descriptorSourceSI21RestOctets, false}
 
 func descriptorDecodeSI21RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI21RestOctets
@@ -87071,7 +87071,7 @@ func descriptorUnwrapNetworkSharingEABInformationStruct(value any) (NetworkShari
 	}
 }
 
-var descriptorPolicyNetworkSharingEABInformationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Network Sharing EAB Information struct", descriptorSourceNetworkSharingEABInformationStruct}
+var descriptorPolicyNetworkSharingEABInformationStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Network Sharing EAB Information struct", "NetworkSharingEABInformationStruct", descriptorSourceNetworkSharingEABInformationStruct, false}
 
 func descriptorDecodeNetworkSharingEABInformationStructFrom(r *runtime.Reader) (any, error) {
 	var v NetworkSharingEABInformationStruct
@@ -87122,7 +87122,7 @@ func descriptorUnwrapSI22RestOctets(value any) (SI22RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI22RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 22 Rest Octets", descriptorSourceSI22RestOctets}
+var descriptorPolicySI22RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 22 Rest Octets", "SI22RestOctets", descriptorSourceSI22RestOctets, false}
 
 func descriptorDecodeSI22RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI22RestOctets
@@ -87171,7 +87171,7 @@ func descriptorUnwrapNetworkSharingInformationStruct(value any) (NetworkSharingI
 	}
 }
 
-var descriptorPolicyNetworkSharingInformationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Network Sharing Information struct", descriptorSourceNetworkSharingInformationStruct}
+var descriptorPolicyNetworkSharingInformationStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Network Sharing Information struct", "NetworkSharingInformationStruct", descriptorSourceNetworkSharingInformationStruct, false}
 
 func descriptorDecodeNetworkSharingInformationStructFrom(r *runtime.Reader) (any, error) {
 	var v NetworkSharingInformationStruct
@@ -87230,7 +87230,7 @@ func descriptorUnwrapSI23RestOctets(value any) (SI23RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI23RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 23 Rest Octets", descriptorSourceSI23RestOctets}
+var descriptorPolicySI23RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 23 Rest Octets", "SI23RestOctets", descriptorSourceSI23RestOctets, false}
 
 func descriptorDecodeSI23RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI23RestOctets
@@ -87287,7 +87287,7 @@ func descriptorUnwrapIRATCellReselectionInformationStruct(value any) (IRATCellRe
 	}
 }
 
-var descriptorPolicyIRATCellReselectionInformationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "IRAT Cell Reselection Information struct", descriptorSourceIRATCellReselectionInformationStruct}
+var descriptorPolicyIRATCellReselectionInformationStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "IRAT Cell Reselection Information struct", "IRATCellReselectionInformationStruct", descriptorSourceIRATCellReselectionInformationStruct, false}
 
 func descriptorDecodeIRATCellReselectionInformationStructFrom(r *runtime.Reader) (any, error) {
 	var v IRATCellReselectionInformationStruct
@@ -87340,7 +87340,7 @@ func descriptorUnwrapPriorityAndUTRANParametersDescriptionStruct(value any) (Pri
 	}
 }
 
-var descriptorPolicyPriorityAndUTRANParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority and UTRAN Parameters Description struct", descriptorSourcePriorityAndUTRANParametersDescriptionStruct}
+var descriptorPolicyPriorityAndUTRANParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority and UTRAN Parameters Description struct", "PriorityAndUTRANParametersDescriptionStruct", descriptorSourcePriorityAndUTRANParametersDescriptionStruct, false}
 
 func descriptorDecodePriorityAndUTRANParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v PriorityAndUTRANParametersDescriptionStruct
@@ -87393,7 +87393,7 @@ func descriptorUnwrapUTRANFDDTDDDescriptionStruct(value any) (UTRANFDDTDDDescrip
 	}
 }
 
-var descriptorPolicyUTRANFDDTDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN FDD/TDD Description struct", descriptorSourceUTRANFDDTDDDescriptionStruct}
+var descriptorPolicyUTRANFDDTDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN FDD/TDD Description struct", "UTRANFDDTDDDescriptionStruct", descriptorSourceUTRANFDDTDDDescriptionStruct, false}
 
 func descriptorDecodeUTRANFDDTDDDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v UTRANFDDTDDDescriptionStruct
@@ -87446,7 +87446,7 @@ func descriptorUnwrapRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct(valu
 	}
 }
 
-var descriptorPolicyRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", descriptorSourceRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct}
+var descriptorPolicyRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct", "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct", descriptorSourceRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, false}
 
 func descriptorDecodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct
@@ -87507,7 +87507,7 @@ func descriptorUnwrapPriorityAndEUTRANParametersDescriptionStructClause105237o(v
 	}
 }
 
-var descriptorPolicyPriorityAndEUTRANParametersDescriptionStructClause105237o = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105237o}
+var descriptorPolicyPriorityAndEUTRANParametersDescriptionStructClause105237o = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", "PriorityAndEUTRANParametersDescriptionStructClause105237o", descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105237o, false}
 
 func descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105237oFrom(r *runtime.Reader) (any, error) {
 	var v PriorityAndEUTRANParametersDescriptionStructClause105237o
@@ -87568,7 +87568,7 @@ func descriptorUnwrapRepeatedEUTRANNeighbourFrequencyAndPriorityStruct(value any
 	}
 }
 
-var descriptorPolicyRepeatedEUTRANNeighbourFrequencyAndPriorityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Frequency and Priority struct", descriptorSourceRepeatedEUTRANNeighbourFrequencyAndPriorityStruct}
+var descriptorPolicyRepeatedEUTRANNeighbourFrequencyAndPriorityStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Frequency and Priority struct", "RepeatedEUTRANNeighbourFrequencyAndPriorityStruct", descriptorSourceRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, false}
 
 func descriptorDecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct
@@ -87619,7 +87619,7 @@ func descriptorUnwrapSI10RestOctets(value any) (SI10RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI10RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI10 rest octets", descriptorSourceSI10RestOctets}
+var descriptorPolicySI10RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI10 rest octets", "SI10RestOctets", descriptorSourceSI10RestOctets, false}
 
 func descriptorDecodeSI10RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI10RestOctets
@@ -87668,7 +87668,7 @@ func descriptorUnwrapNeighbourInformation(value any) (NeighbourInformation, bool
 	}
 }
 
-var descriptorPolicyNeighbourInformation = descriptorReadPolicy{true, 0, 0, 0, 0, false, false, "neighbour information", descriptorSourceNeighbourInformation}
+var descriptorPolicyNeighbourInformation = descriptorReadPolicy{true, 0, 0, 0, false, false, "neighbour information", "NeighbourInformation", descriptorSourceNeighbourInformation, false}
 
 func descriptorDecodeNeighbourInformationFrom(r *runtime.Reader) (any, error) {
 	var v NeighbourInformation
@@ -87715,7 +87715,7 @@ func descriptorUnwrapCellInfo(value any) (CellInfo, bool) {
 	}
 }
 
-var descriptorPolicyCellInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "cell info", descriptorSourceCellInfo}
+var descriptorPolicyCellInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "cell info", "CellInfo", descriptorSourceCellInfo, false}
 
 func descriptorDecodeCellInfoFrom(r *runtime.Reader) (any, error) {
 	var v CellInfo
@@ -87762,7 +87762,7 @@ func descriptorUnwrapCellParameters(value any) (CellParameters, bool) {
 	}
 }
 
-var descriptorPolicyCellParameters = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "cell parameters", descriptorSourceCellParameters}
+var descriptorPolicyCellParameters = descriptorReadPolicy{false, 0, 0, 0, false, false, "cell parameters", "CellParameters", descriptorSourceCellParameters, false}
 
 func descriptorDecodeCellParametersFrom(r *runtime.Reader) (any, error) {
 	var v CellParameters
@@ -87809,7 +87809,7 @@ func descriptorUnwrapCellBarred(value any) (CellBarred, bool) {
 	}
 }
 
-var descriptorPolicyCellBarred = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "cell barred", descriptorSourceCellBarred}
+var descriptorPolicyCellBarred = descriptorReadPolicy{false, 0, 0, 0, false, false, "cell barred", "CellBarred", descriptorSourceCellBarred, false}
 
 func descriptorDecodeCellBarredFrom(r *runtime.Reader) (any, error) {
 	var v CellBarred
@@ -87856,7 +87856,7 @@ func descriptorUnwrapFurtherCellInfo(value any) (FurtherCellInfo, bool) {
 	}
 }
 
-var descriptorPolicyFurtherCellInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "further cell info", descriptorSourceFurtherCellInfo}
+var descriptorPolicyFurtherCellInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "further cell info", "FurtherCellInfo", descriptorSourceFurtherCellInfo, false}
 
 func descriptorDecodeFurtherCellInfoFrom(r *runtime.Reader) (any, error) {
 	var v FurtherCellInfo
@@ -87903,7 +87903,7 @@ func descriptorUnwrapLaDifferent(value any) (LaDifferent, bool) {
 	}
 }
 
-var descriptorPolicyLaDifferent = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "la different", descriptorSourceLaDifferent}
+var descriptorPolicyLaDifferent = descriptorReadPolicy{false, 0, 0, 0, false, false, "la different", "LaDifferent", descriptorSourceLaDifferent, false}
 
 func descriptorDecodeLaDifferentFrom(r *runtime.Reader) (any, error) {
 	var v LaDifferent
@@ -87950,7 +87950,7 @@ func descriptorUnwrapInfoField(value any) (InfoField, bool) {
 	}
 }
 
-var descriptorPolicyInfoField = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "info field", descriptorSourceInfoField}
+var descriptorPolicyInfoField = descriptorReadPolicy{false, 0, 0, 0, false, false, "info field", "InfoField", descriptorSourceInfoField, false}
 
 func descriptorDecodeInfoFieldFrom(r *runtime.Reader) (any, error) {
 	var v InfoField
@@ -87997,7 +87997,7 @@ func descriptorUnwrapNextFrequency(value any) (NextFrequency, bool) {
 	}
 }
 
-var descriptorPolicyNextFrequency = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "next frequency", descriptorSourceNextFrequency}
+var descriptorPolicyNextFrequency = descriptorReadPolicy{false, 0, 0, 0, false, false, "next frequency", "NextFrequency", descriptorSourceNextFrequency, false}
 
 func descriptorDecodeNextFrequencyFrom(r *runtime.Reader) (any, error) {
 	var v NextFrequency
@@ -88046,7 +88046,7 @@ func descriptorUnwrapDifferentialCellInfo(value any) (DifferentialCellInfo, bool
 	}
 }
 
-var descriptorPolicyDifferentialCellInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "differential cell info", descriptorSourceDifferentialCellInfo}
+var descriptorPolicyDifferentialCellInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "differential cell info", "DifferentialCellInfo", descriptorSourceDifferentialCellInfo, false}
 
 func descriptorDecodeDifferentialCellInfoFrom(r *runtime.Reader) (any, error) {
 	var v DifferentialCellInfo
@@ -88093,7 +88093,7 @@ func descriptorUnwrapDiffCellPars(value any) (DiffCellPars, bool) {
 	}
 }
 
-var descriptorPolicyDiffCellPars = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "diff cell pars", descriptorSourceDiffCellPars}
+var descriptorPolicyDiffCellPars = descriptorReadPolicy{false, 0, 0, 0, false, false, "diff cell pars", "DiffCellPars", descriptorSourceDiffCellPars, false}
 
 func descriptorDecodeDiffCellParsFrom(r *runtime.Reader) (any, error) {
 	var v DiffCellPars
@@ -88142,7 +88142,7 @@ func descriptorUnwrapFurtherDiffCellInfo(value any) (FurtherDiffCellInfo, bool) 
 	}
 }
 
-var descriptorPolicyFurtherDiffCellInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "further diff cell info", descriptorSourceFurtherDiffCellInfo}
+var descriptorPolicyFurtherDiffCellInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "further diff cell info", "FurtherDiffCellInfo", descriptorSourceFurtherDiffCellInfo, false}
 
 func descriptorDecodeFurtherDiffCellInfoFrom(r *runtime.Reader) (any, error) {
 	var v FurtherDiffCellInfo
@@ -88191,7 +88191,7 @@ func descriptorUnwrapSI10terRestOctets(value any) (SI10terRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI10terRestOctets = descriptorReadPolicy{true, 0, 0, 0, 0, false, true, "SI10ter Rest Octets", descriptorSourceSI10terRestOctets}
+var descriptorPolicySI10terRestOctets = descriptorReadPolicy{true, 0, 0, 0, false, true, "SI10ter Rest Octets", "SI10terRestOctets", descriptorSourceSI10terRestOctets, false}
 
 func descriptorDecodeSI10terRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI10terRestOctets
@@ -88238,7 +88238,7 @@ func descriptorUnwrapSI9RestOctets(value any) (SI9RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI9RestOctets = descriptorReadPolicy{true, 136, 0, 136, 0, false, true, "SI9 rest octets", descriptorSourceSI9RestOctets}
+var descriptorPolicySI9RestOctets = descriptorReadPolicy{true, 136, 136, 0, false, true, "SI9 rest octets", "SI9RestOctets", descriptorSourceSI9RestOctets, false}
 
 func descriptorDecodeSI9RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI9RestOctets
@@ -88285,7 +88285,7 @@ func descriptorUnwrapSchedulingInfo(value any) (SchedulingInfo, bool) {
 	}
 }
 
-var descriptorPolicySchedulingInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Scheduling info", descriptorSourceSchedulingInfo}
+var descriptorPolicySchedulingInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "Scheduling info", "SchedulingInfo", descriptorSourceSchedulingInfo, false}
 
 func descriptorDecodeSchedulingInfoFrom(r *runtime.Reader) (any, error) {
 	var v SchedulingInfo
@@ -88332,7 +88332,7 @@ func descriptorUnwrapInfoType(value any) (InfoType, bool) {
 	}
 }
 
-var descriptorPolicyInfoType = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Info type", descriptorSourceInfoType}
+var descriptorPolicyInfoType = descriptorReadPolicy{false, 0, 0, 0, false, false, "Info type", "InfoType", descriptorSourceInfoType, false}
 
 func descriptorDecodeInfoTypeFrom(r *runtime.Reader) (any, error) {
 	var v InfoType
@@ -88379,7 +88379,7 @@ func descriptorUnwrapPositions(value any) (Positions, bool) {
 	}
 }
 
-var descriptorPolicyPositions = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Positions", descriptorSourcePositions}
+var descriptorPolicyPositions = descriptorReadPolicy{false, 0, 0, 0, false, false, "Positions", "Positions", descriptorSourcePositions, false}
 
 func descriptorDecodePositionsFrom(r *runtime.Reader) (any, error) {
 	var v Positions
@@ -88426,7 +88426,7 @@ func descriptorUnwrapPosition(value any) (Position, bool) {
 	}
 }
 
-var descriptorPolicyPosition = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Position", descriptorSourcePosition}
+var descriptorPolicyPosition = descriptorReadPolicy{false, 0, 0, 0, false, false, "Position", "Position", descriptorSourcePosition, false}
 
 func descriptorDecodePositionFrom(r *runtime.Reader) (any, error) {
 	var v Position
@@ -88473,7 +88473,7 @@ func descriptorUnwrapSI2terRestOctets(value any) (SI2terRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI2terRestOctets = descriptorReadPolicy{true, 32, 0, 32, 0, false, true, "SI2ter Rest Octets", descriptorSourceSI2terRestOctets}
+var descriptorPolicySI2terRestOctets = descriptorReadPolicy{true, 32, 32, 0, false, true, "SI2ter Rest Octets", "SI2terRestOctets", descriptorSourceSI2terRestOctets, false}
 
 func descriptorDecodeSI2terRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI2terRestOctets
@@ -88522,7 +88522,7 @@ func descriptorUnwrapUTRANFDDDescriptionStructClause105233a(value any) (UTRANFDD
 	}
 }
 
-var descriptorPolicyUTRANFDDDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStructClause105233a}
+var descriptorPolicyUTRANFDDDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN FDD Description struct", "UTRANFDDDescriptionStructClause105233a", descriptorSourceUTRANFDDDescriptionStructClause105233a, false}
 
 func descriptorDecodeUTRANFDDDescriptionStructClause105233aFrom(r *runtime.Reader) (any, error) {
 	var v UTRANFDDDescriptionStructClause105233a
@@ -88575,7 +88575,7 @@ func descriptorUnwrapUTRANTDDDescriptionStructClause105233a(value any) (UTRANTDD
 	}
 }
 
-var descriptorPolicyUTRANTDDDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStructClause105233a}
+var descriptorPolicyUTRANTDDDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN TDD Description struct", "UTRANTDDDescriptionStructClause105233a", descriptorSourceUTRANTDDDescriptionStructClause105233a, false}
 
 func descriptorDecodeUTRANTDDDescriptionStructClause105233aFrom(r *runtime.Reader) (any, error) {
 	var v UTRANTDDDescriptionStructClause105233a
@@ -88628,7 +88628,7 @@ func descriptorUnwrapN3GMEASUREMENTParametersDescriptionStructClause105233a(valu
 	}
 }
 
-var descriptorPolicyN3GMEASUREMENTParametersDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G MEASUREMENT Parameters Description struct", descriptorSourceN3GMEASUREMENTParametersDescriptionStructClause105233a}
+var descriptorPolicyN3GMEASUREMENTParametersDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G MEASUREMENT Parameters Description struct", "N3GMEASUREMENTParametersDescriptionStructClause105233a", descriptorSourceN3GMEASUREMENTParametersDescriptionStructClause105233a, false}
 
 func descriptorDecodeN3GMEASUREMENTParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (any, error) {
 	var v N3GMEASUREMENTParametersDescriptionStructClause105233a
@@ -88681,7 +88681,7 @@ func descriptorUnwrapN3GAdditionalMeasurementParametersDescriptionStructClause10
 	}
 }
 
-var descriptorPolicyN3GAdditionalMeasurementParametersDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", descriptorSourceN3GAdditionalMeasurementParametersDescriptionStructClause105233a}
+var descriptorPolicyN3GAdditionalMeasurementParametersDescriptionStructClause105233a = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", "N3GAdditionalMeasurementParametersDescriptionStructClause105233a", descriptorSourceN3GAdditionalMeasurementParametersDescriptionStructClause105233a, false}
 
 func descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233aFrom(r *runtime.Reader) (any, error) {
 	var v N3GAdditionalMeasurementParametersDescriptionStructClause105233a
@@ -88732,7 +88732,7 @@ func descriptorUnwrapSI4RestOctets(value any) (SI4RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI4RestOctets = descriptorReadPolicy{true, 0, 0, 80, 0, false, true, "SI4 Rest Octets", descriptorSourceSI4RestOctets}
+var descriptorPolicySI4RestOctets = descriptorReadPolicy{true, 0, 80, 0, false, true, "SI4 Rest Octets", "SI4RestOctets", descriptorSourceSI4RestOctets, false}
 
 func descriptorDecodeSI4RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI4RestOctets
@@ -88779,7 +88779,7 @@ func descriptorUnwrapSI4RestOctetsO(value any) (SI4RestOctetsO, bool) {
 	}
 }
 
-var descriptorPolicySI4RestOctetsO = descriptorReadPolicy{true, 0, 0, 0, 0, false, true, "SI4 Rest Octets_O", descriptorSourceSI4RestOctetsO}
+var descriptorPolicySI4RestOctetsO = descriptorReadPolicy{true, 0, 0, 0, false, true, "SI4 Rest Octets_O", "SI4RestOctetsO", descriptorSourceSI4RestOctetsO, false}
 
 func descriptorDecodeSI4RestOctetsOFrom(r *runtime.Reader) (any, error) {
 	var v SI4RestOctetsO
@@ -88826,7 +88826,7 @@ func descriptorUnwrapSI4RestOctetsS(value any) (SI4RestOctetsS, bool) {
 	}
 }
 
-var descriptorPolicySI4RestOctetsS = descriptorReadPolicy{false, 0, 0, 0, 0, false, true, "SI4 Rest Octets_S", descriptorSourceSI4RestOctetsS}
+var descriptorPolicySI4RestOctetsS = descriptorReadPolicy{false, 0, 0, 0, false, true, "SI4 Rest Octets_S", "SI4RestOctetsS", descriptorSourceSI4RestOctetsS, false}
 
 func descriptorDecodeSI4RestOctetsSFrom(r *runtime.Reader) (any, error) {
 	var v SI4RestOctetsS
@@ -88873,7 +88873,7 @@ func descriptorUnwrapBreakIndicator(value any) (BreakIndicator, bool) {
 	}
 }
 
-var descriptorPolicyBreakIndicator = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Break Indicator", descriptorSourceBreakIndicator}
+var descriptorPolicyBreakIndicator = descriptorReadPolicy{false, 0, 0, 0, false, false, "Break Indicator", "BreakIndicator", descriptorSourceBreakIndicator, false}
 
 func descriptorDecodeBreakIndicatorFrom(r *runtime.Reader) (any, error) {
 	var v BreakIndicator
@@ -88921,7 +88921,7 @@ func descriptorUnwrapSI7RestOctets(value any) (SI7RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI7RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI7 Rest Octets", descriptorSourceSI7RestOctets}
+var descriptorPolicySI7RestOctets = descriptorReadPolicy{true, 0, 0, 0, false, true, "SI7 Rest Octets", "SI7RestOctets", descriptorSourceSI7RestOctets, false}
 
 func descriptorDecodeSI7RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI7RestOctets
@@ -88964,9 +88964,12 @@ func descriptorCollectSI7RestOctetsWithContext(data []byte, c *runtime.Collector
 	return v, nil
 }
 
-var descriptorPolicySI7RestOctetsContext = descriptorReadPolicy{false, 0, 160, 160, 0, false, true, "SI7 Rest Octets", descriptorSourceSI7RestOctets}
+var descriptorPolicySI7RestOctetsContext = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI7 Rest Octets", "SI7RestOctets", descriptorSourceSI7RestOctets, true}
 
 func descriptorDecodeSI7RestOctetsFromWithContext(r *runtime.Reader, c runtime.SI4ACS) (any, error) {
+	if !c.Valid() {
+		return runtime.Decoded[SI7RestOctets]{}, descriptorCollectLocationSI7RestOctets.failure(fmt.Errorf("invalid SI4 ACS %d", c), "", -1, 0)
+	}
 	var v SI7RestOctets
 	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
 		var err error
@@ -89016,7 +89019,7 @@ func descriptorUnwrapSI8RestOctets(value any) (SI8RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI8RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI8 Rest Octets", descriptorSourceSI8RestOctets}
+var descriptorPolicySI8RestOctets = descriptorReadPolicy{true, 0, 0, 0, false, true, "SI8 Rest Octets", "SI8RestOctets", descriptorSourceSI8RestOctets, false}
 
 func descriptorDecodeSI8RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI8RestOctets
@@ -89059,9 +89062,12 @@ func descriptorCollectSI8RestOctetsWithContext(data []byte, c *runtime.Collector
 	return v, nil
 }
 
-var descriptorPolicySI8RestOctetsContext = descriptorReadPolicy{false, 0, 160, 160, 0, false, true, "SI8 Rest Octets", descriptorSourceSI8RestOctets}
+var descriptorPolicySI8RestOctetsContext = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI8 Rest Octets", "SI8RestOctets", descriptorSourceSI8RestOctets, true}
 
 func descriptorDecodeSI8RestOctetsFromWithContext(r *runtime.Reader, c runtime.SI4ACS) (any, error) {
+	if !c.Valid() {
+		return runtime.Decoded[SI8RestOctets]{}, descriptorCollectLocationSI8RestOctets.failure(fmt.Errorf("invalid SI4 ACS %d", c), "", -1, 0)
+	}
 	var v SI8RestOctets
 	wire, bits, err := descriptorRead(r, func(r *runtime.Reader) error {
 		var err error
@@ -89112,7 +89118,7 @@ func descriptorUnwrapOptionalSelectionParametersClause105235(value any) (Optiona
 	}
 }
 
-var descriptorPolicyOptionalSelectionParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Optional Selection Parameters", descriptorSourceOptionalSelectionParametersClause105235}
+var descriptorPolicyOptionalSelectionParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Optional Selection Parameters", "OptionalSelectionParametersClause105235", descriptorSourceOptionalSelectionParametersClause105235, false}
 
 func descriptorDecodeOptionalSelectionParametersClause105235From(r *runtime.Reader) (any, error) {
 	var v OptionalSelectionParametersClause105235
@@ -89165,7 +89171,7 @@ func descriptorUnwrapSelectionParametersClause105235(value any) (SelectionParame
 	}
 }
 
-var descriptorPolicySelectionParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Selection Parameters", descriptorSourceSelectionParametersClause105235}
+var descriptorPolicySelectionParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Selection Parameters", "SelectionParametersClause105235", descriptorSourceSelectionParametersClause105235, false}
 
 func descriptorDecodeSelectionParametersClause105235From(r *runtime.Reader) (any, error) {
 	var v SelectionParametersClause105235
@@ -89218,7 +89224,7 @@ func descriptorUnwrapOptionalPowerOffsetClause105235(value any) (OptionalPowerOf
 	}
 }
 
-var descriptorPolicyOptionalPowerOffsetClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Optional Power Offset", descriptorSourceOptionalPowerOffsetClause105235}
+var descriptorPolicyOptionalPowerOffsetClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Optional Power Offset", "OptionalPowerOffsetClause105235", descriptorSourceOptionalPowerOffsetClause105235, false}
 
 func descriptorDecodeOptionalPowerOffsetClause105235From(r *runtime.Reader) (any, error) {
 	var v OptionalPowerOffsetClause105235
@@ -89271,7 +89277,7 @@ func descriptorUnwrapGPRSIndicatorClause105235(value any) (GPRSIndicatorClause10
 	}
 }
 
-var descriptorPolicyGPRSIndicatorClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Indicator", descriptorSourceGPRSIndicatorClause105235}
+var descriptorPolicyGPRSIndicatorClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Indicator", "GPRSIndicatorClause105235", descriptorSourceGPRSIndicatorClause105235, false}
 
 func descriptorDecodeGPRSIndicatorClause105235From(r *runtime.Reader) (any, error) {
 	var v GPRSIndicatorClause105235
@@ -89324,7 +89330,7 @@ func descriptorUnwrapLSAParametersClause105235(value any) (LSAParametersClause10
 	}
 }
 
-var descriptorPolicyLSAParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA Parameters", descriptorSourceLSAParametersClause105235}
+var descriptorPolicyLSAParametersClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA Parameters", "LSAParametersClause105235", descriptorSourceLSAParametersClause105235, false}
 
 func descriptorDecodeLSAParametersClause105235From(r *runtime.Reader) (any, error) {
 	var v LSAParametersClause105235
@@ -89377,7 +89383,7 @@ func descriptorUnwrapLSAIDInformationClause105235(value any) (LSAIDInformationCl
 	}
 }
 
-var descriptorPolicyLSAIDInformationClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA ID information", descriptorSourceLSAIDInformationClause105235}
+var descriptorPolicyLSAIDInformationClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA ID information", "LSAIDInformationClause105235", descriptorSourceLSAIDInformationClause105235, false}
 
 func descriptorDecodeLSAIDInformationClause105235From(r *runtime.Reader) (any, error) {
 	var v LSAIDInformationClause105235
@@ -89430,7 +89436,7 @@ func descriptorUnwrapLSAIdentityClause105235(value any) (LSAIdentityClause105235
 	}
 }
 
-var descriptorPolicyLSAIdentityClause105235 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LSA identity", descriptorSourceLSAIdentityClause105235}
+var descriptorPolicyLSAIdentityClause105235 = descriptorReadPolicy{false, 0, 0, 0, false, false, "LSA identity", "LSAIdentityClause105235", descriptorSourceLSAIdentityClause105235, false}
 
 func descriptorDecodeLSAIdentityClause105235From(r *runtime.Reader) (any, error) {
 	var v LSAIdentityClause105235
@@ -89491,7 +89497,7 @@ func descriptorUnwrapSI13altRestOctets(value any) (SI13altRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI13altRestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 13alt Rest Octets", descriptorSourceSI13altRestOctets}
+var descriptorPolicySI13altRestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 13alt Rest Octets", "SI13altRestOctets", descriptorSourceSI13altRestOctets, false}
 
 func descriptorDecodeSI13altRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI13altRestOctets
@@ -89548,7 +89554,7 @@ func descriptorUnwrapPBCCHDescription2Struct(value any) (PBCCHDescription2Struct
 	}
 }
 
-var descriptorPolicyPBCCHDescription2Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PBCCH Description 2 struct", descriptorSourcePBCCHDescription2Struct}
+var descriptorPolicyPBCCHDescription2Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PBCCH Description 2 struct", "PBCCHDescription2Struct", descriptorSourcePBCCHDescription2Struct, false}
 
 func descriptorDecodePBCCHDescription2StructFrom(r *runtime.Reader) (any, error) {
 	var v PBCCHDescription2Struct
@@ -89607,7 +89613,7 @@ func descriptorUnwrapP2RestOctets(value any) (P2RestOctets, bool) {
 	}
 }
 
-var descriptorPolicyP2RestOctets = descriptorReadPolicy{true, 8, 0, 88, 0, false, true, "P2 Rest Octets", descriptorSourceP2RestOctets}
+var descriptorPolicyP2RestOctets = descriptorReadPolicy{true, 8, 88, 0, false, true, "P2 Rest Octets", "P2RestOctets", descriptorSourceP2RestOctets, false}
 
 func descriptorDecodeP2RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v P2RestOctets
@@ -89656,7 +89662,7 @@ func descriptorUnwrapPriorityClause105224(value any) (PriorityClause105224, bool
 	}
 }
 
-var descriptorPolicyPriorityClause105224 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority", descriptorSourcePriorityClause105224}
+var descriptorPolicyPriorityClause105224 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority", "PriorityClause105224", descriptorSourcePriorityClause105224, false}
 
 func descriptorDecodePriorityClause105224From(r *runtime.Reader) (any, error) {
 	var v PriorityClause105224
@@ -89713,7 +89719,7 @@ func descriptorUnwrapMBMSInformationClause105224(value any) (MBMSInformationClau
 	}
 }
 
-var descriptorPolicyMBMSInformationClause105224 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS Information", descriptorSourceMBMSInformationClause105224}
+var descriptorPolicyMBMSInformationClause105224 = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS Information", "MBMSInformationClause105224", descriptorSourceMBMSInformationClause105224, false}
 
 func descriptorDecodeMBMSInformationClause105224From(r *runtime.Reader) (any, error) {
 	var v MBMSInformationClause105224
@@ -89766,7 +89772,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105224(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105224 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105224}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105224 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105224", descriptorSourcePEOIMMCellGroupDetailsStructClause105224, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105224From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105224
@@ -89817,7 +89823,7 @@ func descriptorUnwrapP3RestOctets(value any) (P3RestOctets, bool) {
 	}
 }
 
-var descriptorPolicyP3RestOctets = descriptorReadPolicy{true, 24, 0, 24, 0, false, true, "P3 Rest Octets", descriptorSourceP3RestOctets}
+var descriptorPolicyP3RestOctets = descriptorReadPolicy{true, 24, 24, 0, false, true, "P3 Rest Octets", "P3RestOctets", descriptorSourceP3RestOctets, false}
 
 func descriptorDecodeP3RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v P3RestOctets
@@ -89866,7 +89872,7 @@ func descriptorUnwrapPriorityClause105225(value any) (PriorityClause105225, bool
 	}
 }
 
-var descriptorPolicyPriorityClause105225 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority", descriptorSourcePriorityClause105225}
+var descriptorPolicyPriorityClause105225 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority", "PriorityClause105225", descriptorSourcePriorityClause105225, false}
 
 func descriptorDecodePriorityClause105225From(r *runtime.Reader) (any, error) {
 	var v PriorityClause105225
@@ -89915,7 +89921,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105225(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105225 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105225}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105225 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105225", descriptorSourcePEOIMMCellGroupDetailsStructClause105225, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105225From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105225
@@ -89976,7 +89982,7 @@ func descriptorUnwrapSI2quaterRestOctets(value any) (SI2quaterRestOctets, bool) 
 	}
 }
 
-var descriptorPolicySI2quaterRestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI2quater Rest Octets", descriptorSourceSI2quaterRestOctets}
+var descriptorPolicySI2quaterRestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI2quater Rest Octets", "SI2quaterRestOctets", descriptorSourceSI2quaterRestOctets, false}
 
 func descriptorDecodeSI2quaterRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI2quaterRestOctets
@@ -90025,7 +90031,7 @@ func descriptorUnwrapN3GNeighbourCellDescriptionStruct(value any) (N3GNeighbourC
 	}
 }
 
-var descriptorPolicyN3GNeighbourCellDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Neighbour Cell Description struct", descriptorSourceN3GNeighbourCellDescriptionStruct}
+var descriptorPolicyN3GNeighbourCellDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Neighbour Cell Description struct", "N3GNeighbourCellDescriptionStruct", descriptorSourceN3GNeighbourCellDescriptionStruct, false}
 
 func descriptorDecodeN3GNeighbourCellDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v N3GNeighbourCellDescriptionStruct
@@ -90078,7 +90084,7 @@ func descriptorUnwrapUTRANFDDDescriptionStructClause105233b(value any) (UTRANFDD
 	}
 }
 
-var descriptorPolicyUTRANFDDDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN FDD Description struct", descriptorSourceUTRANFDDDescriptionStructClause105233b}
+var descriptorPolicyUTRANFDDDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN FDD Description struct", "UTRANFDDDescriptionStructClause105233b", descriptorSourceUTRANFDDDescriptionStructClause105233b, false}
 
 func descriptorDecodeUTRANFDDDescriptionStructClause105233bFrom(r *runtime.Reader) (any, error) {
 	var v UTRANFDDDescriptionStructClause105233b
@@ -90131,7 +90137,7 @@ func descriptorUnwrapRepeatedUTRANFDDNeighbourCellsStruct(value any) (RepeatedUT
 	}
 }
 
-var descriptorPolicyRepeatedUTRANFDDNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated UTRAN FDD Neighbour Cells struct", descriptorSourceRepeatedUTRANFDDNeighbourCellsStruct}
+var descriptorPolicyRepeatedUTRANFDDNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated UTRAN FDD Neighbour Cells struct", "RepeatedUTRANFDDNeighbourCellsStruct", descriptorSourceRepeatedUTRANFDDNeighbourCellsStruct, false}
 
 func descriptorDecodeRepeatedUTRANFDDNeighbourCellsStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedUTRANFDDNeighbourCellsStruct
@@ -90184,7 +90190,7 @@ func descriptorUnwrapUTRANTDDDescriptionStructClause105233b(value any) (UTRANTDD
 	}
 }
 
-var descriptorPolicyUTRANTDDDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN TDD Description struct", descriptorSourceUTRANTDDDescriptionStructClause105233b}
+var descriptorPolicyUTRANTDDDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN TDD Description struct", "UTRANTDDDescriptionStructClause105233b", descriptorSourceUTRANTDDDescriptionStructClause105233b, false}
 
 func descriptorDecodeUTRANTDDDescriptionStructClause105233bFrom(r *runtime.Reader) (any, error) {
 	var v UTRANTDDDescriptionStructClause105233b
@@ -90237,7 +90243,7 @@ func descriptorUnwrapRepeatedUTRANTDDNeighbourCellsStruct(value any) (RepeatedUT
 	}
 }
 
-var descriptorPolicyRepeatedUTRANTDDNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated UTRAN TDD Neighbour Cells struct", descriptorSourceRepeatedUTRANTDDNeighbourCellsStruct}
+var descriptorPolicyRepeatedUTRANTDDNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated UTRAN TDD Neighbour Cells struct", "RepeatedUTRANTDDNeighbourCellsStruct", descriptorSourceRepeatedUTRANTDDNeighbourCellsStruct, false}
 
 func descriptorDecodeRepeatedUTRANTDDNeighbourCellsStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedUTRANTDDNeighbourCellsStruct
@@ -90290,7 +90296,7 @@ func descriptorUnwrapMEASUREMENTPARAMETERSDescriptionStruct(value any) (MEASUREM
 	}
 }
 
-var descriptorPolicyMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MEASUREMENT PARAMETERS Description Struct", descriptorSourceMEASUREMENTPARAMETERSDescriptionStruct}
+var descriptorPolicyMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "MEASUREMENT PARAMETERS Description Struct", "MEASUREMENTPARAMETERSDescriptionStruct", descriptorSourceMEASUREMENTPARAMETERSDescriptionStruct, false}
 
 func descriptorDecodeMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v MEASUREMENTPARAMETERSDescriptionStruct
@@ -90343,7 +90349,7 @@ func descriptorUnwrapN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b(valu
 	}
 }
 
-var descriptorPolicyN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G MEASUREMENT PARAMETERS Description struct", descriptorSourceN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b}
+var descriptorPolicyN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G MEASUREMENT PARAMETERS Description struct", "N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b", descriptorSourceN3GMEASUREMENTPARAMETERSDescriptionStructClause105233b, false}
 
 func descriptorDecodeN3GMEASUREMENTPARAMETERSDescriptionStructClause105233bFrom(r *runtime.Reader) (any, error) {
 	var v N3GMEASUREMENTPARAMETERSDescriptionStructClause105233b
@@ -90396,7 +90402,7 @@ func descriptorUnwrapGPRSRealTimeDifferenceDescriptionStruct(value any) (GPRSRea
 	}
 }
 
-var descriptorPolicyGPRSRealTimeDifferenceDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS Real Time Difference Description struct", descriptorSourceGPRSRealTimeDifferenceDescriptionStruct}
+var descriptorPolicyGPRSRealTimeDifferenceDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Real Time Difference Description struct", "GPRSRealTimeDifferenceDescriptionStruct", descriptorSourceGPRSRealTimeDifferenceDescriptionStruct, false}
 
 func descriptorDecodeGPRSRealTimeDifferenceDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSRealTimeDifferenceDescriptionStruct
@@ -90447,7 +90453,7 @@ func descriptorUnwrapRTD6Struct(value any) (RTD6Struct, bool) {
 	}
 }
 
-var descriptorPolicyRTD6Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "RTD6 Struct", descriptorSourceRTD6Struct}
+var descriptorPolicyRTD6Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "RTD6 Struct", "RTD6Struct", descriptorSourceRTD6Struct, false}
 
 func descriptorDecodeRTD6StructFrom(r *runtime.Reader) (any, error) {
 	var v RTD6Struct
@@ -90494,7 +90500,7 @@ func descriptorUnwrapRTD12Struct(value any) (RTD12Struct, bool) {
 	}
 }
 
-var descriptorPolicyRTD12Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "RTD12 Struct", descriptorSourceRTD12Struct}
+var descriptorPolicyRTD12Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "RTD12 Struct", "RTD12Struct", descriptorSourceRTD12Struct, false}
 
 func descriptorDecodeRTD12StructFrom(r *runtime.Reader) (any, error) {
 	var v RTD12Struct
@@ -90543,7 +90549,7 @@ func descriptorUnwrapGPRSBSICDescriptionStruct(value any) (GPRSBSICDescriptionSt
 	}
 }
 
-var descriptorPolicyGPRSBSICDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS BSIC Description struct", descriptorSourceGPRSBSICDescriptionStruct}
+var descriptorPolicyGPRSBSICDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS BSIC Description struct", "GPRSBSICDescriptionStruct", descriptorSourceGPRSBSICDescriptionStruct, false}
 
 func descriptorDecodeGPRSBSICDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSBSICDescriptionStruct
@@ -90596,7 +90602,7 @@ func descriptorUnwrapGPRSREPORTPRIORITYDescriptionStruct(value any) (GPRSREPORTP
 	}
 }
 
-var descriptorPolicyGPRSREPORTPRIORITYDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS REPORT PRIORITY Description struct", descriptorSourceGPRSREPORTPRIORITYDescriptionStruct}
+var descriptorPolicyGPRSREPORTPRIORITYDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS REPORT PRIORITY Description struct", "GPRSREPORTPRIORITYDescriptionStruct", descriptorSourceGPRSREPORTPRIORITYDescriptionStruct, false}
 
 func descriptorDecodeGPRSREPORTPRIORITYDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSREPORTPRIORITYDescriptionStruct
@@ -90649,7 +90655,7 @@ func descriptorUnwrapGPRSMEASUREMENTPARAMETERSDescriptionStruct(value any) (GPRS
 	}
 }
 
-var descriptorPolicyGPRSMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS MEASUREMENT PARAMETERS Description struct", descriptorSourceGPRSMEASUREMENTPARAMETERSDescriptionStruct}
+var descriptorPolicyGPRSMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS MEASUREMENT PARAMETERS Description struct", "GPRSMEASUREMENTPARAMETERSDescriptionStruct", descriptorSourceGPRSMEASUREMENTPARAMETERSDescriptionStruct, false}
 
 func descriptorDecodeGPRSMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSMEASUREMENTPARAMETERSDescriptionStruct
@@ -90702,7 +90708,7 @@ func descriptorUnwrapGPRS3GMEASUREMENTPARAMETERSDescriptionStruct(value any) (GP
 	}
 }
 
-var descriptorPolicyGPRS3GMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS 3G MEASUREMENT PARAMETERS Description struct", descriptorSourceGPRS3GMEASUREMENTPARAMETERSDescriptionStruct}
+var descriptorPolicyGPRS3GMEASUREMENTPARAMETERSDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS 3G MEASUREMENT PARAMETERS Description struct", "GPRS3GMEASUREMENTPARAMETERSDescriptionStruct", descriptorSourceGPRS3GMEASUREMENTPARAMETERSDescriptionStruct, false}
 
 func descriptorDecodeGPRS3GMEASUREMENTPARAMETERSDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRS3GMEASUREMENTPARAMETERSDescriptionStruct
@@ -90763,7 +90769,7 @@ func descriptorUnwrapNCMeasurementParametersStruct(value any) (NCMeasurementPara
 	}
 }
 
-var descriptorPolicyNCMeasurementParametersStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "NC Measurement Parameters struct", descriptorSourceNCMeasurementParametersStruct}
+var descriptorPolicyNCMeasurementParametersStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "NC Measurement Parameters struct", "NCMeasurementParametersStruct", descriptorSourceNCMeasurementParametersStruct, false}
 
 func descriptorDecodeNCMeasurementParametersStructFrom(r *runtime.Reader) (any, error) {
 	var v NCMeasurementParametersStruct
@@ -90816,7 +90822,7 @@ func descriptorUnwrapSI2qExtensionInformation(value any) (SI2qExtensionInformati
 	}
 }
 
-var descriptorPolicySI2qExtensionInformation = descriptorReadPolicy{true, 0, 0, 0, 0, false, false, "SI2q Extension Information", descriptorSourceSI2qExtensionInformation}
+var descriptorPolicySI2qExtensionInformation = descriptorReadPolicy{true, 0, 0, 0, false, false, "SI2q Extension Information", "SI2qExtensionInformation", descriptorSourceSI2qExtensionInformation, false}
 
 func descriptorDecodeSI2qExtensionInformationFrom(r *runtime.Reader) (any, error) {
 	var v SI2qExtensionInformation
@@ -90869,7 +90875,7 @@ func descriptorUnwrapCCNSupportDescriptionStruct(value any) (CCNSupportDescripti
 	}
 }
 
-var descriptorPolicyCCNSupportDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "CCN Support Description struct", descriptorSourceCCNSupportDescriptionStruct}
+var descriptorPolicyCCNSupportDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "CCN Support Description struct", "CCNSupportDescriptionStruct", descriptorSourceCCNSupportDescriptionStruct, false}
 
 func descriptorDecodeCCNSupportDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v CCNSupportDescriptionStruct
@@ -90922,7 +90928,7 @@ func descriptorUnwrapN3GAdditionalMeasurementParametersDescriptionStructClause10
 	}
 }
 
-var descriptorPolicyN3GAdditionalMeasurementParametersDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", descriptorSourceN3GAdditionalMeasurementParametersDescriptionStructClause105233b}
+var descriptorPolicyN3GAdditionalMeasurementParametersDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description struct", "N3GAdditionalMeasurementParametersDescriptionStructClause105233b", descriptorSourceN3GAdditionalMeasurementParametersDescriptionStructClause105233b, false}
 
 func descriptorDecodeN3GAdditionalMeasurementParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (any, error) {
 	var v N3GAdditionalMeasurementParametersDescriptionStructClause105233b
@@ -90975,7 +90981,7 @@ func descriptorUnwrapN3GAdditionalMeasurementParametersDescription2Struct(value 
 	}
 }
 
-var descriptorPolicyN3GAdditionalMeasurementParametersDescription2Struct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description 2 struct", descriptorSourceN3GAdditionalMeasurementParametersDescription2Struct}
+var descriptorPolicyN3GAdditionalMeasurementParametersDescription2Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Additional Measurement Parameters Description 2 struct", "N3GAdditionalMeasurementParametersDescription2Struct", descriptorSourceN3GAdditionalMeasurementParametersDescription2Struct, false}
 
 func descriptorDecodeN3GAdditionalMeasurementParametersDescription2StructFrom(r *runtime.Reader) (any, error) {
 	var v N3GAdditionalMeasurementParametersDescription2Struct
@@ -91036,7 +91042,7 @@ func descriptorUnwrapPriorityAndEUTRANParametersDescriptionStructClause105233b(v
 	}
 }
 
-var descriptorPolicyPriorityAndEUTRANParametersDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105233b}
+var descriptorPolicyPriorityAndEUTRANParametersDescriptionStructClause105233b = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority and E-UTRAN Parameters Description struct", "PriorityAndEUTRANParametersDescriptionStructClause105233b", descriptorSourcePriorityAndEUTRANParametersDescriptionStructClause105233b, false}
 
 func descriptorDecodePriorityAndEUTRANParametersDescriptionStructClause105233bFrom(r *runtime.Reader) (any, error) {
 	var v PriorityAndEUTRANParametersDescriptionStructClause105233b
@@ -91089,7 +91095,7 @@ func descriptorUnwrapServingCellPriorityParametersDescriptionStruct(value any) (
 	}
 }
 
-var descriptorPolicyServingCellPriorityParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Serving Cell Priority Parameters Description struct", descriptorSourceServingCellPriorityParametersDescriptionStruct}
+var descriptorPolicyServingCellPriorityParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Serving Cell Priority Parameters Description struct", "ServingCellPriorityParametersDescriptionStruct", descriptorSourceServingCellPriorityParametersDescriptionStruct, false}
 
 func descriptorDecodeServingCellPriorityParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v ServingCellPriorityParametersDescriptionStruct
@@ -91142,7 +91148,7 @@ func descriptorUnwrapN3GPriorityParametersDescriptionStruct(value any) (N3GPrior
 	}
 }
 
-var descriptorPolicyN3GPriorityParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G Priority Parameters Description struct", descriptorSourceN3GPriorityParametersDescriptionStruct}
+var descriptorPolicyN3GPriorityParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G Priority Parameters Description struct", "N3GPriorityParametersDescriptionStruct", descriptorSourceN3GPriorityParametersDescriptionStruct, false}
 
 func descriptorDecodeN3GPriorityParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v N3GPriorityParametersDescriptionStruct
@@ -91195,7 +91201,7 @@ func descriptorUnwrapRepeatedUTRANPriorityParametersStruct(value any) (RepeatedU
 	}
 }
 
-var descriptorPolicyRepeatedUTRANPriorityParametersStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated UTRAN Priority Parameters struct", descriptorSourceRepeatedUTRANPriorityParametersStruct}
+var descriptorPolicyRepeatedUTRANPriorityParametersStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated UTRAN Priority Parameters struct", "RepeatedUTRANPriorityParametersStruct", descriptorSourceRepeatedUTRANPriorityParametersStruct, false}
 
 func descriptorDecodeRepeatedUTRANPriorityParametersStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedUTRANPriorityParametersStruct
@@ -91256,7 +91262,7 @@ func descriptorUnwrapEUTRANParametersDescriptionStruct(value any) (EUTRANParamet
 	}
 }
 
-var descriptorPolicyEUTRANParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN Parameters Description struct", descriptorSourceEUTRANParametersDescriptionStruct}
+var descriptorPolicyEUTRANParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN Parameters Description struct", "EUTRANParametersDescriptionStruct", descriptorSourceEUTRANParametersDescriptionStruct, false}
 
 func descriptorDecodeEUTRANParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANParametersDescriptionStruct
@@ -91309,7 +91315,7 @@ func descriptorUnwrapEUTRANMeasurementParametersDescriptionStruct(value any) (EU
 	}
 }
 
-var descriptorPolicyEUTRANMeasurementParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN Measurement Parameters Description struct", descriptorSourceEUTRANMeasurementParametersDescriptionStruct}
+var descriptorPolicyEUTRANMeasurementParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN Measurement Parameters Description struct", "EUTRANMeasurementParametersDescriptionStruct", descriptorSourceEUTRANMeasurementParametersDescriptionStruct, false}
 
 func descriptorDecodeEUTRANMeasurementParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANMeasurementParametersDescriptionStruct
@@ -91362,7 +91368,7 @@ func descriptorUnwrapGPRSEUTRANMeasurementParametersDescriptionStruct(value any)
 	}
 }
 
-var descriptorPolicyGPRSEUTRANMeasurementParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "GPRS E-UTRAN Measurement Parameters Description struct", descriptorSourceGPRSEUTRANMeasurementParametersDescriptionStruct}
+var descriptorPolicyGPRSEUTRANMeasurementParametersDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS E-UTRAN Measurement Parameters Description struct", "GPRSEUTRANMeasurementParametersDescriptionStruct", descriptorSourceGPRSEUTRANMeasurementParametersDescriptionStruct, false}
 
 func descriptorDecodeGPRSEUTRANMeasurementParametersDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GPRSEUTRANMeasurementParametersDescriptionStruct
@@ -91423,7 +91429,7 @@ func descriptorUnwrapRepeatedEUTRANNeighbourCellsStruct(value any) (RepeatedEUTR
 	}
 }
 
-var descriptorPolicyRepeatedEUTRANNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Cells struct", descriptorSourceRepeatedEUTRANNeighbourCellsStruct}
+var descriptorPolicyRepeatedEUTRANNeighbourCellsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated E-UTRAN Neighbour Cells struct", "RepeatedEUTRANNeighbourCellsStruct", descriptorSourceRepeatedEUTRANNeighbourCellsStruct, false}
 
 func descriptorDecodeRepeatedEUTRANNeighbourCellsStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedEUTRANNeighbourCellsStruct
@@ -91484,7 +91490,7 @@ func descriptorUnwrapRepeatedEUTRANNotAllowedCellsStruct(value any) (RepeatedEUT
 	}
 }
 
-var descriptorPolicyRepeatedEUTRANNotAllowedCellsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN Not Allowed Cells struct", descriptorSourceRepeatedEUTRANNotAllowedCellsStruct}
+var descriptorPolicyRepeatedEUTRANNotAllowedCellsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated E-UTRAN Not Allowed Cells struct", "RepeatedEUTRANNotAllowedCellsStruct", descriptorSourceRepeatedEUTRANNotAllowedCellsStruct, false}
 
 func descriptorDecodeRepeatedEUTRANNotAllowedCellsStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedEUTRANNotAllowedCellsStruct
@@ -91545,7 +91551,7 @@ func descriptorUnwrapRepeatedEUTRANPCIDToTAMappingStruct(value any) (RepeatedEUT
 	}
 }
 
-var descriptorPolicyRepeatedEUTRANPCIDToTAMappingStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Repeated E-UTRAN PCID to TA mapping struct", descriptorSourceRepeatedEUTRANPCIDToTAMappingStruct}
+var descriptorPolicyRepeatedEUTRANPCIDToTAMappingStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated E-UTRAN PCID to TA mapping struct", "RepeatedEUTRANPCIDToTAMappingStruct", descriptorSourceRepeatedEUTRANPCIDToTAMappingStruct, false}
 
 func descriptorDecodeRepeatedEUTRANPCIDToTAMappingStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedEUTRANPCIDToTAMappingStruct
@@ -91606,7 +91612,7 @@ func descriptorUnwrapN3GCSGDescriptionStruct(value any) (N3GCSGDescriptionStruct
 	}
 }
 
-var descriptorPolicyN3GCSGDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "3G CSG Description struct", descriptorSourceN3GCSGDescriptionStruct}
+var descriptorPolicyN3GCSGDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "3G CSG Description struct", "N3GCSGDescriptionStruct", descriptorSourceN3GCSGDescriptionStruct, false}
 
 func descriptorDecodeN3GCSGDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v N3GCSGDescriptionStruct
@@ -91667,7 +91673,7 @@ func descriptorUnwrapEUTRANCSGDescriptionStruct(value any) (EUTRANCSGDescription
 	}
 }
 
-var descriptorPolicyEUTRANCSGDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN CSG Description struct", descriptorSourceEUTRANCSGDescriptionStruct}
+var descriptorPolicyEUTRANCSGDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN CSG Description struct", "EUTRANCSGDescriptionStruct", descriptorSourceEUTRANCSGDescriptionStruct, false}
 
 func descriptorDecodeEUTRANCSGDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANCSGDescriptionStruct
@@ -91720,7 +91726,7 @@ func descriptorUnwrapCSGCellsReportingDescriptionStruct(value any) (CSGCellsRepo
 	}
 }
 
-var descriptorPolicyCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "CSG Cells Reporting Description struct", descriptorSourceCSGCellsReportingDescriptionStruct}
+var descriptorPolicyCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "CSG Cells Reporting Description struct", "CSGCellsReportingDescriptionStruct", descriptorSourceCSGCellsReportingDescriptionStruct, false}
 
 func descriptorDecodeCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v CSGCellsReportingDescriptionStruct
@@ -91773,7 +91779,7 @@ func descriptorUnwrapUTRANCSGCellsReportingDescriptionStruct(value any) (UTRANCS
 	}
 }
 
-var descriptorPolicyUTRANCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "UTRAN CSG Cells Reporting Description struct", descriptorSourceUTRANCSGCellsReportingDescriptionStruct}
+var descriptorPolicyUTRANCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN CSG Cells Reporting Description struct", "UTRANCSGCellsReportingDescriptionStruct", descriptorSourceUTRANCSGCellsReportingDescriptionStruct, false}
 
 func descriptorDecodeUTRANCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v UTRANCSGCellsReportingDescriptionStruct
@@ -91826,7 +91832,7 @@ func descriptorUnwrapEUTRANCSGCellsReportingDescriptionStruct(value any) (EUTRAN
 	}
 }
 
-var descriptorPolicyEUTRANCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "E-UTRAN CSG Cells Reporting Description struct", descriptorSourceEUTRANCSGCellsReportingDescriptionStruct}
+var descriptorPolicyEUTRANCSGCellsReportingDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN CSG Cells Reporting Description struct", "EUTRANCSGCellsReportingDescriptionStruct", descriptorSourceEUTRANCSGCellsReportingDescriptionStruct, false}
 
 func descriptorDecodeEUTRANCSGCellsReportingDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANCSGCellsReportingDescriptionStruct
@@ -91879,7 +91885,7 @@ func descriptorUnwrapExtendedEARFCNsDescriptionStruct(value any) (ExtendedEARFCN
 	}
 }
 
-var descriptorPolicyExtendedEARFCNsDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Extended EARFCNs Description struct", descriptorSourceExtendedEARFCNsDescriptionStruct}
+var descriptorPolicyExtendedEARFCNsDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Extended EARFCNs Description struct", "ExtendedEARFCNsDescriptionStruct", descriptorSourceExtendedEARFCNsDescriptionStruct, false}
 
 func descriptorDecodeExtendedEARFCNsDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v ExtendedEARFCNsDescriptionStruct
@@ -91932,7 +91938,7 @@ func descriptorUnwrapExtendedEARFCNsDescriptionForCSGCellsStruct(value any) (Ext
 	}
 }
 
-var descriptorPolicyExtendedEARFCNsDescriptionForCSGCellsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Extended EARFCNs Description for CSG Cells struct", descriptorSourceExtendedEARFCNsDescriptionForCSGCellsStruct}
+var descriptorPolicyExtendedEARFCNsDescriptionForCSGCellsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Extended EARFCNs Description for CSG Cells struct", "ExtendedEARFCNsDescriptionForCSGCellsStruct", descriptorSourceExtendedEARFCNsDescriptionForCSGCellsStruct, false}
 
 func descriptorDecodeExtendedEARFCNsDescriptionForCSGCellsStructFrom(r *runtime.Reader) (any, error) {
 	var v ExtendedEARFCNsDescriptionForCSGCellsStruct
@@ -91983,7 +91989,7 @@ func descriptorUnwrapSI6RestOctets(value any) (SI6RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI6RestOctets = descriptorReadPolicy{true, 56, 0, 56, 0, false, true, "SI6 rest octets", descriptorSourceSI6RestOctets}
+var descriptorPolicySI6RestOctets = descriptorReadPolicy{true, 56, 56, 0, false, true, "SI6 rest octets", "SI6RestOctets", descriptorSourceSI6RestOctets, false}
 
 func descriptorDecodeSI6RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI6RestOctets
@@ -92030,7 +92036,7 @@ func descriptorUnwrapPCHAndNCHInfo(value any) (PCHAndNCHInfo, bool) {
 	}
 }
 
-var descriptorPolicyPCHAndNCHInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PCH and NCH info", descriptorSourcePCHAndNCHInfo}
+var descriptorPolicyPCHAndNCHInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "PCH and NCH info", "PCHAndNCHInfo", descriptorSourcePCHAndNCHInfo, false}
 
 func descriptorDecodePCHAndNCHInfoFrom(r *runtime.Reader) (any, error) {
 	var v PCHAndNCHInfo
@@ -92079,7 +92085,7 @@ func descriptorUnwrapPagingChannelRestructuring(value any) (PagingChannelRestruc
 	}
 }
 
-var descriptorPolicyPagingChannelRestructuring = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "paging channel restructuring", descriptorSourcePagingChannelRestructuring}
+var descriptorPolicyPagingChannelRestructuring = descriptorReadPolicy{false, 0, 0, 0, false, false, "paging channel restructuring", "PagingChannelRestructuring", descriptorSourcePagingChannelRestructuring, false}
 
 func descriptorDecodePagingChannelRestructuringFrom(r *runtime.Reader) (any, error) {
 	var v PagingChannelRestructuring
@@ -92130,7 +92136,7 @@ func descriptorUnwrapVBSVGCSOptions(value any) (VBSVGCSOptions, bool) {
 	}
 }
 
-var descriptorPolicyVBSVGCSOptions = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "VBS/VGCS options", descriptorSourceVBSVGCSOptions}
+var descriptorPolicyVBSVGCSOptions = descriptorReadPolicy{false, 0, 0, 0, false, false, "VBS/VGCS options", "VBSVGCSOptions", descriptorSourceVBSVGCSOptions, false}
 
 func descriptorDecodeVBSVGCSOptionsFrom(r *runtime.Reader) (any, error) {
 	var v VBSVGCSOptions
@@ -92179,7 +92185,7 @@ func descriptorUnwrapInbandNotifications(value any) (InbandNotifications, bool) 
 	}
 }
 
-var descriptorPolicyInbandNotifications = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "inband notifications", descriptorSourceInbandNotifications}
+var descriptorPolicyInbandNotifications = descriptorReadPolicy{false, 0, 0, 0, false, false, "inband notifications", "InbandNotifications", descriptorSourceInbandNotifications, false}
 
 func descriptorDecodeInbandNotificationsFrom(r *runtime.Reader) (any, error) {
 	var v InbandNotifications
@@ -92226,7 +92232,7 @@ func descriptorUnwrapInbandPagings(value any) (InbandPagings, bool) {
 	}
 }
 
-var descriptorPolicyInbandPagings = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "inband pagings", descriptorSourceInbandPagings}
+var descriptorPolicyInbandPagings = descriptorReadPolicy{false, 0, 0, 0, false, false, "inband pagings", "InbandPagings", descriptorSourceInbandPagings, false}
 
 func descriptorDecodeInbandPagingsFrom(r *runtime.Reader) (any, error) {
 	var v InbandPagings
@@ -92275,7 +92281,7 @@ func descriptorUnwrapBandIndicatorClause105235a(value any) (BandIndicatorClause1
 	}
 }
 
-var descriptorPolicyBandIndicatorClause105235a = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Band indicator", descriptorSourceBandIndicatorClause105235a}
+var descriptorPolicyBandIndicatorClause105235a = descriptorReadPolicy{false, 0, 0, 0, false, false, "Band indicator", "BandIndicatorClause105235a", descriptorSourceBandIndicatorClause105235a, false}
 
 func descriptorDecodeBandIndicatorClause105235aFrom(r *runtime.Reader) (any, error) {
 	var v BandIndicatorClause105235a
@@ -92334,7 +92340,7 @@ func descriptorUnwrapSI13RestOctets(value any) (SI13RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI13RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 13 Rest Octets", descriptorSourceSI13RestOctets}
+var descriptorPolicySI13RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 13 Rest Octets", "SI13RestOctets", descriptorSourceSI13RestOctets, false}
 
 func descriptorDecodeSI13RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI13RestOctets
@@ -92383,7 +92389,7 @@ func descriptorUnwrapPBCCHDescriptionStruct(value any) (PBCCHDescriptionStruct, 
 	}
 }
 
-var descriptorPolicyPBCCHDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PBCCH Description struct", descriptorSourcePBCCHDescriptionStruct}
+var descriptorPolicyPBCCHDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PBCCH Description struct", "PBCCHDescriptionStruct", descriptorSourcePBCCHDescriptionStruct, false}
 
 func descriptorDecodePBCCHDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v PBCCHDescriptionStruct
@@ -92430,7 +92436,7 @@ func descriptorUnwrapSICHANGEALT(value any) (SICHANGEALT, bool) {
 	}
 }
 
-var descriptorPolicySICHANGEALT = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "SI_CHANGE_ALT", descriptorSourceSICHANGEALT}
+var descriptorPolicySICHANGEALT = descriptorReadPolicy{false, 0, 0, 0, false, false, "SI_CHANGE_ALT", "SICHANGEALT", descriptorSourceSICHANGEALT, false}
 
 func descriptorDecodeSICHANGEALTFrom(r *runtime.Reader) (any, error) {
 	var v SICHANGEALT
@@ -92479,7 +92485,7 @@ func descriptorUnwrapPEOIMMCellGroupDefinitionStruct(value any) (PEOIMMCellGroup
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDefinitionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Definition struct", descriptorSourcePEOIMMCellGroupDefinitionStruct}
+var descriptorPolicyPEOIMMCellGroupDefinitionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Definition struct", "PEOIMMCellGroupDefinitionStruct", descriptorSourcePEOIMMCellGroupDefinitionStruct, false}
 
 func descriptorDecodePEOIMMCellGroupDefinitionStructFrom(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDefinitionStruct
@@ -92532,7 +92538,7 @@ func descriptorUnwrapPEOIMMCellGroupSpecificParametersStruct(value any) (PEOIMMC
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupSpecificParametersStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Specific Parameters struct", descriptorSourcePEOIMMCellGroupSpecificParametersStruct}
+var descriptorPolicyPEOIMMCellGroupSpecificParametersStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Specific Parameters struct", "PEOIMMCellGroupSpecificParametersStruct", descriptorSourcePEOIMMCellGroupSpecificParametersStruct, false}
 
 func descriptorDecodePEOIMMCellGroupSpecificParametersStructFrom(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupSpecificParametersStruct
@@ -92583,7 +92589,7 @@ func descriptorUnwrapSI19RestOctets(value any) (SI19RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI19RestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "SI 19 Rest Octets", descriptorSourceSI19RestOctets}
+var descriptorPolicySI19RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 19 Rest Octets", "SI19RestOctets", descriptorSourceSI19RestOctets, false}
 
 func descriptorDecodeSI19RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI19RestOctets
@@ -92632,7 +92638,7 @@ func descriptorUnwrapCOMPACTNeighbourCellParamsStruct(value any) (COMPACTNeighbo
 	}
 }
 
-var descriptorPolicyCOMPACTNeighbourCellParamsStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "COMPACT Neighbour Cell params struct", descriptorSourceCOMPACTNeighbourCellParamsStruct}
+var descriptorPolicyCOMPACTNeighbourCellParamsStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "COMPACT Neighbour Cell params struct", "COMPACTNeighbourCellParamsStruct", descriptorSourceCOMPACTNeighbourCellParamsStruct, false}
 
 func descriptorDecodeCOMPACTNeighbourCellParamsStructFrom(r *runtime.Reader) (any, error) {
 	var v COMPACTNeighbourCellParamsStruct
@@ -92685,7 +92691,7 @@ func descriptorUnwrapCOMPACTCellSelectionStruct(value any) (COMPACTCellSelection
 	}
 }
 
-var descriptorPolicyCOMPACTCellSelectionStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "COMPACT Cell Selection struct", descriptorSourceCOMPACTCellSelectionStruct}
+var descriptorPolicyCOMPACTCellSelectionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "COMPACT Cell Selection struct", "COMPACTCellSelectionStruct", descriptorSourceCOMPACTCellSelectionStruct, false}
 
 func descriptorDecodeCOMPACTCellSelectionStructFrom(r *runtime.Reader) (any, error) {
 	var v COMPACTCellSelectionStruct
@@ -92738,7 +92744,7 @@ func descriptorUnwrapLADifferentStruct(value any) (LADifferentStruct, bool) {
 	}
 }
 
-var descriptorPolicyLADifferentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "LA Different struct", descriptorSourceLADifferentStruct}
+var descriptorPolicyLADifferentStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "LA Different struct", "LADifferentStruct", descriptorSourceLADifferentStruct, false}
 
 func descriptorDecodeLADifferentStructFrom(r *runtime.Reader) (any, error) {
 	var v LADifferentStruct
@@ -92785,7 +92791,7 @@ func descriptorUnwrapSI18RestOctets(value any) (SI18RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI18RestOctets = descriptorReadPolicy{false, 160, 0, 160, 0, false, true, "SI 18 Rest Octets", descriptorSourceSI18RestOctets}
+var descriptorPolicySI18RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 18 Rest Octets", "SI18RestOctets", descriptorSourceSI18RestOctets, false}
 
 func descriptorDecodeSI18RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI18RestOctets
@@ -92834,7 +92840,7 @@ func descriptorUnwrapNonGSMMessageStruct(value any) (NonGSMMessageStruct, bool) 
 	}
 }
 
-var descriptorPolicyNonGSMMessageStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Non-GSM Message struct", descriptorSourceNonGSMMessageStruct}
+var descriptorPolicyNonGSMMessageStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Non-GSM Message struct", "NonGSMMessageStruct", descriptorSourceNonGSMMessageStruct, false}
 
 func descriptorDecodeNonGSMMessageStructFrom(r *runtime.Reader) (any, error) {
 	var v NonGSMMessageStruct
@@ -92889,7 +92895,7 @@ func descriptorUnwrapIPARestOctets(value any) (IPARestOctets, bool) {
 	}
 }
 
-var descriptorPolicyIPARestOctets = descriptorReadPolicy{true, 152, 0, 152, 0, false, true, "IPA Rest Octets", descriptorSourceIPARestOctets}
+var descriptorPolicyIPARestOctets = descriptorReadPolicy{true, 152, 152, 0, false, true, "IPA Rest Octets", "IPARestOctets", descriptorSourceIPARestOctets, false}
 
 func descriptorDecodeIPARestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v IPARestOctets
@@ -92946,7 +92952,7 @@ func descriptorUnwrapIPAUplinkAssignmentStruct(value any) (IPAUplinkAssignmentSt
 	}
 }
 
-var descriptorPolicyIPAUplinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "IPA Uplink Assignment struct", descriptorSourceIPAUplinkAssignmentStruct}
+var descriptorPolicyIPAUplinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "IPA Uplink Assignment struct", "IPAUplinkAssignmentStruct", descriptorSourceIPAUplinkAssignmentStruct, false}
 
 func descriptorDecodeIPAUplinkAssignmentStructFrom(r *runtime.Reader) (any, error) {
 	var v IPAUplinkAssignmentStruct
@@ -93007,7 +93013,7 @@ func descriptorUnwrapIPADownlinkAssignmentStruct(value any) (IPADownlinkAssignme
 	}
 }
 
-var descriptorPolicyIPADownlinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "IPA Downlink Assignment struct", descriptorSourceIPADownlinkAssignmentStruct}
+var descriptorPolicyIPADownlinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "IPA Downlink Assignment struct", "IPADownlinkAssignmentStruct", descriptorSourceIPADownlinkAssignmentStruct, false}
 
 func descriptorDecodeIPADownlinkAssignmentStructFrom(r *runtime.Reader) (any, error) {
 	var v IPADownlinkAssignmentStruct
@@ -93068,7 +93074,7 @@ func descriptorUnwrapIPASingleBlockUplinkAssignmentStruct(value any) (IPASingleB
 	}
 }
 
-var descriptorPolicyIPASingleBlockUplinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "IPA Single Block Uplink Assignment struct", descriptorSourceIPASingleBlockUplinkAssignmentStruct}
+var descriptorPolicyIPASingleBlockUplinkAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "IPA Single Block Uplink Assignment struct", "IPASingleBlockUplinkAssignmentStruct", descriptorSourceIPASingleBlockUplinkAssignmentStruct, false}
 
 func descriptorDecodeIPASingleBlockUplinkAssignmentStructFrom(r *runtime.Reader) (any, error) {
 	var v IPASingleBlockUplinkAssignmentStruct
@@ -93121,7 +93127,7 @@ func descriptorUnwrapAcknowledgedAccessRequestStruct(value any) (AcknowledgedAcc
 	}
 }
 
-var descriptorPolicyAcknowledgedAccessRequestStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Acknowledged Access Request struct", descriptorSourceAcknowledgedAccessRequestStruct}
+var descriptorPolicyAcknowledgedAccessRequestStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Acknowledged Access Request struct", "AcknowledgedAccessRequestStruct", descriptorSourceAcknowledgedAccessRequestStruct, false}
 
 func descriptorDecodeAcknowledgedAccessRequestStructFrom(r *runtime.Reader) (any, error) {
 	var v AcknowledgedAccessRequestStruct
@@ -93174,7 +93180,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105278(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105278 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105278}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105278 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105278", descriptorSourcePEOIMMCellGroupDetailsStructClause105278, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105278From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105278
@@ -93225,7 +93231,7 @@ func descriptorUnwrapSI20RestOctets(value any) (SI20RestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI20RestOctets = descriptorReadPolicy{false, 160, 0, 160, 0, false, true, "SI 20 Rest Octets", descriptorSourceSI20RestOctets}
+var descriptorPolicySI20RestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "SI 20 Rest Octets", "SI20RestOctets", descriptorSourceSI20RestOctets, false}
 
 func descriptorDecodeSI20RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI20RestOctets
@@ -93274,7 +93280,7 @@ func descriptorUnwrapGroupCallInformation(value any) (GroupCallInformation, bool
 	}
 }
 
-var descriptorPolicyGroupCallInformation = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Group Call information", descriptorSourceGroupCallInformation}
+var descriptorPolicyGroupCallInformation = descriptorReadPolicy{false, 0, 0, 0, false, false, "Group Call information", "GroupCallInformation", descriptorSourceGroupCallInformation, false}
 
 func descriptorDecodeGroupCallInformationFrom(r *runtime.Reader) (any, error) {
 	var v GroupCallInformation
@@ -93321,7 +93327,7 @@ func descriptorUnwrapEmergencyInd(value any) (EmergencyInd, bool) {
 	}
 }
 
-var descriptorPolicyEmergencyInd = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Emergency_Ind", descriptorSourceEmergencyInd}
+var descriptorPolicyEmergencyInd = descriptorReadPolicy{false, 0, 0, 0, false, false, "Emergency_Ind", "EmergencyInd", descriptorSourceEmergencyInd, false}
 
 func descriptorDecodeEmergencyIndFrom(r *runtime.Reader) (any, error) {
 	var v EmergencyInd
@@ -93370,7 +93376,7 @@ func descriptorUnwrapGroupChannelDescription(value any) (GroupChannelDescription
 	}
 }
 
-var descriptorPolicyGroupChannelDescription = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Group Channel Description", descriptorSourceGroupChannelDescription}
+var descriptorPolicyGroupChannelDescription = descriptorReadPolicy{false, 0, 0, 0, false, false, "Group Channel Description", "GroupChannelDescription", descriptorSourceGroupChannelDescription, false}
 
 func descriptorDecodeGroupChannelDescriptionFrom(r *runtime.Reader) (any, error) {
 	var v GroupChannelDescription
@@ -93421,7 +93427,7 @@ func descriptorUnwrapBitString(value any) (BitString, bool) {
 	}
 }
 
-var descriptorPolicyBitString = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "bit string", descriptorSourceBitString}
+var descriptorPolicyBitString = descriptorReadPolicy{false, 0, 0, 0, false, false, "bit string", "BitString", descriptorSourceBitString, false}
 
 func descriptorDecodeBitStringFrom(r *runtime.Reader) (any, error) {
 	var v BitString
@@ -93468,7 +93474,7 @@ func descriptorUnwrapNTNRestOctets(value any) (NTNRestOctets, bool) {
 	}
 }
 
-var descriptorPolicyNTNRestOctets = descriptorReadPolicy{true, 160, 0, 160, 0, false, true, "NT/N Rest Octets", descriptorSourceNTNRestOctets}
+var descriptorPolicyNTNRestOctets = descriptorReadPolicy{true, 160, 160, 0, false, true, "NT/N Rest Octets", "NTNRestOctets", descriptorSourceNTNRestOctets, false}
 
 func descriptorDecodeNTNRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v NTNRestOctets
@@ -93517,7 +93523,7 @@ func descriptorUnwrapListOfGroupCallNCHInformation(value any) (ListOfGroupCallNC
 	}
 }
 
-var descriptorPolicyListOfGroupCallNCHInformation = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "List of Group Call NCH information", descriptorSourceListOfGroupCallNCHInformation}
+var descriptorPolicyListOfGroupCallNCHInformation = descriptorReadPolicy{false, 0, 0, 0, false, false, "List of Group Call NCH information", "ListOfGroupCallNCHInformation", descriptorSourceListOfGroupCallNCHInformation, false}
 
 func descriptorDecodeListOfGroupCallNCHInformationFrom(r *runtime.Reader) (any, error) {
 	var v ListOfGroupCallNCHInformation
@@ -93570,7 +93576,7 @@ func descriptorUnwrapListOfEmergencyInformation(value any) (ListOfEmergencyInfor
 	}
 }
 
-var descriptorPolicyListOfEmergencyInformation = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "List of Emergency information", descriptorSourceListOfEmergencyInformation}
+var descriptorPolicyListOfEmergencyInformation = descriptorReadPolicy{false, 0, 0, 0, false, false, "List of Emergency information", "ListOfEmergencyInformation", descriptorSourceListOfEmergencyInformation, false}
 
 func descriptorDecodeListOfEmergencyInformationFrom(r *runtime.Reader) (any, error) {
 	var v ListOfEmergencyInformation
@@ -93623,7 +93629,7 @@ func descriptorUnwrapListOfVSTKRANDInformation(value any) (ListOfVSTKRANDInforma
 	}
 }
 
-var descriptorPolicyListOfVSTKRANDInformation = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "List of VSTK_RAND information", descriptorSourceListOfVSTKRANDInformation}
+var descriptorPolicyListOfVSTKRANDInformation = descriptorReadPolicy{false, 0, 0, 0, false, false, "List of VSTK_RAND information", "ListOfVSTKRANDInformation", descriptorSourceListOfVSTKRANDInformation, false}
 
 func descriptorDecodeListOfVSTKRANDInformationFrom(r *runtime.Reader) (any, error) {
 	var v ListOfVSTKRANDInformation
@@ -93674,7 +93680,7 @@ func descriptorUnwrapListOfReducedGCR(value any) (ListOfReducedGCR, bool) {
 	}
 }
 
-var descriptorPolicyListOfReducedGCR = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "List of Reduced GCR", descriptorSourceListOfReducedGCR}
+var descriptorPolicyListOfReducedGCR = descriptorReadPolicy{false, 0, 0, 0, false, false, "List of Reduced GCR", "ListOfReducedGCR", descriptorSourceListOfReducedGCR, false}
 
 func descriptorDecodeListOfReducedGCRFrom(r *runtime.Reader) (any, error) {
 	var v ListOfReducedGCR
@@ -93729,7 +93735,7 @@ func descriptorUnwrapP1RestOctets(value any) (P1RestOctets, bool) {
 	}
 }
 
-var descriptorPolicyP1RestOctets = descriptorReadPolicy{true, 0, 0, 136, 0, false, true, "P1 Rest Octets", descriptorSourceP1RestOctets}
+var descriptorPolicyP1RestOctets = descriptorReadPolicy{true, 0, 136, 0, false, true, "P1 Rest Octets", "P1RestOctets", descriptorSourceP1RestOctets, false}
 
 func descriptorDecodeP1RestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v P1RestOctets
@@ -93778,7 +93784,7 @@ func descriptorUnwrapPriorityClause105223(value any) (PriorityClause105223, bool
 	}
 }
 
-var descriptorPolicyPriorityClause105223 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Priority", descriptorSourcePriorityClause105223}
+var descriptorPolicyPriorityClause105223 = descriptorReadPolicy{false, 0, 0, 0, false, false, "Priority", "PriorityClause105223", descriptorSourcePriorityClause105223, false}
 
 func descriptorDecodePriorityClause105223From(r *runtime.Reader) (any, error) {
 	var v PriorityClause105223
@@ -93835,7 +93841,7 @@ func descriptorUnwrapMBMSInformationClause105223(value any) (MBMSInformationClau
 	}
 }
 
-var descriptorPolicyMBMSInformationClause105223 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MBMS Information", descriptorSourceMBMSInformationClause105223}
+var descriptorPolicyMBMSInformationClause105223 = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS Information", "MBMSInformationClause105223", descriptorSourceMBMSInformationClause105223, false}
 
 func descriptorDecodeMBMSInformationClause105223From(r *runtime.Reader) (any, error) {
 	var v MBMSInformationClause105223
@@ -93888,7 +93894,7 @@ func descriptorUnwrapETWSPrimaryNotificationStruct(value any) (ETWSPrimaryNotifi
 	}
 }
 
-var descriptorPolicyETWSPrimaryNotificationStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "ETWS Primary Notification struct", descriptorSourceETWSPrimaryNotificationStruct}
+var descriptorPolicyETWSPrimaryNotificationStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "ETWS Primary Notification struct", "ETWSPrimaryNotificationStruct", descriptorSourceETWSPrimaryNotificationStruct, false}
 
 func descriptorDecodeETWSPrimaryNotificationStructFrom(r *runtime.Reader) (any, error) {
 	var v ETWSPrimaryNotificationStruct
@@ -93941,7 +93947,7 @@ func descriptorUnwrapPEOIMMCellGroupDetailsStructClause105223(value any) (PEOIMM
 	}
 }
 
-var descriptorPolicyPEOIMMCellGroupDetailsStructClause105223 = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", descriptorSourcePEOIMMCellGroupDetailsStructClause105223}
+var descriptorPolicyPEOIMMCellGroupDetailsStructClause105223 = descriptorReadPolicy{false, 0, 0, 0, false, false, "PEO IMM Cell Group Details struct", "PEOIMMCellGroupDetailsStructClause105223", descriptorSourcePEOIMMCellGroupDetailsStructClause105223, false}
 
 func descriptorDecodePEOIMMCellGroupDetailsStructClause105223From(r *runtime.Reader) (any, error) {
 	var v PEOIMMCellGroupDetailsStructClause105223
@@ -93994,7 +94000,7 @@ func descriptorUnwrapSI10bisRestOctets(value any) (SI10bisRestOctets, bool) {
 	}
 }
 
-var descriptorPolicySI10bisRestOctets = descriptorReadPolicy{true, 0, 0, 160, 0, false, true, "SI10bis Rest Octets", descriptorSourceSI10bisRestOctets}
+var descriptorPolicySI10bisRestOctets = descriptorReadPolicy{true, 0, 160, 0, false, true, "SI10bis Rest Octets", "SI10bisRestOctets", descriptorSourceSI10bisRestOctets, false}
 
 func descriptorDecodeSI10bisRestOctetsFrom(r *runtime.Reader) (any, error) {
 	var v SI10bisRestOctets
@@ -94043,7 +94049,7 @@ func descriptorUnwrapSI10bisNeighbourCellInfo(value any) (SI10bisNeighbourCellIn
 	}
 }
 
-var descriptorPolicySI10bisNeighbourCellInfo = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "SI10bis Neighbour Cell Info", descriptorSourceSI10bisNeighbourCellInfo}
+var descriptorPolicySI10bisNeighbourCellInfo = descriptorReadPolicy{false, 0, 0, 0, false, false, "SI10bis Neighbour Cell Info", "SI10bisNeighbourCellInfo", descriptorSourceSI10bisNeighbourCellInfo, false}
 
 func descriptorDecodeSI10bisNeighbourCellInfoFrom(r *runtime.Reader) (any, error) {
 	var v SI10bisNeighbourCellInfo
@@ -94101,31 +94107,35 @@ func descriptorTypeError(operation, name string, source runtime.Source) error {
 }
 
 type descriptorReadPolicy struct {
-	needsLimit                               bool
-	minBits, postMinBits, maxBits, maxWindow int
-	zeroExtension, emptyValue                bool
-	name                                     string
-	source                                   runtime.Source
+	needsLimit                  bool
+	minBits, maxBits, maxWindow int
+	zeroExtension, emptyValue   bool
+	name, valueName             string
+	source                      runtime.Source
+	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
-	emptyInput := emptyValue && r.Remaining() == 0
+	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
+	if emptyValue && r.Remaining() == 0 {
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+	}
 	if r.Remaining() < minBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+r.Remaining(), minBits, false)
 	}
-	originalRemaining := r.Remaining()
+	if maxBits > 0 && r.Remaining() > maxBits {
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
+	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -94135,32 +94145,46 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
-	if originalRemaining < postMinBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
-	}
-	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
-	}
-	if emptyInput {
-		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
-	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
+	if len(wire.SpareCounts) == 0 {
+		wire.SpareCounts = nil
+	}
+	if len(wire.ImplicitSpans) == 0 {
+		wire.ImplicitSpans = nil
+	}
 	return wire, r.Position() - start, nil
+}
+
+// descriptorExtentError uses the byte entry point's diagnostic and location.
+func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
+	kind := runtime.Truncated
+	if maximum {
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
+		kind = runtime.Limit
+	}
+	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
+	// The ACS byte API reports source bounds as value errors without a bit offset.
+	if p.context {
+		err = fmt.Errorf("%s", detail)
+		offset = -1
+	}
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeIARestOctets(data []byte) (runtime.Decoded[IARestOctets], error) {
 	v, err := decodeIARestOctetsBytes(data, nil)

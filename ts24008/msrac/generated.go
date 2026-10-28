@@ -6462,7 +6462,7 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "MS RA capability value part struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 12, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMSRACapabilityValuePartStruct, DecodeFrom: descriptorDecodeMSRACapabilityValuePartStructFrom, DecodeWithCollector: descriptorCollectMSRACapabilityValuePartStruct, Encode: descriptorEncodeMSRACapabilityValuePartStruct, Canonical: descriptorCanonicalMSRACapabilityValuePartStruct, CanonicalAtLength: descriptorCanonicalAtLengthMSRACapabilityValuePartStruct},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Additional access technologies struct", MaxOctets: 2, Extent: runtime.Extent{MinimumBits: 9, MaximumBits: 9, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAdditionalAccessTechnologiesStruct, DecodeFrom: descriptorDecodeAdditionalAccessTechnologiesStructFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeAdditionalAccessTechnologiesStruct), Encode: descriptorEncodeAdditionalAccessTechnologiesStruct, Canonical: descriptorCanonicalAdditionalAccessTechnologiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAdditionalAccessTechnologiesStruct},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Access capabilities struct", MaxOctets: 50, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeAccessCapabilitiesStruct, DecodeFrom: descriptorDecodeAccessCapabilitiesStructFrom, DecodeWithCollector: descriptorCollectAccessCapabilitiesStruct, Encode: descriptorEncodeAccessCapabilitiesStruct, Canonical: descriptorCanonicalAccessCapabilitiesStruct, CanonicalAtLength: descriptorCanonicalAtLengthAccessCapabilitiesStruct},
-	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeContent, DecodeFrom: descriptorDecodeContentFrom, DecodeWithCollector: descriptorCollectContent, Encode: descriptorEncodeContent, Canonical: descriptorCanonicalContent, CanonicalAtLength: descriptorCanonicalAtLengthContent},
+	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Content", MaxOctets: 21, Extent: runtime.Extent{MinimumBits: 0, MaximumBits: 167, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeContent, DecodeFrom: descriptorDecodeContentFrom, DecodeWithCollector: descriptorCollectContent, Encode: descriptorEncodeContent, Canonical: descriptorCanonicalContent, CanonicalAtLength: descriptorCanonicalAtLengthContent},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Multislot capability struct", MaxOctets: 6, Extent: runtime.Extent{MinimumBits: 6, MaximumBits: 42, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeMultislotCapabilityStruct, DecodeFrom: descriptorDecodeMultislotCapabilityStructFrom, DecodeWithCollector: descriptorCollectMultislotCapabilityStruct, Encode: descriptorEncodeMultislotCapabilityStruct, Canonical: descriptorCanonicalMultislotCapabilityStruct, CanonicalAtLength: descriptorCanonicalAtLengthMultislotCapabilityStruct},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 7, MaximumBits: 7, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeA5Bits), Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a", Name: "Enhanced Flexible Timeslot Assignment struct", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 1, MaximumBits: 8, Finite: true, Fixed: false, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Decode: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStruct, DecodeFrom: descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom, DecodeWithCollector: descriptorCollectEnhancedFlexibleTimeslotAssignmentStruct, Encode: descriptorEncodeEnhancedFlexibleTimeslotAssignmentStruct, Canonical: descriptorCanonicalEnhancedFlexibleTimeslotAssignmentStruct, CanonicalAtLength: descriptorCanonicalAtLengthEnhancedFlexibleTimeslotAssignmentStruct},
@@ -6526,7 +6526,7 @@ func descriptorUnwrapMSRACapabilityValuePart(value any) (MSRACapabilityValuePart
 	}
 }
 
-var descriptorPolicyMSRACapabilityValuePart = descriptorReadPolicy{true, 16, 0, 0, 0, false, false, "MS RA capability value part", descriptorSourceMSRACapabilityValuePart}
+var descriptorPolicyMSRACapabilityValuePart = descriptorReadPolicy{true, 16, 0, 0, false, false, "MS RA capability value part", "MSRACapabilityValuePart", descriptorSourceMSRACapabilityValuePart, false}
 
 func descriptorDecodeMSRACapabilityValuePartFrom(r *runtime.Reader) (any, error) {
 	var v MSRACapabilityValuePart
@@ -6587,7 +6587,7 @@ func descriptorUnwrapMSRACapabilityValuePartStruct(value any) (MSRACapabilityVal
 	}
 }
 
-var descriptorPolicyMSRACapabilityValuePartStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "MS RA capability value part struct", descriptorSourceMSRACapabilityValuePartStruct}
+var descriptorPolicyMSRACapabilityValuePartStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "MS RA capability value part struct", "MSRACapabilityValuePartStruct", descriptorSourceMSRACapabilityValuePartStruct, false}
 
 func descriptorDecodeMSRACapabilityValuePartStructFrom(r *runtime.Reader) (any, error) {
 	var v MSRACapabilityValuePartStruct
@@ -6640,7 +6640,7 @@ func descriptorUnwrapAdditionalAccessTechnologiesStruct(value any) (AdditionalAc
 	}
 }
 
-var descriptorPolicyAdditionalAccessTechnologiesStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Additional access technologies struct", descriptorSourceAdditionalAccessTechnologiesStruct}
+var descriptorPolicyAdditionalAccessTechnologiesStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Additional access technologies struct", "AdditionalAccessTechnologiesStruct", descriptorSourceAdditionalAccessTechnologiesStruct, false}
 
 func descriptorDecodeAdditionalAccessTechnologiesStructFrom(r *runtime.Reader) (any, error) {
 	var v AdditionalAccessTechnologiesStruct
@@ -6701,7 +6701,7 @@ func descriptorUnwrapAccessCapabilitiesStruct(value any) (AccessCapabilitiesStru
 	}
 }
 
-var descriptorPolicyAccessCapabilitiesStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Access capabilities struct", descriptorSourceAccessCapabilitiesStruct}
+var descriptorPolicyAccessCapabilitiesStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Access capabilities struct", "AccessCapabilitiesStruct", descriptorSourceAccessCapabilitiesStruct, false}
 
 func descriptorDecodeAccessCapabilitiesStructFrom(r *runtime.Reader) (any, error) {
 	var v AccessCapabilitiesStruct
@@ -6760,7 +6760,7 @@ func descriptorUnwrapContent(value any) (Content, bool) {
 	}
 }
 
-var descriptorPolicyContent = descriptorReadPolicy{false, 0, 0, 0, 0, true, false, "Content", descriptorSourceContent}
+var descriptorPolicyContent = descriptorReadPolicy{true, 0, 0, 0, true, false, "Content", "Content", descriptorSourceContent, false}
 
 func descriptorDecodeContentFrom(r *runtime.Reader) (any, error) {
 	var v Content
@@ -6817,7 +6817,7 @@ func descriptorUnwrapMultislotCapabilityStruct(value any) (MultislotCapabilitySt
 	}
 }
 
-var descriptorPolicyMultislotCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Multislot capability struct", descriptorSourceMultislotCapabilityStruct}
+var descriptorPolicyMultislotCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Multislot capability struct", "MultislotCapabilityStruct", descriptorSourceMultislotCapabilityStruct, false}
 
 func descriptorDecodeMultislotCapabilityStructFrom(r *runtime.Reader) (any, error) {
 	var v MultislotCapabilityStruct
@@ -6868,7 +6868,7 @@ func descriptorUnwrapA5Bits(value any) (A5Bits, bool) {
 	}
 }
 
-var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "A5 bits", descriptorSourceA5Bits}
+var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, false, false, "A5 bits", "A5Bits", descriptorSourceA5Bits, false}
 
 func descriptorDecodeA5BitsFrom(r *runtime.Reader) (any, error) {
 	var v A5Bits
@@ -6926,7 +6926,7 @@ func descriptorUnwrapEnhancedFlexibleTimeslotAssignmentStruct(value any) (Enhanc
 	}
 }
 
-var descriptorPolicyEnhancedFlexibleTimeslotAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct}
+var descriptorPolicyEnhancedFlexibleTimeslotAssignmentStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Enhanced Flexible Timeslot Assignment struct", "EnhancedFlexibleTimeslotAssignmentStruct", descriptorSourceEnhancedFlexibleTimeslotAssignmentStruct, false}
 
 func descriptorDecodeEnhancedFlexibleTimeslotAssignmentStructFrom(r *runtime.Reader) (any, error) {
 	var v EnhancedFlexibleTimeslotAssignmentStruct
@@ -6987,7 +6987,7 @@ func descriptorUnwrapDLMCCapabilityStruct(value any) (DLMCCapabilityStruct, bool
 	}
 }
 
-var descriptorPolicyDLMCCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, 0, false, false, "DLMC Capability struct", descriptorSourceDLMCCapabilityStruct}
+var descriptorPolicyDLMCCapabilityStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "DLMC Capability struct", "DLMCCapabilityStruct", descriptorSourceDLMCCapabilityStruct, false}
 
 func descriptorDecodeDLMCCapabilityStructFrom(r *runtime.Reader) (any, error) {
 	var v DLMCCapabilityStruct
@@ -7041,31 +7041,35 @@ func descriptorTypeError(operation, name string, source runtime.Source) error {
 }
 
 type descriptorReadPolicy struct {
-	needsLimit                               bool
-	minBits, postMinBits, maxBits, maxWindow int
-	zeroExtension, emptyValue                bool
-	name                                     string
-	source                                   runtime.Source
+	needsLimit                  bool
+	minBits, maxBits, maxWindow int
+	zeroExtension, emptyValue   bool
+	name, valueName             string
+	source                      runtime.Source
+	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, postMinBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.postMinBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
-	emptyInput := emptyValue && r.Remaining() == 0
+	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
+	if emptyValue && r.Remaining() == 0 {
+		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
+	}
 	if r.Remaining() < minBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: name, Detail: "value shorter than source minimum"}, "decode", name, r.Position(), minBits, source)
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+r.Remaining(), minBits, false)
 	}
-	originalRemaining := r.Remaining()
+	if maxBits > 0 && r.Remaining() > maxBits {
+		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
+	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -7075,32 +7079,46 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
-	if originalRemaining < postMinBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Truncated, Offset: start + originalRemaining, Path: name, Detail: "value shorter than source minimum"}, "decode", name, start, postMinBits, source)
-	}
-	if maxBits > 0 && originalRemaining > maxBits {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.DecodeError{Kind: runtime.Limit, Offset: start + maxBits, Path: name, Detail: "value exceeds source maximum"}, "decode", name, start, maxBits, source)
-	}
-	if emptyInput {
-		return runtime.WireInfo{}, 0, locateOperation(fmt.Errorf("%w: %s V%s §%s", runtime.ErrEmptyValue, source.Standard, source.Version, source.Clause), "decode", name, -1, 0, source)
-	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
 	if err != nil {
 		return runtime.WireInfo{}, 0, err
 	}
+	if len(wire.SpareCounts) == 0 {
+		wire.SpareCounts = nil
+	}
+	if len(wire.ImplicitSpans) == 0 {
+		wire.ImplicitSpans = nil
+	}
 	return wire, r.Position() - start, nil
+}
+
+// descriptorExtentError uses the byte entry point's diagnostic and location.
+func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
+	kind := runtime.Truncated
+	if maximum {
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
+		kind = runtime.Limit
+	}
+	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
+	// The ACS byte API reports source bounds as value errors without a bit offset.
+	if p.context {
+		err = fmt.Errorf("%s", detail)
+		offset = -1
+	}
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeMSRACapabilityValuePart(data []byte) (runtime.Decoded[MSRACapabilityValuePart], error) {
 	v, err := decodeMSRACapabilityValuePartBytes(data, nil)

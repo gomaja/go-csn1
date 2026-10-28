@@ -243,7 +243,7 @@ func directLiteralWidth(fn *ast.FuncDecl, want string) bool {
 
 var reviewedHelperExpressions = map[string]map[string]bool{
 	"emrBitmapFields":                {"index + 1": true},
-	"descriptorRead":                 {"r.Position() + r.Remaining()": true, "start + originalRemaining": true, "start + maxBits": true, "r.Position() - start": true},
+	"descriptorRead":                 {"r.Position() + r.Remaining()": true, "r.Position() + maxBits": true, "r.Position() - start": true},
 	"constrainedWidth":               {"len(path) - 1": true, "i--": true, "i + 1": true},
 	"locatedFailure":                 {"be.Limit - be.Position": true, `"/" + be.Field`: true, `location.Path += "/" + be.Field`: true},
 	"shiftOperation":                 {"copy.Location.BitOffset += offset": true, "copy.Offset += offset": true, "copy.Position += offset": true, "copy.Limit += offset": true, `path + "/" + copy.Location.Path`: true, `path + "/" + copy.Path`: true},
@@ -257,7 +257,7 @@ var reviewedHelperExpressions = map[string]map[string]bool{
 
 var reviewedHelperGuards = map[string][]string{
 	"emrBitmapFields":                {"ifv.REPORTINGQUANTITYList!=nil", "last:=0", "forindex,report:=range*v.REPORTINGQUANTITYList", "ifreport!=nil{last=index+1}", "entries:=(*v.REPORTINGQUANTITYList)[:last]"},
-	"descriptorRead":                 {"r.Check()", "r.Remaining()<minBits", "originalRemaining:=r.Remaining()", "start:=r.Position()", "err:=decode(r)", "ifmaxBits>0&&originalRemaining>maxBits"},
+	"descriptorRead":                 {"r.Check()", "r.Remaining()<minBits", "start:=r.Position()", "err:=decode(r)", "ifmaxBits>0&&r.Remaining()>maxBits"},
 	"constrainedWidth":               {"fori:=len(path)-1;i>=0;i--", "path=path[i+1:]"},
 	"locatedFailure":                 {"be.Limit>=0&&be.Limit<=1<<20&&be.Position>=0&&be.Position<=1<<20", "location.Width=be.Limit-be.Position"},
 	"shiftOperation":                 {"ifcopy.Location.BitOffset>=0", "copy.Cause=shiftOperation(copy.Cause,offset,path)"},
