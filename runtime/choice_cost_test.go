@@ -229,3 +229,42 @@ func TestChoiceRejectedObservationAndWorkStayTransactional(t *testing.T) {
 		t.Fatalf("rejected work was refunded: %d", *r.steps)
 	}
 }
+
+func TestPublicForkOfTrialDetachesPooledBindings(t *testing.T) {
+	r := NewReader(nil)
+	r.Set("before", 1)
+	var trials ChoiceErrors
+	a := trials.Fork(r)
+	a.Set("local", 3)
+	b := trials.Fork(a)
+	b.Set("nested", 4)
+	snapshot := b.Fork()
+	r.Set("before", 2)
+	a.Set("local", 5)
+	b.Set("nested", 6)
+	trials.Release()
+	for name, want := range map[string]int{"before": 1, "local": 3, "nested": 4} {
+		got, err := snapshot.Eval(name)
+		if err != nil || got != want {
+			t.Fatalf("%s: got %d %v; want %d", name, got, err, want)
+		}
+	}
+	r.Commit(snapshot)
+	if got, err := r.Eval("before"); err != nil || got != 1 {
+		t.Fatalf("public snapshot commit: %d %v", got, err)
+	}
+}
+
+func TestDeferredPreferTruncationUsesExistingDecodeOffset(t *testing.T) {
+	r := NewReader(nil)
+	var trials ChoiceErrors
+	defer trials.Release()
+	a, b := trials.Fork(r), trials.Fork(r)
+	current := a.ErrorAt(InvalidValue, 7, "prior")
+	candidate := b.ErrorAt(Truncated, 5, "shallower")
+	trials.Track(current)
+	trials.Track(candidate)
+	if got := PreferTruncation(current, candidate); got != current {
+		t.Fatal("changed existing DecodeError offset precedence")
+	}
+}

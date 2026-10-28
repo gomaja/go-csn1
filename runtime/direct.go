@@ -227,6 +227,9 @@ func (r *Reader) Fork() *Reader {
 	r.bindings.shared = true
 	fork := *r
 	fork.bindings.extra = fork.bindings.extra[:len(fork.bindings.extra):len(fork.bindings.extra)]
+	if r.choice {
+		fork.freezeChoiceBindings()
+	}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
 		fork.observationDropped = r.collector.dropped

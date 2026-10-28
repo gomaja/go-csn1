@@ -199,7 +199,7 @@ func PreferTruncation(current, candidate error) error {
 			if next.lh {
 				return candidate
 			}
-			if next.cause.Kind == Truncated && (previous.cause.Kind != Truncated || next.cause.Offset > previous.cause.Offset) {
+			if next.cause.Kind == Truncated && next.cause.Offset > previous.cause.Offset {
 				return candidate
 			}
 			return current

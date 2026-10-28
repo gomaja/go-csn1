@@ -271,6 +271,16 @@ func (r *Reader) applyBindings(target *Reader, stop *Reader) {
 }
 
 func (r *Reader) commitChoice(other *Reader) {
+	if !other.choice {
+		next := r.choiceNext
+		if r.collector != nil {
+			r.commitCollected(other)
+		} else {
+			*r = *other
+		}
+		r.choice, r.bindings, r.choiceNext = true, choiceBindings{}, next
+		return
+	}
 	mode, vars, shared, bindings, next := r.choice, r.vars, r.varsShared, r.bindings, r.choiceNext
 	// Apply into a separate receiver so inherited overlay links to r remain
 	// immutable until all writes have been read.
@@ -367,4 +377,17 @@ func (b *choiceBindings) has(name string) bool {
 		}
 	}
 	return false
+}
+
+// A public Fork must remain independent even when its source is a borrowed
+// trial. Freezing its visible bindings also detaches every pooled ancestor.
+func (r *Reader) freezeChoiceBindings() {
+	root := r
+	for root.choice && root.bindings.base != nil {
+		root = root.bindings.base
+	}
+	snapshot := Reader{vars: cloneVars(root.vars)}
+	r.applyBindings(&snapshot, nil)
+	r.vars, r.varsShared, r.choice, r.bindings = snapshot.vars, true, false, choiceBindings{}
+	r.choiceNext = nil
 }
