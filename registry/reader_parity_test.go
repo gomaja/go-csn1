@@ -112,25 +112,25 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 			t.Errorf("%s §%s %s (%s) on %x: byte entry %+v (%v), reader entry %+v (%v)", d.Standard, d.Clause, d.Name, form, data, b, byteErr, r, readerErr)
 		}
 	}
-	// With no containing extent, caller octets must preserve complete values
-	// and context-required refusals. Other refusals can be incomplete input:
-	// for example Classmark 2 needs three octets before it can decode.
+	// With no containing extent, caller octets after the input, whichever bit
+	// they start with, must leave a complete value unchanged and a
+	// context-required refusal a context-required refusal. Other refusals can
+	// be incomplete input: for example Classmark 2 needs three octets before it
+	// can decode.
 	checkCallerTail := func(d runtime.Descriptor, form string, data []byte, decode func(*runtime.Reader) (any, error)) {
 		t.Helper()
 		before, beforeErr := decode(runtime.NewReader(data))
 		if beforeErr != nil && !errors.Is(beforeErr, runtime.ErrContextRequired) {
 			return
 		}
-		afterData := append(append([]byte(nil), data...), 0x5a, 0xa5)
-		after, afterErr := decode(runtime.NewReader(afterData))
-		if errors.Is(afterErr, runtime.ErrContextRequired) {
-			return
-		}
-		if beforeErr != nil && afterErr == nil {
-			t.Fatalf("%s %s (%s) on %x: caller tail rescued refusal %v", d.Standard, d.Name, form, data, beforeErr)
-		}
-		if beforeErr == nil && (afterErr != nil || !reflect.DeepEqual(before, after)) {
-			t.Fatalf("%s %s (%s) on %x: caller tail changed value: %v", d.Standard, d.Name, form, data, afterErr)
+		for _, tail := range [][]byte{{0x5a, 0xa5}, {0xa5, 0x5a}} {
+			after, afterErr := decode(runtime.NewReader(append(append([]byte(nil), data...), tail...)))
+			if beforeErr != nil && !errors.Is(afterErr, runtime.ErrContextRequired) {
+				t.Fatalf("%s %s (%s) on %x with caller tail %x: context-required refusal became %+v (%v)", d.Standard, d.Name, form, data, tail, after, afterErr)
+			}
+			if beforeErr == nil && (afterErr != nil || !reflect.DeepEqual(before, after)) {
+				t.Fatalf("%s %s (%s) on %x with caller tail %x: caller tail changed value: %v", d.Standard, d.Name, form, data, tail, afterErr)
+			}
 		}
 	}
 	inputs := 0
