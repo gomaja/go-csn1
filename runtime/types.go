@@ -191,39 +191,18 @@ func (e *FallbackError) Unwrap() error { return ErrFallbackKnown }
 // ErrLHPositionUndefined takes priority, even in a non-selected trial arm:
 // accepting another arm would hide an evaluation without a source-defined position.
 func PreferTruncation(current, candidate error) error {
-	if next, ok := candidate.(*deferredFailure); ok {
-		if previous, yes := current.(*deferredFailure); yes {
-			if previous.lh {
-				return current
-			}
-			if next.lh {
-				return candidate
-			}
-			if next.cause.Kind == Truncated && next.cause.Offset > previous.cause.Offset {
-				return candidate
-			}
-			return current
-		}
-		if current == nil {
-			if next.lh || next.cause.Kind == Truncated {
-				return candidate
-			}
-			return nil
-		}
-	}
-
-	if errors.Is(current, ErrLHPositionUndefined) {
+	if IsLHPositionUndefined(current) {
 		return current
 	}
-	if errors.Is(candidate, ErrLHPositionUndefined) {
+	if IsLHPositionUndefined(candidate) {
 		return candidate
 	}
-	var next *DecodeError
-	if !errors.As(candidate, &next) || next.Kind != Truncated {
+	kind, offset, ok := choiceFailurePosition(candidate)
+	if !ok || kind != Truncated {
 		return current
 	}
-	var previous *DecodeError
-	if !errors.As(current, &previous) || next.Offset > previous.Offset {
+	_, previous, exists := choiceFailurePosition(current)
+	if !exists || offset > previous {
 		return candidate
 	}
 	return current

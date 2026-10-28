@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -21,6 +22,7 @@ type deferredFrame struct {
 	kind            ErrorKind
 	operationFn     func(error, string, string, int, int, Source, ErrorKind) error
 	indexFn         func(error, string, int) error
+	pathFn          func(error, string, string) error
 }
 
 type deferredFailure struct {
@@ -41,9 +43,20 @@ var deferredFailures = sync.Pool{New: func() any {
 	return f
 }}
 
-func (f *deferredFailure) Error() string        { return f.cause.Error() }
-func (f *deferredFailure) Unwrap() error        { return &f.cause }
-func (f *deferredFailure) Is(target error) bool { return f.lh && target == ErrLHPositionUndefined }
+// Opaque scoped handles never expose pooled memory, even after reuse. Use
+// ChoiceErrors.Keep to obtain an ordinary error before inspection or escape.
+func (*deferredFailure) Error() string {
+	panic("CSN.1 opaque choice diagnostic: call ChoiceErrors.Keep before inspection")
+}
+func (*deferredFailure) Unwrap() error {
+	panic("CSN.1 opaque choice diagnostic: call ChoiceErrors.Keep before inspection")
+}
+func (*deferredFailure) Is(error) bool {
+	panic("CSN.1 opaque choice diagnostic: call ChoiceErrors.Keep before inspection")
+}
+func (*deferredFailure) As(any) bool {
+	panic("CSN.1 opaque choice diagnostic: call ChoiceErrors.Keep before inspection")
+}
 
 func releaseFailure(f *deferredFailure) {
 	clear(f.path[:])
@@ -132,6 +145,9 @@ func (f *deferredFailure) materialize() error {
 	for _, frame := range f.frames {
 		if frame.operationFn != nil {
 			out = frame.operationFn(out, frame.operation, frame.path, frame.offset, frame.width, frame.source, frame.kind)
+		} else if frame.pathFn != nil {
+			parent := strings.Join(f.path[:frame.offset], "/")
+			out = frame.pathFn(out, parent, frame.path)
 		} else {
 			out = frame.indexFn(out, frame.path, frame.offset)
 		}
@@ -191,9 +207,24 @@ var choiceReaders = sync.Pool{New: func() any {
 	return &slot.reader
 }}
 
-// Fork borrows a trial reader until Release. Generated alternatives must
-// balance their path scopes before Commit or another call to Fork.
-func (c *ChoiceErrors) Fork(r *Reader) *Reader {
+// Fork returns an independent public reader snapshot. Its ordinary errors
+// support Error, errors.Is and errors.As immediately and remain valid after
+// Release. Use ForkScoped only for generated, serial speculative alternatives.
+func (c *ChoiceErrors) Fork(r *Reader) *Reader { return r.Fork() }
+
+// ForkScoped borrows a reader until Release for generated serial alternatives.
+// Balance Enter/Leave before Commit or another ForkScoped. The source reader
+// must remain unchanged during the trial, and the trial must not be copied by
+// value. Use Reader.Fork to obtain an independent snapshot.
+//
+// Failures are opaque scoped handles: Error, Is, As and Unwrap always panic,
+// including after Release and pool reuse. Track each failure and use Keep
+// before inspection or return. Only DeferOperation, DeferIndex,
+// DeferReaderPath, PreferTruncation, IsReservedAlternative and
+// IsLHPositionUndefined may inspect them inside the active scope. Neither a
+// reader nor an opaque handle may be used by these operations after Release.
+// TS 24.007 V20.0.0 Annex B §§B.1.1.3-B.1.1.5.
+func (c *ChoiceErrors) ForkScoped(r *Reader) *Reader {
 	r.checkTrialIdentity()
 	if r.pathShared {
 		r.ownPath()
@@ -431,4 +462,58 @@ func (r *Reader) checkTrialIdentity() {
 	if r.trial != nil && r.trial.reader != r {
 		panic("CSN.1 trial reader copied by value; use Reader.Fork")
 	}
+}
+
+// IsLHPositionUndefined tests the source-position refusal without exposing an
+// opaque scoped diagnostic. Ordinary errors use errors.Is as usual.
+// TS 24.007 V20.0.0 Annex B §B.1.2.2 defines positioned L/H symbols.
+func IsLHPositionUndefined(err error) bool {
+	if f, ok := err.(*deferredFailure); ok {
+		return f.lh
+	}
+	return errors.Is(err, ErrLHPositionUndefined)
+}
+
+// IsReservedAlternative tests the reserved-arm failure while a generated
+// choice is active. Ordinary errors retain the same leaf-decoding rules.
+func IsReservedAlternative(err error) bool {
+	var cause *DecodeError
+	if f, ok := err.(*deferredFailure); ok {
+		cause = &f.cause
+	} else {
+		cause = decodeCause(err)
+	}
+	return cause != nil && cause.Kind == InvalidValue && (cause.Detail == "reserved CSN.1 alternative" || cause.Detail == "value reserved by source table")
+}
+
+func choiceFailurePosition(err error) (ErrorKind, int, bool) {
+	if f, ok := err.(*deferredFailure); ok {
+		return f.cause.Kind, f.cause.Offset, true
+	}
+	var cause *DecodeError
+	if !errors.As(err, &cause) {
+		return "", 0, false
+	}
+	return cause.Kind, cause.Offset, true
+}
+
+// DeferReaderPath records a pure container-child path transformation while a
+// generated choice is active. The reader's current path must be a prefix of
+// the failure's captured path; no pooled reader or path storage is retained.
+// TS 24.007 V20.0.0 Annex B §B.1.1.3 preserves concatenation context.
+func DeferReaderPath(err error, r *Reader, child string, normalize func(error, string, string) error) (error, bool) {
+	f, ok := err.(*deferredFailure)
+	if !ok {
+		return nil, false
+	}
+	if len(r.path) > f.pathLen {
+		panic("CSN.1 deferred child path is not a failure prefix")
+	}
+	for i, part := range r.path {
+		if part != f.path[i] {
+			panic("CSN.1 deferred child path is not a failure prefix")
+		}
+	}
+	f.frames = append(f.frames, deferredFrame{path: child, offset: len(r.path), pathFn: normalize})
+	return f, true
 }

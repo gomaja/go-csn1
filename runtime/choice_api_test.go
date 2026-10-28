@@ -12,7 +12,7 @@ func TestChoiceKeepDoesNotStealAnotherOwnersFailure(t *testing.T) {
 	defer goruntime.GOMAXPROCS(prior)
 	r := NewReader(nil)
 	var first, other, next ChoiceErrors
-	a := first.Fork(r)
+	a := first.ForkScoped(r)
 	_, e1 := a.ReadUint(1)
 	first.Track(e1)
 	_, e0 := a.ReadUint(1)
@@ -24,7 +24,7 @@ func TestChoiceKeepDoesNotStealAnotherOwnersFailure(t *testing.T) {
 	}
 	saved := *before
 	first.Release()
-	b := next.Fork(r)
+	b := next.ForkScoped(r)
 	_, x := b.ReadUint(1)
 	next.Track(x)
 	_, y := b.ReadUint(1)
@@ -48,7 +48,7 @@ func TestChoiceLeaveBelowBorrowedPathIsIndependent(t *testing.T) {
 	}
 	var trials ChoiceErrors
 	defer trials.Release()
-	a := trials.Fork(r)
+	a := trials.ForkScoped(r)
 	a.Leave()
 	if err := a.Enter("x"); err != nil {
 		t.Fatal(err)
@@ -57,7 +57,7 @@ func TestChoiceLeaveBelowBorrowedPathIsIndependent(t *testing.T) {
 	if !errors.As(r.Error(Truncated, "missing"), &de) || de.Path != "p0/p1" {
 		t.Fatalf("source path changed: %v", de)
 	}
-	b := trials.Fork(a)
+	b := trials.ForkScoped(a)
 	b.Leave()
 	b.Leave()
 	if err := b.Enter("other"); err != nil {
@@ -75,7 +75,7 @@ func TestChoiceCommitIntoUnrelatedReaderSharesBothSides(t *testing.T) {
 			source.Set("value", 1)
 			destination.Set("absent", 9)
 			var trials ChoiceErrors
-			arm := trials.Fork(source)
+			arm := trials.ForkScoped(source)
 			if write {
 				arm.Set("extra", 3)
 			}
@@ -100,7 +100,7 @@ func TestChoiceReaderCopyMustUsePublicFork(t *testing.T) {
 	r := NewReader(nil)
 	var trials ChoiceErrors
 	defer trials.Release()
-	arm := trials.Fork(r)
+	arm := trials.ForkScoped(r)
 	arm.Set("value", 1)
 	snapshot := arm.Fork()
 	snapshot.Set("value", 2)
@@ -124,7 +124,7 @@ func TestChoiceCommitIntoUnrelatedReaderKeepsPathSnapshot(t *testing.T) {
 		}
 	}
 	var trials ChoiceErrors
-	arm := trials.Fork(source)
+	arm := trials.ForkScoped(source)
 	destination.Commit(arm)
 	trials.Release()
 	source.Leave()
@@ -141,5 +141,171 @@ func TestChoiceCommitIntoUnrelatedReaderKeepsPathSnapshot(t *testing.T) {
 	}
 	if !errors.As(source.Error(Truncated, "missing"), &de) || de.Path != "Root/After" {
 		t.Fatalf("source path changed: %v", de)
+	}
+}
+
+func TestChoiceErrorCanBeInspectedBeforeKeep(t *testing.T) {
+	r := NewReader(nil)
+	if err := r.Enter("Root"); err != nil {
+		t.Fatal(err)
+	}
+	var trials ChoiceErrors
+	arm := trials.Fork(r)
+	if err := arm.Enter("Field"); err != nil {
+		t.Fatal(err)
+	}
+	_, err := arm.ReadUint(3)
+	trials.Track(err)
+	want := &fieldDecodeError{DecodeError: DecodeError{Kind: Truncated, Offset: 0, Path: "Root/Field", Detail: "required bit absent"}, width: 3}
+	if err.Error() != want.Error() {
+		t.Fatalf("text %q; want %q", err.Error(), want.Error())
+	}
+	var de *DecodeError
+	if !errors.As(err, &de) || *de != want.DecodeError {
+		t.Fatalf("decode facts: %#v", de)
+	}
+	var op *OperationError
+	if !errors.As(err, &op) || op.Location.Path != "Root/Field" || op.Location.Width != 3 {
+		t.Fatalf("operation facts: %#v", op)
+	}
+	saved := *de
+	trials.Release()
+	for range 100 {
+		var discarded ChoiceErrors
+		b := discarded.Fork(r)
+		discarded.Track(b.Error(InvalidValue, "replacement"))
+		discarded.Release()
+	}
+	if *de != saved || err.Error() != want.Error() {
+		t.Fatal("observed error changed after release")
+	}
+}
+
+func TestChoiceOpaqueDiagnosticsAlwaysRefuseInspection(t *testing.T) {
+	prior := goruntime.GOMAXPROCS(1)
+	defer goruntime.GOMAXPROCS(prior)
+	r := NewReader(nil)
+	var trials ChoiceErrors
+	a := trials.ForkScoped(r)
+	_, err := a.ReadUint(1)
+	trials.Track(err)
+	inspect := func(stage string) {
+		t.Helper()
+		for name, call := range map[string]func(){"text": func() { _ = err.Error() }, "is": func() { _ = errors.Is(err, ErrLHPositionUndefined) }, "as": func() { var de *DecodeError; _ = errors.As(err, &de) }, "unwrap": func() { _ = errors.Unwrap(err) }} {
+			t.Run(stage+"/"+name, func(t *testing.T) {
+				defer func() {
+					if recover() == nil {
+						t.Fatal("opaque handle inspected")
+					}
+				}()
+				call()
+			})
+		}
+	}
+	inspect("active")
+	trials.Release()
+	// The original alias must still refuse inspection when its slot is live
+	// again. A released bit on the recycled object cannot provide that property.
+	var replacement ChoiceErrors
+	b := replacement.ForkScoped(r)
+	_, fresh := b.ReadUint(2)
+	replacement.Track(fresh)
+	defer replacement.Release()
+	inspect("reused")
+}
+
+func TestChoicePublicErrorFirstInspectionAfterRelease(t *testing.T) {
+	r := NewReader(nil)
+	if err := r.Enter("Root"); err != nil {
+		t.Fatal(err)
+	}
+	var trials ChoiceErrors
+	arm := trials.Fork(r)
+	_, err := arm.ReadUint(5)
+	trials.Track(err)
+	trials.Release()
+	for range 32 {
+		var discarded ChoiceErrors
+		other := discarded.ForkScoped(r)
+		discarded.Track(other.Error(InvalidValue, "reuse"))
+		discarded.Release()
+	}
+	var de *DecodeError
+	var op *OperationError
+	if !errors.As(err, &de) || de.Path != "Root" || !errors.As(err, &op) || op.Location.Width != 5 {
+		t.Fatalf("public error changed: %v", err)
+	}
+	if err.Error() != "CSN.1 truncated at bit 0 in Root: required bit absent" {
+		t.Fatal(err)
+	}
+}
+
+func TestChoiceDeferredPathMatchesMaterializedPath(t *testing.T) {
+	r := NewReader(nil)
+	for _, part := range []string{"Root", "Container"} {
+		if err := r.Enter(part); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var trials ChoiceErrors
+	defer trials.Release()
+	a := trials.ForkScoped(r)
+	if err := a.Enter("Leaf"); err != nil {
+		t.Fatal(err)
+	}
+	_, err := a.ReadUint(3)
+	normalize := func(err error, parent, child string) error {
+		var de *DecodeError
+		if !errors.As(err, &de) {
+			t.Fatal("missing decode error")
+		}
+		copy := *de
+		copy.Path = parent + "/" + child + "/" + copy.Path
+		return &copy
+	}
+	err, ok := DeferReaderPath(err, r, "Child", normalize)
+	if !ok {
+		t.Fatal("path materialized early")
+	}
+	trials.Track(err)
+	a.Leave()
+	a.Leave()
+	if enterErr := a.Enter("Replacement"); enterErr != nil {
+		t.Fatal(enterErr)
+	}
+	kept := trials.Keep(r, err)
+	var de *DecodeError
+	if !errors.As(kept, &de) || de.Path != "Root/Container/Child/Root/Container/Leaf" {
+		t.Fatalf("deferred container path changed: %v", kept)
+	}
+}
+
+func TestChoicePredicatesAndMixedTruncationKeepSemantics(t *testing.T) {
+	r := NewReader(nil)
+	var trials ChoiceErrors
+	defer trials.Release()
+	a := trials.ForkScoped(r)
+	reserved := a.Error(InvalidValue, "reserved CSN.1 alternative")
+	trials.Track(reserved)
+	if !IsReservedAlternative(reserved) || !IsReservedAlternative(trials.Keep(r, reserved)) {
+		t.Fatal("lost reserved predicate")
+	}
+	for _, reverse := range []bool{false, true} {
+		scoped := a.ErrorAt(Truncated, 7, "scoped")
+		trials.Track(scoped)
+		ordinary := r.ErrorAt(InvalidValue, 9, "ordinary")
+		current, candidate := scoped, ordinary
+		if reverse {
+			current, candidate = candidate, current
+		}
+		if got := PreferTruncation(current, candidate); got != current {
+			t.Fatal("mixed offset precedence changed")
+		}
+	}
+	refusal := a.Error(InvalidSchema, "position")
+	refusal.(*deferredFailure).lh = true
+	trials.Track(refusal)
+	if !IsLHPositionUndefined(refusal) || !IsLHPositionUndefined(trials.Keep(r, refusal)) {
+		t.Fatal("lost refusal predicate")
 	}
 }

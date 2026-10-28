@@ -11,9 +11,9 @@ func TestChoiceBindingCopiesPreserveNamesAndSnapshots(t *testing.T) {
 			r.Set(name, 1)
 			snapshot := r.Fork()
 			var outer, inner ChoiceErrors
-			candidate := outer.Fork(r)
+			candidate := outer.ForkScoped(r)
 			candidate.Set(name, 2)
-			nested := inner.Fork(candidate)
+			nested := inner.ForkScoped(candidate)
 			nested.Set(name, 3)
 			candidate.Commit(nested)
 			inner.Release()

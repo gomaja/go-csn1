@@ -11,7 +11,7 @@ func TestChoiceTrialStatePreservesReceiverSlot(t *testing.T) {
 		t.Fatal("ordinary reader owns speculative state")
 	}
 	var outer, inner ChoiceErrors
-	a := outer.Fork(r)
+	a := outer.ForkScoped(r)
 	owned := a.trial
 	a.Set("local", 2)
 	snapshot := a.Fork()
@@ -22,7 +22,7 @@ func TestChoiceTrialStatePreservesReceiverSlot(t *testing.T) {
 	if a.trial != owned {
 		t.Fatal("snapshot commit replaced receiver state")
 	}
-	b := inner.Fork(a)
+	b := inner.ForkScoped(a)
 	if b.trial == owned {
 		t.Fatal("nested trial shares receiver state")
 	}
@@ -51,9 +51,9 @@ func TestChoiceTrialStateCommitAllocations(t *testing.T) {
 	r.Set("seed", 1)
 	allocs := testing.AllocsPerRun(100, func() {
 		var outer, inner ChoiceErrors
-		a := outer.Fork(r)
+		a := outer.ForkScoped(r)
 		a.Set("one", 2)
-		b := inner.Fork(a)
+		b := inner.ForkScoped(a)
 		b.Set("two", 3)
 		a.Commit(b)
 		inner.Release()

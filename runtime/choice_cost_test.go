@@ -12,14 +12,14 @@ func TestChoiceDeferredErrorRetainsDeepestFailure(t *testing.T) {
 	r := NewReader(nil)
 	var failures ChoiceErrors
 	defer failures.Release()
-	first := failures.Fork(r)
+	first := failures.ForkScoped(r)
 	if err := first.Enter("First"); err != nil {
 		t.Fatal(err)
 	}
 	a := first.ErrorAt(Truncated, 2, "first")
 	first.Leave()
 	failures.Track(a)
-	second := failures.Fork(r)
+	second := failures.ForkScoped(r)
 	if err := second.Enter("Second"); err != nil {
 		t.Fatal(err)
 	}
@@ -38,17 +38,17 @@ func TestChoiceBindingsAreIsolatedAndCommitted(t *testing.T) {
 	var failures ChoiceErrors
 	defer failures.Release()
 	r.Set("A B", 3)
-	first := failures.Fork(r)
+	first := failures.ForkScoped(r)
 	first.Set("A B", 9)
 	first.Set("Other", 7)
-	second := failures.Fork(r)
+	second := failures.ForkScoped(r)
 	if got, err := second.Eval("val(A B)"); err != nil || got != 3 {
 		t.Fatalf("leaked binding: %d %v", got, err)
 	}
 	if _, err := second.Eval("Other"); err == nil {
 		t.Fatal("leaked new binding")
 	}
-	nested := failures.Fork(first)
+	nested := failures.ForkScoped(first)
 	nested.Set("A B", 11)
 	first.Commit(nested)
 	if got, err := first.Eval("AB"); err != nil || got != 11 {
@@ -70,14 +70,14 @@ func TestChoiceBorrowedPathCannotOverwriteRetainedFailure(t *testing.T) {
 	}
 	var failures ChoiceErrors
 	defer failures.Release()
-	chosen := failures.Fork(r)
+	chosen := failures.ForkScoped(r)
 	if err := chosen.Enter("Chosen"); err != nil {
 		t.Fatal(err)
 	}
 	err := chosen.Error(Truncated, "retained")
 	failures.Track(err)
 	chosen.Leave()
-	later := failures.Fork(r)
+	later := failures.ForkScoped(r)
 	if enterErr := later.Enter("Later"); enterErr != nil {
 		t.Fatal(enterErr)
 	}
@@ -105,7 +105,7 @@ func TestChoiceRejectedFailureAllocations(t *testing.T) {
 	r.Set("count", 2)
 	// Keep the reader construction outside the measurement: this measures the
 	// rejected diagnostic and binding writes, not a retained trial reader.
-	candidate := owner.Fork(r)
+	candidate := owner.ForkScoped(r)
 	allocs := testing.AllocsPerRun(100, func() {
 		var failures ChoiceErrors
 		candidate.Set("count", 3)
@@ -124,13 +124,13 @@ func TestChoiceBindingsMatchMapResolution(t *testing.T) {
 	}
 	var failures ChoiceErrors
 	defer failures.Release()
-	a := failures.Fork(r)
+	a := failures.ForkScoped(r)
 	for i := range 24 {
 		a.Set(fmt.Sprintf("local %d", i), uint64(i+1))
 	}
 	a.Set("a b", 7)
 	a.Set("ab", 8)
-	b := failures.Fork(a)
+	b := failures.ForkScoped(a)
 	b.Set("local 15", 91)
 	b.Set("a b", 9)
 	for _, expression := range []string{"base 15", "local 15", "ab", "a b", "BASE15", "local23"} {
@@ -142,6 +142,9 @@ func TestChoiceBindingsMatchMapResolution(t *testing.T) {
 		want, we := eval(expression, vars)
 		got, ge := b.Eval(expression)
 		failures.Track(ge)
+		if ge != nil {
+			ge = failures.Keep(r, ge)
+		}
 		if got != want || (ge == nil) != (we == nil) || ge != nil && !strings.Contains(ge.Error(), we.Error()) {
 			t.Fatalf("%s: %d %v; want %d %v", expression, got, ge, want, we)
 		}
@@ -155,7 +158,7 @@ func TestChoiceBindingsMatchMapResolution(t *testing.T) {
 	// overwritten names inherited through several trial levels.
 	r.Set("a  bc", 1)
 	r.Set("ab c", 2)
-	c := failures.Fork(r)
+	c := failures.ForkScoped(r)
 	c.Set("a bc", 3)
 	_, err := c.Eval("abc")
 	failures.Track(err)
@@ -172,7 +175,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 	r := NewReader(nil)
 	var failures ChoiceErrors
 	defer failures.Release()
-	candidate := failures.Fork(r)
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Enter("Kept"); err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +195,7 @@ func TestChoiceDiagnosticNormalizationPreservesChains(t *testing.T) {
 	}
 	for range 100 {
 		var discarded ChoiceErrors
-		other := discarded.Fork(r)
+		other := discarded.ForkScoped(r)
 		discarded.Track(other.Error(InvalidValue, "replacement"))
 		discarded.Release()
 	}
@@ -207,7 +210,7 @@ func TestChoiceRejectedObservationAndWorkStayTransactional(t *testing.T) {
 	var trials ChoiceErrors
 	defer trials.Release()
 	for _, chosen := range []bool{false, true, false} {
-		candidate := trials.Fork(r)
+		candidate := trials.ForkScoped(r)
 		if err := candidate.Enter("Value"); err != nil {
 			t.Fatal(err)
 		}
@@ -237,9 +240,9 @@ func TestPublicForkOfTrialDetachesPooledBindings(t *testing.T) {
 	r := NewReader(nil)
 	r.Set("before", 1)
 	var trials ChoiceErrors
-	a := trials.Fork(r)
+	a := trials.ForkScoped(r)
 	a.Set("local", 3)
-	b := trials.Fork(a)
+	b := trials.ForkScoped(a)
 	b.Set("nested", 4)
 	snapshot := b.Fork()
 	r.Set("before", 2)
@@ -262,7 +265,7 @@ func TestDeferredPreferTruncationUsesExistingDecodeOffset(t *testing.T) {
 	r := NewReader(nil)
 	var trials ChoiceErrors
 	defer trials.Release()
-	a, b := trials.Fork(r), trials.Fork(r)
+	a, b := trials.ForkScoped(r), trials.ForkScoped(r)
 	current := a.ErrorAt(InvalidValue, 7, "prior")
 	candidate := b.ErrorAt(Truncated, 5, "shallower")
 	trials.Track(current)
@@ -278,13 +281,13 @@ func TestPublicForkOfTrialOwnsItsActivePath(t *testing.T) {
 		t.Fatal(err)
 	}
 	var trials ChoiceErrors
-	a := trials.Fork(r)
+	a := trials.ForkScoped(r)
 	if err := a.Enter("Trial"); err != nil {
 		t.Fatal(err)
 	}
 	snapshot := a.Fork()
 	a.Leave()
-	b := trials.Fork(r)
+	b := trials.ForkScoped(r)
 	if err := b.Enter("Later"); err != nil {
 		t.Fatal(err)
 	}
@@ -320,7 +323,7 @@ func TestChoiceCompiledBindingsMatchInterpreter(t *testing.T) {
 	r.Set("a b", 3)
 	var trials ChoiceErrors
 	defer trials.Release()
-	candidate := trials.Fork(r)
+	candidate := trials.ForkScoped(r)
 	candidate.Set("a b", 5)
 	candidate.Set("ab", 7)
 	candidate.Set("a bc", 9)
@@ -355,7 +358,7 @@ func TestChoiceRejectedOverflowBindingsReuseStorage(t *testing.T) {
 	}
 	allocs := testing.AllocsPerRun(100, func() {
 		var trials ChoiceErrors
-		candidate := trials.Fork(r)
+		candidate := trials.ForkScoped(r)
 		for i, name := range names {
 			candidate.Set(name, uint64(i))
 		}

@@ -8,11 +8,11 @@ import (
 func TestChoiceMapOwnershipAfterNestedRelease(t *testing.T) {
 	r := NewReader(nil)
 	var outer, inner ChoiceErrors
-	a := outer.Fork(r)
+	a := outer.ForkScoped(r)
 	for i := 0; i < 24; i++ {
 		a.Set(fmt.Sprintf("binding%d", i), uint64(i))
 	}
-	b := inner.Fork(a)
+	b := inner.ForkScoped(a)
 	b.Set("binding23", 900)
 	b.Set("nested", 1000)
 	snapshot := b.Fork()
@@ -20,7 +20,7 @@ func TestChoiceMapOwnershipAfterNestedRelease(t *testing.T) {
 	inner.Release()
 	for range 32 {
 		var discarded ChoiceErrors
-		c := discarded.Fork(r)
+		c := discarded.ForkScoped(r)
 		for i := 0; i < 24; i++ {
 			c.Set(fmt.Sprintf("binding%d", i), 9999)
 		}
@@ -46,7 +46,7 @@ func TestChoiceMapSnapshotCommitKeepsVisibleBindings(t *testing.T) {
 	r := NewReader(nil)
 	r.Set("base", 1)
 	var trials ChoiceErrors
-	a := trials.Fork(r)
+	a := trials.ForkScoped(r)
 	a.Set("local", 2)
 	snapshot := a.Fork()
 	snapshot.Set("local", 3)
@@ -77,14 +77,14 @@ func TestChoiceMapDetachedSnapshotReplacesBindings(t *testing.T) {
 	r := NewReader(nil)
 	r.Set("dropped", 1)
 	var outer, inner ChoiceErrors
-	a := outer.Fork(r)
+	a := outer.ForkScoped(r)
 	a.Set("old local", 2)
 	unrelated := NewReader(nil)
 	unrelated.Set("kept", 3)
 	snapshot := unrelated.Fork()
 	a.Commit(snapshot)
 	a.Set("after", 4)
-	b := inner.Fork(a)
+	b := inner.ForkScoped(a)
 	b.Set("nested", 5)
 	a.Commit(b)
 	inner.Release()
