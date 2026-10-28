@@ -396,15 +396,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Associated Radio Capability 2", v)
+	r.Set("associated radio capability 2", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability2(w *runtime.Writer, v uint8) error {
@@ -412,14 +409,11 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Associated Radio Capability 2", uint64(v))
+	w.Set("associated radio capability 2", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(r *runtime.Reader) (uint8, error) {
@@ -427,15 +421,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Associated Radio Capability 1", v)
+	r.Set("associated radio capability 1", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2AssociatedRadioCapability1(w *runtime.Writer, v uint8) error {
@@ -443,14 +434,11 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Associated Radio Capability 1", uint64(v))
+	w.Set("associated radio capability 1", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2, error) {
@@ -675,10 +663,7 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	return w.WriteSpare()
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(r *runtime.Reader) ([]runtime.BitString, error) {
-	count, err := r.Eval("4")
-	if err != nil {
-		return nil, err
-	}
+	count := 4
 	var out []runtime.BitString
 	for i := 0; i < count; i++ {
 		if err := r.EnterIndex("Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i); err != nil {
@@ -694,10 +679,7 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	return out, nil
 }
 func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList(w *runtime.Writer, _ []runtime.BitString) error {
-	count, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	count := 4
 	for i := 0; i < count; i++ {
 		if err := encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitListEntry(w, runtime.BitString{}); err != nil {
 			return locateIndex(w.ComponentError(runtime.InvalidValue, "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", 0, err), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
@@ -710,15 +692,12 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Associated Radio Capability 1", v)
+	r.Set("associated radio capability 1", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1AssociatedRadioCapability1(w *runtime.Writer, v uint8) error {
@@ -726,14 +705,11 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Associated Radio Capability 1", uint64(v))
+	w.Set("associated radio capability 1", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1, error) {
@@ -987,15 +963,12 @@ func decodeClassmark3ValuePartUCS2Treatment(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UCS2 treatment", v)
+	r.Set("ucs2 treatment", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUCS2Treatment(w *runtime.Writer, v uint8) error {
@@ -1003,14 +976,11 @@ func encodeClassmark3ValuePartUCS2Treatment(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UCS2 treatment", uint64(v))
+	w.Set("ucs2 treatment", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedMeasurementCapability(r *runtime.Reader) (uint8, error) {
@@ -1018,15 +988,12 @@ func decodeClassmark3ValuePartExtendedMeasurementCapability(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extended Measurement Capability", v)
+	r.Set("extended measurement capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartExtendedMeasurementCapability(w *runtime.Writer, v uint8) error {
@@ -1034,14 +1001,11 @@ func encodeClassmark3ValuePartExtendedMeasurementCapability(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extended Measurement Capability", uint64(v))
+	w.Set("extended measurement capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartMSMeasurementCapabilityValue(r *runtime.Reader) (MSMeasurementCapability, error) {
@@ -1324,15 +1288,12 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapa
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GSM 400 Associated Radio Capability", v)
+	r.Set("gsm 400 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapability(w *runtime.Writer, v uint8) error {
@@ -1340,14 +1301,11 @@ func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400AssociatedRadioCapa
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM 400 Associated Radio Capability", uint64(v))
+	w.Set("gsm 400 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM400BandsSupportedGroup(r *runtime.Reader) (Classmark3ValuePartGSM400BandsSupportedGroup, error) {
@@ -1432,15 +1390,12 @@ func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GSM 850 Associated Radio Capability", v)
+	r.Set("gsm 850 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -1448,14 +1403,11 @@ func encodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM 850 Associated Radio Capability", uint64(v))
+	w.Set("gsm 850 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -1492,15 +1444,12 @@ func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(r *runtime.R
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GSM 1900 Associated Radio Capability", v)
+	r.Set("gsm 1900 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -1508,14 +1457,11 @@ func encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(w *runtime.W
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM 1900 Associated Radio Capability", uint64(v))
+	w.Set("gsm 1900 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -1552,15 +1498,12 @@ func decodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(r *runtime.
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UMTS FDD Radio Access Technology Capability", v)
+	r.Set("umts fdd radio access technology capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
@@ -1568,14 +1511,11 @@ func encodeClassmark3ValuePartUMTSFDDRadioAccessTechnologyCapability(w *runtime.
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UMTS FDD Radio Access Technology Capability", uint64(v))
+	w.Set("umts fdd radio access technology capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
@@ -1583,15 +1523,12 @@ func decodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(r *r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UMTS 3.84 Mcps TDD Radio Access Technology Capability", v)
+	r.Set("umts 3.84 mcps tdd radio access technology capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
@@ -1599,14 +1536,11 @@ func encodeClassmark3ValuePartUMTS384McpsTDDRadioAccessTechnologyCapability(w *r
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UMTS 3.84 Mcps TDD Radio Access Technology Capability", uint64(v))
+	w.Set("umts 3.84 mcps tdd radio access technology capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(r *runtime.Reader) (uint8, error) {
@@ -1614,15 +1548,12 @@ func decodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(r *runtime
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CDMA 2000 Radio Access Technology Capability", v)
+	r.Set("cdma 2000 radio access technology capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
@@ -1630,14 +1561,11 @@ func encodeClassmark3ValuePartCDMA2000RadioAccessTechnologyCapability(w *runtime
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CDMA 2000 Radio Access Technology Capability", uint64(v))
+	w.Set("cdma 2000 radio access technology capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
@@ -1645,15 +1573,12 @@ func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(r 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM GPRS Multi Slot Class", v)
+	r.Set("dtm gprs multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -1661,14 +1586,11 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMGPRSMultiSlotClass(w 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM GPRS Multi Slot Class", uint64(v))
+	w.Set("dtm gprs multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(r *runtime.Reader) (uint8, error) {
@@ -1676,15 +1598,12 @@ func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(r *runtime
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Single Slot DTM", v)
+	r.Set("single slot dtm", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(w *runtime.Writer, v uint8) error {
@@ -1692,14 +1611,11 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSingleSlotDTM(w *runtime
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Single Slot DTM", uint64(v))
+	w.Set("single slot dtm", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(r *runtime.Reader) (uint8, error) {
@@ -1707,15 +1623,12 @@ func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassVa
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM EGPRS Multi Slot Class", v)
+	r.Set("dtm egprs multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(w *runtime.Writer, v uint8) error {
@@ -1723,14 +1636,11 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassVa
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM EGPRS Multi Slot Class", uint64(v))
+	w.Set("dtm egprs multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
@@ -1892,15 +1802,12 @@ func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GSM 750 Associated Radio Capability", v)
+	r.Set("gsm 750 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -1908,14 +1815,11 @@ func encodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM 750 Associated Radio Capability", uint64(v))
+	w.Set("gsm 750 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -1952,15 +1856,12 @@ func decodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(r *r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UMTS 1.28 Mcps TDD Radio Access Technology Capability", v)
+	r.Set("umts 1.28 mcps tdd radio access technology capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(w *runtime.Writer, v uint8) error {
@@ -1968,14 +1869,11 @@ func encodeClassmark3ValuePartUMTS128McpsTDDRadioAccessTechnologyCapability(w *r
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UMTS 1.28 Mcps TDD Radio Access Technology Capability", uint64(v))
+	w.Set("umts 1.28 mcps tdd radio access technology capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGERANFeaturePackage1(r *runtime.Reader) (uint8, error) {
@@ -1983,15 +1881,12 @@ func decodeClassmark3ValuePartGERANFeaturePackage1(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GERAN Feature Package 1", v)
+	r.Set("geran feature package 1", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGERANFeaturePackage1(w *runtime.Writer, v uint8) error {
@@ -1999,14 +1894,11 @@ func encodeClassmark3ValuePartGERANFeaturePackage1(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GERAN Feature Package 1", uint64(v))
+	w.Set("geran feature package 1", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
@@ -2014,15 +1906,12 @@ func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSM
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extended DTM GPRS Multi Slot Class", v)
+	r.Set("extended dtm gprs multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -2030,14 +1919,11 @@ func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMGPRSM
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extended DTM GPRS Multi Slot Class", uint64(v))
+	w.Set("extended dtm gprs multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(r *runtime.Reader) (uint8, error) {
@@ -2045,15 +1931,12 @@ func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRS
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extended DTM EGPRS Multi Slot Class", v)
+	r.Set("extended dtm egprs multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRSMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -2061,14 +1944,11 @@ func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupExtendedDTMEGPRS
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extended DTM EGPRS Multi Slot Class", uint64(v))
+	w.Set("extended dtm egprs multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(r *runtime.Reader) (Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup, error) {
@@ -2153,15 +2033,12 @@ func decodeClassmark3ValuePartHighMultislotCapabilityValue(r *runtime.Reader) (u
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("High Multislot Capability", v)
+	r.Set("high multislot capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartHighMultislotCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -2169,14 +2046,11 @@ func encodeClassmark3ValuePartHighMultislotCapabilityValue(w *runtime.Writer, v 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("High Multislot Capability", uint64(v))
+	w.Set("high multislot capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartHighMultislotCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -2221,15 +2095,12 @@ func decodeClassmark3ValuePartGERANFeaturePackage2(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GERAN Feature Package 2", v)
+	r.Set("geran feature package 2", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGERANFeaturePackage2(w *runtime.Writer, v uint8) error {
@@ -2237,14 +2108,11 @@ func encodeClassmark3ValuePartGERANFeaturePackage2(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GERAN Feature Package 2", uint64(v))
+	w.Set("geran feature package 2", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGMSKMultislotPowerProfile(r *runtime.Reader) (uint8, error) {
@@ -2252,15 +2120,12 @@ func decodeClassmark3ValuePartGMSKMultislotPowerProfile(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GMSK Multislot Power Profile", v)
+	r.Set("gmsk multislot power profile", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGMSKMultislotPowerProfile(w *runtime.Writer, v uint8) error {
@@ -2268,14 +2133,11 @@ func encodeClassmark3ValuePartGMSKMultislotPowerProfile(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GMSK Multislot Power Profile", uint64(v))
+	w.Set("gmsk multislot power profile", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartN8PSKMultislotPowerProfile(r *runtime.Reader) (uint8, error) {
@@ -2283,15 +2145,12 @@ func decodeClassmark3ValuePartN8PSKMultislotPowerProfile(r *runtime.Reader) (uin
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("8-PSK Multislot Power Profile", v)
+	r.Set("8-psk multislot power profile", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartN8PSKMultislotPowerProfile(w *runtime.Writer, v uint8) error {
@@ -2299,14 +2158,11 @@ func encodeClassmark3ValuePartN8PSKMultislotPowerProfile(w *runtime.Writer, v ui
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("8-PSK Multislot Power Profile", uint64(v))
+	w.Set("8-psk multislot power profile", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(r *runtime.Reader) (struct{}, error) {
@@ -2449,15 +2305,12 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCa
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T-GSM 400 Associated Radio Capability", v)
+	r.Set("t-gsm 400 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCapability(w *runtime.Writer, v uint8) error {
@@ -2465,14 +2318,11 @@ func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400AssociatedRadioCa
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T-GSM 400 Associated Radio Capability", uint64(v))
+	w.Set("t-gsm 400 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartTGSM400BandsSupportedGroup(r *runtime.Reader) (Classmark3ValuePartTGSM400BandsSupportedGroup, error) {
@@ -2567,15 +2417,12 @@ func decodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(r *runtime.Rea
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Downlink Advanced Receiver Performance", v)
+	r.Set("downlink advanced receiver performance", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(w *runtime.Writer, v uint8) error {
@@ -2583,14 +2430,11 @@ func encodeClassmark3ValuePartDownlinkAdvancedReceiverPerformance(w *runtime.Wri
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Downlink Advanced Receiver Performance", uint64(v))
+	w.Set("downlink advanced receiver performance", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMEnhancementsCapability(r *runtime.Reader) (uint8, error) {
@@ -2598,15 +2442,12 @@ func decodeClassmark3ValuePartDTMEnhancementsCapability(r *runtime.Reader) (uint
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM Enhancements Capability", v)
+	r.Set("dtm enhancements capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMEnhancementsCapability(w *runtime.Writer, v uint8) error {
@@ -2614,14 +2455,11 @@ func encodeClassmark3ValuePartDTMEnhancementsCapability(w *runtime.Writer, v uin
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM Enhancements Capability", uint64(v))
+	w.Set("dtm enhancements capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(r *runtime.Reader) (uint8, error) {
@@ -2629,15 +2467,12 @@ func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlot
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM GPRS High Multi Slot Class", v)
+	r.Set("dtm gprs high multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -2645,14 +2480,11 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMGPRSHighMultiSlot
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM GPRS High Multi Slot Class", uint64(v))
+	w.Set("dtm gprs high multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(r *runtime.Reader) (uint8, error) {
@@ -2660,15 +2492,12 @@ func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(r *ru
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Offset required", v)
+	r.Set("offset required", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(w *runtime.Writer, v uint8) error {
@@ -2676,14 +2505,11 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupOffsetRequired(w *ru
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Offset required", uint64(v))
+	w.Set("offset required", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(r *runtime.Reader) (uint8, error) {
@@ -2691,15 +2517,12 @@ func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlo
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("DTM EGPRS High Multi Slot Class", v)
+	r.Set("dtm egprs high multi slot class", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(w *runtime.Writer, v uint8) error {
@@ -2707,14 +2530,11 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlo
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("DTM EGPRS High Multi Slot Class", uint64(v))
+	w.Set("dtm egprs high multi slot class", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
@@ -2841,15 +2661,12 @@ func decodeClassmark3ValuePartRepeatedACCHCapability(r *runtime.Reader) (uint8, 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Repeated ACCH Capability", v)
+	r.Set("repeated acch capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartRepeatedACCHCapability(w *runtime.Writer, v uint8) error {
@@ -2857,14 +2674,11 @@ func encodeClassmark3ValuePartRepeatedACCHCapability(w *runtime.Writer, v uint8)
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Repeated ACCH Capability", uint64(v))
+	w.Set("repeated acch capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(r *runtime.Reader) (uint8, error) {
@@ -2872,15 +2686,12 @@ func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GSM 710 Associated Radio Capability", v)
+	r.Set("gsm 710 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -2888,14 +2699,11 @@ func encodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM 710 Associated Radio Capability", uint64(v))
+	w.Set("gsm 710 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -2932,15 +2740,12 @@ func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(r *runtime.R
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("T-GSM 810 Associated Radio Capability", v)
+	r.Set("t-gsm 810 associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(w *runtime.Writer, v uint8) error {
@@ -2948,14 +2753,11 @@ func encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(w *runtime.W
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("T-GSM 810 Associated Radio Capability", uint64(v))
+	w.Set("t-gsm 810 associated radio capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
@@ -2992,15 +2794,12 @@ func decodeClassmark3ValuePartCipheringModeSettingCapability(r *runtime.Reader) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Ciphering Mode Setting Capability", v)
+	r.Set("ciphering mode setting capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartCipheringModeSettingCapability(w *runtime.Writer, v uint8) error {
@@ -3008,14 +2807,11 @@ func encodeClassmark3ValuePartCipheringModeSettingCapability(w *runtime.Writer, 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Ciphering Mode Setting Capability", uint64(v))
+	w.Set("ciphering mode setting capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartAdditionalPositioningCapabilities(r *runtime.Reader) (uint8, error) {
@@ -3023,15 +2819,12 @@ func decodeClassmark3ValuePartAdditionalPositioningCapabilities(r *runtime.Reade
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Additional Positioning Capabilities", v)
+	r.Set("additional positioning capabilities", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartAdditionalPositioningCapabilities(w *runtime.Writer, v uint8) error {
@@ -3039,14 +2832,11 @@ func encodeClassmark3ValuePartAdditionalPositioningCapabilities(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Additional Positioning Capabilities", uint64(v))
+	w.Set("additional positioning capabilities", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartEUTRAFDDSupport(r *runtime.Reader) (uint8, error) {
@@ -3054,15 +2844,12 @@ func decodeClassmark3ValuePartEUTRAFDDSupport(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRA FDD support", v)
+	r.Set("e-utra fdd support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartEUTRAFDDSupport(w *runtime.Writer, v uint8) error {
@@ -3070,14 +2857,11 @@ func encodeClassmark3ValuePartEUTRAFDDSupport(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRA FDD support", uint64(v))
+	w.Set("e-utra fdd support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartEUTRATDDSupport(r *runtime.Reader) (uint8, error) {
@@ -3085,15 +2869,12 @@ func decodeClassmark3ValuePartEUTRATDDSupport(r *runtime.Reader) (uint8, error) 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRA TDD support", v)
+	r.Set("e-utra tdd support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartEUTRATDDSupport(w *runtime.Writer, v uint8) error {
@@ -3101,14 +2882,11 @@ func encodeClassmark3ValuePartEUTRATDDSupport(w *runtime.Writer, v uint8) error 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRA TDD support", uint64(v))
+	w.Set("e-utra tdd support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(r *runtime.Reader) (uint8, error) {
@@ -3116,15 +2894,12 @@ func decodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(r *runtime.Rea
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRA Measurement and Reporting support", v)
+	r.Set("e-utra measurement and reporting support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(w *runtime.Writer, v uint8) error {
@@ -3132,14 +2907,11 @@ func encodeClassmark3ValuePartEUTRAMeasurementAndReportingSupport(w *runtime.Wri
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRA Measurement and Reporting support", uint64(v))
+	w.Set("e-utra measurement and reporting support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartPriorityBasedReselectionSupport(r *runtime.Reader) (uint8, error) {
@@ -3147,15 +2919,12 @@ func decodeClassmark3ValuePartPriorityBasedReselectionSupport(r *runtime.Reader)
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Priority-based reselection support", v)
+	r.Set("priority-based reselection support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartPriorityBasedReselectionSupport(w *runtime.Writer, v uint8) error {
@@ -3163,14 +2932,11 @@ func encodeClassmark3ValuePartPriorityBasedReselectionSupport(w *runtime.Writer,
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Priority-based reselection support", uint64(v))
+	w.Set("priority-based reselection support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartUTRACSGCellsReporting(r *runtime.Reader) (uint8, error) {
@@ -3178,15 +2944,12 @@ func decodeClassmark3ValuePartUTRACSGCellsReporting(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UTRA CSG Cells Reporting", v)
+	r.Set("utra csg cells reporting", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUTRACSGCellsReporting(w *runtime.Writer, v uint8) error {
@@ -3194,14 +2957,11 @@ func encodeClassmark3ValuePartUTRACSGCellsReporting(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UTRA CSG Cells Reporting", uint64(v))
+	w.Set("utra csg cells reporting", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartVAMOSLevel(r *runtime.Reader) (uint8, error) {
@@ -3209,15 +2969,12 @@ func decodeClassmark3ValuePartVAMOSLevel(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("VAMOS Level", v)
+	r.Set("vamos level", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartVAMOSLevel(w *runtime.Writer, v uint8) error {
@@ -3225,14 +2982,11 @@ func encodeClassmark3ValuePartVAMOSLevel(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("VAMOS Level", uint64(v))
+	w.Set("vamos level", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartTIGHTERCapability(r *runtime.Reader) (uint8, error) {
@@ -3240,15 +2994,12 @@ func decodeClassmark3ValuePartTIGHTERCapability(r *runtime.Reader) (uint8, error
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("TIGHTER Capability", v)
+	r.Set("tighter capability", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartTIGHTERCapability(w *runtime.Writer, v uint8) error {
@@ -3256,14 +3007,11 @@ func encodeClassmark3ValuePartTIGHTERCapability(w *runtime.Writer, v uint8) erro
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("TIGHTER Capability", uint64(v))
+	w.Set("tighter capability", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(r *runtime.Reader) (uint8, error) {
@@ -3271,15 +3019,12 @@ func decodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(r *runtime.Reade
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Selective Ciphering of Downlink SACCH", v)
+	r.Set("selective ciphering of downlink sacch", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(w *runtime.Writer, v uint8) error {
@@ -3287,14 +3032,11 @@ func encodeClassmark3ValuePartSelectiveCipheringOfDownlinkSACCH(w *runtime.Write
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Selective Ciphering of Downlink SACCH", uint64(v))
+	w.Set("selective ciphering of downlink sacch", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(r *runtime.Reader) (uint8, error) {
@@ -3302,15 +3044,12 @@ func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(r *runtime.Reader) (uin
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CS to PS SRVCC from GERAN to UTRA", v)
+	r.Set("cs to ps srvcc from geran to utra", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(w *runtime.Writer, v uint8) error {
@@ -3318,14 +3057,11 @@ func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToUTRA(w *runtime.Writer, v ui
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CS to PS SRVCC from GERAN to UTRA", uint64(v))
+	w.Set("cs to ps srvcc from geran to utra", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(r *runtime.Reader) (uint8, error) {
@@ -3333,15 +3069,12 @@ func decodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(r *runtime.Reader) (ui
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("CS to PS SRVCC from GERAN to E-UTRA", v)
+	r.Set("cs to ps srvcc from geran to e-utra", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(w *runtime.Writer, v uint8) error {
@@ -3349,14 +3082,11 @@ func encodeClassmark3ValuePartCSToPSSRVCCFromGERANToEUTRA(w *runtime.Writer, v u
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("CS to PS SRVCC from GERAN to E-UTRA", uint64(v))
+	w.Set("cs to ps srvcc from geran to e-utra", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartGERANNetworkSharingSupport(r *runtime.Reader) (uint8, error) {
@@ -3364,15 +3094,12 @@ func decodeClassmark3ValuePartGERANNetworkSharingSupport(r *runtime.Reader) (uin
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GERAN Network Sharing support", v)
+	r.Set("geran network sharing support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartGERANNetworkSharingSupport(w *runtime.Writer, v uint8) error {
@@ -3380,14 +3107,11 @@ func encodeClassmark3ValuePartGERANNetworkSharingSupport(w *runtime.Writer, v ui
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GERAN Network Sharing support", uint64(v))
+	w.Set("geran network sharing support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(r *runtime.Reader) (uint8, error) {
@@ -3395,15 +3119,12 @@ func decodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRA Wideband RSRQ measurements support", v)
+	r.Set("e-utra wideband rsrq measurements support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(w *runtime.Writer, v uint8) error {
@@ -3411,14 +3132,11 @@ func encodeClassmark3ValuePartEUTRAWidebandRSRQMeasurementsSupport(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRA Wideband RSRQ measurements support", uint64(v))
+	w.Set("e-utra wideband rsrq measurements support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartERBandSupport(r *runtime.Reader) (uint8, error) {
@@ -3426,15 +3144,12 @@ func decodeClassmark3ValuePartERBandSupport(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ER Band Support", v)
+	r.Set("er band support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartERBandSupport(w *runtime.Writer, v uint8) error {
@@ -3442,14 +3157,11 @@ func encodeClassmark3ValuePartERBandSupport(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ER Band Support", uint64(v))
+	w.Set("er band support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(r *runtime.Reader) (uint8, error) {
@@ -3457,15 +3169,12 @@ func decodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(r *runt
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UTRA Multiple Frequency Band Indicators support", v)
+	r.Set("utra multiple frequency band indicators support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(w *runtime.Writer, v uint8) error {
@@ -3473,14 +3182,11 @@ func encodeClassmark3ValuePartUTRAMultipleFrequencyBandIndicatorsSupport(w *runt
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UTRA Multiple Frequency Band Indicators support", uint64(v))
+	w.Set("utra multiple frequency band indicators support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(r *runtime.Reader) (uint8, error) {
@@ -3488,15 +3194,12 @@ func decodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(r *run
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("E-UTRA Multiple Frequency Band Indicators support", v)
+	r.Set("e-utra multiple frequency band indicators support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(w *runtime.Writer, v uint8) error {
@@ -3504,14 +3207,11 @@ func encodeClassmark3ValuePartEUTRAMultipleFrequencyBandIndicatorsSupport(w *run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("E-UTRA Multiple Frequency Band Indicators support", uint64(v))
+	w.Set("e-utra multiple frequency band indicators support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(r *runtime.Reader) (uint8, error) {
@@ -3519,15 +3219,12 @@ func decodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(r *runtime.Reader)
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extended TSC Set Capability support", v)
+	r.Set("extended tsc set capability support", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(w *runtime.Writer, v uint8) error {
@@ -3535,14 +3232,11 @@ func encodeClassmark3ValuePartExtendedTSCSetCapabilitySupport(w *runtime.Writer,
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extended TSC Set Capability support", uint64(v))
+	w.Set("extended tsc set capability support", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartExtendedEARFCNValueRange(r *runtime.Reader) (uint8, error) {
@@ -3550,15 +3244,12 @@ func decodeClassmark3ValuePartExtendedEARFCNValueRange(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Extended EARFCN value range", v)
+	r.Set("extended earfcn value range", v)
 	return uint8(v), nil
 }
 func encodeClassmark3ValuePartExtendedEARFCNValueRange(w *runtime.Writer, v uint8) error {
@@ -3566,14 +3257,11 @@ func encodeClassmark3ValuePartExtendedEARFCNValueRange(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Extended EARFCN value range", uint64(v))
+	w.Set("extended earfcn value range", uint64(v))
 	return nil
 }
 func decodeClassmark3ValuePartSpareBitsListEntry(r *runtime.Reader) (runtime.BitString, error) {
@@ -4336,15 +4024,12 @@ func decodeA5BitsA57(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("A5/7", v)
+	r.Set("a5/7", v)
 	return uint8(v), nil
 }
 func encodeA5BitsA57(w *runtime.Writer, v uint8) error {
@@ -4352,14 +4037,11 @@ func encodeA5BitsA57(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("A5/7", uint64(v))
+	w.Set("a5/7", uint64(v))
 	return nil
 }
 func decodeA5BitsA56(r *runtime.Reader) (uint8, error) {
@@ -4367,15 +4049,12 @@ func decodeA5BitsA56(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("A5/6", v)
+	r.Set("a5/6", v)
 	return uint8(v), nil
 }
 func encodeA5BitsA56(w *runtime.Writer, v uint8) error {
@@ -4383,14 +4062,11 @@ func encodeA5BitsA56(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("A5/6", uint64(v))
+	w.Set("a5/6", uint64(v))
 	return nil
 }
 func decodeA5BitsA55(r *runtime.Reader) (uint8, error) {
@@ -4398,15 +4074,12 @@ func decodeA5BitsA55(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("A5/5", v)
+	r.Set("a5/5", v)
 	return uint8(v), nil
 }
 func encodeA5BitsA55(w *runtime.Writer, v uint8) error {
@@ -4414,14 +4087,11 @@ func encodeA5BitsA55(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("A5/5", uint64(v))
+	w.Set("a5/5", uint64(v))
 	return nil
 }
 func decodeA5BitsA54(r *runtime.Reader) (uint8, error) {
@@ -4429,15 +4099,12 @@ func decodeA5BitsA54(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("A5/4", v)
+	r.Set("a5/4", v)
 	return uint8(v), nil
 }
 func encodeA5BitsA54(w *runtime.Writer, v uint8) error {
@@ -4445,14 +4112,11 @@ func encodeA5BitsA54(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("A5/4", uint64(v))
+	w.Set("a5/4", uint64(v))
 	return nil
 }
 func decodeA5Bits(r *runtime.Reader) (A5Bits, error) {
@@ -4534,15 +4198,12 @@ func decodeRSupportRGSMBandAssociatedRadioCapability(r *runtime.Reader) (uint8, 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("3")
-	if err != nil {
-		return 0, err
-	}
+	width := 3
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("R-GSM band Associated Radio Capability", v)
+	r.Set("r-gsm band associated radio capability", v)
 	return uint8(v), nil
 }
 func encodeRSupportRGSMBandAssociatedRadioCapability(w *runtime.Writer, v uint8) error {
@@ -4550,14 +4211,11 @@ func encodeRSupportRGSMBandAssociatedRadioCapability(w *runtime.Writer, v uint8)
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("3")
-	if err != nil {
-		return err
-	}
+	width := 3
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("R-GSM band Associated Radio Capability", uint64(v))
+	w.Set("r-gsm band associated radio capability", uint64(v))
 	return nil
 }
 func decodeRSupport(r *runtime.Reader) (RSupport, error) {
@@ -4602,10 +4260,7 @@ func decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -4617,7 +4272,7 @@ func decodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(r *runtime.Reader) (uint8
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
-	r.Set("HSCSD Multi Slot Class", v)
+	r.Set("hscsd multi slot class", v)
 	return uint8(v), nil
 }
 func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -4625,10 +4280,7 @@ func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if w.Canonical() {
 		if uint64(v) < 1 {
 			return w.ComponentError(runtime.InvalidValue, "HSCSDMultiSlotCapabilityHSCSDMultiSlotClass", width, fmt.Errorf("value reserved by source table"))
@@ -4640,7 +4292,7 @@ func encodeHSCSDMultiSlotCapabilityHSCSDMultiSlotClass(w *runtime.Writer, v uint
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("HSCSD Multi Slot Class", uint64(v))
+	w.Set("hscsd multi slot class", uint64(v))
 	return nil
 }
 func decodeHSCSDMultiSlotCapability(r *runtime.Reader) (HSCSDMultiSlotCapability, error) {
@@ -4683,15 +4335,12 @@ func decodeMSMeasurementCapabilitySMSVALUE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SMS_VALUE", v)
+	r.Set("sms_value", v)
 	return uint8(v), nil
 }
 func encodeMSMeasurementCapabilitySMSVALUE(w *runtime.Writer, v uint8) error {
@@ -4699,14 +4348,11 @@ func encodeMSMeasurementCapabilitySMSVALUE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SMS_VALUE", uint64(v))
+	w.Set("sms_value", uint64(v))
 	return nil
 }
 func decodeMSMeasurementCapabilitySMVALUE(r *runtime.Reader) (uint8, error) {
@@ -4714,15 +4360,12 @@ func decodeMSMeasurementCapabilitySMVALUE(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SM_VALUE", v)
+	r.Set("sm_value", v)
 	return uint8(v), nil
 }
 func encodeMSMeasurementCapabilitySMVALUE(w *runtime.Writer, v uint8) error {
@@ -4730,14 +4373,11 @@ func encodeMSMeasurementCapabilitySMVALUE(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SM_VALUE", uint64(v))
+	w.Set("sm_value", uint64(v))
 	return nil
 }
 func decodeMSMeasurementCapability(r *runtime.Reader) (MSMeasurementCapability, error) {
@@ -4793,15 +4433,12 @@ func decodeMSPositioningMethodCapabilityMSPositioningMethod(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("MS Positioning Method", v)
+	r.Set("ms positioning method", v)
 	return uint8(v), nil
 }
 func encodeMSPositioningMethodCapabilityMSPositioningMethod(w *runtime.Writer, v uint8) error {
@@ -4809,14 +4446,11 @@ func encodeMSPositioningMethodCapabilityMSPositioningMethod(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("MS Positioning Method", uint64(v))
+	w.Set("ms positioning method", uint64(v))
 	return nil
 }
 func decodeMSPositioningMethodCapability(r *runtime.Reader) (MSPositioningMethodCapability, error) {
@@ -4859,15 +4493,12 @@ func decodeECSDMultiSlotCapabilityECSDMultiSlotClass(r *runtime.Reader) (uint8, 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("5")
-	if err != nil {
-		return 0, err
-	}
+	width := 5
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ECSD Multi Slot Class", v)
+	r.Set("ecsd multi slot class", v)
 	return uint8(v), nil
 }
 func encodeECSDMultiSlotCapabilityECSDMultiSlotClass(w *runtime.Writer, v uint8) error {
@@ -4875,14 +4506,11 @@ func encodeECSDMultiSlotCapabilityECSDMultiSlotClass(w *runtime.Writer, v uint8)
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("5")
-	if err != nil {
-		return err
-	}
+	width := 5
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ECSD Multi Slot Class", uint64(v))
+	w.Set("ecsd multi slot class", uint64(v))
 	return nil
 }
 func decodeECSDMultiSlotCapability(r *runtime.Reader) (ECSDMultiSlotCapability, error) {
@@ -4925,15 +4553,12 @@ func decodeN8PSKStructModulationCapability(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Modulation Capability", v)
+	r.Set("modulation capability", v)
 	return uint8(v), nil
 }
 func encodeN8PSKStructModulationCapability(w *runtime.Writer, v uint8) error {
@@ -4941,14 +4566,11 @@ func encodeN8PSKStructModulationCapability(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Modulation Capability", uint64(v))
+	w.Set("modulation capability", uint64(v))
 	return nil
 }
 
@@ -4958,10 +4580,7 @@ func decodeN8PSKStructN8PSKRFPowerCapability1Value(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -4973,7 +4592,7 @@ func decodeN8PSKStructN8PSKRFPowerCapability1Value(r *runtime.Reader) (uint8, er
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
-	r.Set("8-PSK RF Power Capability 1", v)
+	r.Set("8-psk rf power capability 1", v)
 	return uint8(v), nil
 }
 func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) error {
@@ -4981,10 +4600,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if w.Canonical() {
 		if uint64(v) < 1 {
 			return w.ComponentError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability1Value", width, fmt.Errorf("value reserved by source table"))
@@ -4993,7 +4609,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) e
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("8-PSK RF Power Capability 1", uint64(v))
+	w.Set("8-psk rf power capability 1", uint64(v))
 	return nil
 }
 func decodeN8PSKStructN8PSKRFPowerCapability1Selector(r *runtime.Reader) (*uint8, error) {
@@ -5032,10 +4648,7 @@ func decodeN8PSKStructN8PSKRFPowerCapability2Value(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -5047,7 +4660,7 @@ func decodeN8PSKStructN8PSKRFPowerCapability2Value(r *runtime.Reader) (uint8, er
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule1)
 	}
-	r.Set("8-PSK RF Power Capability 2", v)
+	r.Set("8-psk rf power capability 2", v)
 	return uint8(v), nil
 }
 func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) error {
@@ -5055,10 +4668,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if w.Canonical() {
 		if uint64(v) < 1 {
 			return w.ComponentError(runtime.InvalidValue, "N8PSKStructN8PSKRFPowerCapability2Value", width, fmt.Errorf("value reserved by source table"))
@@ -5067,7 +4677,7 @@ func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) e
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("8-PSK RF Power Capability 2", uint64(v))
+	w.Set("8-psk rf power capability 2", uint64(v))
 	return nil
 }
 func decodeN8PSKStructN8PSKRFPowerCapability2Selector(r *runtime.Reader) (*uint8, error) {
@@ -5167,10 +4777,7 @@ func decodeSingleBandSupportGSMBand(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("4")
-	if err != nil {
-		return 0, err
-	}
+	width := 4
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -5182,7 +4789,7 @@ func decodeSingleBandSupportGSMBand(r *runtime.Reader) (uint8, error) {
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule2)
 	}
-	r.Set("GSM Band", v)
+	r.Set("gsm band", v)
 	return uint8(v), nil
 }
 func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
@@ -5190,10 +4797,7 @@ func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("4")
-	if err != nil {
-		return err
-	}
+	width := 4
 	if w.Canonical() {
 		if uint64(v) > 9 {
 			return w.ComponentError(runtime.InvalidValue, "SingleBandSupportGSMBand", width, fmt.Errorf("value reserved by source table"))
@@ -5202,7 +4806,7 @@ func encodeSingleBandSupportGSMBand(w *runtime.Writer, v uint8) error {
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GSM Band", uint64(v))
+	w.Set("gsm band", uint64(v))
 	return nil
 }
 func decodeSingleBandSupport(r *runtime.Reader) (SingleBandSupport, error) {

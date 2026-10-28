@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "bf6e6ca26e1ec07671a108472a3cd44343a579dc",
-    "api_sha256": "174de39a1edddf33dd6cda495f66c4c8b15ff98970991c3a2fd99843ae0d8fdb",
-    "api_ledger_sha256": "568d5413d5dc7bbdca743165a524517b4fa2f92ebc2eddd399da10b5e33120e6"
+    "revision": "9946d036574aca7e4bcd011e656b5dc8f2a1ec22",
+    "api_sha256": "da541fb01a7ef9d02e371fabf0c7382fe09b76724c8b9242fe3843afe29cfc2c",
+    "api_ledger_sha256": "30d7a7d9fa88a1bf4bb0559f0044bf46ea1ef0979402dfa7897abedb87b2493c"
   },
   "schema_version": 1,
-  "compiler_commit": "34ce6ab8c63c886be70fd8724f09d78456114880",
+  "compiler_commit": "153e7159a5a3d16ef8900e3e08f726caa2971a1a",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1786,15 +1786,15 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "c90e82d004c6646615d715438c18e81a0aecdb56a7740c726720f8107bfd5d14"
+      "sha256": "2238552589aec20c9037b09114d2b0c40e84ba562b9c9ad54d459eeeaaf88980"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "93f28fe6456f0aeeb2ea85329eba72a39accb5fef668814d934c43473e298167"
+      "sha256": "69bda3e79a6795c985ae2bbb2be4ea26917ecbc7f56a94f187cec6a798e12705"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "13379574006aff0b6ff1b8d589c8e40daf6fa404e9b0624e0f05cdb71ec15532"
+      "sha256": "73092a860b9289303409728e7e646601d459cee72fb18e7c8467fe494c53bb34"
     },
     {
       "path": "ts36331/uecapability/generated.go",
@@ -1802,19 +1802,19 @@
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "a60ab52e39cb583c66eec5f624282af12ee8eae02f852a12411023cdb047df4a"
+      "sha256": "1941eae5a5d8cb2ab3f284779bc7bbf56017737d13fac506b3c6b915ed598fcd"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "e9589794cdabb6691b00f893f1e8307d1c01e539be9cdf9f154ff2f187f8201d"
+      "sha256": "3504ad5a414854bd22ee52f833988301a3eb3e0c8e491489fd573621e12fa9f5"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "d1af6774d4496a2e35a170fdcec425b713cc003a9e78063c77dd188d66dcffca"
+      "sha256": "8ea817c2b18ff647bfbb4c1a2dd601e4ab1ffe846f6c91afec1ae661ee7016d8"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "6d1d78d111729b99a87481dd87bd9e3310b64036c8972e785c0f879beed6c9ae"
+      "sha256": "3a99b3d111e4acd7d1dd7401cf83adc524b678c994387cc8048ad55971047f30"
     }
   ],
   "validation_commands": [

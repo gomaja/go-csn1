@@ -97,15 +97,12 @@ func decodeMSNetworkCapabilityValuePartSMCapabilitiesViaDedicatedChannels(r *run
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SM capabilities via dedicated channels", v)
+	r.Set("sm capabilities via dedicated channels", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartSMCapabilitiesViaDedicatedChannels(w *runtime.Writer, v uint8) error {
@@ -113,14 +110,11 @@ func encodeMSNetworkCapabilityValuePartSMCapabilitiesViaDedicatedChannels(w *run
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SM capabilities via dedicated channels", uint64(v))
+	w.Set("sm capabilities via dedicated channels", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartSMCapabilitiesViaGPRSChannels(r *runtime.Reader) (uint8, error) {
@@ -128,15 +122,12 @@ func decodeMSNetworkCapabilityValuePartSMCapabilitiesViaGPRSChannels(r *runtime.
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SM capabilities via GPRS channels", v)
+	r.Set("sm capabilities via gprs channels", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartSMCapabilitiesViaGPRSChannels(w *runtime.Writer, v uint8) error {
@@ -144,14 +135,11 @@ func encodeMSNetworkCapabilityValuePartSMCapabilitiesViaGPRSChannels(w *runtime.
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SM capabilities via GPRS channels", uint64(v))
+	w.Set("sm capabilities via gprs channels", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartUCS2Support(r *runtime.Reader) (uint8, error) {
@@ -159,15 +147,12 @@ func decodeMSNetworkCapabilityValuePartUCS2Support(r *runtime.Reader) (uint8, er
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("UCS2 support", v)
+	r.Set("ucs2 support", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartUCS2Support(w *runtime.Writer, v uint8) error {
@@ -175,14 +160,11 @@ func encodeMSNetworkCapabilityValuePartUCS2Support(w *runtime.Writer, v uint8) e
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("UCS2 support", uint64(v))
+	w.Set("ucs2 support", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartSSScreeningIndicator(r *runtime.Reader) (uint8, error) {
@@ -190,10 +172,7 @@ func decodeMSNetworkCapabilityValuePartSSScreeningIndicator(r *runtime.Reader) (
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("2")
-	if err != nil {
-		return 0, err
-	}
+	width := 2
 	fieldStart := 0
 	if r.Collecting() {
 		fieldStart = r.Position()
@@ -205,7 +184,7 @@ func decodeMSNetworkCapabilityValuePartSSScreeningIndicator(r *runtime.Reader) (
 	if r.Collecting() {
 		observeReserved(r, fieldStart, width, v, &observationRule0)
 	}
-	r.Set("SS Screening Indicator", v)
+	r.Set("ss screening indicator", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartSSScreeningIndicator(w *runtime.Writer, v uint8) error {
@@ -213,14 +192,11 @@ func encodeMSNetworkCapabilityValuePartSSScreeningIndicator(w *runtime.Writer, v
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("2")
-	if err != nil {
-		return err
-	}
+	width := 2
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SS Screening Indicator", uint64(v))
+	w.Set("ss screening indicator", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartSoLSACapability(r *runtime.Reader) (uint8, error) {
@@ -228,15 +204,12 @@ func decodeMSNetworkCapabilityValuePartSoLSACapability(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SoLSA Capability", v)
+	r.Set("solsa capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartSoLSACapability(w *runtime.Writer, v uint8) error {
@@ -244,14 +217,11 @@ func encodeMSNetworkCapabilityValuePartSoLSACapability(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SoLSA Capability", uint64(v))
+	w.Set("solsa capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartRevisionLevelIndicator(r *runtime.Reader) (uint8, error) {
@@ -259,15 +229,12 @@ func decodeMSNetworkCapabilityValuePartRevisionLevelIndicator(r *runtime.Reader)
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Revision level indicator", v)
+	r.Set("revision level indicator", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartRevisionLevelIndicator(w *runtime.Writer, v uint8) error {
@@ -275,14 +242,11 @@ func encodeMSNetworkCapabilityValuePartRevisionLevelIndicator(w *runtime.Writer,
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Revision level indicator", uint64(v))
+	w.Set("revision level indicator", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartPFCFeatureMode(r *runtime.Reader) (uint8, error) {
@@ -290,15 +254,12 @@ func decodeMSNetworkCapabilityValuePartPFCFeatureMode(r *runtime.Reader) (uint8,
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PFC feature mode", v)
+	r.Set("pfc feature mode", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartPFCFeatureMode(w *runtime.Writer, v uint8) error {
@@ -306,14 +267,11 @@ func encodeMSNetworkCapabilityValuePartPFCFeatureMode(w *runtime.Writer, v uint8
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PFC feature mode", uint64(v))
+	w.Set("pfc feature mode", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartExtendedGEABits(r *runtime.Reader) (ExtendedGEABits, error) {
@@ -327,15 +285,12 @@ func decodeMSNetworkCapabilityValuePartLCSVACapability(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("LCS VA capability", v)
+	r.Set("lcs va capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartLCSVACapability(w *runtime.Writer, v uint8) error {
@@ -343,14 +298,11 @@ func encodeMSNetworkCapabilityValuePartLCSVACapability(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("LCS VA capability", uint64(v))
+	w.Set("lcs va capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToUTRANIuModeCapability(r *runtime.Reader) (uint8, error) {
@@ -358,15 +310,12 @@ func decodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToUTRANIuModeCapabil
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PS inter-RAT HO from GERAN to UTRAN Iu mode capability", v)
+	r.Set("ps inter-rat ho from geran to utran iu mode capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToUTRANIuModeCapability(w *runtime.Writer, v uint8) error {
@@ -374,14 +323,11 @@ func encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToUTRANIuModeCapabil
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PS inter-RAT HO from GERAN to UTRAN Iu mode capability", uint64(v))
+	w.Set("ps inter-rat ho from geran to utran iu mode capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToEUTRANS1ModeCapability(r *runtime.Reader) (uint8, error) {
@@ -389,15 +335,12 @@ func decodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToEUTRANS1ModeCapabi
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("PS inter-RAT HO from GERAN to E-UTRAN S1 mode capability", v)
+	r.Set("ps inter-rat ho from geran to e-utran s1 mode capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToEUTRANS1ModeCapability(w *runtime.Writer, v uint8) error {
@@ -405,14 +348,11 @@ func encodeMSNetworkCapabilityValuePartPSInterRATHOFromGERANToEUTRANS1ModeCapabi
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("PS inter-RAT HO from GERAN to E-UTRAN S1 mode capability", uint64(v))
+	w.Set("ps inter-rat ho from geran to e-utran s1 mode capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartEMMCombinedProceduresCapability(r *runtime.Reader) (uint8, error) {
@@ -420,15 +360,12 @@ func decodeMSNetworkCapabilityValuePartEMMCombinedProceduresCapability(r *runtim
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("EMM Combined procedures Capability", v)
+	r.Set("emm combined procedures capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartEMMCombinedProceduresCapability(w *runtime.Writer, v uint8) error {
@@ -436,14 +373,11 @@ func encodeMSNetworkCapabilityValuePartEMMCombinedProceduresCapability(w *runtim
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EMM Combined procedures Capability", uint64(v))
+	w.Set("emm combined procedures capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartISRSupport(r *runtime.Reader) (uint8, error) {
@@ -451,15 +385,12 @@ func decodeMSNetworkCapabilityValuePartISRSupport(r *runtime.Reader) (uint8, err
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ISR support", v)
+	r.Set("isr support", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartISRSupport(w *runtime.Writer, v uint8) error {
@@ -467,14 +398,11 @@ func encodeMSNetworkCapabilityValuePartISRSupport(w *runtime.Writer, v uint8) er
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ISR support", uint64(v))
+	w.Set("isr support", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartSRVCCToGERANUTRANCapability(r *runtime.Reader) (uint8, error) {
@@ -482,15 +410,12 @@ func decodeMSNetworkCapabilityValuePartSRVCCToGERANUTRANCapability(r *runtime.Re
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("SRVCC to GERAN/UTRAN capability", v)
+	r.Set("srvcc to geran/utran capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartSRVCCToGERANUTRANCapability(w *runtime.Writer, v uint8) error {
@@ -498,14 +423,11 @@ func encodeMSNetworkCapabilityValuePartSRVCCToGERANUTRANCapability(w *runtime.Wr
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("SRVCC to GERAN/UTRAN capability", uint64(v))
+	w.Set("srvcc to geran/utran capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartEPCCapability(r *runtime.Reader) (uint8, error) {
@@ -513,15 +435,12 @@ func decodeMSNetworkCapabilityValuePartEPCCapability(r *runtime.Reader) (uint8, 
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("EPC capability", v)
+	r.Set("epc capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartEPCCapability(w *runtime.Writer, v uint8) error {
@@ -529,14 +448,11 @@ func encodeMSNetworkCapabilityValuePartEPCCapability(w *runtime.Writer, v uint8)
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("EPC capability", uint64(v))
+	w.Set("epc capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartNFCapability(r *runtime.Reader) (uint8, error) {
@@ -544,15 +460,12 @@ func decodeMSNetworkCapabilityValuePartNFCapability(r *runtime.Reader) (uint8, e
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("NF capability", v)
+	r.Set("nf capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartNFCapability(w *runtime.Writer, v uint8) error {
@@ -560,14 +473,11 @@ func encodeMSNetworkCapabilityValuePartNFCapability(w *runtime.Writer, v uint8) 
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("NF capability", uint64(v))
+	w.Set("nf capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartGERANNetworkSharingCapability(r *runtime.Reader) (uint8, error) {
@@ -575,15 +485,12 @@ func decodeMSNetworkCapabilityValuePartGERANNetworkSharingCapability(r *runtime.
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GERAN network sharing capability", v)
+	r.Set("geran network sharing capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartGERANNetworkSharingCapability(w *runtime.Writer, v uint8) error {
@@ -591,14 +498,11 @@ func encodeMSNetworkCapabilityValuePartGERANNetworkSharingCapability(w *runtime.
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GERAN network sharing capability", uint64(v))
+	w.Set("geran network sharing capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartUserPlaneIntegrityProtectionSupport(r *runtime.Reader) (uint8, error) {
@@ -606,15 +510,12 @@ func decodeMSNetworkCapabilityValuePartUserPlaneIntegrityProtectionSupport(r *ru
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("User plane integrity protection support", v)
+	r.Set("user plane integrity protection support", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartUserPlaneIntegrityProtectionSupport(w *runtime.Writer, v uint8) error {
@@ -622,14 +523,11 @@ func encodeMSNetworkCapabilityValuePartUserPlaneIntegrityProtectionSupport(w *ru
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("User plane integrity protection support", uint64(v))
+	w.Set("user plane integrity protection support", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartGIA4(r *runtime.Reader) (uint8, error) {
@@ -637,15 +535,12 @@ func decodeMSNetworkCapabilityValuePartGIA4(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GIA/4", v)
+	r.Set("gia/4", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartGIA4(w *runtime.Writer, v uint8) error {
@@ -653,14 +548,11 @@ func encodeMSNetworkCapabilityValuePartGIA4(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GIA/4", uint64(v))
+	w.Set("gia/4", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartGIA5(r *runtime.Reader) (uint8, error) {
@@ -668,15 +560,12 @@ func decodeMSNetworkCapabilityValuePartGIA5(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GIA/5", v)
+	r.Set("gia/5", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartGIA5(w *runtime.Writer, v uint8) error {
@@ -684,14 +573,11 @@ func encodeMSNetworkCapabilityValuePartGIA5(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GIA/5", uint64(v))
+	w.Set("gia/5", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartGIA6(r *runtime.Reader) (uint8, error) {
@@ -699,15 +585,12 @@ func decodeMSNetworkCapabilityValuePartGIA6(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GIA/6", v)
+	r.Set("gia/6", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartGIA6(w *runtime.Writer, v uint8) error {
@@ -715,14 +598,11 @@ func encodeMSNetworkCapabilityValuePartGIA6(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GIA/6", uint64(v))
+	w.Set("gia/6", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartGIA7(r *runtime.Reader) (uint8, error) {
@@ -730,15 +610,12 @@ func decodeMSNetworkCapabilityValuePartGIA7(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GIA/7", v)
+	r.Set("gia/7", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartGIA7(w *runtime.Writer, v uint8) error {
@@ -746,14 +623,11 @@ func encodeMSNetworkCapabilityValuePartGIA7(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GIA/7", uint64(v))
+	w.Set("gia/7", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartEPCOIEIndicator(r *runtime.Reader) (uint8, error) {
@@ -761,15 +635,12 @@ func decodeMSNetworkCapabilityValuePartEPCOIEIndicator(r *runtime.Reader) (uint8
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("ePCO IE indicator", v)
+	r.Set("epco ie indicator", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartEPCOIEIndicator(w *runtime.Writer, v uint8) error {
@@ -777,14 +648,11 @@ func encodeMSNetworkCapabilityValuePartEPCOIEIndicator(w *runtime.Writer, v uint
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("ePCO IE indicator", uint64(v))
+	w.Set("epco ie indicator", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartRestrictionOnUseOfEnhancedCoverageCapability(r *runtime.Reader) (uint8, error) {
@@ -792,15 +660,12 @@ func decodeMSNetworkCapabilityValuePartRestrictionOnUseOfEnhancedCoverageCapabil
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Restriction on use of enhanced coverage capability", v)
+	r.Set("restriction on use of enhanced coverage capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartRestrictionOnUseOfEnhancedCoverageCapability(w *runtime.Writer, v uint8) error {
@@ -808,14 +673,11 @@ func encodeMSNetworkCapabilityValuePartRestrictionOnUseOfEnhancedCoverageCapabil
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Restriction on use of enhanced coverage capability", uint64(v))
+	w.Set("restriction on use of enhanced coverage capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartDualConnectivityOfEUTRAWithNRCapability(r *runtime.Reader) (uint8, error) {
@@ -823,15 +685,12 @@ func decodeMSNetworkCapabilityValuePartDualConnectivityOfEUTRAWithNRCapability(r
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("Dual connectivity of E-UTRA with NR capability", v)
+	r.Set("dual connectivity of e-utra with nr capability", v)
 	return uint8(v), nil
 }
 func encodeMSNetworkCapabilityValuePartDualConnectivityOfEUTRAWithNRCapability(w *runtime.Writer, v uint8) error {
@@ -839,14 +698,11 @@ func encodeMSNetworkCapabilityValuePartDualConnectivityOfEUTRAWithNRCapability(w
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("Dual connectivity of E-UTRA with NR capability", uint64(v))
+	w.Set("dual connectivity of e-utra with nr capability", uint64(v))
 	return nil
 }
 func decodeMSNetworkCapabilityValuePartSpareBitsListEntry(r *runtime.Reader) (runtime.BitString, error) {
@@ -1296,15 +1152,12 @@ func decodeExtendedGEABitsGEA2(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/2", v)
+	r.Set("gea/2", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA2(w *runtime.Writer, v uint8) error {
@@ -1312,14 +1165,11 @@ func encodeExtendedGEABitsGEA2(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/2", uint64(v))
+	w.Set("gea/2", uint64(v))
 	return nil
 }
 func decodeExtendedGEABitsGEA3(r *runtime.Reader) (uint8, error) {
@@ -1327,15 +1177,12 @@ func decodeExtendedGEABitsGEA3(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/3", v)
+	r.Set("gea/3", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA3(w *runtime.Writer, v uint8) error {
@@ -1343,14 +1190,11 @@ func encodeExtendedGEABitsGEA3(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/3", uint64(v))
+	w.Set("gea/3", uint64(v))
 	return nil
 }
 func decodeExtendedGEABitsGEA4(r *runtime.Reader) (uint8, error) {
@@ -1358,15 +1202,12 @@ func decodeExtendedGEABitsGEA4(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/4", v)
+	r.Set("gea/4", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA4(w *runtime.Writer, v uint8) error {
@@ -1374,14 +1215,11 @@ func encodeExtendedGEABitsGEA4(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/4", uint64(v))
+	w.Set("gea/4", uint64(v))
 	return nil
 }
 func decodeExtendedGEABitsGEA5(r *runtime.Reader) (uint8, error) {
@@ -1389,15 +1227,12 @@ func decodeExtendedGEABitsGEA5(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/5", v)
+	r.Set("gea/5", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA5(w *runtime.Writer, v uint8) error {
@@ -1405,14 +1240,11 @@ func encodeExtendedGEABitsGEA5(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/5", uint64(v))
+	w.Set("gea/5", uint64(v))
 	return nil
 }
 func decodeExtendedGEABitsGEA6(r *runtime.Reader) (uint8, error) {
@@ -1420,15 +1252,12 @@ func decodeExtendedGEABitsGEA6(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/6", v)
+	r.Set("gea/6", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA6(w *runtime.Writer, v uint8) error {
@@ -1436,14 +1265,11 @@ func encodeExtendedGEABitsGEA6(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/6", uint64(v))
+	w.Set("gea/6", uint64(v))
 	return nil
 }
 func decodeExtendedGEABitsGEA7(r *runtime.Reader) (uint8, error) {
@@ -1451,15 +1277,12 @@ func decodeExtendedGEABitsGEA7(r *runtime.Reader) (uint8, error) {
 		return 0, err
 	}
 	defer r.Leave()
-	width, err := r.Eval("1")
-	if err != nil {
-		return 0, err
-	}
+	width := 1
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	r.Set("GEA/7", v)
+	r.Set("gea/7", v)
 	return uint8(v), nil
 }
 func encodeExtendedGEABitsGEA7(w *runtime.Writer, v uint8) error {
@@ -1467,14 +1290,11 @@ func encodeExtendedGEABitsGEA7(w *runtime.Writer, v uint8) error {
 		return err
 	}
 	defer w.Leave()
-	width, err := w.Eval("1")
-	if err != nil {
-		return err
-	}
+	width := 1
 	if err := w.WriteUint(uint64(v), width); err != nil {
 		return err
 	}
-	w.Set("GEA/7", uint64(v))
+	w.Set("gea/7", uint64(v))
 	return nil
 }
 func decodeExtendedGEABits(r *runtime.Reader) (ExtendedGEABits, error) {
