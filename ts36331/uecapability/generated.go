@@ -334,7 +334,7 @@ func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, erro
 		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	if r.Remaining() < 24 {
-		return Classmark2ValuePart{}, operationLocation0.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "Classmark2ValuePart", Detail: "classmark 2 value part requires 24 bits"}, "", r.Position(), 0)
+		return Classmark2ValuePart{}, operationLocation0.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: r.ErrorPath("Classmark2ValuePart"), Detail: "classmark 2 value part requires 3 octets"}, "", r.Position(), 0)
 	}
 	if err := r.Enter("Classmark2ValuePart"); err != nil {
 		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
@@ -408,6 +408,9 @@ func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, erro
 	if err != nil {
 		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
+	// TS 24.008 V20.1.0 §10.5.1.6 has no inferred zeros or counted spares.
+	wire.SpareCounts = nil
+	wire.ImplicitSpans = nil
 	v.Wire = wire
 	return v, nil
 }
@@ -500,14 +503,18 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
 	// §§10.5.1.6–10.5.1.7 require the five framing/Classmark 2 octets
 	// and at least one Classmark 3 octet before receiver-inferred zeros apply.
-	if r.BoundedRemaining() < 48 {
-		return GERANCS{}, operationLocation3.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANCS", Detail: "GERAN CS requires at least 48 bits"}, "", r.Position(), 0)
+	outerBefore := r.Wire()
+	outerOrigin := r.Fork()
+	probe := r.Fork()
+	header, headerErr := probe.ReadUint(16)
+	if r.BoundedRemaining() < 48 || headerErr != nil || header != 0x3303 {
+		return GERANCS{}, operationLocation3.failure(&runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: r.ErrorPath("GERANCS"), BitOffset: -1, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}}, Detail: "invalid GERAN CS Classmark 2 TLV"}, "", r.Position(), 0)
 	}
 	if r.Collecting() {
 		r.EnterObservationPath("GERANCS")
 		defer r.LeaveObservationPath()
 	}
-	if err := r.Expect("0011001100000011"); err != nil {
+	if _, err := r.ReadUint(16); err != nil {
 		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
 	cm2, err := DecodeClassmark2ValuePartFrom(r)
@@ -525,7 +532,7 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	}
 	cm3, err := classmark.DecodeClassmark3ValuePartFrom(r)
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation3.failure(wrapperChildError(r, err, "GERANCS/Classmark3"), "", r.Position(), 0)
 	}
 	if err := r.PopLimit(oldLimit); err != nil {
 		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
@@ -534,8 +541,27 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	if err != nil {
 		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
+	if len(wire.SpareCounts) == 0 {
+		wire.SpareCounts = nil
+	}
+	if len(wire.ImplicitSpans) == 0 {
+		wire.ImplicitSpans = nil
+	}
 	cm3.Wire = wire
-	return GERANCS{Classmark2: cm2, Classmark3: cm3, Wire: runtime.WireInfo{Tail: wire.Tail}}, nil
+	// TS 36.331 V19.4.0 §6.3.6 frames the two typed value parts;
+	// received capability layout belongs to those parts, not to the container.
+	outer, err := r.ValueWire(outerOrigin, outerBefore, true)
+	if err != nil {
+		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+	}
+	outer.Spare = nil
+	outer.Padding = nil
+	outer.Terminal = nil
+	outer.TruncatedAt = nil
+	outer.SpareCounts = nil
+	outer.ImplicitZeros = 0
+	outer.ImplicitSpans = nil
+	return GERANCS{Classmark2: cm2, Classmark3: cm3, Wire: outer}, nil
 }
 func EncodeGERANCSTo(w *runtime.Writer, v GERANCS) error {
 	if w == nil {
@@ -579,7 +605,7 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
 	// §10.5.5.12a require a two-octet minimum.
 	if r.BoundedRemaining() < 16 {
-		return GERANPS{}, operationLocation6.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: "GERANPS", Detail: "GERAN PS requires at least 16 bits"}, "", r.Position(), 0)
+		return GERANPS{}, operationLocation6.failure(geranPSMinimumError(r, r.Position()+r.Remaining()), "", r.Position(), 0)
 	}
 	// As in DecodeGERANPS, receiver-inferred zeros apply only inside the
 	// <Content> of the access capabilities (TS 24.008 V20.1.0 §10.5.5.12a),
@@ -601,8 +627,21 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	if err != nil {
 		return GERANPS{}, operationLocation6.failure(err, "", r.Position(), 0)
 	}
+	if len(wire.SpareCounts) == 0 {
+		wire.SpareCounts = nil
+	}
+	if len(wire.ImplicitSpans) == 0 {
+		wire.ImplicitSpans = nil
+	}
 	v.Wire = wire
-	return GERANPS{Capability: v, Wire: runtime.WireInfo{Tail: wire.Tail}}, nil
+	// TS 36.331 V19.4.0 §6.3.6 carries the TS 24.008
+	// V20.1.0 §10.5.5.12a value part with the same received boundary.
+	outer := runtime.Seal(struct{}{}, nil, wire.BitsConsumed, wire.Tail, runtime.WireInfo{})
+	outer.TransmittedBits = wire.TransmittedBits
+	return GERANPS{Capability: v, Wire: outer}, nil
+}
+func geranPSMinimumError(r *runtime.Reader, offset int) error {
+	return &runtime.OperationError{Operation: "decode", Kind: runtime.Truncated, Location: runtime.Location{Path: r.ErrorPath("MSRACapabilityValuePart"), BitOffset: offset, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.5.12a"}}, Cause: &runtime.DecodeError{Kind: runtime.Truncated, Offset: offset, Detail: "MSRACapabilityValuePart requires at least 16 bits"}}
 }
 func EncodeGERANPSTo(w *runtime.Writer, v GERANPS) error {
 	if w == nil {
@@ -623,6 +662,51 @@ func EncodeGERANPSCanonicalAtLength(v GERANPS, octets int) ([]byte, error) {
 		}
 		return operationValue, nil
 	}
+}
+
+// wrapperChildError inserts the container's child path beneath the enclosing
+// reader path. Nested offsets are already absolute and must not be shifted.
+func wrapperChildError(r *runtime.Reader, err error, child string) error {
+	if err == nil {
+		return nil
+	}
+	parent := r.ErrorPath("")
+	path := func(current string) string {
+		if current == parent {
+			current = ""
+		} else if parent != "" {
+			if rest, ok := strings.CutPrefix(current, parent); ok && strings.HasPrefix(rest, "/") {
+				current = strings.TrimPrefix(rest, "/")
+			}
+		}
+		return errorPath(r.ErrorPath(child), current)
+	}
+	var op *runtime.OperationError
+	if errors.As(err, &op) {
+		copy := *op
+		copy.Location.Path = path(copy.Location.Path)
+		copy.Cause = wrapperChildError(r, copy.Cause, child)
+		return &copy
+	}
+	var de *runtime.DecodeError
+	if errors.As(err, &de) {
+		copy := *de
+		copy.Path = path(copy.Path)
+		return &copy
+	}
+	var be *runtime.BoundError
+	if errors.As(err, &be) {
+		copy := *be
+		copy.Path = path(copy.Path)
+		return &copy
+	}
+	var fe *runtime.FallbackError
+	if errors.As(err, &fe) {
+		copy := *fe
+		copy.Path = path(copy.Path)
+		return &copy
+	}
+	return err
 }
 
 func shiftOperation(err error, offset int, path string) error {
