@@ -778,7 +778,7 @@ func decodePSCGroupIEPSCList(r *runtime.Reader) ([]PSCGroupIEPSCListEntry, error
 	var out []PSCGroupIEPSCListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "PSCGroupIEPSCList", len(out))
 			}
@@ -978,7 +978,7 @@ func decodePSCGroupIEPSCPatternLengthGroupList(r *runtime.Reader) ([]PSCGroupIEP
 	var out []PSCGroupIEPSCPatternLengthGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "PSCGroupIEPSCPatternLengthGroupList", len(out))
 			}
@@ -1851,7 +1851,7 @@ func decodeMBMSSessionListIETMGIGroupList(r *runtime.Reader) ([]MBMSSessionListI
 	var out []MBMSSessionListIETMGIGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "MBMSSessionListIETMGIGroupList", len(out))
 			}
@@ -2290,7 +2290,7 @@ func decodeMBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList(r *run
 	var out []MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "MBMSSessionParametersListIELengthOfMBMSBearerIdentityGroupList", len(out))
 			}
@@ -6191,7 +6191,7 @@ func decodePCIDGroupIEPCIDList(r *runtime.Reader) ([]PCIDGroupIEPCIDListEntry, e
 	var out []PCIDGroupIEPCIDListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation7.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDList", len(out))
 			}
@@ -6445,7 +6445,7 @@ func decodePCIDGroupIEPCIDPatternLengthGroupList(r *runtime.Reader) ([]PCIDGroup
 	var out []PCIDGroupIEPCIDPatternLengthGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation8.failure(err, "", r.Position(), 0), "PCIDGroupIEPCIDPatternLengthGroupList", len(out))
 			}
@@ -6605,7 +6605,7 @@ func decodeEnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselect
 	var out []EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation9.failure(err, "", r.Position(), 0), "EnhancedCellReselectionParametersIERepeatedEUTRANEnhancedCellReselectionParametersList", len(out))
 			}
@@ -6758,7 +6758,7 @@ func decodeRepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYI
 	var out []RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "RepeatedEUTRANEnhancedCellReselectionParametersStructEUTRANFREQUENCYINDEXList", len(out))
 			}

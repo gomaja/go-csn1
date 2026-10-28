@@ -95,3 +95,32 @@ func TestStandaloneEqualityFieldsAtInvertedPaddingBit(t *testing.T) {
 		}
 	}
 }
+
+func TestBandIndicatorHConstraintEncode(t *testing.T) {
+	// TS 44.018 V19.0.0 §10.5.2.32 defines L/H band indicators.
+	// TS 24.007 V20.0.0 Annex B §B.1.2.2: at position 2, H is zero.
+	for _, sample := range []struct{ input, expected byte }{{0x2b, 0x20}, {0x0b, 0}} {
+		r := runtime.NewReader([]byte{sample.input})
+		if _, err := r.ReadUint(2); err != nil {
+			t.Fatal(err)
+		}
+		value, err := DecodeBandIndicatorClause105232From(r)
+		if err != nil {
+			t.Fatal(err)
+		}
+		w := runtime.NewWriter()
+		if err := w.WriteUint(0, 2); err != nil {
+			t.Fatal(err)
+		}
+		if err := EncodeBandIndicatorClause105232To(w, value); err != nil {
+			t.Fatalf("%02x: %v", sample.input, err)
+		}
+		if err := w.WriteUint(0, 5); err != nil {
+			t.Fatal(err)
+		}
+		got, err := w.Bytes()
+		if err != nil || !bytes.Equal(got, []byte{sample.expected}) {
+			t.Fatalf("%02x: %x %v", sample.input, got, err)
+		}
+	}
+}

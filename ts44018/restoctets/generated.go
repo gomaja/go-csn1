@@ -3802,11 +3802,15 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCCompressedInterRATHOI
 	}
 	defer r.Leave()
 	width := 1
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("compressed_inter_rat_ho_info_ind", v)
 	return uint8(v), nil
 }
@@ -3816,10 +3820,14 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCCompressedInterRATHOI
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "IARestOctetsCompressedInterRATHOINFOINDChoiceRCCCompressedInterRATHOINFOIND", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("compressed_inter_rat_ho_info_ind", uint64(v))
@@ -4060,6 +4068,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoic
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -4364,6 +4376,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 		discardReader(candidate)
 		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -4638,6 +4654,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -4786,11 +4806,15 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 	}
 	defer r.Leave()
 	width := 1
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("compressed_inter_rat_ho_info_ind", v)
 	return uint8(v), nil
 }
@@ -4800,10 +4824,14 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersCompressedInterRATHOINFOIND", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("compressed_inter_rat_ho_info_ind", uint64(v))
@@ -5044,6 +5072,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -5437,6 +5469,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPa
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -5681,6 +5717,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentIm
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -5922,6 +5962,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPE
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -6130,6 +6174,10 @@ func decodeIARestOctetsCompressedInterRATHOINFOINDChoice(r *runtime.Reader) (IAR
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -6214,10 +6262,19 @@ func decodeIARestOctetsMultilaterationInformationRequestSelector(r *runtime.Read
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -6249,10 +6306,19 @@ func decodeIARestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOIM
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -7899,6 +7965,10 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -8670,6 +8740,10 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -8872,6 +8946,10 @@ func decodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (EG
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
@@ -10024,10 +10102,19 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoicePRMODEP0GroupSelector(r *run
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -10194,6 +10281,10 @@ func decodePacketUplinkAssignmentTFIASSIGNMENTChoice(r *runtime.Reader) (PacketU
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -10418,6 +10509,10 @@ func decodePacketUplinkAssignmentExtendedRAChoice(r *runtime.Reader) (PacketUpli
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -10650,6 +10745,10 @@ func decodePacketUplinkAssignmentPFIChoice(r *runtime.Reader) (PacketUplinkAssig
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -11596,6 +11695,10 @@ func decodePacketDownlinkAssignmentEGPRSWindowSizeChoice(r *runtime.Reader) (Pac
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -11827,6 +11930,10 @@ func decodePacketDownlinkAssignmentPFIChoice(r *runtime.Reader) (PacketDownlinkA
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -12415,6 +12522,10 @@ func decodePacketDownlinkAssignmentNPMTransferTimeChoice(r *runtime.Reader) (Pac
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
@@ -13057,6 +13168,10 @@ func decodeSecondPartPacketAssignmentExtendedRAChoice(r *runtime.Reader) (Second
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -14373,6 +14488,10 @@ func decodeIARRestOctetsRCCChoice(r *runtime.Reader) (IARRestOctetsRCCChoice, er
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -14427,10 +14546,19 @@ func decodeIARRestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOI
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -14671,11 +14799,15 @@ func decodeIAXRestOctetsCompressedInterRATHOINFOIND(r *runtime.Reader) (uint8, e
 	}
 	defer r.Leave()
 	width := 1
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("compressed_inter_rat_ho_info_ind", v)
 	return uint8(v), nil
 }
@@ -14685,10 +14817,14 @@ func encodeIAXRestOctetsCompressedInterRATHOINFOIND(w *runtime.Writer, v uint8) 
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "IAXRestOctetsCompressedInterRATHOINFOIND", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("compressed_inter_rat_ho_info_ind", uint64(v))
@@ -14852,6 +14988,10 @@ func decodeIAXRestOctetsRCCChoice(r *runtime.Reader) (IAXRestOctetsRCCChoice, er
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -14906,10 +15046,19 @@ func decodeIAXRestOctetsPEOIMMCellGroupDetailsSelector(r *runtime.Reader) (*PEOI
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -15135,10 +15284,19 @@ func decodeSI1RestOctetsNCHPositionSelector(r *runtime.Reader) (*uint8, error) {
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -15236,14 +15394,18 @@ func decodeBandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR(r *runtime.
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
+	if v != uint64(lhL) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("band_indicator", v)
 	return uint8(v), nil
 }
@@ -15253,13 +15415,17 @@ func encodeBandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR(w *runtime.
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL) {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105232BANDINDICATORChoiceBANDINDICATOR", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("band_indicator", uint64(v))
@@ -15272,14 +15438,18 @@ func decodeBandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled(r *runtime.R
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
+	if v != uint64(lhL^1) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("band_indicator", v)
 	return uint8(v), nil
 }
@@ -15289,13 +15459,17 @@ func encodeBandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled(w *runtime.W
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL^1) {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105232BANDINDICATORChoiceAltUnlabeled", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("band_indicator", uint64(v))
@@ -15343,6 +15517,10 @@ func decodeBandIndicatorClause105232BANDINDICATORChoice(r *runtime.Reader) (Band
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -15617,7 +15795,7 @@ func decodeSI2nRestOctetsGSMNeighbourCellSelectionParameters(r *runtime.Reader) 
 	var out []SI2nRestOctetsGSMNeighbourCellSelectionParametersEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "SI2nRestOctetsGSMNeighbourCellSelectionParameters", len(out))
 			}
@@ -16695,10 +16873,19 @@ func decodeSI3RestOctetGPRSIndicatorClause105234Selector(r *runtime.Reader) (*GP
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -16736,10 +16923,19 @@ func decodeSI3RestOctetSI2quaterIndicatorSelector(r *runtime.Reader) (*SI2quater
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -16951,10 +17147,19 @@ func decodeOptionalSelectionParametersClause105234SelectionParametersClause10523
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -17214,10 +17419,19 @@ func decodeOptionalPowerOffsetClause105234PowerOffsetSelector(r *runtime.Reader)
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -17335,6 +17549,10 @@ func decodeSystemInformation2terIndicatorAlternatives(r *runtime.Reader) (System
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -17469,6 +17687,10 @@ func decodeEarlyClassmarkSendingControlAlternatives(r *runtime.Reader) (EarlyCla
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -17569,10 +17791,19 @@ func decodeSchedulingIfAndWhereWHERESelector(r *runtime.Reader) (*uint8, error) 
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -17788,6 +18019,10 @@ func decodeN3GEarlyClassmarkSendingRestrictionAlternatives(r *runtime.Reader) (N
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -18009,10 +18244,19 @@ func decodeSystemInformation21IndicatorSI21POSITIONSelector(r *runtime.Reader) (
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -18079,10 +18323,19 @@ func decodeSI16RestOctetsLSAParametersClause105237eSelector(r *runtime.Reader) (
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -18958,7 +19211,7 @@ func decodeSI14RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 	var out []SI14RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation5.failure(err, "", r.Position(), 0), "SI14RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 			}
@@ -19396,7 +19649,7 @@ func decodeSI15RestOctetsDYNAMICARFCNMAPPINGDescription(r *runtime.Reader) ([]SI
 	var out []SI15RestOctetsDYNAMICARFCNMAPPINGDescriptionEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation6.failure(err, "", r.Position(), 0), "SI15RestOctetsDYNAMICARFCNMAPPINGDescription", len(out))
 			}
@@ -19907,10 +20160,19 @@ func decodeSI21RestOctetsNetworkSharingEABInformationNetworkSharingEABInformatio
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -22451,7 +22713,7 @@ func decodeUTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndP
 	var out []UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation10.failure(err, "", r.Position(), 0), "UTRANFDDTDDDescriptionStructRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityList", len(out))
 			}
@@ -22617,7 +22879,7 @@ func decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList(
 	var out []RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation11.failure(err, "", r.Position(), 0), "RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructUTRANARFCNList", len(out))
 			}
@@ -23242,7 +23504,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	var out []PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation12.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNeighbourFrequencyAndPriorityList", len(out))
 			}
@@ -23341,7 +23603,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	var out []PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation13.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANNotAllowedCellsList", len(out))
 			}
@@ -23440,7 +23702,7 @@ func decodePriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRA
 	var out []PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation14.failure(err, "", r.Position(), 0), "PriorityAndEUTRANParametersDescriptionStructClause105237oDEFAULTEUTRANPRIORITYGroupGroupRepeatedEUTRANPCIDToTAMappingList", len(out))
 			}
@@ -23818,7 +24080,7 @@ func decodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupL
 	var out []RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation15.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourFrequencyAndPriorityStructEARFCNExtendedGroupList", len(out))
 			}
@@ -24313,6 +24575,10 @@ func decodeSI10RestOctetsNeighbourInformationChoice(r *runtime.Reader) (SI10Rest
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -24492,7 +24758,7 @@ func decodeNeighbourInformationInfoFieldList(r *runtime.Reader) ([]NeighbourInfo
 	var out []NeighbourInformationInfoFieldListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("L") {
+		if matched, _ := r.LookaheadLiteral("L"); matched {
 			if err := r.Expect("L"); err != nil {
 				return nil, locateIndex(operationLocation16.failure(err, "", r.Position(), 0), "NeighbourInformationInfoFieldList", len(out))
 			}
@@ -24742,6 +25008,10 @@ func decodeCellInfoCellParametersChoice(r *runtime.Reader) (CellInfoCellParamete
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -24934,6 +25204,10 @@ func decodeCellParametersCellBarredChoice(r *runtime.Reader) (CellParametersCell
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -25409,6 +25683,10 @@ func decodeLaDifferentCellReselectHysteresisChoice(r *runtime.Reader) (LaDiffere
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -25489,7 +25767,7 @@ func decodeInfoFieldNextFrequencyList(r *runtime.Reader) ([]NextFrequency, error
 	var out []NextFrequency
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("L") {
+		if matched, _ := r.LookaheadLiteral("L"); matched {
 			if err := r.Expect("L"); err != nil {
 				return nil, locateIndex(operationLocation17.failure(err, "", r.Position(), 0), "InfoFieldNextFrequencyList", len(out))
 			}
@@ -25820,6 +26098,10 @@ func decodeDifferentialCellInfoBCCChoice(r *runtime.Reader) (DifferentialCellInf
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -25968,6 +26250,10 @@ func decodeDifferentialCellInfoDiffCellParsChoice(r *runtime.Reader) (Differenti
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -26161,6 +26447,10 @@ func decodeDiffCellParsCellBarredChoice(r *runtime.Reader) (DiffCellParsCellBarr
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -26371,6 +26661,10 @@ func decodeFurtherDiffCellInfoMsTxpwrMaxCchChoice(r *runtime.Reader) (FurtherDif
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -26538,6 +26832,10 @@ func decodeFurtherDiffCellInfoRxlevAccessMinChoice(r *runtime.Reader) (FurtherDi
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -26707,6 +27005,10 @@ func decodeFurtherDiffCellInfoCellReselectOffsetChoice(r *runtime.Reader) (Furth
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -26875,6 +27177,10 @@ func decodeFurtherDiffCellInfoTemporaryOffsetChoice(r *runtime.Reader) (FurtherD
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -27042,6 +27348,10 @@ func decodeFurtherDiffCellInfoPenaltyTimeChoice(r *runtime.Reader) (FurtherDiffC
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -27621,10 +27931,19 @@ func decodeSI9RestOctetsSchedulingInfoSelector(r *runtime.Reader) (*SchedulingIn
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -29055,6 +29374,10 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -29229,10 +29552,19 @@ func decodeSI2terRestOctetsSI2terMPCHANGEMARKGroupSelector(r *runtime.Reader) (*
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30134,6 +30466,10 @@ func decodeSI4RestOctetsBreakIndicatorChoice(r *runtime.Reader) (SI4RestOctetsBr
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -30278,10 +30614,19 @@ func decodeSI4RestOctetsOGPRSIndicatorClause105235Selector(r *runtime.Reader) (*
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30396,10 +30741,19 @@ func decodeSI4RestOctetsSLSAParametersClause105235Selector(r *runtime.Reader) (*
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30450,10 +30804,19 @@ func decodeSI4RestOctetsSCellIdentitySelector(r *runtime.Reader) (*uint16, error
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30485,10 +30848,19 @@ func decodeSI4RestOctetsSLSAIDInformationClause105235Selector(r *runtime.Reader)
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30641,10 +31013,19 @@ func decodeSI4RestOctetsSCBQ3GroupSelector(r *runtime.Reader) (*SI4RestOctetsSCB
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -30802,6 +31183,10 @@ func decodeBreakIndicatorAlternatives(r *runtime.Reader) (BreakIndicatorAlternat
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -30883,10 +31268,19 @@ func decodeOptionalSelectionParametersClause105235SelectionParametersClause10523
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -31146,10 +31540,19 @@ func decodeOptionalPowerOffsetClause105235PowerOffsetSelector(r *runtime.Reader)
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32149,10 +32552,19 @@ func decodeP2RestOctetsCN3Selector(r *runtime.Reader) (*uint8, error) {
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32276,10 +32688,19 @@ func decodeP2RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P2RestOctetsNLNP
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32311,10 +32732,19 @@ func decodeP2RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32346,10 +32776,19 @@ func decodeP2RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32381,10 +32820,19 @@ func decodeP2RestOctetsPriority3Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -32467,6 +32915,10 @@ func decodeP2RestOctetsPacketPageIndication3(r *runtime.Reader) (P2RestOctetsPac
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -32795,6 +33247,10 @@ func decodeP2RestOctetsMBMSNotification3Choice(r *runtime.Reader) (P2RestOctetsM
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -33039,6 +33495,10 @@ func decodeP2RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P2RestOctetsIm
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -33239,6 +33699,10 @@ func decodeP2RestOctetsIPASupportChoice(r *runtime.Reader) (P2RestOctetsIPASuppo
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -33481,6 +33945,10 @@ func decodeP2RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P2RestOctetsP
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -33722,6 +34190,10 @@ func decodeP2RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -33934,6 +34406,10 @@ func decodeP2RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P2RestOc
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -34424,7 +34900,7 @@ func decodeMBMSInformationClause105224MBMSChannelParametersGroupList(r *runtime.
 	var out []MBMSInformationClause105224MBMSChannelParametersGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation20.failure(err, "", r.Position(), 0), "MBMSInformationClause105224MBMSChannelParametersGroupList", len(out))
 			}
@@ -34720,10 +35196,19 @@ func decodeP3RestOctetsCN3GroupSelector(r *runtime.Reader) (*P3RestOctetsCN3Grou
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -34847,10 +35332,19 @@ func decodeP3RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P3RestOctetsNLNP
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -34882,10 +35376,19 @@ func decodeP3RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -34917,10 +35420,19 @@ func decodeP3RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -34952,10 +35464,19 @@ func decodeP3RestOctetsPriority3Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -34987,10 +35508,19 @@ func decodeP3RestOctetsPriority4Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -35209,6 +35739,10 @@ func decodeP3RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P3RestOctetsIm
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -35409,6 +35943,10 @@ func decodeP3RestOctetsIPASupportChoice(r *runtime.Reader) (P3RestOctetsIPASuppo
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -35651,6 +36189,10 @@ func decodeP3RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P3RestOctetsP
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -35892,6 +36434,10 @@ func decodeP3RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -36104,6 +36650,10 @@ func decodeP3RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P3RestOc
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -38080,6 +38630,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -38341,6 +38895,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -38531,6 +39089,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -38723,6 +39285,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -38901,6 +39467,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -39065,6 +39635,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -39243,6 +39817,10 @@ func decodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -39904,7 +40482,7 @@ func decodeUTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsL
 	var out []UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation21.failure(err, "", r.Position(), 0), "UTRANFDDDescriptionStructClause105233bRepeatedUTRANFDDNeighbourCellsList", len(out))
 			}
@@ -40305,7 +40883,7 @@ func decodeUTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsL
 	var out []UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation22.failure(err, "", r.Position(), 0), "UTRANTDDDescriptionStructClause105233bRepeatedUTRANTDDNeighbourCellsList", len(out))
 			}
@@ -41264,7 +41842,7 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList(r 
 	var out []GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("1") {
+		if matched, _ := r.LookaheadLiteral("1"); matched {
 			if err := r.Expect("1"); err != nil {
 				return nil, locateIndex(operationLocation23.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupRTDList", len(out))
 			}
@@ -41513,7 +42091,7 @@ func decodeGPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RT
 	var out []GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("1") {
+		if matched, _ := r.LookaheadLiteral("1"); matched {
 			if err := r.Expect("1"); err != nil {
 				return nil, locateIndex(operationLocation24.failure(err, "", r.Position(), 0), "GPRSRealTimeDifferenceDescriptionStructBAIndexStartRTDGroupVariant2RTDList", len(out))
 			}
@@ -41769,7 +42347,7 @@ func decodeRTD6StructRTDList(r *runtime.Reader) ([]RTD6StructRTDListEntry, error
 	var out []RTD6StructRTDListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("1") {
+		if matched, _ := r.LookaheadLiteral("1"); matched {
 			if err := r.Expect("1"); err != nil {
 				return nil, locateIndex(operationLocation25.failure(err, "", r.Position(), 0), "RTD6StructRTDList", len(out))
 			}
@@ -41922,7 +42500,7 @@ func decodeRTD12StructRTDList(r *runtime.Reader) ([]RTD12StructRTDListEntry, err
 	var out []RTD12StructRTDListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("1") {
+		if matched, _ := r.LookaheadLiteral("1"); matched {
 			if err := r.Expect("1"); err != nil {
 				return nil, locateIndex(operationLocation26.failure(err, "", r.Position(), 0), "RTD12StructRTDList", len(out))
 			}
@@ -45398,7 +45976,7 @@ func decodeN3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParameters
 	var out []N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation31.failure(err, "", r.Position(), 0), "N3GPriorityParametersDescriptionStructRepeatedUTRANPriorityParametersList", len(out))
 			}
@@ -45590,7 +46168,7 @@ func decodeRepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList(r *runti
 	var out []RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation32.failure(err, "", r.Position(), 0), "RepeatedUTRANPriorityParametersStructUTRANFREQUENCYINDEXList", len(out))
 			}
@@ -46108,7 +46686,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList(r *
 	var out []EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation33.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNeighbourCellsList", len(out))
 			}
@@ -46207,7 +46785,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList(r 
 	var out []EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation34.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANNotAllowedCellsList", len(out))
 			}
@@ -46306,7 +46884,7 @@ func decodeEUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList(r 
 	var out []EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation35.failure(err, "", r.Position(), 0), "EUTRANParametersDescriptionStructRepeatedEUTRANPCIDToTAMappingList", len(out))
 			}
@@ -48525,7 +49103,7 @@ func decodeRepeatedEUTRANNeighbourCellsStructEARFCNGroupList(r *runtime.Reader) 
 	var out []RepeatedEUTRANNeighbourCellsStructEARFCNGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation36.failure(err, "", r.Position(), 0), "RepeatedEUTRANNeighbourCellsStructEARFCNGroupList", len(out))
 			}
@@ -48923,7 +49501,7 @@ func decodeRepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList(r *runtim
 	var out []RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation37.failure(err, "", r.Position(), 0), "RepeatedEUTRANNotAllowedCellsStructEUTRANFREQUENCYINDEXList", len(out))
 			}
@@ -49070,7 +49648,7 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList(r *runtime.Rea
 	var out []RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation38.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructPCIDToTAMappingList", len(out))
 			}
@@ -49188,7 +49766,7 @@ func decodeRepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList(r *runtim
 	var out []RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation39.failure(err, "", r.Position(), 0), "RepeatedEUTRANPCIDToTAMappingStructEUTRANFREQUENCYINDEXList", len(out))
 			}
@@ -49370,7 +49948,7 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXLi
 	var out []N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation40.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupListEntryUTRANFREQUENCYINDEXList", len(out))
 			}
@@ -49466,7 +50044,7 @@ func decodeN3GCSGDescriptionStructCSGPSCSPLITGroupList(r *runtime.Reader) ([]N3G
 	var out []N3GCSGDescriptionStructCSGPSCSPLITGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation41.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGPSCSPLITGroupList", len(out))
 			}
@@ -49797,7 +50375,7 @@ func decodeN3GCSGDescriptionStructCSGFDDUARFCNList(r *runtime.Reader) ([]N3GCSGD
 	var out []N3GCSGDescriptionStructCSGFDDUARFCNListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation42.failure(err, "", r.Position(), 0), "N3GCSGDescriptionStructCSGFDDUARFCNList", len(out))
 			}
@@ -49979,7 +50557,7 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYIND
 	var out []EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation43.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntryEUTRANFREQUENCYINDEXList", len(out))
 			}
@@ -50075,7 +50653,7 @@ func decodeEUTRANCSGDescriptionStructCSGPCISPLITGroupList(r *runtime.Reader) ([]
 	var out []EUTRANCSGDescriptionStructCSGPCISPLITGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation44.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGPCISPLITGroupList", len(out))
 			}
@@ -50193,7 +50771,7 @@ func decodeEUTRANCSGDescriptionStructCSGEARFCNList(r *runtime.Reader) ([]EUTRANC
 	var out []EUTRANCSGDescriptionStructCSGEARFCNListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation45.failure(err, "", r.Position(), 0), "EUTRANCSGDescriptionStructCSGEARFCNList", len(out))
 			}
@@ -51008,7 +51586,7 @@ func decodeExtendedEARFCNsDescriptionStructEARFCNExtendedList(r *runtime.Reader)
 	var out []ExtendedEARFCNsDescriptionStructEARFCNExtendedListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation46.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionStructEARFCNExtendedList", len(out))
 			}
@@ -51161,7 +51739,7 @@ func decodeExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList(r *r
 	var out []ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation47.failure(err, "", r.Position(), 0), "ExtendedEARFCNsDescriptionForCSGCellsStructCSGEARFCNExtendedList", len(out))
 			}
@@ -51241,10 +51819,19 @@ func decodeSI6RestOctetsPCHAndNCHInfoSelector(r *runtime.Reader) (*PCHAndNCHInfo
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -51295,10 +51882,19 @@ func decodeSI6RestOctetsVBSVGCSOptionsSelector(r *runtime.Reader) (*uint8, error
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -51326,14 +51922,18 @@ func decodeSI6RestOctetsDTMSupportChoiceDTMSupport(r *runtime.Reader) (uint8, er
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
+	if v != uint64(lhL) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("dtm_support", v)
 	return uint8(v), nil
 }
@@ -51343,13 +51943,17 @@ func encodeSI6RestOctetsDTMSupportChoiceDTMSupport(w *runtime.Writer, v uint8) e
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "SI6RestOctetsDTMSupportChoiceDTMSupport", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL) {
 		return w.ComponentError(runtime.InvalidValue, "SI6RestOctetsDTMSupportChoiceDTMSupport", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("dtm_support", uint64(v))
@@ -51362,14 +51966,18 @@ func decodeSI6RestOctetsDTMSupportChoiceRACDTMSupport(r *runtime.Reader) (uint8,
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
+	if v != uint64(lhL^1) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("dtm_support", v)
 	return uint8(v), nil
 }
@@ -51379,13 +51987,17 @@ func encodeSI6RestOctetsDTMSupportChoiceRACDTMSupport(w *runtime.Writer, v uint8
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "SI6RestOctetsDTMSupportChoiceRACDTMSupport", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL^1) {
 		return w.ComponentError(runtime.InvalidValue, "SI6RestOctetsDTMSupportChoiceRACDTMSupport", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("dtm_support", uint64(v))
@@ -51545,6 +52157,10 @@ func decodeSI6RestOctetsDTMSupportChoice(r *runtime.Reader) (SI6RestOctetsDTMSup
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -51616,10 +52232,19 @@ func decodeSI6RestOctetsGPRSMSTXPWRMAXCCHSelector(r *runtime.Reader) (*uint8, er
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -51743,10 +52368,19 @@ func decodeSI6RestOctetsDEDICATEDMODEMBMSNOTIFICATIONSUPPORTGroupSelector(r *run
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -51826,10 +52460,19 @@ func decodeSI6RestOctetsAMRConfigSelector(r *runtime.Reader) (**uint8, error) {
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -52007,6 +52650,10 @@ func decodeSI6RestOctetsRandomBitStreamChoice(r *runtime.Reader) (SI6RestOctetsR
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -52835,14 +53482,18 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR(r *runtime
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
+	if v != uint64(lhL) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("band_indicator", v)
 	return uint8(v), nil
 }
@@ -52852,13 +53503,17 @@ func encodeBandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR(w *runtime
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL) {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105235aBANDINDICATORChoiceBANDINDICATOR", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("band_indicator", uint64(v))
@@ -52871,14 +53526,18 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled(r *runtime.
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
+	if v != uint64(lhL^1) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("band_indicator", v)
 	return uint8(v), nil
 }
@@ -52888,13 +53547,17 @@ func encodeBandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled(w *runtime.
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL^1) {
 		return w.ComponentError(runtime.InvalidValue, "BandIndicatorClause105235aBANDINDICATORChoiceAltUnlabeled", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("band_indicator", uint64(v))
@@ -52942,6 +53605,10 @@ func decodeBandIndicatorClause105235aBANDINDICATORChoice(r *runtime.Reader) (Ban
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -54466,6 +55133,10 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -54643,6 +55314,10 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(r 
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
@@ -54822,6 +55497,10 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(r *runtime.Reader) (SI13
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -54960,10 +55639,19 @@ func decodeSI13RestOctetsBCCHCHANGEMARKGroupSelector(r *runtime.Reader) (*SI13Re
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -55521,6 +56209,10 @@ func decodeSICHANGEALTAlternatives(r *runtime.Reader) (SICHANGEALTAlternatives, 
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -56618,7 +57310,7 @@ func decodeCOMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList(r *runtime.Re
 	var out []COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation51.failure(err, "", r.Position(), 0), "COMPACTNeighbourCellParamsStructSTARTFREQUENCYGroupList", len(out))
 			}
@@ -58355,6 +59047,10 @@ func decodeIPARestOctetsRCCChoice(r *runtime.Reader) (IPARestOctetsRCCChoice, er
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -58722,6 +59418,10 @@ func decodeIPARestOctetsAcknowledgedAccessRequest1Choice(r *runtime.Reader) (IPA
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -58937,6 +59637,10 @@ func decodeIPARestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (IPARest
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -59447,7 +60151,7 @@ func decodeIPAUplinkAssignmentStructRandomReferenceGroupList(r *runtime.Reader) 
 	var out []IPAUplinkAssignmentStructRandomReferenceGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation55.failure(err, "", r.Position(), 0), "IPAUplinkAssignmentStructRandomReferenceGroupList", len(out))
 			}
@@ -59829,7 +60533,7 @@ func decodeIPADownlinkAssignmentStructTLLIGroupList(r *runtime.Reader) ([]IPADow
 	var out []IPADownlinkAssignmentStructTLLIGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation56.failure(err, "", r.Position(), 0), "IPADownlinkAssignmentStructTLLIGroupList", len(out))
 			}
@@ -60325,7 +61029,7 @@ func decodeIPASingleBlockUplinkAssignmentStructRandomReferenceGroupList(r *runti
 	var out []IPASingleBlockUplinkAssignmentStructRandomReferenceGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation57.failure(err, "", r.Position(), 0), "IPASingleBlockUplinkAssignmentStructRandomReferenceGroupList", len(out))
 			}
@@ -61381,14 +62085,18 @@ func decodeEmergencyIndEmergencyIndChoiceEmergencyInd(r *runtime.Reader) (uint8,
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('L', r.Position()-1)) {
+	if v != uint64(lhL) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("emergency_ind", v)
 	return uint8(v), nil
 }
@@ -61398,13 +62106,17 @@ func encodeEmergencyIndEmergencyIndChoiceEmergencyInd(w *runtime.Writer, v uint8
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "EmergencyIndEmergencyIndChoiceEmergencyInd", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('L', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL) {
 		return w.ComponentError(runtime.InvalidValue, "EmergencyIndEmergencyIndChoiceEmergencyInd", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("emergency_ind", uint64(v))
@@ -61417,14 +62129,18 @@ func decodeEmergencyIndEmergencyIndChoiceAltUnlabeled(r *runtime.Reader) (uint8,
 	defer r.Leave()
 	width := 1
 	fieldStart := r.Position()
+	lhL, err := r.LHBit('L')
+	if err != nil {
+		return 0, err
+	}
 	v, err := r.ReadUint(width)
 	if err != nil {
 		return 0, err
 	}
-	if v != uint64(runtime.LHBit('H', r.Position()-1)) {
+	if v != uint64(lhL^1) {
 		return 0, constraintFailure(r, fieldStart, width, "equality constraint failed")
 	}
-	v ^= uint64(runtime.LHBit('L', r.Position()-1))
+	v ^= uint64(lhL)
 	r.Set("emergency_ind", v)
 	return uint8(v), nil
 }
@@ -61434,13 +62150,17 @@ func encodeEmergencyIndEmergencyIndChoiceAltUnlabeled(w *runtime.Writer, v uint8
 	}
 	defer w.Leave()
 	width := 1
+	lhL, err := w.LHBit('L')
+	if err != nil {
+		return err
+	}
 	if v > 1 {
 		return w.ComponentError(runtime.InvalidValue, "EmergencyIndEmergencyIndChoiceAltUnlabeled", width, fmt.Errorf("L/H field outside 0..1"))
 	}
-	if uint64(v)^uint64(runtime.LHBit('L', w.Position())) != uint64(runtime.LHBit('H', w.Position())) {
+	if uint64(v)^uint64(lhL) != uint64(lhL^1) {
 		return w.ComponentError(runtime.InvalidValue, "EmergencyIndEmergencyIndChoiceAltUnlabeled", width, fmt.Errorf("equality constraint failed"))
 	}
-	if err := w.WriteUint(uint64(v)^uint64(runtime.LHBit('L', w.Position())), width); err != nil {
+	if err := w.WriteUint(uint64(v)^uint64(lhL), width); err != nil {
 		return err
 	}
 	w.Set("emergency_ind", uint64(v))
@@ -61488,6 +62208,10 @@ func decodeEmergencyIndEmergencyIndChoice(r *runtime.Reader) (EmergencyIndEmerge
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -62278,6 +63002,10 @@ func decodeNTNRestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (NTNRestOctetsC
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -62867,6 +63595,10 @@ func decodeNTNRestOctetsListOfEmergencyInformationChoice(r *runtime.Reader) (NTN
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -63399,7 +64131,7 @@ func decodeListOfVSTKRANDInformationSegmentIdGroupList(r *runtime.Reader) ([]Lis
 	var out []ListOfVSTKRANDInformationSegmentIdGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation60.failure(err, "", r.Position(), 0), "ListOfVSTKRANDInformationSegmentIdGroupList", len(out))
 			}
@@ -63552,7 +64284,7 @@ func decodeListOfReducedGCRReducedGCRList(r *runtime.Reader) ([]ListOfReducedGCR
 	var out []ListOfReducedGCRReducedGCRListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation61.failure(err, "", r.Position(), 0), "ListOfReducedGCRReducedGCRList", len(out))
 			}
@@ -63724,10 +64456,19 @@ func decodeP1RestOctetsNLNPCHGroupSelector(r *runtime.Reader) (*P1RestOctetsNLNP
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -63759,10 +64500,19 @@ func decodeP1RestOctetsPriority1Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -63794,10 +64544,19 @@ func decodeP1RestOctetsPriority2Selector(r *runtime.Reader) (*PriorityClause1052
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -63829,10 +64588,19 @@ func decodeP1RestOctetsGroupCallInformationSelector(r *runtime.Reader) (*GroupCa
 	if err := candidate.Expect("L"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 	}
 	discardReader(candidate)
 	candidate = r.Fork()
 	if err := candidate.Expect("H"); err != nil {
+		if errors.Is(err, runtime.ErrLHPositionUndefined) {
+			discardReader(candidate)
+			return nil, err
+		}
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
@@ -63915,6 +64683,10 @@ func decodeP1RestOctetsPacketPageIndication1(r *runtime.Reader) (P1RestOctetsPac
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -64013,6 +64785,10 @@ func decodeP1RestOctetsPacketPageIndication2(r *runtime.Reader) (P1RestOctetsPac
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -65064,6 +65840,10 @@ func decodeP1RestOctetsCELLGLOBALCOUNTChoice(r *runtime.Reader) (P1RestOctetsCEL
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -65296,6 +66076,10 @@ func decodeP1RestOctetsAMRConfigChoice(r *runtime.Reader) (P1RestOctetsAMRConfig
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -65558,6 +66342,10 @@ func decodeP1RestOctetsPriorityUplinkAccessChoice(r *runtime.Reader) (P1RestOcte
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && reservedErr != nil {
 		return result, reservedErr
 	}
@@ -65802,6 +66590,10 @@ func decodeP1RestOctetsImplicitRejectCSChoice(r *runtime.Reader) (P1RestOctetsIm
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -66002,6 +66794,10 @@ func decodeP1RestOctetsIPASupportChoice(r *runtime.Reader) (P1RestOctetsIPASuppo
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -66244,6 +67040,10 @@ func decodeP1RestOctetsPEOBCCHCHANGEMARKChoice(r *runtime.Reader) (P1RestOctetsP
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -66485,6 +67285,10 @@ func decodeP1RestOctetsPositioningEventPendingIndicatorChoice(r *runtime.Reader)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
+	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
 	}
@@ -66697,6 +67501,10 @@ func decodeP1RestOctetsPEOIMMCellGroupDetailsChoice(r *runtime.Reader) (P1RestOc
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
+	}
+	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+		discardReader(chosen)
+		return result, truncatedErr
 	}
 	if matches == 0 && truncatedErr != nil {
 		return result, truncatedErr
@@ -67396,7 +68204,7 @@ func decodeMBMSInformationClause105223MBMSChannelParametersGroupList(r *runtime.
 	var out []MBMSInformationClause105223MBMSChannelParametersGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation62.failure(err, "", r.Position(), 0), "MBMSInformationClause105223MBMSChannelParametersGroupList", len(out))
 			}
@@ -68270,7 +69078,7 @@ func decodeSI10bisRestOctetsPositionInSI5ListGroupList(r *runtime.Reader) ([]SI1
 	var out []SI10bisRestOctetsPositionInSI5ListGroupListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("L") {
+		if matched, _ := r.LookaheadLiteral("L"); matched {
 			if err := r.Expect("L"); err != nil {
 				return nil, locateIndex(operationLocation63.failure(err, "", r.Position(), 0), "SI10bisRestOctetsPositionInSI5ListGroupList", len(out))
 			}

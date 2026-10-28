@@ -171,7 +171,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	var out []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescriptionGSMDescriptionList", len(out))
 			}
@@ -325,7 +325,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	var out []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescriptionUTRANFDDDescriptionList", len(out))
 			}
@@ -479,7 +479,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	var out []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescriptionUTRANTDDDescriptionList", len(out))
 			}
@@ -633,7 +633,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	var out []CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescriptionEUTRANDescriptionList", len(out))
 			}

@@ -522,7 +522,7 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	var out []MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesListEntry
 	terminated := false
 	for r.Remaining() > 0 {
-		if r.Matches("0") {
+		if matched, _ := r.LookaheadLiteral("0"); matched {
 			if err := r.Expect("0"); err != nil {
 				return nil, locateIndex(operationLocation1.failure(err, "", r.Position(), 0), "MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesAdditionalAccessTechnologiesList", len(out))
 			}
