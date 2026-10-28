@@ -114,6 +114,9 @@ func lookupCauseDetail(message, name string) string {
 }
 
 // errorPath appends a child only when the parent does not already end in it.
+// Keep diagnostic path formatting in one compilation body.
+//
+//go:noinline
 func errorPath(parent, child string) string {
 	if child == "" || parent == child || strings.HasSuffix(parent, "/"+child) {
 		return parent
@@ -124,6 +127,7 @@ func errorPath(parent, child string) string {
 	return parent + "/" + child
 }
 
+//go:noinline
 func splitErrorPath(path string) (string, string) {
 	if i := strings.LastIndexByte(path, '/'); i >= 0 {
 		return path[:i], path[i+1:]
