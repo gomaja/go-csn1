@@ -281,6 +281,10 @@ func key(name string) string {
 	return b.String()
 }
 
+// Keep the map-copy loop in one compiled body instead of expanding it in each
+// binding-state caller.
+//
+//go:noinline
 func cloneVars(input map[string]uint64) map[string]uint64 {
 	out := make(map[string]uint64, len(input))
 	for k, v := range input {

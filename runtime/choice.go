@@ -297,7 +297,7 @@ func (r *Reader) commitChoice(other *Reader) {
 	if owned == nil {
 		other.applyBindings(&target, r)
 	} else {
-		// Set writes through this already-owned map without retaining a
+		// Apply writes through this already-owned map without retaining a
 		// pointer to the stack copy of the trial metadata.
 		overlay := bindingTarget{values: state.values}
 		other.applyBindings(&overlay, r)
