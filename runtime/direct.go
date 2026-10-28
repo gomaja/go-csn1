@@ -827,7 +827,7 @@ func (w *Writer) WriteBitString(value BitString, width int) error {
 func (w *Writer) WriteLiteral(pattern string) error {
 	for _, symbol := range pattern {
 		bit := literalBit(symbol, w.bits)
-		if symbol == 'L' || symbol == 'H' {
+		if (symbol == 'L' || symbol == 'H') && w.inferredLHPositionPossible() {
 			value, err := w.LHBit(symbol)
 			if err != nil {
 				return err
@@ -880,7 +880,11 @@ func (w *Writer) WritePadding() error {
 		return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
 	}
 	for w.bits%8 != 0 {
-		if err := w.WriteLiteral("L"); err != nil {
+		if w.inferredLHPositionPossible() {
+			if err := w.WriteLiteral("L"); err != nil {
+				return w.operationFailure(err, 0, InvalidValue)
+			}
+		} else if err := w.put(literalBit('L', w.bits)); err != nil {
 			return w.operationFailure(err, 0, InvalidValue)
 		}
 	}
@@ -915,7 +919,11 @@ func (w *Writer) WritePaddingTo(bits int) error {
 		return w.operationFailure(fmt.Errorf("missing received fixed-IE padding"), 0, InvalidValue)
 	}
 	for w.bits < bits {
-		if err := w.WriteLiteral("L"); err != nil {
+		if w.inferredLHPositionPossible() {
+			if err := w.WriteLiteral("L"); err != nil {
+				return w.operationFailure(err, 0, InvalidValue)
+			}
+		} else if err := w.put(literalBit('L', w.bits)); err != nil {
 			return w.operationFailure(err, 0, InvalidValue)
 		}
 	}

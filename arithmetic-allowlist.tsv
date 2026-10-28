@@ -40,30 +40,30 @@ runtime/compiled_expression.go:conversion:int64(len(table))	1	FIXED: expression 
 runtime/compiled_expression.go:conversion:int64(n)	1	FIXED: expression operands are bounded to +/-2^20 by Operand before arithmetic, so sums and guard intermediates fit +/-2^21 and products fit +/-2^40 in int64; variable and final-width conversions follow 0..2^20 checks; table length is at most 21. runtime/compiled_expression.go:45 `func (v ExpressionValue) Operand()`; runtime/compiled_expression.go:64 `v, right = v.Operand(), right.Operand()`; runtime/compiled_expression.go:28 `return ExpressionValue{n: int64(n)}`; runtime/compiled_expression.go:154 `if v.n < 0 || v.n > maxBits`.
 runtime/complete_value_writer.go:arithmetic:w.implicitSpan++	1	FIXED: the index is bounded by len(w.wire.ImplicitSpans) in the enclosing loop; runtime/complete_value_writer.go:44 `w.implicitSpan++`.
 runtime/direct.go:arithmetic:*r.steps++	1	BOUNDED: operand=r.steps guard=runtime/direct.go:179
-runtime/direct.go:arithmetic:1 << (7 - uint((start+i)%8))	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1190
-runtime/direct.go:arithmetic:1 << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:1191
+runtime/direct.go:arithmetic:1 << (7 - uint((start+i)%8))	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1198
+runtime/direct.go:arithmetic:1 << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:1199
 runtime/direct.go:arithmetic:1 << (7 - uint(w.bits%8))	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:789
-runtime/direct.go:arithmetic:7 - uint((consumed+i)%8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1151
-runtime/direct.go:arithmetic:7 - uint((start+i)%8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1190
-runtime/direct.go:arithmetic:7 - uint(i%8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:297; operand=i intrinsic=mod8 guard=runtime/direct.go:821; operand=i intrinsic=mod8 guard=runtime/direct.go:1152; operand=i intrinsic=mod8 guard=runtime/direct.go:1191
+runtime/direct.go:arithmetic:7 - uint((consumed+i)%8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1159
+runtime/direct.go:arithmetic:7 - uint((start+i)%8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1198
+runtime/direct.go:arithmetic:7 - uint(i%8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:297; operand=i intrinsic=mod8 guard=runtime/direct.go:821; operand=i intrinsic=mod8 guard=runtime/direct.go:1160; operand=i intrinsic=mod8 guard=runtime/direct.go:1199
 runtime/direct.go:arithmetic:7 - uint(pos%8)	1	FIXED: checked physical bit position is nonnegative; modulo 8 is 0..7; runtime/direct.go:354 `pos := r.pos + i`
-runtime/direct.go:arithmetic:7 - uint(position%8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1169
+runtime/direct.go:arithmetic:7 - uint(position%8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1177
 runtime/direct.go:arithmetic:7 - uint(r.pos%8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:227
 runtime/direct.go:arithmetic:7 - uint(w.bits%8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:789
 runtime/direct.go:arithmetic:8 - w.bits%8	1	FIXED: modulo 8 yields 0..7 so subtraction yields 1..8 at runtime/direct.go:669 `return (8 - w.bits%8) % 8`
 runtime/direct.go:arithmetic:b << (7 - uint(i%8))	1	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:297
-runtime/direct.go:arithmetic:bits - w.bits	2	BOUNDED: operand=bits guard=runtime/direct.go:898
-runtime/direct.go:arithmetic:consumed + i	2	BOUNDED: operand=consumed guard=runtime/direct.go:1141
-runtime/direct.go:arithmetic:count + 7	1	BOUNDED: operand=count guard=runtime/direct.go:1185
-runtime/direct.go:arithmetic:count += span.Count	1	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1108 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:bits - w.bits	2	BOUNDED: operand=bits guard=runtime/direct.go:902
+runtime/direct.go:arithmetic:consumed + i	2	BOUNDED: operand=consumed guard=runtime/direct.go:1149
+runtime/direct.go:arithmetic:count + 7	1	BOUNDED: operand=count guard=runtime/direct.go:1193
+runtime/direct.go:arithmetic:count += span.Count	1	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1116 `count > maxBits-span.Count`
 runtime/direct.go:arithmetic:i + 1	2	BOUNDED: operand=i guard=runtime/direct.go:627; operand=i guard=runtime/direct.go:639
-runtime/direct.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/direct.go:262; operand=i guard=runtime/direct.go:291; operand=i guard=runtime/direct.go:820; operand=i guard=runtime/direct.go:1150; operand=i guard=runtime/direct.go:1189
+runtime/direct.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/direct.go:262; operand=i guard=runtime/direct.go:291; operand=i guard=runtime/direct.go:820; operand=i guard=runtime/direct.go:1158; operand=i guard=runtime/direct.go:1197
 runtime/direct.go:arithmetic:i--	2	BOUNDED: operand=i guard=runtime/direct.go:721; operand=i guard=runtime/direct.go:809
 runtime/direct.go:arithmetic:int(r.fieldWidthHi) << 16	1	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:168 `width := int(r.fieldWidthHi)<<16 | int(r.fieldWidthLo)`.
-runtime/direct.go:arithmetic:len(data) * 8	6	BOUNDED: operand=data guard=runtime/direct.go:83; operand=data guard=runtime/direct.go:99; operand=data guard=runtime/direct.go:1185; operand=data guard=runtime/direct.go:1201
-runtime/direct.go:arithmetic:len(data)*8 - consumed	1	FIXED: TrailingBits bounds data by maxBits/8 and consumed by len(data)*8 at runtime/direct.go:1201 `consumed > len(data)*8`
-runtime/direct.go:arithmetic:len(data)*8 - start	1	FIXED: bitsAt checks start and count against bounded data length before subtraction at runtime/direct.go:1185 `count > len(data)*8-start`
-runtime/direct.go:arithmetic:len(encoded) * 8	1	BOUNDED: operand=encoded guard=runtime/direct.go:1141
+runtime/direct.go:arithmetic:len(data) * 8	6	BOUNDED: operand=data guard=runtime/direct.go:83; operand=data guard=runtime/direct.go:99; operand=data guard=runtime/direct.go:1193; operand=data guard=runtime/direct.go:1209
+runtime/direct.go:arithmetic:len(data)*8 - consumed	1	FIXED: TrailingBits bounds data by maxBits/8 and consumed by len(data)*8 at runtime/direct.go:1209 `consumed > len(data)*8`
+runtime/direct.go:arithmetic:len(data)*8 - start	1	FIXED: bitsAt checks start and count against bounded data length before subtraction at runtime/direct.go:1193 `count > len(data)*8-start`
+runtime/direct.go:arithmetic:len(encoded) * 8	1	BOUNDED: operand=encoded guard=runtime/direct.go:1149
 runtime/direct.go:arithmetic:len(r.data) * 8	2	BOUNDED: operand=r.data callee=Check guard=runtime/direct.go:115; operand=data callee=CheckInput guard=runtime/direct.go:91
 runtime/direct.go:arithmetic:len(r.path) - 1	1	BOUNDED: operand=r.path intrinsic=lenMinusOne guard=runtime/direct.go:198
 runtime/direct.go:arithmetic:len(r.wire.ImplicitSpans) - 1	1	BOUNDED: operand=r.wire.ImplicitSpans intrinsic=lenMinusOne guard=runtime/direct.go:247
@@ -74,7 +74,7 @@ runtime/direct.go:arithmetic:len(w.path) - 1	1	BOUNDED: operand=w.path intrinsic
 runtime/direct.go:arithmetic:maxBits + 8	1	BOUNDED: operand=maxBits intrinsic=constant guard=runtime/direct.go:50
 runtime/direct.go:arithmetic:maxBits - last.Count	1	FIXED: Reader.bit checks prior span count is positive and at most maxBits before subtracting at runtime/direct.go:240 `last.Count >= maxBits`
 runtime/direct.go:arithmetic:maxBits - r.pos	2	BOUNDED: operand=r.pos guard=runtime/direct.go:112; operand=r.pos guard=runtime/direct.go:223
-runtime/direct.go:arithmetic:maxBits - span.Count	3	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1108 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:maxBits - span.Count	3	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1116 `count > maxBits-span.Count`
 runtime/direct.go:arithmetic:maxBits - w.bits	3	BOUNDED: operand=w.bits guard=runtime/direct.go:678; operand=w.bits guard=runtime/direct.go:733; operand=w.bits guard=runtime/direct.go:599
 runtime/direct.go:arithmetic:min(len(pattern), maxBits) + 1	1	FIXED: maxBits is 2^20 and operands are checked against that limit before use; runtime/direct.go:307 `encoded := min(len(pattern), maxBits) + 1`.
 runtime/direct.go:arithmetic:octets * 8	1	FIXED: LengthFieldError checks w.bits in 0..maxBits and octets in 0..(maxBits-w.bits)/8 before the bound arithmetic at runtime/direct.go:599 `octets > (maxBits-w.bits)/8`.
@@ -90,9 +90,9 @@ runtime/direct.go:arithmetic:r.pos - start	1	FIXED: RecordTerminal checks 0 <= s
 runtime/direct.go:arithmetic:r.pos++	1	BOUNDED: operand=r.pos guard=runtime/direct.go:226
 runtime/direct.go:arithmetic:r.virtual++	1	BOUNDED: operand=r.virtual guard=runtime/direct.go:223
 runtime/direct.go:arithmetic:r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:240
-runtime/direct.go:arithmetic:span.At + span.Count	2	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1108 `count > maxBits-span.Count`
+runtime/direct.go:arithmetic:span.At + span.Count	2	FIXED: span Count, At and running count are checked against maxBits before arithmetic at runtime/direct.go:800 `span.At > maxBits-span.Count` and runtime/direct.go:1116 `count > maxBits-span.Count`
 runtime/direct.go:arithmetic:spans[len(spans)-1].At + spans[len(spans)-1].Count	1	BOUNDED: operand=last.Count intrinsic=implicitSpan guard=runtime/direct.go:240
-runtime/direct.go:arithmetic:start + i	2	BOUNDED: operand=start guard=runtime/direct.go:1185
+runtime/direct.go:arithmetic:start + i	2	BOUNDED: operand=start guard=runtime/direct.go:1193
 runtime/direct.go:arithmetic:uint64(1) << uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:806
 runtime/direct.go:arithmetic:value << 1	1	BOUNDED: operand=width intrinsic=bitAccumulator guard=runtime/direct.go:255
 runtime/direct.go:arithmetic:w.bits + octets*8	1	FIXED: LengthFieldError checks w.bits in 0..maxBits and octets in 0..(maxBits-w.bits)/8 before the bound arithmetic at runtime/direct.go:599 `octets > (maxBits-w.bits)/8`.
@@ -103,31 +103,31 @@ runtime/direct.go:arithmetic:w.depth++	1	BOUNDED: operand=w.depth guard=runtime/
 runtime/direct.go:arithmetic:w.depth--	1	BOUNDED: operand=w.depth guard=runtime/direct.go:718
 runtime/direct.go:arithmetic:w.implicitSpan++	1	BOUNDED: operand=w.implicitSpan guard=runtime/direct.go:761
 runtime/direct.go:arithmetic:w.limit - w.bits	2	BOUNDED: operand=w.limit guard=runtime/direct.go:657; operand=w.limit guard=runtime/direct.go:678
-runtime/direct.go:arithmetic:w.padding++	4	BOUNDED: operand=w.padding guard=runtime/direct.go:871; operand=w.padding guard=runtime/direct.go:1036; operand=w.padding guard=runtime/direct.go:904; operand=w.padding guard=runtime/direct.go:962
+runtime/direct.go:arithmetic:w.padding++	4	BOUNDED: operand=w.padding guard=runtime/direct.go:871; operand=w.padding guard=runtime/direct.go:1044; operand=w.padding guard=runtime/direct.go:908; operand=w.padding guard=runtime/direct.go:970
 runtime/direct.go:arithmetic:w.spare++	1	BOUNDED: operand=w.spare guard=runtime/direct.go:844
-runtime/direct.go:arithmetic:w.terminal++	1	BOUNDED: operand=w.terminal guard=runtime/direct.go:948
+runtime/direct.go:arithmetic:w.terminal++	1	BOUNDED: operand=w.terminal guard=runtime/direct.go:956
 runtime/direct.go:arithmetic:w.virtual++	2	BOUNDED: operand=w.virtual callee=logicalPosition guard=runtime/direct.go:733; operand=w.virtual callee=logicalPosition guard=runtime/direct.go:733
-runtime/direct.go:arithmetic:w.wire.Tail.BitLength + 7	1	BOUNDED: operand=w.wire.Tail.BitLength guard=runtime/direct.go:1100
-runtime/direct.go:arithmetic:w.wire.TransmittedBits - w.wire.BitsConsumed	1	BOUNDED: operand=w.wire.TransmittedBits guard=runtime/direct.go:1100
+runtime/direct.go:arithmetic:w.wire.Tail.BitLength + 7	1	BOUNDED: operand=w.wire.Tail.BitLength guard=runtime/direct.go:1108
+runtime/direct.go:arithmetic:w.wire.TransmittedBits - w.wire.BitsConsumed	1	BOUNDED: operand=w.wire.TransmittedBits guard=runtime/direct.go:1108
 runtime/direct.go:arithmetic:width + 1	3	FIXED: read width is checked within 0..64 or 0..2^20 before increment; runtime/direct.go:260 `r.fieldWidthLo = uint16(width + 1)`.
 runtime/direct.go:arithmetic:width + 7	2	BOUNDED: operand=width guard=runtime/direct.go:274; operand=width guard=runtime/direct.go:817
 runtime/direct.go:arithmetic:width - 1	2	BOUNDED: operand=width guard=runtime/direct.go:806; operand=width guard=runtime/direct.go:169
 runtime/direct.go:conversion:int(r.fieldWidthHi)	1	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:168 `width := int(r.fieldWidthHi)<<16 | int(r.fieldWidthLo)`.
 runtime/direct.go:conversion:int(r.fieldWidthLo)	1	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:168 `width := int(r.fieldWidthHi)<<16 | int(r.fieldWidthLo)`.
 runtime/direct.go:conversion:int32(len(r.collector.observations))	1	FIXED: reader end is at most 2^20 bits; event visits are capped by end and path accumulation checks remaining 2^20-byte and 128*end allowances before allocation. Cursor length is at most 2^20; index storage doubles only below 128 entries. Dropped counts and checkpoints use uint64; unsigned counter arithmetic is defined. runtime/collector.go:98 `if c.visits >= c.eventLimit`
-runtime/direct.go:conversion:uint((consumed + i) % 8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1151
-runtime/direct.go:conversion:uint((start + i) % 8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1190
-runtime/direct.go:conversion:uint(i % 8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:297; operand=i intrinsic=mod8 guard=runtime/direct.go:821; operand=i intrinsic=mod8 guard=runtime/direct.go:1152; operand=i intrinsic=mod8 guard=runtime/direct.go:1191
+runtime/direct.go:conversion:uint((consumed + i) % 8)	1	BOUNDED: operand=consumed intrinsic=mod8 guard=runtime/direct.go:1159
+runtime/direct.go:conversion:uint((start + i) % 8)	1	BOUNDED: operand=start intrinsic=mod8 guard=runtime/direct.go:1198
+runtime/direct.go:conversion:uint(i % 8)	4	BOUNDED: operand=i intrinsic=mod8 guard=runtime/direct.go:297; operand=i intrinsic=mod8 guard=runtime/direct.go:821; operand=i intrinsic=mod8 guard=runtime/direct.go:1160; operand=i intrinsic=mod8 guard=runtime/direct.go:1199
 runtime/direct.go:conversion:uint(i)	1	BOUNDED: operand=i guard=runtime/direct.go:809
 runtime/direct.go:conversion:uint(pos % 8)	1	FIXED: checked physical bit position is nonnegative; modulo 8 is 0..7; runtime/direct.go:354 `pos := r.pos + i`
-runtime/direct.go:conversion:uint(position % 8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1169
+runtime/direct.go:conversion:uint(position % 8)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1177
 runtime/direct.go:conversion:uint(r.pos % 8)	1	BOUNDED: operand=r.pos intrinsic=mod8 guard=runtime/direct.go:227
 runtime/direct.go:conversion:uint(w.bits % 8)	1	BOUNDED: operand=w.bits intrinsic=mod8 guard=runtime/direct.go:789
 runtime/direct.go:conversion:uint(width)	1	BOUNDED: operand=width guard=runtime/direct.go:806
 runtime/direct.go:conversion:uint16(encoded & 65535)	3	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:281 `r.fieldWidthLo = uint16(encoded & 65535)`.
 runtime/direct.go:conversion:uint16(width + 1)	1	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:260 `r.fieldWidthLo = uint16(width + 1)`.
 runtime/direct.go:conversion:uint64(b)	1	BOUNDED: operand=b intrinsic=uint8Widen guard=runtime/direct.go:268
-runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1169
+runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUNDED: operand=position intrinsic=mod8 guard=runtime/direct.go:1177
 runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:810
 runtime/direct.go:conversion:uint8(encoded >> 16)	3	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:280 `r.fieldWidthHi = uint8(encoded >> 16)`.
 runtime/error_message.go:arithmetic:i + 1	1	FIXED: LastIndexByte returns an index strictly below len(path), so adding one is at most len(path); runtime/error_message.go:129 `return path[:i], path[i+1:]`.
@@ -344,9 +344,9 @@ ts44018/restoctets/generated.go:conversion:uint32(v)	13	BOUNDED: generator selec
 ts44018/restoctets/generated.go:conversion:uint64(len(items) - 0)	5	FIXED: csn1/gen/count_setters.go:103 `count:=uint64(len(items)-%d);` checks nonnegative length subtraction before unsigned conversion and bounds narrowing by the field width; internal/arithaudit/setters.go checks the emitted guards.
 ts44018/restoctets/generated.go:conversion:uint64(len(items) - 1)	4	FIXED: csn1/gen/count_setters.go:103 `count:=uint64(len(items)-%d);` checks nonnegative length subtraction before unsigned conversion and bounds narrowing by the field width; internal/arithaudit/setters.go checks the emitted guards.
 ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', r.Position()-1))	4	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:15239 `v, err := r.ReadUint(width)`
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1169 `uint(position%8)` and ts44018/restoctets/generated.go:15295 `uint64(runtime.LHBit('H', w.Position()))`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('H', w.Position()))	4	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1177 `uint(position%8)` and ts44018/restoctets/generated.go:15295 `uint64(runtime.LHBit('H', w.Position()))`
 ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', r.Position()-1))	15	BOUNDED: successful one-bit ReadUint advances position before subtraction at ts44018/restoctets/generated.go:3805 `v, err := r.ReadUint(width)`
-ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', w.Position()))	23	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1169 `uint(position%8)` and ts44018/restoctets/generated.go:3822 `uint64(runtime.LHBit('L', w.Position()))`
+ts44018/restoctets/generated.go:conversion:uint64(runtime.LHBit('L', w.Position()))	23	BOUNDED: writer position is 0..maxBits and LHBit uses modulo 8 at runtime/direct.go:1177 `uint(position%8)` and ts44018/restoctets/generated.go:3822 `uint64(runtime.LHBit('L', w.Position()))`
 ts44018/restoctets/generated.go:conversion:uint64(v)	1210	BOUNDED: generator passes unsigned field or ReadUint result to uint64 at csn1/gen/direct.go:871 `value := "uint64(v)"` and csn1/gen/direct.go:842 `v,err:=r.ReadUint(width)`; AST source proof at internal/arithaudit/widening.go:63 `if !unsigned {`
 ts44018/restoctets/generated.go:conversion:uint8(count)	9	FIXED: csn1/gen/count_setters.go:103 `count:=uint64(len(items)-%d);` checks nonnegative length subtraction before unsigned conversion and bounds narrowing by the field width; internal/arithaudit/setters.go checks the emitted guards.
 ts44018/restoctets/generated.go:conversion:uint8(v)	528	BOUNDED: generator selects an unsigned type from fixed width and casts the checked ReadUint result at csn1/gen/direct.go:822 `result.typ = "uint8"` and csn1/gen/direct.go:866 `return %s(v),nil}`; AST width and offset proof at internal/arithaudit/narrowing.go:113 `readWidth > bits`

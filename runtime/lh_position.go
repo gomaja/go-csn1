@@ -120,3 +120,11 @@ func (w *Writer) LHBit(symbol rune) (uint8, error) {
 	}
 	return literalBit(symbol, position), nil
 }
+
+// inferredLHPositionPossible keeps transmitted literals on their physical
+// coordinate (TS 24.007 V20.0.0 Annex B §B.1.2.2 rule B8). A canonical
+// boundary or remaining replay span requires the full inferred-position check.
+func (w *Writer) inferredLHPositionPossible() bool {
+	return w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) ||
+		w.wire.sealed && w.implicitSpan < len(w.wire.ImplicitSpans)
+}
