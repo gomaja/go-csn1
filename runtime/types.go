@@ -59,9 +59,15 @@ type Decoded[T any] struct {
 type Descriptor struct {
 	Standard, Version, Clause, Name string
 	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
-	MaxOctets  int
-	Extent     Extent
-	Decode     func([]byte) (any, error)
+	MaxOctets int
+	Extent    Extent
+	Decode    func([]byte) (any, error)
+	// DecodeFrom returns the same value and error as Decode when the reader's
+	// containing limit covers exactly the input. TS 44.018 §10.5.2.37h's
+	// Non-GSM Message struct with NR OF CONTAINER OCTETS 31 is the exception:
+	// only a bounded reader supplies its required enclosing value extent.
+	// Without a containing limit, the tail belongs to the caller; definitions
+	// that need the value's extent return an error wrapping ErrContextRequired.
 	DecodeFrom func(*Reader) (any, error)
 	// DecodeWithCollector preserves the byte entry point policy while using an optional collector.
 	DecodeWithCollector            func([]byte, *Collector) (any, error)
