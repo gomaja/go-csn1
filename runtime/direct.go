@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -60,6 +61,7 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 type Reader struct {
 	data                                           []byte
 	pos, end, virtual                              int
+	lh                                             lhPositionState
 	boundDepth                                     int
 	vars                                           map[string]uint64
 	steps                                          *int
@@ -244,6 +246,7 @@ func (r *Reader) bit() (uint8, bool, error) {
 		}
 		r.wire.ImplicitSpans[len(r.wire.ImplicitSpans)-1].Count++
 		r.virtual++
+		r.lh.infer(r.pos, 1)
 		return 0, false, nil
 	}
 	return 0, false, r.fail(Truncated, "required bit absent")
@@ -306,13 +309,21 @@ func (r *Reader) Expect(pattern string) error {
 	r.fieldWidthLo = uint16(encoded & 65535)
 	start := r.pos
 	for _, symbol := range pattern {
-		at := r.pos + r.virtual
+		expected := literalBit(symbol, r.pos)
+		if (symbol == 'L' || symbol == 'H') && r.pos >= r.end && r.allowZero {
+			value, err := r.LHBit(symbol)
+			if err != nil {
+				r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
+				return err
+			}
+			expected = value
+		}
 		bit, _, err := r.bit()
 		if err != nil {
 			r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
 			return err
 		}
-		if bit != literalBit(symbol, at) {
+		if bit != expected {
 			err := r.failAt(InvalidValue, start, fmt.Sprintf("literal %c differs", symbol))
 			r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
 			return err
@@ -321,17 +332,32 @@ func (r *Reader) Expect(pattern string) error {
 	r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
 	return nil
 }
+
+// Matches reports whether pattern matches the next received bits without
+// consuming them. It returns false for any lookahead error, including
+// ErrLHPositionUndefined. Use LookaheadLiteral to inspect the error.
 func (r *Reader) Matches(pattern string) bool {
-	if r.Check() != nil || len(pattern) > r.Remaining() {
-		return false
+	matched, err := r.LookaheadLiteral(pattern)
+	return err == nil && matched
+}
+
+// LookaheadLiteral looks ahead within the received input without consuming bits.
+// Patterns extending past the received end return false even with zero extension.
+func (r *Reader) LookaheadLiteral(pattern string) (bool, error) {
+	if err := r.Check(); err != nil {
+		return false, err
+	}
+	if len(pattern) > r.end-r.pos {
+		return false, nil
 	}
 	for i, symbol := range pattern {
-		b := (r.data[(r.pos+i)/8] >> (7 - uint((r.pos+i)%8))) & 1
-		if b != literalBit(symbol, r.pos+i) {
-			return false
+		pos := r.pos + i
+		b := (r.data[pos/8] >> (7 - uint(pos%8))) & 1
+		if b != literalBit(symbol, pos) {
+			return false, nil
 		}
 	}
-	return true
+	return true, nil
 }
 func (r *Reader) ReadSpare() (BitString, error) {
 	value, err := r.ReadLayoutBit()
@@ -479,6 +505,7 @@ func (r *Reader) RecordSpareCount(path string, count int) {
 type Writer struct {
 	bytes                    []byte
 	bits, virtual            int
+	lh                       lhPositionState
 	limit                    int
 	bounded                  bool
 	vars                     map[string]uint64
@@ -699,6 +726,9 @@ func (w *Writer) Leave() {
 	}
 	w.path = ""
 }
+
+// logicalPosition indexes replay spans only; L/H uses the physical or first-run
+// inferred coordinate in LHBit instead. Inferred bits never shift transmission.
 func (w *Writer) logicalPosition() (int, error) {
 	if w.bits < 0 || w.virtual < 0 || w.bits > maxBits || w.virtual > maxBits-w.bits {
 		return 0, w.operationFailure(fmt.Errorf("encoded bit limit exceeded"), 0, InvalidValue)
@@ -722,6 +752,7 @@ func (w *Writer) put(bit uint8) error {
 			return w.operationFailure(w.boundError(CanonicalTarget, w.wire.targetBits, "", detail), 0, InvalidValue)
 		}
 		w.virtual++
+		w.lh.infer(w.bits, 1)
 		return nil
 	}
 	if w.wire.canonical && w.wire.targetSet && w.bits >= w.wire.targetBits {
@@ -741,6 +772,7 @@ func (w *Writer) put(bit uint8) error {
 				return w.operationFailure(fmt.Errorf("%s", detail), 0, InvalidValue)
 			}
 			w.virtual++
+			w.lh.infer(w.bits, 1)
 			if w.bits+w.virtual == end {
 				w.implicitSpan++
 			}
@@ -794,11 +826,15 @@ func (w *Writer) WriteBitString(value BitString, width int) error {
 }
 func (w *Writer) WriteLiteral(pattern string) error {
 	for _, symbol := range pattern {
-		position, err := w.logicalPosition()
-		if err != nil {
-			return w.operationFailure(err, 0, InvalidValue)
+		bit := literalBit(symbol, w.bits)
+		if symbol == 'L' || symbol == 'H' {
+			value, err := w.LHBit(symbol)
+			if err != nil {
+				return err
+			}
+			bit = value
 		}
-		if err := w.put(literalBit(symbol, position)); err != nil {
+		if err := w.put(bit); err != nil {
 			return w.operationFailure(err, 0, InvalidValue)
 		}
 	}
@@ -844,7 +880,7 @@ func (w *Writer) WritePadding() error {
 		return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
 	}
 	for w.bits%8 != 0 {
-		if err := w.put(literalBit('L', w.bits)); err != nil {
+		if err := w.WriteLiteral("L"); err != nil {
 			return w.operationFailure(err, 0, InvalidValue)
 		}
 	}
@@ -879,7 +915,7 @@ func (w *Writer) WritePaddingTo(bits int) error {
 		return w.operationFailure(fmt.Errorf("missing received fixed-IE padding"), 0, InvalidValue)
 	}
 	for w.bits < bits {
-		if err := w.put(literalBit('L', w.bits)); err != nil {
+		if err := w.WriteLiteral("L"); err != nil {
 			return w.operationFailure(err, 0, InvalidValue)
 		}
 	}
@@ -936,6 +972,7 @@ func (w *Writer) WriteIgnored(value BitString) error {
 // FallbackMark is the writer state where an ignored fallback arm starts.
 type FallbackMark struct {
 	bits, virtual int
+	lh            lhPositionState
 	allowZero     bool
 	vars          map[string]uint64
 }
@@ -948,7 +985,7 @@ func (w *Writer) MarkFallback() FallbackMark {
 	for k, v := range w.vars {
 		vars[k] = v
 	}
-	return FallbackMark{bits: w.bits, virtual: w.virtual, allowZero: w.allowZero, vars: vars}
+	return FallbackMark{bits: w.bits, virtual: w.virtual, lh: w.lh, allowZero: w.allowZero, vars: vars}
 }
 
 // CheckIgnoredFallback returns a *FallbackError when the bits written since
@@ -970,6 +1007,7 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 	// Reader.Check bounds the window by the written bytes; the shared
 	// bindings are copied before the trial binds anything.
 	r.pos, r.end, r.virtual, r.allowZero, r.vars, r.varsShared = mark.bits, w.bits, mark.virtual, mark.allowZero, mark.vars, true
+	r.lh = mark.lh
 	if toBound {
 		r.boundDepth = 1
 	}
@@ -977,6 +1015,9 @@ func (w *Writer) CheckIgnoredFallback(mark FallbackMark, toBound bool, known fun
 		return w.operationFailure(err, 0, InvalidValue)
 	}
 	err := known(r)
+	if errors.Is(err, ErrLHPositionUndefined) {
+		return w.operationFailure(err, 0, InvalidSchema)
+	}
 	if err == nil {
 		return w.operationFailure(&FallbackError{Path: w.path, Position: mark.bits}, 0, InvalidValue)
 	}
