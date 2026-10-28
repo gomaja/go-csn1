@@ -10412,7 +10412,7 @@ func descriptorUnwrapUTRANCSGMeasurementReportIE(value any) (UTRANCSGMeasurement
 	}
 }
 
-var descriptorPolicyUTRANCSGMeasurementReportIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRANCSGMeasurementReportIE", descriptorSourceUTRANCSGMeasurementReportIE, false}
+var descriptorPolicyUTRANCSGMeasurementReportIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN CSG Measurement Report IE", "UTRANCSGMeasurementReportIE", descriptorSourceUTRANCSGMeasurementReportIE, false}
 
 func descriptorDecodeUTRANCSGMeasurementReportIEFrom(r *runtime.Reader) (any, error) {
 	var v UTRANCSGMeasurementReportIE
@@ -10463,7 +10463,7 @@ func descriptorUnwrapPLMNIDStruct(value any) (PLMNIDStruct, bool) {
 	}
 }
 
-var descriptorPolicyPLMNIDStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PLMNIDStruct", descriptorSourcePLMNIDStruct, false}
+var descriptorPolicyPLMNIDStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "PLMN-ID struct", "PLMNIDStruct", descriptorSourcePLMNIDStruct, false}
 
 func descriptorDecodePLMNIDStructFrom(r *runtime.Reader) (any, error) {
 	var v PLMNIDStruct
@@ -10510,7 +10510,7 @@ func descriptorUnwrapPSCGroupIE(value any) (PSCGroupIE, bool) {
 	}
 }
 
-var descriptorPolicyPSCGroupIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "PSCGroupIE", descriptorSourcePSCGroupIE, false}
+var descriptorPolicyPSCGroupIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "PSC Group IE", "PSCGroupIE", descriptorSourcePSCGroupIE, false}
 
 func descriptorDecodePSCGroupIEFrom(r *runtime.Reader) (any, error) {
 	var v PSCGroupIE
@@ -10559,7 +10559,7 @@ func descriptorUnwrapMBMSChannelParametersIE(value any) (MBMSChannelParametersIE
 	}
 }
 
-var descriptorPolicyMBMSChannelParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMSChannelParametersIE", descriptorSourceMBMSChannelParametersIE, false}
+var descriptorPolicyMBMSChannelParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS Channel Parameters IE", "MBMSChannelParametersIE", descriptorSourceMBMSChannelParametersIE, false}
 
 func descriptorDecodeMBMSChannelParametersIEFrom(r *runtime.Reader) (any, error) {
 	var v MBMSChannelParametersIE
@@ -10612,7 +10612,7 @@ func descriptorUnwrapMBMSPTMChannelDescriptionIE(value any) (MBMSPTMChannelDescr
 	}
 }
 
-var descriptorPolicyMBMSPTMChannelDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMSPTMChannelDescriptionIE", descriptorSourceMBMSPTMChannelDescriptionIE, false}
+var descriptorPolicyMBMSPTMChannelDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS p-t-m channel description IE", "MBMSPTMChannelDescriptionIE", descriptorSourceMBMSPTMChannelDescriptionIE, false}
 
 func descriptorDecodeMBMSPTMChannelDescriptionIEFrom(r *runtime.Reader) (any, error) {
 	var v MBMSPTMChannelDescriptionIE
@@ -10665,7 +10665,7 @@ func descriptorUnwrapMPRACHDescriptionIE(value any) (MPRACHDescriptionIE, bool) 
 	}
 }
 
-var descriptorPolicyMPRACHDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MPRACHDescriptionIE", descriptorSourceMPRACHDescriptionIE, false}
+var descriptorPolicyMPRACHDescriptionIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MPRACH description IE", "MPRACHDescriptionIE", descriptorSourceMPRACHDescriptionIE, false}
 
 func descriptorDecodeMPRACHDescriptionIEFrom(r *runtime.Reader) (any, error) {
 	var v MPRACHDescriptionIE
@@ -10714,7 +10714,7 @@ func descriptorUnwrapMBMSSessionListIE(value any) (MBMSSessionListIE, bool) {
 	}
 }
 
-var descriptorPolicyMBMSSessionListIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMSSessionListIE", descriptorSourceMBMSSessionListIE, false}
+var descriptorPolicyMBMSSessionListIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS Session List IE", "MBMSSessionListIE", descriptorSourceMBMSSessionListIE, false}
 
 func descriptorDecodeMBMSSessionListIEFrom(r *runtime.Reader) (any, error) {
 	var v MBMSSessionListIE
@@ -10763,7 +10763,7 @@ func descriptorUnwrapMBMSSessionParametersListIE(value any) (MBMSSessionParamete
 	}
 }
 
-var descriptorPolicyMBMSSessionParametersListIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMSSessionParametersListIE", descriptorSourceMBMSSessionParametersListIE, false}
+var descriptorPolicyMBMSSessionParametersListIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MBMS Session Parameters List IE", "MBMSSessionParametersListIE", descriptorSourceMBMSSessionParametersListIE, false}
 
 func descriptorDecodeMBMSSessionParametersListIEFrom(r *runtime.Reader) (any, error) {
 	var v MBMSSessionParametersListIE
@@ -10816,7 +10816,7 @@ func descriptorUnwrapMPRACHControlParametersIE(value any) (MPRACHControlParamete
 	}
 }
 
-var descriptorPolicyMPRACHControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MPRACHControlParametersIE", descriptorSourceMPRACHControlParametersIE, false}
+var descriptorPolicyMPRACHControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "MPRACH Control Parameters IE", "MPRACHControlParametersIE", descriptorSourceMPRACHControlParametersIE, false}
 
 func descriptorDecodeMPRACHControlParametersIEFrom(r *runtime.Reader) (any, error) {
 	var v MPRACHControlParametersIE
@@ -10877,7 +10877,7 @@ func descriptorUnwrapGPRSPowerControlParametersIE(value any) (GPRSPowerControlPa
 	}
 }
 
-var descriptorPolicyGPRSPowerControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRSPowerControlParametersIE", descriptorSourceGPRSPowerControlParametersIE, false}
+var descriptorPolicyGPRSPowerControlParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Power Control Parameters IE", "GPRSPowerControlParametersIE", descriptorSourceGPRSPowerControlParametersIE, false}
 
 func descriptorDecodeGPRSPowerControlParametersIEFrom(r *runtime.Reader) (any, error) {
 	var v GPRSPowerControlParametersIE
@@ -10930,7 +10930,7 @@ func descriptorUnwrapGPRSCellOptionsIE(value any) (GPRSCellOptionsIE, bool) {
 	}
 }
 
-var descriptorPolicyGPRSCellOptionsIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRSCellOptionsIE", descriptorSourceGPRSCellOptionsIE, false}
+var descriptorPolicyGPRSCellOptionsIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Cell Options IE", "GPRSCellOptionsIE", descriptorSourceGPRSCellOptionsIE, false}
 
 func descriptorDecodeGPRSCellOptionsIEFrom(r *runtime.Reader) (any, error) {
 	var v GPRSCellOptionsIE
@@ -10979,7 +10979,7 @@ func descriptorUnwrapExtensionInformation(value any) (ExtensionInformation, bool
 	}
 }
 
-var descriptorPolicyExtensionInformation = descriptorReadPolicy{true, 0, 0, 0, false, false, "ExtensionInformation", descriptorSourceExtensionInformation, false}
+var descriptorPolicyExtensionInformation = descriptorReadPolicy{true, 0, 0, 0, false, false, "Extension Information", "ExtensionInformation", descriptorSourceExtensionInformation, false}
 
 func descriptorDecodeExtensionInformationFrom(r *runtime.Reader) (any, error) {
 	var v ExtensionInformation
@@ -11028,7 +11028,7 @@ func descriptorUnwrapFrequencyParametersIE(value any) (FrequencyParametersIE, bo
 	}
 }
 
-var descriptorPolicyFrequencyParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "FrequencyParametersIE", descriptorSourceFrequencyParametersIE, false}
+var descriptorPolicyFrequencyParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "Frequency Parameters IE", "FrequencyParametersIE", descriptorSourceFrequencyParametersIE, false}
 
 func descriptorDecodeFrequencyParametersIEFrom(r *runtime.Reader) (any, error) {
 	var v FrequencyParametersIE
@@ -11077,7 +11077,7 @@ func descriptorUnwrapIndirectEncodingStruct(value any) (IndirectEncodingStruct, 
 	}
 }
 
-var descriptorPolicyIndirectEncodingStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "IndirectEncodingStruct", descriptorSourceIndirectEncodingStruct, false}
+var descriptorPolicyIndirectEncodingStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Indirect encoding struct", "IndirectEncodingStruct", descriptorSourceIndirectEncodingStruct, false}
 
 func descriptorDecodeIndirectEncodingStructFrom(r *runtime.Reader) (any, error) {
 	var v IndirectEncodingStruct
@@ -11126,7 +11126,7 @@ func descriptorUnwrapDirectEncoding1Struct(value any) (DirectEncoding1Struct, bo
 	}
 }
 
-var descriptorPolicyDirectEncoding1Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "DirectEncoding1Struct", descriptorSourceDirectEncoding1Struct, false}
+var descriptorPolicyDirectEncoding1Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Direct encoding 1 struct", "DirectEncoding1Struct", descriptorSourceDirectEncoding1Struct, false}
 
 func descriptorDecodeDirectEncoding1StructFrom(r *runtime.Reader) (any, error) {
 	var v DirectEncoding1Struct
@@ -11175,7 +11175,7 @@ func descriptorUnwrapDirectEncoding2Struct(value any) (DirectEncoding2Struct, bo
 	}
 }
 
-var descriptorPolicyDirectEncoding2Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "DirectEncoding2Struct", descriptorSourceDirectEncoding2Struct, false}
+var descriptorPolicyDirectEncoding2Struct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Direct encoding 2 struct", "DirectEncoding2Struct", descriptorSourceDirectEncoding2Struct, false}
 
 func descriptorDecodeDirectEncoding2StructFrom(r *runtime.Reader) (any, error) {
 	var v DirectEncoding2Struct
@@ -11224,7 +11224,7 @@ func descriptorUnwrapGPRSMobileAllocationIE(value any) (GPRSMobileAllocationIE, 
 	}
 }
 
-var descriptorPolicyGPRSMobileAllocationIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRSMobileAllocationIE", descriptorSourceGPRSMobileAllocationIE, false}
+var descriptorPolicyGPRSMobileAllocationIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "GPRS Mobile Allocation IE", "GPRSMobileAllocationIE", descriptorSourceGPRSMobileAllocationIE, false}
 
 func descriptorDecodeGPRSMobileAllocationIEFrom(r *runtime.Reader) (any, error) {
 	var v GPRSMobileAllocationIE
@@ -11273,7 +11273,7 @@ func descriptorUnwrapRFLNumberListStruct(value any) (RFLNumberListStruct, bool) 
 	}
 }
 
-var descriptorPolicyRFLNumberListStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "RFLNumberListStruct", descriptorSourceRFLNumberListStruct, false}
+var descriptorPolicyRFLNumberListStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "RFL number list struct", "RFLNumberListStruct", descriptorSourceRFLNumberListStruct, false}
 
 func descriptorDecodeRFLNumberListStructFrom(r *runtime.Reader) (any, error) {
 	var v RFLNumberListStruct
@@ -11322,7 +11322,7 @@ func descriptorUnwrapARFCNIndexListStruct(value any) (ARFCNIndexListStruct, bool
 	}
 }
 
-var descriptorPolicyARFCNIndexListStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "ARFCNIndexListStruct", descriptorSourceARFCNIndexListStruct, false}
+var descriptorPolicyARFCNIndexListStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "ARFCN index list struct", "ARFCNIndexListStruct", descriptorSourceARFCNIndexListStruct, false}
 
 func descriptorDecodeARFCNIndexListStructFrom(r *runtime.Reader) (any, error) {
 	var v ARFCNIndexListStruct
@@ -11369,7 +11369,7 @@ func descriptorUnwrapPCIDGroupIE(value any) (PCIDGroupIE, bool) {
 	}
 }
 
-var descriptorPolicyPCIDGroupIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "PCIDGroupIE", descriptorSourcePCIDGroupIE, false}
+var descriptorPolicyPCIDGroupIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "PCID Group IE", "PCIDGroupIE", descriptorSourcePCIDGroupIE, false}
 
 func descriptorDecodePCIDGroupIEFrom(r *runtime.Reader) (any, error) {
 	var v PCIDGroupIE
@@ -11418,7 +11418,7 @@ func descriptorUnwrapEnhancedCellReselectionParametersIE(value any) (EnhancedCel
 	}
 }
 
-var descriptorPolicyEnhancedCellReselectionParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EnhancedCellReselectionParametersIE", descriptorSourceEnhancedCellReselectionParametersIE, false}
+var descriptorPolicyEnhancedCellReselectionParametersIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "Enhanced Cell Reselection Parameters IE", "EnhancedCellReselectionParametersIE", descriptorSourceEnhancedCellReselectionParametersIE, false}
 
 func descriptorDecodeEnhancedCellReselectionParametersIEFrom(r *runtime.Reader) (any, error) {
 	var v EnhancedCellReselectionParametersIE
@@ -11471,7 +11471,7 @@ func descriptorUnwrapRepeatedEUTRANEnhancedCellReselectionParametersStruct(value
 	}
 }
 
-var descriptorPolicyRepeatedEUTRANEnhancedCellReselectionParametersStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "RepeatedEUTRANEnhancedCellReselectionParametersStruct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct, false}
+var descriptorPolicyRepeatedEUTRANEnhancedCellReselectionParametersStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "Repeated E-UTRAN Enhanced Cell Reselection Parameters struct", "RepeatedEUTRANEnhancedCellReselectionParametersStruct", descriptorSourceRepeatedEUTRANEnhancedCellReselectionParametersStruct, false}
 
 func descriptorDecodeRepeatedEUTRANEnhancedCellReselectionParametersStructFrom(r *runtime.Reader) (any, error) {
 	var v RepeatedEUTRANEnhancedCellReselectionParametersStruct
@@ -11524,7 +11524,7 @@ func descriptorUnwrapEGPRSWindowSizeIE(value any) (EGPRSWindowSizeIE, bool) {
 	}
 }
 
-var descriptorPolicyEGPRSWindowSizeIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRSWindowSizeIE", descriptorSourceEGPRSWindowSizeIE, false}
+var descriptorPolicyEGPRSWindowSizeIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRS Window Size IE", "EGPRSWindowSizeIE", descriptorSourceEGPRSWindowSizeIE, false}
 
 func descriptorDecodeEGPRSWindowSizeIEFrom(r *runtime.Reader) (any, error) {
 	var v EGPRSWindowSizeIE
@@ -11573,7 +11573,7 @@ func descriptorUnwrapEGPRSModulationAndCodingIE(value any) (EGPRSModulationAndCo
 	}
 }
 
-var descriptorPolicyEGPRSModulationAndCodingIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRSModulationAndCodingIE", descriptorSourceEGPRSModulationAndCodingIE, false}
+var descriptorPolicyEGPRSModulationAndCodingIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRS Modulation and Coding IE", "EGPRSModulationAndCodingIE", descriptorSourceEGPRSModulationAndCodingIE, false}
 
 func descriptorDecodeEGPRSModulationAndCodingIEFrom(r *runtime.Reader) (any, error) {
 	var v EGPRSModulationAndCodingIE
@@ -11624,7 +11624,7 @@ func descriptorUnwrapEGPRSLevelIE(value any) (EGPRSLevelIE, bool) {
 	}
 }
 
-var descriptorPolicyEGPRSLevelIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRSLevelIE", descriptorSourceEGPRSLevelIE, false}
+var descriptorPolicyEGPRSLevelIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "EGPRS Level IE", "EGPRSLevelIE", descriptorSourceEGPRSLevelIE, false}
 
 func descriptorDecodeEGPRSLevelIEFrom(r *runtime.Reader) (any, error) {
 	var v EGPRSLevelIE
@@ -11673,7 +11673,7 @@ func descriptorUnwrapPacketTimingAdvanceIE(value any) (PacketTimingAdvanceIE, bo
 	}
 }
 
-var descriptorPolicyPacketTimingAdvanceIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "PacketTimingAdvanceIE", descriptorSourcePacketTimingAdvanceIE, false}
+var descriptorPolicyPacketTimingAdvanceIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "Packet Timing Advance IE", "PacketTimingAdvanceIE", descriptorSourcePacketTimingAdvanceIE, false}
 
 func descriptorDecodePacketTimingAdvanceIEFrom(r *runtime.Reader) (any, error) {
 	var v PacketTimingAdvanceIE
@@ -11720,7 +11720,7 @@ func descriptorUnwrapTMGIIE(value any) (TMGIIE, bool) {
 	}
 }
 
-var descriptorPolicyTMGIIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "TMGIIE", descriptorSourceTMGIIE, false}
+var descriptorPolicyTMGIIE = descriptorReadPolicy{false, 0, 0, 0, false, false, "TMGI IE", "TMGIIE", descriptorSourceTMGIIE, false}
 
 func descriptorDecodeTMGIIEFrom(r *runtime.Reader) (any, error) {
 	var v TMGIIE
@@ -11777,18 +11777,18 @@ type descriptorReadPolicy struct {
 	needsLimit                  bool
 	minBits, maxBits, maxWindow int
 	zeroExtension, emptyValue   bool
-	name                        string
+	name, valueName             string
 	source                      runtime.Source
 	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
 	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
 	if emptyValue && r.Remaining() == 0 {
@@ -11801,10 +11801,8 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
 	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -11814,7 +11812,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
@@ -11823,7 +11821,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
@@ -11841,10 +11839,10 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 
 // descriptorExtentError uses the byte entry point's diagnostic and location.
 func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
-	detail := fmt.Sprintf("%s requires at least %d bits", p.name, bits)
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
 	kind := runtime.Truncated
 	if maximum {
-		detail = fmt.Sprintf("%s exceeds %d bits", p.name, bits)
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
 		kind = runtime.Limit
 	}
 	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
@@ -11853,7 +11851,7 @@ func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum boo
 		err = fmt.Errorf("%s", detail)
 		offset = -1
 	}
-	return locateOperation(err, "decode", p.name, offset, 0, p.source)
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeUTRANCSGMeasurementReportIE(data []byte) (runtime.Decoded[UTRANCSGMeasurementReportIE], error) {
 	v, err := decodeUTRANCSGMeasurementReportIEBytes(data)

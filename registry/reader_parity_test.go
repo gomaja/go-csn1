@@ -112,6 +112,27 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 			t.Errorf("%s §%s %s (%s) on %x: byte entry %+v (%v), reader entry %+v (%v)", d.Standard, d.Clause, d.Name, form, data, b, byteErr, r, readerErr)
 		}
 	}
+	// With no containing extent, caller octets must preserve complete values
+	// and context-required refusals. Other refusals can be incomplete input:
+	// for example Classmark 2 needs three octets before it can decode.
+	checkCallerTail := func(d runtime.Descriptor, form string, data []byte, decode func(*runtime.Reader) (any, error)) {
+		t.Helper()
+		before, beforeErr := decode(runtime.NewReader(data))
+		if beforeErr != nil && !errors.Is(beforeErr, runtime.ErrContextRequired) {
+			return
+		}
+		afterData := append(append([]byte(nil), data...), 0x5a, 0xa5)
+		after, afterErr := decode(runtime.NewReader(afterData))
+		if errors.Is(afterErr, runtime.ErrContextRequired) {
+			return
+		}
+		if beforeErr != nil && afterErr == nil {
+			t.Fatalf("%s %s (%s) on %x: caller tail rescued refusal %v", d.Standard, d.Name, form, data, beforeErr)
+		}
+		if beforeErr == nil && (afterErr != nil || !reflect.DeepEqual(before, after)) {
+			t.Fatalf("%s %s (%s) on %x: caller tail changed value: %v", d.Standard, d.Name, form, data, afterErr)
+		}
+	}
 	inputs := 0
 	for _, d := range registry.Descriptors() {
 		limit := d.MaxOctets + 2
@@ -136,6 +157,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 			bv, be := d.Decode(data)
 			rv, re := d.DecodeFrom(readerBoundTo(t, data))
 			compare(d, "plain", data, bv, be, rv, re)
+			checkCallerTail(d, "plain", data, d.DecodeFrom)
 			if i < 16*(limit+1) {
 				// Keep four fills and twelve random report cases at every length.
 				pv, _, pe := d.DecodeWithReport(data)
@@ -156,6 +178,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 					bv, be := d.DecodeWithContext(data, acs)
 					rv, re := d.DecodeFromWithContext(readerBoundTo(t, data), acs)
 					compare(d, fmt.Sprintf("SI4 ACS %d", acs), data, bv, be, rv, re)
+					checkCallerTail(d, fmt.Sprintf("SI4 ACS %d", acs), data, func(r *runtime.Reader) (any, error) { return d.DecodeFromWithContext(r, acs) })
 					if i < 16*(limit+1) {
 						pv, _, pe := d.DecodeWithReportWithContext(data, acs)
 						compare(d, "report context", data, bv, be, pv, pe)
@@ -197,5 +220,96 @@ func TestReaderEntryReviewCases(t *testing.T) {
 	out, err := cm2.Encode(decoded)
 	if err != nil || !bytes.Equal(out, data) {
 		t.Fatalf("Classmark 2 reader entry replays %x (%v), want %x", out, err, data)
+	}
+}
+
+// TS 44.018 V19.0.0 §§10.5.2.1e, 10.5.2.20, 10.5.2.35–37,
+// 10.5.2.37h–i define source value sizes. A caller's trailing bytes do not
+// supply the missing containing extent for those source size checks.
+func TestReaderSourceBoundsRequireContainingLimit(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		octets int
+	}{
+		{"SI7 Rest Octets", 20}, {"SI8 Rest Octets", 20},
+		{"SI 18 Rest Octets", 20}, {"SI 20 Rest Octets", 20},
+		{"Measurement Results Contents", 16},
+		{"Cell Selection Indicator after release of all TCH and SDCCH value part", 2},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			d, err := registry.Lookup("TS 44.018", tc.name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, n := range []int{0, tc.octets - 1, tc.octets, tc.octets + 1} {
+				data := make([]byte, n)
+				for _, tail := range [][]byte{nil, {0x5a}} {
+					input := append(append([]byte(nil), data...), tail...)
+					if _, err := d.DecodeFrom(runtime.NewReader(input)); !errors.Is(err, runtime.ErrContextRequired) {
+						t.Errorf("plain %x: %v", input, err)
+					}
+					if d.DecodeFromWithContext != nil {
+						for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
+							if _, err := d.DecodeFromWithContext(runtime.NewReader(input), acs); !errors.Is(err, runtime.ErrContextRequired) {
+								t.Errorf("ACS %d %x: %v", acs, input, err)
+							}
+						}
+					}
+				}
+			}
+		})
+	}
+}
+
+func TestReaderContextRequiredKeepsPrintedName(t *testing.T) {
+	for _, d := range registry.Descriptors() {
+		_, err := d.DecodeFrom(runtime.NewReader([]byte{0x2b}))
+		var context *runtime.ContextRequiredError
+		if errors.As(err, &context) {
+			if context.Name != d.Name {
+				t.Errorf("%s: context name %q, want %q", d.Standard, context.Name, d.Name)
+			}
+			var operation *runtime.OperationError
+			if !errors.As(err, &operation) || operation.Location.Path != d.Name {
+				t.Errorf("%s %s: context path: %v", d.Standard, d.Name, err)
+			}
+		}
+	}
+}
+
+func TestReaderUsesOwnZeroExtensionPolicy(t *testing.T) {
+	for _, tc := range []struct {
+		standard, name string
+		data           []byte
+	}{
+		{"TS 24.008", "A5 bits", nil},
+		{"TS 24.008", "A5 bits", []byte{0}},
+		{"TS 44.018", "GSM Description struct", []byte{0, 0}},
+		{"TS 44.018", "GSM Description struct", []byte{0, 0, 0, 0}},
+	} {
+		t.Run(tc.name+fmt.Sprintf("/%x", tc.data), func(t *testing.T) {
+			var d runtime.Descriptor
+			for _, candidate := range registry.Descriptors() {
+				if candidate.Standard == tc.standard && candidate.Name == tc.name {
+					d = candidate
+					break
+				}
+			}
+			if d.Decode == nil {
+				t.Fatal("missing descriptor")
+			}
+			want, we := d.Decode(tc.data)
+			for _, setting := range []bool{false, true} {
+				r := readerBoundTo(t, tc.data)
+				r.SetZeroExtension(setting)
+				got, ge := d.DecodeFrom(r)
+				if fmt.Sprint(we) != fmt.Sprint(ge) || !sameReaderError(we, ge) || !reflect.DeepEqual(want, got) {
+					t.Errorf("caller zero extension %t: byte error %v, reader error %v, equal %t", setting, we, ge, reflect.DeepEqual(want, got))
+				}
+				if r.ZeroExtension() != setting {
+					t.Errorf("caller zero extension changed from %t", setting)
+				}
+			}
+		})
 	}
 }

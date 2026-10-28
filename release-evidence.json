@@ -5,7 +5,7 @@
     "api_ledger_sha256": "30d7a7d9fa88a1bf4bb0559f0044bf46ea1ef0979402dfa7897abedb87b2493c"
   },
   "schema_version": 1,
-  "compiler_commit": "b98eefb716b79f70270e8c3b740e16a69b49dea2",
+  "compiler_commit": "cb7458f4c3a63992b5838fdcc5135485142f1a0d",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1786,15 +1786,15 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "5f9c451bf199b047d50015bc3919b0c9aa8a6ce127c7b93966ace2273fadf5bd"
+      "sha256": "7a108802f68410372e6170e8c5af73b0ffc7baf215b28e19c9aca7afff65305f"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "9323ed062dcd9677ffaafc2422dd2a2434c546763d71514b605892ea84f8dfb8"
+      "sha256": "49ad09e3745fe7adde46f7eba734deda1c3330e6feeca7374e2cf463dbed9044"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "65f53c1dff0e6a681832a0af47de699b4f26cffd89efa2eabb5659b1e22ed14c"
+      "sha256": "de019b4fe0d6d46316a25bd24da5e932f45a1bc04a96e6e5a5a9c969b859f002"
     },
     {
       "path": "ts36331/uecapability/generated.go",
@@ -1802,19 +1802,19 @@
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "d2b21c746801ca4cf6e9ded03e222f807170416420045f25a588f8e4f87a1ca5"
+      "sha256": "7c9525e949faaa980356106494a5e15aa08c9e55041df69b59128d35c3ca8151"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "5f93e1e863a128960cd5e3f4b865d0fdb61de1c124cc01e34e5d285ae96ee38a"
+      "sha256": "87e4ab7358d6a6cfb178ee3265f4edd041eba3a53ff8ad50b269a8238630393a"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "9541b2385f92ea4921d427f45084392ecc1b1a11859172bc94b5179dcff12e9f"
+      "sha256": "fa94578a5731802a2a1dc16a0404e9c1156821075fe3aef3eff67081c939326a"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "4b36fdc0c47d68aa545dea0fecc1c45bb3b1f69c680a709863abfc7789234fb7"
+      "sha256": "7746639fff8121d5b9ef38fead5f4ea59c70b0bf932a22bc856bd43614e63d3b"
     }
   ],
   "validation_commands": [

@@ -5699,7 +5699,7 @@ func descriptorUnwrapClassmark3ValuePart(value any) (Classmark3ValuePart, bool) 
 	}
 }
 
-var descriptorPolicyClassmark3ValuePart = descriptorReadPolicy{true, 8, 0, 256, true, false, "Classmark3ValuePart", descriptorSourceClassmark3ValuePart, false}
+var descriptorPolicyClassmark3ValuePart = descriptorReadPolicy{true, 8, 0, 256, true, false, "Classmark 3 Value part", "Classmark3ValuePart", descriptorSourceClassmark3ValuePart, false}
 
 func descriptorDecodeClassmark3ValuePartFrom(r *runtime.Reader) (any, error) {
 	var v Classmark3ValuePart
@@ -5746,7 +5746,7 @@ func descriptorUnwrapA5Bits(value any) (A5Bits, bool) {
 	}
 }
 
-var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, false, false, "A5Bits", descriptorSourceA5Bits, false}
+var descriptorPolicyA5Bits = descriptorReadPolicy{false, 0, 0, 0, false, false, "A5 bits", "A5Bits", descriptorSourceA5Bits, false}
 
 func descriptorDecodeA5BitsFrom(r *runtime.Reader) (any, error) {
 	var v A5Bits
@@ -5793,7 +5793,7 @@ func descriptorUnwrapRSupport(value any) (RSupport, bool) {
 	}
 }
 
-var descriptorPolicyRSupport = descriptorReadPolicy{false, 0, 0, 0, false, false, "RSupport", descriptorSourceRSupport, false}
+var descriptorPolicyRSupport = descriptorReadPolicy{false, 0, 0, 0, false, false, "R Support", "RSupport", descriptorSourceRSupport, false}
 
 func descriptorDecodeRSupportFrom(r *runtime.Reader) (any, error) {
 	var v RSupport
@@ -5850,7 +5850,7 @@ func descriptorUnwrapHSCSDMultiSlotCapability(value any) (HSCSDMultiSlotCapabili
 	}
 }
 
-var descriptorPolicyHSCSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "HSCSDMultiSlotCapability", descriptorSourceHSCSDMultiSlotCapability, false}
+var descriptorPolicyHSCSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "HSCSD Multi Slot Capability", "HSCSDMultiSlotCapability", descriptorSourceHSCSDMultiSlotCapability, false}
 
 func descriptorDecodeHSCSDMultiSlotCapabilityFrom(r *runtime.Reader) (any, error) {
 	var v HSCSDMultiSlotCapability
@@ -5903,7 +5903,7 @@ func descriptorUnwrapMSMeasurementCapability(value any) (MSMeasurementCapability
 	}
 }
 
-var descriptorPolicyMSMeasurementCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "MSMeasurementCapability", descriptorSourceMSMeasurementCapability, false}
+var descriptorPolicyMSMeasurementCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "MS Measurement capability", "MSMeasurementCapability", descriptorSourceMSMeasurementCapability, false}
 
 func descriptorDecodeMSMeasurementCapabilityFrom(r *runtime.Reader) (any, error) {
 	var v MSMeasurementCapability
@@ -5956,7 +5956,7 @@ func descriptorUnwrapMSPositioningMethodCapability(value any) (MSPositioningMeth
 	}
 }
 
-var descriptorPolicyMSPositioningMethodCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "MSPositioningMethodCapability", descriptorSourceMSPositioningMethodCapability, false}
+var descriptorPolicyMSPositioningMethodCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "MS Positioning Method Capability", "MSPositioningMethodCapability", descriptorSourceMSPositioningMethodCapability, false}
 
 func descriptorDecodeMSPositioningMethodCapabilityFrom(r *runtime.Reader) (any, error) {
 	var v MSPositioningMethodCapability
@@ -6009,7 +6009,7 @@ func descriptorUnwrapECSDMultiSlotCapability(value any) (ECSDMultiSlotCapability
 	}
 }
 
-var descriptorPolicyECSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "ECSDMultiSlotCapability", descriptorSourceECSDMultiSlotCapability, false}
+var descriptorPolicyECSDMultiSlotCapability = descriptorReadPolicy{false, 0, 0, 0, false, false, "ECSD Multi Slot Capability", "ECSDMultiSlotCapability", descriptorSourceECSDMultiSlotCapability, false}
 
 func descriptorDecodeECSDMultiSlotCapabilityFrom(r *runtime.Reader) (any, error) {
 	var v ECSDMultiSlotCapability
@@ -6068,7 +6068,7 @@ func descriptorUnwrapN8PSKStruct(value any) (N8PSKStruct, bool) {
 	}
 }
 
-var descriptorPolicyN8PSKStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "N8PSKStruct", descriptorSourceN8PSKStruct, false}
+var descriptorPolicyN8PSKStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "8-PSK Struct", "N8PSKStruct", descriptorSourceN8PSKStruct, false}
 
 func descriptorDecodeN8PSKStructFrom(r *runtime.Reader) (any, error) {
 	var v N8PSKStruct
@@ -6125,7 +6125,7 @@ func descriptorUnwrapSingleBandSupport(value any) (SingleBandSupport, bool) {
 	}
 }
 
-var descriptorPolicySingleBandSupport = descriptorReadPolicy{false, 0, 0, 0, false, false, "SingleBandSupport", descriptorSourceSingleBandSupport, false}
+var descriptorPolicySingleBandSupport = descriptorReadPolicy{false, 0, 0, 0, false, false, "Single Band Support", "SingleBandSupport", descriptorSourceSingleBandSupport, false}
 
 func descriptorDecodeSingleBandSupportFrom(r *runtime.Reader) (any, error) {
 	var v SingleBandSupport
@@ -6182,18 +6182,18 @@ type descriptorReadPolicy struct {
 	needsLimit                  bool
 	minBits, maxBits, maxWindow int
 	zeroExtension, emptyValue   bool
-	name                        string
+	name, valueName             string
 	source                      runtime.Source
 	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
 	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
 	if emptyValue && r.Remaining() == 0 {
@@ -6206,10 +6206,8 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
 	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -6219,7 +6217,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
@@ -6228,7 +6226,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
@@ -6246,10 +6244,10 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 
 // descriptorExtentError uses the byte entry point's diagnostic and location.
 func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
-	detail := fmt.Sprintf("%s requires at least %d bits", p.name, bits)
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
 	kind := runtime.Truncated
 	if maximum {
-		detail = fmt.Sprintf("%s exceeds %d bits", p.name, bits)
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
 		kind = runtime.Limit
 	}
 	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
@@ -6258,7 +6256,7 @@ func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum boo
 		err = fmt.Errorf("%s", detail)
 		offset = -1
 	}
-	return locateOperation(err, "decode", p.name, offset, 0, p.source)
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeClassmark3ValuePart(data []byte) (runtime.Decoded[Classmark3ValuePart], error) {
 	v, err := decodeClassmark3ValuePartBytes(data, nil)

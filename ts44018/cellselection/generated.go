@@ -2392,7 +2392,7 @@ func descriptorUnwrapCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart
 	}
 }
 
-var descriptorPolicyCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = descriptorReadPolicy{false, 16, 0, 0, false, false, "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, false}
+var descriptorPolicyCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart = descriptorReadPolicy{true, 16, 0, 0, false, false, "Cell Selection Indicator after release of all TCH and SDCCH value part", "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart", descriptorSourceCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, false}
 
 func descriptorDecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartFrom(r *runtime.Reader) (any, error) {
 	var v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart
@@ -2445,7 +2445,7 @@ func descriptorUnwrapGSMDescriptionStruct(value any) (GSMDescriptionStruct, bool
 	}
 }
 
-var descriptorPolicyGSMDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GSMDescriptionStruct", descriptorSourceGSMDescriptionStruct, false}
+var descriptorPolicyGSMDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "GSM Description struct", "GSMDescriptionStruct", descriptorSourceGSMDescriptionStruct, false}
 
 func descriptorDecodeGSMDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v GSMDescriptionStruct
@@ -2494,7 +2494,7 @@ func descriptorUnwrapUTRANFDDDescriptionStruct(value any) (UTRANFDDDescriptionSt
 	}
 }
 
-var descriptorPolicyUTRANFDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRANFDDDescriptionStruct", descriptorSourceUTRANFDDDescriptionStruct, false}
+var descriptorPolicyUTRANFDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN FDD Description struct", "UTRANFDDDescriptionStruct", descriptorSourceUTRANFDDDescriptionStruct, false}
 
 func descriptorDecodeUTRANFDDDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v UTRANFDDDescriptionStruct
@@ -2547,7 +2547,7 @@ func descriptorUnwrapUTRANTDDDescriptionStruct(value any) (UTRANTDDDescriptionSt
 	}
 }
 
-var descriptorPolicyUTRANTDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRANTDDDescriptionStruct", descriptorSourceUTRANTDDDescriptionStruct, false}
+var descriptorPolicyUTRANTDDDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "UTRAN TDD Description struct", "UTRANTDDDescriptionStruct", descriptorSourceUTRANTDDDescriptionStruct, false}
 
 func descriptorDecodeUTRANTDDDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v UTRANTDDDescriptionStruct
@@ -2608,7 +2608,7 @@ func descriptorUnwrapEUTRANDescriptionStruct(value any) (EUTRANDescriptionStruct
 	}
 }
 
-var descriptorPolicyEUTRANDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "EUTRANDescriptionStruct", descriptorSourceEUTRANDescriptionStruct, false}
+var descriptorPolicyEUTRANDescriptionStruct = descriptorReadPolicy{false, 0, 0, 0, false, false, "E-UTRAN Description struct", "EUTRANDescriptionStruct", descriptorSourceEUTRANDescriptionStruct, false}
 
 func descriptorDecodeEUTRANDescriptionStructFrom(r *runtime.Reader) (any, error) {
 	var v EUTRANDescriptionStruct
@@ -2669,18 +2669,18 @@ type descriptorReadPolicy struct {
 	needsLimit                  bool
 	minBits, maxBits, maxWindow int
 	zeroExtension, emptyValue   bool
-	name                        string
+	name, valueName             string
 	source                      runtime.Source
 	context                     bool
 }
 
 func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p descriptorReadPolicy) (runtime.WireInfo, int, error) {
-	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.name, p.source
+	needsLimit, minBits, maxBits, maxWindow, zeroExtension, emptyValue, name, source := p.needsLimit, p.minBits, p.maxBits, p.maxWindow, p.zeroExtension, p.emptyValue, p.valueName, p.source
 	if err := r.Check(); err != nil {
-		return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, -1, 0, source)
 	}
 	if needsLimit && r.BoundedRemaining() < 0 {
-		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: name}, "decode", name, -1, 0, source)
+		return runtime.WireInfo{}, 0, locateOperation(&runtime.ContextRequiredError{Standard: source.Standard, Clause: source.Clause, Name: p.name}, "decode", p.name, -1, 0, source)
 	}
 	// Preserve byte-entry preflight order: absence, source bounds, then decoding.
 	if emptyValue && r.Remaining() == 0 {
@@ -2693,10 +2693,8 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		return runtime.WireInfo{}, 0, descriptorExtentError(p, r.Position()+maxBits, maxBits, true)
 	}
 	priorZero := r.ZeroExtension()
-	if zeroExtension {
-		r.SetZeroExtension(true)
-		defer r.SetZeroExtension(priorZero)
-	}
+	r.SetZeroExtension(zeroExtension)
+	defer r.SetZeroExtension(priorZero)
 	start := r.Position()
 	before := r.Wire()
 	origin := r.Fork()
@@ -2706,7 +2704,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 		var err error
 		oldLimit, err = r.PushLimit(maxWindow)
 		if err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	err := decode(r)
@@ -2715,7 +2713,7 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 	}
 	if limited {
 		if err := r.PopLimit(oldLimit); err != nil {
-			return runtime.WireInfo{}, 0, locateOperation(err, "decode", name, r.Position(), maxWindow, source)
+			return runtime.WireInfo{}, 0, locateOperation(err, "decode", p.name, r.Position(), maxWindow, source)
 		}
 	}
 	wire, err := r.ValueWire(origin, before, true)
@@ -2733,10 +2731,10 @@ func descriptorRead(r *runtime.Reader, decode func(*runtime.Reader) error, p des
 
 // descriptorExtentError uses the byte entry point's diagnostic and location.
 func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum bool) error {
-	detail := fmt.Sprintf("%s requires at least %d bits", p.name, bits)
+	detail := fmt.Sprintf("%s requires at least %d bits", p.valueName, bits)
 	kind := runtime.Truncated
 	if maximum {
-		detail = fmt.Sprintf("%s exceeds %d bits", p.name, bits)
+		detail = fmt.Sprintf("%s exceeds %d bits", p.valueName, bits)
 		kind = runtime.Limit
 	}
 	var err error = &runtime.DecodeError{Kind: kind, Offset: offset, Detail: detail}
@@ -2745,7 +2743,7 @@ func descriptorExtentError(p descriptorReadPolicy, offset, bits int, maximum boo
 		err = fmt.Errorf("%s", detail)
 		offset = -1
 	}
-	return locateOperation(err, "decode", p.name, offset, 0, p.source)
+	return locateOperation(err, "decode", p.valueName, offset, 0, p.source)
 }
 func DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(data []byte) (runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart], error) {
 	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data, nil)
