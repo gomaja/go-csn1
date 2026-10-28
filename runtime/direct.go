@@ -334,15 +334,15 @@ func (r *Reader) Expect(pattern string) error {
 }
 
 // Matches reports whether pattern matches the next received bits without
-// consuming them. It returns false for any lookahead error, including
-// ErrLHPositionUndefined. Use LookaheadLiteral to inspect the error.
+// consuming them. It returns false where LookaheadLiteral returns an error,
+// which is only the reader's existing failure; use LookaheadLiteral to see it.
 func (r *Reader) Matches(pattern string) bool {
 	matched, err := r.LookaheadLiteral(pattern)
 	return err == nil && matched
 }
 
-// LookaheadLiteral looks ahead within the received input without consuming bits.
-// Patterns extending past the received end return false even with zero extension.
+// LookaheadLiteral looks ahead within the received input, whose L/H positions are always defined,
+// without consuming bits. Past the received end it returns false even with zero extension.
 func (r *Reader) LookaheadLiteral(pattern string) (bool, error) {
 	if err := r.Check(); err != nil {
 		return false, err
