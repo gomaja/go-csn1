@@ -373,6 +373,8 @@ func (r *Reader) resolveBinding(name, canonical string) (uint64, bool, error) {
 // bindingShadowed skips a name already supplied by a newer overlay. Keep this
 // walk separate from compact matching so the compiler does not duplicate the
 // nested traversal in the resolver's map loop.
+//
+//go:noinline
 func (r *Reader) bindingShadowed(owner *Reader, name string) bool {
 	for newer := r; newer != owner; newer = newer.trial.base {
 		if _, exists := newer.trial.values[name]; exists {
