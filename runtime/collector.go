@@ -66,6 +66,7 @@ func (r *Reader) attachCollector(c *Collector) {
 
 // Collecting reports whether observation collection is enabled. Generated
 // field decoders test it before doing any reservation or location work.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Collecting() bool { return r != nil && r.collector != nil }
 
 // Discard abandons a fork's observations, clearing references to their paths.

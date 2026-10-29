@@ -131,6 +131,8 @@ func InputBits(data []byte) int {
 	return len(data) * 8
 }
 
+// Check validates the current reader state.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Check() error {
 	if r == nil {
 		return &DecodeError{Kind: InvalidValue, Offset: -1, Detail: "nil reader"}
@@ -431,6 +433,7 @@ func (r *Reader) Expect(pattern string) error {
 // Matches reports whether pattern matches the next received bits without
 // consuming them. It returns false where LookaheadLiteral returns an error,
 // which is only the reader's existing failure; use LookaheadLiteral to see it.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Matches(pattern string) bool {
 	matched, err := r.LookaheadLiteral(pattern)
 	return err == nil && matched
@@ -438,6 +441,7 @@ func (r *Reader) Matches(pattern string) bool {
 
 // LookaheadLiteral looks ahead within the received input, whose L/H positions are always defined,
 // without consuming bits. Past the received end it returns false even with zero extension.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) LookaheadLiteral(pattern string) (bool, error) {
 	if err := r.Check(); err != nil {
 		return false, err

@@ -16,6 +16,7 @@ func (w *Writer) ComponentError(kind ErrorKind, component string, width int, cau
 // ErrorPath locates a plain generated decoder failure beneath the reader's
 // current path, appending component only when it is not already the final
 // level. Callers use it only on failure; reader errors already carry their path.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) ErrorPath(component string) string {
 	if r == nil {
 		return component

@@ -60,36 +60,50 @@ func TestReleasedTrialMutatorsRefuse(t *testing.T) {
 }
 
 func TestReaderAccessorLifetimeDocumentation(t *testing.T) {
-	f, err := parser.ParseFile(token.NewFileSet(), "direct.go", nil, parser.ParseComments)
-	if err != nil {
-		t.Fatal(err)
+	files := map[string][]string{
+		"direct.go":              {"Check", "Position", "Remaining", "BoundedRemaining", "VirtualBits", "Wire", "Tail", "ZeroExtension", "Matches", "LookaheadLiteral"},
+		"collector.go":           {"Collecting"},
+		"component_error.go":     {"ErrorPath"},
+		"compiled_expression.go": {"ExpressionVariable"},
+		"zero_tail.go":           {"AllRemainingZero"},
 	}
-	names := map[string]bool{"Position": false, "Remaining": false, "BoundedRemaining": false, "VirtualBits": false, "Wire": false, "Tail": false, "ZeroExtension": false}
-	for _, d := range f.Decls {
-		fn, ok := d.(*ast.FuncDecl)
-		if !ok || fn.Recv == nil {
-			continue
-		}
-		star, ok := fn.Recv.List[0].Type.(*ast.StarExpr)
-		if !ok {
-			continue
-		}
-		recv, ok := star.X.(*ast.Ident)
-		if !ok || recv.Name != "Reader" {
-			continue
-		}
-		if _, wanted := names[fn.Name.Name]; !wanted {
-			continue
-		}
-		doc := fn.Doc.Text()
-		if !strings.Contains(doc, "Release") || !strings.Contains(doc, "undefined") {
-			t.Errorf("%s does not document released state", fn.Name.Name)
-		}
-		names[fn.Name.Name] = true
-	}
-	for name, found := range names {
-		if !found {
-			t.Errorf("missing accessor %s", name)
-		}
+	for file, accessors := range files {
+		t.Run(file, func(t *testing.T) {
+			f, err := parser.ParseFile(token.NewFileSet(), file, nil, parser.ParseComments)
+			if err != nil {
+				t.Fatal(err)
+			}
+			names := make(map[string]bool, len(accessors))
+			for _, name := range accessors {
+				names[name] = false
+			}
+			for _, d := range f.Decls {
+				fn, ok := d.(*ast.FuncDecl)
+				if !ok || fn.Recv == nil {
+					continue
+				}
+				star, ok := fn.Recv.List[0].Type.(*ast.StarExpr)
+				if !ok {
+					continue
+				}
+				recv, ok := star.X.(*ast.Ident)
+				if !ok || recv.Name != "Reader" {
+					continue
+				}
+				if _, wanted := names[fn.Name.Name]; !wanted {
+					continue
+				}
+				doc := fn.Doc.Text()
+				if !strings.Contains(doc, "Release") || !strings.Contains(doc, "undefined") {
+					t.Errorf("%s does not document released state", fn.Name.Name)
+				}
+				names[fn.Name.Name] = true
+			}
+			for name, found := range names {
+				if !found {
+					t.Errorf("missing accessor %s", name)
+				}
+			}
+		})
 	}
 }
