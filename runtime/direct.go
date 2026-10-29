@@ -59,6 +59,8 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
 // budget but isolates position and expression bindings for choice resolution.
 // A reader borrowed from ChoiceErrors must not be copied by value; use Fork.
+// It is valid only until ChoiceErrors.Release. State after Release is undefined;
+// Set, ChoiceErrors.ForkScoped and Commit refuse a released trial until reuse.
 type Reader struct {
 	data                                           []byte
 	pos, end, virtual                              int
@@ -145,30 +147,47 @@ func (r *Reader) Check() error {
 	return nil
 }
 
+// Position reports the current bit position.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Position() int {
 	if r == nil {
 		return -1
 	}
 	return r.pos
 }
+
+// Remaining reports the remaining received bits, or -1 for invalid state.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Remaining() int {
 	if r.Check() != nil {
 		return -1
 	}
 	return r.end - r.pos
 }
+
+// BoundedRemaining reports remaining bits in a containing limit, or -1 without one.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) BoundedRemaining() int {
 	if r.boundDepth == 0 {
 		return -1
 	}
 	return r.Remaining()
 }
+
+// VirtualBits reports the number of inferred zero bits.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) VirtualBits() int { return r.virtual }
+
+// Wire returns the retained wire information.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Wire() WireInfo {
 	r.ensureTruncations()
 	r.wire.ImplicitZeros = r.virtual
 	return r.wire
 }
+
+// Tail returns the remaining received bits.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Tail() BitString {
 	if r.Check() != nil {
 		return BitString{}
@@ -176,7 +195,10 @@ func (r *Reader) Tail() BitString {
 	return bitsAt(r.data, r.pos, r.end-r.pos)
 }
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
-func (r *Reader) ZeroExtension() bool           { return r.allowZero }
+
+// ZeroExtension reports whether zero extension is enabled.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
+func (r *Reader) ZeroExtension() bool { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
 	r.checkTrialIdentity()
 	if r.trial != nil {

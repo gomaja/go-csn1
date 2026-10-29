@@ -74,18 +74,25 @@ func releaseFailure(f *deferredFailure) {
 }
 
 // Track retains a trial error until the choice is resolved. Ordinary errors
-// need no scratch ownership and are left untouched.
+// need no scratch ownership and are left untouched. Like Keep, Track panics
+// with "CSN.1 choice diagnostic already consumed or released" if a handle
+// is still in the pool; reuse after another trial acquires it is undetectable.
 //
 //go:noinline
 func (c *ChoiceErrors) Track(err error) {
-	if f, ok := err.(*deferredFailure); ok && !f.tracked {
-		f.next, c.head, f.tracked = c.head, f, true
+	if f, ok := err.(*deferredFailure); ok {
+		if f.pathLen < 0 {
+			panic("CSN.1 choice diagnostic already consumed or released")
+		}
+		if !f.tracked {
+			f.next, c.head, f.tracked = c.head, f, true
+		}
 	}
 }
 
 // Release returns discarded diagnostic scratch. Kept errors are detached first.
 // Keep consumes its input handle. Handles are dead after Keep or Release; do
-// not reuse them. Keep detects a handle still in the pool, but cannot detect
+// not reuse them. Track and Keep detect a handle still in the pool, but cannot detect
 // reuse after another trial acquires it.
 func (c *ChoiceErrors) Release() {
 	defer func() {
@@ -241,9 +248,11 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader { return r.Fork() }
 // DeferReaderPath, PreferTruncation, IsReservedAlternative and
 // IsLHPositionUndefined may inspect them inside the active scope. Neither a
 // reader nor an opaque handle may be used by these operations after Release.
+// Read-only trial state after Release is undefined. Set, ForkScoped and Commit
+// refuse a released trial until its pooled reader is acquired again.
 // Keep consumes its input handle; that handle is dead after Keep or Release.
-// Keep detects a handle still in the pool, but cannot detect reuse after another
-// trial acquires it. Never format or wrap a scoped failure before Keep: fmt
+// Track and Keep detect a handle still in the pool, but cannot detect reuse
+// after another trial acquires it. Never format or wrap a scoped failure before Keep: fmt
 // recovers its Error panic and prints a %!v(PANIC=Error method: ...) marker.
 // TS 24.007 V20.0.0 Annex B §§B.1.1.3-B.1.1.5.
 func (c *ChoiceErrors) ForkScoped(r *Reader) *Reader {
