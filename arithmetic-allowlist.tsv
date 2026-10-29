@@ -131,20 +131,20 @@ runtime/direct.go:conversion:uint8((0x2b >> (7 - uint(position%8))) & 1)	1	BOUND
 runtime/direct.go:conversion:uint8((value >> uint(i)) & 1)	1	BOUNDED: operand=value intrinsic=maskOne guard=runtime/direct.go:911
 runtime/direct.go:conversion:uint8(encoded >> 16)	3	FIXED: bit width is at most 2^20 and the encoded high/low parts fit their carriers; runtime/direct.go:368 `r.fieldWidthHi = uint8(encoded >> 16)`.
 runtime/error_message.go:arithmetic:i + 1	1	FIXED: LastIndexByte returns an index strictly below len(path), so adding one is at most len(path); runtime/error_message.go:133 `return path[:i], path[i+1:]`.
-runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:115 post=runtime/expr.go:137
-runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:115 post=runtime/expr.go:137
-runtime/expr.go:arithmetic:i + 1	5	BOUNDED: operand=i guard=runtime/expr.go:214
-runtime/expr.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/expr.go:214; operand=i guard=runtime/expr.go:33; operand=i guard=runtime/expr.go:45
-runtime/expr.go:arithmetic:maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:115 post=runtime/expr.go:137
-runtime/expr.go:arithmetic:maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:115 post=runtime/expr.go:137
-runtime/expr.go:arithmetic:n *= v	1	BOUNDED: operand=v guard=runtime/expr.go:124
-runtime/expr.go:arithmetic:n += v	1	BOUNDED: operand=n guard=runtime/expr.go:93
-runtime/expr.go:arithmetic:n -= v	1	BOUNDED: operand=n guard=runtime/expr.go:98
-runtime/expr.go:arithmetic:p.position++	1	BOUNDED: operand=p.position callee=peek guard=runtime/expr.go:68
-runtime/expr.go:conversion:int(n)	1	BOUNDED: operand=n guard=runtime/expr.go:61
-runtime/expr.go:conversion:int64(len(table))	1	BOUNDED: operand=table intrinsic=hostIntWiden guard=runtime/expr.go:186
-runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/expr.go:238
-runtime/expr.go:conversion:rune(raw[i])	3	BOUNDED: operand=raw guard=runtime/expr.go:33; operand=i guard=runtime/expr.go:45
+runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:147 post=runtime/expr.go:172
+runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:147 post=runtime/expr.go:172
+runtime/expr.go:arithmetic:i + 1	5	BOUNDED: operand=i guard=runtime/expr.go:261
+runtime/expr.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/expr.go:261; operand=i guard=runtime/expr.go:73; operand=i guard=runtime/expr.go:85
+runtime/expr.go:arithmetic:maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:147 post=runtime/expr.go:172
+runtime/expr.go:arithmetic:maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:147 post=runtime/expr.go:172
+runtime/expr.go:arithmetic:n *= v	1	BOUNDED: operand=v guard=runtime/expr.go:156
+runtime/expr.go:arithmetic:n += v	1	BOUNDED: operand=n guard=runtime/expr.go:125
+runtime/expr.go:arithmetic:n -= v	1	BOUNDED: operand=n guard=runtime/expr.go:130
+runtime/expr.go:arithmetic:p.position++	1	BOUNDED: operand=p.position callee=peek guard=runtime/expr.go:97
+runtime/expr.go:conversion:int(n)	1	BOUNDED: operand=n guard=runtime/expr.go:45
+runtime/expr.go:conversion:int64(len(table))	1	BOUNDED: operand=table intrinsic=hostIntWiden guard=runtime/expr.go:224
+runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/expr.go:289
+runtime/expr.go:conversion:rune(raw[i])	3	BOUNDED: operand=raw guard=runtime/expr.go:73; operand=i guard=runtime/expr.go:85
 runtime/lh_position.go:arithmetic:maxBits + 1	1	FIXED: maxBits is 2^20 so its one-past sentinel fits every supported host int; runtime/lh_position.go:54 `s.count += min(count, maxBits+1-s.count)`
 runtime/lh_position.go:arithmetic:maxBits + 1 - s.count	1	FIXED: private count starts at zero and saturates at maxBits+1; subtraction occurs only at count at most maxBits; runtime/lh_position.go:53 `if s.count <= maxBits`
 runtime/lh_position.go:arithmetic:maxBits - physical	1	FIXED: short circuit excludes negative or greater-than-maxBits physical positions before subtraction; runtime/lh_position.go:68 `physical < 0 || physical > maxBits || s.count > maxBits-physical`

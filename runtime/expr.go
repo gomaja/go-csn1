@@ -10,10 +10,11 @@ import (
 const maxBits = 1 << 20
 
 type expression struct {
-	tokens   []string
-	position int
-	vars     map[string]uint64
-	reader   *Reader
+	tokens     []string
+	position   int
+	vars       map[string]uint64
+	reader     *Reader
+	syntaxOnly bool
 }
 
 // TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
@@ -29,6 +30,45 @@ func eval(raw string, vars map[string]uint64) (int, error) { return evalExpressi
 func evalReader(raw string, r *Reader) (int, error) { return evalExpression(raw, r.vars, r) }
 
 func evalExpression(raw string, vars map[string]uint64, reader *Reader) (int, error) {
+	tokens, err := expressionTokens(raw)
+	if err != nil {
+		return 0, err
+	}
+	p := expression{tokens: tokens, vars: vars, reader: reader}
+	n, err := p.sum()
+	if err != nil {
+		return 0, err
+	}
+	if p.position != len(tokens) {
+		return 0, fmt.Errorf("unexpected expression token %q", tokens[p.position])
+	}
+	if n < 0 || n > maxBits {
+		return 0, fmt.Errorf("width %d outside 0..%d", n, maxBits)
+	}
+	return int(n), nil
+}
+
+// ValidateExpression checks width and count syntax using the same parser as
+// Reader.Eval and Reader.EvalTokens. Labels remain dynamic: no bindings,
+// ambiguity, arithmetic limits or division results are evaluated here.
+// TS 24.007 V20.0.0 Annex B §§B.1.3, B.1.4 and B.2.1 define bit widths,
+// labelled values and repetition expressions.
+func ValidateExpression(raw string) error {
+	tokens, err := expressionTokens(raw)
+	if err != nil {
+		return err
+	}
+	p := expression{tokens: tokens, syntaxOnly: true}
+	if _, err := p.sum(); err != nil {
+		return err
+	}
+	if p.position != len(tokens) {
+		return fmt.Errorf("unexpected expression token %q", tokens[p.position])
+	}
+	return nil
+}
+
+func expressionTokens(raw string) ([]string, error) {
 	var tokens []string
 	for i := 0; i < len(raw); {
 		r := rune(raw[i])
@@ -46,22 +86,11 @@ func evalExpression(raw string, vars map[string]uint64, reader *Reader) (int, er
 			i++
 		}
 		if i == start {
-			return 0, fmt.Errorf("invalid width expression %q", raw)
+			return nil, fmt.Errorf("invalid width expression %q", raw)
 		}
 		tokens = append(tokens, raw[start:i])
 	}
-	p := expression{tokens: tokens, vars: vars, reader: reader}
-	n, err := p.sum()
-	if err != nil {
-		return 0, err
-	}
-	if p.position != len(tokens) {
-		return 0, fmt.Errorf("unexpected expression token %q", tokens[p.position])
-	}
-	if n < 0 || n > maxBits {
-		return 0, fmt.Errorf("width %d outside 0..%d", n, maxBits)
-	}
-	return int(n), nil
+	return tokens, nil
 }
 
 func (p *expression) peek() string {
@@ -88,6 +117,9 @@ func (p *expression) sum() (int64, error) {
 		v, err := p.product()
 		if err != nil {
 			return 0, err
+		}
+		if p.syntaxOnly {
+			continue
 		}
 		if op == "+" {
 			if n > maxBits-v || n < -maxBits-v {
@@ -123,6 +155,9 @@ func (p *expression) product() (int64, error) {
 		}
 		if v < -maxBits || v > maxBits {
 			return 0, fmt.Errorf("expression operand outside limits")
+		}
+		if p.syntaxOnly {
+			continue
 		}
 		if op == "*" {
 			// Operands are bounded to +/-maxBits before this operation;
@@ -180,6 +215,9 @@ func (p *expression) primary() (int64, error) {
 		if p.take() != ")" {
 			return 0, fmt.Errorf("unclosed %s", t)
 		}
+		if p.syntaxOnly {
+			return 0, nil
+		}
 		if index < 0 || index > 31 {
 			return 0, fmt.Errorf("%s index outside 0..31", t)
 		}
@@ -193,6 +231,9 @@ func (p *expression) primary() (int64, error) {
 		return -n, err
 	}
 	if n, err := strconv.ParseInt(t, 10, 64); err == nil {
+		if p.syntaxOnly {
+			return 0, nil
+		}
 		return n, nil
 	}
 	return p.namedValue(t)
@@ -202,6 +243,12 @@ func (p *expression) namedValue(t string) (int64, error) {
 	// TS 44.018 V19.0.0 §10.5.2.16 references printed field labels
 	// containing spaces inside val(...). Match the longest bound label so
 	// arithmetic after it remains a separate expression.
+	// Syntax checking accepts any possible longest label without constructing
+	// each prefix or consulting bindings. Evaluation retains the exact dynamic
+	// matching and ambiguity rules below.
+	if p.syntaxOnly && (t == ")" || t == "+" || t == "*" || t == "/") {
+		return 0, fmt.Errorf("missing expression operand before %q", t)
+	}
 	name := t
 	last := p.position
 	var value uint64
@@ -220,10 +267,14 @@ func (p *expression) namedValue(t string) (int64, error) {
 			if i+1 >= len(p.tokens) || p.tokens[i+1] == "(" || p.tokens[i+1] == ")" {
 				break
 			}
-			name += "-" + p.tokens[i+1]
+			if !p.syntaxOnly {
+				name += "-" + p.tokens[i+1]
+			}
 			i++
 		} else {
-			name += " " + part
+			if !p.syntaxOnly {
+				name += " " + part
+			}
 		}
 		n, ok, err := p.resolveVar(name)
 		if err != nil {
@@ -244,6 +295,9 @@ func (p *expression) namedValue(t string) (int64, error) {
 }
 
 func (p *expression) resolveVar(name string) (uint64, bool, error) {
+	if p.syntaxOnly {
+		return 0, true, nil
+	}
 	canonical := key(name)
 	// Both plain maps and trial overlays prefer exact canonical names and
 	// reject ambiguous compact spellings through the same resolver.
