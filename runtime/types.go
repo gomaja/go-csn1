@@ -186,23 +186,44 @@ func (e *FallbackError) Error() string {
 func (e *FallbackError) Unwrap() error { return ErrFallbackKnown }
 
 // PreferTruncation retains the deepest truncated choice arm. TS 24.007
-// V20.0.0 Annex B §B.1.2.2 permits alternative decoding; when no arm
-// matches because input ends inside one, that boundary is the useful error.
+// V20.0.0 Annex B §B.1.1.4 defines the union of matching alternatives. When
+// none matches, this runtime retains the deepest input boundary as its diagnostic.
 // ErrLHPositionUndefined takes priority, even in a non-selected trial arm:
 // accepting another arm would hide an evaluation without a source-defined position.
 func PreferTruncation(current, candidate error) error {
-	if errors.Is(current, ErrLHPositionUndefined) {
+	if next, ok := candidate.(*deferredFailure); ok {
+		if previous, yes := current.(*deferredFailure); yes {
+			if previous.lh {
+				return current
+			}
+			if next.lh {
+				return candidate
+			}
+			if next.cause.Kind == Truncated && next.cause.Offset > previous.cause.Offset {
+				return candidate
+			}
+			return current
+		}
+		if current == nil {
+			if next.lh || next.cause.Kind == Truncated {
+				return candidate
+			}
+			return nil
+		}
+	}
+
+	if IsLHPositionUndefined(current) {
 		return current
 	}
-	if errors.Is(candidate, ErrLHPositionUndefined) {
+	if IsLHPositionUndefined(candidate) {
 		return candidate
 	}
-	var next *DecodeError
-	if !errors.As(candidate, &next) || next.Kind != Truncated {
+	kind, offset, ok := choiceFailurePosition(candidate)
+	if !ok || kind != Truncated {
 		return current
 	}
-	var previous *DecodeError
-	if !errors.As(current, &previous) || next.Offset > previous.Offset {
+	_, previous, exists := choiceFailurePosition(current)
+	if !exists || offset > previous {
 		return candidate
 	}
 	return current
@@ -260,6 +281,10 @@ func key(name string) string {
 	return b.String()
 }
 
+// Keep the map-copy loop in one compiled body instead of expanding it in each
+// binding-state caller.
+//
+//go:noinline
 func cloneVars(input map[string]uint64) map[string]uint64 {
 	out := make(map[string]uint64, len(input))
 	for k, v := range input {

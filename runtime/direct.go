@@ -58,6 +58,7 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
 // budget but isolates position and expression bindings for choice resolution.
+// A reader borrowed from ChoiceErrors must not be copied by value; use Fork.
 type Reader struct {
 	data                                           []byte
 	pos, end, virtual                              int
@@ -69,6 +70,7 @@ type Reader struct {
 	depth                                          int
 	wire                                           WireInfo
 	collector                                      *Collector
+	trial                                          *choiceTrial
 	observationDropped                             uint64
 	observationStart                               int32
 	fieldWidthLo                                   uint16
@@ -77,14 +79,39 @@ type Reader struct {
 	implicitShared, truncShared, spareCountsShared bool
 }
 
+// readerStorage keeps the shared work counter and initial path in the same
+// allocation as the reader. Forks retain pointers into this storage.
+type readerStorage struct {
+	reader Reader
+	steps  int
+	path   [16]string
+}
+
+// NewReader constructs a reader whose state can remain on the caller's stack.
+// Unused bindings and truncation maps are initialized on first use.
 func NewReader(data []byte) *Reader {
-	steps := 0
 	end := 0
 	if len(data) <= maxBits/8 {
 		end = len(data) * 8
 	}
-	return &Reader{observationStart: -1, data: data, end: end, vars: make(map[string]uint64), path: make([]string, 0, 16), steps: &steps,
-		wire: WireInfo{TruncatedAt: make(map[string][]int)}}
+	steps := 0
+	return &Reader{observationStart: -1, data: data, end: end, path: make([]string, 0, 16), steps: &steps}
+}
+
+// NewChoiceReader co-locates state retained by generated speculative choices.
+// Such choices retain the reader beyond a leaf call; sharing one allocation
+// avoids separate escaped work-counter and path allocations.
+// TS 24.007 V20.0.0 Annex B §B.1.1.4 defines the alternatives.
+func NewChoiceReader(data []byte, collector *Collector) *Reader {
+	storage := new(readerStorage)
+	r := &storage.reader
+	end := 0
+	if len(data) <= maxBits/8 {
+		end = len(data) * 8
+	}
+	*r = Reader{observationStart: -1, data: data, end: end, path: storage.path[:0], steps: &storage.steps}
+	r.attachCollector(collector)
+	return r
 }
 
 func CheckInput(data []byte) error {
@@ -137,7 +164,11 @@ func (r *Reader) BoundedRemaining() int {
 	return r.Remaining()
 }
 func (r *Reader) VirtualBits() int { return r.virtual }
-func (r *Reader) Wire() WireInfo   { r.wire.ImplicitZeros = r.virtual; return r.wire }
+func (r *Reader) Wire() WireInfo {
+	r.ensureTruncations()
+	r.wire.ImplicitZeros = r.virtual
+	return r.wire
+}
 func (r *Reader) Tail() BitString {
 	if r.Check() != nil {
 		return BitString{}
@@ -147,14 +178,22 @@ func (r *Reader) Tail() BitString {
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
+	r.checkTrialIdentity()
+	if r.trial != nil {
+		r.trial.values[key(name)] = value
+		return
+	}
 	if r.varsShared {
 		r.vars = cloneVars(r.vars)
 		r.varsShared = false
 	}
+	if r.vars == nil {
+		r.vars = make(map[string]uint64)
+	}
 	r.vars[key(name)] = value
 }
 func (r *Reader) Eval(expression string) (int, error) {
-	v, err := eval(expression, r.vars)
+	v, err := evalReader(expression, r)
 	if err != nil {
 		return 0, r.fail(InvalidSchema, err.Error())
 	}
@@ -164,6 +203,9 @@ func (r *Reader) fail(kind ErrorKind, detail string) error {
 	return r.failAt(kind, r.pos, detail)
 }
 func (r *Reader) failAt(kind ErrorKind, offset int, detail string) error {
+	if r.trial != nil {
+		return r.deferredFailure(kind, offset, detail)
+	}
 	path := strings.Join(r.path, "/")
 	width := int(r.fieldWidthHi)<<16 | int(r.fieldWidthLo)
 	if width != 0 {
@@ -182,15 +224,18 @@ func (r *Reader) Enter(name string) error {
 	*r.steps++
 	r.depth++
 	if r.pathShared {
-		fresh := make([]string, len(r.path), max(16, len(r.path)))
-		copy(fresh, r.path)
-		r.path = fresh
-		r.pathShared = false
+		r.ownPath()
 	}
 	r.path = append(r.path, name)
 	return nil
 }
 func (r *Reader) Leave() {
+	// A trial may shorten its view of the inherited prefix, but must detach
+	// before a subsequent Enter can replace any of that borrowed prefix.
+	// TS 24.007 V20.0.0 Annex B §B.1.1.3 preserves concatenation order.
+	if r.trial != nil && len(r.path) <= r.trial.pathFloor {
+		r.pathShared = true
+	}
 	if r.depth > 0 {
 		r.depth--
 	}
@@ -199,16 +244,37 @@ func (r *Reader) Leave() {
 	}
 }
 func (r *Reader) Fork() *Reader {
+	var fork Reader
+	r.forkInto(&fork)
+	return &fork
+}
+
+// Keep the public snapshot wrapper small enough for caller inlining. The
+// copied reader may stay on the caller's stack; trial snapshots still detach
+// pooled bindings and borrowed paths before escaping their choice scope.
+// TS 24.007 V20.0.0 Annex B §§B.1.1.3–B.1.1.5.
+func (r *Reader) forkInto(fork *Reader) {
+	r.ensureTruncations()
+	priorVars, priorPath := r.varsShared, r.pathShared
 	r.varsShared, r.pathShared, r.implicitShared, r.truncShared, r.spareCountsShared = true, true, true, true, true
-	fork := *r
+	*fork = *r
+	if r.trial != nil {
+		fork.freezeChoiceSnapshot()
+		r.varsShared, r.pathShared = priorVars, priorPath
+	}
 	if r.collector != nil {
 		fork.observationStart = int32(len(r.collector.observations))
 		fork.observationDropped = r.collector.dropped
 	}
 	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
-	return &fork
 }
 func (r *Reader) Commit(other *Reader) {
+	if r.trial != nil || other.trial != nil {
+		r.checkTrialIdentity()
+		other.checkTrialIdentity()
+		r.commitChoice(other)
+		return
+	}
 	if r.collector != nil {
 		r.commitCollected(other)
 		return
@@ -324,7 +390,14 @@ func (r *Reader) Expect(pattern string) error {
 			return err
 		}
 		if bit != expected {
-			err := r.failAt(InvalidValue, start, fmt.Sprintf("literal %c differs", symbol))
+			detail := ""
+			if r.trial == nil {
+				detail = fmt.Sprintf("literal %c differs", symbol)
+			}
+			err := r.failAt(InvalidValue, start, detail)
+			if f, ok := err.(*deferredFailure); ok {
+				f.cause.Detail = literalDifference(symbol)
+			}
 			r.fieldWidthHi, r.fieldWidthLo = priorHi, priorLo
 			return err
 		}
@@ -461,8 +534,14 @@ func (r *Reader) RecordTruncation(path string, slot, child int) {
 	}
 }
 
-// ownTruncations copies truncation entries shared with a fork before they
-// change.
+// ensureTruncations supplies the public non-nil truncation map lazily.
+func (r *Reader) ensureTruncations() {
+	if r.wire.TruncatedAt == nil {
+		r.wire.TruncatedAt = make(map[string][]int)
+	}
+}
+
+// ownTruncations copies entries shared with a fork before they change.
 func (r *Reader) ownTruncations() {
 	if r.truncShared || r.wire.TruncatedAt == nil {
 		copy := make(map[string][]int, len(r.wire.TruncatedAt))

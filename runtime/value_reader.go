@@ -16,54 +16,32 @@ func (r *Reader) ValueWire(start *Reader, before WireInfo, includeTail bool) (Wi
 	if err := start.Check(); err != nil {
 		return WireInfo{}, err
 	}
-	fail := func(detail string) (WireInfo, error) {
-		return WireInfo{}, operationFailure(fmt.Errorf("%s", detail), "decode", strings.Join(r.path, "/"), r.pos, 0, InvalidValue)
-	}
 	if r.steps != start.steps || start.pos > r.pos || before.ImplicitZeros < 0 || before.ImplicitZeros > r.virtual {
-		return fail("value origin does not belong to this reader")
+		return r.valueWireFailure("value origin does not belong to this reader")
 	}
 	consumed := r.pos - start.pos
 	wire := r.Wire()
 	if len(before.Spare) > len(wire.Spare) || len(before.Padding) > len(wire.Padding) || len(before.Terminal) > len(wire.Terminal) {
-		return fail("value wire prefix exceeds received state")
+		return r.valueWireFailure("value wire prefix exceeds received state")
 	}
 	wire.Spare = append([]BitString(nil), wire.Spare[len(before.Spare):]...)
 	wire.Padding = append([]BitString(nil), wire.Padding[len(before.Padding):]...)
 	wire.Terminal = append([]BitString(nil), wire.Terminal[len(before.Terminal):]...)
-	trunc := map[string][]int{}
-	for key, values := range wire.TruncatedAt {
-		n := len(before.TruncatedAt[key])
-		if n > len(values) {
-			return fail("value truncation prefix exceeds received state")
-		}
-		if n < len(values) {
-			trunc[key] = append([]int(nil), values[n:]...)
-		}
+	trunc, ok := valueCountDelta(before.TruncatedAt, wire.TruncatedAt)
+	if !ok {
+		return r.valueWireFailure("value truncation prefix exceeds received state")
 	}
 	wire.TruncatedAt = trunc
-	counts := map[string][]int{}
-	for key, values := range wire.SpareCounts {
-		n := len(before.SpareCounts[key])
-		if n > len(values) {
-			return fail("value spare prefix exceeds received state")
-		}
-		if n < len(values) {
-			counts[key] = append([]int(nil), values[n:]...)
-		}
+	counts, ok := valueCountDelta(before.SpareCounts, wire.SpareCounts)
+	if !ok {
+		return r.valueWireFailure("value spare prefix exceeds received state")
 	}
 	wire.SpareCounts = counts
 	wire.ImplicitZeros -= before.ImplicitZeros
-	spans := []ImplicitSpan{}
 	begin := start.pos + before.ImplicitZeros
-	for _, span := range wire.ImplicitSpans {
-		if span.At < 0 || span.At > maxBits || span.Count < 0 || span.Count > maxBits-span.At {
-			return fail("invalid inferred span in received value")
-		}
-		end := span.At + span.Count
-		if end > begin {
-			at := max(span.At, begin)
-			spans = append(spans, ImplicitSpan{At: at - begin, Count: end - at})
-		}
+	spans, ok := valueImplicitSpans(wire.ImplicitSpans, begin)
+	if !ok {
+		return r.valueWireFailure("invalid inferred span in received value")
 	}
 	wire.ImplicitSpans = spans
 	tail := BitString{}
@@ -71,7 +49,7 @@ func (r *Reader) ValueWire(start *Reader, before WireInfo, includeTail bool) (Wi
 		tail = r.Tail()
 	}
 	if tail.BitLength > maxBits-consumed {
-		return fail("value tail exceeds runtime bit limit")
+		return r.valueWireFailure("value tail exceeds runtime bit limit")
 	}
 	image, err := start.ReadBitString(consumed + tail.BitLength)
 	if err != nil {
@@ -80,4 +58,45 @@ func (r *Reader) ValueWire(start *Reader, before WireInfo, includeTail bool) (Wi
 	wire = Seal(struct{}{}, image.Bytes, consumed, tail, wire)
 	wire.TransmittedBits = consumed + tail.BitLength
 	return wire, nil
+}
+
+// valueCountDelta shares the identical map-prefix copy used for both received
+// count records, keeping their loops in one compiler body.
+func valueCountDelta(before, after map[string][]int) (map[string][]int, bool) {
+	out := map[string][]int{}
+	for key, values := range after {
+		n := len(before[key])
+		if n > len(values) {
+			return nil, false
+		}
+		if n < len(values) {
+			out[key] = append([]int(nil), values[n:]...)
+		}
+	}
+	return out, true
+}
+
+// Failed value captures share one formatting body; successful captures never
+// enter it.
+//
+//go:noinline
+func (r *Reader) valueWireFailure(detail string) (WireInfo, error) {
+	return WireInfo{}, operationFailure(fmt.Errorf("%s", detail), "decode", strings.Join(r.path, "/"), r.pos, 0, InvalidValue)
+}
+
+// valueImplicitSpans clips received spans with the same checked arithmetic as
+// the enclosing value capture, without expanding that compiler body.
+func valueImplicitSpans(received []ImplicitSpan, begin int) ([]ImplicitSpan, bool) {
+	spans := []ImplicitSpan{}
+	for _, span := range received {
+		if span.At < 0 || span.At > maxBits || span.Count < 0 || span.Count > maxBits-span.At {
+			return nil, false
+		}
+		end := span.At + span.Count
+		if end > begin {
+			at := max(span.At, begin)
+			spans = append(spans, ImplicitSpan{At: at - begin, Count: end - at})
+		}
+	}
+	return spans, true
 }
