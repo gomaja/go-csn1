@@ -100,3 +100,22 @@ func TestCanonicalNullReportsRequestedFixedExtent(t *testing.T) {
 		t.Fatalf("out=%x bound=%+v error=%v", out, bound, err)
 	}
 }
+
+func TestCanonicalNullBoundaryPrecedesInferredZeroExtension(t *testing.T) {
+	// Null remains the selected arm even when the containing capability permits
+	// inferred zeros (TS 24.007 V20.0.0 Annex B Rule B2; TS 24.008
+	// V20.1.0 §10.5.5.12a). Later content must not pass its terminal boundary.
+	w := NewWriter()
+	w.WithWire(WireInfo{canonical: true})
+	w.SetZeroExtension(true)
+	if err := w.WriteUint(0, 8); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.RequireCanonicalEnd(); err != nil {
+		t.Fatal(err)
+	}
+	var bound *BoundError
+	if err := w.WriteUint(0, 1); !errors.As(err, &bound) || bound.Kind != CanonicalTarget || bound.Position != 8 || bound.Limit != 8 {
+		t.Fatalf("inferred content after null: %v", err)
+	}
+}

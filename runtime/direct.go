@@ -895,7 +895,7 @@ func (w *Writer) put(bit uint8) error {
 	if position >= maxBits {
 		return w.operationFailure(fmt.Errorf("encoded bit limit exceeded"), 0, InvalidValue)
 	}
-	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
+	if w.wire.canonical && w.allowZero && !w.canonicalEnd && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 		if bit != 0 {
 			detail := "nonzero bit beyond the receiver-inferred zero extension"
 			if w.bounded && w.bits >= w.limit {
