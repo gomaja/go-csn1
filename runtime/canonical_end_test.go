@@ -54,3 +54,26 @@ func TestCanonicalNullRequiresEnd(t *testing.T) {
 		})
 	}
 }
+
+func TestCanonicalNullPreservesTerminalBoundary(t *testing.T) {
+	for _, padding := range []bool{false, true} {
+		w := NewWriter()
+		w.WithWire(WireInfo{canonical: true})
+		if err := w.WriteUint(0, 8); err != nil {
+			t.Fatal(err)
+		}
+		if err := w.RequireCanonicalEnd(); err != nil {
+			t.Fatal(err)
+		}
+		var bound *BoundError
+		if err := w.PadMinimum(16, padding); !errors.As(err, &bound) || bound.Kind != CanonicalTarget || bound.Limit != 16 || bound.Position != 8 {
+			t.Fatalf("minimum: %v", err)
+		}
+		if err := w.WriteUint(0, 1); !errors.As(err, &bound) || bound.Kind != CanonicalTarget || bound.Limit != 8 || bound.Position != 8 {
+			t.Fatalf("following: %v", err)
+		}
+		if w.Position() != 8 {
+			t.Fatalf("writer changed position: %d", w.Position())
+		}
+	}
+}

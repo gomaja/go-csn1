@@ -623,7 +623,7 @@ type Writer struct {
 	implicitSpan             int
 	stateErr                 error
 	stateErrPath             string
-	allowZero                bool
+	allowZero, canonicalEnd  bool
 }
 
 func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
@@ -743,6 +743,11 @@ func (w *Writer) RequireCanonicalEnd() error {
 	}
 	if w.bits < limit {
 		return w.boundError(kind, limit, "", "null alternative cannot fill the remaining extent")
+	}
+	// An unbounded default call may still request minimum completion later.
+	// Preserve null's end instead of inventing symbols after that choice.
+	if !w.bounded && !w.wire.targetSet {
+		w.canonicalEnd = true
 	}
 	return nil
 }
@@ -879,6 +884,9 @@ func (w *Writer) logicalPosition() (int, error) {
 	return w.bits + w.virtual, nil
 }
 func (w *Writer) put(bit uint8) error {
+	if w.wire.canonical && w.canonicalEnd {
+		return w.boundError(CanonicalTarget, w.bits, "", "content follows an end-selected null alternative")
+	}
 	position, err := w.logicalPosition()
 	if err != nil {
 		return w.operationFailure(err, 0, InvalidValue)
@@ -1090,6 +1098,9 @@ func (w *Writer) WritePaddingTo(bits int) error {
 func (w *Writer) PadMinimum(bits int, sparePadding bool) error {
 	if w.wire.sealed || w.bits >= bits {
 		return nil
+	}
+	if w.wire.canonical && w.canonicalEnd {
+		return w.boundError(CanonicalTarget, bits, "", "null alternative cannot fill the minimum extent")
 	}
 	if sparePadding {
 		return w.operationFailure(w.WritePaddingTo(bits), 0, InvalidValue)
