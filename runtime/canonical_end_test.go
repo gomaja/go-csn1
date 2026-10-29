@@ -77,3 +77,26 @@ func TestCanonicalNullPreservesTerminalBoundary(t *testing.T) {
 		}
 	}
 }
+
+func TestCanonicalNullReportsRequestedFixedExtent(t *testing.T) {
+	encode := func(v struct{ Wire WireInfo }) ([]byte, error) {
+		w := NewWriter()
+		w.WithWire(v.Wire)
+		if err := w.WriteUint(0, 3); err != nil {
+			return nil, err
+		}
+		if err := w.RequireCanonicalEnd(); err != nil {
+			return nil, err
+		}
+		return w.Finish(BitString{})
+	}
+	decode := func([]byte) (Decoded[struct{ Wire WireInfo }], error) {
+		t.Fatal("refused bytes reached decode")
+		return Decoded[struct{ Wire WireInfo }]{}, nil
+	}
+	out, err := CanonicalEncode(struct{ Wire WireInfo }{}, 19, 19, false, encode, decode, nil)
+	var bound *BoundError
+	if out != nil || !errors.As(err, &bound) || bound.Kind != CanonicalTarget || bound.Limit != 152 || bound.Position != 3 {
+		t.Fatalf("out=%x bound=%+v error=%v", out, bound, err)
+	}
+}

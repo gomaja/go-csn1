@@ -92,12 +92,19 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 			}
 			return nil
 		},
-		func() error { _, err := encode(Canonical(value)); return err })
+		func(bits int, target bool) error {
+			if target {
+				_, err := encode(CanonicalTo(value, bits))
+				return err
+			}
+			_, err := encode(Canonical(value))
+			return err
+		})
 }
 
 // canonicalEncode shares the extent search across generated value types. Its
 // typed callbacks do not need an intermediate interface box.
-func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, bool) ([]byte, error), verify func([]byte) error, locate func() error) ([]byte, error) {
+func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, bool) ([]byte, error), verify func([]byte) error, locate func(int, bool) error) ([]byte, error) {
 	if maxOctets == 0 {
 		return nil, &ExtentError{Minimum: minOctets, Required: true}
 	}
@@ -117,9 +124,14 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 		}
 		return out, nil, false
 	}
+	var targetErr error
+	targetBits := 0
 	search := func() ([]byte, bool) {
 		for octets := minOctets; octets <= maxOctets; octets++ {
 			out, err, _ := try(octets*8, true)
+			if targetErr == nil && err != nil {
+				targetErr, targetBits = err, octets*8
+			}
 			if err == nil && len(out) == octets {
 				return out, true
 			}
@@ -143,7 +155,16 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 	if firstSchema {
 		return nil, canonicalFailure(firstErr)
 	}
-	if located := locate(); located != nil {
+	// A null refusal at the fresh octet boundary is only a probe. Report
+	// the actual source/caller extent that the targeted attempt requested.
+	var bound, targetedBound *BoundError
+	if errors.As(firstErr, &bound) && bound.Kind == CanonicalTarget && errors.As(targetErr, &targetedBound) && targetedBound.Kind == CanonicalTarget && targetedBound.Position == bound.Position {
+		if located := locate(targetBits, true); located != nil {
+			return nil, located
+		}
+		return nil, targetErr
+	}
+	if located := locate(0, false); located != nil {
 		return nil, located
 	}
 	return nil, firstErr
