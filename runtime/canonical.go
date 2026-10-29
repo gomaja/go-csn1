@@ -7,6 +7,7 @@ import (
 )
 
 var wireInfoType = reflect.TypeFor[WireInfo]()
+var bitStringType = reflect.TypeFor[BitString]()
 
 type canonicalPointer struct {
 	typ reflect.Type
@@ -218,6 +219,13 @@ var (
 func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
 	if !value.IsValid() {
 		return value
+	}
+	// TS 44.060 V19.0.0 §12.29 paragraphs 23515–23520 permits a
+	// zero-length bitmap: neither nil nor an empty byte slice transmits
+	// any bitmap bits. Normalize only that representation, keeping malformed
+	// nonempty storage and all other slice distinctions visible.
+	if value.Type() == bitStringType && value.Field(1).Int() == 0 && value.Field(0).Len() == 0 {
+		return reflect.Zero(bitStringType)
 	}
 	if value.Type() == wireInfoType {
 		if rawErrors {
