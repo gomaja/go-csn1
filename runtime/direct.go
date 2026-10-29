@@ -774,6 +774,17 @@ func (w *Writer) SpareFillCount() int {
 	return (8 - w.bits%8) % 8
 }
 
+// SpareFillCountToTarget completes a source-defined terminal spare run to
+// the containing bound or explicit canonical extent. TS 44.018 V19.0.0
+// §10.5.2.11a paragraph 15123 prints the DTM value's <spare bit>** tail;
+// TS 24.007 V20.0.0 §B.1.2.1 paragraph 4044 sends each spare as zero.
+// Without an explicit extent it uses SpareFillCount's octet completion.
+func (w *Writer) SpareFillCountToTarget() int {
+	if !w.bounded && w.wire.canonical && w.wire.targetSet && w.bits >= 0 && w.wire.targetBits >= w.bits && w.wire.targetBits <= maxBits {
+		return w.wire.targetBits - w.bits
+	}
+	return w.SpareFillCount()
+}
 func (w *Writer) BoundEndOr(unbounded int) int {
 	if w.bounded {
 		return w.limit
