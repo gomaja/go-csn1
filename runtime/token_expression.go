@@ -32,8 +32,5 @@ func evalTokens(tokens []string, vars map[string]uint64, reader *Reader) (int, e
 	if p.position != len(tokens) {
 		return 0, fmt.Errorf("unexpected expression token %q", tokens[p.position])
 	}
-	if n < 0 || n > maxBits {
-		return 0, fmt.Errorf("width %d outside 0..%d", n, maxBits)
-	}
-	return int(n), nil
+	return (ExpressionValue{n: n}).width()
 }
