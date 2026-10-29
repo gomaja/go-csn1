@@ -416,3 +416,17 @@ func TestChoiceOpaqueFormattingPrintsPanicMarker(t *testing.T) {
 		}
 	}
 }
+
+func TestChoiceKeepAcceptsLiveEmptyKind(t *testing.T) {
+	r := NewReader(nil)
+	var trials ChoiceErrors
+	defer trials.Release()
+	arm := trials.ForkScoped(r)
+	handle := arm.Error("", "custom diagnostic")
+	trials.Track(handle)
+	kept := trials.Keep(r, handle)
+	var cause *DecodeError
+	if !errors.As(kept, &cause) || cause.Kind != "" || cause.Detail != "custom diagnostic" {
+		t.Fatal("live custom diagnostic rejected")
+	}
+}

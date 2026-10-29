@@ -63,7 +63,7 @@ func releaseFailure(f *deferredFailure) {
 	clear(f.frames)
 	f.frames = f.frames[:0]
 	f.cause = DecodeError{}
-	f.width, f.pathLen = 0, 0
+	f.width, f.pathLen = 0, -1
 	f.lh, f.tracked = false, false
 	f.next = nil
 	deferredFailures.Put(f)
@@ -80,8 +80,9 @@ func (c *ChoiceErrors) Track(err error) {
 }
 
 // Release returns discarded diagnostic scratch. Kept errors are detached first.
-// All released handles are dead and must not be reused. Keep detects a handle
-// still in the pool, but reuse after another trial acquires it cannot be detected.
+// Keep consumes its input handle. Handles are dead after Keep or Release; do
+// not reuse them. Keep detects a handle still in the pool, but cannot detect
+// reuse after another trial acquires it.
 func (c *ChoiceErrors) Release() {
 	defer func() {
 		for c.readers != nil {
@@ -113,7 +114,7 @@ func (c *ChoiceErrors) Keep(r *Reader, err error) error {
 	if !ok {
 		return err
 	}
-	if f.cause.Kind == "" {
+	if f.pathLen < 0 {
 		panic("CSN.1 choice diagnostic already consumed or released")
 	}
 	// A diagnostic owned by a different live choice must not be detached or
