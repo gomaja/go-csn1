@@ -95,7 +95,12 @@ func (c *ChoiceErrors) Release() {
 			c.readers = state.next
 			clear(state.values)
 			*state = choiceTrial{values: state.values}
-			*r = Reader{trial: state}
+			// A released trial is dead; ForkScoped overwrites every field
+			// before reuse. Drop references without clearing scalar state.
+			// TS 24.007 V20.0.0 Annex B §B.1.1.4 isolates serial trials.
+			r.data, r.vars, r.steps, r.path = nil, nil, nil, nil
+			r.wire = WireInfo{}
+			r.collector = nil
 			choiceReaders.Put(r)
 		}
 	}()
