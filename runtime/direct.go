@@ -724,9 +724,10 @@ func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) err
 
 // RequireCanonicalEnd refuses a canonical null alternative when its bound
 // still has positions to fill. TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988
-// defines null as the empty string; it does not authorize padding or a change
-// of alternative. The generator calls this only for an end-selected null,
-// excluding length-selected null and source-defined wire padding.
+// defines null as the empty string. Even if <spare padding> follows the
+// choice (Rules B4 and B8), its transmitted symbols select a non-null arm;
+// decode-back would change the caller's selected alternative. The generator
+// excludes length-selected null and source-defined wire padding.
 func (w *Writer) RequireCanonicalEnd() error {
 	if !w.wire.canonical {
 		return nil
@@ -748,6 +749,9 @@ func (w *Writer) RequireCanonicalEnd() error {
 	// Preserve null's end instead of inventing symbols after that choice.
 	if !w.bounded && !w.wire.targetSet {
 		w.canonicalEnd = true
+		// Reuse the existing canonical target guard in put. Ordinary writes
+		// need no extra check for a boundary that only canonical calls set.
+		w.wire.targetSet, w.wire.targetBits = true, w.bits
 	}
 	return nil
 }
@@ -884,9 +888,6 @@ func (w *Writer) logicalPosition() (int, error) {
 	return w.bits + w.virtual, nil
 }
 func (w *Writer) put(bit uint8) error {
-	if w.wire.canonical && w.canonicalEnd {
-		return w.boundError(CanonicalTarget, w.bits, "", "content follows an end-selected null alternative")
-	}
 	position, err := w.logicalPosition()
 	if err != nil {
 		return w.operationFailure(err, 0, InvalidValue)
