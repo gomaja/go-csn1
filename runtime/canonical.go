@@ -63,11 +63,13 @@ func SemanticallyEqual[T any](a, b T) bool {
 // Each candidate must fit the source-defined extent and decode to the same
 // typed semantic value. A zero maximum returns *ExtentError with Required
 // set: the caller must use CanonicalEncodeAtLength. Otherwise, if no
-// candidate succeeds, the fresh encoding's error is returned:
+// candidate succeeds, the fresh encoding's error is returned, except that
+// an end-selected null refusal reports the matching targeted attempt's extent:
 //   - *ExtentError when it falls outside minOctets..maxOctets;
 //   - the encoder's own error, which for generated encoders is *BoundError
 //     with Kind LengthBound when content does not fit a bound inside the
-//     value, or an error wrapping ErrContextRequired;
+//     value, Kind CanonicalTarget when null cannot fill the canonical extent,
+//     or an error wrapping ErrContextRequired;
 //   - an error wrapping the decode error when the bytes do not decode.
 //
 // Bytes that decode to a different typed value give an untyped error.
@@ -180,7 +182,7 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 //     encoding does not fill exactly octets;
 //   - the encoder's own error otherwise. Generated encoders return
 //     *BoundError with Kind CanonicalTarget when content does not fit in
-//     octets, or Kind LengthBound when it does not fit a bound inside the
+//     octets or null cannot fill them, or Kind LengthBound when it does not fit a bound inside the
 //     value. A typed length within the value keeps its value: content it
 //     cannot carry, such as a nonzero field after a TS 44.060 V19.0.0
 //     §12.24 Extension Length, is a LengthBound conflict. A value whose
