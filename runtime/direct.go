@@ -773,6 +773,7 @@ func (w *Writer) SpareFillCount() int {
 	}
 	return (8 - w.bits%8) % 8
 }
+
 func (w *Writer) BoundEndOr(unbounded int) int {
 	if w.bounded {
 		return w.limit
@@ -981,8 +982,19 @@ func (w *Writer) WritePadding() error {
 	if w.wire.sealed {
 		return w.operationFailure(fmt.Errorf("received padding state exhausted"), 0, InvalidValue)
 	}
-	if w.wire.canonical && w.wire.targetSet && !w.bounded {
-		return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
+	if w.wire.canonical {
+		// TS 24.007 V20.0.0 §B.1.2.2 paragraphs 4046–4053: <spare
+		// padding> fills the required extent with L. A fixed carrier
+		// supplies that extent even without an explicit canonical target
+		// (TS 44.018 V19.0.0 §9.1.50 p10636: 160 SI10 bits).
+		if w.bounded && !w.allowZero {
+			return w.operationFailure(w.WritePaddingTo(w.limit), 0, InvalidValue)
+		}
+		// Receiver-inferred padding still evaluates each required L/H bit;
+		// exhausting a bound must not hide an undefined later inferred run.
+		if w.wire.targetSet && !w.bounded {
+			return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
+		}
 	}
 	for w.bits%8 != 0 {
 		if w.inferredLHPositionPossible() {
