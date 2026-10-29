@@ -181,7 +181,7 @@ func (r *Reader) ZeroExtension() bool           { return r.allowZero }
 // Set normalizes caller-supplied names under TS 24.007 V20.0.0 Annex B
 // §B.1.1.5 before applying the same binding update as generated decoders.
 func (r *Reader) Set(name string, value uint64) {
-	r.SetCanonical(key(name), value)
+	r.setBinding(name, value, false)
 }
 func (r *Reader) Eval(expression string) (int, error) {
 	v, err := evalReader(expression, r)
