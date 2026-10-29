@@ -297,18 +297,6 @@ type bindingTarget struct {
 	shared bool
 }
 
-//go:noinline
-func (b *bindingTarget) set(name string, value uint64) {
-	if b.shared {
-		b.values = cloneVars(b.values)
-		b.shared = false
-	}
-	if b.values == nil {
-		b.values = make(map[string]uint64)
-	}
-	b.values[name] = value
-}
-
 func (r *Reader) applyBindings(target *bindingTarget, stop *Reader) {
 	if r.trial == nil {
 		return
@@ -316,8 +304,21 @@ func (r *Reader) applyBindings(target *bindingTarget, stop *Reader) {
 	if r.trial.base != nil && r.trial.base != stop {
 		r.trial.base.applyBindings(target, stop)
 	}
+	// Empty overlays do not acquire a map or detach shared bindings. For a
+	// written overlay, establish ownership once before applying its fields.
+	// TS 24.007 V20.0.0 Annex B §B.1.1.5 preserves the binding context.
+	if len(r.trial.values) == 0 {
+		return
+	}
+	if target.shared {
+		target.values = cloneVars(target.values)
+		target.shared = false
+	}
+	if target.values == nil {
+		target.values = make(map[string]uint64)
+	}
 	for name, value := range r.trial.values {
-		target.set(name, value)
+		target.values[name] = value
 	}
 }
 
