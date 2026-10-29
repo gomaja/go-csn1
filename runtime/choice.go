@@ -59,7 +59,11 @@ func (*deferredFailure) As(any) bool {
 }
 
 func releaseFailure(f *deferredFailure) {
-	clear(f.path[:])
+	// Every acquired entry starts zeroed beyond pathLen, and capture only
+	// writes this prefix. Clear just the owned span so rejected arms do not
+	// scan the full nesting-limit array through the GC write barrier.
+	// TS 24.007 V20.0.0 Annex B §B.1.1.3 preserves the captured context.
+	clear(f.path[:f.pathLen])
 	clear(f.frames)
 	f.frames = f.frames[:0]
 	f.cause = DecodeError{}
