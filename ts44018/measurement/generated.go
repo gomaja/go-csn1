@@ -26,9 +26,8 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.23: align the MBMS reference with TS 44.060 V19.0.0 §12.39.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.23: align the MBMS reference with TS 44.060 V19.0.0 §12.39.
 // Source correction: TS 44.018 V19.0.0 §9.1.55: close the one-bit SI23_BA_USED field; the message field table specifies one bit.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.35a: open the two-branch DTM support choice closed in paragraph 19561.
+// Source correction: TS 44.018 V19.0.0 §10.5.2.35a DOCX paragraph 19556: replace printed I with the choice bar of TS 24.007 V20.0.0 Annex B §B.1.1.4; the opening brace is a Symbol glyph.
+// Source correction: TS 44.018 V19.0.0 §10.5.2.35a DOCX paragraph 19557: replace printed I with the choice bar of TS 24.007 V20.0.0 Annex B §B.1.1.4; the opening brace is a Symbol glyph.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35a: replace the alternative separator with the Annex B choice bar.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35a: replace the Call priority alternative separator with the Annex B choice bar.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35a: terminate the paging channel restructuring definition before prose.
@@ -54,8 +53,6 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35: reference must name the SI4 Rest Octets_S definition printed in paragraph 19480.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35: malformed Break Indicator assignment separator.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.35: malformed LSA identity assignment separator; table 10.5.2.35.2 defines the two alternatives.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.33a: the FDD optional branch closes with a brace but lacks its opening brace.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.33a: the TDD optional branch closes with a brace but lacks its opening brace.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.37a: malformed Info_type_6 width; table 10.5.2.37a.2 defines six bits.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.37e: malformed assignment separator for LSA identity; table 10.5.2.37e.2 confirms the 24-bit and 10-bit alternatives.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.16 table 10.5.2.16.1 defines this as a one-bit L/H field; §10.5.2.18 prints the explicit bit grammar.
@@ -100,8 +97,6 @@
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: close the three-bit TDD bandwidth field.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: align the repeated TDD reference with its printed UTRAN definition.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b and table 9.1.54.1b: close the q(m) width expression.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.33b: open the FDD parameters optional group.
-// Source correction: TS 44.018 V19.0.0 §10.5.2.33b: open the TDD parameters optional group.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: delimit the repeated one-bit reporting priority field.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: malformed SI2q extension assignment separator.
 // Source correction: TS 44.018 V19.0.0 §10.5.2.33b: delimit the repeated one-bit CCN_SUPPORTED field.
