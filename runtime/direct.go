@@ -102,8 +102,6 @@ func NewReader(data []byte) *Reader {
 // Such choices retain the reader beyond a leaf call; sharing one allocation
 // avoids separate escaped work-counter and path allocations.
 // TS 24.007 V20.0.0 Annex B §B.1.1.4 defines the alternatives.
-//
-//go:noinline
 func NewChoiceReader(data []byte, collector *Collector) *Reader {
 	storage := new(readerStorage)
 	r := &storage.reader
@@ -179,20 +177,11 @@ func (r *Reader) Tail() BitString {
 }
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
 func (r *Reader) ZeroExtension() bool           { return r.allowZero }
+
+// Set normalizes caller-supplied names under TS 24.007 V20.0.0 Annex B
+// §B.1.1.5 before applying the same binding update as generated decoders.
 func (r *Reader) Set(name string, value uint64) {
-	r.checkTrialIdentity()
-	if r.trial != nil {
-		r.trial.values[key(name)] = value
-		return
-	}
-	if r.varsShared {
-		r.vars = cloneVars(r.vars)
-		r.varsShared = false
-	}
-	if r.vars == nil {
-		r.vars = make(map[string]uint64)
-	}
-	r.vars[key(name)] = value
+	r.SetCanonical(key(name), value)
 }
 func (r *Reader) Eval(expression string) (int, error) {
 	v, err := evalReader(expression, r)

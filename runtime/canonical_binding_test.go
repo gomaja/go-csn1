@@ -58,3 +58,11 @@ func TestCanonicalBindingsRejectCopiedTrial(t *testing.T) {
 	}()
 	copied.SetCanonical("value", 2)
 }
+
+func BenchmarkChoiceReaderSetup(b *testing.B) {
+	data := []byte{1, 2, 3}
+	b.ReportAllocs()
+	for b.Loop() {
+		benchmarkReader = NewChoiceReader(data, nil)
+	}
+}
