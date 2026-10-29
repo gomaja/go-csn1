@@ -550,21 +550,27 @@ func encodeEnhancedMeasurementReportServingCellDataValue(w *runtime.Writer, v Se
 	return encodeServingCellDataStruct(w, v)
 }
 func decodeEnhancedMeasurementReportServingCellDataSelector(r *runtime.Reader) (*ServingCellDataStruct, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportServingCellDataValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -703,21 +709,27 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(w *runt
 	return nil
 }
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntrySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValueEntryValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -763,21 +775,27 @@ func encodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(w *runtime.Writer
 	return nil
 }
 func decodeEnhancedMeasurementReportREPORTINGQUANTITYListSelector(r *runtime.Reader) (*[]*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportREPORTINGQUANTITYListValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -916,21 +934,27 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntrySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYListEntryValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -961,6 +985,13 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANT
 		if err != nil {
 			return nil, locateIndex(operationLocation2.failure(err, "", r.Position(), 0), "EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHREPORTINGQUANTITYList", i)
 		}
+		if i == 0 {
+			capacity := 128
+			if !r.ZeroExtension() {
+				capacity = max(capacity, r.Remaining()/1+1)
+			}
+			out = make([]*uint8, 0, min(count, capacity))
+		}
 		out = append(out, v)
 	}
 	return out, nil
@@ -989,21 +1020,27 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurem
 	return encodeEUTRANMeasurementReportStruct(w, v)
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurementReportSelector(r *runtime.Reader) (*EUTRANMeasurementReportStruct, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHEUTRANMeasurementReportValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1098,21 +1135,27 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	return ies.EncodeUTRANCSGMeasurementReportIETo(w, v)
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportUTRANCSGMeasurementReportSelector(r *runtime.Reader) (*ies.UTRANCSGMeasurementReportIE, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportUTRANCSGMeasurementReportValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1271,13 +1314,15 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	if r.Remaining() == 0 {
 		{
-			candidate := r.Fork()
+			candidate := failures.ForkScoped(r)
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
@@ -1289,15 +1334,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeAltUnlabeled
-				result.AltUnlabeled = &v
+				kept := v
+				result.AltUnlabeled = &kept
 			} else {
+				failures.Track(err)
 				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceNoString(candidate)
 		if err == nil {
 			matches++
@@ -1309,14 +1356,16 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeNoString
-			result.NoString = &v
+			kept := v
+			result.NoString = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceSI23BAUSED(candidate)
 		if err == nil {
 			matches++
@@ -1328,18 +1377,20 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReportSI23BAUSEDChoiceAlternativeSI23BAUSED
-			result.SI23BAUSED = &v
+			kept := v
+			result.SI23BAUSED = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
-	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+	if runtime.IsLHPositionUndefined(truncatedErr) {
 		discardReader(chosen)
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1440,13 +1491,15 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	if r.Remaining() == 0 {
 		{
-			candidate := r.Fork()
+			candidate := failures.ForkScoped(r)
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
@@ -1458,15 +1511,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeAltUnlabeled
-				result.AltUnlabeled = &v
+				kept := v
+				result.AltUnlabeled = &kept
 			} else {
+				failures.Track(err)
 				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceNoString(candidate)
 		if err == nil {
 			matches++
@@ -1478,14 +1533,16 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeNoString
-			result.NoString = &v
+			kept := v
+			result.NoString = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceUTRANCSGMeasurementReport(candidate)
 		if err == nil {
 			matches++
@@ -1497,18 +1554,20 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasur
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTHUTRANCSGMeasurementReportChoiceAlternativeUTRANCSGMeasurementReport
-			result.UTRANCSGMeasurementReport = &v
+			kept := v
+			result.UTRANCSGMeasurementReport = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
-	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+	if runtime.IsLHPositionUndefined(truncatedErr) {
 		discardReader(chosen)
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1635,13 +1694,15 @@ func encodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(w *runtime.Wr
 	return nil
 }
 func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (EnhancedMeasurementReportBITMAPLENGTHChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result EnhancedMeasurementReportBITMAPLENGTHChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	if r.Remaining() == 0 {
 		{
-			candidate := r.Fork()
+			candidate := failures.ForkScoped(r)
 			v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceAltUnlabeled(candidate)
 			if err == nil {
 				matches++
@@ -1653,15 +1714,17 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 				}
 				_ = v
 				result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeAltUnlabeled
-				result.AltUnlabeled = &v
+				kept := v
+				result.AltUnlabeled = &kept
 			} else {
+				failures.Track(err)
 				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceNoString(candidate)
 		if err == nil {
 			matches++
@@ -1673,14 +1736,16 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeNoString
-			result.NoString = &v
+			kept := v
+			result.NoString = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeEnhancedMeasurementReportBITMAPLENGTHChoiceBITMAPLENGTH(candidate)
 		if err == nil {
 			matches++
@@ -1692,18 +1757,20 @@ func decodeEnhancedMeasurementReportBITMAPLENGTHChoice(r *runtime.Reader) (Enhan
 			}
 			_ = v
 			result.Alternative = EnhancedMeasurementReportBITMAPLENGTHChoiceAlternativeBITMAPLENGTH
-			result.BITMAPLENGTH = &v
+			kept := v
+			result.BITMAPLENGTH = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
-	if errors.Is(truncatedErr, runtime.ErrLHPositionUndefined) {
+	if runtime.IsLHPositionUndefined(truncatedErr) {
 		discardReader(chosen)
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -2542,7 +2609,8 @@ func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry(w *ru
 }
 func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(r *runtime.Reader) ([]EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry, error) {
 	var out []EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry
-	count, err := r.Eval("val(N_E-UTRAN+1)")
+	count, err := r.EvalTokens([]string{"val", "(", "N_E", "-", "UTRAN", "+", "1", ")"})
+
 	if err != nil {
 		return nil, err
 	}
@@ -2555,12 +2623,20 @@ func decodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(r *runtime
 		if err != nil {
 			return nil, locateIndex(operationLocation3.failure(err, "", r.Position(), 0), "EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList", i)
 		}
+		if i == 0 {
+			capacity := 128
+			if !r.ZeroExtension() {
+				capacity = max(capacity, r.Remaining()/18+1)
+			}
+			out = make([]EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry, 0, min(count, capacity))
+		}
 		out = append(out, v)
 	}
 	return out, nil
 }
 func encodeEUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupList(w *runtime.Writer, v []EUTRANMeasurementReportStructEUTRANFREQUENCYINDEXGroupListEntry) error {
-	count, err := w.Eval("val(N_E-UTRAN+1)")
+	count, err := w.EvalTokens([]string{"val", "(", "N_E", "-", "UTRAN", "+", "1", ")"})
+
 	if err != nil {
 		return err
 	}
@@ -2994,6 +3070,13 @@ func decodeMeasurementResultsNCELLReports(r *runtime.Reader) ([]NCELLReportStruc
 		if err != nil {
 			return nil, locateIndex(measurementResultsOperationLocation2.failure(err, "", r.Position(), 0), "MeasurementResultsNCELLReports", i)
 		}
+		if i == 0 {
+			capacity := 128
+			if !r.ZeroExtension() {
+				capacity = max(capacity, r.Remaining()/17+1)
+			}
+			out = make([]NCELLReportStruct, 0, min(count, capacity))
+		}
 		out = append(out, v)
 	}
 	return out, nil
@@ -3118,12 +3201,14 @@ func encodeMeasurementResultsCSGArm(w *runtime.Writer, v MeasurementResultsCSGAr
 	return nil
 }
 func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResultsReportsSuffix, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result MeasurementResultsReportsSuffix
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeMeasurementResultsSuffixNull(candidate)
 		if err == nil {
 			matches++
@@ -3135,14 +3220,16 @@ func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResult
 			}
 			_ = v
 			result.Alternative = MeasurementResultsReportsSuffixAlternativeNull
-			result.Null = &v
+			kept := v
+			result.Null = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeMeasurementResultsCSGArm(candidate)
 		if err == nil {
 			matches++
@@ -3154,14 +3241,16 @@ func decodeMeasurementResultsReportsSuffix(r *runtime.Reader) (MeasurementResult
 			}
 			_ = v
 			result.Alternative = MeasurementResultsReportsSuffixAlternativeCSG
-			result.CSG = &v
+			kept := v
+			result.CSG = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -3257,12 +3346,14 @@ func encodeMeasurementResultsReportsArm(w *runtime.Writer, v MeasurementResultsR
 	return nil
 }
 func decodeMeasurementResultsCountChoice(r *runtime.Reader) (MeasurementResultsCountChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result MeasurementResultsCountChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeMeasurementResultsUnavailableArm(candidate)
 		if err == nil {
 			matches++
@@ -3274,14 +3365,16 @@ func decodeMeasurementResultsCountChoice(r *runtime.Reader) (MeasurementResultsC
 			}
 			_ = v
 			result.Alternative = MeasurementResultsCountChoiceAlternativeUnavailable
-			result.Unavailable = &v
+			kept := v
+			result.Unavailable = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeMeasurementResultsReportsArm(candidate)
 		if err == nil {
 			matches++
@@ -3293,14 +3386,16 @@ func decodeMeasurementResultsCountChoice(r *runtime.Reader) (MeasurementResultsC
 			}
 			_ = v
 			result.Alternative = MeasurementResultsCountChoiceAlternativeReports
-			result.Reports = &v
+			kept := v
+			result.Reports = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -3722,7 +3817,7 @@ func decodeEnhancedMeasurementReportBytes(data []byte, collector *runtime.Collec
 	if len(data) > 21 {
 		return runtime.Decoded[EnhancedMeasurementReport]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 168, Detail: "EnhancedMeasurementReport exceeds 168 bits"}
 	}
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEnhancedMeasurementReport(r)
 	if err != nil {
@@ -4151,7 +4246,7 @@ func decodeMeasurementResultsContentsBytes(data []byte, collector *runtime.Colle
 	if len(data) > 16 {
 		return runtime.Decoded[MeasurementResultsContents]{}, &runtime.DecodeError{Kind: runtime.Limit, Offset: 128, Detail: "MeasurementResultsContents exceeds 128 bits"}
 	}
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeMeasurementResultsContents(r)
 	if err != nil {
@@ -4944,23 +5039,12 @@ func (c *operationLocation) nilWriter() error {
 	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
-func decodeCause(err error) *runtime.DecodeError {
-	for err != nil {
-		switch e := err.(type) {
-		case *runtime.DecodeError:
-			return e
-		case interface{ Unwrap() error }:
-			err = e.Unwrap()
-		default:
-			return nil
-		}
-	}
-	return nil
-}
-
 func locateIndex(err error, path string, index int) error {
 	if err == nil {
 		return nil
+	}
+	if deferred, ok := runtime.DeferIndex(err, path, index, locateIndex); ok {
+		return deferred
 	}
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
@@ -5016,9 +5100,7 @@ func errorPath(parent, child string) string {
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	cause := r.Error(runtime.InvalidValue, detail).(*runtime.DecodeError)
-	cause.Offset = start
-	return cause
+	return r.ErrorAt(runtime.InvalidValue, start, detail)
 }
 
 func locateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
@@ -5031,6 +5113,9 @@ func locateOperationKind(err error, operation, path string, offset, width int, s
 	return locatedFailure(err, operation, path, offset, width, source, kind)
 }
 func locatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
+	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, locatedFailure); ok {
+		return deferred
+	}
 	var existing *runtime.OperationError
 	if errors.As(err, &existing) {
 		copy := *existing

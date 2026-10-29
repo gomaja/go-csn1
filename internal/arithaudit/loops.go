@@ -13,8 +13,8 @@ import (
 
 // CheckGeneratedLoopArithmetic verifies the two emitted index patterns:
 // counted repeats and recursive-list selectors. Their generator sites are
-// csn1/gen/direct.go:1006 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1060
-// `for i:=0;i<count;i++` and csn1/gen/direct.go:1559 `if i+1<len(v.Entries)`.
+// csn1/gen/direct.go:1028 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1082
+// `for i:=0;i<count;i++` and csn1/gen/direct.go:1583 `if i+1<len(v.Entries)`.
 func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextIndexes int, err error) {
 	set := token.NewFileSet()
 	file, err := parser.ParseFile(set, name, source, 0)
@@ -135,7 +135,7 @@ func boundedCountAssignment(body *ast.BlockStmt, assign *ast.AssignStmt) bool {
 	if call, ok := expr.(*ast.CallExpr); ok && len(assign.Lhs) <= 2 {
 		if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (isName(selector.X, "r") || isName(selector.X, "w")) {
 			switch selector.Sel.Name {
-			case "Eval", "SpareCount", "ExpressionResult":
+			case "Eval", "EvalTokens", "SpareCount", "ExpressionResult":
 				return len(call.Args) == 1
 			case "SpareFillCount":
 				return len(call.Args) == 0

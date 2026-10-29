@@ -670,7 +670,15 @@ func wrapperChildError(r *runtime.Reader, err error, child string) error {
 	if err == nil {
 		return nil
 	}
-	parent := r.ErrorPath("")
+	if deferred, ok := runtime.DeferReaderPath(err, r, child, wrapperChildPath); ok {
+		return deferred
+	}
+	return wrapperChildPath(err, r.ErrorPath(""), child)
+}
+func wrapperChildPath(err error, parent, child string) error {
+	if err == nil {
+		return nil
+	}
 	path := func(current string) string {
 		if current == parent {
 			current = ""
@@ -679,13 +687,13 @@ func wrapperChildError(r *runtime.Reader, err error, child string) error {
 				current = strings.TrimPrefix(rest, "/")
 			}
 		}
-		return errorPath(r.ErrorPath(child), current)
+		return errorPath(errorPath(parent, child), current)
 	}
 	var op *runtime.OperationError
 	if errors.As(err, &op) {
 		copy := *op
 		copy.Location.Path = path(copy.Location.Path)
-		copy.Cause = wrapperChildError(r, copy.Cause, child)
+		copy.Cause = wrapperChildPath(copy.Cause, parent, child)
 		return &copy
 	}
 	var de *runtime.DecodeError
@@ -709,6 +717,8 @@ func wrapperChildError(r *runtime.Reader, err error, child string) error {
 	return err
 }
 
+// shiftOperation handles ordinary byte-entry and writer errors. Reader-entry
+// children use wrapperChildError with already absolute positions.
 func shiftOperation(err error, offset int, path string) error {
 	if err == nil {
 		return nil
@@ -839,23 +849,12 @@ func (c *operationLocation) nilWriter() error {
 	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
-func decodeCause(err error) *runtime.DecodeError {
-	for err != nil {
-		switch e := err.(type) {
-		case *runtime.DecodeError:
-			return e
-		case interface{ Unwrap() error }:
-			err = e.Unwrap()
-		default:
-			return nil
-		}
-	}
-	return nil
-}
-
 func locateIndex(err error, path string, index int) error {
 	if err == nil {
 		return nil
+	}
+	if deferred, ok := runtime.DeferIndex(err, path, index, locateIndex); ok {
+		return deferred
 	}
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
@@ -911,9 +910,7 @@ func errorPath(parent, child string) string {
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	cause := r.Error(runtime.InvalidValue, detail).(*runtime.DecodeError)
-	cause.Offset = start
-	return cause
+	return r.ErrorAt(runtime.InvalidValue, start, detail)
 }
 
 func locateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
@@ -926,6 +923,9 @@ func locateOperationKind(err error, operation, path string, offset, width int, s
 	return locatedFailure(err, operation, path, offset, width, source, kind)
 }
 func locatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
+	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, locatedFailure); ok {
+		return deferred
+	}
 	var existing *runtime.OperationError
 	if errors.As(err, &existing) {
 		copy := *existing

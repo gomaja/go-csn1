@@ -1480,13 +1480,15 @@ func encodeSpareBitsAlternativesAltUnlabeledVariant2(w *runtime.Writer, v SpareB
 	return nil
 }
 func decodeSpareBitsAlternatives(r *runtime.Reader) (SpareBitsAlternatives, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result SpareBitsAlternatives
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	if r.Remaining() == 0 {
 		{
-			candidate := r.Fork()
+			candidate := failures.ForkScoped(r)
 			v, err := decodeSpareBitsAlternativesAltUnlabeled(candidate)
 			if err == nil {
 				matches++
@@ -1498,15 +1500,17 @@ func decodeSpareBitsAlternatives(r *runtime.Reader) (SpareBitsAlternatives, erro
 				}
 				_ = v
 				result.Alternative = SpareBitsAlternativesAlternativeAltUnlabeled
-				result.AltUnlabeled = &v
+				kept := v
+				result.AltUnlabeled = &kept
 			} else {
+				failures.Track(err)
 				discardReader(candidate)
 				truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 			}
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeSpareBitsAlternativesAltUnlabeledVariant2(candidate)
 		if err == nil {
 			matches++
@@ -1518,14 +1522,16 @@ func decodeSpareBitsAlternatives(r *runtime.Reader) (SpareBitsAlternatives, erro
 			}
 			_ = v
 			result.Alternative = SpareBitsAlternativesAlternativeAltUnlabeledVariant2
-			result.AltUnlabeledVariant2 = &v
+			kept := v
+			result.AltUnlabeledVariant2 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1897,7 +1903,7 @@ func decodeSpareBitsBytes(data []byte) (runtime.Decoded[SpareBits], error) {
 		return runtime.Decoded[SpareBits]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewChoiceReader(input, nil)
 	r.SetZeroExtension(false)
 	v, err := decodeSpareBits(r)
 	if err != nil {
@@ -2418,23 +2424,12 @@ func (c *operationLocation) nilWriter() error {
 	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
-func decodeCause(err error) *runtime.DecodeError {
-	for err != nil {
-		switch e := err.(type) {
-		case *runtime.DecodeError:
-			return e
-		case interface{ Unwrap() error }:
-			err = e.Unwrap()
-		default:
-			return nil
-		}
-	}
-	return nil
-}
-
 func locateIndex(err error, path string, index int) error {
 	if err == nil {
 		return nil
+	}
+	if deferred, ok := runtime.DeferIndex(err, path, index, locateIndex); ok {
+		return deferred
 	}
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
@@ -2490,9 +2485,7 @@ func errorPath(parent, child string) string {
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	cause := r.Error(runtime.InvalidValue, detail).(*runtime.DecodeError)
-	cause.Offset = start
-	return cause
+	return r.ErrorAt(runtime.InvalidValue, start, detail)
 }
 
 func locateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
@@ -2505,6 +2498,9 @@ func locateOperationKind(err error, operation, path string, offset, width int, s
 	return locatedFailure(err, operation, path, offset, width, source, kind)
 }
 func locatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
+	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, locatedFailure); ok {
+		return deferred
+	}
 	var existing *runtime.OperationError
 	if errors.As(err, &existing) {
 		copy := *existing
