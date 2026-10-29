@@ -721,6 +721,32 @@ func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) err
 	}
 	return w.operationFailure(&BoundError{Kind: kind, Path: w.path, Field: field, Detail: detail, Limit: limit, Position: w.bits}, 0, InvalidValue)
 }
+
+// RequireCanonicalEnd refuses a canonical null alternative when its bound
+// still has positions to fill. TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988
+// defines null as the empty string; it does not authorize padding or a change
+// of alternative. The generator calls this only for an end-selected null,
+// excluding length-selected null and source-defined wire padding.
+func (w *Writer) RequireCanonicalEnd() error {
+	if !w.wire.canonical {
+		return nil
+	}
+	limit := w.bits
+	kind := CanonicalTarget
+	switch {
+	case w.bounded:
+		limit, kind = w.limit, LengthBound
+	case w.wire.targetSet:
+		limit = w.wire.targetBits
+	case w.bits%8 != 0:
+		limit = w.bits + (8 - w.bits%8)
+	}
+	if w.bits < limit {
+		return w.boundError(kind, limit, "", "null alternative cannot fill the remaining extent")
+	}
+	return nil
+}
+
 func (w *Writer) Canonical() bool { return w.wire.canonical }
 
 // Truncation consumes the next received truncation entry for path, in the
@@ -774,11 +800,11 @@ func (w *Writer) SpareFillCount() int {
 	return (8 - w.bits%8) % 8
 }
 
-// SpareFillCountToTarget completes a source-defined terminal spare run to
-// the containing bound or explicit canonical extent. TS 44.018 V19.0.0
-// §10.5.2.11a paragraph 15123 prints the DTM value's <spare bit>** tail;
-// TS 24.007 V20.0.0 §B.1.2.1 paragraph 4044 sends each spare as zero.
-// Without an explicit extent it uses SpareFillCount's octet completion.
+// SpareFillCountToTarget completes a source-defined terminal <spare bit>**
+// run to the containing bound or explicit canonical extent. TS 24.007
+// V20.0.0 Annex B.2.1 p4112 defines the indefinite repetition; Annex
+// B.1.2.1 Rule B7 p4044 sends every spare bit as zero. A printed count
+// uses that count instead. Without an explicit extent, complete the octet.
 func (w *Writer) SpareFillCountToTarget() int {
 	if !w.bounded && w.wire.canonical && w.wire.targetSet && w.bits >= 0 && w.wire.targetBits >= w.bits && w.wire.targetBits <= maxBits {
 		return w.wire.targetBits - w.bits
