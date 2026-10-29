@@ -5,7 +5,7 @@
     "api_ledger_sha256": "92d56900647ddc5896f6f82387bbe9fadf7791956b17832f263170c1e81659a8"
   },
   "schema_version": 1,
-  "compiler_commit": "6dc82ae778ac245b3b3cd42297ccf4d4bae723dc",
+  "compiler_commit": "63df3c984b39ee06095583b9350897b1035685b5",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -119,7 +119,7 @@
     },
     {
       "path": "docs/csn1/ts44018/ia-reserved-tables.txt",
-      "sha256": "aff3e6bd864f67c621801f8bad2e4ec277643e80414a48d1ed3da77da4c66e52"
+      "sha256": "703449da1d7572216f2212be21fdaa0293f9bfe5834aa828e2f1a5fb83e3bd4f"
     },
     {
       "path": "docs/csn1/ts44018/ia-rest-octets.csn",
@@ -283,11 +283,11 @@
     },
     {
       "path": "docs/csn1/ts44018/si2quater-rest-octets.csn",
-      "sha256": "00b09fe8959fd9193e2eb43c88b21a6846e0758eb4b77acce5dcab15cbcbd028"
+      "sha256": "5ea5af8005edd87e31bc4aa0e9d3db3e71586dc2dd104bbb563e6d81f89914e5"
     },
     {
       "path": "docs/csn1/ts44018/si2ter-rest-octets.csn",
-      "sha256": "070bc1e500771e5c8b5f240fbfeff2d6f123fc29fd1d1535526ad4a8a385a64a"
+      "sha256": "209fb1df2418c88ca366a7c281d3dda279a147b618c3a4a53950ab01e2156cf9"
     },
     {
       "path": "docs/csn1/ts44018/si3-rest-octets.csn",
@@ -299,7 +299,7 @@
     },
     {
       "path": "docs/csn1/ts44018/si6-rest-octets.csn",
-      "sha256": "6b64670c21510cf05cc359ddb2f80d244abba62448738bcbb42e0c1b37e04a4d"
+      "sha256": "e53996f4a1fce9cca39705866e41c8b93156cbdb0a9399975d63f2008755408c"
     },
     {
       "path": "docs/csn1/ts44018/si9-rest-octets.csn",
@@ -700,9 +700,9 @@
       "version": "19.0.0",
       "clause": "10.5.2.35a",
       "paragraph": 19556,
-      "expected": "L I H \u003cPCH and NCH info\u003e}",
-      "replacement": "{ L | H \u003cPCH and NCH info\u003e }",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector",
+      "expected": "{L I H \u003cPCH and NCH info\u003e}",
+      "replacement": "{L | H \u003cPCH and NCH info\u003e}",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a DOCX paragraph 19556: replace printed I with the choice bar of TS 24.007 V20.0.0 Annex B §B.1.1.4; the opening brace is a Symbol glyph",
       "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19556"
     },
     {
@@ -710,20 +710,10 @@
       "version": "19.0.0",
       "clause": "10.5.2.35a",
       "paragraph": 19557,
-      "expected": "L I H \u003cVBS/VGCS options : bit(2)\u003e}",
-      "replacement": "{ L | H \u003cVBS/VGCS options : bit(2)\u003e }",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: restore the printed L/H optional group; pycrate encodes the same selector",
+      "expected": "{L I H \u003cVBS/VGCS options : bit(2)\u003e}",
+      "replacement": "{L | H \u003cVBS/VGCS options : bit(2)\u003e}",
+      "reason": "TS 44.018 V19.0.0 §10.5.2.35a DOCX paragraph 19557: replace printed I with the choice bar of TS 24.007 V20.0.0 Annex B §B.1.1.4; the opening brace is a Symbol glyph",
       "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19557"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.35a",
-      "paragraph": 19558,
-      "expected": "\u003c DTM_support : bit == L \u003e",
-      "replacement": "{ \u003c DTM_support : bit == L \u003e",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.35a: open the two-branch DTM support choice closed in paragraph 19561",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.35a paragraph 19558"
     },
     {
       "standard": "TS 44.018",
@@ -974,26 +964,6 @@
       "replacement": "::=",
       "reason": "TS 44.018 V19.0.0 §10.5.2.35: malformed LSA identity assignment separator; table 10.5.2.35.2 defines the two alternatives",
       "citation": "TS 44.018 V19.0.0 §10.5.2.35 paragraph 19517"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.33a",
-      "paragraph": 18932,
-      "expected": " 0 | 1\t\u003c FDD_Qoffset",
-      "replacement": " { 0 | 1\t\u003c FDD_Qoffset",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.33a: the FDD optional branch closes with a brace but lacks its opening brace",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.33a paragraph 18932"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.33a",
-      "paragraph": 18932,
-      "expected": " 0 | 1\t\u003c TDD_Qoffset",
-      "replacement": " { 0 | 1\t\u003c TDD_Qoffset",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.33a: the TDD optional branch closes with a brace but lacks its opening brace",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.33a paragraph 18932"
     },
     {
       "standard": "TS 44.018",
@@ -1439,26 +1409,6 @@
       "standard": "TS 44.018",
       "version": "19.0.0",
       "clause": "10.5.2.33b",
-      "paragraph": 19043,
-      "expected": " 0 | 1\t\u003c FDD_Qoffset",
-      "replacement": " { 0 | 1\t\u003c FDD_Qoffset",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: open the FDD parameters optional group",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19043"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.33b",
-      "paragraph": 19043,
-      "expected": " 0 | 1\t\u003c TDD_Qoffset",
-      "replacement": " { 0 | 1\t\u003c TDD_Qoffset",
-      "reason": "TS 44.018 V19.0.0 §10.5.2.33b: open the TDD parameters optional group",
-      "citation": "TS 44.018 V19.0.0 §10.5.2.33b paragraph 19043"
-    },
-    {
-      "standard": "TS 44.018",
-      "version": "19.0.0",
-      "clause": "10.5.2.33b",
       "paragraph": 19054,
       "expected": "{ REP_PRIORITY: bit }",
       "replacement": "{ \u003c REP_PRIORITY: bit \u003e }",
@@ -1806,11 +1756,11 @@
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "7e6f98551b94db269cadb934334efd1da109d4bd38bd076feaf1a159d49fe00f"
+      "sha256": "5a5507196e1d8638c4b0786263e319647baca267acffc91e968a2c4b7b5f86e7"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "89fab9e0e6e6d3cfba5b5edc8ff37d95cfc24dafa0103a1e656ad8ba02587db9"
+      "sha256": "55a5225dbe4b75a9b43460f38df0a4f67c78642565b1b9c38952b63df4cbdd40"
     },
     {
       "path": "ts44060/ies/generated.go",
