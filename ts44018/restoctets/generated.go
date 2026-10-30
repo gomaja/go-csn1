@@ -4103,6 +4103,11 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoic
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceRCCImplicitRejectPSChoiceAlternativeAltL:
@@ -4703,6 +4708,11 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignm
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceEGPRSPacketUplinkAssignmentImplicitRejectPSChoiceAlternativeAltL:
@@ -5130,6 +5140,11 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParamet
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARestOctetsCompressedInterRATHOINFOINDChoiceLengthOfFrequencyParametersImplicitRejectPSChoiceAlternativeAltL:
@@ -5790,6 +5805,11 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentIm
 	case IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentImplicitRejectCSChoiceAlternativeAltL:
@@ -6043,6 +6063,11 @@ func encodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPE
 	case IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <IA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARestOctetsCompressedInterRATHOINFOINDChoicePacketUplinkAssignmentPEOBCCHCHANGEMARKChoiceAlternativeAltL:
@@ -8154,6 +8179,11 @@ func encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTI
 	case EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <EGPRS Packet Uplink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceTFIASSIGNMENTREPORTEDTIMESLOTSChoiceAlternativeAltL:
@@ -8955,6 +8985,11 @@ func encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLO
 	case EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <EGPRS Packet Uplink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeEGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case EGPRSPacketUplinkAssignmentTFIASSIGNMENTChoiceNUMBEROFRADIOBLOCKSALLOCATEDPFIChoiceAlternativeAltL:
@@ -10786,6 +10821,11 @@ func encodePacketUplinkAssignmentExtendedRAChoice(w *runtime.Writer, v PacketUpl
 	case PacketUplinkAssignmentExtendedRAChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "PacketUplinkAssignmentExtendedRAChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Packet Uplink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodePacketUplinkAssignmentExtendedRAChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case PacketUplinkAssignmentExtendedRAChoiceAlternativeAltL:
@@ -11036,6 +11076,11 @@ func encodePacketUplinkAssignmentPFIChoice(w *runtime.Writer, v PacketUplinkAssi
 	case PacketUplinkAssignmentPFIChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "PacketUplinkAssignmentPFIChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Packet Uplink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodePacketUplinkAssignmentPFIChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case PacketUplinkAssignmentPFIChoiceAlternativeAltL:
@@ -12029,6 +12074,11 @@ func encodePacketDownlinkAssignmentEGPRSWindowSizeChoice(w *runtime.Writer, v Pa
 	case PacketDownlinkAssignmentEGPRSWindowSizeChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "PacketDownlinkAssignmentEGPRSWindowSizeChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodePacketDownlinkAssignmentEGPRSWindowSizeChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case PacketDownlinkAssignmentEGPRSWindowSizeChoiceAlternativeAltL:
@@ -12279,6 +12329,11 @@ func encodePacketDownlinkAssignmentPFIChoice(w *runtime.Writer, v PacketDownlink
 	case PacketDownlinkAssignmentPFIChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "PacketDownlinkAssignmentPFIChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodePacketDownlinkAssignmentPFIChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case PacketDownlinkAssignmentPFIChoiceAlternativeAltL:
@@ -12900,6 +12955,11 @@ func encodePacketDownlinkAssignmentNPMTransferTimeChoice(w *runtime.Writer, v Pa
 	case PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "PacketDownlinkAssignmentNPMTransferTimeChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Packet Downlink Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodePacketDownlinkAssignmentNPMTransferTimeChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case PacketDownlinkAssignmentNPMTransferTimeChoiceAlternativeAltL:
@@ -13565,6 +13625,11 @@ func encodeSecondPartPacketAssignmentExtendedRAChoice(w *runtime.Writer, v Secon
 	case SecondPartPacketAssignmentExtendedRAChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SecondPartPacketAssignmentExtendedRAChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.16 <Second Part Packet Assignment>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSecondPartPacketAssignmentExtendedRAChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SecondPartPacketAssignmentExtendedRAChoiceAlternativeAltL:
@@ -14956,6 +15021,11 @@ func encodeIARRestOctetsRCCChoice(w *runtime.Writer, v IARRestOctetsRCCChoice) e
 	case IARRestOctetsRCCChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IARRestOctetsRCCChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.17 <IAR Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIARRestOctetsRCCChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IARRestOctetsRCCChoiceAlternativeAltL:
@@ -15469,6 +15539,11 @@ func encodeIAXRestOctetsRCCChoice(w *runtime.Writer, v IAXRestOctetsRCCChoice) e
 	case IAXRestOctetsRCCChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IAXRestOctetsRCCChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.18 <IAX Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIAXRestOctetsRCCChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IAXRestOctetsRCCChoiceAlternativeAltL:
@@ -30337,6 +30412,11 @@ func encodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParame
 	case SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33a <SI2ter Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2terRestOctetsSI2terMPCHANGEMARKGroupN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltL:
@@ -34364,6 +34444,11 @@ func encodeP2RestOctetsMBMSNotification3Choice(w *runtime.Writer, v P2RestOctets
 	case P2RestOctetsMBMSNotification3ChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsMBMSNotification3Choice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsMBMSNotification3ChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsMBMSNotification3ChoiceAlternativeAltL:
@@ -34617,6 +34702,11 @@ func encodeP2RestOctetsImplicitRejectCSChoice(w *runtime.Writer, v P2RestOctetsI
 	case P2RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsImplicitRejectCSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsImplicitRejectCSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsImplicitRejectCSChoiceAlternativeAltL:
@@ -34830,6 +34920,11 @@ func encodeP2RestOctetsIPASupportChoice(w *runtime.Writer, v P2RestOctetsIPASupp
 	case P2RestOctetsIPASupportChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsIPASupportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsIPASupportChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsIPASupportChoiceAlternativeAltL:
@@ -35083,6 +35178,11 @@ func encodeP2RestOctetsPEOBCCHCHANGEMARKChoice(w *runtime.Writer, v P2RestOctets
 	case P2RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsPEOBCCHCHANGEMARKChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL:
@@ -35336,6 +35436,11 @@ func encodeP2RestOctetsPositioningEventPendingIndicatorChoice(w *runtime.Writer,
 	case P2RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsPositioningEventPendingIndicatorChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL:
@@ -35567,6 +35672,11 @@ func encodeP2RestOctetsPEOIMMCellGroupDetailsChoice(w *runtime.Writer, v P2RestO
 	case P2RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P2RestOctetsPEOIMMCellGroupDetailsChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.24 <P2 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP2RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P2RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL:
@@ -36943,6 +37053,11 @@ func encodeP3RestOctetsImplicitRejectCSChoice(w *runtime.Writer, v P3RestOctetsI
 	case P3RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P3RestOctetsImplicitRejectCSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP3RestOctetsImplicitRejectCSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P3RestOctetsImplicitRejectCSChoiceAlternativeAltL:
@@ -37156,6 +37271,11 @@ func encodeP3RestOctetsIPASupportChoice(w *runtime.Writer, v P3RestOctetsIPASupp
 	case P3RestOctetsIPASupportChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P3RestOctetsIPASupportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP3RestOctetsIPASupportChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P3RestOctetsIPASupportChoiceAlternativeAltL:
@@ -37409,6 +37529,11 @@ func encodeP3RestOctetsPEOBCCHCHANGEMARKChoice(w *runtime.Writer, v P3RestOctets
 	case P3RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P3RestOctetsPEOBCCHCHANGEMARKChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP3RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P3RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL:
@@ -37662,6 +37787,11 @@ func encodeP3RestOctetsPositioningEventPendingIndicatorChoice(w *runtime.Writer,
 	case P3RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P3RestOctetsPositioningEventPendingIndicatorChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP3RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P3RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL:
@@ -37893,6 +38023,11 @@ func encodeP3RestOctetsPEOIMMCellGroupDetailsChoice(w *runtime.Writer, v P3RestO
 	case P3RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P3RestOctetsPEOIMMCellGroupDetailsChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.25 <P3 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP3RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P3RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL:
@@ -40006,6 +40141,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionINITPWRREDChoiceAlternativeAltL:
@@ -40291,6 +40431,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceEnhancedCellReselectionParametersDescriptionExtendedEARFCNsDescriptionChoiceAlternativeAltL:
@@ -40494,6 +40639,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoicePriorityAndEUTRANParametersDescriptionEnhancedCellReselectionParametersDescriptionChoiceAlternativeAltL:
@@ -40697,6 +40847,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceN700REPORTINGOFFSETPriorityAndEUTRANParametersDescriptionChoiceAlternativeAltL:
@@ -40887,6 +41042,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceN3GCCNACTIVEN700REPORTINGOFFSETChoiceAlternativeAltL:
@@ -41064,6 +41224,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceN3GAdditionalMeasurementParametersDescriptionN3GCCNACTIVEChoiceAlternativeAltL:
@@ -41254,6 +41419,11 @@ func encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoic
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.33b <SI2quater Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI2quaterRestOctetsN3GAdditionalMeasurementParametersDescriptionChoiceAlternativeAltL:
@@ -46519,10 +46689,15 @@ func decodeSI2qExtensionInformationSpareBitList(r *runtime.Reader) ([]runtime.Bi
 	r.RecordSpareCount("SI2qExtensionInformationSpareBitList", len(out))
 	return out, nil
 }
+
+// TS 44.018 V19.0.0 §10.5.2.33b <SI2q Extension Information>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeSI2qExtensionInformationSpareBitList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("SI2qExtensionInformationSpareBitList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeSI2qExtensionInformationSpareBitListEntry(w, runtime.BitString{}); err != nil {
@@ -57116,6 +57291,11 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSIS
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceSISTATUSINDLBMSTXPWRMAXCCHChoiceAlternativeAltL:
@@ -57306,6 +57486,11 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice(w 
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceSGSNRSISTATUSINDChoiceAlternativeAltL:
@@ -57496,6 +57681,11 @@ func encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice(w *runtime.Writer, v SI1
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.37b <SI 13 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case SI13RestOctetsBCCHCHANGEMARKGroupSGSNRChoiceAlternativeAltL:
@@ -61182,6 +61372,11 @@ func encodeIPARestOctetsRCCChoice(w *runtime.Writer, v IPARestOctetsRCCChoice) e
 	case IPARestOctetsRCCChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IPARestOctetsRCCChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIPARestOctetsRCCChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IPARestOctetsRCCChoiceAlternativeAltL:
@@ -61588,6 +61783,11 @@ func encodeIPARestOctetsAcknowledgedAccessRequest1Choice(w *runtime.Writer, v IP
 	case IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IPARestOctetsAcknowledgedAccessRequest1Choice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIPARestOctetsAcknowledgedAccessRequest1ChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IPARestOctetsAcknowledgedAccessRequest1ChoiceAlternativeAltL:
@@ -61819,6 +62019,11 @@ func encodeIPARestOctetsPEOIMMCellGroupDetailsChoice(w *runtime.Writer, v IPARes
 	case IPARestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "IPARestOctetsPEOIMMCellGroupDetailsChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.78 <IPA Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeIPARestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case IPARestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL:
@@ -65273,6 +65478,11 @@ func encodeNTNRestOctetsCELLGLOBALCOUNTChoice(w *runtime.Writer, v NTNRestOctets
 	case NTNRestOctetsCELLGLOBALCOUNTChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "NTNRestOctetsCELLGLOBALCOUNTChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.22c <NT/N Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeNTNRestOctetsCELLGLOBALCOUNTChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case NTNRestOctetsCELLGLOBALCOUNTChoiceAlternativeAltL:
@@ -65904,6 +66114,11 @@ func encodeNTNRestOctetsListOfEmergencyInformationChoice(w *runtime.Writer, v NT
 	case NTNRestOctetsListOfEmergencyInformationChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "NTNRestOctetsListOfEmergencyInformationChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.22c <NT/N Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeNTNRestOctetsListOfEmergencyInformationChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case NTNRestOctetsListOfEmergencyInformationChoiceAlternativeAltL:
@@ -68256,6 +68471,11 @@ func encodeP1RestOctetsCELLGLOBALCOUNTChoice(w *runtime.Writer, v P1RestOctetsCE
 	case P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsCELLGLOBALCOUNTChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsCELLGLOBALCOUNTChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsCELLGLOBALCOUNTChoiceAlternativeAltL:
@@ -68504,6 +68724,11 @@ func encodeP1RestOctetsAMRConfigChoice(w *runtime.Writer, v P1RestOctetsAMRConfi
 	case P1RestOctetsAMRConfigChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsAMRConfigChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsAMRConfigChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsAMRConfigChoiceAlternativeAltL:
@@ -68786,6 +69011,11 @@ func encodeP1RestOctetsPriorityUplinkAccessChoice(w *runtime.Writer, v P1RestOct
 	case P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsPriorityUplinkAccessChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsPriorityUplinkAccessChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsPriorityUplinkAccessChoiceAlternativeAltL:
@@ -69039,6 +69269,11 @@ func encodeP1RestOctetsImplicitRejectCSChoice(w *runtime.Writer, v P1RestOctetsI
 	case P1RestOctetsImplicitRejectCSChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsImplicitRejectCSChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsImplicitRejectCSChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsImplicitRejectCSChoiceAlternativeAltL:
@@ -69252,6 +69487,11 @@ func encodeP1RestOctetsIPASupportChoice(w *runtime.Writer, v P1RestOctetsIPASupp
 	case P1RestOctetsIPASupportChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsIPASupportChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsIPASupportChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsIPASupportChoiceAlternativeAltL:
@@ -69505,6 +69745,11 @@ func encodeP1RestOctetsPEOBCCHCHANGEMARKChoice(w *runtime.Writer, v P1RestOctets
 	case P1RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsPEOBCCHCHANGEMARKChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsPEOBCCHCHANGEMARKChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsPEOBCCHCHANGEMARKChoiceAlternativeAltL:
@@ -69758,6 +70003,11 @@ func encodeP1RestOctetsPositioningEventPendingIndicatorChoice(w *runtime.Writer,
 	case P1RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsPositioningEventPendingIndicatorChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsPositioningEventPendingIndicatorChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsPositioningEventPendingIndicatorChoiceAlternativeAltL:
@@ -69989,6 +70239,11 @@ func encodeP1RestOctetsPEOIMMCellGroupDetailsChoice(w *runtime.Writer, v P1RestO
 	case P1RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "P1RestOctetsPEOIMMCellGroupDetailsChoice", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 44.018 V19.0.0 §10.5.2.23 <P1 Rest Octets>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeP1RestOctetsPEOIMMCellGroupDetailsChoiceAltUnlabeled(w, *v.AltUnlabeled)
 	case P1RestOctetsPEOIMMCellGroupDetailsChoiceAlternativeAltL:
@@ -72781,6 +73036,8 @@ func encodeIARestOctetsBytes(v IARestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 11 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length field;
 //
@@ -72800,8 +73057,8 @@ func EncodeIARestOctetsCanonical(v IARestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 1..11 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length field;
 //
@@ -72880,19 +73137,20 @@ func EncodeEGPRSPacketUplinkAssignmentCanonical(v EGPRSPacketUplinkAssignment) (
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..11 octets, or the
 //     encoding does not fill exactly octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
 func EncodeEGPRSPacketUplinkAssignmentCanonicalAtLength(v EGPRSPacketUplinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEGPRSPacketUplinkAssignmentBytes, DecodeEGPRSPacketUplinkAssignment, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeEGPRSPacketUplinkAssignmentBytes, DecodeEGPRSPacketUplinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation69.failure(operationErr, "", -1, 0)
 		}
@@ -72963,10 +73221,11 @@ func EncodeAccessTechnologiesRequestStructCanonical(v AccessTechnologiesRequestS
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeAccessTechnologiesRequestStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..11 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -72975,7 +73234,7 @@ func EncodeAccessTechnologiesRequestStructCanonical(v AccessTechnologiesRequestS
 // that decode to a different typed value.
 func EncodeAccessTechnologiesRequestStructCanonicalAtLength(v AccessTechnologiesRequestStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeAccessTechnologiesRequestStructBytes, decodeAccessTechnologiesRequestStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeAccessTechnologiesRequestStructBytes, decodeAccessTechnologiesRequestStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation71.failure(operationErr, "", -1, 0)
 		}
@@ -73036,8 +73295,12 @@ func encodePacketUplinkAssignmentBytes(v PacketUplinkAssignment) ([]byte, error)
 // Canonical maximum: TS 44.018 V19.0.0 §10.5.2.16 (finite maximum from the printed CSN.1 grammar).
 // EncodePacketUplinkAssignmentCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns only located *runtime.OperationError errors: a field value
-// the grammar cannot carry, or bytes that decode to a different typed value.
+// an equivalent typed value. It returns:
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
+//
+// Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 0, 9, false, encodePacketUplinkAssignmentBytes, DecodePacketUplinkAssignment, nil)
@@ -73053,8 +73316,8 @@ func EncodePacketUplinkAssignmentCanonical(v PacketUplinkAssignment) ([]byte, er
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 0..9 octets, or the
 //     encoding does not fill exactly octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -73133,11 +73396,12 @@ func EncodePacketDownlinkAssignmentCanonical(v PacketDownlinkAssignment) ([]byte
 
 // EncodePacketDownlinkAssignmentCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. It returns:
+// typed value. No finite containing maximum is recorded from the printed source;
+// the runtime bit limit applies. It returns:
 //   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
 //     encoding does not fill exactly octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -73214,16 +73478,17 @@ func EncodeFrequencyParametersBeforeTimeCanonical(v FrequencyParametersBeforeTim
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeFrequencyParametersBeforeTimeCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+//   - *runtime.ExtentError when octets is outside 0..11 octets;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
 func EncodeFrequencyParametersBeforeTimeCanonicalAtLength(v FrequencyParametersBeforeTime, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeFrequencyParametersBeforeTimeBytes, decodeFrequencyParametersBeforeTimeBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeFrequencyParametersBeforeTimeBytes, decodeFrequencyParametersBeforeTimeBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation80.failure(operationErr, "", -1, 0)
 		}
@@ -73299,8 +73564,7 @@ func EncodeSecondPartPacketAssignmentCanonical(v SecondPartPacketAssignment) ([]
 // EncodeSecondPartPacketAssignmentCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..1 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 0..1 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -73379,10 +73643,11 @@ func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacke
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..11 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -73391,7 +73656,7 @@ func EncodeMultipleBlocksPacketDownlinkAssignmentCanonical(v MultipleBlocksPacke
 // that decode to a different typed value.
 func EncodeMultipleBlocksPacketDownlinkAssignmentCanonicalAtLength(v MultipleBlocksPacketDownlinkAssignment, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMultipleBlocksPacketDownlinkAssignmentBytes, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeMultipleBlocksPacketDownlinkAssignmentBytes, DecodeMultipleBlocksPacketDownlinkAssignment, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation86.failure(operationErr, "", -1, 0)
 		}
@@ -73555,6 +73820,8 @@ func encodeIARRestOctetsBytes(v IARRestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 3 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -73572,8 +73839,8 @@ func EncodeIARRestOctetsCanonical(v IARRestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 3..3 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -73732,8 +73999,12 @@ func encodeIAXRestOctetsBytes(v IAXRestOctets) ([]byte, error) {
 
 // EncodeIAXRestOctetsCanonical encodes a fresh semantic value using source-defined
 // minimum length, truncation and padding, then checks that the bytes decode to
-// an equivalent typed value. It returns only located *runtime.OperationError errors: a field value
-// the grammar cannot carry, or bytes that decode to a different typed value.
+// an equivalent typed value. It returns:
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
+//
+// Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
 func EncodeIAXRestOctetsCanonical(v IAXRestOctets) ([]byte, error) {
 	{
 		operationValue, operationErr := runtime.CanonicalEncode(v, 1, 4, false, encodeIAXRestOctetsBytes, decodeIAXRestOctetsBytes, nil)
@@ -73748,8 +74019,8 @@ func EncodeIAXRestOctetsCanonical(v IAXRestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 1..4 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -75702,10 +75973,11 @@ func EncodeLSAParametersClause105237eCanonical(v LSAParametersClause105237e) ([]
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37e p19873 (SI16/SI17 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeLSAParametersClause105237eCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -75714,7 +75986,7 @@ func EncodeLSAParametersClause105237eCanonical(v LSAParametersClause105237e) ([]
 // that decode to a different typed value.
 func EncodeLSAParametersClause105237eCanonicalAtLength(v LSAParametersClause105237e, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeLSAParametersClause105237eBytes, decodeLSAParametersClause105237eBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeLSAParametersClause105237eBytes, decodeLSAParametersClause105237eBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation164.failure(operationErr, "", -1, 0)
 		}
@@ -75785,10 +76057,11 @@ func EncodeLSAIDInformationClause105237eCanonical(v LSAIDInformationClause105237
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37e p19873 (SI16/SI17 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeLSAIDInformationClause105237eCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -75797,7 +76070,7 @@ func EncodeLSAIDInformationClause105237eCanonical(v LSAIDInformationClause105237
 // that decode to a different typed value.
 func EncodeLSAIDInformationClause105237eCanonicalAtLength(v LSAIDInformationClause105237e, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeLSAIDInformationClause105237eBytes, decodeLSAIDInformationClause105237eBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeLSAIDInformationClause105237eBytes, decodeLSAIDInformationClause105237eBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation166.failure(operationErr, "", -1, 0)
 		}
@@ -76428,10 +76701,11 @@ func EncodeNetworkSharingEABInformationStructCanonical(v NetworkSharingEABInform
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37m p20180 (SI21 Rest Octets is 20 octets; nested component uses the entire containing maximum because the other fields vary).
 // EncodeNetworkSharingEABInformationStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -76440,7 +76714,7 @@ func EncodeNetworkSharingEABInformationStructCanonical(v NetworkSharingEABInform
 // that decode to a different typed value.
 func EncodeNetworkSharingEABInformationStructCanonicalAtLength(v NetworkSharingEABInformationStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeNetworkSharingEABInformationStructBytes, decodeNetworkSharingEABInformationStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeNetworkSharingEABInformationStructBytes, decodeNetworkSharingEABInformationStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation187.failure(operationErr, "", -1, 0)
 		}
@@ -76615,10 +76889,11 @@ func EncodeNetworkSharingInformationStructCanonical(v NetworkSharingInformationS
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37n p20245 (SI22 Rest Octets is 20 octets; nested component uses the entire containing maximum because the other fields vary).
 // EncodeNetworkSharingInformationStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -76627,7 +76902,7 @@ func EncodeNetworkSharingInformationStructCanonical(v NetworkSharingInformationS
 // that decode to a different typed value.
 func EncodeNetworkSharingInformationStructCanonicalAtLength(v NetworkSharingInformationStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeNetworkSharingInformationStructBytes, decodeNetworkSharingInformationStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeNetworkSharingInformationStructBytes, decodeNetworkSharingInformationStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation193.failure(operationErr, "", -1, 0)
 		}
@@ -76802,10 +77077,11 @@ func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionIn
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeIRATCellReselectionInformationStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -76814,7 +77090,7 @@ func EncodeIRATCellReselectionInformationStructCanonical(v IRATCellReselectionIn
 // that decode to a different typed value.
 func EncodeIRATCellReselectionInformationStructCanonicalAtLength(v IRATCellReselectionInformationStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIRATCellReselectionInformationStructBytes, DecodeIRATCellReselectionInformationStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeIRATCellReselectionInformationStructBytes, DecodeIRATCellReselectionInformationStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation199.failure(operationErr, "", -1, 0)
 		}
@@ -76885,10 +77161,11 @@ func EncodePriorityAndUTRANParametersDescriptionStructCanonical(v PriorityAndUTR
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodePriorityAndUTRANParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -76897,7 +77174,7 @@ func EncodePriorityAndUTRANParametersDescriptionStructCanonical(v PriorityAndUTR
 // that decode to a different typed value.
 func EncodePriorityAndUTRANParametersDescriptionStructCanonicalAtLength(v PriorityAndUTRANParametersDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndUTRANParametersDescriptionStructBytes, decodePriorityAndUTRANParametersDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePriorityAndUTRANParametersDescriptionStructBytes, decodePriorityAndUTRANParametersDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation202.failure(operationErr, "", -1, 0)
 		}
@@ -76968,10 +77245,11 @@ func EncodeUTRANFDDTDDDescriptionStructCanonical(v UTRANFDDTDDDescriptionStruct)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeUTRANFDDTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -76980,7 +77258,7 @@ func EncodeUTRANFDDTDDDescriptionStructCanonical(v UTRANFDDTDDDescriptionStruct)
 // that decode to a different typed value.
 func EncodeUTRANFDDTDDDescriptionStructCanonicalAtLength(v UTRANFDDTDDDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANFDDTDDDescriptionStructBytes, decodeUTRANFDDTDDDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeUTRANFDDTDDDescriptionStructBytes, decodeUTRANFDDTDDDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation205.failure(operationErr, "", -1, 0)
 		}
@@ -77051,10 +77329,11 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical(v Rep
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -77063,7 +77342,7 @@ func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonical(v Rep
 // that decode to a different typed value.
 func EncodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructCanonicalAtLength(v RepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructBytes, decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructBytes, decodeRepeatedUTRANFDDTDDNeighbourFrequencyAndPriorityStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation208.failure(operationErr, "", -1, 0)
 		}
@@ -77134,10 +77413,11 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -77146,7 +77426,7 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonical(v 
 // that decode to a different typed value.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105237oCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105237o, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePriorityAndEUTRANParametersDescriptionStructClause105237oBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105237o, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation211.failure(operationErr, "", -1, 0)
 		}
@@ -77217,10 +77497,11 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v Repeated
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37o p20299 (SI23 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -77229,7 +77510,7 @@ func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonical(v Repeated
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructCanonicalAtLength(v RepeatedEUTRANNeighbourFrequencyAndPriorityStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedEUTRANNeighbourFrequencyAndPriorityStructBytes, DecodeRepeatedEUTRANNeighbourFrequencyAndPriorityStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation214.failure(operationErr, "", -1, 0)
 		}
@@ -77404,10 +77685,11 @@ func EncodeNeighbourInformationCanonical(v NeighbourInformation) ([]byte, error)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.44 p20742, p20745–20759 (SI10 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeNeighbourInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+//   - *runtime.ExtentError when octets is outside 0..20 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -77415,7 +77697,7 @@ func EncodeNeighbourInformationCanonical(v NeighbourInformation) ([]byte, error)
 // that decode to a different typed value.
 func EncodeNeighbourInformationCanonicalAtLength(v NeighbourInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeNeighbourInformationBytes, decodeNeighbourInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeNeighbourInformationBytes, decodeNeighbourInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation220.failure(operationErr, "", -1, 0)
 		}
@@ -77908,10 +78190,11 @@ func EncodeInfoFieldCanonical(v InfoField) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.44 p20742, p20745–20759 (SI10 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeInfoFieldCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -77920,7 +78203,7 @@ func EncodeInfoFieldCanonical(v InfoField) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeInfoFieldCanonicalAtLength(v InfoField, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeInfoFieldBytes, decodeInfoFieldBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeInfoFieldBytes, decodeInfoFieldBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation238.failure(operationErr, "", -1, 0)
 		}
@@ -78333,10 +78616,11 @@ func EncodeSI10terRestOctetsCanonical(v SI10terRestOctets) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.71 p21657–21663; §9.1.50b p10660–10665 (SI10ter rest-octet carrier is bit(32)).
 // EncodeSI10terRestOctetsCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 1 or above the runtime bit limit;
+//   - *runtime.ExtentError when octets is outside 1..4 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -78344,7 +78628,7 @@ func EncodeSI10terRestOctetsCanonical(v SI10terRestOctets) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI10terRestOctetsCanonicalAtLength(v SI10terRestOctets, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 0, encodeSI10terRestOctetsBytes, decodeSI10terRestOctetsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 4, encodeSI10terRestOctetsBytes, decodeSI10terRestOctetsBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation253.failure(operationErr, "", -1, 0)
 		}
@@ -78519,10 +78803,11 @@ func EncodeSchedulingInfoCanonical(v SchedulingInfo) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37a p19638 (SI9 Rest Octets is 17 octets; nested Scheduling info uses the entire containing maximum because the other fields vary).
 // EncodeSchedulingInfoCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -78531,7 +78816,7 @@ func EncodeSchedulingInfoCanonical(v SchedulingInfo) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSchedulingInfoCanonicalAtLength(v SchedulingInfo, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeSchedulingInfoBytes, decodeSchedulingInfoBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeSchedulingInfoBytes, decodeSchedulingInfoBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation258.failure(operationErr, "", -1, 0)
 		}
@@ -78686,10 +78971,11 @@ func EncodePositionsCanonical(v Positions) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37a p19650–19657 (Position: 4-bit modulus + at most 16 relative-position bits + 1 BCCH bit = 21 bits; Positions: two Positions and one selector = 43 bits; rounded to octets).
 // EncodePositionsCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..6 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -78698,7 +78984,7 @@ func EncodePositionsCanonical(v Positions) ([]byte, error) {
 // that decode to a different typed value.
 func EncodePositionsCanonicalAtLength(v Positions, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePositionsBytes, decodePositionsBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 6, encodePositionsBytes, decodePositionsBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation264.failure(operationErr, "", -1, 0)
 		}
@@ -78769,10 +79055,11 @@ func EncodePositionCanonical(v Position) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37a p19650–19657 (Position: 4-bit modulus + at most 16 relative-position bits + 1 BCCH bit = 21 bits; Positions: two Positions and one selector = 43 bits; rounded to octets).
 // EncodePositionCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..3 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -78781,7 +79068,7 @@ func EncodePositionCanonical(v Position) ([]byte, error) {
 // that decode to a different typed value.
 func EncodePositionCanonicalAtLength(v Position, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePositionBytes, decodePositionBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 3, encodePositionBytes, decodePositionBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation267.failure(operationErr, "", -1, 0)
 		}
@@ -78861,6 +79148,8 @@ func encodeSI2terRestOctetsBytes(v SI2terRestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 4 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -78878,8 +79167,8 @@ func EncodeSI2terRestOctetsCanonical(v SI2terRestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 4..4 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -79479,10 +79768,11 @@ func EncodeSI4RestOctetsSCanonical(v SI4RestOctetsS) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.35 p19465, p19489–19491; §§10.5.2.36–10.5.2.37 p19629, p19633 (SI4 is at most 10 octets but these components also occur in the 20-octet SI7/SI8; use the largest containing maximum).
 // EncodeSI4RestOctetsSCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 1 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 1..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -79491,7 +79781,7 @@ func EncodeSI4RestOctetsSCanonical(v SI4RestOctetsS) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeSI4RestOctetsSCanonicalAtLength(v SI4RestOctetsS, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 0, encodeSI4RestOctetsSBytes, decodeSI4RestOctetsSBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 1, 20, encodeSI4RestOctetsSBytes, decodeSI4RestOctetsSBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation291.failure(operationErr, "", -1, 0)
 		}
@@ -80410,10 +80700,11 @@ func EncodeLSAIDInformationClause105235Canonical(v LSAIDInformationClause105235)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.35 p19465, p19489–19491; §§10.5.2.36–10.5.2.37 p19629, p19633 (SI4 is at most 10 octets but these components also occur in the 20-octet SI7/SI8; use the largest containing maximum).
 // EncodeLSAIDInformationClause105235CanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -80422,7 +80713,7 @@ func EncodeLSAIDInformationClause105235Canonical(v LSAIDInformationClause105235)
 // that decode to a different typed value.
 func EncodeLSAIDInformationClause105235CanonicalAtLength(v LSAIDInformationClause105235, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeLSAIDInformationClause105235Bytes, decodeLSAIDInformationClause105235Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeLSAIDInformationClause105235Bytes, decodeLSAIDInformationClause105235Bytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation317.failure(operationErr, "", -1, 0)
 		}
@@ -80682,10 +80973,11 @@ func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37l p20158 (SI13alt Rest Octets is 20 octets; nested component uses the entire containing maximum because the other fields vary).
 // EncodePBCCHDescription2StructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -80694,7 +80986,7 @@ func EncodePBCCHDescription2StructCanonical(v PBCCHDescription2Struct) ([]byte, 
 // that decode to a different typed value.
 func EncodePBCCHDescription2StructCanonicalAtLength(v PBCCHDescription2Struct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePBCCHDescription2StructBytes, DecodePBCCHDescription2Struct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePBCCHDescription2StructBytes, DecodePBCCHDescription2Struct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation326.failure(operationErr, "", -1, 0)
 		}
@@ -80774,6 +81066,8 @@ func encodeP2RestOctetsBytes(v P2RestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 11 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -80792,8 +81086,8 @@ func EncodeP2RestOctetsCanonical(v P2RestOctets) ([]byte, error) {
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 1..11 octets, or the
 //     encoding does not fill exactly octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -80954,10 +81248,11 @@ func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) (
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.24 p17567 (P2 Rest Octets is 1..11 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeMBMSInformationClause105224CanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..11 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -80966,7 +81261,7 @@ func EncodeMBMSInformationClause105224Canonical(v MBMSInformationClause105224) (
 // that decode to a different typed value.
 func EncodeMBMSInformationClause105224CanonicalAtLength(v MBMSInformationClause105224, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105224Bytes, DecodeMBMSInformationClause105224, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 11, encodeMBMSInformationClause105224Bytes, DecodeMBMSInformationClause105224, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation335.failure(operationErr, "", -1, 0)
 		}
@@ -81130,6 +81425,8 @@ func encodeP3RestOctetsBytes(v P3RestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 3 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -81147,8 +81444,8 @@ func EncodeP3RestOctetsCanonical(v P3RestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 3..3 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -81402,6 +81699,8 @@ func encodeSI2quaterRestOctetsBytes(v SI2quaterRestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 20 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited value;
 //   - *runtime.FallbackError when ignored fallback bits would decode through
@@ -81423,8 +81722,8 @@ func EncodeSI2quaterRestOctetsCanonical(v SI2quaterRestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 20..20 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited value;
 //   - *runtime.FallbackError when ignored fallback bits would decode through
@@ -81505,10 +81804,11 @@ func EncodeN3GNeighbourCellDescriptionStructCanonical(v N3GNeighbourCellDescript
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeN3GNeighbourCellDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -81517,7 +81817,7 @@ func EncodeN3GNeighbourCellDescriptionStructCanonical(v N3GNeighbourCellDescript
 // that decode to a different typed value.
 func EncodeN3GNeighbourCellDescriptionStructCanonicalAtLength(v N3GNeighbourCellDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeN3GNeighbourCellDescriptionStructBytes, decodeN3GNeighbourCellDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeN3GNeighbourCellDescriptionStructBytes, decodeN3GNeighbourCellDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation353.failure(operationErr, "", -1, 0)
 		}
@@ -81588,10 +81888,11 @@ func EncodeUTRANFDDDescriptionStructClause105233bCanonical(v UTRANFDDDescription
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeUTRANFDDDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -81600,7 +81901,7 @@ func EncodeUTRANFDDDescriptionStructClause105233bCanonical(v UTRANFDDDescription
 // that decode to a different typed value.
 func EncodeUTRANFDDDescriptionStructClause105233bCanonicalAtLength(v UTRANFDDDescriptionStructClause105233b, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANFDDDescriptionStructClause105233bBytes, decodeUTRANFDDDescriptionStructClause105233bBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeUTRANFDDDescriptionStructClause105233bBytes, decodeUTRANFDDDescriptionStructClause105233bBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation356.failure(operationErr, "", -1, 0)
 		}
@@ -81671,10 +81972,11 @@ func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical(v RepeatedUTRANFDDNeigh
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedUTRANFDDNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -81683,7 +81985,7 @@ func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonical(v RepeatedUTRANFDDNeigh
 // that decode to a different typed value.
 func EncodeRepeatedUTRANFDDNeighbourCellsStructCanonicalAtLength(v RepeatedUTRANFDDNeighbourCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedUTRANFDDNeighbourCellsStructBytes, decodeRepeatedUTRANFDDNeighbourCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedUTRANFDDNeighbourCellsStructBytes, decodeRepeatedUTRANFDDNeighbourCellsStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation359.failure(operationErr, "", -1, 0)
 		}
@@ -81754,10 +82056,11 @@ func EncodeUTRANTDDDescriptionStructClause105233bCanonical(v UTRANTDDDescription
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeUTRANTDDDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -81766,7 +82069,7 @@ func EncodeUTRANTDDDescriptionStructClause105233bCanonical(v UTRANTDDDescription
 // that decode to a different typed value.
 func EncodeUTRANTDDDescriptionStructClause105233bCanonicalAtLength(v UTRANTDDDescriptionStructClause105233b, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANTDDDescriptionStructClause105233bBytes, decodeUTRANTDDDescriptionStructClause105233bBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeUTRANTDDDescriptionStructClause105233bBytes, decodeUTRANTDDDescriptionStructClause105233bBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation362.failure(operationErr, "", -1, 0)
 		}
@@ -81837,10 +82140,11 @@ func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical(v RepeatedUTRANTDDNeigh
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedUTRANTDDNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -81849,7 +82153,7 @@ func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonical(v RepeatedUTRANTDDNeigh
 // that decode to a different typed value.
 func EncodeRepeatedUTRANTDDNeighbourCellsStructCanonicalAtLength(v RepeatedUTRANTDDNeighbourCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedUTRANTDDNeighbourCellsStructBytes, decodeRepeatedUTRANTDDNeighbourCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedUTRANTDDNeighbourCellsStructBytes, decodeRepeatedUTRANTDDNeighbourCellsStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation365.failure(operationErr, "", -1, 0)
 		}
@@ -82089,10 +82393,11 @@ func EncodeGPRSRealTimeDifferenceDescriptionStructCanonical(v GPRSRealTimeDiffer
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeGPRSRealTimeDifferenceDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82101,7 +82406,7 @@ func EncodeGPRSRealTimeDifferenceDescriptionStructCanonical(v GPRSRealTimeDiffer
 // that decode to a different typed value.
 func EncodeGPRSRealTimeDifferenceDescriptionStructCanonicalAtLength(v GPRSRealTimeDifferenceDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGPRSRealTimeDifferenceDescriptionStructBytes, decodeGPRSRealTimeDifferenceDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeGPRSRealTimeDifferenceDescriptionStructBytes, decodeGPRSRealTimeDifferenceDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation374.failure(operationErr, "", -1, 0)
 		}
@@ -82172,10 +82477,11 @@ func EncodeRTD6StructCanonical(v RTD6Struct) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRTD6StructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82184,7 +82490,7 @@ func EncodeRTD6StructCanonical(v RTD6Struct) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeRTD6StructCanonicalAtLength(v RTD6Struct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRTD6StructBytes, decodeRTD6StructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRTD6StructBytes, decodeRTD6StructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation377.failure(operationErr, "", -1, 0)
 		}
@@ -82255,10 +82561,11 @@ func EncodeRTD12StructCanonical(v RTD12Struct) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRTD12StructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82267,7 +82574,7 @@ func EncodeRTD12StructCanonical(v RTD12Struct) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeRTD12StructCanonicalAtLength(v RTD12Struct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRTD12StructBytes, decodeRTD12StructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRTD12StructBytes, decodeRTD12StructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation380.failure(operationErr, "", -1, 0)
 		}
@@ -82338,10 +82645,11 @@ func EncodeGPRSBSICDescriptionStructCanonical(v GPRSBSICDescriptionStruct) ([]by
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeGPRSBSICDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82350,7 +82658,7 @@ func EncodeGPRSBSICDescriptionStructCanonical(v GPRSBSICDescriptionStruct) ([]by
 // that decode to a different typed value.
 func EncodeGPRSBSICDescriptionStructCanonicalAtLength(v GPRSBSICDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGPRSBSICDescriptionStructBytes, decodeGPRSBSICDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeGPRSBSICDescriptionStructBytes, decodeGPRSBSICDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation383.failure(operationErr, "", -1, 0)
 		}
@@ -82421,10 +82729,11 @@ func EncodeGPRSREPORTPRIORITYDescriptionStructCanonical(v GPRSREPORTPRIORITYDesc
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p19054 (7-bit count + at most 127 one-bit entries = 134 bits, rounded to 17 octets).
 // EncodeGPRSREPORTPRIORITYDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82433,7 +82742,7 @@ func EncodeGPRSREPORTPRIORITYDescriptionStructCanonical(v GPRSREPORTPRIORITYDesc
 // that decode to a different typed value.
 func EncodeGPRSREPORTPRIORITYDescriptionStructCanonicalAtLength(v GPRSREPORTPRIORITYDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGPRSREPORTPRIORITYDescriptionStructBytes, decodeGPRSREPORTPRIORITYDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeGPRSREPORTPRIORITYDescriptionStructBytes, decodeGPRSREPORTPRIORITYDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation386.failure(operationErr, "", -1, 0)
 		}
@@ -82759,11 +83068,11 @@ func EncodeSI2qExtensionInformationCanonical(v SI2qExtensionInformation) ([]byte
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956, p18972–18974 (8-bit extension length + 1 permits 256 bits, but the containing SI2quater is only 20 octets; use its total maximum because the other fields vary).
 // EncodeSI2qExtensionInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 0..20 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -82771,7 +83080,7 @@ func EncodeSI2qExtensionInformationCanonical(v SI2qExtensionInformation) ([]byte
 // that decode to a different typed value.
 func EncodeSI2qExtensionInformationCanonicalAtLength(v SI2qExtensionInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeSI2qExtensionInformationBytes, decodeSI2qExtensionInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeSI2qExtensionInformationBytes, decodeSI2qExtensionInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation398.failure(operationErr, "", -1, 0)
 		}
@@ -82842,10 +83151,11 @@ func EncodeCCNSupportDescriptionStructCanonical(v CCNSupportDescriptionStruct) (
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p19081–19083 (7-bit count + at most 127 one-bit entries = 134 bits, rounded to 17 octets).
 // EncodeCCNSupportDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -82854,7 +83164,7 @@ func EncodeCCNSupportDescriptionStructCanonical(v CCNSupportDescriptionStruct) (
 // that decode to a different typed value.
 func EncodeCCNSupportDescriptionStructCanonicalAtLength(v CCNSupportDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeCCNSupportDescriptionStructBytes, decodeCCNSupportDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeCCNSupportDescriptionStructBytes, decodeCCNSupportDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation401.failure(operationErr, "", -1, 0)
 		}
@@ -83093,10 +83403,11 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83105,7 +83416,7 @@ func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonical(v 
 // that decode to a different typed value.
 func EncodePriorityAndEUTRANParametersDescriptionStructClause105233bCanonicalAtLength(v PriorityAndEUTRANParametersDescriptionStructClause105233b, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePriorityAndEUTRANParametersDescriptionStructClause105233bBytes, DecodePriorityAndEUTRANParametersDescriptionStructClause105233b, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation410.failure(operationErr, "", -1, 0)
 		}
@@ -83260,10 +83571,11 @@ func EncodeN3GPriorityParametersDescriptionStructCanonical(v N3GPriorityParamete
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeN3GPriorityParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83272,7 +83584,7 @@ func EncodeN3GPriorityParametersDescriptionStructCanonical(v N3GPriorityParamete
 // that decode to a different typed value.
 func EncodeN3GPriorityParametersDescriptionStructCanonicalAtLength(v N3GPriorityParametersDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeN3GPriorityParametersDescriptionStructBytes, decodeN3GPriorityParametersDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeN3GPriorityParametersDescriptionStructBytes, decodeN3GPriorityParametersDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation416.failure(operationErr, "", -1, 0)
 		}
@@ -83343,10 +83655,11 @@ func EncodeRepeatedUTRANPriorityParametersStructCanonical(v RepeatedUTRANPriorit
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedUTRANPriorityParametersStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83355,7 +83668,7 @@ func EncodeRepeatedUTRANPriorityParametersStructCanonical(v RepeatedUTRANPriorit
 // that decode to a different typed value.
 func EncodeRepeatedUTRANPriorityParametersStructCanonicalAtLength(v RepeatedUTRANPriorityParametersStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedUTRANPriorityParametersStructBytes, decodeRepeatedUTRANPriorityParametersStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedUTRANPriorityParametersStructBytes, decodeRepeatedUTRANPriorityParametersStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation419.failure(operationErr, "", -1, 0)
 		}
@@ -83426,10 +83739,11 @@ func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescript
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeEUTRANParametersDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83438,7 +83752,7 @@ func EncodeEUTRANParametersDescriptionStructCanonical(v EUTRANParametersDescript
 // that decode to a different typed value.
 func EncodeEUTRANParametersDescriptionStructCanonicalAtLength(v EUTRANParametersDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANParametersDescriptionStructBytes, DecodeEUTRANParametersDescriptionStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeEUTRANParametersDescriptionStructBytes, DecodeEUTRANParametersDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation422.failure(operationErr, "", -1, 0)
 		}
@@ -83679,10 +83993,11 @@ func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbour
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83691,7 +84006,7 @@ func EncodeRepeatedEUTRANNeighbourCellsStructCanonical(v RepeatedEUTRANNeighbour
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNeighbourCellsStructCanonicalAtLength(v RepeatedEUTRANNeighbourCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNeighbourCellsStructBytes, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedEUTRANNeighbourCellsStructBytes, DecodeRepeatedEUTRANNeighbourCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation431.failure(operationErr, "", -1, 0)
 		}
@@ -83762,10 +84077,11 @@ func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllow
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83774,7 +84090,7 @@ func EncodeRepeatedEUTRANNotAllowedCellsStructCanonical(v RepeatedEUTRANNotAllow
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANNotAllowedCellsStructCanonicalAtLength(v RepeatedEUTRANNotAllowedCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANNotAllowedCellsStructBytes, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedEUTRANNotAllowedCellsStructBytes, DecodeRepeatedEUTRANNotAllowedCellsStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation434.failure(operationErr, "", -1, 0)
 		}
@@ -83845,10 +84161,11 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTA
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83857,7 +84174,7 @@ func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonical(v RepeatedEUTRANPCIDToTA
 // that decode to a different typed value.
 func EncodeRepeatedEUTRANPCIDToTAMappingStructCanonicalAtLength(v RepeatedEUTRANPCIDToTAMappingStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeRepeatedEUTRANPCIDToTAMappingStructBytes, DecodeRepeatedEUTRANPCIDToTAMappingStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation437.failure(operationErr, "", -1, 0)
 		}
@@ -83928,10 +84245,11 @@ func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeN3GCSGDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -83940,7 +84258,7 @@ func EncodeN3GCSGDescriptionStructCanonical(v N3GCSGDescriptionStruct) ([]byte, 
 // that decode to a different typed value.
 func EncodeN3GCSGDescriptionStructCanonicalAtLength(v N3GCSGDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeN3GCSGDescriptionStructBytes, DecodeN3GCSGDescriptionStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeN3GCSGDescriptionStructBytes, DecodeN3GCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation440.failure(operationErr, "", -1, 0)
 		}
@@ -84011,10 +84329,11 @@ func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeEUTRANCSGDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -84023,7 +84342,7 @@ func EncodeEUTRANCSGDescriptionStructCanonical(v EUTRANCSGDescriptionStruct) ([]
 // that decode to a different typed value.
 func EncodeEUTRANCSGDescriptionStructCanonicalAtLength(v EUTRANCSGDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANCSGDescriptionStructBytes, DecodeEUTRANCSGDescriptionStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeEUTRANCSGDescriptionStructBytes, DecodeEUTRANCSGDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation443.failure(operationErr, "", -1, 0)
 		}
@@ -84349,10 +84668,11 @@ func EncodeExtendedEARFCNsDescriptionStructCanonical(v ExtendedEARFCNsDescriptio
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeExtendedEARFCNsDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -84361,7 +84681,7 @@ func EncodeExtendedEARFCNsDescriptionStructCanonical(v ExtendedEARFCNsDescriptio
 // that decode to a different typed value.
 func EncodeExtendedEARFCNsDescriptionStructCanonicalAtLength(v ExtendedEARFCNsDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeExtendedEARFCNsDescriptionStructBytes, decodeExtendedEARFCNsDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeExtendedEARFCNsDescriptionStructBytes, decodeExtendedEARFCNsDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation455.failure(operationErr, "", -1, 0)
 		}
@@ -84432,10 +84752,11 @@ func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical(v ExtendedEARFCN
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.33b p18956 (SI2quater Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -84444,7 +84765,7 @@ func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonical(v ExtendedEARFCN
 // that decode to a different typed value.
 func EncodeExtendedEARFCNsDescriptionForCSGCellsStructCanonicalAtLength(v ExtendedEARFCNsDescriptionForCSGCellsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeExtendedEARFCNsDescriptionForCSGCellsStructBytes, decodeExtendedEARFCNsDescriptionForCSGCellsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeExtendedEARFCNsDescriptionForCSGCellsStructBytes, decodeExtendedEARFCNsDescriptionForCSGCellsStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation458.failure(operationErr, "", -1, 0)
 		}
@@ -85132,6 +85453,8 @@ func encodeSI13RestOctetsBytes(v SI13RestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 20 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited value;
 //   - *runtime.FallbackError when ignored fallback bits would decode through
@@ -85153,8 +85476,8 @@ func EncodeSI13RestOctetsCanonical(v SI13RestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 20..20 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
 //     fit a length-delimited value;
 //   - *runtime.FallbackError when ignored fallback bits would decode through
@@ -85404,10 +85727,11 @@ func EncodePEOIMMCellGroupDefinitionStructCanonical(v PEOIMMCellGroupDefinitionS
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37b p19682 (SI13 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodePEOIMMCellGroupDefinitionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -85416,7 +85740,7 @@ func EncodePEOIMMCellGroupDefinitionStructCanonical(v PEOIMMCellGroupDefinitionS
 // that decode to a different typed value.
 func EncodePEOIMMCellGroupDefinitionStructCanonicalAtLength(v PEOIMMCellGroupDefinitionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePEOIMMCellGroupDefinitionStructBytes, decodePEOIMMCellGroupDefinitionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePEOIMMCellGroupDefinitionStructBytes, decodePEOIMMCellGroupDefinitionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation491.failure(operationErr, "", -1, 0)
 		}
@@ -85487,10 +85811,11 @@ func EncodePEOIMMCellGroupSpecificParametersStructCanonical(v PEOIMMCellGroupSpe
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37b p19682 (SI13 Rest Octets is 20 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodePEOIMMCellGroupSpecificParametersStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -85499,7 +85824,7 @@ func EncodePEOIMMCellGroupSpecificParametersStructCanonical(v PEOIMMCellGroupSpe
 // that decode to a different typed value.
 func EncodePEOIMMCellGroupSpecificParametersStructCanonicalAtLength(v PEOIMMCellGroupSpecificParametersStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodePEOIMMCellGroupSpecificParametersStructBytes, decodePEOIMMCellGroupSpecificParametersStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodePEOIMMCellGroupSpecificParametersStructBytes, decodePEOIMMCellGroupSpecificParametersStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation494.failure(operationErr, "", -1, 0)
 		}
@@ -85675,10 +86000,11 @@ func EncodeCOMPACTNeighbourCellParamsStructCanonical(v COMPACTNeighbourCellParam
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37g p19911 (SI19 Rest Octets is 20 octets; nested component uses the entire containing maximum because the other fields vary).
 // EncodeCOMPACTNeighbourCellParamsStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -85687,7 +86013,7 @@ func EncodeCOMPACTNeighbourCellParamsStructCanonical(v COMPACTNeighbourCellParam
 // that decode to a different typed value.
 func EncodeCOMPACTNeighbourCellParamsStructCanonicalAtLength(v COMPACTNeighbourCellParamsStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeCOMPACTNeighbourCellParamsStructBytes, decodeCOMPACTNeighbourCellParamsStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeCOMPACTNeighbourCellParamsStructBytes, decodeCOMPACTNeighbourCellParamsStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation500.failure(operationErr, "", -1, 0)
 		}
@@ -86036,10 +86362,11 @@ func EncodeNonGSMMessageStructCanonical(v NonGSMMessageStruct) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.37h p19990, p20005–20008, p20022–20032 (SI18 is 20 octets; the continuation code consumes only the remaining portion of one instance).
 // EncodeNonGSMMessageStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86050,7 +86377,7 @@ func EncodeNonGSMMessageStructCanonical(v NonGSMMessageStruct) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeNonGSMMessageStructCanonicalAtLength(v NonGSMMessageStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeNonGSMMessageStructBytes, decodeNonGSMMessageStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeNonGSMMessageStructBytes, decodeNonGSMMessageStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation512.failure(operationErr, "", -1, 0)
 		}
@@ -86130,6 +86457,8 @@ func encodeIPARestOctetsBytes(v IPARestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 19 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -86147,8 +86476,8 @@ func EncodeIPARestOctetsCanonical(v IPARestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 19..19 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -86225,10 +86554,11 @@ func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]by
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.78 p21896 (IPA Rest Octets is 19 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeIPAUplinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..19 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86237,7 +86567,7 @@ func EncodeIPAUplinkAssignmentStructCanonical(v IPAUplinkAssignmentStruct) ([]by
 // that decode to a different typed value.
 func EncodeIPAUplinkAssignmentStructCanonicalAtLength(v IPAUplinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPAUplinkAssignmentStructBytes, DecodeIPAUplinkAssignmentStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 19, encodeIPAUplinkAssignmentStructBytes, DecodeIPAUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation518.failure(operationErr, "", -1, 0)
 		}
@@ -86308,10 +86638,11 @@ func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) (
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.78 p21896 (IPA Rest Octets is 19 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeIPADownlinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..19 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86320,7 +86651,7 @@ func EncodeIPADownlinkAssignmentStructCanonical(v IPADownlinkAssignmentStruct) (
 // that decode to a different typed value.
 func EncodeIPADownlinkAssignmentStructCanonicalAtLength(v IPADownlinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPADownlinkAssignmentStructBytes, DecodeIPADownlinkAssignmentStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 19, encodeIPADownlinkAssignmentStructBytes, DecodeIPADownlinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation521.failure(operationErr, "", -1, 0)
 		}
@@ -86391,10 +86722,11 @@ func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkA
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.78 p21896 (IPA Rest Octets is 19 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..19 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86403,7 +86735,7 @@ func EncodeIPASingleBlockUplinkAssignmentStructCanonical(v IPASingleBlockUplinkA
 // that decode to a different typed value.
 func EncodeIPASingleBlockUplinkAssignmentStructCanonicalAtLength(v IPASingleBlockUplinkAssignmentStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeIPASingleBlockUplinkAssignmentStructBytes, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 19, encodeIPASingleBlockUplinkAssignmentStructBytes, DecodeIPASingleBlockUplinkAssignmentStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation524.failure(operationErr, "", -1, 0)
 		}
@@ -86752,10 +87084,11 @@ func EncodeGroupCallInformationCanonical(v GroupCallInformation) ([]byte, error)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.21a p7306–7308, p7322–7335, p7337–7345; §10.5.2.21 p16717; TS 24.008 V20.1.0 §10.5.1.4 p20956 (Mobile Allocation including length: 9 octets; Group Channel Description: 24+2+72=98 bits; Group Call information: 36+1+98=135 bits; shared bit string also carries up to 10 Mobile Identity octets including length).
 // EncodeGroupCallInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86764,7 +87097,7 @@ func EncodeGroupCallInformationCanonical(v GroupCallInformation) ([]byte, error)
 // that decode to a different typed value.
 func EncodeGroupCallInformationCanonicalAtLength(v GroupCallInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGroupCallInformationBytes, decodeGroupCallInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeGroupCallInformationBytes, decodeGroupCallInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation536.failure(operationErr, "", -1, 0)
 		}
@@ -86919,10 +87252,11 @@ func EncodeGroupChannelDescriptionCanonical(v GroupChannelDescription) ([]byte, 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.21a p7306–7308, p7322–7335, p7337–7345; §10.5.2.21 p16717; TS 24.008 V20.1.0 §10.5.1.4 p20956 (Mobile Allocation including length: 9 octets; Group Channel Description: 24+2+72=98 bits; Group Call information: 36+1+98=135 bits; shared bit string also carries up to 10 Mobile Identity octets including length).
 // EncodeGroupChannelDescriptionCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..13 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -86931,7 +87265,7 @@ func EncodeGroupChannelDescriptionCanonical(v GroupChannelDescription) ([]byte, 
 // that decode to a different typed value.
 func EncodeGroupChannelDescriptionCanonicalAtLength(v GroupChannelDescription, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeGroupChannelDescriptionBytes, decodeGroupChannelDescriptionBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 13, encodeGroupChannelDescriptionBytes, decodeGroupChannelDescriptionBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation542.failure(operationErr, "", -1, 0)
 		}
@@ -87002,10 +87336,11 @@ func EncodeBitStringCanonical(v BitString) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.21a p7335, p7345; §10.5.2.70 p21621, p21633, p21647–21648; §9.1.50a p10650 (shared LV bit string also carries Frequency List inside the 160-bit SI10bis carrier; use its total 20-octet maximum because other fields vary).
 // EncodeBitStringCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87014,7 +87349,7 @@ func EncodeBitStringCanonical(v BitString) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeBitStringCanonicalAtLength(v BitString, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeBitStringBytes, decodeBitStringBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeBitStringBytes, decodeBitStringBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation545.failure(operationErr, "", -1, 0)
 		}
@@ -87094,6 +87429,8 @@ func encodeNTNRestOctetsBytes(v NTNRestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 20 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -87111,8 +87448,8 @@ func EncodeNTNRestOctetsCanonical(v NTNRestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 20..20 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -87189,10 +87526,11 @@ func EncodeListOfGroupCallNCHInformationCanonical(v ListOfGroupCallNCHInformatio
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.22c p17308 (NT/N Rest Octets is 20 octets; nested lists use the entire containing maximum because the other fields vary).
 // EncodeListOfGroupCallNCHInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87201,7 +87539,7 @@ func EncodeListOfGroupCallNCHInformationCanonical(v ListOfGroupCallNCHInformatio
 // that decode to a different typed value.
 func EncodeListOfGroupCallNCHInformationCanonicalAtLength(v ListOfGroupCallNCHInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeListOfGroupCallNCHInformationBytes, decodeListOfGroupCallNCHInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeListOfGroupCallNCHInformationBytes, decodeListOfGroupCallNCHInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation551.failure(operationErr, "", -1, 0)
 		}
@@ -87272,10 +87610,11 @@ func EncodeListOfEmergencyInformationCanonical(v ListOfEmergencyInformation) ([]
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.22c p17308 (NT/N Rest Octets is 20 octets; nested lists use the entire containing maximum because the other fields vary).
 // EncodeListOfEmergencyInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87284,7 +87623,7 @@ func EncodeListOfEmergencyInformationCanonical(v ListOfEmergencyInformation) ([]
 // that decode to a different typed value.
 func EncodeListOfEmergencyInformationCanonicalAtLength(v ListOfEmergencyInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeListOfEmergencyInformationBytes, decodeListOfEmergencyInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeListOfEmergencyInformationBytes, decodeListOfEmergencyInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation554.failure(operationErr, "", -1, 0)
 		}
@@ -87355,10 +87694,11 @@ func EncodeListOfVSTKRANDInformationCanonical(v ListOfVSTKRANDInformation) ([]by
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.22c p17308 (NT/N Rest Octets is 20 octets; nested lists use the entire containing maximum because the other fields vary).
 // EncodeListOfVSTKRANDInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87367,7 +87707,7 @@ func EncodeListOfVSTKRANDInformationCanonical(v ListOfVSTKRANDInformation) ([]by
 // that decode to a different typed value.
 func EncodeListOfVSTKRANDInformationCanonicalAtLength(v ListOfVSTKRANDInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeListOfVSTKRANDInformationBytes, decodeListOfVSTKRANDInformationBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeListOfVSTKRANDInformationBytes, decodeListOfVSTKRANDInformationBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation557.failure(operationErr, "", -1, 0)
 		}
@@ -87438,10 +87778,11 @@ func EncodeListOfReducedGCRCanonical(v ListOfReducedGCR) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.22c p17308 (NT/N Rest Octets is 20 octets; nested lists use the entire containing maximum because the other fields vary).
 // EncodeListOfReducedGCRCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87450,7 +87791,7 @@ func EncodeListOfReducedGCRCanonical(v ListOfReducedGCR) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeListOfReducedGCRCanonicalAtLength(v ListOfReducedGCR, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeListOfReducedGCRBytes, decodeListOfReducedGCRBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeListOfReducedGCRBytes, decodeListOfReducedGCRBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation560.failure(operationErr, "", -1, 0)
 		}
@@ -87521,6 +87862,8 @@ func encodeP1RestOctetsBytes(v P1RestOctets) ([]byte, error) {
 // minimum length, truncation and padding, then checks that the bytes decode to
 // an equivalent typed value. It returns:
 //   - *runtime.ExtentError when the encoding is longer than 17 octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when an end-selected null
+//     cannot fill the canonical extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -87538,8 +87881,8 @@ func EncodeP1RestOctetsCanonical(v P1RestOctets) ([]byte, error) {
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
 //   - *runtime.ExtentError when octets is outside 1..17 octets;
-//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
-//     not fit in octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
+//     octets or an end-selected null cannot fill the requested extent;
 //
 // Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
 // that decode to a different typed value.
@@ -87700,10 +88043,11 @@ func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) (
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.23 p17388 (P1 Rest Octets is 0..17 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeMBMSInformationClause105223CanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87712,7 +88056,7 @@ func EncodeMBMSInformationClause105223Canonical(v MBMSInformationClause105223) (
 // that decode to a different typed value.
 func EncodeMBMSInformationClause105223CanonicalAtLength(v MBMSInformationClause105223, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSInformationClause105223Bytes, DecodeMBMSInformationClause105223, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeMBMSInformationClause105223Bytes, DecodeMBMSInformationClause105223, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation569.failure(operationErr, "", -1, 0)
 		}
@@ -87783,10 +88127,11 @@ func EncodeETWSPrimaryNotificationStructCanonical(v ETWSPrimaryNotificationStruc
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.23 p17388 (P1 Rest Octets is 0..17 octets; nested components use the entire containing maximum because the other fields vary).
 // EncodeETWSPrimaryNotificationStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -87795,7 +88140,7 @@ func EncodeETWSPrimaryNotificationStructCanonical(v ETWSPrimaryNotificationStruc
 // that decode to a different typed value.
 func EncodeETWSPrimaryNotificationStructCanonicalAtLength(v ETWSPrimaryNotificationStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeETWSPrimaryNotificationStructBytes, decodeETWSPrimaryNotificationStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeETWSPrimaryNotificationStructBytes, decodeETWSPrimaryNotificationStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation572.failure(operationErr, "", -1, 0)
 		}
@@ -88045,10 +88390,11 @@ func EncodeSI10bisNeighbourCellInfoCanonical(v SI10bisNeighbourCellInfo) ([]byte
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.70 p21609–21635; §9.1.50a p10646–10650 (SI10bis rest-octet carrier is bit(160); neighbour component uses the entire containing maximum).
 // EncodeSI10bisNeighbourCellInfoCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..20 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -88057,7 +88403,7 @@ func EncodeSI10bisNeighbourCellInfoCanonical(v SI10bisNeighbourCellInfo) ([]byte
 // that decode to a different typed value.
 func EncodeSI10bisNeighbourCellInfoCanonicalAtLength(v SI10bisNeighbourCellInfo, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeSI10bisNeighbourCellInfoBytes, decodeSI10bisNeighbourCellInfoBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 20, encodeSI10bisNeighbourCellInfoBytes, decodeSI10bisNeighbourCellInfoBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation581.failure(operationErr, "", -1, 0)
 		}

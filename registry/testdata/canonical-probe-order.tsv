@@ -1,0 +1,288 @@
+TS 24.008	10.5.1.7	Classmark 3 Value part
+TS 24.008	10.5.1.7	A5 bits
+TS 24.008	10.5.1.7	R Support
+TS 24.008	10.5.1.7	HSCSD Multi Slot Capability
+TS 24.008	10.5.1.7	MS Measurement capability
+TS 24.008	10.5.1.7	MS Positioning Method Capability
+TS 24.008	10.5.1.7	ECSD Multi Slot Capability
+TS 24.008	10.5.1.7	8-PSK Struct
+TS 24.008	10.5.1.7	Single Band Support
+TS 24.008	10.5.5.12a	MS RA capability value part
+TS 24.008	10.5.5.12a	MS RA capability value part struct
+TS 24.008	10.5.5.12a	Additional access technologies struct
+TS 24.008	10.5.5.12a	Access capabilities struct
+TS 24.008	10.5.5.12a	Content
+TS 24.008	10.5.5.12a	Multislot capability struct
+TS 24.008	10.5.5.12a	A5 bits
+TS 24.008	10.5.5.12a	Enhanced Flexible Timeslot Assignment struct
+TS 24.008	10.5.5.12a	DLMC Capability struct
+TS 24.008	10.5.5.12	MS network capability value part
+TS 24.008	10.5.5.12	GEA1 bits
+TS 24.008	10.5.5.12	Extended GEA bits
+TS 24.008	10.5.5.12	Spare bits
+TS 44.018	10.5.2.1e	Cell Selection Indicator after release of all TCH and SDCCH value part
+TS 44.018	10.5.2.1e	GSM Description struct
+TS 44.018	10.5.2.1e	UTRAN FDD Description struct
+TS 44.018	10.5.2.1e	UTRAN TDD Description struct
+TS 44.018	10.5.2.1e	E-UTRAN Description struct
+TS 44.018	9.1.55	Enhanced Measurement report
+TS 44.018	9.1.55	Serving cell data struct
+TS 44.018	9.1.55	Repeated Invalid_BSIC_Information struct
+TS 44.018	9.1.55	E-UTRAN Measurement Report struct
+TS 44.018	10.5.2.16	IA Rest Octets
+TS 44.018	10.5.2.16	EGPRS Packet Uplink Assignment
+TS 44.018	10.5.2.16	Access Technologies Request struct
+TS 44.018	10.5.2.16	Packet Uplink Assignment
+TS 44.018	10.5.2.16	Packet Downlink Assignment
+TS 44.018	10.5.2.16	Frequency Parameters, before time
+TS 44.018	10.5.2.16	Second Part Packet Assignment
+TS 44.018	10.5.2.16	Multiple Blocks Packet Downlink Assignment
+TS 44.018	10.5.2.16	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.17	IAR Rest Octets
+TS 44.018	10.5.2.17	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.18	IAX Rest Octets
+TS 44.018	10.5.2.18	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.32	SI1 Rest Octets
+TS 44.018	10.5.2.32	Band indicator
+TS 44.018	10.5.2.33	SI2bis Rest Octets
+TS 44.018	10.5.2.33c	SI2n Rest Octets
+TS 44.018	10.5.2.33c	GSM Neighbour Cell Selection params struct
+TS 44.018	10.5.2.33c	GPRS Support Indicator struct
+TS 44.018	10.5.2.34	SI3 Rest Octet
+TS 44.018	10.5.2.34	Optional Selection Parameters
+TS 44.018	10.5.2.34	Selection Parameters
+TS 44.018	10.5.2.34	Optional Power Offset
+TS 44.018	10.5.2.34	System Information 2ter Indicator
+TS 44.018	10.5.2.34	Early Classmark Sending Control
+TS 44.018	10.5.2.34	Scheduling if and where
+TS 44.018	10.5.2.34	GPRS Indicator
+TS 44.018	10.5.2.34	3G Early Classmark Sending Restriction
+TS 44.018	10.5.2.34	SI2quater Indicator struct
+TS 44.018	10.5.2.34	Iu Indicator
+TS 44.018	10.5.2.34	System Information 21 Indicator
+TS 44.018	10.5.2.37e	SI16 Rest Octets
+TS 44.018	10.5.2.37f	SI17 Rest Octets
+TS 44.018	10.5.2.37e	LSA Parameters
+TS 44.018	10.5.2.37e	LSA ID information
+TS 44.018	10.5.2.37e	LSA identity
+TS 44.018	10.5.2.37j	SI14 Rest Octets
+TS 44.018	10.5.2.37j	DYNAMIC ARFCN MAPPING
+TS 44.018	10.5.2.37k	SI15 Rest Octets
+TS 44.018	10.5.2.37k	DYNAMIC ARFCN MAPPING
+TS 44.018	10.5.2.37m	SI 21 Rest Octets
+TS 44.018	10.5.2.37m	Network Sharing EAB Information struct
+TS 44.018	10.5.2.37n	SI 22 Rest Octets
+TS 44.018	10.5.2.37n	Network Sharing Information struct
+TS 44.018	10.5.2.37o	SI 23 Rest Octets
+TS 44.018	10.5.2.37o	IRAT Cell Reselection Information struct
+TS 44.018	10.5.2.37o	Priority and UTRAN Parameters Description struct
+TS 44.018	10.5.2.37o	UTRAN FDD/TDD Description struct
+TS 44.018	10.5.2.37o	Repeated UTRAN FDD/TDD Neighbour Frequency and Priority struct
+TS 44.018	10.5.2.37o	Priority and E-UTRAN Parameters Description struct
+TS 44.018	10.5.2.37o	Repeated E-UTRAN Neighbour Frequency and Priority struct
+TS 44.018	10.5.2.44	SI10 rest octets
+TS 44.018	10.5.2.44	neighbour information
+TS 44.018	10.5.2.44	cell info
+TS 44.018	10.5.2.44	cell parameters
+TS 44.018	10.5.2.44	cell barred
+TS 44.018	10.5.2.44	further cell info
+TS 44.018	10.5.2.44	la different
+TS 44.018	10.5.2.44	info field
+TS 44.018	10.5.2.44	next frequency
+TS 44.018	10.5.2.44	differential cell info
+TS 44.018	10.5.2.44	diff cell pars
+TS 44.018	10.5.2.44	further diff cell info
+TS 44.018	10.5.2.71	SI10ter Rest Octets
+TS 44.018	10.5.2.37a	SI9 rest octets
+TS 44.018	10.5.2.37a	Scheduling info
+TS 44.018	10.5.2.37a	Info type
+TS 44.018	10.5.2.37a	Positions
+TS 44.018	10.5.2.37a	Position
+TS 44.018	10.5.2.33a	SI2ter Rest Octets
+TS 44.018	10.5.2.33a	UTRAN FDD Description struct
+TS 44.018	10.5.2.33a	UTRAN TDD Description struct
+TS 44.018	10.5.2.33a	3G MEASUREMENT Parameters Description struct
+TS 44.018	10.5.2.33a	3G Additional Measurement Parameters Description struct
+TS 44.018	10.5.2.35	SI4 Rest Octets
+TS 44.018	10.5.2.35	SI4 Rest Octets_O
+TS 44.018	10.5.2.35	SI4 Rest Octets_S
+TS 44.018	10.5.2.35	Break Indicator
+TS 44.018	10.5.2.36	SI7 Rest Octets
+TS 44.018	10.5.2.37	SI8 Rest Octets
+TS 44.018	10.5.2.35	Optional Selection Parameters
+TS 44.018	10.5.2.35	Selection Parameters
+TS 44.018	10.5.2.35	Optional Power Offset
+TS 44.018	10.5.2.35	GPRS Indicator
+TS 44.018	10.5.2.35	LSA Parameters
+TS 44.018	10.5.2.35	LSA ID information
+TS 44.018	10.5.2.35	LSA identity
+TS 44.018	10.5.2.37l	SI 13alt Rest Octets
+TS 44.018	10.5.2.37l	PBCCH Description 2 struct
+TS 44.018	10.5.2.24	P2 Rest Octets
+TS 44.018	10.5.2.24	Priority
+TS 44.018	10.5.2.24	MBMS Information
+TS 44.018	10.5.2.24	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.25	P3 Rest Octets
+TS 44.018	10.5.2.25	Priority
+TS 44.018	10.5.2.25	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.33b	SI2quater Rest Octets
+TS 44.018	10.5.2.33b	3G Neighbour Cell Description struct
+TS 44.018	10.5.2.33b	UTRAN FDD Description struct
+TS 44.018	10.5.2.33b	Repeated UTRAN FDD Neighbour Cells struct
+TS 44.018	10.5.2.33b	UTRAN TDD Description struct
+TS 44.018	10.5.2.33b	Repeated UTRAN TDD Neighbour Cells struct
+TS 44.018	10.5.2.33b	MEASUREMENT PARAMETERS Description Struct
+TS 44.018	10.5.2.33b	3G MEASUREMENT PARAMETERS Description struct
+TS 44.018	10.5.2.33b	GPRS Real Time Difference Description struct
+TS 44.018	10.5.2.33b	RTD6 Struct
+TS 44.018	10.5.2.33b	RTD12 Struct
+TS 44.018	10.5.2.33b	GPRS BSIC Description struct
+TS 44.018	10.5.2.33b	GPRS REPORT PRIORITY Description struct
+TS 44.018	10.5.2.33b	GPRS MEASUREMENT PARAMETERS Description struct
+TS 44.018	10.5.2.33b	GPRS 3G MEASUREMENT PARAMETERS Description struct
+TS 44.018	10.5.2.33b	NC Measurement Parameters struct
+TS 44.018	10.5.2.33b	SI2q Extension Information
+TS 44.018	10.5.2.33b	CCN Support Description struct
+TS 44.018	10.5.2.33b	3G Additional Measurement Parameters Description struct
+TS 44.018	10.5.2.33b	3G Additional Measurement Parameters Description 2 struct
+TS 44.018	10.5.2.33b	Priority and E-UTRAN Parameters Description struct
+TS 44.018	10.5.2.33b	Serving Cell Priority Parameters Description struct
+TS 44.018	10.5.2.33b	3G Priority Parameters Description struct
+TS 44.018	10.5.2.33b	Repeated UTRAN Priority Parameters struct
+TS 44.018	10.5.2.33b	E-UTRAN Parameters Description struct
+TS 44.018	10.5.2.33b	E-UTRAN Measurement Parameters Description struct
+TS 44.018	10.5.2.33b	GPRS E-UTRAN Measurement Parameters Description struct
+TS 44.018	10.5.2.33b	Repeated E-UTRAN Neighbour Cells struct
+TS 44.018	10.5.2.33b	Repeated E-UTRAN Not Allowed Cells struct
+TS 44.018	10.5.2.33b	Repeated E-UTRAN PCID to TA mapping struct
+TS 44.018	10.5.2.33b	3G CSG Description struct
+TS 44.018	10.5.2.33b	E-UTRAN CSG Description struct
+TS 44.018	10.5.2.33b	CSG Cells Reporting Description struct
+TS 44.018	10.5.2.33b	UTRAN CSG Cells Reporting Description struct
+TS 44.018	10.5.2.33b	E-UTRAN CSG Cells Reporting Description struct
+TS 44.018	10.5.2.33b	Extended EARFCNs Description struct
+TS 44.018	10.5.2.33b	Extended EARFCNs Description for CSG Cells struct
+TS 44.018	10.5.2.35a	SI6 rest octets
+TS 44.018	10.5.2.35a	PCH and NCH info
+TS 44.018	10.5.2.35a	paging channel restructuring
+TS 44.018	10.5.2.35a	VBS/VGCS options
+TS 44.018	10.5.2.35a	inband notifications
+TS 44.018	10.5.2.35a	inband pagings
+TS 44.018	10.5.2.35a	Band indicator
+TS 44.018	10.5.2.37b	SI 13 Rest Octets
+TS 44.018	10.5.2.37b	PBCCH Description struct
+TS 44.018	10.5.2.37b	SI_CHANGE_ALT
+TS 44.018	10.5.2.37b	PEO IMM Cell Group Definition struct
+TS 44.018	10.5.2.37b	PEO IMM Cell Group Specific Parameters struct
+TS 44.018	10.5.2.37g	SI 19 Rest Octets
+TS 44.018	10.5.2.37g	COMPACT Neighbour Cell params struct
+TS 44.018	10.5.2.37g	COMPACT Cell Selection struct
+TS 44.018	10.5.2.37g	LA Different struct
+TS 44.018	10.5.2.37h	SI 18 Rest Octets
+TS 44.018	10.5.2.37h	Non-GSM Message struct
+TS 44.018	10.5.2.78	IPA Rest Octets
+TS 44.018	10.5.2.78	IPA Uplink Assignment struct
+TS 44.018	10.5.2.78	IPA Downlink Assignment struct
+TS 44.018	10.5.2.78	IPA Single Block Uplink Assignment struct
+TS 44.018	10.5.2.78	Acknowledged Access Request struct
+TS 44.018	10.5.2.78	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.37i	SI 20 Rest Octets
+TS 44.018	9.1.21a	Group Call information
+TS 44.018	9.1.21a	Emergency_Ind
+TS 44.018	9.1.21a	Group Channel Description
+TS 44.018	9.1.21a	bit string
+TS 44.018	10.5.2.22c	NT/N Rest Octets
+TS 44.018	10.5.2.22c	List of Group Call NCH information
+TS 44.018	10.5.2.22c	List of Emergency information
+TS 44.018	10.5.2.22c	List of VSTK_RAND information
+TS 44.018	10.5.2.22c	List of Reduced GCR
+TS 44.018	10.5.2.23	P1 Rest Octets
+TS 44.018	10.5.2.23	Priority
+TS 44.018	10.5.2.23	MBMS Information
+TS 44.018	10.5.2.23	ETWS Primary Notification struct
+TS 44.018	10.5.2.23	PEO IMM Cell Group Details struct
+TS 44.018	10.5.2.70	SI10bis Rest Octets
+TS 44.018	10.5.2.70	SI10bis Neighbour Cell Info
+TS 44.060	12.61	UTRAN CSG Measurement Report IE
+TS 44.060	12.61	PLMN-ID struct
+TS 44.060	12.58	PSC Group IE
+TS 44.060	12.36	MBMS Channel Parameters IE
+TS 44.060	12.37	MBMS p-t-m channel description IE
+TS 44.060	12.38	MPRACH description IE
+TS 44.060	12.39	MBMS Session List IE
+TS 44.060	12.40	MBMS Session Parameters List IE
+TS 44.060	12.41	MPRACH Control Parameters IE
+TS 44.060	12.9a	GPRS Power Control Parameters IE
+TS 44.060	12.24	GPRS Cell Options IE
+TS 44.060	12.24	Extension Information
+TS 44.060	12.8	Frequency Parameters IE
+TS 44.060	12.8	Indirect encoding struct
+TS 44.060	12.8	Direct encoding 1 struct
+TS 44.060	12.8	Direct encoding 2 struct
+TS 44.060	12.10a	GPRS Mobile Allocation IE
+TS 44.060	12.10a	RFL number list struct
+TS 44.060	12.10a	ARFCN index list struct
+TS 44.060	12.57	PCID Group IE
+TS 44.060	12.59	Enhanced Cell Reselection Parameters IE
+TS 44.060	12.59	Repeated E-UTRAN Enhanced Cell Reselection Parameters struct
+TS 44.060	12.5.2	EGPRS Window Size IE
+TS 44.060	12.10d	EGPRS Modulation and Coding IE
+TS 44.060	12.10f	EGPRS Level IE
+TS 44.060	12.12	Packet Timing Advance IE
+TS 44.060	12.33	TMGI IE
+TS 24.008	10.5.1.6	Mobile Station Classmark 2 value part
+TS 36.331	UE-CapabilityRAT-ContainerList field descriptions	geran-cs
+TS 36.331	UE-CapabilityRAT-ContainerList field descriptions	geran-ps
+TS 44.018	10.5.2.20	Measurement Results Contents
+TS 44.018	10.5.2.20	NCELL Report struct
+TS 44.060	12.10	Global TFI IE
+TS 44.060	12.5.1	EGPRS Channel Quality Report IE
+TS 44.060	12.5.3	EGPRS BEP Link Quality Measurements IE
+TS 44.060	12.5.4	BEP Measurement Report Struct
+TS 44.060	12.5.4	EGPRS Timeslot Link Quality Measurements IE
+TS 44.060	12.5.4	Interference Measurement Report Struct
+TS 44.018	10.5.2.61	Restriction Timer value part
+TS 44.018	10.5.2.83	EC Request Reference Description
+TS 44.018	9.1.62	EC-Dummy message content
+TS 44.060	12.3	Ack/Nack Description IE
+TS 44.060	12.3.2	FLO Ack/Nack Description IE
+TS 44.060	12.3.2	FLO Ack/Nack Description struct
+TS 44.060	12.31	UTRAN FDD Target cell IE
+TS 44.060	12.32	UTRAN TDD Target cell IE
+TS 44.060	12.48a.4	Dynamic Allocation 2 IE
+TS 44.060	12.49	E-UTRAN Target cell IE
+TS 44.060	12.50	3G Individual Priority Parameters Description struct
+TS 44.060	12.50	E-UTRAN Individual Priority Parameters Description struct
+TS 44.060	12.50	Individual priorities IE
+TS 44.060	12.50	Repeated Individual E-UTRAN Priority Parameters struct
+TS 44.060	12.50	Repeated Individual UTRAN Priority Parameters struct
+TS 44.060	12.5a.2	EGPRS BEP Link Quality Measurements Type 2 IE
+TS 44.060	12.65	Dynamic Allocation 3 IE
+TS 44.060	12.68	E-UTRAN Target cell with extended EARFCN IE
+TS 44.060	12.69	E-UTRAN IPP with extended EARFCNs IE
+TS 44.060	12.69	Repeated Individual E-UTRAN PP with extended EARFCNs struct
+TS 44.060	12.70	E-UTRAN NC with extended EARFCNs IE
+TS 44.060	12.70	Repeated E-UTRAN NC with extended EARFCNs struct
+TS 44.060	12.72	EC Ack/Nack Description IE
+TS 44.060	12.73	EC Primary Ack/Nack Description IE
+TS 44.060	12.74	EC Packet Timing Advance IE
+TS 44.060	12.76	EC Channel Quality Report Higher CC IE
+TS 44.060	12.8.2	Dual Carrier Direct encoding 1 struct
+TS 44.060	12.8.2	Dual Carrier Direct encoding 2 struct
+TS 44.060	12.8.2	Dual Carrier Frequency Parameters IE
+TS 44.060	12.8.2	Dual Carrier Indirect encoding struct
+TS 44.060	12.8.4	DLMC Direct encoding 1 struct
+TS 44.060	12.8.4	DLMC Direct encoding 2 struct
+TS 44.060	12.8.4	DLMC Frequency Parameters IE
+TS 44.060	12.8.4	DLMC Indirect encoding struct
+TS 44.018	9.1.43p	EC Cell Channel Description struct
+TS 44.018	9.1.43p	EC Mobile Allocation List struct
+TS 44.018	9.1.43p	EC Mobile Allocation struct
+TS 44.018	9.1.43p	EC System Information Type 1
+TS 44.018	9.1.43r	EC Cell Reselection Parameters struct
+TS 44.018	9.1.43r	EC Neighbour Cell Description struct
+TS 44.018	9.1.43r	EC Neighbour Cell Reselection Parameters struct
+TS 44.018	9.1.43r	EC System Information Type 3
+TS 44.018	9.1.43s	EC System Information Type 4
+TS 44.018	9.1.43s	Network Sharing Information struct
+TS 44.060	11.2.33	Handover Access 8 bit message

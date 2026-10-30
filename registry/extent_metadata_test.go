@@ -15,8 +15,8 @@ import (
 // can coexist with a canonical API that requires an explicit external extent.
 func TestDescriptorContextMetadataMatchesOperations(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 237 {
-		t.Fatalf("catalogue has %d descriptors, want 237", len(descriptors))
+	if len(descriptors) != 317 {
+		t.Fatalf("catalogue has %d descriptors, want 317", len(descriptors))
 	}
 	for _, d := range descriptors {
 		t.Run(d.Standard+"/"+d.Clause+"/"+d.Name, func(t *testing.T) {
@@ -207,6 +207,12 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 		bits int
 		hex  string
 	}{
+		// TS 44.018 V19.0.0 §§9.1.50–9.1.50b: exact 21-octet carriers.
+		"TS 44.018/9.1.50/SYSTEM INFORMATION TYPE 10":     {168, "002b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+		"TS 44.018/9.1.50a/SYSTEM INFORMATION TYPE 10bis": {168, "282b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+		"TS 44.018/9.1.50b/SYSTEM INFORMATION TYPE 10ter": {168, "2c0000000000000000000000000000000000032b2b"},
+		// TS 44.018 V19.0.0 §10.5.2.11a paragraphs 15114–15117: 3+5+16 bits, then null.
+		"TS 44.018/10.5.2.11a/DTM Information Details value part":              {24, "000000"},
 		"TS 24.008/10.5.1.6/Mobile Station Classmark 2 value part":             {24, "200000"},
 		"TS 36.331/UE-CapabilityRAT-ContainerList field descriptions/geran-cs": {48, "330320000000"},
 		"TS 44.018/10.5.2.16/EGPRS Packet Uplink Assignment":                   {32, "00000000"},
@@ -266,7 +272,42 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 		"TS 44.060/12.61/UTRAN CSG Measurement Report IE":                      {63, "0000000000000000"},
 		"TS 44.060/12.8/Direct encoding 2 struct":                              {40, "0000000000"},
 		"TS 44.060/12.9a/GPRS Power Control Parameters IE":                     {19, "000000"},
+
+		// TS 44.018 V19.0.0 §9.1.58 paragraphs 11515–11523: absent MSISDN, 89 bits.
+		"TS 44.018/9.1.58/NOTIFY APPLICATION DATA": {89, "340000000000000000000000"},
+		// TS 44.060 V19.0.0 §§12.3 and 12.72: zero sequence number and bitmap.
+		"TS 44.060/12.3/Ack/Nack Description IE":     {72, "000000000000000000"},
+		"TS 44.060/12.72/EC Ack/Nack Description IE": {21, "000000"},
+		// TS 44.060 V19.0.0 §§12.31, 12.32, 12.49 and 12.68:
+		// zero frequency and identity, with optional bandwidth absent.
+		"TS 44.060/12.31/UTRAN FDD Target cell IE":                    {25, "00000000"},
+		"TS 44.060/12.32/UTRAN TDD Target cell IE":                    {24, "000000"},
+		"TS 44.060/12.49/E-UTRAN Target cell IE":                      {26, "00000000"},
+		"TS 44.060/12.68/E-UTRAN Target cell with extended EARFCN IE": {28, "00000000"},
+		// TS 44.060 V19.0.0 tables 12.8.2.1 and 12.8.4.1:
+		// absent MAIOs, HSN 0, length 0 and three zero octets.
+		"TS 44.060/12.8.2/Dual Carrier Direct encoding 2 struct": {36, "0000000000"},
+		"TS 44.060/12.8.4/DLMC Direct encoding 2 struct":         {34, "0000000000"},
+		// TS 44.018 V19.0.0 §9.1.43s: 1+2+1+12+1+1 = 18 bits.
+		"TS 44.018/9.1.43s/Network Sharing Information struct": {18, "000000"},
+		// TS 44.060 V19.0.0 §§12.7, 12.9, 12.11, 12.14, 12.16a and 12.23.
+		"TS 44.060/12.11/Packet Request Reference IE":       {27, "00000000"},
+		"TS 44.060/12.14/PRACH Control Parameters IE":       {33, "0000000000"},
+		"TS 44.060/12.16a/G-RNTI IE":                        {32, "00000000"},
+		"TS 44.060/12.23/Cell Identification IE":            {64, "0000000000000000"},
+		"TS 44.060/12.7/Channel Request Description IE":     {24, "000000"},
+		"TS 44.060/12.9/Global Power Control Parameters IE": {24, "000000"},
 	}
+
+	// TS 44.018 V19.0.0 §§10.5.2.1c and 10.5.2.25a: minimum range and direct channel fields.
+	fixtures["TS 44.018/10.5.2.1c/RANGE LIMITS"] = struct {
+		bits int
+		hex  string
+	}{20, "000000"}
+	fixtures["TS 44.018/10.5.2.25a/Packet Channel Description"] = struct {
+		bits int
+		hex  string
+	}{24, "080000"}
 	checked := 0
 	for _, d := range registry.Descriptors() {
 		if d.Extent.MinimumBits <= 16 {

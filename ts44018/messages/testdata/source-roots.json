@@ -1,0 +1,69 @@
+[
+  {
+    "name": "ec-dummy-0",
+    "package": "ts44018/messages",
+    "clause": "9.1.62",
+    "definition": "EC-Dummy message content",
+    "module": "ec_dummy_message_content",
+    "hex": "33",
+    "bits": 8,
+    "values": {
+      "MessageType": 3,
+      "UsedDLCoverageClass": 0
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "33"
+  },
+  {
+    "name": "ec-dummy-1",
+    "package": "ts44018/messages",
+    "clause": "9.1.62",
+    "definition": "EC-Dummy message content",
+    "module": "ec_dummy_message_content",
+    "hex": "37",
+    "bits": 8,
+    "values": {
+      "MessageType": 3,
+      "UsedDLCoverageClass": 1
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "37"
+  },
+  {
+    "name": "ec-dummy-2",
+    "package": "ts44018/messages",
+    "clause": "9.1.62",
+    "definition": "EC-Dummy message content",
+    "module": "ec_dummy_message_content",
+    "hex": "3b",
+    "bits": 8,
+    "values": {
+      "MessageType": 3,
+      "UsedDLCoverageClass": 2
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "3b"
+  },
+  {
+    "name": "ec-dummy-3",
+    "package": "ts44018/messages",
+    "clause": "9.1.62",
+    "definition": "EC-Dummy message content",
+    "module": "ec_dummy_message_content",
+    "hex": "3f",
+    "bits": 8,
+    "values": {
+      "MessageType": 3,
+      "UsedDLCoverageClass": 3
+    },
+    "present": [],
+    "absent": [],
+    "invalid_values": {
+      "UsedDLCoverageClass": 4
+    },
+    "canonical_hex": "3f"
+  }
+]

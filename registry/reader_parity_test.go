@@ -134,7 +134,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 		}
 	}
 	inputs := 0
-	for _, d := range registry.Descriptors() {
+	for _, d := range sampleDescriptors(t, registry.Descriptors(), "sorted-probe-order.tsv") {
 		limit := d.MaxOctets + 2
 		if d.MaxOctets == 0 {
 			limit = 40

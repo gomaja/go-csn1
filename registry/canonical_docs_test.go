@@ -11,6 +11,7 @@ import (
 	"go/token"
 	"math/rand"
 	"os"
+	"path"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -81,15 +82,36 @@ func generatedFiles(t *testing.T) []string {
 	return files
 }
 
+// canonicalImports resolves selectors in the importing file's own namespace.
+func canonicalImports(t *testing.T, file *ast.File) map[string]string {
+	t.Helper()
+	aliases := map[string]string{}
+	const prefix = "github.com/gomaja/go-csn1/"
+	for _, spec := range file.Imports {
+		name, err := strconv.Unquote(spec.Path.Value)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.HasPrefix(name, prefix) {
+			continue
+		}
+		alias := path.Base(name)
+		if spec.Name != nil {
+			alias = spec.Name.Name
+		}
+		aliases[alias] = strings.TrimPrefix(name, prefix)
+	}
+	return aliases
+}
+
 // documentedClasses reads the classes each generated canonical entry point
 // documents, keyed by package directory and function name: two packages may
-// define the same function name. It also returns each package name's
-// directory, and fails on a duplicate key.
-func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]string) {
+// define the same function name. It fails on a duplicate function key.
+func documentedClasses(t *testing.T) map[string]map[string]bool {
 	t.Helper()
 	files := generatedFiles(t)
 	out := map[string]map[string]bool{}
-	packages := map[string]string{}
+	packages := map[string]map[string]string{}
 	type delegation struct{ dir, text string }
 	delegations := map[string]delegation{}
 	for _, file := range files {
@@ -98,10 +120,7 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 			t.Fatal(err)
 		}
 		dir := filepath.ToSlash(filepath.Dir(strings.TrimPrefix(file, ".."+string(filepath.Separator))))
-		if prior, ok := packages[parsed.Name.Name]; ok && prior != dir {
-			t.Fatalf("package name %s in %s and %s", parsed.Name.Name, prior, dir)
-		}
-		packages[parsed.Name.Name] = dir
+		packages[dir] = canonicalImports(t, parsed)
 		for _, decl := range parsed.Decls {
 			fn, ok := decl.(*ast.FuncDecl)
 			if !ok || fn.Doc == nil || !strings.HasPrefix(fn.Name.Name, "Encode") || !strings.Contains(fn.Name.Name, "Canonical") {
@@ -142,7 +161,7 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 		for _, callee := range delegatedCallee.FindAllStringSubmatch(d.text, -1) {
 			dir := d.dir
 			if callee[1] != "" {
-				dir = packages[callee[1]]
+				dir = packages[d.dir][callee[1]]
 			}
 			classes, ok := out[dir+"."+callee[2]]
 			if !ok {
@@ -153,15 +172,15 @@ func documentedClasses(t *testing.T) (map[string]map[string]bool, map[string]str
 			}
 		}
 	}
-	return out, packages
+	return out
 }
 
-var delegatedCallee = regexp.MustCompile(`(?:([a-z]+)\.)?(Encode[A-Za-z0-9]*Canonical(?:AtLength)?(?:WithContext)?)\b`)
+var delegatedCallee = regexp.MustCompile(`(?:([A-Za-z_][A-Za-z0-9_]*)\.)?(Encode[A-Za-z0-9]*Canonical(?:AtLength)?(?:WithContext)?)\b`)
 
 // canonicalFunctions maps each descriptor (clause and name) to the package
 // directory and function its Canonical adapter calls, and fails when one
 // descriptor key maps to two functions.
-func canonicalFunctions(t *testing.T, packages map[string]string) map[string]string {
+func canonicalFunctions(t *testing.T) map[string]string {
 	t.Helper()
 	files := append(generatedFiles(t), "registry.go")
 	out := map[string]string{}
@@ -170,7 +189,11 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 		if err != nil {
 			t.Fatal(err)
 		}
-		own := packages[parsed.Name.Name]
+		own := "registry"
+		if file != "registry.go" {
+			own = filepath.ToSlash(filepath.Dir(strings.TrimPrefix(file, ".."+string(filepath.Separator))))
+		}
+		imports := canonicalImports(t, parsed)
 		adapters := map[string]*ast.FuncDecl{}
 		for _, decl := range parsed.Decls {
 			if fn, ok := decl.(*ast.FuncDecl); ok && fn.Recv == nil {
@@ -217,8 +240,8 @@ func canonicalFunctions(t *testing.T, packages map[string]string) map[string]str
 									call = own + "." + fn.Name
 								}
 							case *ast.SelectorExpr:
-								if pkg, ok := fn.X.(*ast.Ident); ok && strings.HasSuffix(fn.Sel.Name, "Canonical") && packages[pkg.Name] != "" {
-									call = packages[pkg.Name] + "." + fn.Sel.Name
+								if pkg, ok := fn.X.(*ast.Ident); ok && strings.HasSuffix(fn.Sel.Name, "Canonical") && imports[pkg.Name] != "" {
+									call = imports[pkg.Name] + "." + fn.Sel.Name
 								}
 							}
 						}
@@ -570,6 +593,56 @@ func grow(v reflect.Value, depth, times int, nested bool) {
 	}
 }
 
+func canonicalProbeDefinitions(t *testing.T) []runtime.Descriptor {
+	t.Helper()
+	// Preserve the existing audit's discovery order across descriptor table
+	// reordering, then append newly published definitions.
+	order, err := os.ReadFile("testdata/canonical-probe-order.tsv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	key := func(d runtime.Descriptor) string { return d.Standard + "\t" + d.Clause + "\t" + d.Name }
+	current := descriptors()
+	byKey := make(map[string]runtime.Descriptor, len(current))
+	for _, d := range current {
+		if _, exists := byKey[key(d)]; exists {
+			t.Fatalf("duplicate descriptor %s", key(d))
+		}
+		byKey[key(d)] = d
+	}
+	definitions := make([]runtime.Descriptor, 0, len(current))
+	for _, line := range strings.Split(strings.TrimSuffix(string(order), "\n"), "\n") {
+		d, ok := byKey[line]
+		if !ok {
+			t.Fatalf("missing or repeated canonical probe descriptor %q", line)
+		}
+		definitions = append(definitions, d)
+		delete(byKey, line)
+	}
+	for _, d := range current {
+		if _, added := byKey[key(d)]; added {
+			definitions = append(definitions, d)
+		}
+	}
+	return definitions
+}
+
+func TestCanonicalProbePreservesPublishedSeeds(t *testing.T) {
+	definitions := canonicalProbeDefinitions(t)
+	if len(definitions) < 237 {
+		t.Fatalf("only %d descriptors in canonical probe", len(definitions))
+	}
+	// Freeze the pre-addition discovery order: the descriptor index selects
+	// both random streams used by the canonical error audit.
+	hash := sha256.New()
+	for _, d := range definitions[:237] {
+		_, _ = fmt.Fprintf(hash, "%s\x00%s\x00%s\n", d.Standard, d.Clause, d.Name)
+	}
+	if got := fmt.Sprintf("%x", hash.Sum(nil)); got != "54ef71ee397137283fbd9156a6cf532f78aafa459c030ad72f0197b5dda384f3" {
+		t.Fatalf("canonical probe changed existing descriptor seeds: %s", got)
+	}
+}
+
 // TestCanonicalDocsListExactlyReachableErrors checks the per-definition
 // error lists on the generated canonical entry points. For every definition
 // and entry point, each documented typed error class must be provoked by a
@@ -581,13 +654,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 	if testing.Short() {
 		t.Skip("explores every definition")
 	}
-	documented, packages := documentedClasses(t)
-	functions := canonicalFunctions(t, packages)
-	definitions := descriptors()
-	// Append the newly published clause to this test's discovery order so its
-	// addition does not change any existing descriptor's seeded random stream.
-	isResults := func(d runtime.Descriptor) bool { return d.Standard == "TS 44.018" && d.Clause == "10.5.2.20" }
-	sort.SliceStable(definitions, func(i, j int) bool { return !isResults(definitions[i]) && isResults(definitions[j]) })
+	documented := documentedClasses(t)
+	functions := canonicalFunctions(t)
+	definitions := canonicalProbeDefinitions(t)
 
 	// Decode-guided values, then nested values harvested by type.
 	values := make([][]any, len(definitions))
@@ -712,7 +781,68 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					observed[entry][c] = true
 				}
 			}
-			octets := []int{-1, 0, 1, 8, 20, 64, runtimeOctetMaximum + 1}
+
+			// TS 24.007 V20.0.0 Annex B.1.1.2 p3987-3988: a
+			// deliberately selected null cannot supply remaining positions.
+			// Byte-aligned decode seeds cannot reach these fresh layouts.
+			if seed, ok := canonicalNullBoundSeeds[d.Clause+"\x00"+d.Name]; ok {
+				wire, err := hex.DecodeString(seed.hex)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				r := runtime.NewReader(wire)
+				if _, err := r.PushLimit(seed.bits); err != nil {
+					t.Error(err)
+					return
+				}
+				decoded, err := d.DecodeFrom(r)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				fresh := runtime.Canonical(decoded)
+				value := reflect.New(reflect.TypeOf(fresh)).Elem()
+				value.Set(reflect.ValueOf(fresh))
+				choice := value
+				parts := strings.Split(strings.TrimPrefix(seed.path, "/"), "/")
+				for _, part := range parts[:len(parts)-1] {
+					for choice.Kind() == reflect.Pointer || choice.Kind() == reflect.Interface {
+						choice = choice.Elem()
+					}
+					choice = choice.FieldByName(part)
+				}
+				for choice.Kind() == reflect.Pointer || choice.Kind() == reflect.Interface {
+					choice = choice.Elem()
+				}
+				field := parts[len(parts)-1]
+				selected := choice.FieldByName(field)
+				index := 0
+				for i := 0; i < choice.NumField(); i++ {
+					f := choice.Field(i)
+					if f.Kind() != reflect.Pointer {
+						continue
+					}
+					if choice.Type().Field(i).Name == field {
+						choice.FieldByName("Alternative").SetUint(uint64(index))
+						f.Set(reflect.New(selected.Type().Elem()))
+					} else {
+						f.SetZero()
+					}
+					index++
+				}
+				_, err = d.Canonical(value.Interface())
+				var bound *runtime.BoundError
+				var decode *runtime.DecodeError
+				if !errors.As(err, &bound) || bound.Kind != runtime.CanonicalTarget || errors.As(err, &decode) {
+					t.Errorf("%s null-bound witness: %v", d.Name, err)
+					return
+				}
+				record(entryCanonical, err, 0)
+			}
+			// TS 44.018 V19.0.0 §10.5.2.37a p19650–19657: Position and Positions
+			// have 3/6-octet caps; shorter in-range targets witness underfill.
+			octets := []int{-1, 0, 1, 2, 3, 8, 20, 64, runtimeOctetMaximum + 1}
 			if d.MaxOctets > 0 {
 				octets = append(octets, d.MaxOctets, d.MaxOctets+1)
 			}
@@ -1053,11 +1183,30 @@ func TestClassifyExtentErrors(t *testing.T) {
 }
 
 func TestCanonicalFunctionsResolveDescriptorAdapters(t *testing.T) {
-	_, packages := documentedClasses(t)
-	functions := canonicalFunctions(t, packages)
+	functions := canonicalFunctions(t)
 	for _, d := range descriptors() {
 		if functions[d.Clause+"\x00"+d.Name] == "" {
 			t.Errorf("%s §%s <%s>: no generated canonical function", d.Standard, d.Clause, d.Name)
 		}
 	}
+}
+
+// Synthetic bounded-reader values with a selected empty alternative.
+var canonicalNullBoundSeeds = map[string]struct {
+	hex  string
+	bits int
+	path string
+}{
+	"10.5.2.16\u0000IA Rest Octets":           {"2b2b", 11, "/Value/CompressedInterRATHOINFOINDChoice/RCC/ImplicitRejectPSChoice/AltUnlabeled"},
+	"10.5.2.16\u0000Packet Uplink Assignment": {"da2624d7", 31, "/Value/PFIChoice/AltUnlabeled"},
+	"10.5.2.17\u0000IAR Rest Octets":          {"81c7db", 24, "/Value/RCCChoice/AltUnlabeled"},
+	"10.5.2.18\u0000IAX Rest Octets":          {"2b", 3, "/Value/RCCChoice/AltUnlabeled"},
+	"10.5.2.22c\u0000NT/N Rest Octets":        {"04fd6c478a97d17fbd3617b03e5ad2948bbea85e", 160, "/Value/CELLGLOBALCOUNTChoice/AltUnlabeled"},
+	"10.5.2.23\u0000P1 Rest Octets":           {"2b2b", 11, "/Value/CELLGLOBALCOUNTChoice/AltUnlabeled"},
+	"10.5.2.24\u0000P2 Rest Octets":           {"2b2b", 11, "/Value/MBMSNotification3Choice/AltUnlabeled"},
+	"10.5.2.25\u0000P3 Rest Octets":           {"668bda", 24, "/Value/ImplicitRejectCSChoice/AltUnlabeled"},
+	"10.5.2.33a\u0000SI2ter Rest Octets":      {"b71dd121", 32, "/Value/SI2terMPCHANGEMARKGroup/N3GAdditionalMeasurementParametersDescriptionChoice/AltUnlabeled"},
+	"10.5.2.33b\u0000SI2quater Rest Octets":   {"2a8dc10902614fb283447f544447fc68dba28477", 160, "/Value/N3GAdditionalMeasurementParametersDescriptionChoice/N3GAdditionalMeasurementParametersDescription/N3GCCNACTIVEChoice/AltUnlabeled"},
+	"10.5.2.37b\u0000SI 13 Rest Octets":       {"86274f5c8357edd7c9bc1d54cf5b94978150881e", 160, "/Value/BCCHCHANGEMARKGroup/SGSNRChoice/AltUnlabeled"},
+	"10.5.2.78\u0000IPA Rest Octets":          {"1ffeea057aaf7aa617f51ca956f95713cf6cec", 152, "/Value/RCCChoice/AltUnlabeled"},
 }

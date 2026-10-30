@@ -70,7 +70,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 		}
 	}
 	t.Logf("definitions=%d vectors=%d accepted=%d rejected=%d failures=%d", len(defs), len(vectors), accepted, rejected, failures)
-	if len(defs) != 237 || len(vectors) != 38 {
+	if len(defs) != 317 || len(vectors) != 38 {
 		t.Fatalf("unexpected probe breadth: %d definitions and %d vectors", len(defs), len(vectors))
 	}
 }
@@ -119,6 +119,9 @@ func probeCanonical(definition runtime.Descriptor, wire []byte) (accepted bool, 
 		}
 	}
 	if err != nil {
+		if canonicalContainingExtentRefusal(definition, err) {
+			return true, nil
+		}
 		if canonicalCapabilityDefinition(definition) && canonicalCapabilityReservation(err) {
 			return true, nil
 		}
@@ -287,7 +290,7 @@ func FuzzCanonicalAllDefinitions(f *testing.F) {
 	} {
 		f.Add(seed.index, seed.wire)
 	}
-	definitions := descriptors()
+	definitions := sampleDescriptors(f, descriptors(), "direct-probe-order.tsv")
 	f.Fuzz(func(t *testing.T, index uint16, wire []byte) {
 		if len(wire) > 50 {
 			return

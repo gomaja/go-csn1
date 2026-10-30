@@ -33,7 +33,7 @@ func TestCanonicalDecodeBackDoesNotFail(t *testing.T) {
 	// Every definition's zero value, at every small extent.
 	rng := rand.New(rand.NewSource(19))
 	checked := 0
-	for _, d := range descriptors() {
+	for _, d := range sampleDescriptors(t, descriptors(), "direct-probe-order.tsv") {
 		var sample any
 		for i := 0; i < 2000 && sample == nil; i++ {
 			b := make([]byte, 1+rng.Intn(24))

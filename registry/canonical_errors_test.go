@@ -72,11 +72,13 @@ func TestCanonicalErrorTypes(t *testing.T) {
 		want func(error) bool
 	}{
 		{"no standalone maximum", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonical(gprs.Value); return err }, extent(runtime.ExtentError{Required: true})},
-		{"extent below range", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, -1); return err }, extent(runtime.ExtentError{Actual: -1, Maximum: 1 << 17})},
+		// TS 44.060 V19.0.0 §12.24 p23343–23356: at most 98 bits,
+		// completed to 13 octets at the byte entry point.
+		{"extent below range", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, -1); return err }, extent(runtime.ExtentError{Actual: -1, Maximum: 13})},
 		{"extent above runtime limit", func() error {
 			_, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, 1<<17+1)
 			return err
-		}, extent(runtime.ExtentError{Actual: 1<<17 + 1, Maximum: 1 << 17})},
+		}, extent(runtime.ExtentError{Actual: 1<<17 + 1, Maximum: 13})},
 		{"extent not filled", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, 10); return err }, extent(runtime.ExtentError{Actual: 6, Minimum: 10, Maximum: 10})},
 		{"extent too small", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(gprs.Value, 1); return err }, bound(runtime.CanonicalTarget)},
 		{"length too short at extent", func() error { _, err := ies.EncodeGPRSCellOptionsIECanonicalAtLength(ccn, 6); return err }, bound(runtime.LengthBound)},

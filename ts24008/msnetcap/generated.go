@@ -723,10 +723,15 @@ func decodeMSNetworkCapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runti
 	r.RecordSpareCount("MSNetworkCapabilityValuePartSpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.5.12 <MS network capability value part>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeMSNetworkCapabilityValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("MSNetworkCapabilityValuePartSpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSNetworkCapabilityValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -1425,10 +1430,15 @@ func decodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsList(r *runtime.Rea
 	r.RecordSpareCount("SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.5.12 <Spare bits>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("SpareBitsAlternativesAltUnlabeledVariant2SpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeSpareBitsAlternativesAltUnlabeledVariant2SpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -1554,6 +1564,11 @@ func encodeSpareBitsAlternatives(w *runtime.Writer, v SpareBitsAlternatives) err
 	case SpareBitsAlternativesAlternativeAltUnlabeled:
 		if v.AltUnlabeled == nil {
 			return w.ComponentError(runtime.InvalidBranch, "SpareBitsAlternatives", 0, fmt.Errorf("choice alternative mismatch"))
+		} // TS 24.008 V20.1.0 §10.5.5.12 <Spare bits>; TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988: null has no canonical encoding when transmitted fill selects another arm (Annex B Rules B4 and B8).
+		if w.Canonical() {
+			if err := w.RequireCanonicalEnd(); err != nil {
+				return err
+			}
 		}
 		return encodeSpareBitsAlternativesAltUnlabeled(w, *v.AltUnlabeled)
 	case SpareBitsAlternativesAlternativeAltUnlabeledVariant2:
@@ -1694,8 +1709,7 @@ func EncodeMSNetworkCapabilityValuePartCanonical(v MSNetworkCapabilityValuePart)
 // EncodeMSNetworkCapabilityValuePartCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 1..8 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 1..8 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -1947,8 +1961,7 @@ func EncodeSpareBitsCanonical(v SpareBits) ([]byte, error) {
 // EncodeSpareBitsCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..8 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 0..8 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
