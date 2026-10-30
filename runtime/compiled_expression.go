@@ -34,6 +34,7 @@ func expressionVariableFrom(name string, vars map[string]uint64, reader *Reader)
 
 // ExpressionVariable resolves a single-token reference using Eval's exact and
 // compact name matching, including its ambiguity and variable-bound checks.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) ExpressionVariable(name string) ExpressionValue {
 	return expressionVariableFrom(name, r.vars, r)
 }

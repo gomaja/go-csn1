@@ -7,6 +7,7 @@ import (
 )
 
 var wireInfoType = reflect.TypeFor[WireInfo]()
+var bitStringType = reflect.TypeFor[BitString]()
 
 type canonicalPointer struct {
 	typ reflect.Type
@@ -62,11 +63,13 @@ func SemanticallyEqual[T any](a, b T) bool {
 // Each candidate must fit the source-defined extent and decode to the same
 // typed semantic value. A zero maximum returns *ExtentError with Required
 // set: the caller must use CanonicalEncodeAtLength. Otherwise, if no
-// candidate succeeds, the fresh encoding's error is returned:
+// candidate succeeds, the fresh encoding's error is returned, except that
+// an end-selected null refusal reports the matching targeted attempt's extent:
 //   - *ExtentError when it falls outside minOctets..maxOctets;
 //   - the encoder's own error, which for generated encoders is *BoundError
 //     with Kind LengthBound when content does not fit a bound inside the
-//     value, or an error wrapping ErrContextRequired;
+//     value, Kind CanonicalTarget when null cannot fill the canonical extent,
+//     or an error wrapping ErrContextRequired;
 //   - an error wrapping the decode error when the bytes do not decode.
 //
 // Bytes that decode to a different typed value give an untyped error.
@@ -91,12 +94,19 @@ func CanonicalEncode[T any](value T, minOctets, maxOctets int, shortest bool, en
 			}
 			return nil
 		},
-		func() error { _, err := encode(Canonical(value)); return err })
+		func(bits int, target bool) error {
+			if target {
+				_, err := encode(CanonicalTo(value, bits))
+				return err
+			}
+			_, err := encode(Canonical(value))
+			return err
+		})
 }
 
 // canonicalEncode shares the extent search across generated value types. Its
 // typed callbacks do not need an intermediate interface box.
-func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, bool) ([]byte, error), verify func([]byte) error, locate func() error) ([]byte, error) {
+func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, bool) ([]byte, error), verify func([]byte) error, locate func(int, bool) error) ([]byte, error) {
 	if maxOctets == 0 {
 		return nil, &ExtentError{Minimum: minOctets, Required: true}
 	}
@@ -116,9 +126,14 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 		}
 		return out, nil, false
 	}
+	var targetErr error
+	targetBits := 0
 	search := func() ([]byte, bool) {
 		for octets := minOctets; octets <= maxOctets; octets++ {
 			out, err, _ := try(octets*8, true)
+			if targetErr == nil && err != nil {
+				targetErr, targetBits = err, octets*8
+			}
 			if err == nil && len(out) == octets {
 				return out, true
 			}
@@ -142,7 +157,16 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 	if firstSchema {
 		return nil, canonicalFailure(firstErr)
 	}
-	if located := locate(); located != nil {
+	// A null refusal at the fresh octet boundary is only a probe. Report
+	// the actual source/caller extent that the targeted attempt requested.
+	var bound, targetedBound *BoundError
+	if errors.As(firstErr, &bound) && bound.Kind == CanonicalTarget && errors.As(targetErr, &targetedBound) && targetedBound.Kind == CanonicalTarget && targetedBound.Position == bound.Position {
+		if located := locate(targetBits, true); located != nil {
+			return nil, located
+		}
+		return nil, targetErr
+	}
+	if located := locate(0, false); located != nil {
 		return nil, located
 	}
 	return nil, firstErr
@@ -158,7 +182,7 @@ func canonicalEncode(minOctets, maxOctets int, shortest bool, encode func(int, b
 //     encoding does not fill exactly octets;
 //   - the encoder's own error otherwise. Generated encoders return
 //     *BoundError with Kind CanonicalTarget when content does not fit in
-//     octets, or Kind LengthBound when it does not fit a bound inside the
+//     octets or null cannot fill them, or Kind LengthBound when it does not fit a bound inside the
 //     value. A typed length within the value keeps its value: content it
 //     cannot carry, such as a nonzero field after a TS 44.060 V19.0.0
 //     §12.24 Extension Length, is a LengthBound conflict. A value whose
@@ -218,6 +242,13 @@ var (
 func canonicalValue(value reflect.Value, seen map[canonicalPointer]reflect.Value, rawErrors bool) reflect.Value {
 	if !value.IsValid() {
 		return value
+	}
+	// TS 44.060 V19.0.0 §12.29 paragraphs 23515–23520 permits a
+	// zero-length bitmap: neither nil nor an empty byte slice transmits
+	// any bitmap bits. Normalize only that representation, keeping malformed
+	// nonempty storage and all other slice distinctions visible.
+	if value.Type() == bitStringType && value.Field(1).Int() == 0 && value.Field(0).Len() == 0 {
+		return reflect.Zero(bitStringType)
 	}
 	if value.Type() == wireInfoType {
 		if rawErrors {

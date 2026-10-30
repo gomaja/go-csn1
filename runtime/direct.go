@@ -59,6 +59,8 @@ func Seal[T any](_ T, raw []byte, consumed int, tail BitString, wire WireInfo) W
 // Reader is an MSB-first, bounded CSN.1 bit reader. A fork shares the work
 // budget but isolates position and expression bindings for choice resolution.
 // A reader borrowed from ChoiceErrors must not be copied by value; use Fork.
+// It is valid only until ChoiceErrors.Release. State after Release is undefined;
+// Set, ChoiceErrors.ForkScoped and Commit refuse a released trial until reuse.
 type Reader struct {
 	data                                           []byte
 	pos, end, virtual                              int
@@ -129,6 +131,8 @@ func InputBits(data []byte) int {
 	return len(data) * 8
 }
 
+// Check validates the current reader state.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Check() error {
 	if r == nil {
 		return &DecodeError{Kind: InvalidValue, Offset: -1, Detail: "nil reader"}
@@ -145,30 +149,47 @@ func (r *Reader) Check() error {
 	return nil
 }
 
+// Position reports the current bit position.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Position() int {
 	if r == nil {
 		return -1
 	}
 	return r.pos
 }
+
+// Remaining reports the remaining received bits, or -1 for invalid state.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Remaining() int {
 	if r.Check() != nil {
 		return -1
 	}
 	return r.end - r.pos
 }
+
+// BoundedRemaining reports remaining bits in a containing limit, or -1 without one.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) BoundedRemaining() int {
 	if r.boundDepth == 0 {
 		return -1
 	}
 	return r.Remaining()
 }
+
+// VirtualBits reports the number of inferred zero bits.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) VirtualBits() int { return r.virtual }
+
+// Wire returns the retained wire information.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Wire() WireInfo {
 	r.ensureTruncations()
 	r.wire.ImplicitZeros = r.virtual
 	return r.wire
 }
+
+// Tail returns the remaining received bits.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Tail() BitString {
 	if r.Check() != nil {
 		return BitString{}
@@ -176,7 +197,10 @@ func (r *Reader) Tail() BitString {
 	return bitsAt(r.data, r.pos, r.end-r.pos)
 }
 func (r *Reader) SetZeroExtension(enabled bool) { r.allowZero = enabled }
-func (r *Reader) ZeroExtension() bool           { return r.allowZero }
+
+// ZeroExtension reports whether zero extension is enabled.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
+func (r *Reader) ZeroExtension() bool { return r.allowZero }
 func (r *Reader) Set(name string, value uint64) {
 	r.checkTrialIdentity()
 	if r.trial != nil {
@@ -409,6 +433,7 @@ func (r *Reader) Expect(pattern string) error {
 // Matches reports whether pattern matches the next received bits without
 // consuming them. It returns false where LookaheadLiteral returns an error,
 // which is only the reader's existing failure; use LookaheadLiteral to see it.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) Matches(pattern string) bool {
 	matched, err := r.LookaheadLiteral(pattern)
 	return err == nil && matched
@@ -416,6 +441,7 @@ func (r *Reader) Matches(pattern string) bool {
 
 // LookaheadLiteral looks ahead within the received input, whose L/H positions are always defined,
 // without consuming bits. Past the received end it returns false even with zero extension.
+// State after ChoiceErrors.Release is undefined for a borrowed trial.
 func (r *Reader) LookaheadLiteral(pattern string) (bool, error) {
 	if err := r.Check(); err != nil {
 		return false, err
@@ -597,7 +623,7 @@ type Writer struct {
 	implicitSpan             int
 	stateErr                 error
 	stateErrPath             string
-	allowZero                bool
+	allowZero, canonicalEnd  bool
 }
 
 func NewWriter() *Writer { return &Writer{vars: make(map[string]uint64)} }
@@ -695,6 +721,41 @@ func (w *Writer) boundError(kind BoundKind, limit int, field, detail string) err
 	}
 	return w.operationFailure(&BoundError{Kind: kind, Path: w.path, Field: field, Detail: detail, Limit: limit, Position: w.bits}, 0, InvalidValue)
 }
+
+// RequireCanonicalEnd refuses a canonical null alternative when its bound
+// still has positions to fill. TS 24.007 V20.0.0 Annex B.1.1.2 p3987–3988
+// defines null as the empty string. Even if <spare padding> follows the
+// choice (Rules B4 and B8), its transmitted symbols select a non-null arm;
+// decode-back would change the caller's selected alternative. The generator
+// excludes length-selected null and source-defined wire padding.
+func (w *Writer) RequireCanonicalEnd() error {
+	if !w.wire.canonical {
+		return nil
+	}
+	limit := w.bits
+	kind := CanonicalTarget
+	switch {
+	case w.bounded:
+		limit, kind = w.limit, LengthBound
+	case w.wire.targetSet:
+		limit = w.wire.targetBits
+	case w.bits%8 != 0:
+		limit = w.bits + (8 - w.bits%8)
+	}
+	if w.bits < limit {
+		return w.boundError(kind, limit, "", "null alternative cannot fill the remaining extent")
+	}
+	// An unbounded default call may still request minimum completion later.
+	// Preserve null's end instead of inventing symbols after that choice.
+	if !w.bounded && !w.wire.targetSet {
+		w.canonicalEnd = true
+		// Reuse the existing canonical target guard in put. Ordinary writes
+		// need no extra check for a boundary that only canonical calls set.
+		w.wire.targetSet, w.wire.targetBits = true, w.bits
+	}
+	return nil
+}
+
 func (w *Writer) Canonical() bool { return w.wire.canonical }
 
 // Truncation consumes the next received truncation entry for path, in the
@@ -746,6 +807,18 @@ func (w *Writer) SpareFillCount() int {
 		return remaining
 	}
 	return (8 - w.bits%8) % 8
+}
+
+// SpareFillCountToTarget completes a source-defined terminal <spare bit>**
+// run to the containing bound or explicit canonical extent. TS 24.007
+// V20.0.0 Annex B.2.1 p4112 defines the indefinite repetition; Annex
+// B.1.2.1 Rule B7 p4044 sends every spare bit as zero. A printed count
+// uses that count instead. Without an explicit extent, complete the octet.
+func (w *Writer) SpareFillCountToTarget() int {
+	if !w.bounded && w.wire.canonical && w.wire.targetSet && w.bits >= 0 && w.wire.targetBits >= w.bits && w.wire.targetBits <= maxBits {
+		return w.wire.targetBits - w.bits
+	}
+	return w.SpareFillCount()
 }
 func (w *Writer) BoundEndOr(unbounded int) int {
 	if w.bounded {
@@ -822,7 +895,7 @@ func (w *Writer) put(bit uint8) error {
 	if position >= maxBits {
 		return w.operationFailure(fmt.Errorf("encoded bit limit exceeded"), 0, InvalidValue)
 	}
-	if w.wire.canonical && w.allowZero && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
+	if w.wire.canonical && w.allowZero && !w.canonicalEnd && (w.bounded && w.bits >= w.limit || w.wire.targetSet && w.bits >= w.wire.targetBits) {
 		if bit != 0 {
 			detail := "nonzero bit beyond the receiver-inferred zero extension"
 			if w.bounded && w.bits >= w.limit {
@@ -955,8 +1028,19 @@ func (w *Writer) WritePadding() error {
 	if w.wire.sealed {
 		return w.operationFailure(fmt.Errorf("received padding state exhausted"), 0, InvalidValue)
 	}
-	if w.wire.canonical && w.wire.targetSet && !w.bounded {
-		return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
+	if w.wire.canonical {
+		// TS 24.007 V20.0.0 §B.1.2.2 paragraphs 4046–4053: <spare
+		// padding> fills the required extent with L. A fixed carrier
+		// supplies that extent even without an explicit canonical target
+		// (TS 44.018 V19.0.0 §9.1.50 p10636: 160 SI10 bits).
+		if w.bounded && !w.allowZero {
+			return w.operationFailure(w.WritePaddingTo(w.limit), 0, InvalidValue)
+		}
+		// Receiver-inferred padding still evaluates each required L/H bit;
+		// exhausting a bound must not hide an undefined later inferred run.
+		if w.wire.targetSet && !w.bounded {
+			return w.operationFailure(w.WritePaddingTo(w.wire.targetBits), 0, InvalidValue)
+		}
 	}
 	for w.bits%8 != 0 {
 		if w.inferredLHPositionPossible() {
@@ -1015,6 +1099,9 @@ func (w *Writer) WritePaddingTo(bits int) error {
 func (w *Writer) PadMinimum(bits int, sparePadding bool) error {
 	if w.wire.sealed || w.bits >= bits {
 		return nil
+	}
+	if w.wire.canonical && w.canonicalEnd {
+		return w.boundError(CanonicalTarget, bits, "", "null alternative cannot fill the minimum extent")
 	}
 	if sparePadding {
 		return w.operationFailure(w.WritePaddingTo(bits), 0, InvalidValue)

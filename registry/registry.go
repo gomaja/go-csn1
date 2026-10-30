@@ -7,7 +7,6 @@ package registry
 import (
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/gomaja/go-csn1/runtime"
 	"github.com/gomaja/go-csn1/ts24008/classmark"
@@ -54,42 +53,12 @@ func validateVersions(entries []runtime.Descriptor) error {
 // Lookup accepts the definition name exactly as printed. A name with multiple
 // clause-qualified definitions is rejected with the candidate clauses.
 func Lookup(standard, name string) (runtime.Descriptor, error) {
-	var matches []runtime.Descriptor
-	entries := catalogue
-	if err := validateVersions(entries); err != nil {
-		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
-	}
-	for _, d := range entries {
-		if d.Standard == standard && d.Name == name {
-			matches = append(matches, d)
-		}
-	}
-	if len(matches) == 1 {
-		return matches[0], nil
-	}
-	if len(matches) == 0 {
-		return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("unknown CSN.1 definition %q in %s", name, standard))
-	}
-	clauses := make([]string, 0, len(matches))
-	for _, d := range matches {
-		clauses = append(clauses, d.Clause)
-	}
-	sort.Strings(clauses)
-	return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("ambiguous CSN.1 definition %q in %s; clauses: %s", name, standard, strings.Join(clauses, ", ")))
+	return catalogueLookup.lookup(standard, name)
 }
 
 // LookupClause resolves the exact specification, clause and printed name.
 func LookupClause(standard, clause, name string) (runtime.Descriptor, error) {
-	entries := catalogue
-	if err := validateVersions(entries); err != nil {
-		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
-	}
-	for _, d := range entries {
-		if d.Standard == standard && d.Clause == clause && d.Name == name {
-			return d, nil
-		}
-	}
-	return runtime.Descriptor{}, lookupFailure(standard, clause, name, fmt.Errorf("unknown CSN.1 definition %q in %s §%s", name, standard, clause))
+	return catalogueLookup.lookupClause(standard, clause, name)
 }
 
 // Decode resolves a printed definition name. SI7/SI8 return a typed
