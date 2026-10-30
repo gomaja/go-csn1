@@ -276,6 +276,11 @@ func (p *expression) namedValue(t string) (int64, error) {
 				name += " " + part
 			}
 		}
+		// Labels cannot take arguments. Leave a following call to the
+		// expression parser instead of absorbing its name into a label.
+		if p.syntaxOnly && i+1 < len(p.tokens) && p.tokens[i+1] == "(" {
+			break
+		}
 		n, ok, err := p.resolveVar(name)
 		if err != nil {
 			return 0, err
