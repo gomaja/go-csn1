@@ -3657,11 +3657,11 @@ func EncodeMBMSSessionIdentityValuePartCanonical(v MBMSSessionIdentityValuePart)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.62 p21347; TS 24.007 V20.0.0 §11.2.1.1.4 p3024, p3038 (2-octet type 3 IE minus IEI: 1 value octet).
 // EncodeMBMSSessionIdentityValuePartCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..1 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -3669,7 +3669,7 @@ func EncodeMBMSSessionIdentityValuePartCanonical(v MBMSSessionIdentityValuePart)
 // that decode to a different typed value.
 func EncodeMBMSSessionIdentityValuePartCanonicalAtLength(v MBMSSessionIdentityValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeMBMSSessionIdentityValuePartBytes, decodeMBMSSessionIdentityValuePartBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 1, encodeMBMSSessionIdentityValuePartBytes, decodeMBMSSessionIdentityValuePartBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation22.failure(operationErr, "", -1, 0)
 		}

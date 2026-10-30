@@ -21,6 +21,8 @@ func canonicalContainingExtentRefusal(d runtime.Descriptor, err error) bool {
 }
 
 var canonicalContainingProbeMaxima = map[string]int{
+	// TS 44.018 V19.0.0 §10.5.2.62 p21347; TS 24.007 V20.0.0 §11.2.1.1.4 p3024, p3038 (2 - 1 = 1 value octet).
+	"TS 44.018/10.5.2.62/MBMS Session Identity value part": 1,
 	// TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary)
 	"TS 44.018/10.5.2.16/EGPRS Packet Uplink Assignment": 11,
 	// TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary)

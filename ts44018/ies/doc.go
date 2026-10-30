@@ -4,11 +4,11 @@
 // EC Request Reference Description is specified in §10.5.2.83 paragraphs
 // 22163–22165, with a ten-bit frame and three random bits.
 //
-// BA List Pref is specified in §10.5.2.1c paragraphs 13985–13992. Its syntax includes the length octet, terminated range and frequency lists, and spare padding.
+// BA List Pref is specified in §10.5.2.1c paragraphs 13985–13992. Its syntax includes the length octet, terminated range and frequency lists, and spare padding. Relating that length field to the total extent is unresolved; no numerical containing cap is recorded.
 //
 // Packet Channel Description is specified in §10.5.2.25a paragraphs 17795–17811. Its value occupies 24 bits within the four-octet IE; the containing assignment supplies the packet-channel context. Non-hopping, indirect and direct hopping encodings remain distinct.
 //
-// MBMS Session Identity value part is specified in §10.5.2.62 paragraphs 21367–21369. Its value occupies one octet within the two-octet type 3 IE.
+// MBMS Session Identity value part is specified in §10.5.2.62 paragraphs 21367–21369. Its value occupies one octet within the two-octet type 3 IE (§10.5.2.62 p21347); canonical explicit lengths are capped at one octet.
 //
 // EC Packet Channel Description Type 1 is specified in §10.5.2.84 paragraphs 22184–22191. Its value occupies 16 bits and retains the Type 1 uplink coverage field.
 //
