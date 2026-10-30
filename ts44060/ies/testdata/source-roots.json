@@ -1,0 +1,236 @@
+[
+  {
+    "name": "channel-quality-empty",
+    "package": "ts44060/ies",
+    "clause": "12.5.1",
+    "definition": "EGPRS Channel Quality Report IE",
+    "module": "egprs_channel_quality_report_ie",
+    "hex": "0000",
+    "bits": 10,
+    "values": {
+      "CVALUE": 0
+    },
+    "present": [],
+    "absent": [
+      "EGPRSBEPLinkQualityMeasurements.GMSKMEANBEPGroup",
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS"
+    ],
+    "canonical_hex": "0000"
+  },
+  {
+    "name": "channel-quality-present",
+    "package": "ts44060/ies",
+    "clause": "12.5.1",
+    "definition": "EGPRS Channel Quality Report IE",
+    "module": "egprs_channel_quality_report_ie",
+    "hex": "ffe2ffc3947a4bb4fc7feef37ace00",
+    "bits": 114,
+    "values": {
+      "CVALUE": 63,
+      "EGPRSBEPLinkQualityMeasurements.GMSKMEANBEPGroup.GMSKMEANBEP": 31,
+      "EGPRSBEPLinkQualityMeasurements.N8PSKMEANBEPGroup.N8PSKMEANBEP": 17,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN0Choice.Alternative": 0,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN0Choice.GMSKMEANBEPTN0.GMSKMEANBEPTN0": 1,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN0": 15,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN1Choice.Alternative": 1,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN1Choice.N8PSKMEANBEPTN1.N8PSKMEANBEPTN1": 2,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN1": 14,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN2Choice.Alternative": 0,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN2Choice.GMSKMEANBEPTN2.GMSKMEANBEPTN2": 3,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN2": 13,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN3Choice.Alternative": 1,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN3Choice.N8PSKMEANBEPTN3.N8PSKMEANBEPTN3": 4,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN3": 12,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN4Choice.Alternative": 0,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN4Choice.GMSKMEANBEPTN4.GMSKMEANBEPTN4": 5,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN4": 11,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN5Choice.Alternative": 1,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN5Choice.N8PSKMEANBEPTN5.N8PSKMEANBEPTN5": 6,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN5": 10,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN6Choice.Alternative": 0,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN6Choice.GMSKMEANBEPTN6.GMSKMEANBEPTN6": 7,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN6": 9,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN7Choice.Alternative": 1,
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS.GMSKMEANBEPTN7Choice.N8PSKMEANBEPTN7.N8PSKMEANBEPTN7": 8,
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS.ILEVELTN7": 8
+    },
+    "present": [
+      "EGPRSTimeslotLinkQualityMeasurements.BEPMEASUREMENTS",
+      "EGPRSTimeslotLinkQualityMeasurements.INTERFERENCEMEASUREMENTS"
+    ],
+    "absent": [],
+    "invalid_values": {
+      "CVALUE": 64
+    },
+    "canonical_hex": "ffe2ffc3947a4bb4fc7feef37ace00"
+  },
+  {
+    "name": "bep-empty",
+    "package": "ts44060/ies",
+    "clause": "12.5.3",
+    "definition": "EGPRS BEP Link Quality Measurements IE",
+    "module": "egprs_bep_link_quality_measurements_ie",
+    "hex": "00",
+    "bits": 2,
+    "values": {},
+    "present": [],
+    "absent": [
+      "GMSKMEANBEPGroup",
+      "N8PSKMEANBEPGroup"
+    ],
+    "canonical_hex": "00"
+  },
+  {
+    "name": "bep-present",
+    "package": "ts44060/ies",
+    "clause": "12.5.3",
+    "definition": "EGPRS BEP Link Quality Measurements IE",
+    "module": "egprs_bep_link_quality_measurements_ie",
+    "hex": "ffe2c0",
+    "bits": 18,
+    "values": {
+      "GMSKMEANBEPGroup.GMSKMEANBEP": 31,
+      "GMSKMEANBEPGroup.GMSKCVBEP": 7,
+      "N8PSKMEANBEPGroup.N8PSKMEANBEP": 17,
+      "N8PSKMEANBEPGroup.N8PSKCVBEP": 3
+    },
+    "present": [],
+    "absent": [],
+    "invalid_values": {
+      "GMSKMEANBEPGroup.GMSKMEANBEP": 32,
+      "GMSKMEANBEPGroup.GMSKCVBEP": 8,
+      "N8PSKMEANBEPGroup.N8PSKMEANBEP": 32,
+      "N8PSKMEANBEPGroup.N8PSKCVBEP": 8
+    },
+    "canonical_hex": "ffe2c0"
+  },
+  {
+    "name": "timeslot-empty",
+    "package": "ts44060/ies",
+    "clause": "12.5.4",
+    "definition": "EGPRS Timeslot Link Quality Measurements IE",
+    "module": "egprs_timeslot_link_quality_measurements_ie",
+    "hex": "00",
+    "bits": 2,
+    "values": {},
+    "present": [],
+    "absent": [
+      "BEPMEASUREMENTS",
+      "INTERFERENCEMEASUREMENTS"
+    ],
+    "canonical_hex": "00"
+  },
+  {
+    "name": "timeslot-present",
+    "package": "ts44060/ies",
+    "clause": "12.5.4",
+    "definition": "EGPRS Timeslot Link Quality Measurements IE",
+    "module": "egprs_timeslot_link_quality_measurements_ie",
+    "hex": "c3947a4bb4fc7feef37ace00",
+    "bits": 90,
+    "values": {
+      "INTERFERENCEMEASUREMENTS.ILEVELTN0": 15,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN7": 8,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN0Choice.Alternative": 0,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN0Choice.GMSKMEANBEPTN0.GMSKMEANBEPTN0": 1,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN1Choice.Alternative": 1,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN1Choice.N8PSKMEANBEPTN1.N8PSKMEANBEPTN1": 2,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN1": 14,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN2Choice.Alternative": 0,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN2Choice.GMSKMEANBEPTN2.GMSKMEANBEPTN2": 3,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN2": 13,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN3Choice.Alternative": 1,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN3Choice.N8PSKMEANBEPTN3.N8PSKMEANBEPTN3": 4,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN3": 12,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN4Choice.Alternative": 0,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN4Choice.GMSKMEANBEPTN4.GMSKMEANBEPTN4": 5,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN4": 11,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN5Choice.Alternative": 1,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN5Choice.N8PSKMEANBEPTN5.N8PSKMEANBEPTN5": 6,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN5": 10,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN6Choice.Alternative": 0,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN6Choice.GMSKMEANBEPTN6.GMSKMEANBEPTN6": 7,
+      "INTERFERENCEMEASUREMENTS.ILEVELTN6": 9,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN7Choice.Alternative": 1,
+      "BEPMEASUREMENTS.GMSKMEANBEPTN7Choice.N8PSKMEANBEPTN7.N8PSKMEANBEPTN7": 8
+    },
+    "present": [
+      "BEPMEASUREMENTS"
+    ],
+    "absent": [],
+    "invalid_values": {
+      "INTERFERENCEMEASUREMENTS.ILEVELTN0": 16
+    },
+    "canonical_hex": "c3947a4bb4fc7feef37ace00"
+  },
+  {
+    "name": "global-tfi-0-0",
+    "package": "ts44060/ies",
+    "clause": "12.10",
+    "definition": "Global TFI IE",
+    "module": "global_tfi_ie",
+    "hex": "00",
+    "bits": 6,
+    "values": {
+      "UPLINKTFIChoice.Alternative": 0,
+      "UPLINKTFIChoice.UPLINKTFI.UPLINKTFI": 0
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "00"
+  },
+  {
+    "name": "global-tfi-0-31",
+    "package": "ts44060/ies",
+    "clause": "12.10",
+    "definition": "Global TFI IE",
+    "module": "global_tfi_ie",
+    "hex": "7c",
+    "bits": 6,
+    "values": {
+      "UPLINKTFIChoice.Alternative": 0,
+      "UPLINKTFIChoice.UPLINKTFI.UPLINKTFI": 31
+    },
+    "present": [],
+    "absent": [],
+    "invalid_values": {
+      "UPLINKTFIChoice.UPLINKTFI.UPLINKTFI": 32
+    },
+    "canonical_hex": "7c"
+  },
+  {
+    "name": "global-tfi-1-17",
+    "package": "ts44060/ies",
+    "clause": "12.10",
+    "definition": "Global TFI IE",
+    "module": "global_tfi_ie",
+    "hex": "c4",
+    "bits": 6,
+    "values": {
+      "UPLINKTFIChoice.Alternative": 1,
+      "UPLINKTFIChoice.DOWNLINKTFI.DOWNLINKTFI": 17
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "c4"
+  },
+  {
+    "name": "global-tfi-1-31",
+    "package": "ts44060/ies",
+    "clause": "12.10",
+    "definition": "Global TFI IE",
+    "module": "global_tfi_ie",
+    "hex": "fc",
+    "bits": 6,
+    "values": {
+      "UPLINKTFIChoice.Alternative": 1,
+      "UPLINKTFIChoice.DOWNLINKTFI.DOWNLINKTFI": 31
+    },
+    "present": [],
+    "absent": [],
+    "invalid_values": {
+      "UPLINKTFIChoice.DOWNLINKTFI.DOWNLINKTFI": 32
+    },
+    "canonical_hex": "fc"
+  }
+]

@@ -43,11 +43,18 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 	choiceCounters := 0
 	loopIncrements := 0
 	rangeNext := 0
-	for _, file := range []string{
-		"ts24008/classmark/generated.go", "ts24008/msrac/generated.go", "ts24008/msnetcap/generated.go",
-		"ts36331/uecapability/generated.go", "ts44018/measurement/generated.go",
-		"ts44018/restoctets/generated.go", "ts44018/cellselection/generated.go", "ts44060/ies/generated.go",
-	} {
+
+	generatedFiles, err := filepath.Glob(filepath.Join(root, "ts*", "*", "generated.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, full := range generatedFiles {
+		file, err := filepath.Rel(root, full)
+		if err != nil {
+			t.Fatal(err)
+		}
+		file = filepath.ToSlash(file)
+
 		contents, err := os.ReadFile(filepath.Join(root, file))
 		if err != nil {
 			t.Fatal(err)

@@ -248,7 +248,7 @@ func TestBoundConflictIsTyped(t *testing.T) {
 // fmt.Errorf; a missing enclosing value wraps runtime.ErrContextRequired.
 func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
-	if err != nil || len(files) != 8 {
+	if err != nil || len(files) != 11 {
 		t.Fatalf("generated files %v, %v", files, err)
 	}
 	var omitted, length, lengthField, context int
@@ -333,7 +333,7 @@ func TestBoundErrorOffsets(t *testing.T) {
 	}
 	rng := rand.New(rand.NewSource(3536))
 	kinds := map[runtime.BoundKind]int{}
-	for _, d := range descriptors() {
+	for _, d := range sampleDescriptors(t, descriptors(), "direct-probe-order.tsv") {
 		for range rounds {
 			wire := make([]byte, rng.Intn(41))
 			rng.Read(wire)
@@ -353,7 +353,7 @@ func TestBoundErrorOffsets(t *testing.T) {
 func FuzzBoundErrorOffsets(f *testing.F) {
 	f.Add(uint16(0), int64(1), []byte{0x82, 0, 0, 0x08})
 	f.Add(uint16(100), int64(2), bytes.Repeat([]byte{0x2b}, 20))
-	definitions := descriptors()
+	definitions := sampleDescriptors(f, descriptors(), "direct-probe-order.tsv")
 	f.Fuzz(func(t *testing.T, index uint16, seed int64, wire []byte) {
 		if len(wire) > 50 {
 			return

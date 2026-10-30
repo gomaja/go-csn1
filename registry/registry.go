@@ -14,9 +14,12 @@ import (
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 	"github.com/gomaja/go-csn1/ts36331/uecapability"
 	"github.com/gomaja/go-csn1/ts44018/cellselection"
+	rries "github.com/gomaja/go-csn1/ts44018/ies"
 	"github.com/gomaja/go-csn1/ts44018/measurement"
+	"github.com/gomaja/go-csn1/ts44018/messages"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
 	"github.com/gomaja/go-csn1/ts44060/ies"
+	ts44060messages "github.com/gomaja/go-csn1/ts44060/messages"
 )
 
 func descriptors() []runtime.Descriptor {
@@ -28,6 +31,9 @@ func descriptors() []runtime.Descriptor {
 	out = append(out, measurement.Descriptors()...)
 	out = append(out, restoctets.Descriptors()...)
 	out = append(out, ies.Descriptors()...)
+	out = append(out, rries.Descriptors()...)
+	out = append(out, messages.Descriptors()...)
+	out = append(out, ts44060messages.Descriptors()...)
 	out = append(out,
 		manualDescriptor(manualSourceClassmark2ValuePart, "Mobile Station Classmark 2 value part", 24, 24, 3, manualDecodeClassmark2ValuePart, manualDecodeClassmark2ValuePartFrom, manualEncodeClassmark2ValuePart, manualCanonicalClassmark2ValuePart, manualCanonicalClassmark2ValuePartAtLength),
 		manualDescriptor(manualSourceGERANCS, "geran-cs", 48, 296, 37, manualDecodeGERANCS, manualDecodeGERANCSFrom, manualEncodeGERANCS, manualCanonicalGERANCS, manualCanonicalGERANCSAtLength),

@@ -32,7 +32,7 @@ func TestEveryGeneratedDescriptorRejectsMalformedReader(t *testing.T) {
 // The fixed corpus covers short truncations, padding, and random branches.
 func TestDirectEncoderCorpus(t *testing.T) {
 	accepted := 0
-	for i, descriptor := range descriptors() {
+	for i, descriptor := range sampleDescriptors(t, descriptors(), "direct-probe-order.tsv") {
 		rng := rand.New(rand.NewSource(int64(0x5c51 + i)))
 		inputs := [][]byte{{0}, {0x2b}, {0xff}, {0x10, 0x01}, {0, 0}, {0x2b, 0x2b}}
 		for j := 0; j < 80; j++ {
@@ -83,21 +83,21 @@ func TestDirectEncoderCorpus(t *testing.T) {
 }
 
 func FuzzGeneratedDecodeFrom(f *testing.F) {
-	entries := descriptors()
+	entries := sampleDescriptors(f, descriptors(), "direct-probe-order.tsv")
 	for i, entry := range entries {
 		if entry.DecodeFrom != nil {
-			f.Add([]byte{byte(i), 0x2b, 0x2b})
+			f.Add(uint16(i), []byte{0x2b, 0x2b})
 		}
 	}
-	f.Fuzz(func(t *testing.T, data []byte) {
-		if len(data) == 0 || len(data) > 4096 {
+	f.Fuzz(func(t *testing.T, index uint16, data []byte) {
+		if len(data) > 4096 {
 			return
 		}
-		entry := entries[int(data[0])%len(entries)]
+		entry := entries[int(index)%len(entries)]
 		if entry.DecodeFrom == nil {
 			return
 		}
-		reader := runtime.NewReader(data[1:])
+		reader := runtime.NewReader(data)
 		_, _ = entry.DecodeFrom(reader)
 	})
 }

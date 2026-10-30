@@ -3447,10 +3447,15 @@ func decodeClassmark3ValuePartSpareBitsList(r *runtime.Reader) ([]runtime.BitStr
 	r.RecordSpareCount("Classmark3ValuePartSpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.1.7 <Classmark 3 Value part>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeClassmark3ValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("Classmark3ValuePartSpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeClassmark3ValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -5115,8 +5120,7 @@ func EncodeClassmark3ValuePartCanonical(v Classmark3ValuePart) ([]byte, error) {
 // EncodeClassmark3ValuePartCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 1..32 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 1..32 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //

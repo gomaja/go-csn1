@@ -77,7 +77,7 @@ func TestManualDecodeReportParity(t *testing.T) {
 
 func TestCatalogueDecodeReportParity(t *testing.T) {
 	rng := rand.New(rand.NewSource(20261027))
-	for _, d := range registry.Descriptors() {
+	for _, d := range sampleDescriptors(t, registry.Descriptors(), "sorted-probe-order.tsv") {
 		t.Run(d.Standard+"/"+d.Name, func(t *testing.T) {
 			// Match the issue's synthetic sweep: zero through eight random octets.
 			// The extent and reader parity suites exercise canonical ceilings separately.

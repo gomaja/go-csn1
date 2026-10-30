@@ -242,10 +242,15 @@ func decodeMSRACapabilityValuePartSpareBitsList(r *runtime.Reader) ([]runtime.Bi
 	r.RecordSpareCount("MSRACapabilityValuePartSpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeMSRACapabilityValuePartSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("MSRACapabilityValuePartSpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartSpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -574,10 +579,15 @@ func decodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthA
 	r.RecordSpareCount("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.5.12a <MS RA capability value part struct>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("MSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeMSRACapabilityValuePartStructElementAccessTechnologyTypeChoiceLengthAdditionalAccessTechnologiesAdditionalAccessTechnologiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -1097,10 +1107,15 @@ func decodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBits
 	r.RecordSpareCount("AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList", len(out))
 	return out, nil
 }
+
+// TS 24.008 V20.1.0 §10.5.5.12a <Access capabilities struct>; TS 24.007 V20.0.0 Annex B.1.2.1 Rule B7 p4044, B.2.1: terminal <spare bit>** fills its extent with zeros.
 func encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList(w *runtime.Writer, _ []runtime.BitString) error {
 	count, recorded := w.SpareCount("AccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsList")
 	if !recorded {
 		count = w.SpareFillCount()
+		if w.Canonical() {
+			count = w.SpareFillCountToTarget()
+		}
 	}
 	for i := 0; i < count; i++ {
 		if err := encodeAccessCapabilitiesStructAccessCapabilitiesAccessCapabilitiesSpareBitsListEntry(w, runtime.BitString{}); err != nil {
@@ -5866,8 +5881,7 @@ func EncodeMSRACapabilityValuePartCanonical(v MSRACapabilityValuePart) ([]byte, 
 // EncodeMSRACapabilityValuePartCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 2..50 octets, or the
-//     encoding does not fill exactly octets;
+//   - *runtime.ExtentError when octets is outside 2..50 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //   - *runtime.BoundError with Kind runtime.LengthBound when content does not
@@ -6130,10 +6144,11 @@ func EncodeAccessCapabilitiesStructCanonical(v AccessCapabilitiesStruct) ([]byte
 	}
 }
 
+// Containing value maximum: TS 24.008 V20.1.0 §10.5.5.12a p30797–30803 (7 + 127 bits, rounded to 17 octets).
 // EncodeAccessCapabilitiesStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is outside 0..50 octets, or the
+//   - *runtime.ExtentError when octets is outside 0..17 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -6144,7 +6159,7 @@ func EncodeAccessCapabilitiesStructCanonical(v AccessCapabilitiesStruct) ([]byte
 // that decode to a different typed value.
 func EncodeAccessCapabilitiesStructCanonicalAtLength(v AccessCapabilitiesStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 50, encodeAccessCapabilitiesStructBytes, DecodeAccessCapabilitiesStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 17, encodeAccessCapabilitiesStructBytes, DecodeAccessCapabilitiesStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}

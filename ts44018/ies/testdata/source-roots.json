@@ -1,0 +1,102 @@
+[
+  {
+    "name": "restriction-timer-0",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.61",
+    "definition": "Restriction Timer value part",
+    "module": "restriction_timer_value_part",
+    "hex": "00",
+    "bits": 8,
+    "values": {
+      "RESTRICTIONTIMER": 0
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "00"
+  },
+  {
+    "name": "restriction-timer-15",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.61",
+    "definition": "Restriction Timer value part",
+    "module": "restriction_timer_value_part",
+    "hex": "ff",
+    "bits": 8,
+    "values": {
+      "RESTRICTIONTIMER": 15
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "f0",
+    "invalid_values": {
+      "RESTRICTIONTIMER": 16
+    }
+  },
+  {
+    "name": "restriction-timer-7",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.61",
+    "definition": "Restriction Timer value part",
+    "module": "restriction_timer_value_part",
+    "hex": "7a",
+    "bits": 8,
+    "values": {
+      "RESTRICTIONTIMER": 7
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "70"
+  },
+  {
+    "name": "ec-request-0",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.83",
+    "definition": "EC Request Reference Description",
+    "module": "ec_request_reference_description",
+    "hex": "0000",
+    "bits": 13,
+    "values": {
+      "LastTDMAFrame": 0,
+      "EchoedRandomBits": 0
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "0000"
+  },
+  {
+    "name": "ec-request-1023",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.83",
+    "definition": "EC Request Reference Description",
+    "module": "ec_request_reference_description",
+    "hex": "fff8",
+    "bits": 13,
+    "values": {
+      "LastTDMAFrame": 1023,
+      "EchoedRandomBits": 7
+    },
+    "present": [],
+    "absent": [],
+    "invalid_values": {
+      "LastTDMAFrame": 1024,
+      "EchoedRandomBits": 8
+    },
+    "canonical_hex": "fff8"
+  },
+  {
+    "name": "ec-request-341",
+    "package": "ts44018/ies",
+    "clause": "10.5.2.83",
+    "definition": "EC Request Reference Description",
+    "module": "ec_request_reference_description",
+    "hex": "5568",
+    "bits": 13,
+    "values": {
+      "LastTDMAFrame": 341,
+      "EchoedRandomBits": 5
+    },
+    "present": [],
+    "absent": [],
+    "canonical_hex": "5568"
+  }
+]

@@ -147,6 +147,8 @@ func TestDirectCountWritesFailClosed(t *testing.T) {
 		{"token eval second lhs", `count:=1;x,count:=r.EvalTokens([]string{"2"});_ = x` + loop, false},
 		{"spare count", `count,recorded:=w.SpareCount("spare");_ = recorded` + loop, true},
 		{"spare fill count", `count:=w.SpareFillCount()` + loop, true},
+		{"terminal spare target count", `count:=w.SpareFillCountToTarget()` + loop, true},
+		{"wrong terminal spare target arity", `count:=w.SpareFillCountToTarget(n)` + loop, false},
 		{"expression result", `count,err:=r.ExpressionResult(r.ExpressionVariable("n").Operand());_ = err` + loop, true},
 		{"bounded remaining", `remaining:=r.BoundedRemaining();count:=remaining/8` + loop, true},
 		{"choice counter without loop", `count:=0;count++;_ = count`, true},

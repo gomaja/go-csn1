@@ -2023,10 +2023,11 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.1e p14011, p14024 (type 4 with one-octet value length); TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043 (type 4 value at most 255 octets).
 // EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 2 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 2..255 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -2035,7 +2036,7 @@ func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonical(
 // that decode to a different typed value.
 func EncodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartCanonicalAtLength(v CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 0, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 2, 255, encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes, DecodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation6.failure(operationErr, "", -1, 0)
 		}
@@ -2190,10 +2191,11 @@ func EncodeUTRANFDDDescriptionStructCanonical(v UTRANFDDDescriptionStruct) ([]by
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.1e p14011, p14024 (type 4 with one-octet value length); TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043 (type 4 value at most 255 octets).
 // EncodeUTRANFDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..255 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -2202,7 +2204,7 @@ func EncodeUTRANFDDDescriptionStructCanonical(v UTRANFDDDescriptionStruct) ([]by
 // that decode to a different typed value.
 func EncodeUTRANFDDDescriptionStructCanonicalAtLength(v UTRANFDDDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANFDDDescriptionStructBytes, decodeUTRANFDDDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 255, encodeUTRANFDDDescriptionStructBytes, decodeUTRANFDDDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation12.failure(operationErr, "", -1, 0)
 		}
@@ -2273,10 +2275,11 @@ func EncodeUTRANTDDDescriptionStructCanonical(v UTRANTDDDescriptionStruct) ([]by
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.1e p14011, p14024 (type 4 with one-octet value length); TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043 (type 4 value at most 255 octets).
 // EncodeUTRANTDDDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..255 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -2285,7 +2288,7 @@ func EncodeUTRANTDDDescriptionStructCanonical(v UTRANTDDDescriptionStruct) ([]by
 // that decode to a different typed value.
 func EncodeUTRANTDDDescriptionStructCanonicalAtLength(v UTRANTDDDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUTRANTDDDescriptionStructBytes, decodeUTRANTDDDescriptionStructBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 255, encodeUTRANTDDDescriptionStructBytes, decodeUTRANTDDDescriptionStructBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation15.failure(operationErr, "", -1, 0)
 		}
@@ -2356,10 +2359,11 @@ func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, 
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §10.5.2.1e p14011, p14024 (type 4 with one-octet value length); TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043 (type 4 value at most 255 octets).
 // EncodeEUTRANDescriptionStructCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
 // typed value. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+//   - *runtime.ExtentError when octets is outside 0..255 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -2368,7 +2372,7 @@ func EncodeEUTRANDescriptionStructCanonical(v EUTRANDescriptionStruct) ([]byte, 
 // that decode to a different typed value.
 func EncodeEUTRANDescriptionStructCanonicalAtLength(v EUTRANDescriptionStruct, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeEUTRANDescriptionStructBytes, DecodeEUTRANDescriptionStruct, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 255, encodeEUTRANDescriptionStructBytes, DecodeEUTRANDescriptionStruct, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation18.failure(operationErr, "", -1, 0)
 		}
