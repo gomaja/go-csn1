@@ -713,12 +713,14 @@ func encodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 	return nil
 }
 func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice(r *runtime.Reader) (CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceGSMDescription(candidate)
 		if err == nil {
 			matches++
@@ -730,14 +732,16 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeGSMDescription
-			result.GSMDescription = &v
+			kept := v
+			result.GSMDescription = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANFDDDescription(candidate)
 		if err == nil {
 			matches++
@@ -749,14 +753,16 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANFDDDescription
-			result.UTRANFDDDescription = &v
+			kept := v
+			result.UTRANFDDDescription = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceUTRANTDDDescription(candidate)
 		if err == nil {
 			matches++
@@ -768,14 +774,16 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeUTRANTDDDescription
-			result.UTRANTDDDescription = &v
+			kept := v
+			result.UTRANTDDDescription = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceEUTRANDescription(candidate)
 		if err == nil {
 			matches++
@@ -787,14 +795,16 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescrip
 			}
 			_ = v
 			result.Alternative = CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartGSMDescriptionChoiceAlternativeEUTRANDescription
-			result.EUTRANDescription = &v
+			kept := v
+			result.EUTRANDescription = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1041,21 +1051,27 @@ func encodeUTRANFDDDescriptionStructBandwidthFDDValue(w *runtime.Writer, v uint8
 	return nil
 }
 func decodeUTRANFDDDescriptionStructBandwidthFDDSelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructBandwidthFDDValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1237,21 +1253,27 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 	return nil
 }
 func decodeUTRANFDDDescriptionStructFDDIndic0GroupSelector(r *runtime.Reader) (*UTRANFDDDescriptionStructFDDIndic0Group, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructFDDIndic0Group(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1352,21 +1374,27 @@ func encodeUTRANTDDDescriptionStructBandwidthTDDValue(w *runtime.Writer, v uint8
 	return nil
 }
 func decodeUTRANTDDDescriptionStructBandwidthTDDSelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructBandwidthTDDValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1548,21 +1576,27 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 	return nil
 }
 func decodeUTRANTDDDescriptionStructTDDIndic0GroupSelector(r *runtime.Reader) (*UTRANTDDDescriptionStructTDDIndic0Group, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructTDDIndic0Group(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1695,21 +1729,27 @@ func encodeEUTRANDescriptionStructMeasurementBandwidthValue(w *runtime.Writer, v
 	return nil
 }
 func decodeEUTRANDescriptionStructMeasurementBandwidthSelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructMeasurementBandwidthValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1730,21 +1770,27 @@ func encodeEUTRANDescriptionStructNotAllowedCellsValue(w *runtime.Writer, v ies.
 	return ies.EncodePCIDGroupIETo(w, v)
 }
 func decodeEUTRANDescriptionStructNotAllowedCellsSelector(r *runtime.Reader) (*ies.PCIDGroupIE, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructNotAllowedCellsValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1784,21 +1830,27 @@ func encodeEUTRANDescriptionStructTARGETPCIDValue(w *runtime.Writer, v uint16) e
 	return nil
 }
 func decodeEUTRANDescriptionStructTARGETPCIDSelector(r *runtime.Reader) (*uint16, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructTARGETPCIDValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1926,7 +1978,7 @@ func decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePartBytes(data
 		return runtime.Decoded[CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: runtime.InputBits(data), Detail: "CellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart requires at least 16 bits"}
 	}
 	input := data
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeCellSelectionIndicatorAfterReleaseOfAllTCHAndSDCCHValuePart(r)
 	if err != nil {
@@ -2099,7 +2151,7 @@ func decodeUTRANFDDDescriptionStructBytes(data []byte) (runtime.Decoded[UTRANFDD
 		return runtime.Decoded[UTRANFDDDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewChoiceReader(input, nil)
 	r.SetZeroExtension(false)
 	v, err := decodeUTRANFDDDescriptionStruct(r)
 	if err != nil {
@@ -2182,7 +2234,7 @@ func decodeUTRANTDDDescriptionStructBytes(data []byte) (runtime.Decoded[UTRANTDD
 		return runtime.Decoded[UTRANTDDDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReader(input)
+	r := runtime.NewChoiceReader(input, nil)
 	r.SetZeroExtension(false)
 	v, err := decodeUTRANTDDDescriptionStruct(r)
 	if err != nil {
@@ -2265,7 +2317,7 @@ func decodeEUTRANDescriptionStructBytes(data []byte, collector *runtime.Collecto
 		return runtime.Decoded[EUTRANDescriptionStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeEUTRANDescriptionStruct(r)
 	if err != nil {
@@ -2882,23 +2934,12 @@ func (c *operationLocation) nilWriter() error {
 	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
-func decodeCause(err error) *runtime.DecodeError {
-	for err != nil {
-		switch e := err.(type) {
-		case *runtime.DecodeError:
-			return e
-		case interface{ Unwrap() error }:
-			err = e.Unwrap()
-		default:
-			return nil
-		}
-	}
-	return nil
-}
-
 func locateIndex(err error, path string, index int) error {
 	if err == nil {
 		return nil
+	}
+	if deferred, ok := runtime.DeferIndex(err, path, index, locateIndex); ok {
+		return deferred
 	}
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
@@ -2954,9 +2995,7 @@ func errorPath(parent, child string) string {
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	cause := r.Error(runtime.InvalidValue, detail).(*runtime.DecodeError)
-	cause.Offset = start
-	return cause
+	return r.ErrorAt(runtime.InvalidValue, start, detail)
 }
 
 func locateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
@@ -2969,6 +3008,9 @@ func locateOperationKind(err error, operation, path string, offset, width int, s
 	return locatedFailure(err, operation, path, offset, width, source, kind)
 }
 func locatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
+	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, locatedFailure); ok {
+		return deferred
+	}
 	var existing *runtime.OperationError
 	if errors.As(err, &existing) {
 		copy := *existing

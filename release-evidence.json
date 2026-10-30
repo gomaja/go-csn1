@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "54537b5d3cd3728623b4c586c4a5250938478b6e",
-    "api_sha256": "dee8003d1b05bd2e76071662e416ca03c7ca43ed2524a02471739ac314c953fe",
-    "api_ledger_sha256": "92d56900647ddc5896f6f82387bbe9fadf7791956b17832f263170c1e81659a8"
+    "revision": "f0d6a1a0b4287fec0ff2dd3e5d753cae02d2d3f9",
+    "api_sha256": "a3af0ca8568ec1a763fb871a97f7a9eb19f9c77e4cd69286f96c0f9cc29fcd08",
+    "api_ledger_sha256": "2344fbddf9457a00e09d4a97a75a354659aa1e1e1901b114e6d15633f08c5ce1"
   },
   "schema_version": 1,
-  "compiler_commit": "63df3c984b39ee06095583b9350897b1035685b5",
+  "compiler_commit": "7cf6e2b72408820dbdfa7216ffbd3133b90831ef",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -1736,35 +1736,35 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "7a108802f68410372e6170e8c5af73b0ffc7baf215b28e19c9aca7afff65305f"
+      "sha256": "5fc8c848d7f6b83080af62f934d4eaeb1a1eec414ce52ef51c31e064defd275d"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
-      "sha256": "49ad09e3745fe7adde46f7eba734deda1c3330e6feeca7374e2cf463dbed9044"
+      "sha256": "7e2925e374ede8c5d0ec413088313b558173f9708d118a6c7233935cf6d15114"
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "f27044433fab43f2bbec95961563d349ae0a22b2d8e3ff8ae3a46362b65d1022"
+      "sha256": "3c5af45f2161e220ce057594c38ea19e86ba375767be880debb477db7516ff31"
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "c02a17c5c8fadc2cc30b1404ab3fc1ce8337c63c4d4200e8c04170e97d36b956"
+      "sha256": "88693439dc40258899b392f2d211ece2d070d0557b2e7520e3bd5f63603a7489"
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "6a112c3b0c0dee3580ab0ce3776589845eb950f122c23bce18f7e02158c0ac2c"
+      "sha256": "16ea4402b151dac7e968d668f0abbc7069261c2e87fd074dee34faae1f705021"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "5a5507196e1d8638c4b0786263e319647baca267acffc91e968a2c4b7b5f86e7"
+      "sha256": "68b8a8b2150da4bb129e18dd34e83f57d85edb4d8f68c3f43f26e5ae3af083cc"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "55a5225dbe4b75a9b43460f38df0a4f67c78642565b1b9c38952b63df4cbdd40"
+      "sha256": "4dc627a1dc0c6cf516bdfdfe0ff6718d04baa3e7bf75993c1f4c5f59a7647055"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "d3747e02e0d0f44c4f2fa6ada2c4c6396308369c55a123828e88b678b74e16ff"
+      "sha256": "1a5bf8e7a58ee9771813b73558831eebf5db04d74771d29f0e8dbb69eac0227f"
     }
   ],
   "validation_commands": [

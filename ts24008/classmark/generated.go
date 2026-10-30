@@ -308,12 +308,14 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 	return w.WriteLiteral("110")
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt101(candidate)
 		if err == nil {
 			matches++
@@ -325,14 +327,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt101
-			result.Alt101 = &v
+			kept := v
+			result.Alt101 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlt110(candidate)
 		if err == nil {
 			matches++
@@ -344,14 +348,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2MultibandSupportedAlternativeAlt110
-			result.Alt110 = &v
+			kept := v
+			result.Alt110 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -546,12 +552,14 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	return w.WriteLiteral("100")
 }
 func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupported
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt001(candidate)
 		if err == nil {
 			matches++
@@ -563,14 +571,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt001
-			result.Alt001 = &v
+			kept := v
+			result.Alt001 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt010(candidate)
 		if err == nil {
 			matches++
@@ -582,14 +592,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt010
-			result.Alt010 = &v
+			kept := v
+			result.Alt010 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlt100(candidate)
 		if err == nil {
 			matches++
@@ -601,14 +613,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1MultibandSupportedAlternativeAlt100
-			result.Alt100 = &v
+			kept := v
+			result.Alt100 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -673,6 +687,13 @@ func decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 		r.LeaveIndex()
 		if err != nil {
 			return nil, locateIndex(operationLocation0.failure(err, "", r.Position(), 0), "Classmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1SpareBitList", i)
+		}
+		if i == 0 {
+			capacity := 128
+			if !r.ZeroExtension() {
+				capacity = max(capacity, r.Remaining()/1+1)
+			}
+			out = make([]runtime.BitString, 0, min(count, capacity))
 		}
 		out = append(out, v)
 	}
@@ -784,12 +805,14 @@ func encodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1
 	return nil
 }
 func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Classmark3ValuePartMultibandSupportedChoice, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result Classmark3ValuePartMultibandSupportedChoice
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceA5Bits(candidate)
 		if err == nil {
 			matches++
@@ -801,14 +824,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeA5Bits
-			result.A5Bits = &v
+			kept := v
+			result.A5Bits = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability2(candidate)
 		if err == nil {
 			matches++
@@ -820,14 +845,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability2
-			result.AssociatedRadioCapability2 = &v
+			kept := v
+			result.AssociatedRadioCapability2 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartMultibandSupportedChoiceAssociatedRadioCapability1(candidate)
 		if err == nil {
 			matches++
@@ -839,14 +866,16 @@ func decodeClassmark3ValuePartMultibandSupportedChoice(r *runtime.Reader) (Class
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartMultibandSupportedChoiceAlternativeAssociatedRadioCapability1
-			result.AssociatedRadioCapability1 = &v
+			kept := v
+			result.AssociatedRadioCapability1 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -895,21 +924,27 @@ func encodeClassmark3ValuePartRSupportValue(w *runtime.Writer, v RSupport) error
 	return encodeRSupport(w, v)
 }
 func decodeClassmark3ValuePartRSupportSelector(r *runtime.Reader) (*RSupport, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartRSupportValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -930,21 +965,27 @@ func encodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(w *runtime.Writer, v
 	return encodeHSCSDMultiSlotCapability(w, v)
 }
 func decodeClassmark3ValuePartHSCSDMultiSlotCapabilitySelector(r *runtime.Reader) (*HSCSDMultiSlotCapability, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartHSCSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1015,21 +1056,27 @@ func encodeClassmark3ValuePartMSMeasurementCapabilityValue(w *runtime.Writer, v 
 	return encodeMSMeasurementCapability(w, v)
 }
 func decodeClassmark3ValuePartMSMeasurementCapabilitySelector(r *runtime.Reader) (*MSMeasurementCapability, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartMSMeasurementCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1050,21 +1097,27 @@ func encodeClassmark3ValuePartMSPositioningMethodCapabilityValue(w *runtime.Writ
 	return encodeMSPositioningMethodCapability(w, v)
 }
 func decodeClassmark3ValuePartMSPositioningMethodCapabilitySelector(r *runtime.Reader) (*MSPositioningMethodCapability, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartMSPositioningMethodCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1085,21 +1138,27 @@ func encodeClassmark3ValuePartECSDMultiSlotCapabilityValue(w *runtime.Writer, v 
 	return encodeECSDMultiSlotCapability(w, v)
 }
 func decodeClassmark3ValuePartECSDMultiSlotCapabilitySelector(r *runtime.Reader) (*ECSDMultiSlotCapability, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartECSDMultiSlotCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1120,21 +1179,27 @@ func encodeClassmark3ValuePartN8PSKStructValue(w *runtime.Writer, v N8PSKStruct)
 	return encodeN8PSKStruct(w, v)
 }
 func decodeClassmark3ValuePartN8PSKStructSelector(r *runtime.Reader) (*N8PSKStruct, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartN8PSKStructValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1179,12 +1244,14 @@ func encodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11
 	return w.WriteLiteral("11")
 }
 func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *runtime.Reader) (Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
@@ -1196,14 +1263,16 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt01
-			result.Alt01 = &v
+			kept := v
+			result.Alt01 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
@@ -1215,14 +1284,16 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt10
-			result.Alt10 = &v
+			kept := v
+			result.Alt10 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
@@ -1234,14 +1305,16 @@ func decodeClassmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupported(r *r
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartGSM400BandsSupportedGroupGSM400BandsSupportedAlternativeAlt11
-			result.Alt11 = &v
+			kept := v
+			result.Alt11 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -1357,21 +1430,27 @@ func encodeClassmark3ValuePartGSM400BandsSupportedGroup(w *runtime.Writer, v Cla
 	return nil
 }
 func decodeClassmark3ValuePartGSM400BandsSupportedGroupSelector(r *runtime.Reader) (*Classmark3ValuePartGSM400BandsSupportedGroup, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM400BandsSupportedGroup(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1411,21 +1490,27 @@ func encodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(w *runtime.Wr
 	return nil
 }
 func decodeClassmark3ValuePartGSM850AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM850AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1465,21 +1550,27 @@ func encodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(w *runtime.W
 	return nil
 }
 func decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM1900AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1644,21 +1735,27 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassVa
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupDTMEGPRSMultiSlotClassValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1734,21 +1831,27 @@ func encodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(w *runtime.Writer, v Cl
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartDTMGPRSMultiSlotClassGroup, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1769,21 +1872,27 @@ func encodeClassmark3ValuePartSingleBandSupportValue(w *runtime.Writer, v Single
 	return encodeSingleBandSupport(w, v)
 }
 func decodeClassmark3ValuePartSingleBandSupportSelector(r *runtime.Reader) (*SingleBandSupport, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartSingleBandSupportValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -1823,21 +1932,27 @@ func encodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(w *runtime.Wr
 	return nil
 }
 func decodeClassmark3ValuePartGSM750AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM750AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2000,21 +2115,27 @@ func encodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(w *runtime.Writ
 	return nil
 }
 func decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartExtendedDTMGPRSMultiSlotClassGroup(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2054,21 +2175,27 @@ func encodeClassmark3ValuePartHighMultislotCapabilityValue(w *runtime.Writer, v 
 	return nil
 }
 func decodeClassmark3ValuePartHighMultislotCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartHighMultislotCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2196,12 +2323,14 @@ func encodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt
 	return w.WriteLiteral("11")
 }
 func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r *runtime.Reader) (Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported, error) {
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
 	var result Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported
 	matches := 0
 	var chosen *runtime.Reader
 	var truncatedErr error
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt01(candidate)
 		if err == nil {
 			matches++
@@ -2213,14 +2342,16 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt01
-			result.Alt01 = &v
+			kept := v
+			result.Alt01 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt10(candidate)
 		if err == nil {
 			matches++
@@ -2232,14 +2363,16 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt10
-			result.Alt10 = &v
+			kept := v
+			result.Alt10 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	{
-		candidate := r.Fork()
+		candidate := failures.ForkScoped(r)
 		v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlt11(candidate)
 		if err == nil {
 			matches++
@@ -2251,14 +2384,16 @@ func decodeClassmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupported(r 
 			}
 			_ = v
 			result.Alternative = Classmark3ValuePartTGSM400BandsSupportedGroupTGSM400BandsSupportedAlternativeAlt11
-			result.Alt11 = &v
+			kept := v
+			result.Alt11 = &kept
 		} else {
+			failures.Track(err)
 			discardReader(candidate)
 			truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 		}
 	}
 	if matches == 0 && truncatedErr != nil {
-		return result, truncatedErr
+		return result, failures.Keep(r, truncatedErr)
 	}
 	if matches != 1 {
 		return result, r.Error(runtime.InvalidBranch, fmt.Sprintf("choice has %d matching alternatives", matches))
@@ -2374,21 +2509,27 @@ func encodeClassmark3ValuePartTGSM400BandsSupportedGroup(w *runtime.Writer, v Cl
 	return nil
 }
 func decodeClassmark3ValuePartTGSM400BandsSupportedGroupSelector(r *runtime.Reader) (*Classmark3ValuePartTGSM400BandsSupportedGroup, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartTGSM400BandsSupportedGroup(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2538,21 +2679,27 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlo
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassSelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupDTMEGPRSHighMultiSlotClassValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2628,21 +2775,27 @@ func encodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(w *runtime.Writer, 
 	return nil
 }
 func decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroupSelector(r *runtime.Reader) (*Classmark3ValuePartDTMGPRSHighMultiSlotClassGroup, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartDTMGPRSHighMultiSlotClassGroup(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2707,21 +2860,27 @@ func encodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(w *runtime.Wr
 	return nil
 }
 func decodeClassmark3ValuePartGSM710AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartGSM710AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -2761,21 +2920,27 @@ func encodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(w *runtime.W
 	return nil
 }
 func decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilitySelector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeClassmark3ValuePartTGSM810AssociatedRadioCapabilityValue(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -4613,21 +4778,27 @@ func encodeN8PSKStructN8PSKRFPowerCapability1Value(w *runtime.Writer, v uint8) e
 	return nil
 }
 func decodeN8PSKStructN8PSKRFPowerCapability1Selector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN8PSKStructN8PSKRFPowerCapability1Value(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -4681,21 +4852,27 @@ func encodeN8PSKStructN8PSKRFPowerCapability2Value(w *runtime.Writer, v uint8) e
 	return nil
 }
 func decodeN8PSKStructN8PSKRFPowerCapability2Selector(r *runtime.Reader) (*uint8, error) {
-	candidate := r.Fork()
+	var failures runtime.ChoiceErrors
+	defer failures.Release()
+	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
+	} else {
+		failures.Track(err)
 	}
 	discardReader(candidate)
-	candidate = r.Fork()
+	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
+		failures.Track(err)
 		discardReader(candidate)
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeN8PSKStructN8PSKRFPowerCapability2Value(candidate)
 	if err != nil {
+		failures.Track(err)
 		discardReader(candidate)
-		return nil, err
+		return nil, failures.Keep(r, err)
 	}
 	r.Commit(candidate)
 	return &v, nil
@@ -4888,7 +5065,7 @@ func decodeClassmark3ValuePartBytes(data []byte, collector *runtime.Collector) (
 	if len(data) > 32 {
 		input = data[:32]
 	}
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(true)
 	v, err := decodeClassmark3ValuePart(r)
 	if err != nil {
@@ -5483,7 +5660,7 @@ func decodeN8PSKStructBytes(data []byte, collector *runtime.Collector) (runtime.
 		return runtime.Decoded[N8PSKStruct]{}, err
 	}
 	input := data
-	r := runtime.NewReaderWithCollector(input, collector)
+	r := runtime.NewChoiceReader(input, collector)
 	r.SetZeroExtension(false)
 	v, err := decodeN8PSKStruct(r)
 	if err != nil {
@@ -6457,23 +6634,12 @@ func (c *operationLocation) nilWriter() error {
 	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
 }
 
-func decodeCause(err error) *runtime.DecodeError {
-	for err != nil {
-		switch e := err.(type) {
-		case *runtime.DecodeError:
-			return e
-		case interface{ Unwrap() error }:
-			err = e.Unwrap()
-		default:
-			return nil
-		}
-	}
-	return nil
-}
-
 func locateIndex(err error, path string, index int) error {
 	if err == nil {
 		return nil
+	}
+	if deferred, ok := runtime.DeferIndex(err, path, index, locateIndex); ok {
+		return deferred
 	}
 	var previous *runtime.OperationError
 	if errors.As(err, &previous) {
@@ -6529,9 +6695,7 @@ func errorPath(parent, child string) string {
 }
 
 func constraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	cause := r.Error(runtime.InvalidValue, detail).(*runtime.DecodeError)
-	cause.Offset = start
-	return cause
+	return r.ErrorAt(runtime.InvalidValue, start, detail)
 }
 
 func locateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
@@ -6544,6 +6708,9 @@ func locateOperationKind(err error, operation, path string, offset, width int, s
 	return locatedFailure(err, operation, path, offset, width, source, kind)
 }
 func locatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
+	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, locatedFailure); ok {
+		return deferred
+	}
 	var existing *runtime.OperationError
 	if errors.As(err, &existing) {
 		copy := *existing
