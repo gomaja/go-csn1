@@ -15,6 +15,7 @@ type expression struct {
 	vars       map[string]uint64
 	reader     *Reader
 	syntaxOnly bool
+	context    *ExpressionContext
 }
 
 // TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
@@ -204,27 +205,11 @@ func (p *expression) primary() (int64, error) {
 		}
 		return n, nil
 	}
-	if table, ok := cellInformationWidths[t]; ok {
-		if p.take() != "(" {
-			return 0, fmt.Errorf("%s needs (", t)
-		}
-		index, err := p.sum()
-		if err != nil {
-			return 0, err
-		}
-		if p.take() != ")" {
-			return 0, fmt.Errorf("unclosed %s", t)
-		}
-		if p.syntaxOnly {
-			return 0, nil
-		}
-		if index < 0 || index > 31 {
-			return 0, fmt.Errorf("%s index outside 0..31", t)
-		}
-		if index >= int64(len(table)) {
-			return 0, nil
-		}
-		return table[index], nil
+	if t == "max" && p.peek() == "(" {
+		return p.maximum()
+	}
+	if t == "p" || t == "q" || t == "expanded_EPDAN_extension_length" && p.peek() == "(" {
+		return p.sourceFunction(t)
 	}
 	if t == "-" {
 		n, err := p.primary()
