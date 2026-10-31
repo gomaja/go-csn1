@@ -247,7 +247,7 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader { return r.Fork() }
 // Failures are opaque scoped handles: Error, Is, As and Unwrap always panic,
 // including after Release and pool reuse. Track each failure and use Keep
 // before inspection or return. Only DeferOperation, DeferIndex,
-// DeferReaderPath, PreferTruncation, IsReservedAlternative and
+// DeferReaderPath, PreferTruncation, IsReservedAlternative, IsRegionSyntaxError and
 // IsLHPositionUndefined may inspect them inside the active scope. Neither a
 // reader nor an opaque handle may be used by these operations after Release.
 // Read-only trial state after Release is undefined. Set, ForkScoped and Commit
