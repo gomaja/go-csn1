@@ -91,17 +91,15 @@ func segmentationMaximum(ctx runtime.RLCMACContext, clause string, blocks int) (
 			return 9, nil
 		}
 	case "11.2.7", "11.2.7a", "11.2.29", "11.2.29a", "11.2.31", "11.2.31a", "11.2.37":
-		// These clauses permit extended segmentation only with the printed
-		// dual-carrier capability. Missing capability is not false.
+		// TS 44.060 V19.0.0 §§11.2.7, 11.2.29 and 11.2.31 also
+		// permit Downlink Multi Carrier support. Missing capability is not false.
 		if blocks > 2 && ctx.Mode != runtime.RLCMACEC {
-			if (clause == "11.2.7" || clause == "11.2.29" || clause == "11.2.31") && ctx.DLMC != nil && *ctx.DLMC {
+			multi := clause == "11.2.7" || clause == "11.2.29" || clause == "11.2.31"
+			if ctx.DLDC != nil && *ctx.DLDC || multi && ctx.DLMC != nil && *ctx.DLMC {
 				return 9, nil
 			}
-			if ctx.DLDC == nil {
+			if ctx.DLDC == nil || multi && ctx.DLMC == nil {
 				return 0, &runtime.ContextRequiredError{Standard: "TS 44.060 V19.0.0", Clause: clause, Name: "extended segmentation dual-carrier capability"}
-			}
-			if *ctx.DLDC {
-				return 9, nil
 			}
 		}
 	}
