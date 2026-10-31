@@ -71,19 +71,37 @@ func ValidateExpression(raw string) error {
 
 func expressionTokens(raw string) ([]string, error) {
 	var tokens []string
+	depth, valDepth := 0, 0
 	for i := 0; i < len(raw); {
 		r := rune(raw[i])
 		if unicode.IsSpace(r) {
 			i++
 			continue
 		}
-		if strings.ContainsRune("()+-*/", r) {
+		if r == '(' || r == ')' || expressionOperator(raw, i, valDepth != 0) {
+			switch r {
+			case '(':
+				depth++
+				if valDepth == 0 && len(tokens) > 0 && tokens[len(tokens)-1] == "val" {
+					valDepth = depth
+				}
+			case ')':
+				if depth == valDepth {
+					valDepth = 0
+				}
+				depth--
+			}
 			tokens = append(tokens, string(r))
 			i++
 			continue
 		}
 		start := i
-		for i < len(raw) && (unicode.IsLetter(rune(raw[i])) || unicode.IsDigit(rune(raw[i])) || raw[i] == '_') {
+		for i < len(raw) {
+			r := rune(raw[i])
+			if !unicode.IsLetter(r) && !unicode.IsDigit(r) && r != '_' &&
+				(valDepth == 0 || !strings.ContainsRune("+-*/", r) || expressionOperator(raw, i, true)) {
+				break
+			}
 			i++
 		}
 		if i == start {
@@ -92,6 +110,26 @@ func expressionTokens(raw string) ([]string, error) {
 		tokens = append(tokens, raw[start:i])
 	}
 	return tokens, nil
+}
+
+// TS 44.060 V19.0.0 §11.2.6a p14465 prints EPD A/N as label text;
+// §§11.2.3a and 11.2.9 pp13726,15479 print N_E-UTRAN + 1.
+// Within val(), only operators surrounded by whitespace are arithmetic.
+// Outside val(), the ordinary expression operator grammar is unchanged.
+func expressionOperator(raw string, i int, inVal bool) bool {
+	if i < 0 || i >= len(raw) {
+		return false
+	}
+	if strings.IndexByte("+-*/", raw[i]) < 0 {
+		return false
+	}
+	if !inVal {
+		return true
+	}
+	if i == 0 || i+1 >= len(raw) {
+		return false
+	}
+	return strings.IndexByte(" \t\r\n\v\f", raw[i-1]) >= 0 && strings.IndexByte(" \t\r\n\v\f", raw[i+1]) >= 0
 }
 
 func (p *expression) peek() string {

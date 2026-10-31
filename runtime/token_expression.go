@@ -4,8 +4,10 @@ import "fmt"
 
 // EvalTokens evaluates already-tokenized width syntax using Eval's parser and
 // dynamic label resolution. Tokens must use Eval's lexical grammar: operators
-// and parentheses are separate tokens, with whitespace omitted. The slice is
-// borrowed only for this call and is neither modified nor retained.
+// and parentheses are separate tokens, with whitespace omitted. Within val(),
+// unspaced punctuation belongs to the label token (for example "A/N"), while
+// operators surrounded by whitespace in the source are separate tokens.
+// The slice is borrowed only for this call and is neither modified nor retained.
 // TS 24.007 V20.0.0 Annex B defines the CSN.1 expression syntax; printed labels
 // remain dynamically resolved, including longest matches and ambiguity errors.
 func (r *Reader) EvalTokens(tokens []string) (int, error) {

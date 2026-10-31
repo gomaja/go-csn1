@@ -22,7 +22,7 @@ func TestSourceFunctionSyntax(t *testing.T) {
 
 func TestSourceFunctionSyntaxRefusal(t *testing.T) {
 	for _, raw := range []string{
-		"max()", "max(X)", "max(val())", "max(val(X)+1)", "max(val(X*2))", "max(val(X)",
+		"max()", "max(X)", "max(val())", "max(val(X)+1)", "max(val(X * 2))", "max(val(X)",
 		"expanded_EPDAN_extension_length()", "expanded_EPDAN_extension_length(1,2)",
 		"expanded_EPDAN_extension_length(1", "unknown(1)", "q(1", "q()",
 	} {
@@ -421,12 +421,12 @@ func TestExpressionContextPreservesDivision(t *testing.T) {
 		codec.Set("b", 2)
 		codec.Set("a/b", 6)
 	}
-	tokens, e := expressionTokens("val(a/b)")
+	tokens, e := expressionTokens("val(a / b)")
 	if e != nil {
 		t.Fatal(e)
 	}
-	a, e := r.EvalWithContext("val(a/b)", ctx)
-	b, f := w.EvalWithContext("val(a/b)", ctx)
+	a, e := r.EvalWithContext("val(a / b)", ctx)
+	b, f := w.EvalWithContext("val(a / b)", ctx)
 	c, g := r.EvalTokensWithContext(tokens, ctx)
 	d, h := w.EvalTokensWithContext(tokens, ctx)
 	for _, v := range []struct {

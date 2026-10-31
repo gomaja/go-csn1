@@ -73,12 +73,13 @@ func TestEvalPrintedMultiwordFieldName(t *testing.T) {
 
 func TestEvalHyphenatedPrintedNameAndSubtraction(t *testing.T) {
 	// TS 44.018 V19.0.0 §9.1.55 prints N_E-UTRAN as one field name.
-	vars := map[string]uint64{key("N_E-UTRAN"): 2, key("N_E"): 9}
+	vars := map[string]uint64{key("N_E-UTRAN"): 2, key("N_E"): 9, key("N_E-UTRAN+1"): 8}
 	for _, tc := range []struct {
 		expr string
 		want int
 	}{
-		{"val(N_E-UTRAN+1)", 3},
+		{"val(N_E-UTRAN + 1)", 3},
+		{"val(N_E-UTRAN+1)", 8},
 		{"val(N_E-UTRAN)-1", 1},
 		{"N_E-UTRAN-N_E", -7},
 	} {
