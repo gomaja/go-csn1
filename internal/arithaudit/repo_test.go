@@ -8,6 +8,7 @@ import (
 )
 
 func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
+	requireStandardLibraryTypes(t)
 	root := filepath.Join("..", "..")
 	findings, err := ScanTree(root, []string{"runtime", "registry", "ts24008", "ts36331", "ts44018", "ts44060"})
 	if err != nil {

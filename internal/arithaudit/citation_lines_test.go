@@ -108,6 +108,7 @@ func TestCitationsQuoteTheirLines(t *testing.T) {
 // classification test accepts a finding when any part proves it, which
 // alone would let a stale part go unnoticed.
 func TestEveryGuardCitationPartHolds(t *testing.T) {
+	requireStandardLibraryTypes(t)
 	root := filepath.Join("..", "..")
 	findings, err := ScanTree(root, []string{"runtime", "registry", "ts24008", "ts36331", "ts44018", "ts44060"})
 	if err != nil {
