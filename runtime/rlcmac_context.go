@@ -72,7 +72,17 @@ func (c RLCMACContext) Validate() error {
 	if c.Direction != RLCMACDownlink && c.Direction != RLCMACUplink || c.Mode < RLCMACOrdinary || c.Mode > RLCMACDBPSCH || c.Channel < RLCMACPACCH || c.Channel > RLCMACADCH {
 		return &ContextRequiredError{Standard: "TS 44.060 V19.0.0", Clause: "11.2.0", Name: "direction, mode and channel"}
 	}
-	if c.Mode == RLCMACDBPSCH && c.Channel < RLCMACFACCH || c.Mode == RLCMACEC && c.Channel != RLCMACPACCH || c.CoverageClass != nil && (*c.CoverageClass < 1 || *c.CoverageClass > 5) || c.CodingScheme > RLCMACECCoding {
+	// TS 44.060 V19.0.0 §§11.2.6b–c, 11.2.28a–b and 11.2.33–34
+	// establish this DBPSCH carrier union, excluding PBCCH and PCCCH.
+	// The resolver applies each message's narrower channel and FLO rules.
+	if c.Mode == RLCMACDBPSCH {
+		switch c.Channel {
+		case RLCMACPACCH, RLCMACFACCH, RLCMACSACCH, RLCMACSDCCH, RLCMACADCH:
+		default:
+			return &DecodeError{Kind: InvalidValue, Path: "RLCMACContext", Detail: "TS 44.060 V19.0.0 §§11.2.6b–c, 11.2.28a–b, 11.2.33–34: DBPSCH requires PACCH, FACCH, SACCH, SDCCH or ADCH"}
+		}
+	}
+	if c.Mode == RLCMACEC && c.Channel != RLCMACPACCH || c.CoverageClass != nil && (*c.CoverageClass < 1 || *c.CoverageClass > 5) || c.CodingScheme > RLCMACECCoding {
 		return &DecodeError{Kind: InvalidValue, Path: "RLCMACContext", Detail: "TS 44.060 V19.0.0 §§11.1.1, 11.2.0.2: incompatible mode, channel or coverage class"}
 	}
 	return nil
