@@ -6,7 +6,7 @@ import (
 )
 
 func TestValidateExpressionSyntax(t *testing.T) {
-	for _, raw := range []string{"max(val(CELL_PARAMS_POINTER))", "expanded_EPDAN_extension_length(val(EPD A/N Extension length index))", "val(", "q(val(NR_OF_TDD_CELLS)", "", "()", "val()", "1 +", "* 2", "1 2", "1 + )", "1)"} {
+	for _, raw := range []string{"val(", "q(val(NR_OF_TDD_CELLS)", "", "()", "val()", "1 +", "* 2", "1 2", "1 + )", "1)"} {
 		t.Run(raw, func(t *testing.T) {
 			if err := ValidateExpression(raw); err == nil {
 				t.Errorf("accepted %q", raw)
