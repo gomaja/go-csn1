@@ -305,6 +305,13 @@ func (p *expression) namedValue(t string) (int64, error) {
 				name += "-" + p.tokens[i+1]
 			}
 			i++
+			// TS 24.007 V20.0.0 Annex B.2.1 pp4105,4108 permits
+			// negative exponents and arithmetic. A second minus cannot end
+			// a possible label prefix: keep the previous endpoint until a
+			// label word follows, so a unary call remains available to sum.
+			if p.syntaxOnly && p.tokens[i] == "-" {
+				continue
+			}
 		} else {
 			if !p.syntaxOnly {
 				name += " " + part
