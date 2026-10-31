@@ -219,11 +219,15 @@ func evalContext(raw string, context *ExpressionContext, vars map[string]uint64,
 	if err != nil {
 		return 0, err
 	}
-	return evalContextTokens(tokens, context, vars, reader)
+	return evalContextInput(tokens, context, vars, reader, false)
 }
 
 func evalContextTokens(tokens []string, context *ExpressionContext, vars map[string]uint64, reader *Reader) (int, error) {
-	p := expression{tokens: tokens, context: context, vars: vars, reader: reader}
+	return evalContextInput(tokens, context, vars, reader, true)
+}
+
+func evalContextInput(tokens []string, context *ExpressionContext, vars map[string]uint64, reader *Reader, pretokenized bool) (int, error) {
+	p := expression{tokens: tokens, context: context, vars: vars, reader: reader, pretokenized: pretokenized}
 	n, err := p.sum()
 	if err != nil {
 		return 0, err

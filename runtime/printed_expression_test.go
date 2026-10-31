@@ -101,6 +101,16 @@ func TestPrintedValArguments(t *testing.T) {
 				}
 				return v
 			})
+			if strings.Contains(tc.label, "-") {
+				publishedTokens := strings.Fields(strings.ReplaceAll(strings.Join(tokens, " "), "-", " - "))
+				assertValPaths(t, raw, publishedTokens, map[string]uint64{tc.label: 7, "N_E": 19, "UTRAN": 3, "EPD A": 20, "N Extension length index": 2, "a5": 9}, want, func(variable func(string) ExpressionValue) ExpressionValue {
+					v := variable(tc.label)
+					if tc.add {
+						v = v.Add(ExpressionConstant(1))
+					}
+					return v
+				})
+			}
 		})
 	}
 }

@@ -181,23 +181,23 @@ runtime/error_regions.go:arithmetic:state.current.dropped++	2	FIXED: validated r
 runtime/error_regions.go:arithmetic:state.current.fills++	1	FIXED: validated reader positions lie in 0..maxBits; input event bound is at most maxBits+128 and shared visits cap every retained event. Snapshot counts equal their immutable chain lengths. Path accumulation checks each addition against maxBits and the remaining input-proportional budget; maximum path budget 128*(maxBits+128) fits int32. runtime/error_regions.go:216 `budget.limit = int(state.reserved.eventLimit) + 128`; runtime/error_regions.go:218 `if budget.visits >= budget.limit`; runtime/error_regions.go:261 `if length > budget.pathBudget-budget.pathUsed`
 runtime/error_regions.go:arithmetic:state.current.regions++	1	FIXED: validated reader positions lie in 0..maxBits; input event bound is at most maxBits+128 and shared visits cap every retained event. Snapshot counts equal their immutable chain lengths. Path accumulation checks each addition against maxBits and the remaining input-proportional budget; maximum path budget 128*(maxBits+128) fits int32. runtime/error_regions.go:216 `budget.limit = int(state.reserved.eventLimit) + 128`; runtime/error_regions.go:218 `if budget.visits >= budget.limit`; runtime/error_regions.go:261 `if length > budget.pathBudget-budget.pathUsed`
 runtime/error_regions.go:conversion:int(state.reserved.eventLimit)	1	FIXED: validated reader positions lie in 0..maxBits; input event bound is at most maxBits+128 and shared visits cap every retained event. Snapshot counts equal their immutable chain lengths. Path accumulation checks each addition against maxBits and the remaining input-proportional budget; maximum path budget 128*(maxBits+128) fits int32. runtime/error_regions.go:216 `budget.limit = int(state.reserved.eventLimit) + 128`; runtime/error_regions.go:218 `if budget.visits >= budget.limit`; runtime/error_regions.go:261 `if length > budget.pathBudget-budget.pathUsed`
-runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:186 post=runtime/expr.go:211
-runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:186 post=runtime/expr.go:211
-runtime/expr.go:arithmetic:depth++	1	FIXED: depth starts at zero and changes by one only for each consumed parenthesis; the number of changes is at most len(raw), so -len(raw) <= depth <= len(raw) on every host. runtime/expr.go:84 `depth++`; runtime/expr.go:92 `depth--`.
-runtime/expr.go:arithmetic:depth--	1	FIXED: depth starts at zero and changes by one only for each consumed parenthesis; the number of changes is at most len(raw), so -len(raw) <= depth <= len(raw) on every host. runtime/expr.go:84 `depth++`; runtime/expr.go:92 `depth--`.
-runtime/expr.go:arithmetic:i - 1	1	BOUNDED: operand=i guard=runtime/expr.go:129
-runtime/expr.go:arithmetic:len(tokens) - 1	1	BOUNDED: operand=tokens intrinsic=lenMinusOne guard=runtime/expr.go:85
-runtime/expr.go:arithmetic:i + 1	9	BOUNDED: operand=i guard=runtime/expr.go:284; operand=i guard=runtime/expr.go:120
-runtime/expr.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/expr.go:284; operand=i guard=runtime/expr.go:75; operand=i guard=runtime/expr.go:99
-runtime/expr.go:arithmetic:maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:186 post=runtime/expr.go:211
-runtime/expr.go:arithmetic:maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:186 post=runtime/expr.go:211
-runtime/expr.go:arithmetic:n *= v	1	BOUNDED: operand=v guard=runtime/expr.go:195
-runtime/expr.go:arithmetic:n += v	1	BOUNDED: operand=n guard=runtime/expr.go:164
-runtime/expr.go:arithmetic:n -= v	1	BOUNDED: operand=n guard=runtime/expr.go:169
-runtime/expr.go:arithmetic:p.position++	1	BOUNDED: operand=p.position callee=peek guard=runtime/expr.go:136
-runtime/expr.go:conversion:int(n)	1	BOUNDED: operand=n guard=runtime/expr.go:46
-runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/expr.go:317
-runtime/expr.go:conversion:rune(raw[i])	2	BOUNDED: operand=raw guard=runtime/expr.go:75; operand=i guard=runtime/expr.go:99
+runtime/expr.go:arithmetic:-maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:188 post=runtime/expr.go:213
+runtime/expr.go:arithmetic:-maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:188 post=runtime/expr.go:213
+runtime/expr.go:arithmetic:depth++	1	FIXED: depth starts at zero and changes by one only for each consumed parenthesis; the number of changes is at most len(raw), so -len(raw) <= depth <= len(raw) on every host. runtime/expr.go:86 `depth++`; runtime/expr.go:94 `depth--`.
+runtime/expr.go:arithmetic:depth--	1	FIXED: depth starts at zero and changes by one only for each consumed parenthesis; the number of changes is at most len(raw), so -len(raw) <= depth <= len(raw) on every host. runtime/expr.go:86 `depth++`; runtime/expr.go:94 `depth--`.
+runtime/expr.go:arithmetic:i - 1	1	BOUNDED: operand=i guard=runtime/expr.go:131
+runtime/expr.go:arithmetic:len(tokens) - 1	1	BOUNDED: operand=tokens intrinsic=lenMinusOne guard=runtime/expr.go:87
+runtime/expr.go:arithmetic:i + 1	9	BOUNDED: operand=i guard=runtime/expr.go:289; operand=i guard=runtime/expr.go:122
+runtime/expr.go:arithmetic:i++	5	BOUNDED: operand=i guard=runtime/expr.go:289; operand=i guard=runtime/expr.go:77; operand=i guard=runtime/expr.go:101
+runtime/expr.go:arithmetic:maxBits + v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:188 post=runtime/expr.go:213
+runtime/expr.go:arithmetic:maxBits - v	1	BOUNDED: operand=n callee=product guard=runtime/expr.go:188 post=runtime/expr.go:213
+runtime/expr.go:arithmetic:n *= v	1	BOUNDED: operand=v guard=runtime/expr.go:197
+runtime/expr.go:arithmetic:n += v	1	BOUNDED: operand=n guard=runtime/expr.go:166
+runtime/expr.go:arithmetic:n -= v	1	BOUNDED: operand=n guard=runtime/expr.go:171
+runtime/expr.go:arithmetic:p.position++	1	BOUNDED: operand=p.position callee=peek guard=runtime/expr.go:138
+runtime/expr.go:conversion:int(n)	1	BOUNDED: operand=n guard=runtime/expr.go:48
+runtime/expr.go:conversion:int64(value)	1	BOUNDED: operand=value guard=runtime/expr.go:328
+runtime/expr.go:conversion:rune(raw[i])	2	BOUNDED: operand=raw guard=runtime/expr.go:77; operand=i guard=runtime/expr.go:101
 runtime/expression_functions.go:arithmetic:p.position - 2	1	FIXED: NewExpressionFunction accepts only one 32-entry row or two 64-entry rows, copies them, and rejects outputs above 2^20. applyFunction checks the operand, argument column and context row before lookup, so table length conversions and returned int64 values fit every supported host. maximum subtracts two from position only after consuming at least two tokens, guarded by a nonempty preceding label. runtime/expression_functions.go:131 `if arg.n < 0 || arg.n >= int64(len(f.rows[0]))`.
 runtime/expression_functions.go:conversion:int64(f.rows[row][arg.n])	1	FIXED: NewExpressionFunction accepts only one 32-entry row or two 64-entry rows, copies them, and rejects outputs above 2^20. applyFunction checks the operand, argument column and context row before lookup, so table length conversions and returned int64 values fit every supported host. maximum subtracts two from position only after consuming at least two tokens, guarded by a nonempty preceding label. runtime/expression_functions.go:131 `if arg.n < 0 || arg.n >= int64(len(f.rows[0]))`.
 runtime/expression_functions.go:conversion:int64(len(f.rows[0]))	1	FIXED: NewExpressionFunction accepts only one 32-entry row or two 64-entry rows, copies them, and rejects outputs above 2^20. applyFunction checks the operand, argument column and context row before lookup, so table length conversions and returned int64 values fit every supported host. maximum subtracts two from position only after consuming at least two tokens, guarded by a nonempty preceding label. runtime/expression_functions.go:131 `if arg.n < 0 || arg.n >= int64(len(f.rows[0]))`.

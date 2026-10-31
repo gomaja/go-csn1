@@ -10,12 +10,14 @@ import (
 const maxBits = 1 << 20
 
 type expression struct {
-	tokens     []string
-	position   int
-	vars       map[string]uint64
-	reader     *Reader
-	syntaxOnly bool
-	context    *ExpressionContext
+	tokens       []string
+	position     int
+	vars         map[string]uint64
+	reader       *Reader
+	syntaxOnly   bool
+	pretokenized bool
+	inVal        bool
+	context      *ExpressionContext
 }
 
 // TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
@@ -234,7 +236,10 @@ func (p *expression) primary() (int64, error) {
 		if p.take() != "(" {
 			return 0, fmt.Errorf("val needs (")
 		}
+		outerVal := p.inVal
+		p.inVal = true
 		n, err := p.sum()
+		p.inVal = outerVal
 		if err != nil {
 			return 0, err
 		}
@@ -287,6 +292,12 @@ func (p *expression) namedValue(t string) (int64, error) {
 			break
 		}
 		if part == "-" {
+			// Compatibility for pretokenized published code: old codecs split
+			// N_E-UTRAN into N_E, -, UTRAN. Only token input rejoins these
+			// inside val(); string input retains the lexical operator rule.
+			if p.inVal && !p.pretokenized {
+				break
+			}
 			if i+1 >= len(p.tokens) || p.tokens[i+1] == "(" || p.tokens[i+1] == ")" {
 				break
 			}
