@@ -24,11 +24,13 @@ type Report struct {
 // ready. NewReaderWithCollector sets its bounds from that reader's input, while
 // visits accumulate until TakeReport. Readers sharing it must run serially.
 type Collector struct {
-	observations                             []Observation
-	dropped                                  uint64
-	eventLimit, visits, pathBudget, pathUsed int
-	indices                                  []observationIndex
-	indexDepth                               int
+	receiver             *receiverState
+	observations         []Observation
+	dropped              uint64
+	eventLimit, visits   int32
+	pathBudget, pathUsed int
+	indices              []observationIndex
+	indexDepth           int
 }
 
 type observationIndex struct {
@@ -42,6 +44,7 @@ func (c *Collector) TakeReport() Report {
 	if c == nil {
 		return Report{}
 	}
+	c = c.observationCollector()
 	report := Report{Observations: c.observations, Dropped: c.dropped}
 	c.observations = nil
 	c.dropped, c.visits, c.pathUsed = 0, 0, 0
@@ -59,8 +62,9 @@ func NewReaderWithCollector(data []byte, c *Collector) *Reader {
 func (r *Reader) attachCollector(c *Collector) {
 	r.collector = c
 	if c != nil {
-		c.eventLimit = r.end
-		c.pathBudget = c.eventLimit * 128
+		// Both counters are bounded by the maxBits (2^20) input ceiling.
+		c.eventLimit = int32(r.end)
+		c.pathBudget = int(c.eventLimit) * 128
 	}
 }
 
@@ -75,7 +79,10 @@ func (r *Reader) Discard() {
 	if r == nil || r.collector == nil || r.observationStart < 0 {
 		return
 	}
-	c := r.collector
+	if r.collector.receiver != nil {
+		r.collector.receiver.current = r.collector.receiver.checkpoint
+	}
+	c := r.collector.observationCollector()
 	if int(r.observationStart) <= len(c.observations) {
 		clear(c.observations[r.observationStart:])
 		c.observations = c.observations[:r.observationStart]
@@ -99,7 +106,7 @@ func (r *Reader) Observe(offset, width int, value uint64, source Source, field .
 	if offset < 0 || width <= 0 || offset > r.end || width > r.end-offset || offset+width > r.pos {
 		return nil
 	}
-	c := r.collector
+	c := r.collector.observationCollector()
 	if c.visits >= c.eventLimit {
 		c.dropped++
 		return nil
@@ -187,7 +194,7 @@ func (r *Reader) EnterObservationPath(path string) {
 func (r *Reader) LeaveObservationPath() { r.LeaveIndex() }
 
 func (r *Reader) enterObservationScope(path string, index int) {
-	c := r.collector
+	c := r.collector.observationCollector()
 	if c.indexDepth < 128 {
 		if len(c.indices) == cap(c.indices) {
 			grown := make([]observationIndex, len(c.indices), min(128, max(1, 2*cap(c.indices))))
@@ -204,7 +211,7 @@ func (r *Reader) LeaveIndex() {
 	if !r.Collecting() {
 		return
 	}
-	c := r.collector
+	c := r.collector.observationCollector()
 	if c.indexDepth > 0 {
 		c.indexDepth--
 		if c.indexDepth < len(c.indices) {
@@ -242,6 +249,10 @@ func clipWireBits(a, b, c []BitString) ([]BitString, []BitString, []BitString) {
 }
 
 func (r *Reader) commitCollected(other *Reader) {
+	if r.collector.receiver != nil && other.collector != nil && other.collector.receiver != nil {
+		r.commitReceiver(other)
+		return
+	}
 	start, dropped := r.observationStart, r.observationDropped
 	other.observationStart = -1
 	*r = *other

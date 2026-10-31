@@ -287,8 +287,12 @@ func (r *Reader) forkInto(fork *Reader) {
 		r.varsShared, r.pathShared = priorVars, priorPath
 	}
 	if r.collector != nil {
-		fork.observationStart = int32(len(r.collector.observations))
-		fork.observationDropped = r.collector.dropped
+		c := r.collector.observationCollector()
+		fork.observationStart = int32(len(c.observations))
+		fork.observationDropped = c.dropped
+		if r.collector.receiver != nil {
+			fork.collector = r.collector.forkReceiver()
+		}
 	}
 	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
 }

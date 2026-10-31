@@ -107,6 +107,8 @@ func (c *ChoiceErrors) Release() {
 			// TS 24.007 V20.0.0 Annex B §B.1.1.4 isolates serial trials.
 			r.data, r.vars, r.steps, r.path = nil, nil, nil, nil
 			r.wire = WireInfo{}
+			// Fork collectors own immutable diagnostic prefixes. Releasing this
+			// reference drops uncommitted events; commits retain their own prefix.
 			r.collector = nil
 			choiceReaders.Put(r)
 		}
@@ -268,8 +270,12 @@ func (c *ChoiceErrors) ForkScoped(r *Reader) *Reader {
 	fork.trial, c.readers = state, fork
 	fork.pathShared = false
 	if r.collector != nil {
-		fork.observationStart = int32(len(r.collector.observations))
-		fork.observationDropped = r.collector.dropped
+		c := r.collector.observationCollector()
+		fork.observationStart = int32(len(c.observations))
+		fork.observationDropped = c.dropped
+		if r.collector.receiver != nil {
+			fork.collector = r.collector.forkReceiver()
+		}
 	}
 	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
 	return fork
