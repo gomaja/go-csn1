@@ -173,3 +173,23 @@ func (r *Reader) ExpressionResult(v ExpressionValue) (int, error) {
 
 // ExpressionResult applies Eval's final width check and writer error behavior.
 func (w *Writer) ExpressionResult(v ExpressionValue) (int, error) { return v.width() }
+
+// ExpressionResultWithContext applies final bounds and locates every compiled
+// expression failure, including arithmetic and unresolved scalar bindings.
+func (r *Reader) ExpressionResultWithContext(v ExpressionValue) (int, error) {
+	n, err := v.width()
+	if err != nil {
+		return 0, r.expressionFailure(err)
+	}
+	return n, nil
+}
+
+// ExpressionResultWithContext is the writer counterpart of
+// Reader.ExpressionResultWithContext. It retains the writer path and bit offset.
+func (w *Writer) ExpressionResultWithContext(v ExpressionValue) (int, error) {
+	n, err := v.width()
+	if err != nil {
+		return 0, w.expressionFailure(err)
+	}
+	return n, nil
+}

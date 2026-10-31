@@ -6,14 +6,14 @@ import (
 )
 
 func TestValidateExpressionSyntax(t *testing.T) {
-	for _, raw := range []string{"max(val(CELL_PARAMS_POINTER))", "expanded_EPDAN_extension_length(val(EPD A/N Extension length index))", "val(", "q(val(NR_OF_TDD_CELLS)", "", "()", "val()", "1 +", "* 2", "1 2", "1 + )", "1)"} {
+	for _, raw := range []string{"val(", "q(val(NR_OF_TDD_CELLS)", "", "()", "val()", "1 +", "* 2", "1 2", "1 + )", "1)"} {
 		t.Run(raw, func(t *testing.T) {
 			if err := ValidateExpression(raw); err == nil {
 				t.Errorf("accepted %q", raw)
 			}
 		})
 	}
-	for _, raw := range []string{"val(N)", "val(Extension Length) + 1", "val(N_E-UTRAN+1)", "val(N_E-UTRAN - 1)", "p(val(N))", "q(Count)", "1 / 0", "1048576 * 1048576", "-1", "val(x-y z)", "(1+2)*3"} {
+	for _, raw := range []string{"val(N)", "val(Extension Length) + 1", "val(N_E-UTRAN + 1)", "val(N_E-UTRAN - 1)", "p(val(N))", "q(Count)", "1 / 0", "1048576 * 1048576", "-1", "val(x-y z)", "(1+2)*3"} {
 		t.Run(raw, func(t *testing.T) {
 			if err := ValidateExpression(raw); err != nil {
 				t.Errorf("refused %q: %v", raw, err)
@@ -23,21 +23,22 @@ func TestValidateExpressionSyntax(t *testing.T) {
 }
 
 func TestValidateExpressionKeepsBindingsDynamic(t *testing.T) {
-	const raw = "val(x-y)"
-	if err := ValidateExpression(raw); err != nil {
+	const arithmetic = "val(x - y)"
+	if err := ValidateExpression(arithmetic); err != nil {
 		t.Fatal(err)
 	}
-	for _, tc := range []struct {
-		vars map[string]uint64
-		want int
-	}{
-		{map[string]uint64{"x": 5, "y": 2}, 3},
-		{map[string]uint64{"x": 5, "y": 2, "x-y": 7}, 7},
-	} {
-		got, err := eval(raw, tc.vars)
-		if err != nil || got != tc.want {
-			t.Fatalf("Eval = %d, %v; want %d", got, err, tc.want)
-		}
+	if got, err := eval(arithmetic, map[string]uint64{"x": 5, "y": 2}); err != nil || got != 3 {
+		t.Fatalf("Eval = %d, %v; want 3", got, err)
+	}
+	const label = "val(x-y)"
+	if err := ValidateExpression(label); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := eval(label, map[string]uint64{"x": 5, "y": 2}); err == nil {
+		t.Fatal("unbound label evaluated as subtraction")
+	}
+	if got, err := eval(label, map[string]uint64{"x": 5, "y": 2, "x-y": 7}); err != nil || got != 7 {
+		t.Fatalf("label = %d, %v; want 7", got, err)
 	}
 	if err := ValidateExpression("val(abc)"); err != nil {
 		t.Fatal(err)

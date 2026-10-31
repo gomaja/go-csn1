@@ -39,10 +39,6 @@ func TestValidateExpressionSubtractedCalls(t *testing.T) {
 func TestValidateExpressionRefusesUnsupportedSourceCalls(t *testing.T) {
 	// Keep the expressions rejected by the compiler's generation boundary.
 	for _, raw := range []string{
-		// TS 44.060 V19.0.0 §11.2.21.
-		"1+max(val(CELL_PARAMS_POINTER))",
-		// TS 44.060 V19.0.0 §11.2.6a.
-		"expanded_EPDAN_extension_length(val(EPD A/N Extension length index))",
 		// TS 44.018 V19.0.0 §§9.1.49a and 9.1.54.
 		"8 * val(talker identity length",
 		"q(NR_OF_TDD_CELLS",

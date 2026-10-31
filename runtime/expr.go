@@ -10,11 +10,14 @@ import (
 const maxBits = 1 << 20
 
 type expression struct {
-	tokens     []string
-	position   int
-	vars       map[string]uint64
-	reader     *Reader
-	syntaxOnly bool
+	tokens       []string
+	position     int
+	vars         map[string]uint64
+	reader       *Reader
+	syntaxOnly   bool
+	pretokenized bool
+	inVal        bool
+	context      *ExpressionContext
 }
 
 // TS 44.018 V19.0.0 §9.1.54 tables 9.1.54.1a and 9.1.54.1b
@@ -70,19 +73,37 @@ func ValidateExpression(raw string) error {
 
 func expressionTokens(raw string) ([]string, error) {
 	var tokens []string
+	depth, valDepth := 0, 0
 	for i := 0; i < len(raw); {
 		r := rune(raw[i])
 		if unicode.IsSpace(r) {
 			i++
 			continue
 		}
-		if strings.ContainsRune("()+-*/", r) {
+		if r == '(' || r == ')' || expressionOperator(raw, i, valDepth != 0) {
+			switch r {
+			case '(':
+				depth++
+				if valDepth == 0 && len(tokens) > 0 && tokens[len(tokens)-1] == "val" {
+					valDepth = depth
+				}
+			case ')':
+				if depth == valDepth {
+					valDepth = 0
+				}
+				depth--
+			}
 			tokens = append(tokens, string(r))
 			i++
 			continue
 		}
 		start := i
-		for i < len(raw) && (unicode.IsLetter(rune(raw[i])) || unicode.IsDigit(rune(raw[i])) || raw[i] == '_') {
+		for i < len(raw) {
+			r := rune(raw[i])
+			if !unicode.IsLetter(r) && !unicode.IsDigit(r) && r != '_' &&
+				(valDepth == 0 || !strings.ContainsRune("+-*/", r) || expressionOperator(raw, i, true)) {
+				break
+			}
 			i++
 		}
 		if i == start {
@@ -91,6 +112,26 @@ func expressionTokens(raw string) ([]string, error) {
 		tokens = append(tokens, raw[start:i])
 	}
 	return tokens, nil
+}
+
+// TS 44.060 V19.0.0 §11.2.6a p14465 prints EPD A/N as label text;
+// §§11.2.3a and 11.2.9 pp13726,15479 print N_E-UTRAN + 1.
+// Within val(), only operators surrounded by whitespace are arithmetic.
+// Outside val(), the ordinary expression operator grammar is unchanged.
+func expressionOperator(raw string, i int, inVal bool) bool {
+	if i < 0 || i >= len(raw) {
+		return false
+	}
+	if strings.IndexByte("+-*/", raw[i]) < 0 {
+		return false
+	}
+	if !inVal {
+		return true
+	}
+	if i == 0 || i+1 >= len(raw) {
+		return false
+	}
+	return strings.IndexByte(" \t\r\n\v\f", raw[i-1]) >= 0 && strings.IndexByte(" \t\r\n\v\f", raw[i+1]) >= 0
 }
 
 func (p *expression) peek() string {
@@ -195,7 +236,10 @@ func (p *expression) primary() (int64, error) {
 		if p.take() != "(" {
 			return 0, fmt.Errorf("val needs (")
 		}
+		outerVal := p.inVal
+		p.inVal = true
 		n, err := p.sum()
+		p.inVal = outerVal
 		if err != nil {
 			return 0, err
 		}
@@ -204,27 +248,11 @@ func (p *expression) primary() (int64, error) {
 		}
 		return n, nil
 	}
-	if table, ok := cellInformationWidths[t]; ok {
-		if p.take() != "(" {
-			return 0, fmt.Errorf("%s needs (", t)
-		}
-		index, err := p.sum()
-		if err != nil {
-			return 0, err
-		}
-		if p.take() != ")" {
-			return 0, fmt.Errorf("unclosed %s", t)
-		}
-		if p.syntaxOnly {
-			return 0, nil
-		}
-		if index < 0 || index > 31 {
-			return 0, fmt.Errorf("%s index outside 0..31", t)
-		}
-		if index >= int64(len(table)) {
-			return 0, nil
-		}
-		return table[index], nil
+	if t == "max" && p.peek() == "(" {
+		return p.maximum()
+	}
+	if t == "p" || t == "q" || t == "expanded_EPDAN_extension_length" && p.peek() == "(" {
+		return p.sourceFunction(t)
 	}
 	if t == "-" {
 		n, err := p.primary()
@@ -264,6 +292,12 @@ func (p *expression) namedValue(t string) (int64, error) {
 			break
 		}
 		if part == "-" {
+			// Compatibility for pretokenized published code: old codecs split
+			// N_E-UTRAN into N_E, -, UTRAN. Only token input rejoins these
+			// inside val(); string input retains the lexical operator rule.
+			if p.inVal && !p.pretokenized {
+				break
+			}
 			if i+1 >= len(p.tokens) || p.tokens[i+1] == "(" || p.tokens[i+1] == ")" {
 				break
 			}
@@ -271,6 +305,13 @@ func (p *expression) namedValue(t string) (int64, error) {
 				name += "-" + p.tokens[i+1]
 			}
 			i++
+			// TS 24.007 V20.0.0 Annex B.2.1 pp4105,4108 permits
+			// negative exponents and arithmetic. A second minus cannot end
+			// a possible label prefix: keep the previous endpoint until a
+			// label word follows, so a unary call remains available to sum.
+			if p.syntaxOnly && p.tokens[i] == "-" {
+				continue
+			}
 		} else {
 			if !p.syntaxOnly {
 				name += " " + part

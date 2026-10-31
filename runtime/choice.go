@@ -107,6 +107,8 @@ func (c *ChoiceErrors) Release() {
 			// TS 24.007 V20.0.0 Annex B §B.1.1.4 isolates serial trials.
 			r.data, r.vars, r.steps, r.path = nil, nil, nil, nil
 			r.wire = WireInfo{}
+			// Fork collectors own immutable diagnostic prefixes. Releasing this
+			// reference drops uncommitted events; commits retain their own prefix.
 			r.collector = nil
 			choiceReaders.Put(r)
 		}
@@ -245,7 +247,7 @@ func (c *ChoiceErrors) Fork(r *Reader) *Reader { return r.Fork() }
 // Failures are opaque scoped handles: Error, Is, As and Unwrap always panic,
 // including after Release and pool reuse. Track each failure and use Keep
 // before inspection or return. Only DeferOperation, DeferIndex,
-// DeferReaderPath, PreferTruncation, IsReservedAlternative and
+// DeferReaderPath, PreferTruncation, IsReservedAlternative, IsRegionSyntaxError and
 // IsLHPositionUndefined may inspect them inside the active scope. Neither a
 // reader nor an opaque handle may be used by these operations after Release.
 // Read-only trial state after Release is undefined. Set, ForkScoped and Commit
@@ -268,8 +270,12 @@ func (c *ChoiceErrors) ForkScoped(r *Reader) *Reader {
 	fork.trial, c.readers = state, fork
 	fork.pathShared = false
 	if r.collector != nil {
-		fork.observationStart = int32(len(r.collector.observations))
-		fork.observationDropped = r.collector.dropped
+		c := r.collector.observationCollector()
+		fork.observationStart = int32(len(c.observations))
+		fork.observationDropped = c.dropped
+		if r.collector.receiver != nil {
+			fork.collector = r.collector.forkReceiver()
+		}
 	}
 	fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal = clipWireBits(fork.wire.Spare, fork.wire.Padding, fork.wire.Terminal)
 	return fork

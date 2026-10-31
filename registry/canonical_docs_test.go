@@ -60,6 +60,11 @@ func generatedFiles(t *testing.T) []string {
 	}
 	var files []string
 	for _, dir := range dirs {
+		// The hand-maintained framing adapter has no generated descriptors
+		// or generated canonical entry points to inventory here.
+		if filepath.ToSlash(dir) == "../ts44060/controlblock" {
+			continue
+		}
 		if info, err := os.Stat(dir); err != nil || !info.IsDir() {
 			continue
 		}
