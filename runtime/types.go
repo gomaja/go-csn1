@@ -60,8 +60,15 @@ type Descriptor struct {
 	Standard, Version, Clause, Name string
 	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
 	MaxOctets int
-	Extent    Extent
-	Decode    func([]byte) (any, error)
+	// SourceOrigin is the absolute block bit at which content starts in the
+	// owned readers used by DecodeBits and DecodeBitsWithReport. Zero starts
+	// at bit zero. It does not reposition a caller-owned DecodeFrom reader.
+	// TS 24.007 V20.0.0 Annex B §B.1.2.2 makes L/H position-dependent;
+	// TS 44.060 V19.0.0 §§10.3.1–10.3.2, 11.2.0.1–11.2.0.2 place ordinary
+	// control-message content after the MAC header and message selector.
+	SourceOrigin int
+	Extent       Extent
+	Decode       func([]byte) (any, error)
 	// DecodeFrom returns the same value and error as Decode when the reader's
 	// containing limit covers exactly the input. TS 44.018 §10.5.2.37h's
 	// Non-GSM Message struct with NR OF CONTAINER OCTETS 31 is the exception:
