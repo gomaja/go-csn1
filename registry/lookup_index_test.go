@@ -16,16 +16,27 @@ func linearLookup(entries []runtime.Descriptor, standard, clause, name string, q
 	if err := validateVersions(entries); err != nil {
 		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
 	}
+	seen := make(map[[4]string]bool, len(entries))
+	for _, d := range entries {
+		identity := [4]string{d.Standard, d.Clause, d.Name, d.Context}
+		if seen[identity] {
+			return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("duplicate CSN.1 descriptor %q in %s §%s with context %q", d.Name, d.Standard, d.Clause, d.Context))
+		}
+		seen[identity] = true
+	}
 	var matches []runtime.Descriptor
 	for _, d := range entries {
 		if d.Standard == standard && d.Name == name && (!qualified || d.Clause == clause) {
-			if qualified {
-				return d, nil
-			}
 			matches = append(matches, d)
 		}
 	}
 	if qualified {
+		if len(matches) == 1 {
+			return matches[0], nil
+		}
+		if len(matches) > 1 {
+			return runtime.Descriptor{}, lookupFailure(standard, clause, name, fmt.Errorf("ambiguous CSN.1 definition %q in %s §%s; specify context", name, standard, clause))
+		}
 		return runtime.Descriptor{}, lookupFailure(standard, clause, name, fmt.Errorf("unknown CSN.1 definition %q in %s §%s", name, standard, clause))
 	}
 	if len(matches) == 1 {
@@ -177,18 +188,6 @@ func TestLookupUsesCatalogueSnapshot(t *testing.T) {
 	assertLookupEqual(t, got, entry, ge, nil)
 	got, ge = LookupClause(entry.Standard, entry.Clause, entry.Name)
 	assertLookupEqual(t, got, entry, ge, nil)
-}
-
-func TestLookupDuplicateClauseFirstMatch(t *testing.T) {
-	first := Descriptors()[0]
-	second := first
-	second.MaxOctets++
-	installLookupCatalogue(t, []runtime.Descriptor{first, second})
-	got, ge := LookupClause(first.Standard, first.Clause, first.Name)
-	assertLookupEqual(t, got, first, ge, nil)
-	got, ge = Lookup(first.Standard, first.Name)
-	want, we := linearLookup(catalogue, first.Standard, "", first.Name, false)
-	assertLookupEqual(t, got, want, ge, we)
 }
 
 func TestLookupAmbiguityErrorDetached(t *testing.T) {

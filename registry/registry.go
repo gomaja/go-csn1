@@ -63,8 +63,15 @@ func Lookup(standard, name string) (runtime.Descriptor, error) {
 }
 
 // LookupClause resolves the exact specification, clause and printed name.
+// It rejects names with more than one publication context.
 func LookupClause(standard, clause, name string) (runtime.Descriptor, error) {
 	return catalogueLookup.lookupClause(standard, clause, name)
+}
+
+// LookupContext resolves the exact specification, clause, printed name and opaque
+// publication context. The empty context selects an unqualified definition.
+func LookupContext(standard, clause, name, context string) (runtime.Descriptor, error) {
+	return catalogueLookup.lookupContext(standard, clause, name, context)
 }
 
 // Decode resolves a printed definition name. SI7/SI8 return a typed
@@ -90,12 +97,17 @@ func DecodeWithContext(standard, name string, data []byte, acs runtime.SI4ACS) (
 	return d.DecodeWithContext(data, acs)
 }
 
-// Descriptors returns a detached catalogue in stable standard, clause and name
+// Descriptors returns a detached catalogue in stable standard, clause, name and context
 // order. Changing entries or function slots never changes subsequent lookups.
 func Descriptors() []runtime.Descriptor { return append([]runtime.Descriptor(nil), catalogue...) }
 
 var catalogue = func() []runtime.Descriptor {
 	entries := descriptors()
+	sortDescriptors(entries)
+	return entries
+}()
+
+func sortDescriptors(entries []runtime.Descriptor) {
 	sort.Slice(entries, func(i, j int) bool {
 		a, b := entries[i], entries[j]
 		if a.Standard != b.Standard {
@@ -104,10 +116,12 @@ var catalogue = func() []runtime.Descriptor {
 		if a.Clause != b.Clause {
 			return a.Clause < b.Clause
 		}
-		return a.Name < b.Name
+		if a.Name != b.Name {
+			return a.Name < b.Name
+		}
+		return a.Context < b.Context
 	})
-	return entries
-}()
+}
 
 func lookupFailure(standard, clause, name string, cause error) error {
 	return &runtime.OperationError{Operation: "lookup", Kind: runtime.InvalidSchema, Location: runtime.Location{Path: name, BitOffset: -1, Source: runtime.Source{Standard: standard, Clause: clause}}, Cause: cause}

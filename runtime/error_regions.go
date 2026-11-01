@@ -31,11 +31,14 @@ const (
 	// TS 44.060 V19.0.0 §11.2.7 p14874; §11.2.7a p15242; §11.2.29 p18212;
 	// §11.2.29a p18611; §11.2.31 p19048; §11.2.31a p19559; §12.42a p23904.
 	FrequencyParametersError ErrorLabel = "Frequency Parameters error"
+	// TBFModeError identifies the printed reserved-designation arm in
+	// TS 44.060 V19.0.0 §12.48 p24544 and §12.64 p25616.
+	TBFModeError ErrorLabel = "TBF mode error"
 )
 
 func (label ErrorLabel) valid() bool {
 	switch label {
-	case UnknownMessageType, DistributionPartError, AddressInformationPartError, NonDistributionPartError, DBPSCHMessagePartError, MessageEscape, Ignore, PDCHPairsConfigurationError, FrequencyparametersError, FrequencyParametersError:
+	case UnknownMessageType, DistributionPartError, AddressInformationPartError, NonDistributionPartError, DBPSCHMessagePartError, MessageEscape, Ignore, PDCHPairsConfigurationError, FrequencyparametersError, FrequencyParametersError, TBFModeError:
 		return true
 	}
 	return false

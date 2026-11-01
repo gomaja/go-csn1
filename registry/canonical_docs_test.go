@@ -606,7 +606,13 @@ func canonicalProbeDefinitions(t *testing.T) []runtime.Descriptor {
 	if err != nil {
 		t.Fatal(err)
 	}
-	key := func(d runtime.Descriptor) string { return d.Standard + "\t" + d.Clause + "\t" + d.Name }
+	key := func(d runtime.Descriptor) string {
+		base := d.Standard + "\t" + d.Clause + "\t" + d.Name
+		if d.Context != "" {
+			return base + "\t" + d.Context
+		}
+		return base
+	}
 	current := descriptors()
 	byKey := make(map[string]runtime.Descriptor, len(current))
 	for _, d := range current {
