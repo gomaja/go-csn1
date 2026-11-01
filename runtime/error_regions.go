@@ -24,14 +24,18 @@ const (
 	// §12.48a.2 pp24701,24712; §12.48a.5 pp24921,24932;
 	// TS 44.018 V19.0.0 §10.5.2.25e pp18316,18328.
 	PDCHPairsConfigurationError ErrorLabel = "PDCH pairs configuration error"
-	// FrequencyParametersError identifies the printed reserved-designation arm
+	// FrequencyparametersError identifies the printed reserved-designation arm
 	// in TS 44.060 V19.0.0 §11.2.37 p20100.
-	FrequencyParametersError ErrorLabel = "Frequency parameters error"
+	FrequencyparametersError ErrorLabel = "Frequency parameters error"
+	// FrequencyParametersError identifies the capitalized printed reserved-designation arm:
+	// TS 44.060 V19.0.0 §11.2.7 p14874; §11.2.7a p15242; §11.2.29 p18212;
+	// §11.2.29a p18611; §11.2.31 p19048; §11.2.31a p19559; §12.42a p23904.
+	FrequencyParametersError ErrorLabel = "Frequency Parameters error"
 )
 
 func (label ErrorLabel) valid() bool {
 	switch label {
-	case UnknownMessageType, DistributionPartError, AddressInformationPartError, NonDistributionPartError, DBPSCHMessagePartError, MessageEscape, Ignore, PDCHPairsConfigurationError, FrequencyParametersError:
+	case UnknownMessageType, DistributionPartError, AddressInformationPartError, NonDistributionPartError, DBPSCHMessagePartError, MessageEscape, Ignore, PDCHPairsConfigurationError, FrequencyparametersError, FrequencyParametersError:
 		return true
 	}
 	return false

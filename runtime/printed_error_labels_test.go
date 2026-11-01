@@ -12,7 +12,7 @@ func TestPrintedErrorLabelsReplay(t *testing.T) {
 	labels := []ErrorLabel{
 		"Unknown message type", "Distribution part error", "Address information part error",
 		"Non-distribution part error", "DBPSCH message part error", "Message escape", "Ignore",
-		"PDCH pairs configuration error", "Frequency parameters error",
+		"PDCH pairs configuration error", "Frequency parameters error", "Frequency Parameters error",
 	}
 	for _, label := range labels {
 		for phase := 0; phase < 8; phase++ {
@@ -86,9 +86,12 @@ func TestPrintedErrorLabelsRefuseNearMisses(t *testing.T) {
 		"", "arbitrary label", "pdch pairs configuration error", "PDCH Pairs configuration error",
 		"PDCH pairs configuration Error", " PDCH pairs configuration error", "PDCH pairs configuration error ",
 		"PDCH  pairs configuration error", "PDCH pair configuration error", "PDCH pairs configurations error",
-		"frequency parameters error", "Frequency Parameters error", "Frequency parameters Error",
+		"frequency parameters error", "FREQUENCY PARAMETERS ERROR", "frequency Parameters error",
+		"Frequency parameters Error", "Frequency Parameters Error",
 		" Frequency parameters error", "Frequency parameters error ", "Frequency  parameters error",
-		"Frequency parameter error", "Frequency parameters errors", "Ignore ", "ignore",
+		" Frequency Parameters error", "Frequency Parameters error ", "Frequency  Parameters error",
+		"Frequency parameter error", "Frequency parameters errors",
+		"Frequency Parameter error", "Frequency Parameters errors", "Ignore ", "ignore",
 	} {
 		t.Run(string(label), func(t *testing.T) {
 			c := NewReceiverCollector()
@@ -112,7 +115,7 @@ func TestPrintedErrorLabelsRefuseNearMisses(t *testing.T) {
 }
 
 func TestPrintedErrorLabelConstants(t *testing.T) {
-	if PDCHPairsConfigurationError != ErrorLabel("PDCH pairs configuration error") || FrequencyParametersError != ErrorLabel("Frequency parameters error") {
+	if PDCHPairsConfigurationError != ErrorLabel("PDCH pairs configuration error") || FrequencyparametersError != ErrorLabel("Frequency parameters error") || FrequencyParametersError != ErrorLabel("Frequency Parameters error") {
 		t.Fatal("printed label constant changed")
 	}
 	existing := []ErrorLabel{UnknownMessageType, DistributionPartError, AddressInformationPartError, NonDistributionPartError, DBPSCHMessagePartError, MessageEscape, Ignore}
