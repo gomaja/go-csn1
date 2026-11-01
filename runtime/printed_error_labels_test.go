@@ -12,7 +12,7 @@ func TestPrintedErrorLabelsReplay(t *testing.T) {
 	labels := []ErrorLabel{
 		"Unknown message type", "Distribution part error", "Address information part error",
 		"Non-distribution part error", "DBPSCH message part error", "Message escape", "Ignore",
-		"PDCH pairs configuration error", "Frequency parameters error", "Frequency Parameters error",
+		"PDCH pairs configuration error", "Frequency parameters error", "Frequency Parameters error", "TBF mode error",
 	}
 	for _, label := range labels {
 		for phase := 0; phase < 8; phase++ {
@@ -92,6 +92,7 @@ func TestPrintedErrorLabelsRefuseNearMisses(t *testing.T) {
 		" Frequency Parameters error", "Frequency Parameters error ", "Frequency  Parameters error",
 		"Frequency parameter error", "Frequency parameters errors",
 		"Frequency Parameter error", "Frequency Parameters errors", "Ignore ", "ignore",
+		"tbf mode error", "TBF Mode error", "TBF mode Error", " TBF mode error", "TBF mode error ", "TBF  mode error",
 	} {
 		t.Run(string(label), func(t *testing.T) {
 			c := NewReceiverCollector()
@@ -115,6 +116,9 @@ func TestPrintedErrorLabelsRefuseNearMisses(t *testing.T) {
 }
 
 func TestPrintedErrorLabelConstants(t *testing.T) {
+	if TBFModeError != ErrorLabel("TBF mode error") {
+		t.Fatal("printed TBF mode error constant changed")
+	}
 	if PDCHPairsConfigurationError != ErrorLabel("PDCH pairs configuration error") || FrequencyparametersError != ErrorLabel("Frequency parameters error") || FrequencyParametersError != ErrorLabel("Frequency Parameters error") {
 		t.Fatal("printed label constant changed")
 	}
