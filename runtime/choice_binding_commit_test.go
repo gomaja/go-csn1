@@ -25,9 +25,6 @@ func TestChoiceEmptyChildCommitPreservesAncestorBindings(t *testing.T) {
 }
 
 func TestChoiceEmptyCommitDoesNotCloneBindings(t *testing.T) {
-	if raceEnabled {
-		t.Skip("pool entries may be dropped by race instrumentation")
-	}
 	r := NewReader(nil)
 	r.Set("value", 1)
 	_ = r.Wire()
@@ -43,7 +40,7 @@ func TestChoiceEmptyCommitDoesNotCloneBindings(t *testing.T) {
 	if baselineSnapshot == nil || committedSnapshot == nil {
 		t.Fatal("missing snapshot")
 	}
-	if withCommit != baseline {
+	if !raceEnabled && withCommit != baseline {
 		t.Fatalf("empty commit adds allocations: fork %g, fork and commit %g", baseline, withCommit)
 	}
 	r.Set("value", 2)

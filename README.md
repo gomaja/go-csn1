@@ -100,35 +100,57 @@ Canonical explicit lengths are capped where the permitted catalogue establishes 
 
 No universal numerical containing maximum has been established from the permitted source catalogue for the following shared TS 44.060 V19.0.0 definitions: PSC Group IE (§12.58), MBMS Channel Parameters IE (§12.36), MBMS p-t-m channel description IE (§12.37), MPRACH description IE (§12.38), MBMS Session List IE (§12.39), MBMS Session Parameters List IE (§12.40), Frequency Parameters IE and Direct encoding 1 struct (§12.8), GPRS Mobile Allocation IE, RFL number list struct and ARFCN index list struct (§12.10a), PCID Group IE (§12.57), Enhanced Cell Reselection Parameters IE and Repeated E-UTRAN Enhanced Cell Reselection Parameters struct (§12.59). Their grammars have open or recursive lists; the IE definitions apply across TS 44.060 clauses 11/12 and TS 44.018 (§11 p12884), including different block sizes and segmented messages (§9.1.12a p6882; §10.0b.2.1 p7388–7393). The PDCH rules bound segmentation to nine blocks of at most 304 payload bits; they do not resolve the ceiling on the other Iu carriers. The universal carrier ceiling for these shared definitions remains unresolved. A particular use must supply its carrier limit; standalone `CanonicalAtLength` retains the runtime bit limit until a universal maximum is established.
 
-For EC-Dummy message content, the pinned TS 44.018 V19.0.0 §9.1.62 p11854–11861 and §10.1 p13004–13008 print the six-bit header and terminal padding but no numerical EC-CCCH block size. Its physical carrier specification is outside the permitted catalogue. Its standalone explicit length therefore retains the runtime bit limit; this is an unresolved carrier limit, not evidence that an EC-CCCH block can carry that many octets.
+BA List Pref includes its eight-bit length field in the CSN.1 root (TS 44.018 V19.0.0 §10.5.2.1c p13984–13989). CHANNEL RELEASE carries it as TLV after the PD/skip octet, message-type octet and RR-cause octet (§9.1.7 p4879–4932). TS 44.006 V19.0.0 §8.8.5 p2466 limits an acknowledged L3 message to 251 octets. Subtracting those three mandatory octets and the BA IEI gives a 247-octet root, including its length octet and at most 246 value octets. The type-4 value ceiling of 255 octets is less restrictive (TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043).
 
-BA List Pref includes its eight-bit length field inside the printed CSN.1 syntax (TS 44.018 V19.0.0 §10.5.2.1c p13984–13989). Relating that field to the total explicit extent needs a separate interpretation; no numerical cap is imposed here. EC System Information Types 1, 3 and 4 have terminal padding, but §§9.1.43p p9739–9752, 9.1.43r p10035–10049, 9.1.43s p10118–10136 and 10.1 p13004 give no numerical EC-BCCH carrier ceiling. NOTIFY APPLICATION DATA likewise has no numerical carrier maximum in §9.1.58 p11509–11529. These definitions remain unresolved; callers supply their actual carrier extent.
+EC System Information Types 1, 3 and 4 are bounded to 184 information bits, including their headers: 23 octets (TS 45.003 V19.0.0 §5.2a.1 p9923). Each EC SI instance uses one EC-BCCH block; its 16 blind physical transmissions repeat that instance (TS 45.002 V19.0.0 §6.3.4.4 p2458). EC-Dummy is bounded to 88 information bits including its six-bit header: 11 octets (TS 44.018 V19.0.0 §9.1.62 p11854–11861, §10.1 p13004–13008; TS 45.003 V19.0.0 §5.2b.1 p9934–9935). NOTIFY APPLICATION DATA is bounded to the 23-octet main-DCCH Bter frame; its short L2 header is already part of the root (TS 44.018 V19.0.0 §9.1.58 p11509–11523; TS 44.006 V19.0.0 §§5.2, 6.4a, 8.8.3 p2456–2458). These sender caps preserve the explicit-extent requirement and existing tolerant reception.
+
+Additional source clauses define open or recursive component lists without a standalone numerical containing extent: FLO Ack/Nack Description (§12.3.2 p22132–22142), individual priorities (§12.50 p25241–25268), E-UTRAN parameters (§12.53 p25343–25377), Dynamic Allocation 3 (§12.65 p25735–25751), extended EARFCN priority and neighbour lists (§§12.69–12.70 p25910–25943), the repeated channel requests (§§12.7a–12.7b p22685–22707), and Dual Carrier/DLMC direct encoding 1 through the shared GPRS Mobile Allocation IE (§§12.8.2, 12.8.4, 12.10a). Their source clauses require the actual carrier or assignment context; no universal ceiling is asserted here.
 
 The complete unresolved carrier list, including shared definitions whose open lists do not themselves grow by padding, is:
 
 <!-- unresolved-carrier-limits -->
 | Definition (standard/clause/printed name) |
 | --- |
-| `TS 44.018/10.5.2.1c/BA List Pref` |
-| `TS 44.018/9.1.43p/EC System Information Type 1` |
-| `TS 44.018/9.1.43r/EC System Information Type 3` |
-| `TS 44.018/9.1.43s/EC System Information Type 4` |
-| `TS 44.018/9.1.58/NOTIFY APPLICATION DATA` |
-| `TS 44.018/9.1.62/EC-Dummy message content` |
-| `TS 44.060/12.58/PSC Group IE` |
+| `TS 44.018/9.1.49b/VGCS SMS INFORMATION` |
+| `TS 44.018/9.1.57/VGCS Neighbour Cell Information` |
+| `TS 44.018/9.1.21a/NOTIFICATION FACCH` |
+| `TS 44.018/9.1.47/UPLINK FREE` |
+| `TS 44.060/12.10a/ARFCN index list struct` |
+| `TS 44.060/12.10a/GPRS Mobile Allocation IE` |
+| `TS 44.060/12.10a/RFL number list struct` |
+| `TS 44.060/12.3.2/FLO Ack/Nack Description IE` |
+| `TS 44.060/12.3.2/FLO Ack/Nack Description struct` |
 | `TS 44.060/12.36/MBMS Channel Parameters IE` |
 | `TS 44.060/12.37/MBMS p-t-m channel description IE` |
 | `TS 44.060/12.38/MPRACH description IE` |
 | `TS 44.060/12.39/MBMS Session List IE` |
 | `TS 44.060/12.40/MBMS Session Parameters List IE` |
-| `TS 44.060/12.8/Frequency Parameters IE` |
-| `TS 44.060/12.8/Direct encoding 1 struct` |
-| `TS 44.060/12.10a/GPRS Mobile Allocation IE` |
-| `TS 44.060/12.10a/RFL number list struct` |
-| `TS 44.060/12.10a/ARFCN index list struct` |
+| `TS 44.060/12.50/3G Individual Priority Parameters Description struct` |
+| `TS 44.060/12.50/E-UTRAN Individual Priority Parameters Description struct` |
+| `TS 44.060/12.50/Individual priorities IE` |
+| `TS 44.060/12.50/Repeated Individual E-UTRAN Priority Parameters struct` |
+| `TS 44.060/12.50/Repeated Individual UTRAN Priority Parameters struct` |
+| `TS 44.060/12.53/E-UTRAN Parameters IE` |
+| `TS 44.060/12.53/Repeated E-UTRAN Neighbour Cells struct` |
+| `TS 44.060/12.53/Repeated E-UTRAN Not Allowed Cells struct` |
+| `TS 44.060/12.53/Repeated E-UTRAN PCID to TA mapping struct` |
 | `TS 44.060/12.57/PCID Group IE` |
+| `TS 44.060/12.58/PSC Group IE` |
 | `TS 44.060/12.59/Enhanced Cell Reselection Parameters IE` |
 | `TS 44.060/12.59/Repeated E-UTRAN Enhanced Cell Reselection Parameters struct` |
+| `TS 44.060/12.65/Dynamic Allocation 3 IE` |
+| `TS 44.060/12.69/E-UTRAN IPP with extended EARFCNs IE` |
+| `TS 44.060/12.69/Repeated Individual E-UTRAN PP with extended EARFCNs struct` |
+| `TS 44.060/12.70/E-UTRAN NC with extended EARFCNs IE` |
+| `TS 44.060/12.70/Repeated E-UTRAN NC with extended EARFCNs struct` |
+| `TS 44.060/12.7a/Iu mode Channel Request Description IE` |
+| `TS 44.060/12.7b/Extended Channel Request Description IE` |
+| `TS 44.060/12.8.2/Dual Carrier Direct encoding 1 struct` |
+| `TS 44.060/12.8.2/Dual Carrier Frequency Parameters IE` |
+| `TS 44.060/12.8.4/DLMC Direct encoding 1 struct` |
+| `TS 44.060/12.8.4/DLMC Frequency Parameters IE` |
+| `TS 44.060/12.8/Direct encoding 1 struct` |
+| `TS 44.060/12.8/Frequency Parameters IE` |
 <!-- /unresolved-carrier-limits -->
 
 A canonical end-selected `null` must remain the selected typed alternative. Even where `<spare padding>` follows a choice, transmitted bits can select its L arm instead (TS 24.007 V20.0.0 Annex B Rules B2, B4 and B8; TS 44.018 V19.0.0 §10.5.2.78). Generated encoders refuse this case with `*runtime.BoundError` and `Kind: runtime.CanonicalTarget`, reporting the requested extent, before returning bytes. They do not introduce a null/L equivalence outside the Enhanced Measurement Report rule above. Terminal `<spare bit>**` runs fill their containing extent with zero (Annex B Rule B7 and §B.2.1 Rule A2); printed carrier and IE-format maxima still bound explicit lengths.
@@ -232,3 +254,223 @@ The module has no tags or releases. Consumers track `main` at a pinned commit.
 
 Licensed under the [Apache License, Version 2.0](LICENSE). See [NOTICE](NOTICE) for the
 attribution of the 3GPP specifications from which the packages are generated.
+
+## Source-selected publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §10.5.2.11b | `ts44018/ies` | Dynamic ARFCN Mapping |
+| TS 44.018 §10.5.2.14d | `ts44018/ies` | GPRS broadcast information value part |
+| TS 44.018 §10.5.2.1d | `ts44018/ies` | UTRAN Freq List |
+| TS 44.018 §10.5.2.58 | `ts44018/ies` | MBMS p-t-m Channel Description value part |
+| TS 44.018 §10.5.2.58a | `ts44018/ies` | MBMS Session Parameters List value part |
+| TS 44.018 §10.5.2.60 | `ts44018/ies` | MPRACH description value part |
+| TS 44.018 §10.5.2.75 | `ts44018/ies` | Individual priorities |
+| TS 44.060 §11.2.8 | `ts44060/controlmessages` | Packet Downlink Dummy Control Block message content |
+| TS 44.060 §12.60 | `ts44060/csgreport` | E-UTRAN CSG Measurement Report IE |
+| TS 44.060 §12.62 | `ts44060/eutrancsgtarget` | E-UTRAN CSG Target cell IE |
+| TS 44.060 §12.12a | `ts44060/ies` | Global Packet Timing Advance IE |
+| TS 44.060 §12.26 | `ts44060/ies` | Extension Bits IE |
+| TS 44.060 §12.52 | `ts44060/ies` | 3G Priority Parameters IE |
+| TS 44.060 §12.54 | `ts44060/ies` | 3G CSG Description IE |
+| TS 44.060 §12.55 | `ts44060/ies` | E-UTRAN CSG Description IE |
+| TS 44.060 §12.75 | `ts44060/ies` | EC Channel Quality Report IE |
+| TS 44.060 §11 | `ts44060/padding` | padding bits |
+| TS 44.060 §12.63 | `ts44060/utrancsgtarget` | UTRAN CSG Target cell IE |
+
+## Additional source-selected publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §9.1.47 | `ts44018/messages` | UPLINK FREE |
+| TS 44.018 §9.1.21a | `ts44018/notification` | NOTIFICATION FACCH |
+| TS 44.018 §9.1.21a | `ts44018/notification` | Paging Information |
+| TS 44.060 §12.3.1 | `ts44060/acknack` | EGPRS Ack/Nack Description IE |
+| TS 44.060 §12.43 | `ts44060/containers` | NAS Container for PS Handover IE |
+| TS 44.060 §12.47 | `ts44060/containers` | CS Handover Radio Resources IE |
+| TS 44.060 §11.2.30a | `ts44060/controlmessages` | Packet pause message content |
+| TS 44.060 §11.2.35 | `ts44060/controlmessages` | Packet CS Request message content |
+| TS 44.060 §12.21 | `ts44060/ies` | Starting Frame Number Description IE |
+| TS 44.060 §12.28 | `ts44060/ies` | LSA Parameters IE |
+| TS 44.060 §12.8.3 | `ts44060/pulseformat` | Pulse Format IE |
+
+Notification/FACCH (TS 44.018 V19.0.0 §9.1.21a) and Uplink Free (§9.1.47) require the caller’s exact containing extent; no numerical carrier record has been authenticated. TS 44.060 V19.0.0 §§12.43 and 12.47 containers and §§11.2.30a and 11.2.35 control content likewise use the enclosing field or control block extent.
+
+## Additional source-selected publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §9.1.49b | `ts44018/messages` | VGCS SMS INFORMATION |
+| TS 44.018 §9.1.57 | `ts44018/messages` | VGCS Neighbour Cell Information |
+| TS 44.060 §11.2.1 | `ts44060/controlmessages` | Packet Access Reject message content |
+| TS 44.060 §11.2.11 | `ts44060/controlmessages` | Packet PDCH Release message content |
+| TS 44.060 §11.2.14 | `ts44060/controlmessages` | Packet PRACH Parameters message content |
+| TS 44.060 §11.2.15 | `ts44060/controlmessages` | Packet Queueing Notification message content |
+| TS 44.060 §11.2.2a | `ts44060/controlmessages` | Packet Cell Change Continue message content |
+| TS 44.060 §11.2.8b | `ts44060/controlmessages` | Packet Uplink Dummy Control Block message content |
+| TS 44.060 §12.56 | `ts44060/ies` | Measurement Control Parameters Description |
+| TS 44.060 §12.5a.1 | `ts44060/ies` | EGPRS Channel Quality Report Type 2 IE |
+| TS 44.060 §12.5a.3 | `ts44060/ies` | EGPRS Timeslot Link Quality Measurements Type 2 IE |
+| TS 44.060 §12.66 | `ts44060/ies` | DLMC Channel Quality Report IE |
+| TS 44.060 §12.27 | `ts44060/nongprsoptions` | Non GPRS Cell Options IE |
+
+VGCS SMS Information (TS 44.018 V19.0.0 §9.1.49b) and VGCS Neighbour Cell Information (§9.1.57) require the caller’s exact containing extent; no numerical carrier maximum has been authenticated. TS 44.060 V19.0.0 §§11.2.1, 11.2.2a, 11.2.8b, 11.2.11, 11.2.14 and 11.2.15 content uses the enclosing control block extent. Non GPRS Cell Options (§12.27) has a 14-octet containing maximum; Extension Information has eight octets, with no default standalone extent.
+
+## Status and channel reconfiguration publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §9.1.21h | `ts44018/vgcsreconfigure` | VBS/VGCS RECONFIGURE |
+| TS 44.018 §9.1.21h | `ts44018/vgcsreconfigure` | new Group Channel Description |
+| TS 44.018 §9.1.21i | `ts44018/vgcsreconfigure2` | VBS/VGCS RECONFIGURE2 |
+| TS 44.060 §11.2.17b | `ts44060/celldata` | Packet SI Status message content |
+| TS 44.060 §11.2.12 | `ts44060/controlmessages` | Packet Polling Request message content |
+| TS 44.060 §11.2.17 | `ts44060/controlmessages` | Packet PSI Status message content |
+| TS 44.060 §11.2.9c | `ts44060/controlmessages` | Packet Mobile TBF Status message content |
+| TS 44.060 §11.2.9 | `ts44060/measurementreport` | Packet Measurement Report message content |
+
+These source-selected roots require the enclosing message or control-block extent. Received earlier-release ignored tails replay exactly. A named canonical encoder refuses a requested extent it cannot fill, using its documented typed extent error.
+
+## Access, assignment and system information publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §9.1.60 | `ts44018/ecimmediateassignment2` | EC Immediate Assignment Type 2 message content |
+| TS 44.018 §10.5.2.8b | `ts44018/ies` | Channel Request Description 2 value part |
+| TS 44.018 §9.1.49a | `ts44018/messages` | VGCS ADDITIONAL INFO |
+| TS 44.018 §9.1.61 | `ts44018/messages` | EC Immediate Assignment Reject message content |
+| TS 44.018 §9.1.63 | `ts44018/messages` | EC Paging Request message content |
+| TS 44.018 §9.1.69 | `ts44018/messages` | EC Paging Indication |
+| TS 44.018 §10.5.2.25d | `ts44018/packetdlassignment` | RR Packet Downlink Assignment value part |
+| TS 44.060 §11.2.2 | `ts44060/access` | Packet Control Acknowledgement 11 bit message |
+| TS 44.060 §11.2.2 | `ts44060/access` | Packet Control Acknowledgement 8 bit message |
+| TS 44.060 §11.2.2 | `ts44060/access` | Packet Control Acknowledgement message content |
+| TS 44.060 §11.2.5 | `ts44060/access` | Packet channel request 11 bit message content |
+| TS 44.060 §11.2.5 | `ts44060/access` | Packet channel request 8 bit message content |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Access Burst method) |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS Packet channel request message content |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS PACKET CHANNEL REQUEST message content for ‘PEO One Phase Access Request’ |
+| TS 44.060 §11.2.5c | `ts44060/access` | MPRACH Packet channel request message content |
+| TS 44.060 §11.2.6a | `ts44060/ackmessages` | EGPRS Packet Downlink Ack/Nack message content |
+| TS 44.060 §11.2.17c | `ts44060/celldata` | Packet Serving Cell SI message content |
+| TS 44.060 §11.2.20 | `ts44060/packetsysteminformationtype3` | PSI3 message content |
+| TS 44.060 §11.2.24 | `ts44060/psilegacy` | PSI8 message content |
+
+Access-burst forms use their printed 8-bit or 11-bit extent. Source-selected control roots require the documented enclosing message or control-block extent. Received earlier-release ignored tails replay exactly. A named canonical encoder refuses a requested extent it cannot fill, using its documented typed extent error.
+
+## Control-message and assignment publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.060 §11.2.6 | `ts44060/ackmessages` | Packet Downlink Ack/Nack message content |
+| TS 44.060 §11.2.6b | `ts44060/ackmessages` | Packet DBPSCH Downlink Ack/Nack message |
+| TS 44.060 §11.2.6c | `ts44060/ackmessages` | Packet DBPSCH Downlink Ack/Nack Type 2 message |
+| TS 44.060 §11.2.13 | `ts44060/controlmessages` | Packet Power Control/Timing Advance message content |
+| TS 44.060 §11.2.3 | `ts44060/controlmessages` | Packet Cell Change Failure message content |
+| TS 44.060 §11.2.32 | `ts44060/controlmessages` | Additional MS Radio Access Capabilities message content |
+| TS 44.060 §11.2.34 | `ts44060/controlmessages` | Physical information message content |
+| TS 44.060 §11.2.3a | `ts44060/controlmessages` | Packet Cell Change Notification message content |
+| TS 44.060 §11.2.45 | `ts44060/controlmessages` | Packet Physical information message content |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Channel Description struct |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Network Response Times struct |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Packet DBPSCH Assignment message content |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Power Command struct |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Response Time SACCH struct |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Response Time SDCCH struct |
+| TS 44.060 §11.2.5b | `ts44060/controlmessages` | Response Time struct |
+| TS 44.060 §11.2.28a | `ts44060/dbpschuplinkack` | Packet DBPSCH Uplink Ack/Nack message content |
+| TS 44.060 §12.46 | `ts44060/dtmhandover` | DTM Handover PS Radio Resources IE |
+| TS 44.060 §11.2.39 | `ts44060/mbmsassignment` | MBMS Assignment Non-distribution message content |
+| TS 44.060 §11.2.38 | `ts44060/mbmsmessages` | MBMS service request message content |
+| TS 44.060 §12.48a.5 | `ts44060/multipledownlink` | Multiple Downlink Assignment 2 IE |
+| TS 44.060 §11.2.9e | `ts44060/neighbourcelldata` | Packet Neighbour Cell Data message content |
+| TS 44.060 §11.2.9d | `ts44060/packetenhancedmeasurement` | PACKET ENHANCED MEASUREMENT REPORT message content |
+| TS 44.060 §12.5.5 | `ts44060/pdchpairs` | PDCH Pairs Description IE |
+| TS 44.060 §11.2.18 | `ts44060/psi` | PSI1 message content |
+| TS 44.060 §11.2.19 | `ts44060/psi` | PSI2 message content |
+| TS 44.060 §11.2.21a | `ts44060/psi` | PSI3 ter message content |
+| TS 44.060 §11.2.25 | `ts44060/psi` | PSI13 message content |
+| TS 44.060 §11.2.25a | `ts44060/psi` | PSI14 message content |
+| TS 44.060 §11.2.25b | `ts44060/psi` | PSI15 message content |
+| TS 44.060 §11.2.21b | `ts44060/psineighbours` | PSI3 quater message content |
+| TS 44.060 §11.2.17a | `ts44060/servingcelldata` | Packet Serving Cell Data message content |
+| TS 44.060 §12.48a.2 | `ts44060/singledownlink` | Single Downlink Assignment 2 IE |
+| TS 44.060 §12.48a.3 | `ts44060/singleuplink` | Single Uplink Assignment 2 IE |
+
+Ordinary selector-free RLC/MAC control content uses block origin 14, phase 6. DBPSCH roots retain their own printed message selector. The caller supplies the documented enclosing extent. Received earlier-release ignored tails replay exactly. A named canonical encoder refuses a requested extent it cannot fill, using its documented typed extent error.
+
+## Additional assignment and measurement publications
+
+| Standard and clause | Package | Printed root |
+| --- | --- | --- |
+| TS 44.018 §10.5.2.25e | `ts44018/packetdlassignment2` | RR Packet Downlink Assignment Type 2 value part |
+| TS 44.060 §11.2.28b | `ts44060/dbpschuplinkack2` | Packet DBPSCH Uplink Ack/Nack message content |
+| TS 44.060 §12.51 | `ts44060/ies` | GSM Priority Parameters IE |
+| TS 44.060 §11.2.9b | `ts44060/packetmeasurementorder` | Packet Measurement Order message content |
+
+Ordinary selector-free RLC/MAC control content uses block origin 14, phase 6. DBPSCH roots retain their own printed message selector. The caller supplies the documented enclosing extent. Received earlier-release ignored tails replay exactly. A named canonical encoder refuses a requested extent it cannot fill, using its documented typed extent error.
+
+## Contextual access, capability and bounded assignment publications
+
+| Standard and clause | Package | Printed root | Printed context |
+| --- | --- | --- | --- |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC PACKET CHANNEL REQUEST message content | {"prefix": "", "suffix": "EGPRS Capability", "table": "9.1.65.2", "training_sequence": "3 (CC1)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) | {"prefix": "00", "suffix": "EGPRS Capability", "table": "9.1.65.2", "training_sequence": "4 (CC1)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Access Burst method) | {"prefix": "01", "suffix": "Spare", "table": "9.1.65.2", "training_sequence": "4 (CC1)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) | {"prefix": "10", "suffix": "0", "table": "9.1.65.2", "training_sequence": "4 (CC1)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) | {"prefix": "10", "suffix": "1", "table": "9.1.65.2", "training_sequence": "4 (CC1)\nNote 1"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC PACKET CHANNEL REQUEST message content | {"prefix": "", "suffix": "0", "table": "9.1.65.2", "training_sequence": "5 (CC2)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) | {"prefix": "00", "suffix": "1", "table": "9.1.65.2", "training_sequence": "5 (CC2)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Access Burst method) | {"prefix": "01", "suffix": "1", "table": "9.1.65.2", "training_sequence": "5 (CC2)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC PACKET CHANNEL REQUEST message content | {"prefix": "", "suffix": "0", "table": "9.1.65.2", "training_sequence": "6 (CC3)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) | {"prefix": "00", "suffix": "1", "table": "9.1.65.2", "training_sequence": "6 (CC3)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Access Burst method) | {"prefix": "01", "suffix": "1", "table": "9.1.65.2", "training_sequence": "6 (CC3)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC PACKET CHANNEL REQUEST message content | {"prefix": "", "suffix": "0", "table": "9.1.65.2", "training_sequence": "7 (CC4) or 8 (CC5)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content RLC Data Block method or Page Response for Positioning Event) | {"prefix": "00", "suffix": "1", "table": "9.1.65.2", "training_sequence": "7 (CC4) or 8 (CC5)"} |
+| TS 44.018 §9.1.65 | `ts44018/ecaccess` | EC MULTILATERATION REQUEST message content (Access Burst method) | {"prefix": "01", "suffix": "1", "table": "9.1.65.2", "training_sequence": "7 (CC4) or 8 (CC5)"} |
+| TS 44.060 §11.2.44 | `ts44060/access` | PS Handover Access message content 11 bit message |  |
+| TS 44.060 §11.2.44 | `ts44060/access` | PS Handover Access message content 8 bit message |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Access Burst method) |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS Packet channel request message content |  |
+| TS 44.060 §11.2.5a | `ts44060/access` | EGPRS PACKET CHANNEL REQUEST message content for ‘PEO One Phase Access Request’ |  |
+| TS 44.060 §11.2.7 | `ts44060/packetdownlinkassignment` | Additional PFCs struct |  |
+| TS 44.060 §11.2.31 | `ts44060/packettimeslotreconfigure` | Packet Timeslot Reconfigure message content |  |
+| TS 44.060 §12.42b | `ts44060/pshandoverradioresources3` | PS Handover Radio Resources 3 IE |  |
+| TS 44.060 §12.30 | `ts44060/radioaccesscapability` | MS Radio Access Capability 2 IE |  |
+
+Fourteen EC-RACH contexts from TS 44.018 table 9.1.65.2 are selected; the ten table 9.1.65.4 contexts remain held for conflicting bit labels. Context-qualified lookups require the exact printed context when a clause and name are ambiguous. The two extended part-2 forms compose eleven initial bits and nineteen continuation bits. Selected reserved remainder arms preserve and report their complete received bound, while fresh and canonical sending refuse them. The Packet Downlink Assignment selection contains only Additional PFCs struct; its message root remains unselected.
+
+## Resource request and PS handover publications
+
+| Standard and clause | Package | Printed root | Printed context |
+| --- | --- | --- | --- |
+| TS 44.060 §11.2.16 | `ts44060/assignmentmessages` | Packet Resource Request message content |  |
+| TS 44.060 §12.42 | `ts44060/pshandover` | PS Handover Radio Resources IE |  |
+
+Content roots retain their authenticated block coordinates. Packet Resource Request imports the selected MS Radio Access Capability 2 IE sender policy. PS Handover Radio Resources derives allocation counts from its enclosing typed value.
+
+## Uplink assignment publication
+
+| Standard and clause | Package | Printed root | Printed context |
+| --- | --- | --- | --- |
+| TS 44.060 §11.2.29 | `ts44060/packetuplinkassignment` | Packet Uplink Assignment message content |  |
+
+Content roots retain their authenticated block coordinates. The publications retain typed receiver-only error regions and source-derived allocation reference paths.
+
+## TBF release publication
+
+| Standard and clause | Package | Printed root | Printed context |
+| --- | --- | --- | --- |
+| TS 44.060 §11.2.26 | `ts44060/ecmessages` | Packet TBF Release message content |  |
+
+Content roots retain their authenticated block coordinates. The publications retain typed receiver-only error regions and complete earlier-release extension prefixes.
+
+## Held assignment clauses
+
+TS 44.060 V19.0.0 §§12.48a.6, 12.48a.1, 12.42a, 12.48, 12.64 and 11.2.37 are not published. The printed USF count in the §12.48a.6 BTTI Uplink TBF Assignment struct conflicts with its field text and with its RTTI sister struct. These clauses remain held pending resolution.

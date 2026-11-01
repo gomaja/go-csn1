@@ -11,17 +11,21 @@ var lookupErrorSink error
 var lookupValueSink any
 
 func TestLookupAllocations(t *testing.T) {
-	if raceEnabled {
-		t.Skip("allocation counts differ under race instrumentation")
-	}
 	for _, d := range Descriptors() {
 		if _, err := Lookup(d.Standard, d.Name); err == nil {
-			if n := testing.AllocsPerRun(100, func() { lookupDescriptorSink, lookupErrorSink = Lookup(d.Standard, d.Name) }); n != 0 {
+			if n := testing.AllocsPerRun(100, func() { lookupDescriptorSink, lookupErrorSink = Lookup(d.Standard, d.Name) }); !raceEnabled && n != 0 {
 				t.Errorf("Lookup %s/%s: %g allocations, want zero", d.Standard, d.Name, n)
 			}
 		}
-		if n := testing.AllocsPerRun(100, func() { lookupDescriptorSink, lookupErrorSink = LookupClause(d.Standard, d.Clause, d.Name) }); n != 0 {
-			t.Errorf("LookupClause %s/%s/%s: %g allocations, want zero", d.Standard, d.Clause, d.Name, n)
+		lookup := func() (runtime.Descriptor, error) { return LookupClause(d.Standard, d.Clause, d.Name) }
+		if _, err := lookup(); err != nil || d.Context != "" {
+			lookup = func() (runtime.Descriptor, error) { return LookupContext(d.Standard, d.Clause, d.Name, d.Context) }
+		}
+		if _, err := lookup(); err != nil {
+			t.Fatalf("exact lookup %s/%s/%s context %q: %v", d.Standard, d.Clause, d.Name, d.Context, err)
+		}
+		if n := testing.AllocsPerRun(100, func() { lookupDescriptorSink, lookupErrorSink = lookup() }); !raceEnabled && n != 0 {
+			t.Errorf("exact lookup %s/%s/%s context %q: %g allocations, want zero", d.Standard, d.Clause, d.Name, d.Context, n)
 		}
 	}
 }

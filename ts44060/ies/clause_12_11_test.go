@@ -262,7 +262,7 @@ func elementaryRequestGrowth(t *testing.T, clause, name string, entryBits int) {
 				panic(decodeErr)
 			}
 		})
-		if previous > 0 && allocations > 5*previous+8 {
+		if !raceEnabled && previous > 0 && allocations > 5*previous+8 {
 			t.Fatalf("allocation count grew beyond a linear bound: %g to %g", previous, allocations)
 		}
 		previous = allocations

@@ -101,7 +101,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 				t.Fatalf("%s §%s %s (%s) on %x: byte error %#v (%v), reader error %#v (%v)", d.Standard, d.Clause, d.Name, form, data, byteErr, byteErr, readerErr, readerErr)
 				return
 			}
-			if !reflect.DeepEqual(byteValue, readerValue) {
+			if !sameSourceDecoded(d, data, byteValue, readerValue) {
 				t.Fatalf("%s §%s %s (%s) on %x: typed value differs", d.Standard, d.Clause, d.Name, form, data)
 				return
 			}
@@ -119,12 +119,12 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 	// can decode.
 	checkCallerTail := func(d runtime.Descriptor, form string, data []byte, decode func(*runtime.Reader) (any, error)) {
 		t.Helper()
-		before, beforeErr := decode(runtime.NewReader(data))
+		before, beforeErr := decode(unboundedReaderAtOrigin(t, d, data))
 		if beforeErr != nil && !errors.Is(beforeErr, runtime.ErrContextRequired) {
 			return
 		}
 		for _, tail := range [][]byte{{0x5a, 0xa5}, {0xa5, 0x5a}} {
-			after, afterErr := decode(runtime.NewReader(append(append([]byte(nil), data...), tail...)))
+			after, afterErr := decode(unboundedReaderAtOrigin(t, d, append(append([]byte(nil), data...), tail...)))
 			if beforeErr != nil && !errors.Is(afterErr, runtime.ErrContextRequired) {
 				t.Fatalf("%s %s (%s) on %x with caller tail %x: context-required refusal became %+v (%v)", d.Standard, d.Name, form, data, tail, after, afterErr)
 			}
@@ -155,7 +155,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 				t.Fatalf("%s %s: missing entry point", d.Standard, d.Name)
 			}
 			bv, be := d.Decode(data)
-			rv, re := d.DecodeFrom(readerBoundTo(t, data))
+			rv, re := d.DecodeFrom(descriptorReader(t, d, data))
 			compare(d, "plain", data, bv, be, rv, re)
 			checkCallerTail(d, "plain", data, d.DecodeFrom)
 			if i < 16*(limit+1) {
@@ -176,7 +176,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 				}
 				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne, runtime.SI4ACS(2)} {
 					bv, be := d.DecodeWithContext(data, acs)
-					rv, re := d.DecodeFromWithContext(readerBoundTo(t, data), acs)
+					rv, re := d.DecodeFromWithContext(descriptorReader(t, d, data), acs)
 					compare(d, fmt.Sprintf("SI4 ACS %d", acs), data, bv, be, rv, re)
 					checkCallerTail(d, fmt.Sprintf("SI4 ACS %d", acs), data, func(r *runtime.Reader) (any, error) { return d.DecodeFromWithContext(r, acs) })
 					if i < 16*(limit+1) {

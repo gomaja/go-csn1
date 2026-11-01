@@ -1,0 +1,2123 @@
+[
+  {
+    "name": "baseline",
+    "bits": "0100000011110100000000000000001001001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  },
+  {
+    "name": "PSI3 quater message content//0/0/maximum",
+    "bits": "0100000011110111000000000000001001001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=3",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  },
+  {
+    "name": "PSI3 quater message content//0/1/maximum",
+    "bits": "0100000011110100110000000000001001001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=3",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  },
+  {
+    "name": "PSI3 quater message content//0/2/maximum",
+    "bits": "0100000011110100001111000000001001001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=15",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  },
+  {
+    "name": "PSI3 quater message content//0/3/maximum",
+    "bits": "0100000011110100000000111100001001001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=15",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  },
+  {
+    "name": "PSI3 quater message content//0/4/0/arm1",
+    "bits": "0100000011110100000000000010000000000100100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "numbercells=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "GPRS REP PRIORITY Description struct//1/count1",
+    "bits": "0100000011110100000000000010000001000010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "numbercells=1",
+      "reppriority=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "GPRS REP PRIORITY Description struct//1/count2",
+    "bits": "0100000011110100000000000010000010000001001000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "numbercells=2",
+      "reppriority=0",
+      "reppriority=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 44
+  },
+  {
+    "name": "GPRS REP PRIORITY Description struct//1/0/maximum",
+    "bits": "0100000011110100000000000010000001100010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "numbercells=1",
+      "reppriority=1",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "PSI3 quater message content//0/4/1/arm1",
+    "bits": "0100000011110100000000000001000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 39
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//0/arm1",
+    "bits": "0100000011110100000000000001100000000000010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "indexstart3g=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//0/1/1/maximum",
+    "bits": "0100000011110100000000000001111111110000010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "indexstart3g=127",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//1/arm1",
+    "bits": "0100000011110100000000000001010000000000010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "absoluteindexstartemr=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//1/1/1/maximum",
+    "bits": "0100000011110100000000000001011111111000010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "absoluteindexstartemr=127",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//2/arm1",
+    "bits": "0100000011110100000000000001001000001001001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 41
+  },
+  {
+    "name": "UTRAN FDD Description struct//0/arm1",
+    "bits": "0100000011110100000000000001001100000001001000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "bandwidthfdd=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 44
+  },
+  {
+    "name": "UTRAN FDD Description struct//0/1/1/maximum",
+    "bits": "0100000011110100000000000001001111100001001000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "bandwidthfdd=7",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 44
+  },
+  {
+    "name": "UTRAN FDD Description struct//1/count1",
+    "bits": "0100000011110100000000000001001010000000000000000000000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=0",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "UTRAN FDD Description struct//1/count2",
+    "bits": "0100000011110100000000000001001010000000000000000000001000000000000000000000000010010011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=0",
+      "fddcellinformationfield=bits:",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=0",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 85
+  },
+  {
+    "name": "Repeated UTRAN FDD Neighbour Cells struct//1/maximum",
+    "bits": "0100000011110100000000000001001010111111111111110000000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=16383",
+      "fddindic0=0",
+      "nroffddcells=0",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "Repeated UTRAN FDD Neighbour Cells struct//2/maximum",
+    "bits": "0100000011110100000000000001001010000000000000001000000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=1",
+      "nroffddcells=0",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 1",
+    "bits": "0100000011110100000000000001001010000000000000000000010000000000000010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=1",
+      "fddcellinformationfield=bits:0000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 73
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 2",
+    "bits": "0100000011110100000000000001001010000000000000000000100000000000000000000000010010001011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=2",
+      "fddcellinformationfield=bits:0000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 82
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 3",
+    "bits": "0100000011110100000000000001001010000000000000000000110000000000000000000000000000000010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=3",
+      "fddcellinformationfield=bits:0000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 91
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 4",
+    "bits": "0100000011110100000000000001001010000000000000000001000000000000000000000000000000000000000000100100101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=4",
+      "fddcellinformationfield=bits:000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 99
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 5",
+    "bits": "0100000011110100000000000001001010000000000000000001010000000000000000000000000000000000000000000000001001001011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=5",
+      "fddcellinformationfield=bits:00000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 107
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 6",
+    "bits": "0100000011110100000000000001001010000000000000000001100000000000000000000000000000000000000000000000000000000010010010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=6",
+      "fddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 115
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 7",
+    "bits": "0100000011110100000000000001001010000000000000000001110000000000000000000000000000000000000000000000000000000000000000100100101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=7",
+      "fddcellinformationfield=bits:000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 123
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 8",
+    "bits": "0100000011110100000000000001001010000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000010010001011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=8",
+      "fddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 130
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 9",
+    "bits": "0100000011110100000000000001001010000000000000000010010000000000000000000000000000000000000000000000000000000000000000000000000000001001001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=9",
+      "fddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 137
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 10",
+    "bits": "0100000011110100000000000001001010000000000000000010100000000000000000000000000000000000000000000000000000000000000000000000000000000000000100100010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=10",
+      "fddcellinformationfield=bits:000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 144
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 11",
+    "bits": "0100000011110100000000000001001010000000000000000010110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010010000101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=11",
+      "fddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 151
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 12",
+    "bits": "0100000011110100000000000001001010000000000000000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=12",
+      "fddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 158
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 13",
+    "bits": "0100000011110100000000000001001010000000000000000011010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100100110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=13",
+      "fddcellinformationfield=bits:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 165
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 14",
+    "bits": "0100000011110100000000000001001010000000000000000011100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010010001100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=14",
+      "fddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 172
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 15",
+    "bits": "0100000011110100000000000001001010000000000000000011110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=15",
+      "fddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 179
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 17",
+    "bits": "0100000011110100000000000001001010000000000000000100010000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=17",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 18",
+    "bits": "0100000011110100000000000001001010000000000000000100100000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=18",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 19",
+    "bits": "0100000011110100000000000001001010000000000000000100110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=19",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 20",
+    "bits": "0100000011110100000000000001001010000000000000000101000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=20",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 21",
+    "bits": "0100000011110100000000000001001010000000000000000101010000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=21",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 22",
+    "bits": "0100000011110100000000000001001010000000000000000101100000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=22",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 23",
+    "bits": "0100000011110100000000000001001010000000000000000101110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=23",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 24",
+    "bits": "0100000011110100000000000001001010000000000000000110000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=24",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 25",
+    "bits": "0100000011110100000000000001001010000000000000000110010000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=25",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 26",
+    "bits": "0100000011110100000000000001001010000000000000000110100000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=26",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 27",
+    "bits": "0100000011110100000000000001001010000000000000000110110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=27",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 28",
+    "bits": "0100000011110100000000000001001010000000000000000111000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=28",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 29",
+    "bits": "0100000011110100000000000001001010000000000000000111010000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=29",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 30",
+    "bits": "0100000011110100000000000001001010000000000000000111100000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=30",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_FDD_CELLS table index 31",
+    "bits": "0100000011110100000000000001001010000000000000000111110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddarfcn=0",
+      "fddindic0=0",
+      "nroffddcells=31",
+      "fddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "3G Neighbour Cell Description struct//3/arm1",
+    "bits": "0100000011110100000000000001000100001001001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 41
+  },
+  {
+    "name": "UTRAN TDD Description struct//0/arm1",
+    "bits": "0100000011110100000000000001000110000001001000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "bandwidthtdd=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 44
+  },
+  {
+    "name": "UTRAN TDD Description struct//0/1/1/maximum",
+    "bits": "0100000011110100000000000001000111110001001000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "bandwidthtdd=7",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 44
+  },
+  {
+    "name": "UTRAN TDD Description struct//1/count1",
+    "bits": "0100000011110100000000000001000101000000000000000000000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=0",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "UTRAN TDD Description struct//1/count2",
+    "bits": "0100000011110100000000000001000101000000000000000000000100000000000000000000000010010011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=0",
+      "tddcellinformationfield=bits:",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=0",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 85
+  },
+  {
+    "name": "Repeated UTRAN TDD Neighbour Cells struct//1/maximum",
+    "bits": "0100000011110100000000000001000101011111111111111000000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=16383",
+      "tddindic0=0",
+      "nroftddcells=0",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "Repeated UTRAN TDD Neighbour Cells struct//2/maximum",
+    "bits": "0100000011110100000000000001000101000000000000000100000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=1",
+      "nroftddcells=0",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 1",
+    "bits": "0100000011110100000000000001000101000000000000000000001000000000000100100010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=1",
+      "tddcellinformationfield=bits:000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 72
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 2",
+    "bits": "0100000011110100000000000001000101000000000000000000010000000000000000000001001000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=2",
+      "tddcellinformationfield=bits:00000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 80
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 3",
+    "bits": "0100000011110100000000000001000101000000000000000000011000000000000000000000000000010010001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=3",
+      "tddcellinformationfield=bits:0000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 88
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 4",
+    "bits": "0100000011110100000000000001000101000000000000000000100000000000000000000000000000000000001001000010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=4",
+      "tddcellinformationfield=bits:00000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 95
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 5",
+    "bits": "0100000011110100000000000001000101000000000000000000101000000000000000000000000000000000000000000100100100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=5",
+      "tddcellinformationfield=bits:000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 102
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 6",
+    "bits": "0100000011110100000000000001000101000000000000000000110000000000000000000000000000000000000000000000000010010011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=6",
+      "tddcellinformationfield=bits:0000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 109
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 7",
+    "bits": "0100000011110100000000000001000101000000000000000000111000000000000000000000000000000000000000000000000000000001001000110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=7",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 116
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 8",
+    "bits": "0100000011110100000000000001000101000000000000000001000000000000000000000000000000000000000000000000000000000000000001001000101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=8",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 122
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 9",
+    "bits": "0100000011110100000000000001000101000000000000000001001000000000000000000000000000000000000000000000000000000000000000000001001000101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=9",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 128
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 10",
+    "bits": "0100000011110100000000000001000101000000000000000001010000000000000000000000000000000000000000000000000000000000000000000000000001001001001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=10",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 134
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 11",
+    "bits": "0100000011110100000000000001000101000000000000000001011000000000000000000000000000000000000000000000000000000000000000000000000000000001001000110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=11",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 140
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 12",
+    "bits": "0100000011110100000000000001000101000000000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001000101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=12",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 146
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 13",
+    "bits": "0100000011110100000000000001000101000000000000000001101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001000101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=13",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 152
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 14",
+    "bits": "0100000011110100000000000001000101000000000000000001110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=14",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 158
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 15",
+    "bits": "0100000011110100000000000001000101000000000000000001111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001000110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=15",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 164
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 16",
+    "bits": "0100000011110100000000000001000101000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010010010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=16",
+      "tddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 169
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 17",
+    "bits": "0100000011110100000000000001000101000000000000000010001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100100100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=17",
+      "tddcellinformationfield=bits:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 174
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 18",
+    "bits": "0100000011110100000000000001000101000000000000000010010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=18",
+      "tddcellinformationfield=bits:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 179
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 19",
+    "bits": "0100000011110100000000000001000101000000000000000010011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010010",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=19",
+      "tddcellinformationfield=bits:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 184
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 21",
+    "bits": "0100000011110100000000000001000101000000000000000010101000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=21",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 22",
+    "bits": "0100000011110100000000000001000101000000000000000010110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=22",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 23",
+    "bits": "0100000011110100000000000001000101000000000000000010111000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=23",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 24",
+    "bits": "0100000011110100000000000001000101000000000000000011000000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=24",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 25",
+    "bits": "0100000011110100000000000001000101000000000000000011001000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=25",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 26",
+    "bits": "0100000011110100000000000001000101000000000000000011010000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=26",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 27",
+    "bits": "0100000011110100000000000001000101000000000000000011011000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=27",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 28",
+    "bits": "0100000011110100000000000001000101000000000000000011100000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=28",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 29",
+    "bits": "0100000011110100000000000001000101000000000000000011101000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=29",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 30",
+    "bits": "0100000011110100000000000001000101000000000000000011110000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=30",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "NR_OF_TDD_CELLS table index 31",
+    "bits": "0100000011110100000000000001000101000000000000000011111000100100001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "tddarfcn=0",
+      "tddindic0=0",
+      "nroftddcells=31",
+      "tddcellinformationfield=bits:",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 63
+  },
+  {
+    "name": "PSI3 quater message content//0/4/2/arm1",
+    "bits": "0100000011110100000000000000100001000100100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//0/maximum",
+    "bits": "0100000011110100000000000000111111000100100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=15",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//2/arm1",
+    "bits": "0100000011110100000000000000100001100000000010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "fddgprsqoffset=0",
+      "fddqmin=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//2/1/1/maximum",
+    "bits": "0100000011110100000000000000100001111110000010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "fddgprsqoffset=15",
+      "fddqmin=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//2/1/2/maximum",
+    "bits": "0100000011110100000000000000100001100001110010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "fddgprsqoffset=0",
+      "fddqmin=7",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//3/arm1",
+    "bits": "0100000011110100000000000000100001010000010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "tddgprsqoffset=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "3G MEASUREMENT PARAMETERS Description struct//3/1/1/maximum",
+    "bits": "0100000011110100000000000000100001011111010010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "qsearchp=0",
+      "tddgprsqoffset=15",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 46
+  },
+  {
+    "name": "PSI3 quater message content//0/4/3/arm1",
+    "bits": "0100000011110100000000000000010000000010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//0/maximum",
+    "bits": "0100000011110100000000000000011000000010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=1",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//1/maximum",
+    "bits": "0100000011110100000000000000010111100010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=15",
+      "qsearchcinitial=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//2/maximum",
+    "bits": "0100000011110100000000000000010000010010010010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=1",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 43
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//3/arm1",
+    "bits": "0100000011110100000000000000010000001000000001001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "fddqoffset=0",
+      "fddrepquant=0",
+      "fddmultiratreporting=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//3/1/1/maximum",
+    "bits": "0100000011110100000000000000010000001111100001001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "fddqoffset=15",
+      "fddrepquant=0",
+      "fddmultiratreporting=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//3/1/2/maximum",
+    "bits": "0100000011110100000000000000010000001000010001001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "fddqoffset=0",
+      "fddrepquant=1",
+      "fddmultiratreporting=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//3/1/3/maximum",
+    "bits": "0100000011110100000000000000010000001000001101001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "fddqoffset=0",
+      "fddrepquant=0",
+      "fddmultiratreporting=3",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//4/arm1",
+    "bits": "0100000011110100000000000000010000000100000010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "tddqoffset=0",
+      "tddmultiratreporting=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//4/1/1/maximum",
+    "bits": "0100000011110100000000000000010000000111110010010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "tddqoffset=15",
+      "tddmultiratreporting=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "3G Initial Dedicated Mode Reporting Description struct//4/1/2/maximum",
+    "bits": "0100000011110100000000000000010000000100001110010010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gbaind=0",
+      "qsearchi=0",
+      "qsearchcinitial=0",
+      "tddqoffset=0",
+      "tddmultiratreporting=3",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 49
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/arm0",
+    "bits": "010000001111010000000000000000",
+    "extent": 30,
+    "full_block": false,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0"
+    ],
+    "tail": "empty",
+    "semantic_bits": 30
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/arm1",
+    "bits": "0100000011110100000000000000000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0"
+    ],
+    "tail": "ignored",
+    "semantic_bits": 31
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/2/1/arm1",
+    "bits": "0100000011110100000000000000001100000000100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddqminoffset=0",
+      "fddrscpmin=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "GPRS 3G Additional Measurement Parameters Description struct//0/maximum",
+    "bits": "0100000011110100000000000000001111100000100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddqminoffset=7",
+      "fddrscpmin=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "GPRS 3G Additional Measurement Parameters Description struct//1/maximum",
+    "bits": "0100000011110100000000000000001100011110100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddqminoffset=0",
+      "fddrscpmin=15",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/2/2/arm1",
+    "bits": "0100000011110100000000000000001010100011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 36
+  },
+  {
+    "name": "GPRS 3G Additional Measurement Parameters Description 2 struct//arm1",
+    "bits": "0100000011110100000000000000001011000000100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddreportingthreshold2=0",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "GPRS 3G Additional Measurement Parameters Description 2 struct//1/1/maximum",
+    "bits": "0100000011110100000000000000001011111111100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "fddreportingthreshold2=63",
+      "3gccnactive=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 42
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/2/3/arm0",
+    "bits": "010000001111010000000000000000100",
+    "extent": 33,
+    "full_block": false,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0"
+    ],
+    "tail": "empty",
+    "semantic_bits": 33
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/2/3/arm1",
+    "bits": "0100000011110100000000000000001000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0"
+    ],
+    "tail": "ignored",
+    "semantic_bits": 34
+  },
+  {
+    "name": "PSI3 quater message content//0/4/4/2/3/2/1/maximum",
+    "bits": "0100000011110100000000000000001001101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi3changemark=0",
+      "psi3quaterindex=0",
+      "psi3quatercount=0",
+      "3gccnactive=1"
+    ],
+    "tail": "padding",
+    "semantic_bits": 35
+  }
+]

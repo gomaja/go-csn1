@@ -1,0 +1,4 @@
+// Package vgcsreconfigure2 contains source-selected CSN.1 codecs.
+//
+// TS 44.018 V19.0.0 §9.1.21i defines VBS/VGCS reconfigure2. The containing message supplies the exact bit extent; no additional numerical carrier cap is assigned by this intake.
+package vgcsreconfigure2

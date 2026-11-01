@@ -381,7 +381,7 @@ func TestZeroRunGrowth(t *testing.T) {
 			if err := r.ExpectZeros(width); err != nil {
 				t.Fatal(err)
 			}
-		}); allocations != 0 {
+		}); !raceEnabled && allocations != 0 {
 			t.Fatalf("width=%d: reader allocates %g", width, allocations)
 		}
 		w := NewWriter()

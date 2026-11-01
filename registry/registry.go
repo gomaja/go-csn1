@@ -14,12 +14,57 @@ import (
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 	"github.com/gomaja/go-csn1/ts36331/uecapability"
 	"github.com/gomaja/go-csn1/ts44018/cellselection"
+	"github.com/gomaja/go-csn1/ts44018/ecaccess"
+	"github.com/gomaja/go-csn1/ts44018/ecimmediateassignment2"
 	rries "github.com/gomaja/go-csn1/ts44018/ies"
 	"github.com/gomaja/go-csn1/ts44018/measurement"
 	"github.com/gomaja/go-csn1/ts44018/messages"
+	"github.com/gomaja/go-csn1/ts44018/notification"
+	"github.com/gomaja/go-csn1/ts44018/packetdlassignment"
+	"github.com/gomaja/go-csn1/ts44018/packetdlassignment2"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
+	"github.com/gomaja/go-csn1/ts44018/vgcsreconfigure"
+	"github.com/gomaja/go-csn1/ts44018/vgcsreconfigure2"
+	"github.com/gomaja/go-csn1/ts44060/access"
+	"github.com/gomaja/go-csn1/ts44060/ackmessages"
+	"github.com/gomaja/go-csn1/ts44060/acknack"
+	"github.com/gomaja/go-csn1/ts44060/assignmentmessages"
+	"github.com/gomaja/go-csn1/ts44060/celldata"
+	"github.com/gomaja/go-csn1/ts44060/containers"
+	"github.com/gomaja/go-csn1/ts44060/controlmessages"
+	"github.com/gomaja/go-csn1/ts44060/csgreport"
+	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack"
+	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack2"
+	"github.com/gomaja/go-csn1/ts44060/dtmhandover"
+	"github.com/gomaja/go-csn1/ts44060/ecmessages"
+	"github.com/gomaja/go-csn1/ts44060/eutrancsgtarget"
 	"github.com/gomaja/go-csn1/ts44060/ies"
+	"github.com/gomaja/go-csn1/ts44060/mbmsassignment"
+	"github.com/gomaja/go-csn1/ts44060/mbmsmessages"
+	"github.com/gomaja/go-csn1/ts44060/measurementreport"
 	ts44060messages "github.com/gomaja/go-csn1/ts44060/messages"
+	"github.com/gomaja/go-csn1/ts44060/multipledownlink"
+	"github.com/gomaja/go-csn1/ts44060/neighbourcelldata"
+	"github.com/gomaja/go-csn1/ts44060/nongprsoptions"
+	"github.com/gomaja/go-csn1/ts44060/packetdownlinkassignment"
+	"github.com/gomaja/go-csn1/ts44060/packetenhancedmeasurement"
+	"github.com/gomaja/go-csn1/ts44060/packetmeasurementorder"
+	"github.com/gomaja/go-csn1/ts44060/packetsysteminformationtype3"
+	"github.com/gomaja/go-csn1/ts44060/packettimeslotreconfigure"
+	"github.com/gomaja/go-csn1/ts44060/packetuplinkassignment"
+	"github.com/gomaja/go-csn1/ts44060/padding"
+	"github.com/gomaja/go-csn1/ts44060/pdchpairs"
+	"github.com/gomaja/go-csn1/ts44060/pshandover"
+	"github.com/gomaja/go-csn1/ts44060/pshandoverradioresources3"
+	"github.com/gomaja/go-csn1/ts44060/psi"
+	"github.com/gomaja/go-csn1/ts44060/psilegacy"
+	"github.com/gomaja/go-csn1/ts44060/psineighbours"
+	"github.com/gomaja/go-csn1/ts44060/pulseformat"
+	"github.com/gomaja/go-csn1/ts44060/radioaccesscapability"
+	"github.com/gomaja/go-csn1/ts44060/servingcelldata"
+	"github.com/gomaja/go-csn1/ts44060/singledownlink"
+	"github.com/gomaja/go-csn1/ts44060/singleuplink"
+	"github.com/gomaja/go-csn1/ts44060/utrancsgtarget"
 )
 
 func descriptors() []runtime.Descriptor {
@@ -34,6 +79,51 @@ func descriptors() []runtime.Descriptor {
 	out = append(out, rries.Descriptors()...)
 	out = append(out, messages.Descriptors()...)
 	out = append(out, ts44060messages.Descriptors()...)
+	out = append(out, ecaccess.Descriptors()...)
+	out = append(out, ecimmediateassignment2.Descriptors()...)
+	out = append(out, notification.Descriptors()...)
+	out = append(out, packetdlassignment.Descriptors()...)
+	out = append(out, packetdlassignment2.Descriptors()...)
+	out = append(out, vgcsreconfigure.Descriptors()...)
+	out = append(out, vgcsreconfigure2.Descriptors()...)
+	out = append(out, access.Descriptors()...)
+	out = append(out, ackmessages.Descriptors()...)
+	out = append(out, acknack.Descriptors()...)
+	out = append(out, assignmentmessages.Descriptors()...)
+	out = append(out, celldata.Descriptors()...)
+	out = append(out, containers.Descriptors()...)
+	out = append(out, controlmessages.Descriptors()...)
+	out = append(out, csgreport.Descriptors()...)
+	out = append(out, dbpschuplinkack.Descriptors()...)
+	out = append(out, dbpschuplinkack2.Descriptors()...)
+	out = append(out, dtmhandover.Descriptors()...)
+	out = append(out, ecmessages.Descriptors()...)
+	out = append(out, eutrancsgtarget.Descriptors()...)
+	out = append(out, mbmsassignment.Descriptors()...)
+	out = append(out, mbmsmessages.Descriptors()...)
+	out = append(out, measurementreport.Descriptors()...)
+	out = append(out, multipledownlink.Descriptors()...)
+	out = append(out, neighbourcelldata.Descriptors()...)
+	out = append(out, nongprsoptions.Descriptors()...)
+	out = append(out, packetdownlinkassignment.Descriptors()...)
+	out = append(out, packetenhancedmeasurement.Descriptors()...)
+	out = append(out, packetmeasurementorder.Descriptors()...)
+	out = append(out, packetsysteminformationtype3.Descriptors()...)
+	out = append(out, packettimeslotreconfigure.Descriptors()...)
+	out = append(out, packetuplinkassignment.Descriptors()...)
+	out = append(out, padding.Descriptors()...)
+	out = append(out, pdchpairs.Descriptors()...)
+	out = append(out, pshandover.Descriptors()...)
+	out = append(out, pshandoverradioresources3.Descriptors()...)
+	out = append(out, psi.Descriptors()...)
+	out = append(out, psilegacy.Descriptors()...)
+	out = append(out, psineighbours.Descriptors()...)
+	out = append(out, pulseformat.Descriptors()...)
+	out = append(out, radioaccesscapability.Descriptors()...)
+	out = append(out, servingcelldata.Descriptors()...)
+	out = append(out, singledownlink.Descriptors()...)
+	out = append(out, singleuplink.Descriptors()...)
+	out = append(out, utrancsgtarget.Descriptors()...)
 	out = append(out,
 		manualDescriptor(manualSourceClassmark2ValuePart, "Mobile Station Classmark 2 value part", 24, 24, 3, manualDecodeClassmark2ValuePart, manualDecodeClassmark2ValuePartFrom, manualEncodeClassmark2ValuePart, manualCanonicalClassmark2ValuePart, manualCanonicalClassmark2ValuePartAtLength),
 		manualDescriptor(manualSourceGERANCS, "geran-cs", 48, 296, 37, manualDecodeGERANCS, manualDecodeGERANCSFrom, manualEncodeGERANCS, manualCanonicalGERANCS, manualCanonicalGERANCSAtLength),
@@ -311,4 +401,101 @@ func manualCanonicalGERANPSAtLength(value any, octets int) ([]byte, error) {
 		return nil, manualTypeError("canonical", "geran-ps", manualSourceGERANPS)
 	}
 	return uecapability.EncodeGERANPSCanonicalAtLength(v, octets)
+}
+
+// SourceOrigin returns the recorded source block coordinate, or zero when no origin contract is recorded.
+// TS 44.060 V19.0.0 sections 10.3.1, 10.3.2 and 11.2.0.1-11.2.0.2.
+// Descriptor DecodeBits and DecodeBitsWithReport position content there.
+// DecodeFrom accepts a caller-owned bounded reader at the same octet phase;
+// descriptor byte functions supply the recorded coordinate.
+func SourceOrigin(d runtime.Descriptor) int {
+	switch {
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.1" && d.Name == "Packet Access Reject message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.11" && d.Name == "Packet PDCH Release message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.12" && d.Name == "Packet Polling Request message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.13" && d.Name == "Packet Power Control/Timing Advance message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.14" && d.Name == "Packet PRACH Parameters message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.15" && d.Name == "Packet Queueing Notification message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.16" && d.Name == "Packet Resource Request message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17" && d.Name == "Packet PSI Status message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17a" && d.Name == "Packet Serving Cell Data message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17b" && d.Name == "Packet SI Status message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17c" && d.Name == "Packet Serving Cell SI message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.18" && d.Name == "PSI1 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.19" && d.Name == "PSI2 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.2" && d.Name == "Packet Control Acknowledgement message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.20" && d.Name == "PSI3 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.21a" && d.Name == "PSI3 ter message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.21b" && d.Name == "PSI3 quater message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.24" && d.Name == "PSI8 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25" && d.Name == "PSI13 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25a" && d.Name == "PSI14 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25b" && d.Name == "PSI15 message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.26" && d.Name == "Packet TBF Release message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.29" && d.Name == "Packet Uplink Assignment message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.2a" && d.Name == "Packet Cell Change Continue message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.3" && d.Name == "Packet Cell Change Failure message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.30a" && d.Name == "Packet pause message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.31" && d.Name == "Packet Timeslot Reconfigure message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.32" && d.Name == "Additional MS Radio Access Capabilities message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.35" && d.Name == "Packet CS Request message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.38" && d.Name == "MBMS service request message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.39" && d.Name == "MBMS Assignment Non-distribution message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.3a" && d.Name == "Packet Cell Change Notification message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.45" && d.Name == "Packet Physical information message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.5b" && d.Name == "Packet DBPSCH Assignment message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.6" && d.Name == "Packet Downlink Ack/Nack message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.6a" && d.Name == "EGPRS Packet Downlink Ack/Nack message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.8" && d.Name == "Packet Downlink Dummy Control Block message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.8b" && d.Name == "Packet Uplink Dummy Control Block message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9" && d.Name == "Packet Measurement Report message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9b" && d.Name == "Packet Measurement Order message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9c" && d.Name == "Packet Mobile TBF Status message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9d" && d.Name == "PACKET ENHANCED MEASUREMENT REPORT message content":
+		return 14
+	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9e" && d.Name == "Packet Neighbour Cell Data message content":
+		return 14
+	}
+	return 0
 }

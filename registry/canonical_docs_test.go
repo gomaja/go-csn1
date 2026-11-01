@@ -48,7 +48,7 @@ const (
 )
 
 // generatedFiles returns the generated.go of every codec package: a ts*/*
-// directory with Go files. A directory without Go files is a planned package
+// directory with production Go files. A test-only directory is a planned package
 // (see the README coverage table) and is skipped. It fails clearly on a
 // lookup error, on no codec package, or on a codec package without
 // generated code.
@@ -72,7 +72,14 @@ func generatedFiles(t *testing.T) []string {
 		if err != nil {
 			t.Fatalf("listing %s: %v", dir, err)
 		}
-		if len(sources) == 0 {
+		production := false
+		for _, source := range sources {
+			if !strings.HasSuffix(source, "_test.go") {
+				production = true
+				break
+			}
+		}
+		if !production {
 			continue
 		}
 		file := filepath.Join(dir, "generated.go")
@@ -182,7 +189,7 @@ func documentedClasses(t *testing.T) map[string]map[string]bool {
 
 var delegatedCallee = regexp.MustCompile(`(?:([A-Za-z_][A-Za-z0-9_]*)\.)?(Encode[A-Za-z0-9]*Canonical(?:AtLength)?(?:WithContext)?)\b`)
 
-// canonicalFunctions maps each descriptor (clause and name) to the package
+// canonicalFunctions maps each descriptor (clause, name and context) to the package
 // directory and function its Canonical adapter calls, and fails when one
 // descriptor key maps to two functions.
 func canonicalFunctions(t *testing.T) map[string]string {
@@ -210,7 +217,7 @@ func canonicalFunctions(t *testing.T) map[string]string {
 			if !ok {
 				return true
 			}
-			var clause, name, call string
+			var clause, name, context, call string
 			for _, element := range lit.Elts {
 				kv, ok := element.(*ast.KeyValueExpr)
 				if !ok {
@@ -221,13 +228,16 @@ func canonicalFunctions(t *testing.T) map[string]string {
 					continue
 				}
 				switch key.Name {
-				case "Clause", "Name":
+				case "Clause", "Name", "Context":
 					if basic, ok := kv.Value.(*ast.BasicLit); ok {
 						value, _ := strconv.Unquote(basic.Value)
-						if key.Name == "Clause" {
+						switch key.Name {
+						case "Clause":
 							clause = value
-						} else {
+						case "Name":
 							name = value
+						case "Context":
+							context = value
 						}
 					}
 				case "Canonical":
@@ -255,7 +265,7 @@ func canonicalFunctions(t *testing.T) map[string]string {
 				}
 			}
 			if name != "" && call != "" {
-				key := clause + "\x00" + name
+				key := clause + "\x00" + name + "\x00" + context
 				if prior, ok := out[key]; ok && prior != call {
 					t.Fatalf("descriptor %s §%s maps to %s and %s", name, clause, prior, call)
 				}
@@ -265,9 +275,9 @@ func canonicalFunctions(t *testing.T) map[string]string {
 		})
 	}
 
-	out["10.5.1.6\x00Mobile Station Classmark 2 value part"] = "ts36331/uecapability.EncodeClassmark2ValuePartCanonical"
-	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs"] = "ts36331/uecapability.EncodeGERANCSCanonical"
-	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-ps"] = "ts36331/uecapability.EncodeGERANPSCanonical"
+	out["10.5.1.6\x00Mobile Station Classmark 2 value part\x00"] = "ts36331/uecapability.EncodeClassmark2ValuePartCanonical"
+	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs\x00"] = "ts36331/uecapability.EncodeGERANCSCanonical"
+	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-ps\x00"] = "ts36331/uecapability.EncodeGERANPSCanonical"
 	return out
 }
 
@@ -322,7 +332,7 @@ func classify(err error, octets int, entry string) string {
 // guidedDecode decodes biased random bits, resampling from the offset where
 // the decoder rejects them, so most grammars yield valid values; a high
 // one-bit bias lengthens {1 ...}** lists and selects optional arms.
-func guidedDecode(rng *rand.Rand, maxOctets int, decode func([]byte) (any, error)) []any {
+func guidedDecode(rng *rand.Rand, maxOctets, origin int, decode func([]byte) (any, error)) []any {
 	var out []any
 	sizes := []int{0, 1, 8, 20, 64, 200}
 	if maxOctets > 0 {
@@ -361,10 +371,10 @@ func guidedDecode(rng *rand.Rand, maxOctets int, decode func([]byte) (any, error
 				}
 				at := 0
 				var de *runtime.DecodeError
-				if errors.As(err, &de) && de.Offset > 0 && de.Offset <= len(bits) {
+				if errors.As(err, &de) && de.Offset > origin && de.Offset-origin <= len(bits) {
 					// Resample near the failure, sometimes further back:
 					// some checks report after the bits they reject.
-					at = de.Offset - 1 - rng.Intn(min(de.Offset, []int{8, 16, 64}[rng.Intn(3)]))
+					at = de.Offset - origin - 1 - rng.Intn(min(de.Offset-origin, []int{8, 16, 64}[rng.Intn(3)]))
 				}
 				fill(at)
 			}
@@ -682,7 +692,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			switch {
 			case d.DecodeWithContext != nil:
 				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
-					found = append(found, guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
+					found = append(found, guidedDecode(rng, d.MaxOctets, SourceOrigin(d), func(b []byte) (any, error) {
 						decoded, err := d.DecodeWithContext(b, acs)
 						if err != nil {
 							return nil, err
@@ -691,9 +701,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					})...)
 				}
 			case d.DecodeFrom != nil:
-				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
-					r := runtime.NewReader(b)
-					if _, err := r.PushLimit(len(b) * 8); err != nil {
+				found = guidedDecode(rng, d.MaxOctets, SourceOrigin(d), func(b []byte) (any, error) {
+					r := sourceReader(t, d, b)
+					if _, err := r.PushLimit(r.Remaining()); err != nil {
 						return nil, err
 					}
 					decoded, err := d.DecodeFrom(r)
@@ -703,7 +713,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					return reflect.ValueOf(decoded).FieldByName("Value").Interface(), nil
 				})
 			default:
-				found = guidedDecode(rng, d.MaxOctets, func(b []byte) (any, error) {
+				found = guidedDecode(rng, d.MaxOctets, SourceOrigin(d), func(b []byte) (any, error) {
 					decoded, err := d.Decode(b)
 					if err != nil {
 						return nil, err
@@ -722,7 +732,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				}
 			}
 			if decode := canonicalLongSeeds[d.Clause+"\x00"+d.Name]; decode != nil {
-				found = append(found, guidedDecode(rand.New(rand.NewSource(int64(index))), 0, decode)...)
+				found = append(found, guidedDecode(rand.New(rand.NewSource(int64(index))), 0, 0, decode)...)
 			}
 			local := map[reflect.Type][]reflect.Value{}
 			for _, v := range found {
@@ -777,6 +787,9 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			}
 		}
 		own = selectValues(d, own, canonicalSeedCount(d))
+		if seed, ok := containerCanonicalLengthSeed(t, d); ok {
+			own = append(own, seed)
+		}
 		if len(own) > 0 {
 			// The zero value selects first and empty alternatives.
 			own = append(own, reflect.Zero(reflect.TypeOf(own[0])).Interface())
@@ -792,6 +805,27 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					observed[entry][c] = true
 				}
 			}
+			reservedRemainderCanonicalWitnesses(t, d, record)
+			// TS 44.060 V19.0.0 §11.2.6a table 11.2.6a.1a:
+			// exercise the generated codec with both application-owned DLDC
+			// contexts, as well as the descriptor's context-free refusal.
+			// The ignored zero extension is valid known-arm content, so a
+			// canonical sender must return the documented FallbackError.
+			for _, dual := range []uint64{0, 1} {
+				contextual, selected := canonicalDLDCDescriptor(d, dual)
+				if !selected {
+					continue
+				}
+				witness, err := canonicalDLDCFallbackWitness(dual)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				_, err = d.CanonicalAtLength(witness, 23)
+				record(entryAtLength, err, 23)
+				_, err = contextual.CanonicalAtLength(witness, 23)
+				record(entryAtLength, err, 23)
+			}
 
 			// TS 24.007 V20.0.0 Annex B.1.1.2 p3987-3988: a
 			// deliberately selected null cannot supply remaining positions.
@@ -802,7 +836,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 					t.Error(err)
 					return
 				}
-				r := runtime.NewReader(wire)
+				r := sourceReader(t, d, wire)
 				if _, err := r.PushLimit(seed.bits); err != nil {
 					t.Error(err)
 					return
@@ -857,6 +891,27 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 			if d.MaxOctets > 0 {
 				octets = append(octets, d.MaxOctets, d.MaxOctets+1)
 			}
+			// TS 44.060 V19.0.0 §11.2.1 paragraphs 13485–13491:
+			// empty selected RB/PFI lists collide with the earlier all-requests
+			// alternative. Exercise that refusal through the full content root.
+			if d.Standard == "TS 44.060" && d.Clause == "11.2.1" && d.Name == "Packet Access Reject message content" {
+				for _, base := range own {
+					var lists []reflect.Value
+					sliceFields(deepCopy(base), 0, &lists)
+					for index, list := range lists {
+						name := list.Type().Elem().Name()
+						if !strings.HasSuffix(name, "RBIdChoiceRBIdEntry") && !strings.HasSuffix(name, "PFIChoicePFIEntry") {
+							continue
+						}
+						copy := deepCopy(base)
+						var copied []reflect.Value
+						sliceFields(copy, 0, &copied)
+						copied[index].Set(reflect.MakeSlice(list.Type(), 0, 0))
+						_, err := d.CanonicalAtLength(copy.Interface(), 23)
+						record(entryAtLength, err, 23)
+					}
+				}
+			}
 			for _, base := range own {
 				variants(rng, base, 40, func(v any) {
 					if d.Canonical != nil {
@@ -905,7 +960,7 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 
 	var failures []string
 	for index, d := range definitions {
-		function := functions[d.Clause+"\x00"+d.Name]
+		function := functions[d.Clause+"\x00"+d.Name+"\x00"+d.Context]
 		if function == "" {
 			t.Fatalf("%s: no generated canonical function", results[index].key)
 		}
@@ -987,6 +1042,30 @@ func structTypes(t reflect.Type, into map[reflect.Type]bool) {
 // entry and a valid multiblock assignment; growing that list reaches the
 // IA extent error without selecting a reserved alternative.
 var canonicalSeeds = map[string][]string{
+
+	"11.2.28b\x00Packet DBPSCH Uplink Ack/Nack message content": {"2403"},
+
+	// TS 44.060 V19.0.0 §11.2.18: source-selected canonical arm witnesses.
+	"11.2.18" + "\x00" + "PSI1 message content": {"2d4caa9ca4963c1b6a69575cda9ecb2b2b2b2b2b2b2b", "ed4cbba9ca4963c1b6a69575cda9efb32b2b2b2b2b2b", "2d4cad870ea89150963c1b6a69575cda9efb2b2b2b2b", "2d4cada4793e353258f06da9a55d736a7bed2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.19: source-selected canonical arm witnesses.
+	"11.2.19" + "\x00" + "PSI2 message content": {"97408b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b", "9740f8d73dd92b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.21a: source-selected canonical arm witnesses.
+	"11.2.21a" + "\x00" + "PSI3 ter message content": {"e9c12b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b", "e9ca4b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.25: source-selected canonical arm witnesses.
+	"11.2.25" + "\x00" + "PSI13 message content": {"6d14bb29ca475cf3f5ab2b2b2b2b2b2b2b2b2b2b2b2b", "6d65565ebe7ff76b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.25a: source-selected canonical arm witnesses.
+	"11.2.25a" + "\x00" + "PSI14 message content": {"b2ee96df2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b", "b2ee96df2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.25b: source-selected canonical arm witnesses.
+	"11.2.25b" + "\x00" + "PSI15 message content": {"0b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b", "f0002000c0028007001100330007fff32b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §11.2.28a: source-selected canonical arm witnesses.
+	"11.2.28a\x00Packet DBPSCH Uplink Ack/Nack message content": {"2401"},
+
+	// TS 44.018 V19.0.0 §9.1.57 pp11475–11488: absent optional fields, terminated lists and spare padding.
+	"9.1.57\x00VGCS Neighbour Cell Information": {"30072b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
+	// TS 44.060 V19.0.0 §12.8.3 pp22817–22819: bounded 1/01/00 bitmap codewords.
+	"12.8.3\x00Pulse Format IE": {"8040", "80a0", "8080", "8250"},
+	// TS 44.060 V19.0.0 §11.2.1: selected RB and PFI lists.
+	"11.2.1\x00Packet Access Reject message content": {"8204060807319c07f82b2b2b2b2b2b2b2b2b2b2b2b2b2b"},
 	// TS 44.018 V19.0.0 §10.5.2.20: unavailable and two-neighbour
 	// source shapes, independently decoded with the same field values.
 	"10.5.2.20\x00Measurement Results Contents": {"95aabbc0000000000000000000000000", "95aabaad8ca625200000000000000000"},
@@ -1196,7 +1275,7 @@ func TestClassifyExtentErrors(t *testing.T) {
 func TestCanonicalFunctionsResolveDescriptorAdapters(t *testing.T) {
 	functions := canonicalFunctions(t)
 	for _, d := range descriptors() {
-		if functions[d.Clause+"\x00"+d.Name] == "" {
+		if functions[d.Clause+"\x00"+d.Name+"\x00"+d.Context] == "" {
 			t.Errorf("%s §%s <%s>: no generated canonical function", d.Standard, d.Clause, d.Name)
 		}
 	}

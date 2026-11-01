@@ -28,9 +28,18 @@ func TestECDummyAssignedMessageType(t *testing.T) {
 			t.Fatalf("missing canonical extent type: %v", err)
 		}
 	}
-	for _, n := range []int{1, 2, 4, 8, 16} {
+	for _, n := range []int{1, 2, 4, 8, 11, 12, 16} {
 		wire, err := EncodeECDummyMessageContentCanonicalAtLength(value, n)
-		if err != nil {
+		if n > 11 {
+			// TS 45.003 V19.0.0 §5.2b.1 p9934–9935: EC-CCCH/D
+			// has 88 information bits, including the six-bit EC header.
+			var extent *runtime.ExtentError
+			if wire != nil || !errors.As(err, &extent) || extent.Maximum != 11 {
+				t.Fatalf("oversized sender: %x %v", wire, err)
+			}
+			wire = bytes.Repeat([]byte{0x2b}, n)
+			wire[0] = 0x3b
+		} else if err != nil {
 			t.Fatal(err)
 		}
 		reader := runtime.NewReader(append(wire, 0xff))

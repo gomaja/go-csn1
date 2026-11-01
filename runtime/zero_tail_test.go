@@ -21,7 +21,7 @@ func TestReaderAllRemainingZero(t *testing.T) {
 		if !reflect.DeepEqual(before, *r) || *r.steps != steps {
 			t.Fatal("lookahead changed reader")
 		}
-		if got := testing.AllocsPerRun(5, func() { r.AllRemainingZero() }); got != 0 {
+		if got := testing.AllocsPerRun(5, func() { r.AllRemainingZero() }); !raceEnabled && got != 0 {
 			t.Fatalf("lookahead allocations %g", got)
 		}
 		for bit := 0; bit < bits; bit++ {
@@ -55,7 +55,7 @@ func TestReaderAllRemainingZeroGrowth(t *testing.T) {
 		if !r.AllRemainingZero() {
 			t.Fatalf("extent %d", bits)
 		}
-		if allocations := testing.AllocsPerRun(3, func() { r.AllRemainingZero() }); allocations != 0 {
+		if allocations := testing.AllocsPerRun(3, func() { r.AllRemainingZero() }); !raceEnabled && allocations != 0 {
 			t.Fatalf("extent %d allocates %g", bits, allocations)
 		}
 		data[len(data)-1] = 1

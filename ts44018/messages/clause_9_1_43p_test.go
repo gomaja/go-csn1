@@ -3,6 +3,7 @@ package messages
 import (
 	"bytes"
 	"encoding/hex"
+	"errors"
 	"reflect"
 	"strconv"
 	"strings"
@@ -38,16 +39,20 @@ func checkECSourceCases(t *testing.T, clause, name string, messageType uint8, ca
 				t.Fatalf("replay %x: %v", replay, err)
 			}
 			canonical, err := d.CanonicalAtLength(decoded, len(wire))
-			if err != nil || !bytes.Equal(canonical, wire) {
-				t.Fatalf("canonical %x want %x: %v", canonical, wire, err)
-			}
-			fresh, err := d.Decode(canonical)
-			if err != nil {
-				t.Fatal(err)
-			}
-			stable, err := d.CanonicalAtLength(fresh, len(wire))
-			if err != nil || !bytes.Equal(stable, canonical) {
-				t.Fatalf("unstable canonical %x: %v", stable, err)
+			if len(wire) > 23 {
+				checkECSenderRefusal(t, canonical, err, len(wire))
+			} else {
+				if err != nil || !bytes.Equal(canonical, wire) {
+					t.Fatalf("canonical %x want %x: %v", canonical, wire, err)
+				}
+				fresh, err := d.Decode(canonical)
+				if err != nil {
+					t.Fatal(err)
+				}
+				stable, err := d.CanonicalAtLength(fresh, len(wire))
+				if err != nil || !bytes.Equal(stable, canonical) {
+					t.Fatalf("unstable canonical %x: %v", stable, err)
+				}
 			}
 			if _, err := d.Canonical(decoded); err == nil {
 				t.Fatal("canonical padding encoded without an extent")
@@ -70,7 +75,9 @@ func checkECSourceCases(t *testing.T, clause, name string, messageType uint8, ca
 				t.Fatalf("received padding replay %x: %v", replay, err)
 			}
 			canonical, err = d.CanonicalAtLength(other, len(wire))
-			if err != nil || !bytes.Equal(canonical, wire) {
+			if len(wire) > 23 {
+				checkECSenderRefusal(t, canonical, err, len(wire))
+			} else if err != nil || !bytes.Equal(canonical, wire) {
 				t.Fatalf("received padding canonical %x: %v", canonical, err)
 			}
 			for bits := 0; bits < c.contentBits; bits++ {
@@ -112,8 +119,13 @@ func checkECSourceCases(t *testing.T, clause, name string, messageType uint8, ca
 				if _, err := d.Decode(wrong); err == nil {
 					t.Fatalf("accepted message type %d", candidate)
 				}
-				if _, err := d.CanonicalAtLength(ecEditedValue(t, decoded, "MessageType", uint64(candidate)), len(wire)); err == nil {
+				if _, err := d.Encode(ecEditedValue(t, decoded, "MessageType", uint64(candidate))); err == nil {
 					t.Fatalf("encoded message type %d", candidate)
+				}
+				if len(wire) <= 23 {
+					if _, err := d.CanonicalAtLength(ecEditedValue(t, decoded, "MessageType", uint64(candidate)), len(wire)); err == nil {
+						t.Fatalf("canonically encoded message type %d", candidate)
+					}
 				}
 			}
 			for field, invalid := range map[string]uint64{"ECSI1INDEX": 4, "ECSI1COUNT": 4, "ECSI3INDEX": 4, "ECSI3COUNT": 4, "ECSI4INDEX": 4, "ECSI4COUNT": 4, "ECSICHANGEMARK": 32} {
@@ -121,8 +133,13 @@ func checkECSourceCases(t *testing.T, clause, name string, messageType uint8, ca
 				if !value.FieldByName("Value").FieldByName(field).IsValid() {
 					continue
 				}
-				if _, err := d.CanonicalAtLength(ecEditedValue(t, decoded, field, invalid), len(wire)); err == nil {
+				if _, err := d.Encode(ecEditedValue(t, decoded, field, invalid)); err == nil {
 					t.Fatalf("encoded invalid %s=%d", field, invalid)
+				}
+				if len(wire) <= 23 {
+					if _, err := d.CanonicalAtLength(ecEditedValue(t, decoded, field, invalid), len(wire)); err == nil {
+						t.Fatalf("canonically encoded invalid %s=%d", field, invalid)
+					}
 				}
 			}
 		})
@@ -167,6 +184,10 @@ func fuzzECSource(f *testing.F, clause, name string, cases []ecSourceCase) {
 			t.Fatalf("accepted bytes did not replay: %x: %v", replay, err)
 		}
 		canonical, err := d.CanonicalAtLength(value, len(wire))
+		if len(wire) > 23 {
+			checkECSenderRefusal(t, canonical, err, len(wire))
+			return
+		}
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -280,8 +301,13 @@ func checkECTypedFields(t *testing.T, d runtime.Descriptor, decoded any, wire []
 				field = field.Elem()
 			}
 			field.SetUint(1 << width)
-			if _, err := d.CanonicalAtLength(mutable.Interface(), len(wire)); err == nil {
+			if _, err := d.Encode(mutable.Interface()); err == nil {
 				t.Fatalf("encoded out-of-range %s at %v", name, steps)
+			}
+			if len(wire) <= 23 {
+				if _, err := d.CanonicalAtLength(mutable.Interface(), len(wire)); err == nil {
+					t.Fatalf("canonically encoded out-of-range %s at %v", name, steps)
+				}
 			}
 		}
 	}
@@ -314,6 +340,9 @@ func TestECSystemInformationType1TypedAllocation(t *testing.T) {
 					t.Fatalf("cell channel description: %+v", cell)
 				}
 				cell.FrequencyListInformation.BitLength--
+				if _, err := EncodeECSystemInformationType1(v); err == nil {
+					t.Fatal("plain encoder accepted invalid frequency-list width")
+				}
 				if _, err := EncodeECSystemInformationType1CanonicalAtLength(v, len(wire)); err == nil {
 					t.Fatal("invalid frequency-list width encoded")
 				}
@@ -374,6 +403,9 @@ func TestECSystemInformationType1TypedAllocation(t *testing.T) {
 					}
 				}
 				group.MABITMAP.BitLength--
+				if _, err := EncodeECSystemInformationType1(v); err == nil {
+					t.Fatal("plain encoder accepted invalid bitmap width")
+				}
 				if _, err := EncodeECSystemInformationType1CanonicalAtLength(v, len(wire)); err == nil {
 					t.Fatal("invalid bitmap width encoded")
 				}
@@ -383,29 +415,39 @@ func TestECSystemInformationType1TypedAllocation(t *testing.T) {
 }
 
 func TestECMobileAllocationListLinearGrowth(t *testing.T) {
-	if raceEnabled {
-		t.Skip("allocation counts vary under the race detector")
-	}
 	// TS 44.018 V19.0.0 §9.1.43p paragraph 9758 permits an indefinite list.
 	previous := float64(0)
 	for count := 16; count <= 256; count *= 2 {
-		value := ECSystemInformationType1{MessageType: 1}
-		for i := 0; i < count; i++ {
-			value.ECMobileAllocationList.ECMobileAllocationStructList = append(value.ECMobileAllocationList.ECMobileAllocationStructList, ECMobileAllocationListStructECMobileAllocationStructListEntry{ECMobileAllocationStruct: ECMobileAllocationStruct{ARFCNChoice: ECMobileAllocationStructARFCNChoice{Alternative: ECMobileAllocationStructARFCNChoiceAlternativeARFCN, ARFCN: &ECMobileAllocationStructARFCNChoiceARFCN{ARFCN: 1}}}})
-		}
+		// The synthetic receiver input deliberately exceeds one physical
+		// carrier. §9.1.43p pp9743–9765: 13 header/absence bits,
+		// each entry 1+5+1+1+10=18 bits, then terminator and band bits.
 		octets := (15 + 18*count + 7) / 8
-		wire, err := EncodeECSystemInformationType1CanonicalAtLength(value, octets)
-		if err != nil {
-			t.Fatal(err)
+		wire := make([]byte, octets)
+		wire[0] = 0x20
+		at := 13
+		for range count {
+			wire[at/8] |= 1 << uint(7-at%8)
+			last := at + 17
+			wire[last/8] |= 1 << uint(7-last%8)
+			at += 18
 		}
+		at += 2
+		for bit := at; bit < len(wire)*8; bit++ {
+			if 0x2b&(1<<uint(7-bit%8)) != 0 {
+				wire[bit/8] |= 1 << uint(7-bit%8)
+			}
+		}
+		var err error
 		var decoded runtime.Decoded[ECSystemInformationType1]
 		allocations := testing.AllocsPerRun(3, func() { decoded, err = DecodeECSystemInformationType1(wire) })
 		if err != nil || len(decoded.Value.ECMobileAllocationList.ECMobileAllocationStructList) != count {
 			t.Fatalf("decode count=%d: %v", count, err)
 		}
-		if previous != 0 && allocations > previous*2+16 {
+		if !raceEnabled && previous != 0 && allocations > previous*2+16 {
 			t.Fatalf("allocation growth count=%d: %g after %g", count, allocations, previous)
 		}
+		out, e := EncodeECSystemInformationType1CanonicalAtLength(decoded.Value, octets)
+		checkECSenderRefusal(t, out, e, octets)
 		previous = allocations
 	}
 }
@@ -423,5 +465,15 @@ func TestECSystemInformationType1TypedCanonical(t *testing.T) {
 	wire, err = EncodeECSystemInformationType1CanonicalAtLength(value, 4)
 	if err != nil || !bytes.Equal(wire, []byte{0x3f, 0xf3, 0x2b, 0x2b}) {
 		t.Fatalf("boundary typed SI1 %x: %v", wire, err)
+	}
+}
+
+// TS 45.003 V19.0.0 §5.2a.1 p9923: 184 information bits include
+// the EC SI header; longer received images retain only reception and replay.
+func checkECSenderRefusal(t *testing.T, encoded []byte, err error, octets int) {
+	t.Helper()
+	var extent *runtime.ExtentError
+	if encoded != nil || !errors.As(err, &extent) || extent.Maximum != 23 || extent.Actual != octets {
+		t.Fatalf("oversized EC sender extent %d: %x %v", octets, encoded, err)
 	}
 }

@@ -82,14 +82,14 @@ func TestCollectorDiscardClearsPaths(t *testing.T) {
 func TestCollectorNoEventAllocations(t *testing.T) {
 	var c Collector
 	r := NewReaderWithCollector([]byte{0}, &c)
-	if got := testing.AllocsPerRun(100, func() { _ = c.TakeReport(); r.Discard() }); got != 0 {
+	if got := testing.AllocsPerRun(100, func() { _ = c.TakeReport(); r.Discard() }); !raceEnabled && got != 0 {
 		t.Fatalf("empty collector: %v allocations", got)
 	}
 	if c.observations != nil {
 		t.Fatal("empty buffer allocated")
 	}
 	disabled := NewReader(nil)
-	if got := testing.AllocsPerRun(100, func() { _ = disabled.Observe(0, 1, 1, Source{}) }); got != 0 {
+	if got := testing.AllocsPerRun(100, func() { _ = disabled.Observe(0, 1, 1, Source{}) }); !raceEnabled && got != 0 {
 		t.Fatalf("disabled collector: %v allocations", got)
 	}
 }
@@ -171,7 +171,7 @@ func TestCollectorIndexedPathsAndGrowth(t *testing.T) {
 			}
 			_ = collector.TakeReport()
 		})
-		if allocations > float64(count+32) {
+		if !raceEnabled && allocations > float64(count+32) {
 			t.Fatalf("count=%d allocations=%g", count, allocations)
 		}
 	}
@@ -224,7 +224,7 @@ func TestCollectorMaterializesOnePathPerEvent(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
-	if allocations != 1 {
+	if !raceEnabled && allocations != 1 {
 		t.Fatalf("materialized path allocations=%g, want 1", allocations)
 	}
 	before := &c.observations[0]
@@ -251,7 +251,7 @@ func TestCollectorBorrowedLeaf(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
-	if allocations != 1 {
+	if !raceEnabled && allocations != 1 {
 		t.Fatalf("borrowed leaf allocated %g times, want one owned path", allocations)
 	}
 	if c.observations[0].Location.Path != "Root/Leaf" || len(r.path) != 1 || r.depth != 1 {

@@ -18,10 +18,14 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := CheckAllowlist(findings, allowed); err != nil {
+	citations := &citationChecker{root: root, files: make(map[string]citationFile)}
+	counted, err := citations.checkStructuralSpareFindings(findings, allowed)
+	if err != nil {
 		t.Fatal(err)
 	}
-	citations := &citationChecker{root: root, files: make(map[string]citationFile)}
+	if err := CheckAllowlist(counted, allowed); err != nil {
+		t.Fatal(err)
+	}
 	for _, finding := range findings {
 		if strings.HasSuffix(finding.File, "/generated.go") {
 			if finding.Expression == "uint8(v)" || finding.Expression == "uint16(v)" || finding.Expression == "uint32(v)" || finding.Expression == "uint64(v)" || finding.Expression == "count++" || finding.Expression == "matches++" || finding.Expression == "i++" || finding.Expression == "i + 1" {
@@ -65,7 +69,11 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 			t.Fatal(err)
 		}
 		checked += n
-		n, err = CheckGeneratedUint64Conversions(file, contents)
+		packageSources, err := readGeneratedPackageSources(filepath.Dir(full))
+		if err != nil {
+			t.Fatal(err)
+		}
+		n, err = checkGeneratedPackageUint64Conversions(filepath.Base(full), packageSources)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -124,4 +132,27 @@ func TestRuntimeAndGeneratedArithmeticIsClassified(t *testing.T) {
 		t.Fatalf("checked %d generated loop increments and %d range successors; scanner found %d and %d", loopIncrements, rangeNext, wantLoopIncrements, wantRangeNext)
 	}
 	t.Logf("generated arithmetic: checked=%d increments=%d nextIndexes=%d", checked, loopIncrements, rangeNext)
+}
+
+// readGeneratedPackageSources supplies the complete production namespace to the
+// local-return proof. Include every production Go file regardless of build tags:
+// declarations from an alternate configuration must not silently become builtins.
+func readGeneratedPackageSources(directory string) (map[string][]byte, error) {
+	entries, err := os.ReadDir(directory)
+	if err != nil {
+		return nil, err
+	}
+	sources := make(map[string][]byte)
+	for _, entry := range entries {
+		name := entry.Name()
+		if entry.IsDir() || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
+			continue
+		}
+		source, err := os.ReadFile(filepath.Join(directory, name))
+		if err != nil {
+			return nil, err
+		}
+		sources[name] = source
+	}
+	return sources, nil
 }

@@ -150,7 +150,7 @@ func TestDynamicAllocation3ListAllocationGrowth(t *testing.T) {
 			if count == 8 {
 				baseAllocations = allocations
 			}
-			if allocations > baseAllocations*float64(count)/8+64 {
+			if !raceEnabled && allocations > baseAllocations*float64(count)/8+64 {
 				t.Fatalf("mode=%d count=%d allocations=%.0f exceed linear allocation-count bound", mode, count, allocations)
 			}
 			t.Logf("mode=%d count=%d allocations=%.0f", mode, count, allocations)

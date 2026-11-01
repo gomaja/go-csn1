@@ -2,6 +2,7 @@ package arithaudit
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -86,12 +87,18 @@ func TestDirectWidthNarrowingProof(t *testing.T) {
 		{"value negative offset", `width:=3;v,_:=r.ReadUint(width);v+=-1;return uint8(v)`, false},
 		{"value decrement after cast", `width:=8;v,_:=r.ReadUint(width);x:=uint8(v);v--;return x`, false},
 	} {
-		t.Run(tc.name, func(t *testing.T) {
-			n, err := CheckGeneratedNarrowing("sample.go", []byte("package sample;func decode(r reader,n int) uint8{"+tc.body+"}"))
-			if (err == nil) != tc.ok || tc.ok && n != 1 {
-				t.Fatalf("checked=%d err=%v, want accepted=%t: %s", n, err, tc.ok, tc.body)
+		for _, method := range []string{"ReadUint", "ReadUintWithFill"} {
+			body := tc.body
+			if method == "ReadUintWithFill" {
+				body = strings.ReplaceAll(body, ".ReadUint(width)", ".ReadUintWithFill(width, source)")
 			}
-		})
+			t.Run(tc.name+"/"+method, func(t *testing.T) {
+				n, err := CheckGeneratedNarrowing("sample.go", []byte("package sample;func decode(r reader,n int) uint8{"+body+"}"))
+				if (err == nil) != tc.ok || tc.ok && n != 1 {
+					t.Fatalf("checked=%d err=%v, want accepted=%t: %s", n, err, tc.ok, tc.body)
+				}
+			})
+		}
 	}
 }
 

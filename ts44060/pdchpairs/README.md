@@ -1,0 +1,9 @@
+# PDCH Pairs Description caller extent
+
+TS 44.060 V19.0.0 §12.5.5 defines a component without an independent length. Its containing description supplies the bit extent. `DecodePDCHPairsDescriptionIEFrom` requires a reader with that containing limit already established through `PushLimit`. Do not infer this limit solely from an ordinary selector's width: the reserved arm runs to the enclosing end. Every selector requires the bound; an unbounded reader returns an error wrapping `runtime.ErrContextRequired` before consuming the selector. A sentinel or next framed value lies beyond the containing limit.
+
+The byte entry point treats the supplied bytes as the containing extent. For a component ending within an octet, use its descriptor's `DecodeBits` or `DecodeBitsWithReport` with the exact bit count.
+
+Designation `11` selects the printed `PDCH pairs configuration error` branch. Its reported unspecified string starts after the designation and consumes the remaining containing extent, including an empty remainder (TS 44.060 §§11.1–11.1.3.2). Enclosing receiver descriptions end there; accepted typed fields remain available. Fields that would ordinarily follow within that description belong to the ignored remainder. Generated enclosing codecs propagate this end; a manual caller must respect `ReceiverRegionEnds()` before attempting later fields. The application implements the error-handling procedure (§11.1.2 p13020).
+
+Preserving the received `Wire` permits exact replay. Fresh and canonical encoders refuse the reserved arm with a typed `runtime.OperationError` of kind `runtime.InvalidValue`. Ordinary arms support canonical encoding with the caller's explicit length through `EncodePDCHPairsDescriptionIECanonicalAtLength`; the default canonical entry point requires that external length.

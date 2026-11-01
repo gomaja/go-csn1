@@ -18,7 +18,7 @@ func TestCanonicalCopyWireInfoAllocatesNothing(t *testing.T) {
 		without := withoutWire{A: 1, B: 2}
 		got := testing.AllocsPerRun(100, func() { _ = canonicalCopy(with, raw) })
 		want := testing.AllocsPerRun(100, func() { _ = canonicalCopy(without, raw) })
-		if got != want {
+		if !raceEnabled && got != want {
 			t.Fatalf("raw errors %v: canonical copy with a wire record allocates %v times, without %v", raw, got, want)
 		}
 		if copied := canonicalCopy(with, raw); !copied.Wire.canonical || copied.Wire.rawErrors != raw {

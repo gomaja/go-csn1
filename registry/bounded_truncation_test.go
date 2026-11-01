@@ -15,7 +15,9 @@ import (
 
 	"github.com/gomaja/go-csn1/runtime"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
+	"github.com/gomaja/go-csn1/ts44060/celldata"
 	"github.com/gomaja/go-csn1/ts44060/ies"
+	"github.com/gomaja/go-csn1/ts44060/padding"
 )
 
 // canonicalAtSomeExtent returns the first explicit extent that a definition
@@ -248,10 +250,10 @@ func TestBoundConflictIsTyped(t *testing.T) {
 // fmt.Errorf; a missing enclosing value wraps runtime.ErrContextRequired.
 func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
-	if err != nil || len(files) != 11 {
+	if err != nil || len(files) != 56 {
 		t.Fatalf("generated files %v, %v", files, err)
 	}
-	var omitted, length, lengthField, context int
+	var omitted, length, lengthField, context, wholeOctet int
 	for _, file := range files {
 		source, err := os.ReadFile(file)
 		if err != nil {
@@ -264,15 +266,18 @@ func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 		}
 		omitted += strings.Count(string(source), "w.OmittedFieldError(")
 		length += strings.Count(string(source), "w.LengthBoundError(")
+		wholeOctet += strings.Count(string(source), `w.LengthBoundError("whole-octet remainder must fill every complete octet")`)
 		lengthField += strings.Count(string(source), "w.LengthFieldError(")
 		context += strings.Count(string(source), `"%w: continuation count requires enclosing SI value"`)
 	}
 	// Two SI stop records and one continuation container sit inside the
-	// fixed SI 18/SI 20 value; the IA length field bounds both choice arms;
+	// fixed SI 18/SI 20 value; Packet Serving Cell SI requires its whole-octet
+	// remainder to fill the containing extent; both cell-data continuations add
+	// exact containing-octet bounds; the IA length field bounds both choice arms;
 	// a standalone continuation container has no enclosing value in either
 	// its reader or its writer.
-	if omitted == 0 || length != 3 || lengthField != 2 || context != 2 {
-		t.Fatalf("typed bound checks: %d omitted-field, %d length, %d length-field, %d context", omitted, length, lengthField, context)
+	if omitted == 0 || length != 6 || wholeOctet != 1 || lengthField != 2 || context != 2 {
+		t.Fatalf("typed bound checks: %d omitted-field, %d length (%d whole-octet), %d length-field, %d context", omitted, length, wholeOctet, lengthField, context)
 	}
 }
 
@@ -488,5 +493,45 @@ func mutateTyped(rng *rand.Rand, v reflect.Value, depth int) {
 				mutateTyped(rng, v.Index(i), depth+1)
 			}
 		}
+	}
+}
+
+// TS 44.060 V19.0.0 §11.2.17c assigns every complete octet after PAGE_MODE
+// to CONTAINER_DATA; a fresh typed value must fill that containing interval.
+func TestWholeOctetRemainderBoundConflictIsTyped(t *testing.T) {
+	for _, count := range []int{0, 1, 2} {
+		t.Run(fmt.Sprint(count), func(t *testing.T) {
+			w := runtime.NewWriter()
+			if err := w.WriteUint(0, 14); err != nil {
+				t.Fatal(err)
+			}
+			if _, err := w.PushLimit(10); err != nil {
+				t.Fatal(err)
+			}
+			value := celldata.PacketServingCellSIMessageContent{
+				PAGEMODEGroupFallback: celldata.PacketServingCellSIMessageContentPAGEMODEGroupFallback{
+					Known: &celldata.PacketServingCellSIMessageContentPAGEMODEGroupFallbackKnown{
+						PAGEMODE: 1, CONTAINERDATA: make([]uint8, count),
+						PaddingBits: padding.PaddingBits{IgnoreChoice: padding.PaddingBitsIgnoreChoice{AltUnlabeled: &struct{}{}}},
+					},
+				},
+			}
+			err := celldata.EncodePacketServingCellSIMessageContentTo(w, value)
+			if count == 1 {
+				image, finishErr := w.FinishBits(runtime.BitString{})
+				if err != nil || finishErr != nil || image.BitLength != 24 {
+					t.Fatalf("matching complete octet: %d bits, encode=%v finish=%v", image.BitLength, err, finishErr)
+				}
+				return
+			}
+			var bound *runtime.BoundError
+			if !errors.As(err, &bound) || !errors.Is(err, runtime.ErrBoundConflict) {
+				t.Fatalf("container count %d: untyped bound error %v (%T)", count, err, err)
+			}
+			const path = "PacketServingCellSIMessageContent/PacketServingCellSIMessageContentPAGEMODEGroupFallbackKnown"
+			if bound.Kind != runtime.LengthBound || bound.Path != path || bound.Limit != 24 || bound.Position != 16 || bound.Field != "PacketServingCellSIMessageContentPAGEMODEGroupFallbackKnown" {
+				t.Fatalf("container count %d: bound %+v", count, *bound)
+			}
+		})
 	}
 }

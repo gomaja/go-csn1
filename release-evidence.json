@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "0ba8de38ae8866d783d3c550031e3ef74cb7829c",
-    "api_sha256": "071416e8cfa916d7db0f061f89eecd8baf0590df1d10f0a574217c7955462357",
-    "api_ledger_sha256": "dc120546fe98b7f30268b2ecaa7bd40f91ceaf3934c05b0eda8d0ec71fdb9ee1"
+    "revision": "06ba8b1c93de194710f6eac2d6694edb548b169e",
+    "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
+    "api_ledger_sha256": "6d9a7caa18d93b34d5c63cd6c31dd5ad000d45556bd0421bea8b1d00b0937e7a"
   },
   "schema_version": 1,
-  "compiler_commit": "cb8c24ede9718223aea99c785295661a0ca35a43",
+  "compiler_commit": "dfc3a437e0b2dcf072a02f6460d5ec00e24533a4",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -46,6 +46,46 @@
       "archive_sha256": "1908cdc05f80292adff9780efae373f26d350c6853f26a499cc0f37ac66d902b",
       "member": "45008-j00.docx",
       "member_sha256": "9b9e794c07f98a0e90b4798a0435693a961455e84bdde84dd870f4c8c7a16163"
+    },
+    {
+      "standard": "TS 44.118",
+      "version": "16.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.118/44118-g00.zip",
+      "archive_sha256": "1e352abdd57bcb7c100c5c858f7e4641f2279855979c0e4fb12142c0287827fd",
+      "member": "44118-g00.doc",
+      "member_sha256": "7a71d432d1b83e149abac097571cb858875f74d4d5bc8c5a76f01a89edf8d13c"
+    },
+    {
+      "standard": "TS 44.006",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.006/44006-j00.zip",
+      "archive_sha256": "ac240623f666a10fc9041bc450122a7a22086101474d871f4256972087d34758",
+      "member": "44006-j00.docx",
+      "member_sha256": "d87e1a8f56a006dc6683d1bf55d75183e5d6d2bdb94d833bf8002611d94f11ff"
+    },
+    {
+      "standard": "TS 45.002",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/45_series/45.002/45002-j00.zip",
+      "archive_sha256": "84d7f48aea5c11d7c85a8fb273ebe46fc756c637224f136d6f9ab5ae44c4c62d",
+      "member": "45002-j00.doc",
+      "member_sha256": "c20e22605912043df2195b805d23fc3ff88d4edfc2168673da082331ed524be7"
+    },
+    {
+      "standard": "TS 45.003",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/45_series/45.003/45003-j00.zip",
+      "archive_sha256": "903afd8aa61b3bd121a70759f4e893d6264e888bdc06f7a3b9ed883bc935b6ab",
+      "member": "45003-j00.docx",
+      "member_sha256": "1a0a2461d2f84d7f147a5259fdd32bf305c7cadda162f08f155816fc10aba057"
+    },
+    {
+      "standard": "TS 44.004",
+      "version": "19.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.004/44004-j00.zip",
+      "archive_sha256": "204d3a243d857d2ecfddb3023418e00f74f7d1cc94b46885cea3df30f08c652a",
+      "member": "44004-j00.docx",
+      "member_sha256": "828ac95279495bfbe268ace42749e3c7c7217d4a3dbb3ff4ac7cafc5bda8fa93"
     }
   ],
   "extracted_files": [
@@ -90,6 +130,118 @@
       "sha256": "25aea756f06882c43c5483796ddd170c7ba87e187aba91108ed4c4eeff8ea825"
     },
     {
+      "path": "docs/csn1/ts44004/carrier-ec-rach.txt",
+      "sha256": "77ef71f634dc0e7565fc7fa019002893d23b3c55b1a72f8a7db4356d0ad5d04a"
+    },
+    {
+      "path": "docs/csn1/ts44004/carrier-rach-uplink.txt",
+      "sha256": "1da859be78b1387b5385330763d8d3a3f8a39b5dbe0174e5aad9ec8348cd6279"
+    },
+    {
+      "path": "docs/csn1/ts44004/carrier-transmission-order.txt",
+      "sha256": "190d5f0d249fa528c64a250bea8c76ff2bb86e224296ada118e092bf2539fca6"
+    },
+    {
+      "path": "docs/csn1/ts44006/carrier-frame-delimitation.txt",
+      "sha256": "188c4009fb9183cbfbeaeb383914ee2246e510d9eff175e46a1107e7c9e5af4d"
+    },
+    {
+      "path": "docs/csn1/ts44006/carrier-information-field-limit.txt",
+      "sha256": "aaaf6423a3789e79e3cc65970aca2039f72b4e6d60c78742bd9da150d91288db"
+    },
+    {
+      "path": "docs/csn1/ts44006/carrier-layer-three-limit.txt",
+      "sha256": "9e8d4c06fb1948cb33214049eb3711c0a1cdebf6daf46bd3f3f8b369d8864f94"
+    },
+    {
+      "path": "docs/csn1/ts44006/carrier-short-header.txt",
+      "sha256": "93a85cac717cfacf592ff3fd571ddf7a68ba00bae6ff6891db6a8e1866b5c2ec"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12116.csn",
+      "sha256": "6b2039b7dbc976520456348cbbdbf9ef659683cf29661c7bcab78d6cad696f3b"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12125.csn",
+      "sha256": "4d9025374e404888541423bf834baff014b843c050b23059daacf9360a9c024e"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12135.csn",
+      "sha256": "2b02ac1ef06f548cc662e05e1d87857ec98a16a72427b5e8955796131fcfc5e5"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12143.csn",
+      "sha256": "6010892fd212cfa626d9edc145abf6ac1b3001cf61aae7edafa884cf8cb7eaa1"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12152.csn",
+      "sha256": "fa79fb01a5dfebba8fc27865458df1bb3c61fe2a34562916758f4d4aabf6e443"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12162.csn",
+      "sha256": "6b2039b7dbc976520456348cbbdbf9ef659683cf29661c7bcab78d6cad696f3b"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12171.csn",
+      "sha256": "4d9025374e404888541423bf834baff014b843c050b23059daacf9360a9c024e"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12181.csn",
+      "sha256": "2b02ac1ef06f548cc662e05e1d87857ec98a16a72427b5e8955796131fcfc5e5"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12190.csn",
+      "sha256": "6b2039b7dbc976520456348cbbdbf9ef659683cf29661c7bcab78d6cad696f3b"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12199.csn",
+      "sha256": "4d9025374e404888541423bf834baff014b843c050b23059daacf9360a9c024e"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12209.csn",
+      "sha256": "2b02ac1ef06f548cc662e05e1d87857ec98a16a72427b5e8955796131fcfc5e5"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12218.csn",
+      "sha256": "6b2039b7dbc976520456348cbbdbf9ef659683cf29661c7bcab78d6cad696f3b"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12227.csn",
+      "sha256": "98f0fbe4b1c81be533c965f0afc73198391291c6120a449f689d0f2e8b908978"
+    },
+    {
+      "path": "docs/csn1/ts44018/access-context-12238.csn",
+      "sha256": "2b02ac1ef06f548cc662e05e1d87857ec98a16a72427b5e8955796131fcfc5e5"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-channel-release-procedure.txt",
+      "sha256": "7f1defe6a85a375312fd865819326c91e4f5da030b6c8f0005c74cc2d2cede7d"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-channel-release.txt",
+      "sha256": "6871403579f6dc7c586350b2a4b316c60c0229814ae2654d15f2128bfc53cac5"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-channel-request-description.txt",
+      "sha256": "67cf0bd9c9c88b5972be83fe4f171dc0b9257f0df8c0fcc84fc794c8e9a1360a"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-ec-access-continuation.txt",
+      "sha256": "1ff93c49d91750dbc71c2d9a89be61a4f3fc60e33fdc91969a121e953cb4b903"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-main-signalling-link.txt",
+      "sha256": "68c8e9305c7edaab667e30ffe01d180e64417a68078d0c17b97910bb6d601cad"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-rr-packet-downlink-assignment.txt",
+      "sha256": "46ea0d7efa24604bf1c04e09e716179aba5f491ed05ddf49458096bbf348869a"
+    },
+    {
+      "path": "docs/csn1/ts44018/carrier-vgcs-additional-info.txt",
+      "sha256": "40506b525cdf99990d754846b46ddb4ef429664d540e8190037eeaf3e7748482"
+    },
+    {
       "path": "docs/csn1/ts44018/cell-selection-after-release.csn",
       "sha256": "36d2cf44fcc55fae7f2acb2dc10bf6be3eb416a2256c83d78f3859c6bd3b7556"
     },
@@ -98,16 +250,72 @@
       "sha256": "8ecd1dc871fd0a9702db23b83679b7bca6c24fdc9e37f9246d99aa7087c61e0c"
     },
     {
+      "path": "docs/csn1/ts44018/clause-10-5-2-11b.csn",
+      "sha256": "b54666e4cd7ac1c5e3fe1a6a4eee7fbc6519f86f7170004fd11b514cd3064227"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-14d-details.txt",
+      "sha256": "44a21c56145aa0746dff9c8e6df0d9495c7a87b4b20df15edea370233d0038da"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-14d.csn",
+      "sha256": "179019756fde79095f2c85f5cab64ff6b4338355b01021953e276e956353081b"
+    },
+    {
       "path": "docs/csn1/ts44018/clause-10-5-2-1c.csn",
       "sha256": "10bbbebe2bb442a9a5f412f47bf5d4a33fd6a36dc69c9e26c48b8889018af5f3"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-1d.csn",
+      "sha256": "b592dc6feaa98859fa656f57cde7b0d8c5de7fa865c93a6e9931e9bb16a7e896"
     },
     {
       "path": "docs/csn1/ts44018/clause-10-5-2-25a.csn",
       "sha256": "21b44cf55746c9f21491968fa0a8d2cec0dbfec8dbbeabd49110155873eb6ed1"
     },
     {
+      "path": "docs/csn1/ts44018/clause-10-5-2-25d.csn",
+      "sha256": "70538e40ed93c6b73fef1adfdfcb3ce118c358c2e3c04145b1b1a00d354b132c"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-25e-details.txt",
+      "sha256": "2f5c19ac83cf3306e97e31e440d23cd881b92221f465036255d0f1ac096de62a"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-25e.csn",
+      "sha256": "85dab723482795a73249d7c124e5476f619e3aaffe899c41f92ae85b7d2d0231"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-58-details.txt",
+      "sha256": "69f74e575140e0d32aa00ecfaf843d8d1e8d3a264e4959b19d4733a932b653b5"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-58.csn",
+      "sha256": "7bfc7baace7f7adca3c714b29255dbdd7ac3ab38d73301a4fc2a29c4756ef22e"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-58a-details.txt",
+      "sha256": "ed1347d4130ed06a6476ee03595d17d5f9279b7ce3b4c0a3da34f5533bdf5c52"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-58a.csn",
+      "sha256": "749a8097cb3b2a82383d02edb09f085bc028fe4111374e7080b4a56b4e051ede"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-60-details.txt",
+      "sha256": "eae030f0c532ecd47bb8ddaa023ec90099734b2182e4ae250f7cdafe7746e044"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-60.csn",
+      "sha256": "e5ab19bff06b7fca68f3953e7336373215e9229b362e2cc7bcb0db6bd8824449"
+    },
+    {
       "path": "docs/csn1/ts44018/clause-10-5-2-62.csn",
       "sha256": "3901ca73d5f682a737f5395c07993960ed6a71a96d3a58cf5a822d92cdaba734"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-75.csn",
+      "sha256": "72ae6af8ef1307f565738b5e094c4d986b9c339621d501034c4cff9d21647334"
     },
     {
       "path": "docs/csn1/ts44018/clause-10-5-2-84.csn",
@@ -122,6 +330,38 @@
       "sha256": "2a77c8b03d86cf030a38505a9e7a3d62cccbba3d21a3e990eb73176ddf8d7e8b"
     },
     {
+      "path": "docs/csn1/ts44018/clause-10-5-2-8b-details.txt",
+      "sha256": "0c5f58cea7add0db4090e7816c740655de14f2a9f66e905b17fcd4793ac8dde9"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-10-5-2-8b.csn",
+      "sha256": "0ae7b785ba76653bf9d6e21991c288630c9890136c08983d3d42d4dd02bdbfe0"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21a-paging.csn",
+      "sha256": "89d25e7aadc8ac6dafde746121750737f6e5b99f69ad64dce949103d6515dfb7"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21a.csn",
+      "sha256": "f52cef8442930d67fc1e06ac5f0039429e240e7112e55a40b0283b209c2f465c"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21h-channel.csn",
+      "sha256": "623b0edd901ab81a72ba4be0602ede01296dd60208bec0cb2f90bf907ac66c32"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21h.csn",
+      "sha256": "d249a2b4ac1c969ca4f1e1fb7efcc767bd066340cfb30de88a9ea48639920828"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21i-cell-description-evidence.txt",
+      "sha256": "e94d90c3e13b021511a3438b947c3b6696dd4ea8e1d1d4ba9236c67a76f9526f"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-21i.csn",
+      "sha256": "30192a634e13d423f8bb08dac79f97590923d86d286197a63434fe87ebab3b70"
+    },
+    {
       "path": "docs/csn1/ts44018/clause-9-1-43p.csn",
       "sha256": "a1a2c412b7a2a9d0be3d54cd76d63b3773f14a9c745d2841fe6cfdf0428617f1"
     },
@@ -132,6 +372,18 @@
     {
       "path": "docs/csn1/ts44018/clause-9-1-43s.csn",
       "sha256": "fd40b7ad79b7fba6ab021cf14ec5ef7abf480ba52c0afaf338872d94c4392563"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-47.csn",
+      "sha256": "97409e276d6c7d5ab8128152253987866005ae43fab63e932c9ea2e2f7dd59a5"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-49a.csn",
+      "sha256": "47a3eefdb299598af3197f21b3162ebaf168ce982d37c12ceed5ba4c9cee43b3"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-49b.csn",
+      "sha256": "f35cfec69d07a135cd6109ce5ad9807512180b060e74295cb017d8a8cb0f9e4f"
     },
     {
       "path": "docs/csn1/ts44018/clause-9-1-50.csn",
@@ -146,8 +398,32 @@
       "sha256": "1c4d816cbd9cfb7f93cfc21829106a47b32c06a031e63fa62004fb64e92ff9c4"
     },
     {
+      "path": "docs/csn1/ts44018/clause-9-1-57.csn",
+      "sha256": "977a83856bb7ad9bc4be106234edda3b82d9b1c33312adaea7b0aa1fdf363428"
+    },
+    {
       "path": "docs/csn1/ts44018/clause-9-1-58.csn",
       "sha256": "42d72fcca1cb088f9ac978f735b24bb4023fb82f8e37f1cbbdaf0d3d7fed5c63"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-60.csn",
+      "sha256": "98e80ccf1cbd10086925da7a863f9563b60837d9a1af92a8c38417e498637127"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-61.csn",
+      "sha256": "b623ffa210ebb7c40bea9a8ae598b969e499ee1cb64790e7266823efe078218a"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-63.csn",
+      "sha256": "997329f5f16b40893c2117831e0dffca4e4907231cd38b33b307390e74b00115"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-69-message-type.txt",
+      "sha256": "b499c9d35664a8bb76926011c17f968fd69fa648f7723b88f0c50756a8d902b7"
+    },
+    {
+      "path": "docs/csn1/ts44018/clause-9-1-69.csn",
+      "sha256": "988ebc9a903c32e2c66295ac814c35a82b9a03bdc9da856cd8973efcdd2d0b9d"
     },
     {
       "path": "docs/csn1/ts44018/ec-dummy-message-content.csn",
@@ -264,6 +540,10 @@
     {
       "path": "docs/csn1/ts44018/rr-ec-message-types.txt",
       "sha256": "a468ea6ae54f6b34498fe03c059d9c1cea24160359b5f2e9ffdb1da029c20c45"
+    },
+    {
+      "path": "docs/csn1/ts44018/rr-packet-downlink-assignment-details.txt",
+      "sha256": "cb0b933b7f1e47009c261ef86161aa35d54ac1f9f43d5d284d495c8a71305eeb"
     },
     {
       "path": "docs/csn1/ts44018/rr-short-message-types.txt",
@@ -386,12 +666,424 @@
       "sha256": "cf82c987d004a359b90c02b405cc2c915eefcca30957f198eb45d6a464312b5c"
     },
     {
+      "path": "docs/csn1/ts44060/carrier-egprs-access-context.txt",
+      "sha256": "33d9ab726bcbbd4c65a3153f598b37a725fdae61d0fd43c98a0d3809f47296d8"
+    },
+    {
+      "path": "docs/csn1/ts44060/carrier-egprs-access-continuation.txt",
+      "sha256": "9a83ba34cab42978c5e54ac2833c7ca049f0245d46e2c59a14e02e837c504685"
+    },
+    {
+      "path": "docs/csn1/ts44060/carrier-epdan-extension-length.txt",
+      "sha256": "a7971d80f6ecb5bbe8c79b8b2c7b30e11e90950f9cfb7abee538847f1dc5f424"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-1.csn",
+      "sha256": "e0048f7ca5c43b5fd821a008ce4380453d76343055ae3e17ded1966f3bf03907"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-11.csn",
+      "sha256": "611e5bb21890bab29130082ccae81127f3e2b191ccc08c868cf8a1aac88793f6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-12.csn",
+      "sha256": "359506bb79d806794dd86e45d1acb2a3515cf7d453cbbd8ce2b4f90c0dbf4a28"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-13.csn",
+      "sha256": "f3bb75291cf17ca86b0db0e4d8d9ea62dd4221bf2cc4dfad05ba1e8128cf338a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-14.csn",
+      "sha256": "518edbf526c736f6eba56c9e6882097aef5911c8addbc73837ade86e0cebd557"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-15.csn",
+      "sha256": "45521d98169371369b9a39655d9522241bfd6abb5d2b6d55a2faae6f5589bcc0"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-16-binding.csn",
+      "sha256": "0e3f008dd5d473a05f77e1d42d450ba9e3766cd45e9ac09eab5bfaf799e2183b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-16-details.txt",
+      "sha256": "a706b60cd30f4694d75aef41032931dcb9841ac3e37dc07f730f86c2529fa800"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-16.csn",
+      "sha256": "ae74cf78ba70c3ff90551c69b3cf599ce367371c9914d8667c44177424c9cbd8"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17.csn",
+      "sha256": "fdcdf2292941f2037ec99d3a95aa5a076c1ea53213eff309b5f2e720cf040bb6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17a-cd_length-table.txt",
+      "sha256": "63961282af5c809545ce34f4bca005129988fca818240778fdca8a9b9952a448"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17a-pd-table.txt",
+      "sha256": "9f68e62fd3d50fdefcfc1112c4adbe217a9a81ab2c94752be428bb30fb51f233"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17a.csn",
+      "sha256": "cfdb3709ceafa0757dd56e4cf6a8e9dfcb9e883d5759862f6e022fc8de08e003"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17b.csn",
+      "sha256": "5fe2b8f1bd686563b64b262565e960980bc2928a5d7e9c3cd2860ac23a8376b6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17c-meaning.txt",
+      "sha256": "abe6027aca7e188ab8af75b66685357b48a9a8a2e31a9b40177b14fd4930d1a6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-17c.csn",
+      "sha256": "41b6dc201770f6f53ed8140d9a48bce48fed7fcfb1250eac0adcaae81f15b3d5"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-18-evidence-16783.txt",
+      "sha256": "bd2ebab2289d9e97ab3d502d7665fbcd425de8ca81378dd22ada860f643c35c2"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-18-evidence-16784.txt",
+      "sha256": "6c152c33df128d298d95a5a5ec37ce17bf1b7f492bd224de164b7f7a97e545f3"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-18-evidence-16808.txt",
+      "sha256": "426c02b558ae801f487ddf0cf74421a6fe74694e578e71dcba7fd0ae6769986e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-18-evidence-16809.txt",
+      "sha256": "2a62d304a35ad70bd0e8c34d5eca1504389f8eedebeadabdb273cca415bb32bf"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-18.csn",
+      "sha256": "cef58c3f1538898c7471e15fae5d6983432e63d2d3d733615db7e44dd3217928"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-19-evidence-16898.txt",
+      "sha256": "cc8048eaa09b0fb2d6ffb2e579bd89573653d4627872592926839ad844d843e7"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-19-evidence-16899.txt",
+      "sha256": "379d9d89d9ef51a019e8e5ac0f3ca7068d483f62806d2ca95b89afd320503c08"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-19-evidence-16909.txt",
+      "sha256": "73345a48d1a2932d745c441d7d0a89fd57f89e66361baba24adb742fa1901e2b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-19.csn",
+      "sha256": "3ceae6cd2f0c42a051b281678e68ebdb3c9256198b767e214d8fde905f14bca5"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-2-2.csn",
+      "sha256": "2f5393a0ac137ab6e8a9f694dd03f66803e7d6ffce3c97445e1b75597cbb4a1a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-2-3.csn",
+      "sha256": "32a69be017a78efbdb7f943c061c6541ee3dc2bcd3e88c587eb99af190ecca1b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-2.csn",
+      "sha256": "e668c250c0369d12a2756dfa7fce6ab6dbc7659a90ab36c05a1e89617a7cc9f4"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-20-import-17130.txt",
+      "sha256": "5246c3240b964f7dad57917ef932c9cdd7e5da8a90f7f4cd78e21fdcc0878298"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-20-import-17137.txt",
+      "sha256": "069afcfff103466167edf8de4450abe30e037ef0c8083b1c8cd36c869ba73290"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-20.csn",
+      "sha256": "f0984442628ca8581a5dc4aa24b950a5b0ca49ab91dfc0b2b833c76d9a87142d"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-21a.csn",
+      "sha256": "2ffd357109b9225c896a8fcdd4f72031392ed97cc194ec9421d33af710e7ec64"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-21b.csn",
+      "sha256": "46b39c9143e9075e95623468fff529a5beeeaa5d39f284186d62285a797c1b2a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-24-import-17664.txt",
+      "sha256": "6422bfb4d50bb627884eb106710aa1bdfd34af86321f4b74cd6b06f0581ef8ea"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-24.csn",
+      "sha256": "48392c6c21611beb49f35272705675ac6c30ebbe4bf152d4e3eb0286b9411bdd"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25-evidence-17731.txt",
+      "sha256": "68a9b36d79e6a46ef7d658252fd1a25cca6c43f5711c3595cbd2622524e996bf"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25.csn",
+      "sha256": "f349739feedbad9e1b0432bf1e3eca03b702e6e3140394157bef983cc44c7af8"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25a-evidence-17799.txt",
+      "sha256": "780fd7787765af9241df53da220340565fee5faf35587defb1756767bc823165"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25a-evidence-17803.txt",
+      "sha256": "68a9b36d79e6a46ef7d658252fd1a25cca6c43f5711c3595cbd2622524e996bf"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25a-evidence-17809.txt",
+      "sha256": "623924289c7f8ded744f7609ab3448dd9a46b7faeb41e6deee6ec66c4d6478ca"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25a.csn",
+      "sha256": "c18663c0c30932d68280a324145c1cc7370366a32680e95d050f37f5b9002b95"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-25b.csn",
+      "sha256": "e711cbfeb2a49b465b62707fe27a7ef2d919b23acf64a6a9a643c2139874f8a9"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-26-sender.txt",
+      "sha256": "d683f5e875b02b040cffcef3debe61ece015d739a316b8bfa59275f14f0837d2"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-26.csn",
+      "sha256": "ee6a9f9a3b30cffbc0f0c07e608d75daa3f78fb85305c8cfa1e51cf657f7a51b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-28a.csn",
+      "sha256": "c8112cfe8aa82178b5492d553eedfe571819754c7ba9ddfe33ba25b3e754f352"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-28b.csn",
+      "sha256": "88d12f53b6042c79d8cff4b091baed2f9e535bfc938eedc5101a7378f83869fc"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-29-details.txt",
+      "sha256": "cf4e680064ee19d4b6920e593fb770353947e95fb67f53b1036e93ec642a627c"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-29.csn",
+      "sha256": "3cd2b9330e57428ee56b05610c8effa2d7e16994302ddd2f9e1ea511d73c1acf"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-2a.csn",
+      "sha256": "0316bf68843eaafd632dc9c16decf1f989c81f5feb0548c9b47ad187ca501e27"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-3.csn",
+      "sha256": "05d13df22591352941cb3da95ed74993a18aa8240eb6926005144b2a7e466b99"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-30a.csn",
+      "sha256": "9ca77584c22144e45e2c0e163556ce8a70e23c0e63f1905de72cd355339e42bf"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-31-details.txt",
+      "sha256": "5518e04ffa868e7cbc1e55d8e03ca5a6526ec9cf1444a9be16e687b3072a9218"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-31.csn",
+      "sha256": "45785c094d5c51fa7024a00c5ff7ae77a15b141b44e0983e541cecd55318927e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-32-binding.csn",
+      "sha256": "0e3f008dd5d473a05f77e1d42d450ba9e3766cd45e9ac09eab5bfaf799e2183b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-32.csn",
+      "sha256": "ae7dca24c7632e6ae9f33ad10a7b5c35582d4d2e1a45fdbec49afc036536d6d2"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-11-2-33.csn",
       "sha256": "539449cb8e051c3b4e25273753793dcab49ec4b651709fdf4ba84b498c526d4b"
     },
     {
+      "path": "docs/csn1/ts44060/clause-11-2-34.csn",
+      "sha256": "cde0539af5fe0b63dbe9d410b3365814fd0db7b8b33712c5b9113beed169510d"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-35.csn",
+      "sha256": "fc0d0129f5220c29c9816349d72f521ed134dfce004430254549bc2de66eb40f"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-37-details.txt",
+      "sha256": "d763d1eb9e7e28dad59bdf1c69ae123b2872e3ae8830d5d7b40424388bb02459"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-37.csn",
+      "sha256": "9a9ce2d0e60f22a897295577ad6e7e3ce883b2b4e6aeef634ebab20d961f9ba8"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-38.csn",
+      "sha256": "5fe0d9332021b1abf268aafa9dc99b2df780dccc3c1223524f39d524e33cca49"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-length-evidence.txt",
+      "sha256": "901189d86fe4dd6f7c7e40538207c4b19195fd1c3bc401dc09985bc3a2eb3475"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20377.txt",
+      "sha256": "a7210d6f4bb14e648cd00d3a834176fe466dc8d0e52bd0ec13426e989a3cd2c2"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20380.txt",
+      "sha256": "7a72dedd1f3ce5c70c1d15c6b8865bd57343289b2124709f20c3773b0e1eb467"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20389.txt",
+      "sha256": "67c14ac72e435323189bc212591d79d123d4ef8438897ba2c55ef07b4388407c"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20391.txt",
+      "sha256": "b2ec105c397dd795aaae4ecf767014a7641ca12bbf98b05a70562dd1cce219ed"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20395.txt",
+      "sha256": "fd8c7e4261523b58a39ca5cc8b5c873406f1a6969e6fd0a6be426a0332d98003"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39-reference-20398.txt",
+      "sha256": "994a8d5adddf7e21ee87d29268edd8ff9246ef345c79db027574367a698415e2"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-39.csn",
+      "sha256": "c8ef0a8e14fd316f2ccdbd1ff228df04cff571a6a31eb189ecf7112932ea5968"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-3a.csn",
+      "sha256": "7a1347ce6b1b62e83338f866e6a820d8e063edd2f2f9fae9f540264889a106a0"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-44-2.csn",
+      "sha256": "1486d3cacdae094cdf9fc5bb54a247d6316b951a7be7857dfb0d88f3d03f08dc"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-44-spare.txt",
+      "sha256": "3f411071d30ec46b7bb35e5c361d2059b1a8094449a9502bf7a5bfd57d322d9b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-44.csn",
+      "sha256": "083e635d01dfd8bf01bd0d71bd0b62174327c5a2a6f2ad0fe4e3f842c0b7bd79"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-45.csn",
+      "sha256": "8711d88966dbef8f61dd80371936d7b30d97d9619d1c0da6a969e77474d5dcae"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5-2.csn",
+      "sha256": "282b8106927198c53dcc73d595556f6f753d4ebf7d4a89bd0a7cfc49258a4440"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5.csn",
+      "sha256": "574ce502e370229186a6286314234050fc3f64844f1c493e7f86f3d1dcf40f99"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a-2.csn",
+      "sha256": "bb5a54b845891f7b6de13f2be93d4a5853463d5fed4d5b4de75d0935a66db33b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a-3.csn",
+      "sha256": "1f63b9c4309c6c4b411cef15670266b21835823b018e625c99589a2643afd841"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a-4.csn",
+      "sha256": "723f512c5edf8e28277309c923c8a93b72aa5a6a03b56a458eed661774cb3af7"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a-5.csn",
+      "sha256": "4edf582bfc7c7de9e5c67196d9d79143ce02ef66962a648f82e2548686361d77"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a-6.csn",
+      "sha256": "d80f4b790fd57507d3151c1c7a1e9271263675bc0c7a3dbf98d65d9a19d443c8"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5a.csn",
+      "sha256": "27462766bf863c120bb4c3f8e46b3418782399cff8b00abd09953bc1a074ff6c"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5b-closure.csn",
+      "sha256": "668860b4c6f229d5f8697aede6f675dc3732d3c63e117630f6a3ddc8bb35c65f"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5b.csn",
+      "sha256": "48ad1baf3a6decbf94c0f9d6ce5fcab295d345aa2a1014d96bc86322173f04fe"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-5c.csn",
+      "sha256": "ae0298d3c92ea84f912662f4ae6aa2a7a59faa49bf7be2cb443b4ece7c552fc7"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-6.csn",
+      "sha256": "cf15c90513bb886eb3d5633eab9c23ce26ef57b389b47525a269d2270689a893"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-6a.csn",
+      "sha256": "efe5a34fdf37e860936aa818b3a827978a449be24cbd8e02ea1b6c02d50ef336"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-6b.csn",
+      "sha256": "4075bca1bd495d79a4019c4b38e7cd9a027f1014fd8f879be76d46ef0aa374ff"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-6c.csn",
+      "sha256": "d3c6e696323c7c2381b13fefaee78f72f9191d11c769d2582fd80b3c194d2dee"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-7.csn",
+      "sha256": "b0319c13ddc68a9f33000db81c2e6d402aa9a9aa8f6119f88487d08ffb6997bb"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-8.csn",
+      "sha256": "467bdf7ce449c6a5f9fec7ce0df0e4aeca47be476882617e08406431154a5557"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-8b.csn",
+      "sha256": "e944993bcf02ea0d9dfccaaeec47de3cf38e7859cff81862680a61ad2429ab8b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9.csn",
+      "sha256": "5edb527e6134208a596cc17dac9f9ac196af550da875c250fd8699bb3338dc6a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9b.csn",
+      "sha256": "d74a410d496762cbd0c736a4af3bdbe11d1588c1687bcc8aefec197bf5525a14"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9c.csn",
+      "sha256": "edbdc35f9fa0fd100995274ed7189f90552d96ba407adbd1dd2e7211789fa04d"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9d.csn",
+      "sha256": "62c1bee60912328576c9dcb7618359122a7bc2aec167b3808f1736c2dac84e7b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9e-cd_length-table.txt",
+      "sha256": "5c90f8f8a8d4bde4e50c0d941d854c5be8a2a1191656b72c94752b413e573aef"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9e-pd-table.txt",
+      "sha256": "829ac39bbb1731ba4426307a4c97f869ee255c463cbaad192674a5e0fd88ad8d"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11-2-9e.csn",
+      "sha256": "1c75464aa5dbd584d5e5038c7d2b16040b28ca6becd6b1dd1d0365710db0f7af"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-11.csn",
+      "sha256": "0d94594ae7cb95f073df8d7c2aaa6cbf38649877c7808b3939221b5d53600dd1"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-11.csn",
       "sha256": "8fbf95c4cf0082d159b689087419d8687d109c86ed21b5a24456351a636f3a51"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-12a.csn",
+      "sha256": "f4f13f4de213eb8e2e88313e5a43edf38f1f504258dce369988124564423ff19"
     },
     {
       "path": "docs/csn1/ts44060/clause-12-13.csn",
@@ -406,6 +1098,10 @@
       "sha256": "2eff4dd38f62694be47fa9c363ce87121c327bb1a2bfdb3868771968816ab5b7"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-21.csn",
+      "sha256": "68ee88e4e97c36107d6dbfb99f450b4c81f9bbe2d1bc74da0f4b41fa5f92f4a9"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-23.csn",
       "sha256": "ab27ac0c36e74235b87c14136b04591d29e7bbedf372b4d3f1f45e36a77d8023"
     },
@@ -414,8 +1110,24 @@
       "sha256": "49c4e5c3170e6b81dbfdf7ef846220274beb22a4a3e6b9f0d8fea56226806843"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-26.csn",
+      "sha256": "0e389b8fe99578c590e3a27d2f8d9a467d2ba4cde3fe9fe717c77fdfb47f5103"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-27.csn",
+      "sha256": "798b7cdc4f65340f175c460fd47d5a99f03b99cc36862e4955a81492d081f77e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-28.csn",
+      "sha256": "a969758f0fb349395caaaf2dab610ab9d78f82973189a04e9d5dfd63b41ac446"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-29.csn",
       "sha256": "f4cb83d514ea8d9da49b28d6edd319979ac8f29c4201ad2d8b752755d353cffc"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-3-1.csn",
+      "sha256": "06ea24f35190e215117069bfb7b4c05ae9b4e9bdbdffd38adc13fea60e9a6bab"
     },
     {
       "path": "docs/csn1/ts44060/clause-12-3-2.csn",
@@ -426,6 +1138,14 @@
       "sha256": "d4a92fe4e87a348590e4ed6d2300b44c90d06b1c694d0c02f0f621b06cb536d6"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-30-details.txt",
+      "sha256": "6f9c3fe9fe2ee42a7457d289b58b5524eb8d71b0fbff61b807edbedeb6e36840"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-30.csn",
+      "sha256": "6695103ad88899cdac9fed096552f935a8e0b13269336d5037b16d6aa812968c"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-31.csn",
       "sha256": "ab54680a6b7d38c7b19d97e42da01f8759c981255039da6791e4225b0402b90f"
     },
@@ -434,20 +1154,112 @@
       "sha256": "e34ca73d94ef3bc0bae0574c63cac8e27c13778036edf929c44033d5497a5877"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-42.csn",
+      "sha256": "e54a54de2de071def6e335349d3cc096b18f336b7dc6e866127088556ab332c9"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-42a-details.txt",
+      "sha256": "1d42906647b2d43f450baef00ee3af89b98b156df3f73fed8fb601b115daa444"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-42a.csn",
+      "sha256": "46d09580a9fbd82743647cb95a032ca815b3c4517ba091e482bc828ca1b390eb"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-42b-details.txt",
+      "sha256": "994e927d26f7cc1fca5f442d0b78610965d8a619f2c0484fe6f3c8f8d89cd08c"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-42b.csn",
+      "sha256": "1e4c0ab030a9c1d74b54301036da13f76d8357e375d5b2854f69ca0f6951833b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-43.csn",
+      "sha256": "68668e1ef0378f55d196da23bb812312fd584a5ba6d99c38233508315aa5946a"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-45.csn",
       "sha256": "15e0c66a6406c90b030b178c4667f43218dd867c42ab14a52910bcb881ab5111"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-46.csn",
+      "sha256": "dc7ac2ea90ae0d6fe5723391fe1ae9a4e8ed81f2d0fd8cd0058b29dcb7f821fa"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-47.csn",
+      "sha256": "b03381989e11ea7781dc3fc9c6543551ca0f973e65443206db0f4d8822977423"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48-details.txt",
+      "sha256": "a91eb5c62b1e1b81ecf6b81881011a7a05956a83ff32477e5e438eacc9a77301"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48.csn",
+      "sha256": "9f9a6f90b8b806229672cfe05bc63ac726bcb82f6e901a1ca8cce99f19a2f173"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-1-details.txt",
+      "sha256": "6166320e86332ca5952a2471b4ad7f3bec7226e9c7c3d630aedcd9aaa9d8226f"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-1.csn",
+      "sha256": "0dc47587e84ec25df1ad2d9a9143b1e6d4168ec042e2ef00ed0d2e1ff4fb762a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-2-details.txt",
+      "sha256": "b5da24132fa0db0de2a56306e223374871787fb7b2f8da8bb8b2947223721d5f"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-2.csn",
+      "sha256": "02cd07590bcda77dd38ccec76c2d61881402b5e80dc57d038247e4c3a7901c76"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-3-details.txt",
+      "sha256": "cf5e17080883faed14d1d9e5f645a5f460dbc677a2af51c09eb426e904dcfe3a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-3.csn",
+      "sha256": "1d598a4f319e5ca1537febe2c26eb4edb7c52c04aa8872a3f82e68c6287ca7db"
     },
     {
       "path": "docs/csn1/ts44060/clause-12-48a-4.csn",
       "sha256": "74b1a88fdededbbaee9d230361c2008f63eaa0b83781449ace7d6863562d1b2d"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-48a-5-details.txt",
+      "sha256": "9b1f53d3deddc73e331e9b07193cb38e10042850c9e0bef1e917b3bbbb83654e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-5.csn",
+      "sha256": "ab1a64a93c884e03464f825a1cec0061dd0d257561df8abcbabae62e4a9e750b"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-6-details.txt",
+      "sha256": "c4327e920c261b641f13e42dd2723038906e850a8df24edeead2dc8257826bef"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-48a-6.csn",
+      "sha256": "53ab47e6a232d2cbc828a458fbd22a2a919046da495d1d013e617fa580d18b7c"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-49.csn",
       "sha256": "8304c8abc2e9c063fb8e01d08956f00d8624d10436b5ce8b2af2c001ce445bbd"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-5-5.csn",
+      "sha256": "2166f297bc32a51155a7985ec1a08ae58fac7faea3bbb3768707e101c2c55937"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-50.csn",
       "sha256": "d3071474bfced79064c729e9281d0dbfcde287faf2acee677e413e4de6176465"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-51.csn",
+      "sha256": "df6586c794d4e46ad19be6ba83b91f9aba3655dcf0c5082ccf21d925f5d9cac6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-52.csn",
+      "sha256": "618444494565497934aa582ac010c0acc04f3f1667a80245f0fbee1e17267ce0"
     },
     {
       "path": "docs/csn1/ts44060/clause-12-53-dependencies.txt",
@@ -458,12 +1270,68 @@
       "sha256": "cbdf7ead8a3f4d4e37465130a6ad6c887e2d98820eb9bc6e545d9dbc6a95510d"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-54-dependencies.txt",
+      "sha256": "9383e139f78b2fc11f7a3a39664acd550ca94cd78dc72a4a965f30e4c5a35dc2"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-54.csn",
+      "sha256": "736b42763c0e21ef682b58231119f7890c7e596818d5042ff17ee1d43002f668"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-55-dependencies.txt",
+      "sha256": "097072b750044b06998298850667f6db9878752a29cd0d1e0f466df9b2fb0ea6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-55.csn",
+      "sha256": "43dbe1e0dd704ecc0aeb25e6d6901bf4dd786ea9f54736b875042009d4de6e3e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-56.csn",
+      "sha256": "5a07e1664e7930bccd64ec168954c8be4cd679a51c6181a2df8398cfba616329"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-5a-1-dependencies.txt",
+      "sha256": "e521988af86def2184c2feac7f7348d0cd9f69cb54d5d26bc3622d55b706bd25"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-5a-1.csn",
+      "sha256": "e21d5df2062d79bbe1ed48382e0eee9cfa722febc2119c9a6a3236716f9a27a0"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-5a-2.csn",
       "sha256": "97bfd2b8b06dcebeeeda871b68bbb49a65fbbbbe1936aadbf6647368ea1ccd83"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-5a-3.csn",
+      "sha256": "7ba3510a175fc1f199013fabf2c2c1865d528937136ee93ce5fbb07fd0d3ef77"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-60.csn",
+      "sha256": "0f742adfc169a6c51eb2e846073f6256227888750a7abc03e6b6126d8d3cbcd6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-62.csn",
+      "sha256": "ef7bb87d4210f3a857b29a3fdf0893d90ae02e263bf87b84daac1553f9446e63"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-63.csn",
+      "sha256": "d2aaf1d6f7c1cec9bc248728cb5f6454ceccbec0ad4ba15285a19c2bdba2ef0c"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-64-details.txt",
+      "sha256": "26f8274ad4d5d1c6300361649f1416798b85997052ae05a77ef3ffc2b6de8a05"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-64.csn",
+      "sha256": "ef2331838b9b574d2fa5744417b4f8b31e4deb5cc28d56feb988fdebab052b78"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-65.csn",
       "sha256": "68dd484bab92a2d863c35dc234eed813f5fcd442a7449b77cb5780b3ceac50a0"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12-66.csn",
+      "sha256": "74a943690e89cb0a1336accf05646df808b8917cc44e56d1f8be39d83c7533cd"
     },
     {
       "path": "docs/csn1/ts44060/clause-12-68.csn",
@@ -494,6 +1362,10 @@
       "sha256": "7e841b0cae69cf3335d4b647526e1d645c49fc3e65416322da1be95234b89c23"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-75.csn",
+      "sha256": "dd4403d21f087d435a5992e95b724e7b56b44123583997456fdbcf56b738a5c0"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-76.csn",
       "sha256": "e0f817e37e0ee669a738fbf5cd9e4f58150312e4f68b40a67621e666a89bf31c"
     },
@@ -514,6 +1386,10 @@
       "sha256": "4fd481c68dc5485e56cbe25d0b14b7947b6cecb4cf38d66e73c4e59b42bbc0f9"
     },
     {
+      "path": "docs/csn1/ts44060/clause-12-8-3.csn",
+      "sha256": "3ed51bf1a87adc3a79439ae5d915744c2f84a2526b3b0d61645886283c65f56e"
+    },
+    {
       "path": "docs/csn1/ts44060/clause-12-8-4-dependencies.txt",
       "sha256": "73345a48d1a2932d745c441d7d0a89fd57f89e66361baba24adb742fa1901e2b"
     },
@@ -524,6 +1400,18 @@
     {
       "path": "docs/csn1/ts44060/clause-12-9.csn",
       "sha256": "918717672a050d52914a3d08c960db596e9819ff026030daf30e977c4845075e"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12.21-evidence-13.txt",
+      "sha256": "86220b3b1f240561f8449d3dc1a3c06b3ecc5247cfa706d3bd702f8fa2191e3a"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12.21-evidence-16.txt",
+      "sha256": "e22415fc898b335c7458636125c9a3cde9b08a652df9b48c4fd5c8c69382dfa6"
+    },
+    {
+      "path": "docs/csn1/ts44060/clause-12.27-evidence-1.txt",
+      "sha256": "bc18653068bc8f7fda6699c203367709497c26bab5d81a2d8f3a877c8c2e6cd1"
     },
     {
       "path": "docs/csn1/ts44060/egprs-bep-link-quality-measurements-ie.csn",
@@ -602,6 +1490,18 @@
       "sha256": "dc745286fa89a2f7c2f2ef1846944c2716fed74b42a4cc73f39a17ec167a4724"
     },
     {
+      "path": "docs/csn1/ts44060/measurement-p-table.txt",
+      "sha256": "1ce4aa85f99855d2f262ec1ea50d541bae12b815504846d27bba1d2554db206f"
+    },
+    {
+      "path": "docs/csn1/ts44060/measurement-q-table.txt",
+      "sha256": "1abb5f4e8c063845485344fef87b8c949adeee2051ec6bde8fe6510c92c21b90"
+    },
+    {
+      "path": "docs/csn1/ts44060/measurement-width-references.txt",
+      "sha256": "889f73c3d7e98021ff8d30e77c82775d174a2ea3977f106750a14c3194bec6af"
+    },
+    {
       "path": "docs/csn1/ts44060/mprach-control-parameters-ie.csn",
       "sha256": "d370ff483fac526825ecbefdb47aee994009f141f5cc439f0d96bd836c1e8366"
     },
@@ -618,6 +1518,18 @@
       "sha256": "3960b213caa3667cf46d347c0086083562010cb7c49ae234a7c7e870b3ec190c"
     },
     {
+      "path": "docs/csn1/ts44060/packet-emr-bitmap.txt",
+      "sha256": "30acd4ec8677d9e959546f1955d1fa2795d5b13648a1162f68a4fbcaebbe8b68"
+    },
+    {
+      "path": "docs/csn1/ts44060/packet-emr-carrier.txt",
+      "sha256": "1e12cc159a23238a935adfaefe0331d667e7da7947acc44dce02a662cfa32c02"
+    },
+    {
+      "path": "docs/csn1/ts44060/packet-emr-dispatch.txt",
+      "sha256": "39bb7d07e7132ac50884f0601e0474911257341ad049df6e15730b6f05a1c799"
+    },
+    {
       "path": "docs/csn1/ts44060/packet-timing-advance-ie.csn",
       "sha256": "616ab3a3fe806332641f528d917873b7793fc54183725074873ce5b1ea942ba9"
     },
@@ -630,12 +1542,48 @@
       "sha256": "92a0788dc37d73e11c8beea8a56602e3e257e7ff1004fa54c86f90b2c24f8830"
     },
     {
+      "path": "docs/csn1/ts44060/quater-width-references.txt",
+      "sha256": "c3f804d660e590530231d69e58cb000488384d256d0ee93723ee5350feaba2d1"
+    },
+    {
       "path": "docs/csn1/ts44060/tmgi-ie.csn",
       "sha256": "b9b63ddc29f6dac40d201110615c9b9af317065f0084ebcdbf5b13e12db872d4"
     },
     {
       "path": "docs/csn1/ts44060/utran-csg-measurement-report-ie.csn",
       "sha256": "3b13c4e4865da5ff04e69f4aca8860ed2d848d68ddc828df69de474e84ad5e9f"
+    },
+    {
+      "path": "docs/csn1/ts44118/cn-domain-identity-details.txt",
+      "sha256": "d6e94e1732b7ff8bd168d9e77d73db7ebf699d80a577ab42e316f1e4f022d6fe"
+    },
+    {
+      "path": "docs/csn1/ts44118/cn-domain-identity-ie.csn",
+      "sha256": "1117eeb9a7c14486897f512996aeebe4fe6a7deff765f82ff1ef13e075e9c61a"
+    },
+    {
+      "path": "docs/csn1/ts44118/cn-domain-specific-drx-cycle-length-coefficient-details.txt",
+      "sha256": "cb18c89eae3c14c74332dfdeba51c8c42c371a54c900740c2430ff43d8e883f9"
+    },
+    {
+      "path": "docs/csn1/ts44118/cn-domain-specific-drx-cycle-length-coefficient-ie.csn",
+      "sha256": "0d06eeb7ae6f1f6f3e2bea3de19c58f1179c6d93a767a32eabc2b009a1af1278"
+    },
+    {
+      "path": "docs/csn1/ts45002/carrier-ec-bcch-mapping.txt",
+      "sha256": "8f2d1bc910d49eb007f9a0de81e0432cdec0ef76d985509fd1652b8aba7d701f"
+    },
+    {
+      "path": "docs/csn1/ts45002/carrier-ec-ccch-mapping.txt",
+      "sha256": "7e1f73f29a8db041baf81d93fb2301e1f8d175f93839a81c7894073abfe282ac"
+    },
+    {
+      "path": "docs/csn1/ts45003/carrier-ec-bcch-block.txt",
+      "sha256": "94932e1958e83df9dce82c9d67dadbad978a84be273cfd6866d83de513e8bd36"
+    },
+    {
+      "path": "docs/csn1/ts45003/carrier-ec-ccch-block.txt",
+      "sha256": "c0773f0673383e44e0e6d2811cdcb44f456f54ac864b5efe88fdc1893bebe30a"
     },
     {
       "path": "docs/csn1/ts45008/bep-period-table.txt",
@@ -1915,6 +2863,500 @@
       "approval_date": "2026-10-26"
     },
     {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.11b",
+      "paragraph": 15142,
+      "expected": "\t\u003c DYNAMIC ARFCN MAPPING Description : { 1 \u003c DYNAMIC ARFCN MAPPING \u003e } ** 0 \u003e",
+      "replacement": "\t\u003c DYNAMIC ARFCN MAPPING Description : { 1 \u003c Dynamic ARFCN Mapping entry \u003e } ** 0 \u003e",
+      "reason": "Give the entry and its local reference a distinct name under TS 24.007 Annex B §B.1.1.5; retain every transmitted bit.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.11b paragraph 15142",
+      "policy": "owner-approved-text-rule",
+      "reading": "Give the entry and its local reference a distinct name under TS 24.007 Annex B §B.1.1.5; retain every transmitted bit.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.11b",
+      "paragraph": 15145,
+      "expected": "\u003c DYNAMIC ARFCN MAPPING \u003e::=",
+      "replacement": "\u003c Dynamic ARFCN Mapping entry \u003e::=",
+      "reason": "Give the entry and its local reference a distinct name under TS 24.007 Annex B §B.1.1.5; retain every transmitted bit.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.11b paragraph 15145",
+      "policy": "owner-approved-text-rule",
+      "reading": "Give the entry and its local reference a distinct name under TS 24.007 Annex B §B.1.1.5; retain every transmitted bit.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.14d",
+      "paragraph": 16007,
+      "expected": "GPRS Cell Options\nThe GPRS Cell Option information element is defined in 3GPP TS 44.060.",
+      "replacement": "GPRS Cell Options\nThe GPRS Cell Options information element is defined in 3GPP TS 44.060.",
+      "reason": "Correct the singular prose spelling to the printed GPRS Cell Options IE name for the standard-only import.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.14d paragraph 16007",
+      "policy": "owner-approved-text-rule",
+      "reading": "Correct the singular prose spelling to the printed GPRS Cell Options IE name for the standard-only import.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.1d",
+      "paragraph": 14003,
+      "expected": "\t{ 1 \u003c FDD_ARFCN \u003e : bit (14) } ** 0\t\t-- FDD frequencies",
+      "replacement": "\t{ 1 \u003c FDD_ARFCN : bit (14) \u003e } ** 0\t\t-- FDD frequencies",
+      "reason": "Place the primitive type inside the field brackets.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.1d paragraph 14003",
+      "policy": "owner-approved-text-rule",
+      "reading": "Place the primitive type inside the field brackets.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.1d",
+      "paragraph": 14004,
+      "expected": "\t{ 1 \u003c TDD_ARFCN \u003e : bit (14) } ** 0\t\t-- TDD frequencies",
+      "replacement": "\t{ 1 \u003c TDD_ARFCN : bit (14) \u003e } ** 0\t\t-- TDD frequencies",
+      "reason": "Place the primitive type inside the field brackets.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.1d paragraph 14004",
+      "policy": "owner-approved-text-rule",
+      "reading": "Place the primitive type inside the field brackets.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.47",
+      "paragraph": 10468,
+      "expected": "\u003cUPLINK FREE\u003e ::=\t\u003c RR short PD : bit \u003e\t\t\t-- See 3GPP TS 24.007\n\t\t\t\t\u003c message type : bit(5) \u003e\t\t\t-- See 10.4\n\t\t\t\t\u003c short layer 2 header : bit(2) \u003e\t\t-- See 3GPP TS 44.006\n\t\t\t\t\u003c Uplink Access Request bit \u003e\n\t\t\t\t{ L | H \u003c Uplink Identity Code bit(6) \u003e}\n\t\t\t\t{\tnull | L\t\t\t\t\t-- Receiver compatible with earlier release",
+      "replacement": "\u003cUPLINK FREE\u003e ::=\t\u003c RR short PD : bit \u003e\t\t\t-- See 3GPP TS 24.007\n\t\t\t\t\u003c message type : bit(5) \u003e\t\t\t-- See 10.4\n\t\t\t\t\u003c short layer 2 header : bit(2) \u003e\t\t-- See 3GPP TS 44.006\n\t\t\t\t\u003c Uplink Access Request : bit \u003e\n\t\t\t\t{ L | H \u003c Uplink Identity Code : bit(6) \u003e}\n\t\t\t\t{\tnull | L\t\t\t\t\t-- Receiver compatible with earlier release",
+      "reason": "Restore label/type colons for the printed one-bit and six-bit fields.",
+      "citation": "TS 44.018 V19.0.0 §9.1.47 paragraph 10468",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore label/type colons for the printed one-bit and six-bit fields.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.49b",
+      "paragraph": 10607,
+      "expected": "\t\u003c SMS_Final_Content : bit (val(Length)) \u003e",
+      "replacement": "\t\u003c SMS_Final_Content : bit (val(Length)) \u003e ;",
+      "reason": "Terminate the non-segmented declaration before the segmented declaration.",
+      "citation": "TS 44.018 V19.0.0 §9.1.49b paragraph 10607",
+      "policy": "owner-approved-text-rule",
+      "reading": "Terminate the non-segmented declaration before the segmented declaration.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.49b",
+      "paragraph": 10613,
+      "expected": "\t|1\t\u003c Length : bit (8)\u003e\n\t\t\u003c SMS_Final_Content : bit (val(Length)) \u003e }\t\t-- Last segment",
+      "replacement": "\t|1\t\u003c Length : bit (8)\u003e\n\t\t\u003c SMS_Final_Content : bit (val(Length)) \u003e } ;\t\t-- Last segment",
+      "reason": "Terminate the segmented declaration before its final comment.",
+      "citation": "TS 44.018 V19.0.0 §9.1.49b paragraph 10613",
+      "policy": "owner-approved-text-rule",
+      "reading": "Terminate the segmented declaration before its final comment.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.57",
+      "paragraph": 11481,
+      "expected": "\t{ 0 | 1 BSIC : bit (6) }",
+      "replacement": "\t{ 0 | 1 \u003c BSIC : bit (6) \u003e }",
+      "reason": "Restore field angle brackets around the six-bit BSIC.",
+      "citation": "TS 44.018 V19.0.0 §9.1.57 paragraph 11481",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore field angle brackets around the six-bit BSIC.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.57",
+      "paragraph": 11488,
+      "expected": "\t| 1 \u003c Validity bitmap : bit (3) \u003e }",
+      "replacement": "\t| 1 \u003c Validity bitmap : bit (3) \u003e } ;",
+      "reason": "Terminate the Validity Information declaration.",
+      "citation": "TS 44.018 V19.0.0 §9.1.57 paragraph 11488",
+      "policy": "owner-approved-text-rule",
+      "reading": "Terminate the Validity Information declaration.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.21h",
+      "paragraph": 7645,
+      "expected": "\t{ null | 0 bit** = \u003c no string \u003e}\t- Receiver backward compatible with earlier version",
+      "replacement": "\t{ null | 0 bit** = \u003c no string \u003e};\t-- Receiver backward compatible with earlier version",
+      "reason": "Restore the declaration terminator and malformed comment introducer.",
+      "citation": "TS 44.018 V19.0.0 §9.1.21h paragraph 7645",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the declaration terminator and malformed comment introducer.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.21h",
+      "paragraph": 7650,
+      "expected": "\u003cnew Group Channel Description\u003e : :=\t",
+      "replacement": "\u003cnew Group Channel Description\u003e ::=\t",
+      "reason": "Restore the split declaration operator.",
+      "citation": "TS 44.018 V19.0.0 §9.1.21h paragraph 7650",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.21i",
+      "paragraph": 7683,
+      "expected": "\t{ null | 0 bit** = \u003c no string \u003e}\t- Receiver backward compatible with earlier version",
+      "replacement": "\t{ null | 0 bit** = \u003c no string \u003e};\t-- Receiver backward compatible with earlier version",
+      "reason": "Restore the declaration terminator and malformed comment introducer.",
+      "citation": "TS 44.018 V19.0.0 §9.1.21i paragraph 7683",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the declaration terminator and malformed comment introducer.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25d",
+      "paragraph": 18221,
+      "expected": "\u003c Downlink TBF assignment struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment struct \u003e ::=",
+      "reason": "Restore the split declaration operator.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25d paragraph 18221",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.49a",
+      "paragraph": 10578,
+      "expected": "\t\t\t{\u003ctalker identity: bit(8 * val (talker identity length)\u003e}",
+      "replacement": "\t\t\t{\u003ctalker identity: bit(8 * val (talker identity length))\u003e}",
+      "reason": "Close the bit-width expression; the field table states eight times the length.",
+      "citation": "TS 44.018 V19.0.0 §9.1.49a paragraph 10578",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the bit-width expression; the field table states eight times the length.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.60",
+      "paragraph": 11624,
+      "expected": "\t{ 0 | 1 \u003c Timing Advance : bit (6) }",
+      "replacement": "\t{ 0 | 1 \u003c Timing Advance : bit (6) \u003e }",
+      "reason": "Close the Timing Advance field angle bracket.",
+      "citation": "TS 44.018 V19.0.0 §9.1.60 paragraph 11624",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the Timing Advance field angle bracket.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.60",
+      "paragraph": 11629,
+      "expected": "\t{ 0\t– use MCS-1 for uplink packet transfer ",
+      "replacement": "\t{ 0\t-- use MCS-1 for uplink packet transfer ",
+      "reason": "Restore the CSN.1 line-comment introducer for MCS-1 prose.",
+      "citation": "TS 44.018 V19.0.0 §9.1.60 paragraph 11629",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the CSN.1 line-comment introducer for MCS-1 prose.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.60",
+      "paragraph": 11637,
+      "expected": "\t| 1\t– no gap between last block and next block }  } ** 0 ;",
+      "replacement": "\t| 1\t}  } ** 0 ; -- no gap between last block and next block",
+      "reason": "Separate the no-gap prose from the closing grammar using a line comment.",
+      "citation": "TS 44.018 V19.0.0 §9.1.60 paragraph 11637",
+      "policy": "owner-approved-text-rule",
+      "reading": "Separate the no-gap prose from the closing grammar using a line comment.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.61",
+      "paragraph": 11820,
+      "expected": "\t{ 0 | 1 \u003c EC Page Extension ; bit (4) \u003e }",
+      "replacement": "\t{ 0 | 1 \u003c EC Page Extension : bit (4) \u003e }",
+      "reason": "Restore the EC Page Extension label/type separator.",
+      "citation": "TS 44.018 V19.0.0 §9.1.61 paragraph 11820",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the EC Page Extension label/type separator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.63",
+      "paragraph": 11881,
+      "expected": "\t{ 0 | 1 \u003c EC Page Extension ; bit (4) \u003e }",
+      "replacement": "\t{ 0 | 1 \u003c EC Page Extension : bit (4) \u003e }",
+      "reason": "Restore the EC Page Extension label/type separator.",
+      "citation": "TS 44.018 V19.0.0 §9.1.63 paragraph 11881",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the EC Page Extension label/type separator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.69",
+      "paragraph": 12808,
+      "expected": "\t\u003c Paging Indication Sequence : bit (84) \u003e",
+      "replacement": "\t\u003c Paging Indication Sequence : bit (84) \u003e ;",
+      "reason": "Terminate the two-field EC Paging Indication declaration.",
+      "citation": "TS 44.018 V19.0.0 §9.1.69 paragraph 12808",
+      "policy": "owner-approved-text-rule",
+      "reading": "Terminate the two-field EC Paging Indication declaration.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25e",
+      "paragraph": 18316,
+      "expected": "\t\t! \u003c PDCH pairs configuration error : { 1 1 } bit (*) = \u003c no string \u003e \t-- reserved",
+      "replacement": "\t\t! \u003c PDCH pairs configuration error : { 1 1 } bit (*) = \u003c no string \u003e \u003e \t-- reserved",
+      "reason": "Close the outer PDCH-pairs error label before its comment.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25e paragraph 18316",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer PDCH-pairs error label before its comment.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25e",
+      "paragraph": 18328,
+      "expected": "\t\t! \u003c PDCH pairs configuration error : { 1 1 } bit (*) = \u003c no string \u003e \t-- reserved",
+      "replacement": "\t\t! \u003c PDCH pairs configuration error : { 1 1 } bit (*) = \u003c no string \u003e \u003e \t-- reserved",
+      "reason": "Close the outer PDCH-pairs error label before its comment.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25e paragraph 18328",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer PDCH-pairs error label before its comment.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "10.5.2.25e",
+      "paragraph": 18381,
+      "expected": "\u003c Downlink TBF assignment 2 struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment 2 struct \u003e ::=",
+      "reason": "Restore the split declaration operator.",
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25e paragraph 18381",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12116,
+      "expected": "\u003c EC PACKET CHANNEL REQUEST message content \u003e :: =",
+      "replacement": "\u003c EC PACKET CHANNEL REQUEST message content \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12116",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12125,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12125",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12135,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12135",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12143,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12143",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12152,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12152",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12162,
+      "expected": "\u003c EC PACKET CHANNEL REQUEST message content \u003e :: =",
+      "replacement": "\u003c EC PACKET CHANNEL REQUEST message content \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12162",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12171,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12171",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12181,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12181",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12190,
+      "expected": "\u003c EC PACKET CHANNEL REQUEST message content \u003e :: =",
+      "replacement": "\u003c EC PACKET CHANNEL REQUEST message content \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12190",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12199,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12199",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12209,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12209",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12218,
+      "expected": "\u003c EC PACKET CHANNEL REQUEST message content \u003e :: =",
+      "replacement": "\u003c EC PACKET CHANNEL REQUEST message content \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12218",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12227,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content RLC Data Block method or Page Response for Positioning Event) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content RLC Data Block method or Page Response for Positioning Event) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12227",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.018",
+      "version": "19.0.0",
+      "clause": "9.1.65",
+      "paragraph": 12238,
+      "expected": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e :: =",
+      "replacement": "\u003c EC MULTILATERATION REQUEST message content (Access Burst method) \u003e ::=",
+      "reason": "Restore the split declaration operator; retain each table context and printed name.",
+      "citation": "TS 44.018 V19.0.0 §9.1.65 paragraph 12238",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the split declaration operator; retain each table context and printed name.",
+      "approval_date": "2026-10-31"
+    },
+    {
       "standard": "TS 44.060",
       "version": "19.0.0",
       "clause": "12.24",
@@ -1953,6 +3395,1540 @@
       "replacement": "::=",
       "reason": "TS 44.060 V19.0.0 §12.38: malformed assignment separator in MPRACH description",
       "citation": "TS 44.060 V19.0.0 §12.38 paragraph 23658"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.12a",
+      "paragraph": 23161,
+      "expected": "\t\t\t\t\t\u003c DOWNLINK_TIMING_ADVANCE_TIMESLOT_NUMBER : bit (3) \u003e }",
+      "replacement": "\t\t\t\t\t\u003c DOWNLINK_TIMING_ADVANCE_TIMESLOT_NUMBER : bit (3) \u003e } ;",
+      "reason": "Terminate the Global Packet Timing Advance production after its final optional component (TS 44.060 §12.12a, Table 12.12a.1).",
+      "citation": "TS 44.060 V19.0.0 §12.12a paragraph 23161",
+      "policy": "owner-approved-text-rule",
+      "reading": "Terminate the Global Packet Timing Advance production after its final optional component (TS 44.060 §12.12a, Table 12.12a.1).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.52",
+      "paragraph": 25322,
+      "expected": "\t\t\t\u003c DEFAULT_UTRAN_QRXLEVMIN: bit(5) }",
+      "replacement": "\t\t\t\u003c DEFAULT_UTRAN_QRXLEVMIN: bit(5) \u003e }",
+      "reason": "Close the printed field angle bracket at paragraph 25322; retain its printed width (TS 44.060 §12.52).",
+      "citation": "TS 44.060 V19.0.0 §12.52 paragraph 25322",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the printed field angle bracket at paragraph 25322; retain its printed width (TS 44.060 §12.52).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.75",
+      "paragraph": 26000,
+      "expected": "\t\t\t\u003c 8PSK_CV_BEP : bit (3) \u003e };",
+      "replacement": "\t\t\t\u003c 8PSK_CV_BEP : bit (3) \u003e }",
+      "reason": "Move the terminator after C_VALUE, defined by paragraph 26008 as a six-bit field.",
+      "citation": "TS 44.060 V19.0.0 §12.75 paragraph 26000",
+      "policy": "owner-approved-text-rule",
+      "reading": "Move the terminator after C_VALUE, defined by paragraph 26008 as a six-bit field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.28",
+      "paragraph": 23503,
+      "expected": "\t\u003c NR_OF_FREQ_OR_CELLS : bit (5) \u003e:\n\t{ \u003c LSA ID information : \u003c LSA ID information struct \u003e\u003e * (val(NR_OF_FREQ_OR_CELLS)) };\n",
+      "replacement": "\t\u003c NR_OF_FREQ_OR_CELLS : bit (5) \u003e\n\t{ \u003c LSA ID information : \u003c LSA ID information struct \u003e\u003e * (val(NR_OF_FREQ_OR_CELLS)) };\n",
+      "reason": "Remove the stray colon following NR_OF_FREQ_OR_CELLS; retain the printed counted repetition inside its group (TS 44.060 §12.28, Table 12.28.1).",
+      "citation": "TS 44.060 V19.0.0 §12.28 paragraph 23503",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the stray colon following NR_OF_FREQ_OR_CELLS; retain the printed counted repetition inside its group (TS 44.060 §12.28, Table 12.28.1).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.56",
+      "paragraph": 25436,
+      "expected": "\u003c Measurement Control Parameters Description\u003e :: =",
+      "replacement": "\u003c Measurement Control Parameters Description\u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.56 paragraph 25436).",
+      "citation": "TS 44.060 V19.0.0 §12.56 paragraph 25436",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.56 paragraph 25436).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.66",
+      "paragraph": 25778,
+      "expected": "\tC_VALUE : bit (6)",
+      "replacement": "\t\u003c C_VALUE : bit (6) \u003e",
+      "reason": "Enclose the printed labelled field in angle brackets (TS 44.060 §12.66 paragraph 25778).",
+      "citation": "TS 44.060 V19.0.0 §12.66 paragraph 25778",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed labelled field in angle brackets (TS 44.060 §12.66 paragraph 25778).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.17b",
+      "paragraph": 16688,
+      "expected": "\t\t|\t\u003c MESS_REC : bit (2) == 11 \u003e\t\t\t-- Message type supported and completely received, multiple \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tinstances",
+      "replacement": "\t\t|\t\u003c MESS_REC : bit (2) == 11 \u003e\t\t\t-- Message type supported and completely received, multiple \n\t-- \t\t\t\t\t\t\t\t\t\t\t\t\t\t\tinstances",
+      "reason": "Continue the explanatory word instances as a line comment instead of a bare grammar token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.17b paragraph 16688",
+      "policy": "owner-approved-text-rule",
+      "reading": "Continue the explanatory word instances as a line comment instead of a bare grammar token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.17c",
+      "paragraph": 16742,
+      "expected": "\t\u003c padding bits \u003ez",
+      "replacement": "\t\u003c padding bits \u003e",
+      "reason": "Remove the stray letter after the padding reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.17c paragraph 16742",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the stray letter after the padding reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.2",
+      "paragraph": 13533,
+      "expected": "\t\u003c MESSAGE_TYPE : bit (9) == 1111 1100 1 \u003e",
+      "replacement": "\t{ \u003c MESSAGE_TYPE : bit (9) == 1111 1100 1 \u003e",
+      "reason": "Open the access-burst choice before its first message-type code.",
+      "citation": "TS 44.060 V19.0.0 §11.2.2 paragraph 13533",
+      "policy": "owner-approved-text-rule",
+      "reading": "Open the access-burst choice before its first message-type code.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.2",
+      "paragraph": 13535,
+      "expected": "\t\t\t\u003c TN_RRBP : bit (3) \u003e }",
+      "replacement": "\t\t\t\u003c TN_RRBP : bit (3) \u003e } }",
+      "reason": "Close both access-burst alternatives before the common CTRL_ACK field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.2 paragraph 13535",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close both access-burst alternatives before the common CTRL_ACK field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.2",
+      "paragraph": 13539,
+      "expected": "\t\u003c MESSAGE_TYPE : bit (6) == 0111 11 \u003e",
+      "replacement": "\t{ \u003c MESSAGE_TYPE : bit (6) == 0111 11 \u003e",
+      "reason": "Open the access-burst choice before its first message-type code.",
+      "citation": "TS 44.060 V19.0.0 §11.2.2 paragraph 13539",
+      "policy": "owner-approved-text-rule",
+      "reading": "Open the access-burst choice before its first message-type code.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.2",
+      "paragraph": 13541,
+      "expected": "\t\t\t\u003c TN_RRBP : bit (3) \u003e }",
+      "replacement": "\t\t\t\u003c TN_RRBP : bit (3) \u003e } }",
+      "reason": "Close both access-burst alternatives before the common CTRL_ACK field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.2 paragraph 13541",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close both access-burst alternatives before the common CTRL_ACK field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.20",
+      "paragraph": 17021,
+      "expected": "\u003c COMPACT Information struct \u003e : :=",
+      "replacement": "\u003c COMPACT Information struct \u003e ::=",
+      "reason": "Join the split printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.20 paragraph 17021",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the split printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.20",
+      "paragraph": 17048,
+      "expected": "\u003c CCN Support Description struct \u003e ::=\n\u003c Number_Cells : bit (7) \u003e\n{ CCN_SUPPORTED : bit } * (val(Number_Cells)) ;",
+      "replacement": "\u003c CCN Support Description struct \u003e ::=\n\u003c Number_Cells : bit (7) \u003e\n{ \u003c CCN_SUPPORTED : bit \u003e } * (val(Number_Cells)) ;",
+      "reason": "Put the printed CCN_SUPPORTED bit label and its type inside angle delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.20 paragraph 17048",
+      "policy": "owner-approved-text-rule",
+      "reading": "Put the printed CCN_SUPPORTED bit label and its type inside angle delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.20",
+      "paragraph": 17071,
+      "expected": "\t\t\t\u003c GPRS_PENALTY_TIME : bit (5) }",
+      "replacement": "\t\t\t\u003c GPRS_PENALTY_TIME : bit (5) \u003e }",
+      "reason": "Close the GPRS_PENALTY_TIME five-bit field before its optional-group delimiter.",
+      "citation": "TS 44.060 V19.0.0 §11.2.20 paragraph 17071",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the GPRS_PENALTY_TIME five-bit field before its optional-group delimiter.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.24",
+      "paragraph": 17652,
+      "expected": "\t\u003c ARFCN_FIRST : bit (10) \u003e\t\t\t\t\t\t\t\t- - Dynamic ARFCN mapping parameters",
+      "replacement": "\t\u003c ARFCN_FIRST : bit (10) \u003e\t\t\t\t\t\t\t\t-- Dynamic ARFCN mapping parameters",
+      "reason": "Join the split double-dash comment introducer.",
+      "citation": "TS 44.060 V19.0.0 §11.2.24 paragraph 17652",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the split double-dash comment introducer.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.5a",
+      "paragraph": 14116,
+      "expected": "\t\t\t\t| \u003c Two Phase Access Request by IPA capable MS\t111000\t\u003c Priority : bit (2) \u003e",
+      "replacement": "\t\t\t\t| \u003c Two Phase Access Request by IPA capable MS :\t111000\t\u003c Priority : bit (2) \u003e",
+      "reason": "Separate the labelled IPA-capable request name from its printed bit concatenation with a colon.",
+      "citation": "TS 44.060 V19.0.0 §11.2.5a paragraph 14116",
+      "policy": "owner-approved-text-rule",
+      "reading": "Separate the labelled IPA-capable request name from its printed bit concatenation with a colon.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.5a",
+      "paragraph": 14160,
+      "expected": "\u003c EGPRS MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e :: =",
+      "replacement": "\u003c EGPRS MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event) \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.5a paragraph 14160",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.5a",
+      "paragraph": 14170,
+      "expected": "\u003c EGPRS MULTILATERATION REQUEST message content (Access Burst method) \u003e :: =",
+      "replacement": "\u003c EGPRS MULTILATERATION REQUEST message content (Access Burst method) \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.5a paragraph 14170",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.5a",
+      "paragraph": 14177,
+      "expected": "\u003c EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) \u003e :: =",
+      "replacement": "\u003c EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1) \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.5a paragraph 14177",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.5a",
+      "paragraph": 14185,
+      "expected": "\u003c EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) \u003e :: =",
+      "replacement": "\u003c EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2) \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.5a paragraph 14185",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.6a",
+      "paragraph": 14462,
+      "expected": "\t\t{ 0 | 1\t\u003c Channel Request Description : \u003eChannel Request Description IE \u003e \u003e}",
+      "replacement": "\t\t{ 0 | 1\t\u003c Channel Request Description : \u003c Channel Request Description IE \u003e \u003e}",
+      "reason": "Restore the opening angle of the nested Channel Request Description IE reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.6a paragraph 14462",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the opening angle of the nested Channel Request Description IE reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.6a",
+      "paragraph": 14468,
+      "expected": "\t\t\u003cpadding bits \u003e } ;",
+      "replacement": "\t\t\u003cpadding bits \u003e ;",
+      "reason": "Remove the unmatched closing brace after padding; the local message production has no corresponding opening group.",
+      "citation": "TS 44.060 V19.0.0 §11.2.6a paragraph 14468",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the unmatched closing brace after padding; the local message production has no corresponding opening group.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.6a",
+      "paragraph": 14478,
+      "expected": "\t\t{ 0 | 1 \u003c Secondary Dual Carrier Channel Report : \u003c EGPRS Channel Quality Report IE \u003e } }",
+      "replacement": "\t\t{ 0 | 1 \u003c Secondary Dual Carrier Channel Report : \u003c EGPRS Channel Quality Report IE \u003e \u003e } }",
+      "reason": "Close the labelled Secondary Dual Carrier Channel Report after its nested IE reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.6a paragraph 14478",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled Secondary Dual Carrier Channel Report after its nested IE reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.13",
+      "paragraph": 16410,
+      "expected": "\t\t\t\t\t\t\t\t\t\t\u003c DLMC Carrier Bitmap : bit (val(Carrier Count) + 1) }",
+      "replacement": "\t\t\t\t\t\t\t\t\t\t\u003c DLMC Carrier Bitmap : bit (val(Carrier Count) + 1) \u003e }",
+      "reason": "Close the labelled DLMC Carrier Bitmap field after its complete printed width expression.",
+      "citation": "TS 44.060 V19.0.0 §11.2.13 paragraph 16410",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled DLMC Carrier Bitmap field after its complete printed width expression.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.21b",
+      "paragraph": 17405,
+      "expected": "\t\t{\tnull | 0 bit** \u003c no string\u003e\t\t\t\t\t\t\t\t\t-- Receiver compatible with earlier release",
+      "replacement": "\t\t{\tnull | 0 bit** = \u003c no string\u003e\t\t\t\t\t\t\t\t\t-- Receiver compatible with earlier release",
+      "reason": "Restore the equality operator of the printed no-string receiver-compatible alternative.",
+      "citation": "TS 44.060 V19.0.0 §11.2.21b paragraph 17405",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the equality operator of the printed no-string receiver-compatible alternative.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.21b",
+      "paragraph": 17414,
+      "expected": "\t\t\u003c padding bits \u003e } } }//\t\t\t\t\t\t\t-- truncation at end of message allowed, bits '0' assumed\t ! \u003c Distribution part error : bit (*) = \u003c no string \u003e \u003e ;",
+      "replacement": "\t\t\u003c padding bits \u003e } } }//\t\t\t\t\t\t\t-- truncation at end of message allowed, bits '0' assumed\n\t ! \u003c Distribution part error : bit (*) = \u003c no string \u003e \u003e ;",
+      "reason": "End the truncation comment before the distribution error production and terminator.",
+      "citation": "TS 44.060 V19.0.0 §11.2.21b paragraph 17414",
+      "policy": "owner-approved-text-rule",
+      "reading": "End the truncation comment before the distribution error production and terminator.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.25b",
+      "paragraph": 17829,
+      "expected": "\t{ 1 \u003c FDD_ARFCN \u003e : bit (14) } ** 0\t\t\t-- FDD frequencies\n\t{ 1 \u003c TDD_ARFCN \u003e : bit (14) } ** 0 ;\t\t-- TDD frequencies",
+      "replacement": "\t{ 1 \u003c FDD_ARFCN : bit (14) \u003e } ** 0\t\t\t-- FDD frequencies\n\t{ 1 \u003c TDD_ARFCN : bit (14) \u003e } ** 0 ;\t\t-- TDD frequencies",
+      "reason": "Place each printed 14-bit field width inside its angle brackets, as confirmed by paragraph 17834.",
+      "citation": "TS 44.060 V19.0.0 §11.2.25b paragraph 17829",
+      "policy": "owner-approved-text-rule",
+      "reading": "notation-only delimiter repair; both ARFCN fields retain fourteen bits.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.28a",
+      "paragraph": 18030,
+      "expected": "\t\t\t{ 0 - All data blocks acknowledged, no retransmission requested",
+      "replacement": "\t\t\t{ 0 -- All data blocks acknowledged, no retransmission requested",
+      "reason": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "citation": "TS 44.060 V19.0.0 §11.2.28a paragraph 18030",
+      "policy": "owner-approved-text-rule",
+      "reading": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.28a",
+      "paragraph": 18034,
+      "expected": "\t\t\t{ 0 - All data blocks acknowledged, no retransmission requested",
+      "replacement": "\t\t\t{ 0 -- All data blocks acknowledged, no retransmission requested",
+      "reason": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "citation": "TS 44.060 V19.0.0 §11.2.28a paragraph 18034",
+      "policy": "owner-approved-text-rule",
+      "reading": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.39",
+      "paragraph": 20355,
+      "expected": "\t\t\t\t{ 0 | 1 \u003c MBMS Radio Bearer Starting Time : \u003c bit (16) \u003e }",
+      "replacement": "\t\t\t\t{ 0 | 1 \u003c MBMS Radio Bearer Starting Time : \u003c bit (16) \u003e \u003e }",
+      "reason": "Close the labelled MBMS Radio Bearer Starting Time around its nested printed bit(16) reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.39 paragraph 20355",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled MBMS Radio Bearer Starting Time around its nested printed bit(16) reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.39",
+      "paragraph": 20364,
+      "expected": "\u003c MBMS bearer description struct \u003e :: =",
+      "replacement": "\u003c MBMS bearer description struct \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.39 paragraph 20364",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.39",
+      "paragraph": 20365,
+      "expected": "\t{ 0 | 1 \u003c MBMS Radio Bearer Starting Time : \u003c bit (16) \u003e }",
+      "replacement": "\t{ 0 | 1 \u003c MBMS Radio Bearer Starting Time : \u003c bit (16) \u003e \u003e }",
+      "reason": "Close the labelled MBMS Radio Bearer Starting Time around its nested printed bit(16) reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.39 paragraph 20365",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled MBMS Radio Bearer Starting Time around its nested printed bit(16) reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.3a",
+      "paragraph": 13658,
+      "expected": "\t\t\u003c 3G Target Cell : \u003c 3G Target Cell Struct \u003e\u003e } -- Re-selection with a 3G cell as the preferred target cell",
+      "replacement": "\t\t\u003c 3G Target Cell : \u003c 3G Target Cell Struct \u003e\u003e -- Re-selection with a 3G cell as the preferred target cell",
+      "reason": "Remove the premature closing brace so the single target-cell choice includes its printed 110, 1110 and 1111 alternatives through paragraph 13671.",
+      "citation": "TS 44.060 V19.0.0 §11.2.3a paragraph 13658",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the premature closing brace so the single target-cell choice includes its printed 110, 1110 and 1111 alternatives through paragraph 13671.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.6b",
+      "paragraph": 14544,
+      "expected": "\t\t{ 0 - All data blocks acknowledged, no retransmission requested",
+      "replacement": "\t\t{ 0 -- All data blocks acknowledged, no retransmission requested",
+      "reason": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "citation": "TS 44.060 V19.0.0 §11.2.6b paragraph 14544",
+      "policy": "owner-approved-text-rule",
+      "reading": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.6b",
+      "paragraph": 14548,
+      "expected": "\t\t{ 0 - All data blocks acknowledged, no retransmission requested",
+      "replacement": "\t\t{ 0 -- All data blocks acknowledged, no retransmission requested",
+      "reason": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "citation": "TS 44.060 V19.0.0 §11.2.6b paragraph 14548",
+      "policy": "owner-approved-text-rule",
+      "reading": "Use the Annex B double-dash comment introducer before the explanatory acknowledged-blocks prose.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.9e",
+      "paragraph": 16150,
+      "expected": "\t\t{\t\u003c CONTAINER_ID : bit (2) \u003e\n\t\t\t\u003c spare : bit (1)",
+      "replacement": "\t\t{\t\u003c CONTAINER_ID : bit (2) \u003e\n\t\t\t\u003c spare : bit (1) \u003e",
+      "reason": "Close the one-bit spare field before CONTAINER_INDEX; the defect is in the preceding multiline paragraph, not paragraph 16151.",
+      "citation": "TS 44.060 V19.0.0 §11.2.9e paragraph 16150",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the one-bit spare field before CONTAINER_INDEX; the defect is in the preceding multiline paragraph, not paragraph 16151.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.46",
+      "paragraph": 24368,
+      "expected": "\t{\t0\t\u003c GPRS mode : GPRS mode struct \u003e \u003e",
+      "replacement": "\t{\t0\t\u003c GPRS mode : \u003c GPRS mode struct \u003e \u003e",
+      "reason": "Open the inner mode-struct reference to match its two printed closing brackets (TS 44.060 §12.46).",
+      "citation": "TS 44.060 V19.0.0 §12.46 paragraph 24368",
+      "policy": "owner-approved-text-rule",
+      "reading": "Open the inner mode-struct reference to match its two printed closing brackets (TS 44.060 §12.46).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.46",
+      "paragraph": 24369,
+      "expected": "\t\t| 1\t\u003c EGPRS mode : EGPRS mode struct \u003e \u003e }",
+      "replacement": "\t\t| 1\t\u003c EGPRS mode : \u003c EGPRS mode struct \u003e \u003e }",
+      "reason": "Open the inner mode-struct reference to match its two printed closing brackets (TS 44.060 §12.46).",
+      "citation": "TS 44.060 V19.0.0 §12.46 paragraph 24369",
+      "policy": "owner-approved-text-rule",
+      "reading": "Open the inner mode-struct reference to match its two printed closing brackets (TS 44.060 §12.46).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.46",
+      "paragraph": 24432,
+      "expected": "\u003c Downlink TBF assignment struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.46 paragraph 24432).",
+      "citation": "TS 44.060 V19.0.0 §12.46 paragraph 24432",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.46 paragraph 24432).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48a.3",
+      "paragraph": 24765,
+      "expected": "\t\u003c EGPRS Channel Coding Command : \u003c EGPRS Modulation and Coding Scheme IE \u003e \u003e }",
+      "replacement": "\t\u003c EGPRS Channel Coding Command : \u003c EGPRS Modulation and Coding Scheme IE \u003e \u003e",
+      "reason": "Remove the unmatched closing brace after the initial mandatory coding-command reference (TS 44.060 §12.48a.3).",
+      "citation": "TS 44.060 V19.0.0 §12.48a.3 paragraph 24765",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the unmatched closing brace after the initial mandatory coding-command reference (TS 44.060 §12.48a.3).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48a.5",
+      "paragraph": 24923,
+      "expected": "\t\t\t{ 1\t\u003c RTTI Multiple Downlink Assignment SC : RTTI Multiple Downlink Assignment SC struct \u003e \u003e } ** 0",
+      "replacement": "\t\t\t{ 1\t\u003c RTTI Multiple Downlink Assignment SC : \u003c RTTI Multiple Downlink Assignment SC struct \u003e \u003e } ** 0",
+      "reason": "Open the inner RTTI Multiple Downlink Assignment SC struct reference to match its two printed closing brackets (TS 44.060 §12.48a.5).",
+      "citation": "TS 44.060 V19.0.0 §12.48a.5 paragraph 24923",
+      "policy": "owner-approved-text-rule",
+      "reading": "Open the inner RTTI Multiple Downlink Assignment SC struct reference to match its two printed closing brackets (TS 44.060 §12.48a.5).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48a.5",
+      "paragraph": 24956,
+      "expected": "\u003c Downlink TBF assignment 2 struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment 2 struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.48a.5 paragraph 24956).",
+      "citation": "TS 44.060 V19.0.0 §12.48a.5 paragraph 24956",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.48a.5 paragraph 24956).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.9b",
+      "paragraph": 15635,
+      "expected": "\t{ 0 | 1 \u003c Index_Start_3G : bit (7)\u003e }\n\t{ 0 | 1 \u003c Absolute_Index_Start_EMR : bit (7)\u003e }\n\t{ 0 | 1 \u003c UTRAN FDD Description : \u003c UTRAN FDD Description struct \u003e }\n\t{ 0 | 1 \u003c UTRAN TDD Description : \u003c UTRAN TDD Description struct \u003e }\n\t{ 0 | 1 \u003c CDMA2000 Description : \u003c CDMA2000 Description struct \u003e }\n\t{ 0 | 1 \u003c REMOVED_3GCELL_Description : \u003c REMOVED_3GCELL_Description struct \u003e\u003e } ;",
+      "replacement": "\t{ 0 | 1 \u003c Index_Start_3G : bit (7)\u003e }\n\t{ 0 | 1 \u003c Absolute_Index_Start_EMR : bit (7)\u003e }\n\t{ 0 | 1 \u003c UTRAN FDD Description : \u003c UTRAN FDD Description struct \u003e \u003e }\n\t{ 0 | 1 \u003c UTRAN TDD Description : \u003c UTRAN TDD Description struct \u003e \u003e }\n\t{ 0 | 1 \u003c CDMA2000 Description : \u003c CDMA2000 Description struct \u003e \u003e }\n\t{ 0 | 1 \u003c REMOVED_3GCELL_Description : \u003c REMOVED_3GCELL_Description struct \u003e\u003e } ;",
+      "reason": "Close each of the three labelled neighbour-cell descriptions after its nested structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.9b paragraph 15635",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close each of the three labelled neighbour-cell descriptions after its nested structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.9b",
+      "paragraph": 15646,
+      "expected": "\t{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e }\n\t{ 1 \u003c Repeated UTRAN FDD Neighbour Cells : Repeated UTRAN FDD Neighbour Cells struct \u003e\u003e } ** 0 ;",
+      "replacement": "\t{ 0 | 1 \u003c Bandwidth_FDD : bit (3) \u003e }\n\t{ 1 \u003c Repeated UTRAN FDD Neighbour Cells : \u003c Repeated UTRAN FDD Neighbour Cells struct \u003e\u003e } ** 0 ;",
+      "reason": "Restore the opening angle of the nested repeated UTRAN FDD neighbour-cells structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.9b paragraph 15646",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the opening angle of the nested repeated UTRAN FDD neighbour-cells structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.9b",
+      "paragraph": 15708,
+      "expected": "\u003c CCN Support Description struct \u003e ::=\n\u003c Number_Cells : bit (7) \u003e\n{ CCN_SUPPORTED : bit } * (val(Number_Cells)) ;",
+      "replacement": "\u003c CCN Support Description struct \u003e ::=\n\u003c Number_Cells : bit (7) \u003e\n{ \u003c CCN_SUPPORTED : bit \u003e } * (val(Number_Cells)) ;",
+      "reason": "Put the printed CCN_SUPPORTED bit label and its type inside angle delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.9b paragraph 15708",
+      "policy": "owner-approved-text-rule",
+      "reading": "Put the printed CCN_SUPPORTED bit label and its type inside angle delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48a.6",
+      "paragraph": 25080,
+      "expected": "\t\t{ 0 | 1 \u003c USF_C2 : bit (3) }",
+      "replacement": "\t\t{ 0 | 1 \u003c USF_C2 : bit (3) \u003e }",
+      "reason": "Close the printed field angle bracket at paragraph 25080; retain its printed width (TS 44.060 §12.48a.6).",
+      "citation": "TS 44.060 V19.0.0 §12.48a.6 paragraph 25080",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the printed field angle bracket at paragraph 25080; retain its printed width (TS 44.060 §12.48a.6).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48a.6",
+      "paragraph": 25103,
+      "expected": "\t\t{ 0 | 1 \u003c USF_C2 : bit (3) } \t\t-- Same USF valid on all pairs assigned to the TBF on the respective carriers",
+      "replacement": "\t\t{ 0 | 1 \u003c USF_C2 : bit (3) \u003e } \t\t-- Same USF valid on all pairs assigned to the TBF on the respective carriers",
+      "reason": "Close the printed field angle bracket at paragraph 25103; retain its printed width (TS 44.060 §12.48a.6).",
+      "citation": "TS 44.060 V19.0.0 §12.48a.6 paragraph 25103",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the printed field angle bracket at paragraph 25103; retain its printed width (TS 44.060 §12.48a.6).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 18926,
+      "expected": "\t\t\t\t\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 18926",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 18928,
+      "expected": "\t\t\t\t\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity Struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 18928",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 18931,
+      "expected": "\t\t\t\t\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 18931",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 18933,
+      "expected": "\t\t\t\t\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 18933",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19080,
+      "expected": "\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19080",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19082,
+      "expected": "\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity Struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19082",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19085,
+      "expected": "\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19085",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19087,
+      "expected": "\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19087",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19090,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19090",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19091,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19091",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19092,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19092",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19093,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19093",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19123,
+      "expected": "\t\t\t\t\tDLMC Measurement Type : bit (1)",
+      "replacement": "\t\t\t\t\t\u003c DLMC Measurement Type : bit (1) \u003e",
+      "reason": "Enclose the DLMC Measurement Type label and its printed one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19123",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the DLMC Measurement Type label and its printed one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19141,
+      "expected": "\t\t\t\t\t{ 1 \u003c \u003c DLMC UL Carrier Info : \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "replacement": "\t\t\t\t\t{ 1 \u003c DLMC UL Carrier Info : \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "reason": "Remove the duplicate opening angle before the labelled DLMC UL Carrier Info field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19141",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the duplicate opening angle before the labelled DLMC UL Carrier Info field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19235,
+      "expected": "\u003c RLC Entity Struct \u003e :: =",
+      "replacement": "\u003c RLC Entity Struct \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19235",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19306,
+      "expected": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19306",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.31",
+      "paragraph": 19307,
+      "expected": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e } }",
+      "replacement": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e } }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraph 19307",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.7",
+      "paragraph": 14899,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.7 paragraph 14899",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.7",
+      "paragraph": 14900,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.7 paragraph 14900",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.7",
+      "paragraph": 14921,
+      "expected": "\t\t\t\t\tDLMC Measurement Type : bit (1)",
+      "replacement": "\t\t\t\t\t\u003c DLMC Measurement Type : bit (1) \u003e",
+      "reason": "Enclose the DLMC Measurement Type label and its printed one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.7 paragraph 14921",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the DLMC Measurement Type label and its printed one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 23978,
+      "expected": "\t\tDLMC Measurement Type : bit (1)",
+      "replacement": "\t\t\u003c DLMC Measurement Type : bit (1) \u003e",
+      "reason": "Enclose the printed labelled field in angle brackets (TS 44.060 §12.42b paragraph 23978).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 23978",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed labelled field in angle brackets (TS 44.060 §12.42b paragraph 23978).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 23996,
+      "expected": "\t\t{ 1 \u003c \u003c DLMC UL Carrier Info : \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "replacement": "\t\t{ 1 \u003c DLMC UL Carrier Info : \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "reason": "Remove the duplicated angle opener before DLMC UL Carrier Info (TS 44.060 §12.42b).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 23996",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the duplicated angle opener before DLMC UL Carrier Info (TS 44.060 §12.42b).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 24013,
+      "expected": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ CCN_SUPPORTED : bit } * (val(Number_Cells)) ;",
+      "replacement": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ \u003c CCN_SUPPORTED : bit \u003e } * (val(Number_Cells)) ;",
+      "reason": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42b).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 24013",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42b).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 24079,
+      "expected": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.42b paragraph 24079).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 24079",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.42b paragraph 24079).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 24080,
+      "expected": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e } }",
+      "replacement": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e } }",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.42b paragraph 24080).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 24080",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.42b paragraph 24080).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42b",
+      "paragraph": 24091,
+      "expected": "\u003c RLC Entity Struct \u003e :: =",
+      "replacement": "\u003c RLC Entity Struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.42b paragraph 24091).",
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraph 24091",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.42b paragraph 24091).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42",
+      "paragraph": 23744,
+      "expected": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ CCN_SUPPORTED : bit } * (val(Number_Cells)) ;",
+      "replacement": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ \u003c CCN_SUPPORTED : bit \u003e } * (val(Number_Cells)) ;",
+      "reason": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42).",
+      "citation": "TS 44.060 V19.0.0 §12.42 paragraph 23744",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42",
+      "paragraph": 23798,
+      "expected": "\u003c Downlink TBF assignment struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.42 paragraph 23798).",
+      "citation": "TS 44.060 V19.0.0 §12.42 paragraph 23798",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.42 paragraph 23798).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18236,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18236",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18237,
+      "expected": "\t\t\t\t\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t\t\t\t\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18237",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed MTTI bit label and its existing one-bit type in field delimiters.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18250,
+      "expected": "\t\t\t\t\t{ 1 \u003c \u003c DLMC UL Carrier Info: \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "replacement": "\t\t\t\t\t{ 1 \u003c DLMC UL Carrier Info: \u003c DLMC UL Carrier Info struct \u003e \u003e } ** 0",
+      "reason": "Remove the duplicate opening angle before the DLMC UL Carrier Info labelled field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18250",
+      "policy": "owner-approved-text-rule",
+      "reading": "Remove the duplicate opening angle before the DLMC UL Carrier Info labelled field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18270,
+      "expected": "\t\t\t\t\t\u003c padding bits \u003e  //\t\t\t\t\t-- truncation at end of message allowed, bits '0' assumed\t\t\t\t\t\t\t\t! \u003c Non-distribution part error : bit (*) = \u003c no string \u003e \u003e }",
+      "replacement": "\t\t\t\t\t\u003c padding bits \u003e  //\t\t\t\t\t-- truncation at end of message allowed, bits '0' assumed\n\t\t\t\t\t\t\t\t! \u003c Non-distribution part error : bit (*) = \u003c no string \u003e \u003e }",
+      "reason": "End the truncation comment before the non-distribution error production and containing brace.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18270",
+      "policy": "owner-approved-text-rule",
+      "reading": "End the truncation comment before the non-distribution error production and containing brace.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18271,
+      "expected": "\t\t\t\t! \u003c Message escape : { 11 } bit (*) = \u003cno string\u003e \u003e } } \t- Extended for future changes",
+      "replacement": "\t\t\t\t! \u003c Message escape : { 11 } bit (*) = \u003cno string\u003e \u003e } } \t-- Extended for future changes",
+      "reason": "Use the double-dash comment introducer for Extended for future changes.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18271",
+      "policy": "owner-approved-text-rule",
+      "reading": "Use the double-dash comment introducer for Extended for future changes.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18379,
+      "expected": "\tPFI : bit (7) \u003e;",
+      "replacement": "\t\u003c PFI : bit (7) \u003e;",
+      "reason": "Restore the opening angle of the printed seven-bit PFI field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18379",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the opening angle of the printed seven-bit PFI field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18396,
+      "expected": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e ",
+      "replacement": "\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity Struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18396",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.29",
+      "paragraph": 18397,
+      "expected": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e } }",
+      "replacement": "\t\t\t\t\t{ 0 | 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity Struct \u003e \u003e } }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraph 18397",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20058,
+      "expected": "\t\t\t\t\t\t\t\t\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t\t\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20058",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20060,
+      "expected": "\t\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20060",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20064,
+      "expected": "\t\t\t\t\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e ",
+      "replacement": "\t\t\t\t\t\t\t\t\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e ",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20064",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20066,
+      "expected": "\t\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20066",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20109,
+      "expected": "\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e \t-- EMST is used in DL",
+      "replacement": "\t\t\t\t\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e \t-- EMST is used in DL",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20109",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20111,
+      "expected": "\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20111",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20114,
+      "expected": "\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e \t-- EMST is used in UL",
+      "replacement": "\t\t\t\t\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e \t-- EMST is used in UL",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20114",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20116,
+      "expected": "\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20116",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the labelled RLC entity after its nested RLC Entity structure reference.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20156,
+      "expected": "\u003c Downlink TBF assignment struct \u003e :: =",
+      "replacement": "\u003c Downlink TBF assignment struct \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20156",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20213,
+      "expected": "\u003c RLC Entity struct \u003e :: =",
+      "replacement": "\u003c RLC Entity struct \u003e ::=",
+      "reason": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20213",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the printed assignment separator into the CSN.1 ::= token.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "11.2.37",
+      "paragraph": 20217,
+      "expected": "\tPFI : bit (7) \u003e;",
+      "replacement": "\t\u003c PFI : bit (7) \u003e;",
+      "reason": "Restore the opening angle of the printed seven-bit PFI field.",
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraph 20217",
+      "policy": "owner-approved-text-rule",
+      "reading": "Restore the opening angle of the printed seven-bit PFI field.",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24556,
+      "expected": "\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e ",
+      "replacement": "\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e ",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24556).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24556",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24556).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24558,
+      "expected": "\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24558).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24558",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24558).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24561,
+      "expected": "\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e ",
+      "replacement": "\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct \u003e \u003e ",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24561).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24561",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24561).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24563,
+      "expected": "\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e }",
+      "replacement": "\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct \u003e \u003e }",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24563).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24563",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.48 paragraph 24563).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24566,
+      "expected": "\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24566).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24566",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24566).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24567,
+      "expected": "\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24567).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24567",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24567).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24568,
+      "expected": "\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24568).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24568",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24568).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24569,
+      "expected": "\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24569).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24569",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.48 paragraph 24569).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.48",
+      "paragraph": 24585,
+      "expected": "\u003c RLC Entity struct \u003e :: =",
+      "replacement": "\u003c RLC Entity struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.48 paragraph 24585).",
+      "citation": "TS 44.060 V19.0.0 §12.48 paragraph 24585",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.48 paragraph 24585).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25628,
+      "expected": "\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct\u003e ",
+      "replacement": "\t\t\t| 1\t\u003c Downlink RLC Entity 2 : \u003c RLC Entity struct\u003e \u003e ",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25628).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25628",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25628).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25630,
+      "expected": "\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct\u003e }",
+      "replacement": "\t\t\t\t| 1 \u003c Downlink RLC Entity 3 : \u003c RLC Entity struct\u003e \u003e }",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25630).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25630",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25630).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25633,
+      "expected": "\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct\u003e ",
+      "replacement": "\t\t\t| 1\t\u003c Uplink RLC Entity 2 : \u003c RLC Entity struct\u003e \u003e ",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25633).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25633",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25633).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25635,
+      "expected": "\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct\u003e }",
+      "replacement": "\t\t\t\t| 1 \u003c Uplink RLC Entity 3 : \u003c RLC Entity struct\u003e \u003e }",
+      "reason": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25635).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25635",
+      "policy": "owner-approved-text-rule",
+      "reading": "Close the outer labelled RLC Entity reference without changing its selected entity (TS 44.060 §12.64 paragraph 25635).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25638,
+      "expected": "\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25638).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25638",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25638).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25639,
+      "expected": "\t\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25639).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25639",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25639).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25640,
+      "expected": "\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25640).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25640",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25640).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25641,
+      "expected": "\t\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) }",
+      "replacement": "\t\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25641).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25641",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.64 paragraph 25641).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.64",
+      "paragraph": 25669,
+      "expected": "\u003c RLC Entity struct \u003e :: =",
+      "replacement": "\u003c RLC Entity struct \u003e ::=",
+      "reason": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.64 paragraph 25669).",
+      "citation": "TS 44.060 V19.0.0 §12.64 paragraph 25669",
+      "policy": "owner-approved-text-rule",
+      "reading": "Join the assignment separator as ::= (TS 24.007 Annex B §B.1.1.5; TS 44.060 §12.64 paragraph 25669).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42a",
+      "paragraph": 23916,
+      "expected": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ CCN_SUPPORTED : bit } * (val(Number_Cells)) ;",
+      "replacement": "\u003c CCN Support Description struct \u003e ::=\n\t\u003c Number_Cells : bit (7) \u003e\n\t{ \u003c CCN_SUPPORTED : bit \u003e } * (val(Number_Cells)) ;",
+      "reason": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42a).",
+      "citation": "TS 44.060 V19.0.0 §12.42a paragraph 23916",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the one-bit CCN_SUPPORTED label in angle brackets (TS 44.060 §12.42a).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42a",
+      "paragraph": 23920,
+      "expected": "\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) }",
+      "replacement": "\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C1 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23920).",
+      "citation": "TS 44.060 V19.0.0 §12.42a paragraph 23920",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23920).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42a",
+      "paragraph": 23921,
+      "expected": "\t{ 0 | 1 MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) }",
+      "replacement": "\t{ 0 | 1 \u003c MTTI_DOWNLINK_ASSIGNMENT_C2 : bit (1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23921).",
+      "citation": "TS 44.060 V19.0.0 §12.42a paragraph 23921",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23921).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42a",
+      "paragraph": 23922,
+      "expected": "\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) }",
+      "replacement": "\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C1 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23922).",
+      "citation": "TS 44.060 V19.0.0 §12.42a paragraph 23922",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23922).",
+      "approval_date": "2026-10-31"
+    },
+    {
+      "standard": "TS 44.060",
+      "version": "19.0.0",
+      "clause": "12.42a",
+      "paragraph": 23923,
+      "expected": "\t{ 0 | 1 MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) }",
+      "replacement": "\t{ 0 | 1 \u003c MTTI_UPLINK_ASSIGNMENT_C2 : bit(1) \u003e }",
+      "reason": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23923).",
+      "citation": "TS 44.060 V19.0.0 §12.42a paragraph 23923",
+      "policy": "owner-approved-text-rule",
+      "reading": "Enclose the printed one-bit MTTI field in angle brackets (TS 44.060 §12.42a paragraph 23923).",
+      "approval_date": "2026-10-31"
     }
   ],
   "source_discrepancies": [
@@ -1960,7 +4936,7 @@
       "citation": "TS 44.018 V19.0.0 §10.5.2.37g paragraphs [19924 19927 19962 19963 19964]",
       "source_text": "\u003c NR_OF_REMAINING_CELLS : bit (4) \u003e; } * val(NR_OF_REMAINING_CELLS; Range 1-16.",
       "resolution": "Use the raw four-bit count 0-15 as the repetition count, equal to the repeated-cell list length; no +1 count adjustment. FREQ_DIFF_LENGTH retains its separate +1 width binding.",
-      "evidence": "Printed repetition and field table in the authenticated official source; pycrate si_19_rest_octets.py and Wireshark packet-gsm_rlcmac.c COMPACT neighbour-cell repetition.",
+      "evidence": "TS 44.018 V19.0.0 §10.5.2.37g paragraphs [19924 19927 19962 19963 19964]: authenticated source quotation and reviewed reading.",
       "policy": "owner-approved-text-rule",
       "approval_date": "2026-10-26",
       "paragraphs": [
@@ -1971,6 +4947,346 @@
         19964
       ],
       "reason": "A printed repetition against a prose range: retain the printed val(NR_OF_REMAINING_CELLS) repetition rather than deriving count+1 from Range 1-16."
+    },
+    {
+      "citation": "TS 44.018 V19.0.0 §9.1.21i paragraphs [7681]",
+      "source_text": "\t\u003cnew Cell Channel Description\u003e",
+      "resolution": "128-bit field (sixteen octets, source octets 2 through 17).",
+      "evidence": "TS 44.018 V19.0.0 §9.1.21i paragraphs [7681]: authenticated source quotation and reviewed reading. Target: TS 44.018 §9.1.21i paragraph 7687, quotation SHA-256 f90a706070eeaf6eee50beee272c950ee23a2a2601a9aeb7b7da172a182595c7.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        7681
+      ],
+      "reason": "Bind the exact printed reference to the clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.018 V19.0.0 §10.5.2.25d paragraphs [18184 18264 18265]",
+      "source_text": "\t\t\u003c Downlink EGPRS Level: \u003c EGPRS Level IE \u003e \u003e",
+      "resolution": "Bind EGPRS Level IE to the EGPRS Level table named by the RR Packet Downlink Assignment field and its TS 44.060 delegation.",
+      "evidence": "TS 44.018 V19.0.0 §10.5.2.25d paragraphs [18184 18264 18265]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10f paragraph 23078, quotation SHA-256 b06c1f231b2e5d90c4d4d5d33363f487eb7538e15080380bcaee7d594665319e.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        18184,
+        18264,
+        18265
+      ],
+      "reason": "The field label, exact named IE reference and clause-owned prose identify the published EGPRS Level information element."
+    },
+    {
+      "citation": "TS 44.018 V19.0.0 §9.1.49a paragraphs [10573]",
+      "source_text": "\u003cVGCS ADDITIONAL INFO\u003e\t::=\t\u003cRR short PD : bit\u003e\t\t\t-- See 3GPP TS 24.007",
+      "resolution": "Bind the grammar name VGCS ADDITIONAL INFO to the message-type table label VGCS Additional Information; retain every transmitted bit.",
+      "evidence": "TS 44.018 V19.0.0 §9.1.49a paragraphs [10573]: authenticated source quotation and reviewed reading. Target: TS 44.018 §10.4 paragraph 13201, quotation SHA-256 761359b80fab41765888147f767013f26b53332775ca60eaba5bc1e314e77b4a.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        10573
+      ],
+      "reason": "The clause heading and message-type prose identify the expanded table label for the abbreviated grammar name."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.21 paragraphs [23299]",
+      "source_text": "\t{ 0 \u003c Absolute Frame Number Encoding \u003e",
+      "resolution": "16-bit field",
+      "evidence": "TS 44.060 V19.0.0 §12.21 paragraphs [23299]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.21.1 paragraph 23305, quotation SHA-256 1605588042eba96308446af16e7d8756f3fbf9d50c5c4811692634be4094c326.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        23299
+      ],
+      "reason": "Bind the exact printed reference to the width defined by its own clause prose; application context remains external."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.21 paragraphs [23300]",
+      "source_text": "\t| 1 \u003c Relative Frame Number Encoding \u003e } ;",
+      "resolution": "13-bit field",
+      "evidence": "TS 44.060 V19.0.0 §12.21 paragraphs [23300]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.21.2 paragraph 23309, quotation SHA-256 45eda59d45049435064abbba7503c399bbc97cdbdee0faf3ee1d9437e57b3362.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        23300
+      ],
+      "reason": "Bind the exact printed reference to the width defined by its own clause prose; application context remains external."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.27 paragraphs [23483]",
+      "source_text": "\t\u003c 3G ECSR \u003e\t\t\t\t\t\t\t\t\t-- 3G Early Classmark Sending Restriction",
+      "resolution": "1-bit field",
+      "evidence": "TS 44.060 V19.0.0 §12.27 paragraphs [23483]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.27 paragraph 23494, quotation SHA-256 1dcbb6427ffbca1118be28b4b28283e940fb28013024155302f01882c499c7d1.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        23483
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.21b paragraphs [17402]",
+      "source_text": "\u003c 3G Neighbour Cells Description struct \u003e",
+      "resolution": "TS 44.060 §11.2.21b \u003c3G Neighbour Cell Description struct\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.21b paragraphs [17402]: authenticated source quotation and reviewed reading. Target: TS 44.060 §11.2.21b paragraph 17420, quotation SHA-256 bb13230bd1e173ed1624d73f288d1865250bd2249f36f64dab2e9086dcef15b5.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        17402
+      ],
+      "reason": "Bind the exact clause-scoped reference to the authenticated defining declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.25a paragraphs [17771]",
+      "source_text": "\t\u003c GPRS Power Control Parameters : \u003c GPRS Power Control Parameters struct \u003e\u003e",
+      "resolution": "TS 44.060 §12.9a \u003cGPRS Power Control Parameters IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.25a paragraphs [17771]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.9a paragraph 22921, quotation SHA-256 affe42bb1a48bf59a67f50b5c8b26daffdf85fd60937ada305277b27efccb587.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        17771
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.32 paragraphs [19914]",
+      "source_text": "\t\u003c MS Radio Access Capability 2 : \u003c MS Radio Access Capability 2 IE \u003e \u003e",
+      "resolution": "Bind the typed MS RA capability value part struct through the explicit MS Radio Access Capability 2 IE definition in TS 44.060 V19.0.0 §12.30 pp23543–23547.",
+      "evidence": "TS 44.060 V19.0.0 §11.2.32 paragraphs [19914]: authenticated source quotation and reviewed reading. Target: TS 24.008 §10.5.5.12a paragraph 30776, quotation SHA-256 f0324767e89b7125f9476bdf6875b87e82210016ad5fb95bb6a2deadef7dc748.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-11-01",
+      "paragraphs": [
+        19914
+      ],
+      "reason": "The one-field wrapper at pp23543–23544 names MS RA capability value part struct; p23547 explicitly identifies TS 24.008 and suppresses the outer spare bits. TS 24.008 V20.1.0 §10.5.5.12a pp30772–30776 separates the struct from that outer spare repetition."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.32 paragraphs [19913]",
+      "source_text": "\t| 1 \u003c TLLI : \u003c TLLI IE \u003e \u003e }",
+      "resolution": "32-bit field",
+      "evidence": "TS 44.060 V19.0.0 §11.2.32 paragraphs [19913]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.16 paragraph 23267, quotation SHA-256 1128d764174df459c9e3f552f97c56a64c428458157211b23779fb489fea969c.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        19913
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.38 paragraphs [20314]",
+      "source_text": "\t\u003c TMGI : \u003c TMGI struct \u003e \u003e",
+      "resolution": "TS 44.060 §12.33 \u003cTMGI IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.38 paragraphs [20314]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.33 paragraph 23591, quotation SHA-256 e8eb0b570272e3bc0489a62f04937af74491dd420dc3375d3b97756ab831b748.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        20314
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.39 paragraphs [20345]",
+      "source_text": "\t\t\t{ 0 | 1\t\u003c TMGI : \u003c TMGI struct \u003e \u003e }",
+      "resolution": "TS 44.060 §12.33 \u003cTMGI IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.39 paragraphs [20345]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.33 paragraph 23591, quotation SHA-256 e8eb0b570272e3bc0489a62f04937af74491dd420dc3375d3b97756ab831b748.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        20345
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.46 paragraphs [24391 24407]",
+      "source_text": "EGPRS Modulation and Coding Scheme IE",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §12.46 paragraphs [24391 24407]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        24391,
+        24407
+      ],
+      "reason": "Bind the exact printed Scheme IE reference to the published modulation and coding table in §12.10d."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.48a.3 paragraphs [24765]",
+      "source_text": "EGPRS Modulation and Coding Scheme IE",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §12.48a.3 paragraphs [24765]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        24765
+      ],
+      "reason": "Bind the exact printed Scheme IE reference to the published modulation and coding table in §12.10d."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.9b paragraphs [15635]",
+      "source_text": "\u003c CDMA2000 Description struct \u003e",
+      "resolution": "TS 44.060 §11.2.9b \u003cCDMA 2000 Description struct\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.9b paragraphs [15635]: authenticated source quotation and reviewed reading. Target: TS 44.060 §11.2.9b paragraph 15659, quotation SHA-256 a05061e383da8f392f6f85d4b20080e5c2b29fc97dad32d7fcab703a7ccfa45b.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        15635
+      ],
+      "reason": "Bind the exact clause-scoped reference to the authenticated defining declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.9b paragraphs [15562]",
+      "source_text": "\u003c Measurement Control Parameters Description IE \u003e",
+      "resolution": "TS 44.060 §12.56 \u003cMeasurement Control Parameters Description\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.9b paragraphs [15562]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.56 paragraph 25436, quotation SHA-256 56652c9812233303d2e7a6760f822550d18ed9f284af4fc68c856bfb106c26f4.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        15562
+      ],
+      "reason": "Bind the exact clause-scoped reference to the authenticated defining declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.48a.6 paragraphs [25017 25065 25090]",
+      "source_text": "EGPRS Modulation and Coding Scheme IE",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §12.48a.6 paragraphs [25017 25065 25090]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        25017,
+        25065,
+        25090
+      ],
+      "reason": "Bind the exact printed Scheme IE reference to the published modulation and coding table in §12.10d."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraphs [18940 18941 18942 18946 18947 18948 19098 19099 19100 19104 19105 19106 19279 19281 19283 19310 19311 19312]",
+      "source_text": "\u003c Additional PFCs struct \u003e",
+      "resolution": "TS 44.060 §11.2.7 \u003cAdditional PFCs struct\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.31 paragraphs [18940 18941 18942 18946 18947 18948 19098 19099 19100 19104 19105 19106 19279 19281 19283 19310 19311 19312]: authenticated source quotation and reviewed reading. Target: TS 44.060 §11.2.7 paragraph 14955, quotation SHA-256 73115b6fbb7aca15615d2b8e4f327743573e000ef837d1f7ca7aae47c151032e.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        18940,
+        18941,
+        18942,
+        18946,
+        18947,
+        18948,
+        19098,
+        19099,
+        19100,
+        19104,
+        19105,
+        19106,
+        19279,
+        19281,
+        19283,
+        19310,
+        19311,
+        19312
+      ],
+      "reason": "Bind the exact clause-scoped reference to the authenticated defining declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.31 paragraphs [18960 19002 19139]",
+      "source_text": "\t\t\t\t\t\u003c EGPRS Channel Coding Command : \u003c EGPRS Modulation and Coding Scheme IE \u003e\u003e",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.31 paragraphs [18960 19002 19139]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        18960,
+        19002,
+        19139
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.44 paragraphs [20787]",
+      "source_text": "\t\u003c spare : bit (3) \u003e ;",
+      "resolution": "Send 000 on fresh and canonical encoding; receive all three-bit values and report nonzero spares.",
+      "evidence": "TS 44.060 V19.0.0 §11.2.44 paragraphs [20787]: authenticated source quotation and reviewed reading. Target: TS 44.060 §11.2.44 paragraph 20791, quotation SHA-256 0da884755126b52da80aec0861891ae921a016619af2f1f7d54e710554016fff.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        20787
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.30 paragraphs [23544]",
+      "source_text": "\t\u003c MS RA capability : \u003c MS RA capability value part struct \u003e \u003e ;",
+      "resolution": "Bind the typed MS RA capability value part struct through the explicit MS Radio Access Capability 2 IE definition in TS 44.060 V19.0.0 §12.30 pp23543–23547.",
+      "evidence": "TS 44.060 V19.0.0 §12.30 paragraphs [23544]: authenticated source quotation and reviewed reading. Target: TS 24.008 §10.5.5.12a paragraph 30776, quotation SHA-256 f0324767e89b7125f9476bdf6875b87e82210016ad5fb95bb6a2deadef7dc748.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-11-01",
+      "paragraphs": [
+        23544
+      ],
+      "reason": "The one-field wrapper at pp23543–23544 names MS RA capability value part struct; p23547 explicitly identifies TS 24.008 and suppresses the outer spare bits. TS 24.008 V20.1.0 §10.5.5.12a pp30772–30776 separates the struct from that outer spare repetition."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.42b paragraphs [23994]",
+      "source_text": "EGPRS Modulation and Coding Scheme IE",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §12.42b paragraphs [23994]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        23994
+      ],
+      "reason": "Bind the exact printed Scheme IE reference to the published modulation and coding table in §12.10d."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.16 paragraphs [16482]",
+      "source_text": "\u003c TLLI / G-RNTI IE \u003e",
+      "resolution": "32-bit field",
+      "evidence": "TS 44.060 V19.0.0 §11.2.16 paragraphs [16482]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.16 paragraph 23267, quotation SHA-256 1128d764174df459c9e3f552f97c56a64c428458157211b23779fb489fea969c.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        16482
+      ],
+      "reason": "Bind the exact clause-scoped reference to the authenticated defining declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.42 paragraphs [23757 23773]",
+      "source_text": "EGPRS Modulation and Coding Scheme IE",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §12.42 paragraphs [23757 23773]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        23757,
+        23773
+      ],
+      "reason": "Bind the exact printed Scheme IE reference to the published modulation and coding table in §12.10d."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.29 paragraphs [18145 18205 18269]",
+      "source_text": "\t\t\t\t\t\u003c EGPRS Channel Coding Command : \u003c EGPRS Modulation and Coding Scheme IE \u003e\u003e",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.29 paragraphs [18145 18205 18269]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        18145,
+        18205,
+        18269
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §11.2.37 paragraphs [20045 20188]",
+      "source_text": "\t\t\t\t\t\t\t\t\t\u003c EGPRS Modulation and Coding Scheme IE \u003e\u003e }",
+      "resolution": "TS 44.060 §12.10d \u003cEGPRS Modulation and Coding IE\u003e",
+      "evidence": "TS 44.060 V19.0.0 §11.2.37 paragraphs [20045 20188]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.10d paragraph 22978, quotation SHA-256 b685aa849181f14378d3f8a4d8bf70c4f8d39a82eae0934187f88b10cd4cfe34.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-10-31",
+      "paragraphs": [
+        20045,
+        20188
+      ],
+      "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
     }
   ],
   "generated_files": [
@@ -1995,28 +5311,208 @@
       "sha256": "cc48e57bf83eeaf136460b947cc1318f329a0c25da553dec2a3eaeaf092f9a40"
     },
     {
+      "path": "ts44018/ecaccess/generated.go",
+      "sha256": "385e122b20a5440e8882ce35f4dc68598fe9745d39fefbb1a460bce5d5822841"
+    },
+    {
+      "path": "ts44018/ecimmediateassignment2/generated.go",
+      "sha256": "e78f8157c60ea341c337897568e88ab1dbdce79aba01bdb077e7e133da3c1ad8"
+    },
+    {
       "path": "ts44018/ies/generated.go",
-      "sha256": "fc9252f22ba593a8bb02663e73e2deacba11abfeb066e5de0a1f22a67dbe11ef"
+      "sha256": "e3008fc9b46d3c1d98d4563a7bb10487c556c8ee5f145ba3acdbe72217d0440a"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "1ba766e057b0fccbd4be27f5a535c2d3687dcc89f99bdfd41112959da94e42d0"
+      "sha256": "106e31ded5010d8a34c03c3c31c878d60c209c733ff5be6026ba9261f5b47646"
     },
     {
       "path": "ts44018/messages/generated.go",
-      "sha256": "ce8257a111c2b5099ef9630c8f48941025f915880410ac8d729a5f9419bb0844"
+      "sha256": "706944b2cc8e9981e45e53ff8b4691ca23b286a69476c782024fbaae062fd926"
+    },
+    {
+      "path": "ts44018/notification/generated.go",
+      "sha256": "3808a1094417fa6b7166da9c7c3a7c4456f3d94919cc7470c0f8bb3046e7267e"
+    },
+    {
+      "path": "ts44018/packetdlassignment/generated.go",
+      "sha256": "f2dd934c1ce35b3e3f1d81d8a5349e7c16c32b7e8a65c1ecc7aa2e1ad3b83dda"
+    },
+    {
+      "path": "ts44018/packetdlassignment2/generated.go",
+      "sha256": "6576da7f1755730b203c6f99096fb2f0c1170e8bdea8879ec37bf85d1815f9a8"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "fb0d3ee767dedceea6026f2de797a47a05f9bd2047aed08daa88a69f3c2b2114"
+      "sha256": "3a7d01348ee8926ef98c16538a67e954077b0be1f56dca86686512e468f207fc"
+    },
+    {
+      "path": "ts44018/vgcsreconfigure/generated.go",
+      "sha256": "671433a23a4464b94f414cd63a0e20835a48a283a2e02d20f4e2930f6670c080"
+    },
+    {
+      "path": "ts44018/vgcsreconfigure2/generated.go",
+      "sha256": "81245a2adf1b78237e408da6ca97019c3f6c41300e0eed4a0d67eea80c44373e"
+    },
+    {
+      "path": "ts44060/access/generated.go",
+      "sha256": "c26d0dc9c22484f3591a14bff05a00ca2218bd00ad4dd1aa370809a493d59c22"
+    },
+    {
+      "path": "ts44060/ackmessages/generated.go",
+      "sha256": "fa74e378a420bbf062c9c3a58d4533c548e96062de5aa3688457a8ae98fcf359"
+    },
+    {
+      "path": "ts44060/acknack/generated.go",
+      "sha256": "97f2aa63451376e78c439bdc13543ba7e2155c63883ea0e92ace56148560ab6c"
+    },
+    {
+      "path": "ts44060/assignmentmessages/generated.go",
+      "sha256": "5cc7e8e7d25b71496f29491d481f37f0e0a3313375c13bc2a971a14e85987caf"
+    },
+    {
+      "path": "ts44060/celldata/generated.go",
+      "sha256": "02af807de9fc940d57228db53e997332c74721e232f276dcd68b186dfa5228ee"
+    },
+    {
+      "path": "ts44060/containers/generated.go",
+      "sha256": "76e7352cec02072bf3e8d8ea1879879b74793e9ced9135be7ca4abec0cd915ca"
+    },
+    {
+      "path": "ts44060/controlmessages/generated.go",
+      "sha256": "bf14c30e69c414897c52da361a519392a8dface0ae6d744ea7c2cb764f7a6730"
+    },
+    {
+      "path": "ts44060/csgreport/generated.go",
+      "sha256": "2be2e37fb53da417df301576b12f55cc1c3812124414decc9c047fbf74c28b72"
+    },
+    {
+      "path": "ts44060/dbpschuplinkack/generated.go",
+      "sha256": "4b136553bf71efcbd84c404c01ee4b9652ed19d03da70feb7b58869115289a9f"
+    },
+    {
+      "path": "ts44060/dbpschuplinkack2/generated.go",
+      "sha256": "0055bdf1adb2765209611b580926206a1f0740763df8d48632182cf196110452"
+    },
+    {
+      "path": "ts44060/dtmhandover/generated.go",
+      "sha256": "c93e23e992fd12bc663297d1bcefd054ffcf5a120ee98950c01d00208f9cf027"
+    },
+    {
+      "path": "ts44060/ecmessages/generated.go",
+      "sha256": "0b720f15b44adae8c57f0411a52937fc48377013362c253ca8805b53bd29b0cf"
+    },
+    {
+      "path": "ts44060/eutrancsgtarget/generated.go",
+      "sha256": "0d5fb74717ffbd3e3b750a78f36229971ef11a6175dd908c64ea6f5406626555"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "8b22a64549579981561a0d2c353d8a8ea5a6e34896084b6e94495aa55524fa4e"
+      "sha256": "fdf2abb912ac7a99641f91e9330eccb780b9fa794cd0d7eab129ae6ab5451b79"
+    },
+    {
+      "path": "ts44060/mbmsassignment/generated.go",
+      "sha256": "6930f26a61256cd06dfe7fa14558c07e4a791a70b69e2917b8897e3df8870d34"
+    },
+    {
+      "path": "ts44060/mbmsmessages/generated.go",
+      "sha256": "f22f1d04675f1823140684b3309c4bdfd22041d75b1cf30748de515d5ee14ba2"
+    },
+    {
+      "path": "ts44060/measurementreport/generated.go",
+      "sha256": "30a133c62abee07085c0559d501ceed418e9a94c11cc505b253126e6608c4180"
     },
     {
       "path": "ts44060/messages/generated.go",
       "sha256": "cf0da1186d76c484d2cd15e321b5ece2df2ccaf6dec415b4c13bb4473eed4a16"
+    },
+    {
+      "path": "ts44060/multipledownlink/generated.go",
+      "sha256": "92791dd8ed5a867f1aab8910f76a34e4417ffee21061061809a5c327631e049b"
+    },
+    {
+      "path": "ts44060/neighbourcelldata/generated.go",
+      "sha256": "496c07d0ef38e3d4e8aad0dc2d020e5ad22fb40659478c66906276bed0462ba5"
+    },
+    {
+      "path": "ts44060/nongprsoptions/generated.go",
+      "sha256": "71db2940f34f2cafceb3362e740a6d067c8368e14a1866ea587ef24bfaa51e03"
+    },
+    {
+      "path": "ts44060/packetdownlinkassignment/generated.go",
+      "sha256": "02fd6d86d035c9a686f5697fa781956d13a8080d3c73ef3023ec0323258e63aa"
+    },
+    {
+      "path": "ts44060/packetenhancedmeasurement/generated.go",
+      "sha256": "60bdc9e7f5702fba3847c7957acb41d2ec18a701e58895215138c9cc84aeac32"
+    },
+    {
+      "path": "ts44060/packetmeasurementorder/generated.go",
+      "sha256": "0572a4c405fee55ed3c2a2ca3cebcf10f32e9b0acef83bb70e7fd3efa91105c0"
+    },
+    {
+      "path": "ts44060/packetsysteminformationtype3/generated.go",
+      "sha256": "7e1d00945f284b0174b4ad89e7aa954a0603a5bb1adc57c48e7eef18aeda6894"
+    },
+    {
+      "path": "ts44060/packettimeslotreconfigure/generated.go",
+      "sha256": "9df4a0ca60e99c10e70445c429d2f741096a3382ba5238adce889a94fb1265f9"
+    },
+    {
+      "path": "ts44060/packetuplinkassignment/generated.go",
+      "sha256": "2b13df40981aa4d5876667540bc360f59ece11b17294157060a992d0e69d8954"
+    },
+    {
+      "path": "ts44060/padding/generated.go",
+      "sha256": "197266c2f6266dfee76d884815e4e3f5b8af5980b4580bb7d6129794f9d3e1b3"
+    },
+    {
+      "path": "ts44060/pdchpairs/generated.go",
+      "sha256": "6e14d3146d260b0aedfb737c88d177dd60745e25f18fcbdd2323269d0c1849ba"
+    },
+    {
+      "path": "ts44060/pshandover/generated.go",
+      "sha256": "ac25cbd3eb3d605c206b30bdd9bf40d5dee98e56aea42fa5d4a297309ca2ebd4"
+    },
+    {
+      "path": "ts44060/pshandoverradioresources3/generated.go",
+      "sha256": "d9630bfe95fdc0bca98630d84fd09d90cd63274065fb12eaefccc96500d9676c"
+    },
+    {
+      "path": "ts44060/psi/generated.go",
+      "sha256": "8063db50655aa197e0564a5e6931f736363fa23a3833c2fc252c80c1d1fec276"
+    },
+    {
+      "path": "ts44060/psilegacy/generated.go",
+      "sha256": "2bda47a99b1fbc3c762df789de2ed03d6d77388614f99161aa9a732d608b313d"
+    },
+    {
+      "path": "ts44060/psineighbours/generated.go",
+      "sha256": "c2c4d1d0dc62d1c392990d861f009340f85b80dc0b8e92adff411944336b5e92"
+    },
+    {
+      "path": "ts44060/pulseformat/generated.go",
+      "sha256": "f0b7e4f265a03eb7b06e224971ee5b636367a0879cabafb6a628d8202bbf9db0"
+    },
+    {
+      "path": "ts44060/radioaccesscapability/generated.go",
+      "sha256": "b412164fef9d8a79444049af1e1a7a1e463dc5dc72ca081ec0523c7d338fbf82"
+    },
+    {
+      "path": "ts44060/servingcelldata/generated.go",
+      "sha256": "4b69eb12b16d65223d88fe8cb5e262eb644df438e25d4e9810ace7d75cc798b1"
+    },
+    {
+      "path": "ts44060/singledownlink/generated.go",
+      "sha256": "5d1346021a424ab2ac2f6863d4919a6f909b83f92e935bfddfcb56e5bb8b40de"
+    },
+    {
+      "path": "ts44060/singleuplink/generated.go",
+      "sha256": "fcbb82e5c40cff5e88fa7d716fbce11ec61e8e994458f44af005f89c738ef7e8"
+    },
+    {
+      "path": "ts44060/utrancsgtarget/generated.go",
+      "sha256": "9255697e7c52f4df9c0c42babdfd04baf0e01820b314969f198a62b47c678ae1"
     }
   ],
   "validation_commands": [
@@ -2124,7 +5620,7 @@
   "source_policies": [
     {
       "path": "conformance/csn1-expansion.json",
-      "sha256": "1efc581e5712685a68dbf8e23ee7fee37e0060d74a7efcb233d6e26e422428e2"
+      "sha256": "80ac8109abfc3bdcabb74895d1f01bf3473cdd67991a29fb34b58a5801fefa0e"
     }
   ]
 }
