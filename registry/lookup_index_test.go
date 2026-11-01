@@ -16,6 +16,14 @@ func linearLookup(entries []runtime.Descriptor, standard, clause, name string, q
 	if err := validateVersions(entries); err != nil {
 		return runtime.Descriptor{}, lookupFailure(standard, "", name, err)
 	}
+	seen := make(map[[4]string]bool, len(entries))
+	for _, d := range entries {
+		identity := [4]string{d.Standard, d.Clause, d.Name, d.Context}
+		if seen[identity] {
+			return runtime.Descriptor{}, lookupFailure(standard, "", name, fmt.Errorf("duplicate CSN.1 descriptor %q in %s §%s with context %q", d.Name, d.Standard, d.Clause, d.Context))
+		}
+		seen[identity] = true
+	}
 	var matches []runtime.Descriptor
 	for _, d := range entries {
 		if d.Standard == standard && d.Name == name && (!qualified || d.Clause == clause) {

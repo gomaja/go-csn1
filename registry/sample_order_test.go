@@ -10,6 +10,16 @@ import (
 	"github.com/gomaja/go-csn1/runtime"
 )
 
+// sampleKey names a descriptor in the sample-order fixtures: standard, clause and
+// printed name, then the publication context when it has one.
+func sampleKey(d runtime.Descriptor) string {
+	base := d.Standard + "\t" + d.Clause + "\t" + d.Name
+	if d.Context != "" {
+		return base + "\t" + d.Context
+	}
+	return base
+}
+
 // sampleDescriptors preserves discovery order because seeded probes consume
 // either a shared random stream or the descriptor's ordinal as their seed.
 func sampleDescriptors(t testing.TB, current []runtime.Descriptor, fixture string) []runtime.Descriptor {
@@ -18,16 +28,9 @@ func sampleDescriptors(t testing.TB, current []runtime.Descriptor, fixture strin
 	if err != nil {
 		t.Fatal(err)
 	}
-	key := func(d runtime.Descriptor) string {
-		base := d.Standard + "\t" + d.Clause + "\t" + d.Name
-		if d.Context != "" {
-			return base + "\t" + d.Context
-		}
-		return base
-	}
 	byKey := make(map[string]runtime.Descriptor, len(current))
 	for _, d := range current {
-		k := key(d)
+		k := sampleKey(d)
 		if _, ok := byKey[k]; ok {
 			t.Fatalf("duplicate descriptor %q", k)
 		}
@@ -43,11 +46,22 @@ func sampleDescriptors(t testing.TB, current []runtime.Descriptor, fixture strin
 		delete(byKey, line)
 	}
 	for _, d := range current {
-		if _, ok := byKey[key(d)]; ok {
+		if _, ok := byKey[sampleKey(d)]; ok {
 			result = append(result, d)
 		}
 	}
 	return result
+}
+
+func TestSampleKeyIncludesContext(t *testing.T) {
+	d := runtime.Descriptor{Standard: "synthetic", Clause: "9", Name: "Printed"}
+	if got := sampleKey(d); got != "synthetic\t9\tPrinted" {
+		t.Fatalf("unqualified sample key = %q", got)
+	}
+	d.Context = `{"table":"a"}`
+	if got := sampleKey(d); got != "synthetic\t9\tPrinted\t"+d.Context {
+		t.Fatalf("contextual sample key = %q", got)
+	}
 }
 
 func TestPublishedSampleOrders(t *testing.T) {
@@ -73,7 +87,7 @@ func TestPublishedSampleOrders(t *testing.T) {
 		}
 		for i, line := range strings.Split(strings.TrimSuffix(string(data), "\n"), "\n") {
 			d := ordered[i]
-			if got := d.Standard + "\t" + d.Clause + "\t" + d.Name; got != line {
+			if got := sampleKey(d); got != line {
 				t.Errorf("%s entry %d=%q, want %q", tc.file, i, got, line)
 			}
 		}
