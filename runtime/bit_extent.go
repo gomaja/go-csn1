@@ -141,7 +141,9 @@ func (d Descriptor) contentReader(data []byte, bitLength int, c *Collector) (*Re
 		}
 	}
 	r := NewChoiceReader(positioned, nil)
-	r.pos, r.end, r.boundDepth = d.SourceOrigin, end, 1
+	// Collection budgets follow received content, independently of its origin.
+	r.end = bitLength
 	r.attachCollector(c)
+	r.pos, r.end, r.boundDepth = d.SourceOrigin, end, 1
 	return r, nil
 }
