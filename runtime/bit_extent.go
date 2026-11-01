@@ -87,12 +87,14 @@ func (w *Writer) FinishBits(tail BitString) (BitString, error) {
 }
 
 // DecodeBits uses the descriptor's typed reader entry point with an explicit
-// containing extent. It does not change the policy of the byte entry point.
+// containing extent. data contains content only; its first bit is positioned
+// at SourceOrigin. Backing-octet completion is outside bitLength. It does not
+// change the policy of the byte entry point or a caller-owned DecodeFrom.
 func (d Descriptor) DecodeBits(data []byte, bitLength int) (any, error) {
 	if d.DecodeFrom == nil {
 		return nil, ErrUnsupported
 	}
-	r, err := NewChoiceReaderBits(data, bitLength, nil)
+	r, err := d.contentReader(data, bitLength, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -106,10 +108,40 @@ func (d Descriptor) DecodeBitsWithReport(data []byte, bitLength int) (any, Repor
 		return nil, Report{}, ReceiverReport{}, ErrUnsupported
 	}
 	c := NewReceiverCollector()
-	r, err := NewChoiceReaderBits(data, bitLength, c)
+	r, err := d.contentReader(data, bitLength, c)
 	if err != nil {
 		return nil, Report{}, ReceiverReport{}, err
 	}
 	value, err := d.DecodeFrom(r)
 	return value, c.TakeReport(), c.TakeReceiverReport(), err
+}
+
+// contentReader retains source coordinates without enlarging every Reader.
+// TS 24.007 V20.0.0 Annex B §B.1.2.2 defines L/H at the block position;
+// TS 44.060 V19.0.0 §11 p12940 aligns the padding pattern to block octets.
+func (d Descriptor) contentReader(data []byte, bitLength int, c *Collector) (*Reader, error) {
+	if d.SourceOrigin == 0 {
+		return NewChoiceReaderBits(data, bitLength, c)
+	}
+	if err := checkBitExtent(data, bitLength); err != nil {
+		return nil, err
+	}
+	if d.SourceOrigin < 0 || d.SourceOrigin > maxBits {
+		return nil, &DecodeError{Kind: InvalidSchema, Offset: 0, Detail: "source origin outside runtime bit limit"}
+	}
+	if bitLength > maxBits-d.SourceOrigin {
+		return nil, &DecodeError{Kind: Limit, Offset: d.SourceOrigin, Detail: "content extent exceeds runtime bit limit"}
+	}
+	end := d.SourceOrigin + bitLength
+	positioned := make([]byte, (end+7)/8)
+	for bit := 0; bit < bitLength; bit++ {
+		if data[bit/8]&(1<<uint(7-bit%8)) != 0 {
+			at := d.SourceOrigin + bit
+			positioned[at/8] |= 1 << uint(7-at%8)
+		}
+	}
+	r := NewChoiceReader(positioned, nil)
+	r.pos, r.end, r.boundDepth = d.SourceOrigin, end, 1
+	r.attachCollector(c)
+	return r, nil
 }
