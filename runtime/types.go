@@ -55,9 +55,11 @@ type Decoded[T any] struct {
 }
 
 // Descriptor identifies a definition by published specification, clause and
-// printed name. Version is metadata and never part of the lookup key.
+// printed name and publication context. Version is metadata and never part of the lookup key.
 type Descriptor struct {
 	Standard, Version, Clause, Name string
+	// Context is the opaque, exact publication context; empty means unqualified.
+	Context string
 	// MaxOctets is the finite canonical octet ceiling, or zero if unknown.
 	MaxOctets int
 	// SourceOrigin is the absolute block bit at which content starts in the
