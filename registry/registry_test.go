@@ -97,7 +97,7 @@ func FuzzGeneratedDecodeFrom(f *testing.F) {
 		if entry.DecodeFrom == nil {
 			return
 		}
-		reader := runtime.NewReader(data)
+		reader := sourceReader(t, entry, data)
 		_, _ = entry.DecodeFrom(reader)
 	})
 }

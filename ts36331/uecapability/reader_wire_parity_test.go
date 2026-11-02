@@ -156,7 +156,7 @@ func TestGERANCSReaderTailStorageGrowsLinearly(t *testing.T) {
 		}
 		goruntime.ReadMemStats(&after)
 		bytes := (after.TotalAlloc - before.TotalAlloc + 7) / 8
-		if bytes > uint64(16*n+65536) {
+		if !raceEnabled && bytes > uint64(16*n+65536) {
 			t.Fatalf("%d input octets allocate %d bytes", n, bytes)
 		}
 	}

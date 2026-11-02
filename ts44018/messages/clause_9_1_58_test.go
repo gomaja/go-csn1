@@ -50,7 +50,9 @@ func TestNotifyApplicationDataVectors(t *testing.T) {
 			}
 			value := notifyApplicationValue(vector.length)
 			canonical, err := EncodeNOTIFYAPPLICATIONDATACanonicalAtLength(value, vector.octets)
-			if err != nil || !bytes.Equal(canonical, wire) {
+			if vector.octets > 23 {
+				checkNotifySenderRefusal(t, canonical, err, vector.octets)
+			} else if err != nil || !bytes.Equal(canonical, wire) {
 				t.Fatalf("canonical %x want %x: %v", canonical, wire, err)
 			}
 			decoded, err := d.Decode(wire)
@@ -69,7 +71,9 @@ func TestNotifyApplicationDataVectors(t *testing.T) {
 				t.Fatalf("typed decode %#v", typed)
 			}
 			stable, err := d.CanonicalAtLength(decoded, vector.octets)
-			if err != nil || !bytes.Equal(stable, wire) {
+			if vector.octets > 23 {
+				checkNotifySenderRefusal(t, stable, err, vector.octets)
+			} else if err != nil || !bytes.Equal(stable, wire) {
 				t.Fatalf("stable %x: %v", stable, err)
 			}
 			_, err = EncodeNOTIFYAPPLICATIONDATACanonical(value)
@@ -145,7 +149,7 @@ func TestNotifyApplicationDataFieldBoundaries(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			v := notifyApplicationValue(1)
 			tc.edit(&v)
-			if _, err := EncodeNOTIFYAPPLICATIONDATACanonicalAtLength(v, 32); err == nil {
+			if _, err := EncodeNOTIFYAPPLICATIONDATACanonicalAtLength(v, 23); err == nil {
 				t.Fatal("accepted invalid field")
 			}
 		})
@@ -156,7 +160,15 @@ func TestNotifyApplicationDataFieldBoundaries(t *testing.T) {
 				v := notifyApplicationValue(length)
 				v.RRShortPD = pd
 				v.ShortLayer2Header = header
-				wire, err := EncodeNOTIFYAPPLICATIONDATACanonicalAtLength(v, 32)
+				wire, err := EncodeNOTIFYAPPLICATIONDATACanonicalAtLength(v, 23)
+				if length == 15 {
+					if wire != nil || err == nil {
+						t.Fatal("oversized MSISDN encoded in Bter")
+					}
+					// Keep exercising every received header combination even
+					// when the declared MSISDN cannot fit the sender carrier.
+					wire, err = EncodeNOTIFYAPPLICATIONDATA(v)
+				}
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -202,4 +214,14 @@ func FuzzNotifyApplicationDataReplay(f *testing.F) {
 			t.Fatalf("replay %x: %v", replay, err)
 		}
 	})
+}
+
+// TS 44.006 V19.0.0 §8.8.3 p2456–2458: a main-DCCH Bter
+// carrier has 23 octets, including its short header (TS 44.018 §9.1.58).
+func checkNotifySenderRefusal(t *testing.T, encoded []byte, err error, octets int) {
+	t.Helper()
+	var extent *runtime.ExtentError
+	if encoded != nil || !errors.As(err, &extent) || extent.Maximum != 23 || extent.Actual != octets {
+		t.Fatalf("oversized Notify sender extent %d: %x %v", octets, encoded, err)
+	}
 }

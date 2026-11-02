@@ -66,9 +66,9 @@ func TestSampleKeyIncludesContext(t *testing.T) {
 
 func TestPublishedSampleOrders(t *testing.T) {
 	for _, tc := range []struct{ file, hash string }{
-		{"direct-probe-order.tsv", "f367ac89e9a4024ada8981185bd5a06e53bc1a38ce54cc95534187af0405f937"},
-		{"sorted-probe-order.tsv", "ad02ecc395617a8ef1b6a5e0990035bace964cace3b2af04d774b6cdb166d760"},
-		{"canonical-probe-order.tsv", "4eef9aede8885e4828fb3be1c5f1d2ba2b80b49f97b6af5d5a24fe89e58b7c17"},
+		{"direct-probe-order.tsv", "f9440a4bc469a1a8b9933be5eed693396ecfad27c973cafdba62ac945543123d"},
+		{"sorted-probe-order.tsv", "da07910d985b03efeec133a4f2ea3e1204d8e5828aa3773a3915d0c1a581da93"},
+		{"canonical-probe-order.tsv", "dbeaa585ef10c5e884f9fbb2128f49fc70e0fb226f8dcab624108f20133487b0"},
 	} {
 		current := descriptors()
 		if tc.file == "sorted-probe-order.tsv" {
@@ -95,8 +95,8 @@ func TestPublishedSampleOrders(t *testing.T) {
 		if got := fmt.Sprintf("%x", sha256.Sum256(data)); got != tc.hash {
 			t.Errorf("published sample order %s changed: %s", tc.file, got)
 		}
-		if got := len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")); got != 288 {
-			t.Errorf("sample order %s has %d entries, want 288", tc.file, got)
+		if got := len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")); got != 632 {
+			t.Errorf("sample order %s has %d entries, want 632", tc.file, got)
 		}
 	}
 }

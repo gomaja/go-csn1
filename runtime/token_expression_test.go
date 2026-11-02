@@ -36,9 +36,6 @@ func TestTokenWidthKeepsDynamicLabels(t *testing.T) {
 }
 
 func TestTokenWidthAvoidsLexicalAllocations(t *testing.T) {
-	if raceEnabled {
-		t.Skip("pool allocation counts vary under race")
-	}
 	r := NewReader(nil)
 	r.Set("Extension Length", 3)
 	tokens := []string{"val", "(", "Extension", "Length", ")", "+", "1"}
@@ -52,7 +49,7 @@ func TestTokenWidthAvoidsLexicalAllocations(t *testing.T) {
 			panic("tokens")
 		}
 	})
-	if parsed >= text {
+	if !raceEnabled && parsed >= text {
 		t.Fatalf("token evaluation allocates %v; text %v", parsed, text)
 	}
 	t.Logf("text %v allocations; tokens %v", text, parsed)

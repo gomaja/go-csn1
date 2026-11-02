@@ -126,7 +126,7 @@ func TestIndexedCausePathAllocationBound(t *testing.T) {
 			if !causePathIncluded(outer, inner) {
 				panic("path changed")
 			}
-		}); got != 0 {
+		}); !raceEnabled && got != 0 {
 			t.Fatalf("size %d allocated %.0f times", size, got)
 		}
 	}

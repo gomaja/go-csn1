@@ -64,4 +64,20 @@
 // measurement, neighbour-cell, not-allowed-cell and PCID-to-TA mapping helpers.
 // Its PCID Group IE references are defined in §12.57.
 
+// Global Packet Timing Advance: three independent optional components from TS 44.060 V19.0.0 Table 12.12a.1. The printed grammar bounds a complete value to 23 significant bits.
+// Extension Bits: a six-bit length code followed by code+1 spares (TS 44.060 V19.0.0 Table 12.26.1). Reception retains every spare value for replay; fresh and canonical encoding send zero.
+// 3G Priority Parameters: optional defaults and terminated parameter/frequency lists from TS 44.060 V19.0.0 Table 12.52.1. Every optional scalar remains typed; canonical encoding requires the containing extent.
+// TS 44.060 V19.0.0 §12.54, table 12.54.1, authenticated paragraphs 25411–25413.
+// TS 44.060 V19.0.0 §12.55, table 12.55.1, authenticated paragraphs 25423–25425.
+// TS 44.060 V19.0.0 §12.75 paragraphs 25996-26001 defines EC Channel Quality Report IE. The reviewed reading moves the paragraph 26000 terminator after C_VALUE at paragraph 26001; table 12.75.2 paragraph 26008 defines its six-bit range 0–63.
+//
+// Starting Frame Number Description: selector 0 carries the 16-bit absolute encoding and selector 1 the 13-bit relative encoding from TS 44.060 V19.0.0 §§12.21.1–12.21.2, paragraphs 23305 and 23309.
+// LSA Parameters: a five-bit frequency/cell count followed by that many terminated LSA lists; each entry carries either a 24-bit LSA_ID or a 10-bit ShortLSA_ID. TS 44.060 V19.0.0 Table 12.28.1; the approved paragraph-23503 correction removes only the stray colon.
+//
+// TS 44.060 V19.0.0 §12.56 paragraphs 25436–25444 defines Measurement Control Parameters Description. The reviewed reading restores the assignment separator through its exact reviewed receipt. Both optional control groups retain their initial frequency index and terminated additional-index list. Canonical encoding takes the containing octet extent.
+// TS 44.060 V19.0.0 §12.5a.1 paragraphs 22531-22534 defines EGPRS Channel Quality Report Type 2 IE. The two named components retain their clause-owned types; C_VALUE is six bits. The containing procedure supplies the measurement-mode context.
+// TS 44.060 V19.0.0 §12.5a.3 paragraphs 22571-22618 defines EGPRS Timeslot Link Quality Measurements Type 2 IE. The reviewed reading gives only the two local measurement helpers clause-qualified names. Each selected timeslot retains its two-bit modulation and four-bit mean; interference retains four bits per selected timeslot.
+// TS 44.060 V19.0.0 §12.66 paragraphs 25777–25835 defines DLMC Channel Quality Report IE. The reviewed reading restores the p25778 C_VALUE delimiters through its exact reviewed receipt. The interference, link-quality and timeslot helpers remain typed; the BEP list is self-terminated. Canonical encoding takes the containing octet extent.
+//
+// TS 44.060 V19.0.0 §12.51, authenticated paragraphs 25304–25309.
 package ies

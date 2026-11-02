@@ -1,0 +1,155 @@
+[
+  {
+    "clause": "11.2.1",
+    "name": "Packet Access Reject message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "408400000000142b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "00000000050acacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ],
+      "tlli_g_rnti": [
+        0
+      ]
+    }
+  },
+  {
+    "clause": "11.2.11",
+    "name": "Packet PDCH Release message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "408caaab2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "2aaacacacacacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ],
+      "timeslots_available": [
+        85
+      ]
+    }
+  },
+  {
+    "clause": "11.2.14",
+    "name": "Packet PRACH Parameters message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "4090a55a1b2d2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "295686cb4acacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ],
+      "acc_contr_class": [
+        42330
+      ],
+      "max_retrans": [
+        27
+      ],
+      "s": [
+        2
+      ],
+      "tx_int": [
+        13
+      ]
+    }
+  },
+  {
+    "clause": "11.2.15",
+    "name": "Packet Queueing Notification message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "4018f68ed5aa95692b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "3da3b56aa55a4acacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ],
+      "random_access_information_value": [
+        1443
+      ],
+      "frame_number": [
+        46442
+      ],
+      "tqi": [
+        42330
+      ]
+    }
+  },
+  {
+    "clause": "11.2.2a",
+    "name": "Packet Cell Change Continue message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "402c002b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "000acacacacacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ],
+      "uplink_tfi": [
+        0
+      ]
+    }
+  },
+  {
+    "clause": "11.2.30a",
+    "name": "Packet pause message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "4024000000000000000000012b2b2b2b2b2b2b2b2b2b2b",
+    "content": "000000000000000000004acacacacacacacacacacac0",
+    "scalars": {
+      "tlli": [
+        0
+      ],
+      "rai": [
+        0
+      ]
+    }
+  },
+  {
+    "clause": "11.2.35",
+    "name": "Packet CS Request message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "403800032b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "0000cacacacacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "uplink_tfi": [
+        0
+      ],
+      "establishment_cause": [
+        0
+      ]
+    }
+  },
+  {
+    "clause": "11.2.8",
+    "name": "Packet Downlink Dummy Control Block message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "40942b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "0acacacacacacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "page_mode": [
+        0
+      ]
+    }
+  },
+  {
+    "clause": "11.2.8b",
+    "name": "Packet Uplink Dummy Control Block message content",
+    "origin": 14,
+    "significant_bits": 170,
+    "block": "400c000000022b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b",
+    "content": "000000008acacacacacacacacacacacacacacacacac0",
+    "scalars": {
+      "tlli_g_rnti": [
+        0
+      ]
+    }
+  }
+]

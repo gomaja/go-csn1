@@ -1,5 +1,3 @@
-//go:build !race
-
 package measurement
 
 import (
@@ -23,7 +21,7 @@ func TestMeasurementResultsReportAllocations(t *testing.T) {
 					panic(err)
 				}
 			})
-			if got != want[i] {
+			if !raceEnabled && got != want[i] {
 				t.Fatalf("allocations = %g, want %g", got, want[i])
 			}
 		})

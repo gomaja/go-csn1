@@ -286,3 +286,347 @@ TS 44.060	12.8.4	DLMC Direct encoding 1 struct
 TS 44.060	12.8.4	DLMC Direct encoding 2 struct
 TS 44.060	12.8.4	DLMC Frequency Parameters IE
 TS 44.060	12.8.4	DLMC Indirect encoding struct
+TS 44.018	10.5.2.11a	DTM Information Details value part
+TS 44.018	10.5.2.1c	BA List Pref
+TS 44.018	10.5.2.1c	RANGE LIMITS
+TS 44.018	10.5.2.25a	Packet Channel Description
+TS 44.018	10.5.2.62	MBMS Session Identity value part
+TS 44.018	10.5.2.84	EC Packet Channel Description Type 1
+TS 44.018	10.5.2.85	EC Packet Channel Description Type 2
+TS 44.018	10.5.2.88	EC Packet Channel Description Type 3
+TS 44.018	9.1.50	SYSTEM INFORMATION TYPE 10
+TS 44.018	9.1.50a	SYSTEM INFORMATION TYPE 10bis
+TS 44.018	9.1.50b	SYSTEM INFORMATION TYPE 10ter
+TS 44.018	9.1.58	NOTIFY APPLICATION DATA
+TS 44.060	12.11	Packet Request Reference IE
+TS 44.060	12.13	Power Control Parameters IE
+TS 44.060	12.14	PRACH Control Parameters IE
+TS 44.060	12.16a	G-RNTI IE
+TS 44.060	12.23	Cell Identification IE
+TS 44.060	12.25	PCCCH Organization Parameters IE
+TS 44.060	12.29	COMPACT reduced MA IE
+TS 44.060	12.45	MBMS In-band Signalling Indicator IE
+TS 44.060	12.53	E-UTRAN Parameters IE
+TS 44.060	12.53	GPRS E-UTRAN Measurement Parameters struct
+TS 44.060	12.53	Repeated E-UTRAN Neighbour Cells struct
+TS 44.060	12.53	Repeated E-UTRAN Not Allowed Cells struct
+TS 44.060	12.53	Repeated E-UTRAN PCID to TA mapping struct
+TS 44.060	12.7	Channel Request Description IE
+TS 44.060	12.7a	Iu mode Channel Request Description IE
+TS 44.060	12.7b	Extended Channel Request Description IE
+TS 44.060	12.9	Global Power Control Parameters IE
+TS 44.018	10.5.2.11b	Dynamic ARFCN Mapping
+TS 44.018	10.5.2.11b	Dynamic ARFCN Mapping entry
+TS 44.018	10.5.2.14d	GPRS broadcast information value part
+TS 44.018	10.5.2.1d	UTRAN Freq List
+TS 44.018	10.5.2.58	MBMS p-t-m Channel Description value part
+TS 44.018	10.5.2.58a	MBMS Session Parameters List value part
+TS 44.018	10.5.2.60	MPRACH description value part
+TS 44.018	10.5.2.75	3G Individual Priority Parameters Description struct
+TS 44.018	10.5.2.75	E-UTRAN IPP with extended EARFCNs Description struct
+TS 44.018	10.5.2.75	E-UTRAN Individual Priority Parameters Description struct
+TS 44.018	10.5.2.75	Individual priorities
+TS 44.018	10.5.2.75	Repeated Individual E-UTRAN PP with extended EARFCNs Description struct
+TS 44.018	10.5.2.75	Repeated Individual E-UTRAN Priority Parameters Description struct
+TS 44.018	10.5.2.75	Repeated Individual UTRAN Priority Parameters struct
+TS 44.060	11	padding bits
+TS 44.060	11.2.8	Packet Downlink Dummy Control Block message content
+TS 44.060	12.12a	Global Packet Timing Advance IE
+TS 44.060	12.26	Extension Bits IE
+TS 44.060	12.52	3G Priority Parameters IE
+TS 44.060	12.52	Repeated UTRAN Priority Parameters struct
+TS 44.060	12.54	3G CSG Description IE
+TS 44.060	12.55	E-UTRAN CSG Description IE
+TS 44.060	12.60	E-UTRAN CSG Measurement Report IE
+TS 44.060	12.60	PLMN-ID struct
+TS 44.060	12.62	E-UTRAN CSG Target cell IE
+TS 44.060	12.62	PLMN-ID struct
+TS 44.060	12.63	PLMN-ID struct
+TS 44.060	12.63	UTRAN CSG Target cell IE
+TS 44.060	12.75	EC Channel Quality Report IE
+TS 44.018	9.1.21a	NOTIFICATION FACCH
+TS 44.018	9.1.21a	Paging Information
+TS 44.018	9.1.47	UPLINK FREE
+TS 44.060	11.2.30a	Packet pause message content
+TS 44.060	11.2.35	Packet CS Request message content
+TS 44.060	12.21	Starting Frame Number Description IE
+TS 44.060	12.28	LSA ID information struct
+TS 44.060	12.28	LSA Parameters IE
+TS 44.060	12.3.1	EGPRS Ack/Nack Description IE
+TS 44.060	12.3.1	EGPRS Ack/Nack Description struct
+TS 44.060	12.43	NAS Container for PS Handover IE
+TS 44.060	12.47	CS Handover Radio Resources IE
+TS 44.060	12.8.3	Pulse Format Coding 2 struct
+TS 44.060	12.8.3	Pulse Format IE
+TS 44.018	9.1.49b	Non-Segmented_SMS Description struct
+TS 44.018	9.1.49b	Segmented_SMS Description struct
+TS 44.018	9.1.49b	VGCS SMS INFORMATION
+TS 44.018	9.1.57	VGCS Neighbour Cell Information
+TS 44.018	9.1.57	Validity Information
+TS 44.060	11.2.1	A/Gb mode Reject struct
+TS 44.060	11.2.1	Iu mode Reject struct
+TS 44.060	11.2.1	Packet Access Reject message content
+TS 44.060	11.2.1	Reject struct
+TS 44.060	11.2.11	Packet PDCH Release message content
+TS 44.060	11.2.14	Packet PRACH Parameters message content
+TS 44.060	11.2.15	Packet Queueing Notification message content
+TS 44.060	11.2.2a	Packet Cell Change Continue message content
+TS 44.060	11.2.8b	Packet Uplink Dummy Control Block message content
+TS 44.060	12.27	Extension Information
+TS 44.060	12.27	Non GPRS Cell Options IE
+TS 44.060	12.56	Measurement Control Parameters Description
+TS 44.060	12.5a.1	EGPRS Channel Quality Report Type 2 IE
+TS 44.060	12.5a.3	BEP Measurement Report Struct
+TS 44.060	12.5a.3	EGPRS Timeslot Link Quality Measurements Type 2 IE
+TS 44.060	12.5a.3	Interference Measurement Report Struct
+TS 44.060	12.66	DLMC BEP Link Quality Measurements struct
+TS 44.060	12.66	DLMC BEP Measurements Struct
+TS 44.060	12.66	DLMC Channel Quality Report IE
+TS 44.060	12.66	DLMC Interference Measurement Report Struct
+TS 44.018	9.1.21h	VBS/VGCS RECONFIGURE
+TS 44.018	9.1.21h	new Group Channel Description
+TS 44.018	9.1.21i	VBS/VGCS RECONFIGURE2
+TS 44.060	11.2.12	Packet Polling Request message content
+TS 44.060	11.2.17	PSI Message List struct
+TS 44.060	11.2.17	Packet PSI Status message content
+TS 44.060	11.2.17	Unknown PSI Message List struct
+TS 44.060	11.2.17b	Packet SI Status message content
+TS 44.060	11.2.17b	SI Message List struct
+TS 44.060	11.2.17b	Unknown SI Message List struct
+TS 44.060	11.2.9	3G Measurement Report struct
+TS 44.060	11.2.9	E-UTRAN Measurement Report struct
+TS 44.060	11.2.9	NC Measurement Report struct
+TS 44.060	11.2.9	Packet Measurement Report message content
+TS 44.060	11.2.9c	Packet Mobile TBF Status message content
+TS 44.018	10.5.2.25d	Additional PFCs struct
+TS 44.018	10.5.2.25d	Downlink TBF assignment struct
+TS 44.018	10.5.2.25d	Multiple Downlink TBF Assignment struct
+TS 44.018	10.5.2.25d	RLC Entity Struct
+TS 44.018	10.5.2.25d	RR Packet Downlink Assignment value part
+TS 44.018	10.5.2.8b	Channel Request Description 2 value part
+TS 44.018	9.1.49a	VGCS ADDITIONAL INFO
+TS 44.018	9.1.60	EC Fixed Uplink Allocation struct
+TS 44.018	9.1.60	EC Immediate Assignment Type 2 message content
+TS 44.018	9.1.61	EC Immediate Assignment Reject message content
+TS 44.018	9.1.63	EC Paging Request message content
+TS 44.018	9.1.63	Mobile Identity struct
+TS 44.018	9.1.69	EC Paging Indication
+TS 44.060	11.2.17c	Packet Serving Cell SI message content
+TS 44.060	11.2.2	Packet Control Acknowledgement 11 bit message
+TS 44.060	11.2.2	Packet Control Acknowledgement 8 bit message
+TS 44.060	11.2.2	Packet Control Acknowledgement message content
+TS 44.060	11.2.20	CCN Support Description struct
+TS 44.060	11.2.20	COMPACT Cell Selection struct
+TS 44.060	11.2.20	COMPACT Information struct
+TS 44.060	11.2.20	COMPACT Neighbour Cell params struct
+TS 44.060	11.2.20	Cell Selection struct
+TS 44.060	11.2.20	Gen Cell Sel struct
+TS 44.060	11.2.20	HCS struct
+TS 44.060	11.2.20	Iu Mode Cell Selection struct
+TS 44.060	11.2.20	Iu Mode Neighbour Cell Params struct
+TS 44.060	11.2.20	Iu Mode Only Cell Selection struct
+TS 44.060	11.2.20	Iu mode Only Neighbour Cell params struct
+TS 44.060	11.2.20	LSA ID information struct
+TS 44.060	11.2.20	Neighbour Cell params struct
+TS 44.060	11.2.20	PSI3 message content
+TS 44.060	11.2.20	SI13 PBCCH Location struct
+TS 44.060	11.2.20	Serving Cell params struct
+TS 44.060	11.2.24	CBCH Channel Description struct
+TS 44.060	11.2.24	DYNAMIC ARFCN MAPPING
+TS 44.060	11.2.24	Dynamic ARFCN Mapping Description struct
+TS 44.060	11.2.24	PSI8 message content
+TS 44.060	11.2.5	Packet channel request 11 bit message content
+TS 44.060	11.2.5	Packet channel request 8 bit message content
+TS 44.060	11.2.5a	EGPRS MULTILATERATION REQUEST message content (Access Burst method)
+TS 44.060	11.2.5a	EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1)
+TS 44.060	11.2.5a	EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2)
+TS 44.060	11.2.5a	EGPRS MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event)
+TS 44.060	11.2.5a	EGPRS PACKET CHANNEL REQUEST message content for ‘PEO One Phase Access Request’
+TS 44.060	11.2.5a	EGPRS Packet channel request message content
+TS 44.060	11.2.5c	MPRACH Packet channel request message content
+TS 44.060	11.2.6a	EGPRS Packet Downlink Ack/Nack message content
+TS 44.060	11.2.6a	EPD A/N Extension Info
+TS 44.060	11.2.13	Packet Power Control/Timing Advance message content
+TS 44.060	11.2.17a	Container repetition struct
+TS 44.060	11.2.17a	Packet Serving Cell Data message content
+TS 44.060	11.2.18	PSI1 message content
+TS 44.060	11.2.19	Additional PSI Messages struct
+TS 44.060	11.2.19	COMPACT Control Info struct
+TS 44.060	11.2.19	Cell Allocation Lists struct
+TS 44.060	11.2.19	Cell Allocation struct
+TS 44.060	11.2.19	GPRS Mobile Allocations Lists struct
+TS 44.060	11.2.19	GPRS Mobile Allocations struct
+TS 44.060	11.2.19	Hopping PCCCH Carriers Lists struct
+TS 44.060	11.2.19	Hopping PCCCH Carriers struct
+TS 44.060	11.2.19	Non-Hopping PCCCH Carriers struct
+TS 44.060	11.2.19	Non-hopping PCCCH Carriers Lists struct
+TS 44.060	11.2.19	Number of Idle Blocks struct
+TS 44.060	11.2.19	PCCCH Description Lists struct
+TS 44.060	11.2.19	PCCCH Description struct
+TS 44.060	11.2.19	PSI2 message content
+TS 44.060	11.2.19	Reference Frequency Lists struct
+TS 44.060	11.2.19	Reference Frequency struct
+TS 44.060	11.2.21a	GPRS REP PRIORITY Description struct
+TS 44.060	11.2.21a	PSI3 ter message content
+TS 44.060	11.2.21a	RTD12 Struct
+TS 44.060	11.2.21a	RTD6 Struct
+TS 44.060	11.2.21a	Real Time Difference Description struct
+TS 44.060	11.2.21b	3G Initial Dedicated Mode Reporting Description struct
+TS 44.060	11.2.21b	3G MEASUREMENT PARAMETERS Description struct
+TS 44.060	11.2.21b	3G Neighbour Cell Description struct
+TS 44.060	11.2.21b	GPRS 3G Additional Measurement Parameters Description 2 struct
+TS 44.060	11.2.21b	GPRS 3G Additional Measurement Parameters Description struct
+TS 44.060	11.2.21b	GPRS REP PRIORITY Description struct
+TS 44.060	11.2.21b	PSI3 quater message content
+TS 44.060	11.2.21b	Repeated UTRAN FDD Neighbour Cells struct
+TS 44.060	11.2.21b	Repeated UTRAN TDD Neighbour Cells struct
+TS 44.060	11.2.21b	UTRAN FDD Description struct
+TS 44.060	11.2.21b	UTRAN TDD Description struct
+TS 44.060	11.2.25	PBCCH Description struct
+TS 44.060	11.2.25	PSI13 message content
+TS 44.060	11.2.25a	CCCH Access Information struct
+TS 44.060	11.2.25a	PBCCH Description struct 2
+TS 44.060	11.2.25a	PSI14 message content
+TS 44.060	11.2.25b	PSI15 message content
+TS 44.060	11.2.25b	UTRAN Frequency List Description struct
+TS 44.060	11.2.28a	Packet DBPSCH Uplink Ack/Nack message content
+TS 44.060	11.2.3	Packet Cell Change Failure message content
+TS 44.060	11.2.32	Additional MS Radio Access Capabilities message content
+TS 44.060	11.2.34	Physical information message content
+TS 44.060	11.2.38	MBMS service request message content
+TS 44.060	11.2.39	MBMS Assignment Non-distribution message content
+TS 44.060	11.2.39	MBMS bearer description struct
+TS 44.060	11.2.3a	3G CCN Measurement Report Struct
+TS 44.060	11.2.3a	3G Target Cell Struct
+TS 44.060	11.2.3a	CCN Measurement Report struct
+TS 44.060	11.2.3a	E-UTRAN CCN Measurement Report struct
+TS 44.060	11.2.3a	E-UTRAN Target Cell struct
+TS 44.060	11.2.3a	E-UTRAN Target Cell with extended EARFCN struct
+TS 44.060	11.2.3a	Packet Cell Change Notification message content
+TS 44.060	11.2.45	Packet Physical information message content
+TS 44.060	11.2.5b	Channel Description struct
+TS 44.060	11.2.5b	Network Response Times struct
+TS 44.060	11.2.5b	Packet DBPSCH Assignment message content
+TS 44.060	11.2.5b	Power Command struct
+TS 44.060	11.2.5b	Response Time SACCH struct
+TS 44.060	11.2.5b	Response Time SDCCH struct
+TS 44.060	11.2.5b	Response Time struct
+TS 44.060	11.2.6	Channel Quality Report struct
+TS 44.060	11.2.6	Packet Downlink Ack/Nack message content
+TS 44.060	11.2.6b	Packet DBPSCH Downlink Ack/Nack message
+TS 44.060	11.2.6c	Packet DBPSCH Downlink Ack/Nack Type 2 message
+TS 44.060	11.2.9d	E-UTRAN Measurement Report struct
+TS 44.060	11.2.9d	NC Measurement Report struct
+TS 44.060	11.2.9d	PACKET ENHANCED MEASUREMENT REPORT message content
+TS 44.060	11.2.9d	Repeated Invalid_BSIC_Information struct
+TS 44.060	11.2.9d	Serving cell data struct
+TS 44.060	11.2.9e	Container repetition struct
+TS 44.060	11.2.9e	Packet Neighbour Cell Data message content
+TS 44.060	12.46	DTM Handover PS Radio Resources IE
+TS 44.060	12.46	Downlink Assignment struct
+TS 44.060	12.46	Downlink TBF assignment struct
+TS 44.060	12.46	EGPRS mode struct
+TS 44.060	12.46	GPRS mode struct
+TS 44.060	12.46	Timeslot description struct
+TS 44.060	12.46	Uplink TBF Assignment struct
+TS 44.060	12.48a.2	Single Downlink Assignment 2 IE
+TS 44.060	12.48a.3	Single Uplink Assignment 2 IE
+TS 44.060	12.48a.5	BTTI Multiple Downlink Assignment struct
+TS 44.060	12.48a.5	Downlink TBF assignment 2 struct
+TS 44.060	12.48a.5	Multiple Downlink Assignment 2 IE
+TS 44.060	12.48a.5	RTTI Multiple Downlink Assignment DC struct
+TS 44.060	12.48a.5	RTTI Multiple Downlink Assignment SC struct
+TS 44.060	12.5.5	PDCH Pairs Description IE
+TS 44.018	10.5.2.25e	Additional PFCs struct
+TS 44.018	10.5.2.25e	BTTI Multiple Downlink Assignment struct
+TS 44.018	10.5.2.25e	Downlink TBF assignment 2 struct
+TS 44.018	10.5.2.25e	RLC Entity Struct
+TS 44.018	10.5.2.25e	RR Packet Downlink Assignment Type 2 value part
+TS 44.018	10.5.2.25e	RTTI Multiple Downlink Assignment DC struct
+TS 44.018	10.5.2.25e	RTTI Multiple Downlink Assignment SC struct
+TS 44.060	11.2.28b	Packet DBPSCH Uplink Ack/Nack message content
+TS 44.060	11.2.9b	3G Neighbour Cell Description struct
+TS 44.060	11.2.9b	Add Frequency list struct
+TS 44.060	11.2.9b	Add Iu Mode Only Cell List struct
+TS 44.060	11.2.9b	CCN Support Description struct
+TS 44.060	11.2.9b	CDMA 2000 Description struct
+TS 44.060	11.2.9b	CSG Cells Reporting Description struct
+TS 44.060	11.2.9b	Cell Selection struct
+TS 44.060	11.2.9b	E-UTRAN CSG Cells Reporting Description struct
+TS 44.060	11.2.9b	ENH Measurement parameters struct
+TS 44.060	11.2.9b	GPRS 3G Additional Measurement Parameters Description 2 struct
+TS 44.060	11.2.9b	GPRS 3G MEASUREMENT PARAMETERS BIS Description struct
+TS 44.060	11.2.9b	GPRS MEASUREMENT PARAMETERS Description struct
+TS 44.060	11.2.9b	GPRS REP PRIORITY Description struct
+TS 44.060	11.2.9b	HCS struct
+TS 44.060	11.2.9b	Iu Mode Cell Selection struct
+TS 44.060	11.2.9b	Iu Mode Neighbour Cell Params struct
+TS 44.060	11.2.9b	Iu Mode Only Cell Selection struct
+TS 44.060	11.2.9b	NC Frequency list struct
+TS 44.060	11.2.9b	NC Iu Mode Only Cell List struct
+TS 44.060	11.2.9b	NC Measurement Parameters struct
+TS 44.060	11.2.9b	Packet Measurement Order message content
+TS 44.060	11.2.9b	Priority and E-UTRAN Parameters Description struct
+TS 44.060	11.2.9b	REMOVED_3GCELL_Description struct
+TS 44.060	11.2.9b	Repeated UTRAN FDD Neighbour Cells struct
+TS 44.060	11.2.9b	Repeated UTRAN TDD Neighbour Cells struct
+TS 44.060	11.2.9b	SI13_PBCCH_LOCATION struct
+TS 44.060	11.2.9b	UTRAN CSG Cells Reporting Description struct
+TS 44.060	11.2.9b	UTRAN FDD Description struct
+TS 44.060	11.2.9b	UTRAN TDD Description struct
+TS 44.060	12.51	GSM Priority Parameters IE
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"4 (CC1)","prefix":"01","suffix":"Spare"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"5 (CC2)","prefix":"01","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"6 (CC3)","prefix":"01","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"7 (CC4) or 8 (CC5)","prefix":"01","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 1)	{"table":"9.1.65.2","training_sequence":"4 (CC1)","prefix":"10","suffix":"0"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2)	{"table":"9.1.65.2","training_sequence":"4 (CC1)\nNote 1","prefix":"10","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event)	{"table":"9.1.65.2","training_sequence":"4 (CC1)","prefix":"00","suffix":"EGPRS Capability"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event)	{"table":"9.1.65.2","training_sequence":"5 (CC2)","prefix":"00","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (RLC Data Block method or Page Response for Positioning Event)	{"table":"9.1.65.2","training_sequence":"6 (CC3)","prefix":"00","suffix":"1"}
+TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content RLC Data Block method or Page Response for Positioning Event)	{"table":"9.1.65.2","training_sequence":"7 (CC4) or 8 (CC5)","prefix":"00","suffix":"1"}
+TS 44.018	9.1.65	EC PACKET CHANNEL REQUEST message content	{"table":"9.1.65.2","training_sequence":"3 (CC1)","prefix":"","suffix":"EGPRS Capability"}
+TS 44.018	9.1.65	EC PACKET CHANNEL REQUEST message content	{"table":"9.1.65.2","training_sequence":"5 (CC2)","prefix":"","suffix":"0"}
+TS 44.018	9.1.65	EC PACKET CHANNEL REQUEST message content	{"table":"9.1.65.2","training_sequence":"6 (CC3)","prefix":"","suffix":"0"}
+TS 44.018	9.1.65	EC PACKET CHANNEL REQUEST message content	{"table":"9.1.65.2","training_sequence":"7 (CC4) or 8 (CC5)","prefix":"","suffix":"0"}
+TS 44.060	11.2.31	Assignment Info struct
+TS 44.060	11.2.31	Carrier Specific Info struct
+TS 44.060	11.2.31	DLMC UL Carrier Info struct
+TS 44.060	11.2.31	Dynamic Allocation 2 struct
+TS 44.060	11.2.31	Dynamic Allocation struct
+TS 44.060	11.2.31	Packet Timeslot Reconfigure message content
+TS 44.060	11.2.31	RLC Entity Struct
+TS 44.060	11.2.31	UFPS struct
+TS 44.060	11.2.44	PS Handover Access message content 11 bit message
+TS 44.060	11.2.44	PS Handover Access message content 8 bit message
+TS 44.060	11.2.5a	EGPRS MULTILATERATION REQUEST message content (Extended Access Burst Method – part 2)	{"table":"11.2.5a.4","training_sequence":"4 (Note 1)","prefix":"100","suffix":""}
+TS 44.060	11.2.7	Additional PFCs struct
+TS 44.060	12.30	MS Radio Access Capability 2 IE
+TS 44.060	12.42b	Additional PFCs struct
+TS 44.060	12.42b	CCN Support Description struct
+TS 44.060	12.42b	Carrier Specific Info struct
+TS 44.060	12.42b	DLMC UL Carrier Info struct
+TS 44.060	12.42b	PS Handover Radio Resources 3 IE
+TS 44.060	12.42b	RLC Entity Struct
+TS 44.060	12.42b	UFPS struct
+TS 44.060	11.2.16	Packet Resource Request message content
+TS 44.060	12.42	CCN Support Description struct
+TS 44.060	12.42	Downlink Assignment struct
+TS 44.060	12.42	Downlink TBF assignment struct
+TS 44.060	12.42	EGPRS mode struct
+TS 44.060	12.42	GPRS mode struct
+TS 44.060	12.42	PS Handover Radio Resources IE
+TS 44.060	12.42	Timeslot description struct
+TS 44.060	12.42	Uplink TBF Assignment struct
+TS 44.060	11.2.29	Access Technologies Request struct
+TS 44.060	11.2.29	Additional PFCs struct
+TS 44.060	11.2.29	Assignment Info struct
+TS 44.060	11.2.29	DLMC UL Carrier Info struct
+TS 44.060	11.2.29	Dynamic Allocation 2 struct
+TS 44.060	11.2.29	Dynamic Allocation struct
+TS 44.060	11.2.29	Multi Block Allocation struct
+TS 44.060	11.2.29	Packet Uplink Assignment message content
+TS 44.060	11.2.29	RLC Entity Struct
+TS 44.060	11.2.29	Single Block Allocation struct
+TS 44.060	11.2.29	extension
+TS 44.060	11.2.26	Packet TBF Release message content

@@ -13,8 +13,8 @@ import (
 
 // CheckGeneratedLoopArithmetic verifies the two emitted index patterns:
 // counted repeats and recursive-list selectors. Their generator sites are
-// csn1/gen/direct.go:1052 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1049
-// `for i:=0;i<count;i++` and csn1/gen/direct.go:1616 `if i+1<len(v.Entries)`.
+// csn1/gen/direct.go:1410 `count,err:=w.Eval(%q)`, csn1/gen/direct.go:1407
+// `for i:=0;i<count;i++` and csn1/gen/direct.go:2230 `if i+1<len(v.Entries)`.
 func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextIndexes int, err error) {
 	set := token.NewFileSet()
 	file, err := parser.ParseFile(set, name, source, 0)
@@ -24,6 +24,21 @@ func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextI
 	for _, declaration := range file.Decls {
 		fn, ok := declaration.(*ast.FuncDecl)
 		if !ok || fn.Body == nil {
+			continue
+		}
+		if fn.Name.Name == "emrContentReader" || fn.Name.Name == "emrContentBytes" {
+			n, proofErr := checkGeneratedEMRLoopIncrements(citationFile{set: set, file: file, source: source}, fn)
+			if proofErr != nil {
+				return 0, 0, fmt.Errorf("%s: %w", name, proofErr)
+			}
+			increments += n
+			continue
+		}
+		if fn.Name.Name == "capabilitySenderValue" {
+			if err := checkGeneratedCapabilitySender(citationFile{set: set, file: file, source: source}, fn); err != nil {
+				return 0, 0, err
+			}
+			increments += 2
 			continue
 		}
 		if fn.Name.Name == "constrainedWidth" {
@@ -56,7 +71,7 @@ func CheckGeneratedLoopArithmetic(name string, source []byte) (increments, nextI
 				if !ok || id.Name != "i" {
 					break
 				}
-				if stmt.Tok != token.INC || !boundedForIncrement(fn.Body, counted, stmt) {
+				if stmt.Tok != token.INC || !boundedForIncrement(fn.Body, counted, stmt) && !boundedContinuationIncrement(fn, counted, stmt) && !boundedGroupedSpareIncrement(citationFile{set: set, file: file, source: source}, fn, counted, stmt) {
 					fault = fmt.Errorf("%s: loop increment has no bounded count", name)
 					return false
 				}
@@ -137,6 +152,9 @@ func boundedCountAssignment(body *ast.BlockStmt, assign *ast.AssignStmt) bool {
 			switch selector.Sel.Name {
 			case "Eval", "EvalTokens", "SpareCount", "ExpressionResult":
 				return len(call.Args) == 1
+			case "EvalTokensWithContext":
+				// The context form uses the same checked count conversion.
+				return len(call.Args) == 2
 			case "SpareFillCount", "SpareFillCountToTarget":
 				return len(call.Args) == 0
 			}
@@ -274,6 +292,85 @@ func boundedRangeNext(set *token.FileSet, body *ast.BlockStmt, ranges []*ast.Ran
 			return !found
 		})
 		if found {
+			return true
+		}
+	}
+	return false
+}
+
+// boundedContinuationIncrement covers only the direct whole-octet loop.
+// BoundedRemaining returns -1 or at most the checked runtime bit limit. The
+// dominating rejection leaves 0..1<<20 bits; dividing by eight leaves room
+// for the final i++ on every supported host. No write or alias may change
+// either the remainder or the loop index during or after the loop.
+func boundedContinuationIncrement(fn *ast.FuncDecl, loops []*ast.ForStmt, inc *ast.IncDecStmt) bool {
+	if fn.Type.Params == nil || len(fn.Type.Params.List) != 1 {
+		return false
+	}
+	parameter := fn.Type.Params.List[0]
+	if len(parameter.Names) != 1 || parameter.Names[0].Name != "r" {
+		return false
+	}
+	pointer, ok := parameter.Type.(*ast.StarExpr)
+	if !ok {
+		return false
+	}
+	selector, ok := pointer.X.(*ast.SelectorExpr)
+	if !ok || !isName(selector.X, "runtime") || selector.Sel.Name != "Reader" {
+		return false
+	}
+	for _, loop := range loops {
+		if loop.Post != inc || !zeroLoopInit(loop.Init) || hasNameWrite(loop.Body, "i") {
+			continue
+		}
+		condition, ok := loop.Cond.(*ast.BinaryExpr)
+		if !ok || condition.Op != token.LSS || !isName(condition.X, "i") {
+			continue
+		}
+		quotient, ok := condition.Y.(*ast.BinaryExpr)
+		if !ok || quotient.Op != token.QUO || !isName(quotient.X, "remaining") {
+			continue
+		}
+		divisor, ok := quotient.Y.(*ast.BasicLit)
+		if !ok || divisor.Kind != token.INT || divisor.Value != "8" {
+			continue
+		}
+		if len(fn.Body.List) < 3 {
+			continue
+		}
+		assign, ok := fn.Body.List[0].(*ast.AssignStmt)
+		if !ok || assign.Tok != token.DEFINE || len(assign.Lhs) != 1 || len(assign.Rhs) != 1 || !isName(assign.Lhs[0], "remaining") {
+			continue
+		}
+		call, ok := assign.Rhs[0].(*ast.CallExpr)
+		if !ok || len(call.Args) != 0 {
+			continue
+		}
+		method, ok := call.Fun.(*ast.SelectorExpr)
+		if !ok || !isName(method.X, "r") || method.Sel.Name != "BoundedRemaining" {
+			continue
+		}
+		guard, ok := fn.Body.List[1].(*ast.IfStmt)
+		if !ok || guard.Init != nil || guard.Else != nil || len(guard.Body.List) != 1 {
+			continue
+		}
+		comparison, ok := guard.Cond.(*ast.BinaryExpr)
+		if !ok || comparison.Op != token.LSS || !isName(comparison.X, "remaining") || !isZeroLiteral(comparison.Y) {
+			continue
+		}
+		if _, ok := guard.Body.List[0].(*ast.ReturnStmt); !ok {
+			continue
+		}
+		topLevel := false
+		for _, stmt := range fn.Body.List {
+			topLevel = topLevel || stmt == loop
+		}
+		if !topLevel {
+			continue
+		}
+		unsafe := false
+		ast.Inspect(fn.Body, func(n ast.Node) bool { unsafe = unsafe || n != assign && writesName(n, "remaining"); return !unsafe })
+		if !unsafe {
 			return true
 		}
 	}

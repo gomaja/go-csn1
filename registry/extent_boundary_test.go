@@ -28,8 +28,8 @@ func TestDescriptorReaderEmptyMatchesByte(t *testing.T) {
 // The extent describes canonical bytes; receivers may retain excess input.
 func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 317 {
-		t.Fatalf("catalogue has %d descriptors, want 317", len(descriptors))
+	if len(descriptors) != 632 {
+		t.Fatalf("catalogue has %d descriptors, want 632", len(descriptors))
 	}
 	for _, d := range descriptors {
 		checkDescriptorTypedBoundaries(t, d)
@@ -46,10 +46,7 @@ func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 				if d.DecodeWithContext != nil {
 					for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
 						decoded, byteErr := d.DecodeWithContext(data, acs)
-						bounded := runtime.NewReader(data)
-						if _, err := bounded.PushLimit(n * 8); err != nil {
-							t.Fatal(err)
-						}
+						bounded := descriptorReader(t, d, data)
 						_, readerErr := d.DecodeFromWithContext(bounded, acs)
 						if (byteErr == nil) != (readerErr == nil) {
 							t.Errorf("%s %s ACS=%d length=%d fill=%02x: byte=%v reader=%v", d.Standard, d.Name, acs, n, fill, byteErr, readerErr)
@@ -61,10 +58,7 @@ func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 					continue
 				}
 				decoded, byteErr := d.Decode(data)
-				reader := runtime.NewReader(data)
-				if _, err := reader.PushLimit(n * 8); err != nil {
-					t.Fatal(err)
-				}
+				reader := descriptorReader(t, d, data)
 				_, readerErr := d.DecodeFrom(reader)
 				if (byteErr == nil) != (readerErr == nil) {
 					t.Errorf("%s %s length=%d fill=%02x: byte=%v reader=%v", d.Standard, d.Name, n, fill, byteErr, readerErr)
@@ -74,26 +68,33 @@ func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 				}
 			}
 		}
+		// The descriptor interval constrains canonical values. A received
+		// image can be shorter; successful decoding still requires exact
+		// replay and a canonical encoding inside the published interval.
 		if d.Extent.MinimumBits > 0 {
 			bits := d.Extent.MinimumBits - 1
 			if d.DecodeWithContext != nil {
 				for _, acs := range []runtime.SI4ACS{runtime.SI4ACSZero, runtime.SI4ACSOne} {
-					r := runtime.NewReader(make([]byte, (bits+7)/8))
+					r := readerAtOrigin(t, d, make([]byte, (bits+7)/8), bits, nil)
 					if _, err := r.PushLimit(bits); err != nil {
 						t.Fatal(err)
 					}
-					_, err := d.DecodeFromWithContext(r, acs)
+					value, err := d.DecodeFromWithContext(r, acs)
 					if err == nil {
-						t.Errorf("%s %s ACS=%d accepted %d bits below minimum %d", d.Standard, d.Name, acs, bits, d.Extent.MinimumBits)
+						if _, err := canonicalAfterShortReplay(d, value, make([]byte, (bits+7)/8), bits, acs); err != nil {
+							t.Errorf("%s %s ACS=%d short received image (%d bits): %v", d.Standard, d.Name, acs, bits, err)
+						}
 					}
 				}
 			} else {
-				r := runtime.NewReader(make([]byte, (bits+7)/8))
+				r := readerAtOrigin(t, d, make([]byte, (bits+7)/8), bits, nil)
 				if _, err := r.PushLimit(bits); err != nil {
 					t.Fatal(err)
 				}
-				if _, err := d.DecodeFrom(r); err == nil {
-					t.Errorf("%s %s accepted %d bits below minimum %d", d.Standard, d.Name, bits, d.Extent.MinimumBits)
+				if value, err := d.DecodeFrom(r); err == nil {
+					if _, err := canonicalAfterShortReplay(d, value, make([]byte, (bits+7)/8), bits, runtime.SI4ACSZero); err != nil {
+						t.Errorf("%s %s short received image (%d bits): %v", d.Standard, d.Name, bits, err)
+					}
 				}
 			}
 		}

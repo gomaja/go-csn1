@@ -80,7 +80,7 @@ func TestCountSetterStoresWithoutAllocation(t *testing.T) {
 			if err := value.SetCCNSUPPORTEDList(items); err != nil {
 				panic(err)
 			}
-		}); count != 0 {
+		}); !raceEnabled && count != 0 {
 			t.Fatalf("length %d allocated %g", length, count)
 		}
 	}

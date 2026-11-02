@@ -130,7 +130,7 @@ func TestOrdinaryDecodeAllocationBaseline(t *testing.T) {
 	}
 	plain := testing.AllocsPerRun(20, func() { r := NewReader([]byte{0xff}); _, _ = r.ReadUint(8) })
 	disabled := testing.AllocsPerRun(20, func() { r := NewReaderWithCollector([]byte{0xff}, nil); _, _ = r.ReadUint(8) })
-	if disabled != plain {
+	if !raceEnabled && disabled != plain {
 		t.Fatalf("nil collector changed ordinary allocations: %v versus %v", disabled, plain)
 	}
 

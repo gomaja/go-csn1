@@ -1,0 +1,818 @@
+[
+  {
+    "name": "baseline",
+    "bits": "0100000011100100000000000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 27
+  },
+  {
+    "name": "PSI8 message content//0/0/maximum",
+    "bits": "0100000011100111000000000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=3",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 27
+  },
+  {
+    "name": "PSI8 message content//0/1/maximum",
+    "bits": "0100000011100100110000000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=3",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 27
+  },
+  {
+    "name": "PSI8 message content//0/2/maximum",
+    "bits": "0100000011100100001110000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=7",
+      "psi8count=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 27
+  },
+  {
+    "name": "PSI8 message content//0/3/maximum",
+    "bits": "0100000011100100000001110100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=7"
+    ],
+    "tail": "padding",
+    "semantic_bits": 27
+  },
+  {
+    "name": "PSI8 message content//0/4/arm1",
+    "bits": "0100000011100100000000001000000000000000000000001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "arfcn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "CBCH Channel Description struct//0/maximum",
+    "bits": "0100000011100100000000001111110000000000000000001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=31",
+      "tn=0",
+      "tsc=0",
+      "arfcn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "CBCH Channel Description struct//1/maximum",
+    "bits": "0100000011100100000000001000001110000000000000001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=7",
+      "tsc=0",
+      "arfcn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "Frequency Parameters IE//0/maximum",
+    "bits": "0100000011100100000000001000000001110000000000001000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=7",
+      "arfcn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "Frequency Parameters IE//1/0/1/maximum",
+    "bits": "0100000011100100000000001000000000000011111111111000101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "arfcn=1023"
+    ],
+    "tail": "padding",
+    "semantic_bits": 50
+  },
+  {
+    "name": "Frequency Parameters IE//1/arm1",
+    "bits": "0100000011100100000000001000000000000100000000000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 51
+  },
+  {
+    "name": "Indirect encoding struct//0/maximum",
+    "bits": "0100000011100100000000001000000000000111111100000100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=63",
+      "manumber=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 51
+  },
+  {
+    "name": "Indirect encoding struct//1/maximum",
+    "bits": "0100000011100100000000001000000000000100000011110100101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=15"
+    ],
+    "tail": "padding",
+    "semantic_bits": 51
+  },
+  {
+    "name": "Indirect encoding struct//2/arm1",
+    "bits": "0100000011100100000000001000000000000100000000001000100100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=0",
+      "changemark1=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 54
+  },
+  {
+    "name": "Indirect encoding struct//2/1/1/maximum",
+    "bits": "0100000011100100000000001000000000000100000000001110100100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=0",
+      "changemark1=3"
+    ],
+    "tail": "padding",
+    "semantic_bits": 54
+  },
+  {
+    "name": "Indirect encoding struct//2/1/2/arm1",
+    "bits": "0100000011100100000000001000000000000100000000001001001000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=0",
+      "changemark1=0",
+      "changemark2=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 56
+  },
+  {
+    "name": "Indirect encoding struct//2/1/2/1/1/maximum",
+    "bits": "0100000011100100000000001000000000000100000000001001111000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "manumber=0",
+      "changemark1=0",
+      "changemark2=3"
+    ],
+    "tail": "padding",
+    "semantic_bits": 56
+  },
+  {
+    "name": "Frequency Parameters IE//1/arm2",
+    "bits": "0100000011100100000000001000000000001000000000000000000000010011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "Direct encoding 1 struct//0/maximum",
+    "bits": "0100000011100100000000001000000000001011111100000000000000010011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=63",
+      "hsn=0",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "GPRS Mobile Allocation IE//0/maximum",
+    "bits": "0100000011100100000000001000000000001000000011111100000000010011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=63",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "GPRS Mobile Allocation IE//1/arm1",
+    "bits": "0100000011100100000000001000000000001000000000000010000000000000100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "rflnumber=0",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 66
+  },
+  {
+    "name": "RFL number list struct//0/maximum",
+    "bits": "0100000011100100000000001000000000001000000000000011111000000000100010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "rflnumber=15",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 66
+  },
+  {
+    "name": "RFL number list struct//1/arm1",
+    "bits": "0100000011100100000000001000000000001000000000000010000100000000000001000010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "rflnumber=0",
+      "rflnumber=0",
+      "malength=0",
+      "mabitmap=bits:0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 71
+  },
+  {
+    "name": "GPRS Mobile Allocation IE//2/0/2/maximum",
+    "bits": "0100000011100100000000001000000000001000000000000000000000110011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "malength=0",
+      "mabitmap=bits:1"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "GPRS Mobile Allocation IE//2/arm1",
+    "bits": "0100000011100100000000001000000000001000000000000001010000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 55
+  },
+  {
+    "name": "GPRS Mobile Allocation IE//2/1/1/arm1",
+    "bits": "0100000011100100000000001000000000001000000000000001100000001001001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "arfcnindex=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 62
+  },
+  {
+    "name": "ARFCN index list struct//0/maximum",
+    "bits": "0100000011100100000000001000000000001000000000000001111111101001001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "arfcnindex=63"
+    ],
+    "tail": "padding",
+    "semantic_bits": 62
+  },
+  {
+    "name": "ARFCN index list struct//1/arm1",
+    "bits": "0100000011100100000000001000000000001000000000000001100000010000000100110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "arfcnindex=0",
+      "arfcnindex=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 69
+  },
+  {
+    "name": "Frequency Parameters IE//1/arm3",
+    "bits": "0100000011100100000000001000000000001100000000000000000000000000000000000000001000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "lengthofmafrequencylistcontents=0",
+      "mafrequencylistcontents=bits:000000000000000000000000"
+    ],
+    "tail": "padding",
+    "semantic_bits": 80
+  },
+  {
+    "name": "Direct encoding 2 struct//0/maximum",
+    "bits": "0100000011100100000000001000000000001111111100000000000000000000000000000000001000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=63",
+      "hsn=0",
+      "lengthofmafrequencylistcontents=0",
+      "mafrequencylistcontents=bits:000000000000000000000000"
+    ],
+    "tail": "padding",
+    "semantic_bits": 80
+  },
+  {
+    "name": "Direct encoding 2 struct//1/maximum",
+    "bits": "0100000011100100000000001000000000001100000011111100000000000000000000000000001000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=63",
+      "lengthofmafrequencylistcontents=0",
+      "mafrequencylistcontents=bits:000000000000000000000000"
+    ],
+    "tail": "padding",
+    "semantic_bits": 80
+  },
+  {
+    "name": "Direct encoding 2 struct//3/maximum",
+    "bits": "0100000011100100000000001000000000001100000000000000001111111111111111111111111000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "maio=0",
+      "hsn=0",
+      "lengthofmafrequencylistcontents=0",
+      "mafrequencylistcontents=bits:111111111111111111111111"
+    ],
+    "tail": "padding",
+    "semantic_bits": 80
+  },
+  {
+    "name": "PSI8 message content//0/5/arm0",
+    "bits": "0100000011100100000000000",
+    "extent": 25,
+    "full_block": false,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "empty",
+    "semantic_bits": 25
+  },
+  {
+    "name": "PSI8 message content//0/5/arm1",
+    "bits": "0100000011100100000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "ignored",
+    "semantic_bits": 26
+  },
+  {
+    "name": "PSI8 message content//0/5/2/1/arm1",
+    "bits": "0100000011100100000000000110001100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 29
+  },
+  {
+    "name": "Dynamic ARFCN Mapping Description struct//0/arm1",
+    "bits": "0100000011100100000000000111000000101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "dmchangemark=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 33
+  },
+  {
+    "name": "Dynamic ARFCN Mapping Description struct//0/1/1/maximum",
+    "bits": "0100000011100100000000000111111100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "dmchangemark=15"
+    ],
+    "tail": "padding",
+    "semantic_bits": 33
+  },
+  {
+    "name": "Dynamic ARFCN Mapping Description struct//1/count1",
+    "bits": "0100000011100100000000000110100000000000000000000000000000000011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=0",
+      "arfcnfirst=0",
+      "bandoffset=0",
+      "arfcnrange=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "Dynamic ARFCN Mapping Description struct//1/count2",
+    "bits": "0100000011100100000000000110100000000000000000000000000000001000000000000000000000000000000000110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=0",
+      "arfcnfirst=0",
+      "bandoffset=0",
+      "arfcnrange=0",
+      "gsmband=0",
+      "arfcnfirst=0",
+      "bandoffset=0",
+      "arfcnrange=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 93
+  },
+  {
+    "name": "DYNAMIC ARFCN MAPPING//0/maximum",
+    "bits": "0100000011100100000000000110111110000000000000000000000000000011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=15",
+      "arfcnfirst=0",
+      "bandoffset=0",
+      "arfcnrange=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "DYNAMIC ARFCN MAPPING//1/maximum",
+    "bits": "0100000011100100000000000110100001111111111000000000000000000011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=0",
+      "arfcnfirst=1023",
+      "bandoffset=0",
+      "arfcnrange=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "DYNAMIC ARFCN MAPPING//2/maximum",
+    "bits": "0100000011100100000000000110100000000000000111111111100000000011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=0",
+      "arfcnfirst=0",
+      "bandoffset=1023",
+      "arfcnrange=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "DYNAMIC ARFCN MAPPING//3/maximum",
+    "bits": "0100000011100100000000000110100000000000000000000000011111110011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "gsmband=0",
+      "arfcnfirst=0",
+      "bandoffset=0",
+      "arfcnrange=127"
+    ],
+    "tail": "padding",
+    "semantic_bits": 61
+  },
+  {
+    "name": "CBCH and empty dynamic mapping",
+    "bits": "0100000011100100000000001000000000000000000000001100001100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011001010110010101100101011",
+    "extent": 184,
+    "full_block": true,
+    "fields": [
+      "pagemode=0",
+      "psi8changemark=0",
+      "psi8index=0",
+      "psi8count=0",
+      "channeltypeandtdmaoffset=0",
+      "tn=0",
+      "tsc=0",
+      "arfcn=0"
+    ],
+    "tail": "padding",
+    "semantic_bits": 52
+  }
+]

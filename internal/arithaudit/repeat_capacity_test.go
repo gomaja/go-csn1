@@ -102,3 +102,11 @@ func checkRepeatCapacityFixture(t *testing.T, source string, accepted bool) {
 		t.Fatalf("checked=%d rejected=%d accepted=%t", checked, rejected, accepted)
 	}
 }
+
+func TestGeneratedContextTokenRepeatCapacityProof(t *testing.T) {
+	source := strings.ReplaceAll(repeatCapacityFixture, `r.Eval("val(N)")`, `r.EvalTokensWithContext([]string{"val", "(", "N", ")"}, sourceContext)`)
+	checkRepeatCapacityFixture(t, strings.ReplaceAll(source, "MINIMUM", "1"), true)
+	for _, call := range []string{`r.EvalTokensWithContext()`, `r.EvalTokensWithContext([]string{"N"})`, `r.EvalTokensWithContext([]string{"N"}, sourceContext, 0)`} {
+		checkRepeatCapacityFixture(t, strings.ReplaceAll(strings.ReplaceAll(repeatCapacityFixture, `r.Eval("val(N)")`, call), "MINIMUM", "1"), false)
+	}
+}

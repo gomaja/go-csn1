@@ -66,7 +66,7 @@ func CheckGeneratedNarrowing(name string, source []byte) (int, error) {
 				}
 				if len(value.Rhs) == 1 {
 					if call, ok := value.Rhs[0].(*ast.CallExpr); ok {
-						if selector, ok := call.Fun.(*ast.SelectorExpr); ok && isName(selector.X, "r") && selector.Sel.Name == "ReadUint" && len(call.Args) == 1 && isName(call.Args[0], "width") {
+						if reviewedUintRead(call) {
 							readUint, readWidth, offset = true, width, 0
 							if unreviewedWidthWrite {
 								readWidth = -1
@@ -230,14 +230,21 @@ func reviewedValueWrites(fn *ast.FuncDecl, directWrites map[ast.Node]bool) bool 
 	return valid
 }
 
+// ReadUintWithFill preserves ReadUint's numeric range; it only reports inferred
+// zeros in an explicitly enabled suffix (runtime/zero_fill_report.go;
+// TS 44.060 V19.0.0 §11.2.5b p14299).
+func reviewedUintRead(call *ast.CallExpr) bool {
+	selector, ok := call.Fun.(*ast.SelectorExpr)
+	if !ok || !isName(selector.X, "r") || len(call.Args) == 0 || !isName(call.Args[0], "width") || call.Ellipsis.IsValid() {
+		return false
+	}
+	return selector.Sel.Name == "ReadUint" && len(call.Args) == 1 || selector.Sel.Name == "ReadUintWithFill" && len(call.Args) == 2
+}
+
 func reviewedValueAssignment(assign *ast.AssignStmt) bool {
 	if expr, ok := plainAssignmentValue(assign, "v"); ok && len(assign.Lhs) <= 2 {
 		call, ok := expr.(*ast.CallExpr)
-		if !ok || len(call.Args) != 1 || !isName(call.Args[0], "width") {
-			return false
-		}
-		selector, ok := call.Fun.(*ast.SelectorExpr)
-		return ok && isName(selector.X, "r") && selector.Sel.Name == "ReadUint"
+		return ok && reviewedUintRead(call)
 	}
 	if len(assign.Lhs) != 1 || !isName(assign.Lhs[0], "v") || len(assign.Rhs) != 1 {
 		return false

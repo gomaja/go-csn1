@@ -188,7 +188,7 @@ func TestClause12_3_2BitmapAllocationGrowth(t *testing.T) {
 			}
 			goruntime.ReadMemStats(&after)
 			perValue := (after.TotalAlloc - before.TotalAlloc) / 16
-			if bound := uint64(65536 + 128*n); perValue > bound {
+			if bound := uint64(65536 + 128*n); !raceEnabled && perValue > bound {
 				t.Fatalf("allocation %d bytes/value exceeds linear bound %d for %d bits", perValue, bound, n)
 			}
 		})

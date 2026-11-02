@@ -205,7 +205,7 @@ func TestDescriptorSourceOriginZeroAndCallerOwnership(t *testing.T) {
 		_, _ = decode(r)
 	})
 	owned := testing.AllocsPerRun(100, func() { _, _ = d.DecodeBits(data, 7) })
-	if owned != old {
+	if !raceEnabled && owned != old {
 		t.Fatalf("zero origin allocations %g, original %g", owned, old)
 	}
 	for phase := 0; phase < 8; phase++ {

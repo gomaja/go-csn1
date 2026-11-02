@@ -227,7 +227,7 @@ func TestPunctuatedValLabelTokenGrowth(t *testing.T) {
 			if err := ValidateExpression(raw); err != nil {
 				panic(err)
 			}
-		}); n > 32 {
+		}); !raceEnabled && n > 32 {
 			t.Fatalf("%d words: %g allocations; want at most 32", size, n)
 		}
 	}

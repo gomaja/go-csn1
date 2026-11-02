@@ -191,7 +191,7 @@ func TestExtendedPriorityListGrowth(t *testing.T) {
 		if decodeErr != nil {
 			t.Fatal(decodeErr)
 		}
-		if allocations > 64+32*float64(count) {
+		if !raceEnabled && allocations > 64+32*float64(count) {
 			t.Fatalf("%d entries: %g allocations exceed linear bound", count, allocations)
 		}
 		t.Logf("%d entries, %d bytes, %g allocations", count, len(wire), allocations)

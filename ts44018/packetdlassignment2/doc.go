@@ -1,0 +1,4 @@
+// Package packetdlassignment2 contains source-selected CSN.1 codecs.
+//
+// TS 44.018 V19.0.0 §10.5.2.25e. Standalone callers provide the exact containing bit extent. Printed coding delegations at paragraphs 18404, 18406 and 18419–18420 identify their imported IEs through authenticated local labelled references. The quotation carries no invented clause; the actual source resolves Power Control Parameters IE to TS 44.060 §12.13. The reviewed reading closes the missing outer angle at paragraphs 18316 and 18328 using TS 44.060 sister prints at paragraphs 14851 and 22504, without changing accepted bit strings. Reserved PDCH designations preserve the typed prefix and received remainder; replay is exact and fresh/canonical senders refuse the designation. Application procedures remain with callers.
+package packetdlassignment2

@@ -331,8 +331,11 @@ func TestAggregateStorageBound(t *testing.T) {
 				}
 			}
 		})
-		if allocs != 0 || len(r.vars) != 3 {
+		if !raceEnabled && allocs != 0 {
 			t.Errorf("%d records allocations=%g bindings=%d", records, allocs, len(r.vars))
+		}
+		if len(r.vars) != 3 {
+			t.Errorf("%d records bindings=%d, want 3", records, len(r.vars))
 		}
 	}
 }

@@ -21,6 +21,37 @@ func canonicalContainingExtentRefusal(d runtime.Descriptor, err error) bool {
 }
 
 var canonicalContainingProbeMaxima = map[string]int{
+	// TS 44.018 V19.0.0 §9.1.7 p4880–4902,p4933–4938; TS 44.006 V19.0.0 §8.8.5 p2466 (251-3-1).
+	"TS 44.018/10.5.2.1d/UTRAN Freq List": 247,
+	// TS 44.018 V19.0.0 §9.1.15 table 9.1.15.1 p6317–6322 (34-1).
+	"TS 44.018/10.5.2.11b/Dynamic ARFCN Mapping": 33,
+	// TS 44.018 V19.0.0 §10.5.2.14d p15981,p16001–16008; TS 44.060 §§12.24,12.9a ((98+19+7)/8).
+	"TS 44.018/10.5.2.14d/GPRS broadcast information value part": 15,
+	// TS 44.018 V19.0.0 §10.5.2.58 p21193; TS 24.007 V20.0.0 §11.2.1.1.4 (type 4 value).
+	"TS 44.018/10.5.2.58/MBMS p-t-m Channel Description value part": 255,
+	// TS 44.018 V19.0.0 §10.5.2.58a p21223–21224; TS 24.007 V20.0.0 §11.2.1.1.4 (generic type 4 value).
+	"TS 44.018/10.5.2.58a/MBMS Session Parameters List value part": 255,
+	// TS 44.018 V19.0.0 §10.5.2.60 p21288; TS 24.007 V20.0.0 §11.2.1.1.4 (type 4 value).
+	"TS 44.018/10.5.2.60/MPRACH description value part": 255,
+	// TS 44.006 V19.0.0 §8.8.5 p2466; TS 44.018 §9.1.7 p4879–4932:
+	// root includes its length and excludes IEI: 251 - 3 mandatory octets - 1 IEI.
+	"TS 44.018/10.5.2.1c/BA List Pref": 247,
+	// TS 45.003 V19.0.0 §5.2a.1 p9923: 184 bits including the EC SI header;
+	// each nested component uses the entire carrier as a conservative ceiling.
+	"TS 44.018/9.1.43p/EC System Information Type 1":                    23,
+	"TS 44.018/9.1.43p/EC Cell Channel Description struct":              23,
+	"TS 44.018/9.1.43p/EC Mobile Allocation List struct":                23,
+	"TS 44.018/9.1.43p/EC Mobile Allocation struct":                     23,
+	"TS 44.018/9.1.43r/EC System Information Type 3":                    23,
+	"TS 44.018/9.1.43r/EC Neighbour Cell Description struct":            23,
+	"TS 44.018/9.1.43r/EC Neighbour Cell Reselection Parameters struct": 23,
+	"TS 44.018/9.1.43s/EC System Information Type 4":                    23,
+	"TS 44.018/9.1.43s/Network Sharing Information struct":              23,
+	// TS 44.006 V19.0.0 §8.8.3 p2456–2458: complete FACCH/SDCCH Bter.
+	"TS 44.018/9.1.58/NOTIFY APPLICATION DATA": 23,
+	// TS 45.003 V19.0.0 §5.2b.1 p9934–9935: complete 88-bit EC-CCCH/D.
+	"TS 44.018/9.1.62/EC-Dummy message content": 11,
+
 	// TS 44.018 V19.0.0 §10.5.2.62 p21347; TS 24.007 V20.0.0 §11.2.1.1.4 p3024, p3038 (2 - 1 = 1 value octet).
 	"TS 44.018/10.5.2.62/MBMS Session Identity value part": 1,
 	// TS 44.018 V19.0.0 §10.5.2.16 p16145 (IA Rest Octets is 0..11 octets; nested components use the entire containing maximum because the other fields vary)

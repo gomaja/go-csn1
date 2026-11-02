@@ -11,8 +11,8 @@ func FuzzIEDefinitions(f *testing.F) {
 		f.Add(seed)
 	}
 	f.Fuzz(func(t *testing.T, data []byte) {
-		for _, name := range Definitions() {
-			definition, err := Lookup(name)
+		for _, descriptor := range Descriptors() {
+			definition, err := LookupClause(descriptor.Clause, descriptor.Name)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -23,7 +23,7 @@ func FuzzIEDefinitions(f *testing.F) {
 			value := reflect.ValueOf(decoded).FieldByName("Value").Interface()
 			encoded, err := definition.Encode(value)
 			if err != nil || !bytes.Equal(encoded, data) {
-				t.Fatalf("%s round trip %x -> %x: %v", name, data, encoded, err)
+				t.Fatalf("%s/%s round trip %x -> %x: %v", descriptor.Clause, descriptor.Name, data, encoded, err)
 			}
 		}
 	})

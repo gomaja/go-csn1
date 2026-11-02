@@ -86,7 +86,7 @@ func TestComponentErrorPreservesTypedCauses(t *testing.T) {
 	if writer.ComponentError(InvalidValue, "Field", 0, plain) != plain {
 		t.Fatal("raw candidate changed")
 	}
-	if n := testing.AllocsPerRun(5, func() { _ = writer.ComponentError(InvalidValue, "Field", 0, plain) }); n != 0 {
+	if n := testing.AllocsPerRun(5, func() { _ = writer.ComponentError(InvalidValue, "Field", 0, plain) }); !raceEnabled && n != 0 {
 		t.Fatalf("raw candidate allocated %g times", n)
 	}
 	var nilWriter *Writer

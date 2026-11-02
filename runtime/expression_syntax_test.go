@@ -70,7 +70,7 @@ func TestValidateExpressionLongLabelsAvoidPrefixAllocations(t *testing.T) {
 		})
 		// Token storage grows geometrically. Checking a longer possible label
 		// must not allocate each prefix as dynamic binding lookup does.
-		if allocations > 32 {
+		if !raceEnabled && allocations > 32 {
 			t.Errorf("%d words: %g allocations, want at most 32", words, allocations)
 		}
 	}
