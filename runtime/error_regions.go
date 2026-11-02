@@ -51,6 +51,17 @@ type ErrorRegion struct {
 	Label    ErrorLabel
 	Location Location
 	Bits     BitString
+	received *errorRegionReceipt
+}
+
+// errorRegionReceipt owns an immutable snapshot separate from the editable
+// public fields. It exists only for a received error arm, including an empty
+// one (TS 44.060 V19.0.0 §§11.1.2–11.1.3).
+type errorRegionReceipt struct {
+	label     ErrorLabel
+	location  Location
+	bits      string
+	bitLength int
 }
 
 // RegionDiagnostic describes a selected error arm. Replay bits belong to the
@@ -99,6 +110,7 @@ func (r *Reader) ReadErrorRegion(label ErrorLabel, width int, source Source) (Er
 		return ErrorRegion{}, err
 	}
 	region := ErrorRegion{Label: label, Location: Location{Path: strings.Join(r.path, "/"), BitOffset: start, Width: width, Source: source}, Bits: bits}
+	region.received = &errorRegionReceipt{label: label, location: region.Location, bits: string(bits.Bytes), bitLength: bits.BitLength}
 	r.recordReceiver(label, start, width, source, nil)
 	return region, nil
 }
@@ -106,6 +118,10 @@ func (r *Reader) ReadErrorRegion(label ErrorLabel, width int, source Source) (Er
 // WriteErrorRegion replays the owned bits of a selected receiver error arm.
 // A canonical sender must instead construct a source-valid semantic arm.
 func (w *Writer) WriteErrorRegion(region ErrorRegion) error {
+	receipt := region.received
+	if w.Canonical() || receipt == nil || receipt.label != region.Label || receipt.location != region.Location || receipt.bitLength != region.Bits.BitLength || receipt.bits != string(region.Bits.Bytes) {
+		return w.operationFailure(errors.New("receiver error region was not received or was edited"), 0, InvalidValue)
+	}
 	if !region.Label.valid() || region.Location.Width != region.Bits.BitLength {
 		return w.operationFailure(errors.New("inconsistent receiver error region"), 0, InvalidValue)
 	}
