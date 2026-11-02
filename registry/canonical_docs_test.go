@@ -406,7 +406,7 @@ var canonicalLongSeeds = map[string]func([]byte) (any, error){
 // harvest records every struct value nested in a decoded value, so that
 // component definitions without a standalone decode still get values.
 func harvest(v reflect.Value, into map[reflect.Type][]reflect.Value, depth int) {
-	if depth > 40 || !v.IsValid() {
+	if depth > 40 || !v.IsValid() || !v.CanInterface() {
 		return
 	}
 	switch v.Kind() {
