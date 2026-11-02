@@ -24,7 +24,7 @@ func TestPublishedReceiverRegionEdits(t *testing.T) {
 			if len(v.Bits.Bytes) == 0 {
 				t.Fatal("empty fixture region")
 			}
-			v.Bits.Bytes[0] ^= 1
+			v.Bits.Bytes[0] ^= 0x80
 		}},
 		{"path", func(v *runtime.ErrorRegion) { v.Location.Path += "/edited" }},
 	} {
