@@ -99,3 +99,30 @@ func FuzzErrorRegionProvenance(f *testing.F) {
 		}
 	})
 }
+
+var regionStorageSink ErrorRegion
+
+// The immutable receipt owns only a linear amount of data. Keep the input
+// outside the measured operation and include the reader and owned public bits.
+func TestErrorRegionReceiptStorageGrowth(t *testing.T) {
+	for _, size := range []int{32, 1024, 32768} {
+		input := make([]byte, size)
+		result := testing.Benchmark(func(b *testing.B) {
+			b.ReportAllocs()
+			for b.Loop() {
+				region, err := NewReader(input).ReadErrorRegion(Ignore, -1, Source{})
+				if err != nil {
+					b.Fatal(err)
+				}
+				regionStorageSink = region
+			}
+		})
+		if result.N == 0 {
+			t.Fatal("receipt allocation probe did not run")
+		}
+		if got, limit := result.AllocedBytesPerOp(), int64(3*size+2048); got > limit {
+			t.Fatalf("%d input octets: receipt capture used %d B/op, limit %d", size, got, limit)
+		}
+		t.Logf("%d input octets: %d B/op, %d allocs/op", size, result.AllocedBytesPerOp(), result.AllocsPerOp())
+	}
+}
