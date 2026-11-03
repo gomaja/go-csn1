@@ -47,7 +47,9 @@ func (label ErrorLabel) valid() bool {
 
 // ErrorRegion is an owned error-arm value. Location.BitOffset identifies the
 // end of the accepted enclosing prefix; Bits retains only the selected arm.
-// The generated value retains its accepted typed prefix separately.
+// The generated value retains its accepted typed prefix separately. A received
+// region may be copied between decoded values at the same path. Replay at
+// another path is refused; the current bit offset may differ after prefix edits.
 type ErrorRegion struct {
 	Label    ErrorLabel
 	Location Location
@@ -132,7 +134,9 @@ func (w *Writer) WriteErrorRegion(region ErrorRegion) error {
 	if receivedBits == nil {
 		receivedBits = receipt.bits[:receipt.octets]
 	}
-	if w.Canonical() || !receipt.present || receipt.label != region.Label || receipt.location != region.Location || receipt.bitLength != region.Bits.BitLength || !bytes.Equal(receivedBits, region.Bits.Bytes) {
+	// TS 44.060 V19.0.0 §11.1.3.2 applies an error label at the
+	// received position. Prefix edits may move its bits, but not its path.
+	if w.Canonical() || !receipt.present || receipt.location.Path != w.path || receipt.label != region.Label || receipt.location != region.Location || receipt.bitLength != region.Bits.BitLength || !bytes.Equal(receivedBits, region.Bits.Bytes) {
 		return w.operationFailure(errors.New("receiver error region was not received or was edited"), 0, InvalidValue)
 	}
 	if !region.Label.valid() || region.Location.Width != region.Bits.BitLength {
