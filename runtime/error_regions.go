@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"bytes"
 	"errors"
 	"strings"
 )
@@ -46,11 +47,28 @@ func (label ErrorLabel) valid() bool {
 
 // ErrorRegion is an owned error-arm value. Location.BitOffset identifies the
 // end of the accepted enclosing prefix; Bits retains only the selected arm.
-// The generated value retains its accepted typed prefix separately.
+// The generated value retains its accepted typed prefix separately. A received
+// region may be copied between decoded values at the same path. Replay at
+// another parent path is refused; the decoder enters one additional scope for
+// the region itself. The current bit offset may differ after prefix edits.
 type ErrorRegion struct {
 	Label    ErrorLabel
 	Location Location
 	Bits     BitString
+	received errorRegionReceipt
+}
+
+// errorRegionReceipt owns an immutable snapshot separate from the editable
+// public fields. It exists only for a received error arm, including an empty
+// one (TS 44.060 V19.0.0 §§11.1.2–11.1.3).
+type errorRegionReceipt struct {
+	label     ErrorLabel
+	location  Location
+	bits      [128]byte
+	larger    []byte
+	bitLength int
+	octets    int
+	present   bool
 }
 
 // RegionDiagnostic describes a selected error arm. Replay bits belong to the
@@ -99,6 +117,12 @@ func (r *Reader) ReadErrorRegion(label ErrorLabel, width int, source Source) (Er
 		return ErrorRegion{}, err
 	}
 	region := ErrorRegion{Label: label, Location: Location{Path: strings.Join(r.path, "/"), BitOffset: start, Width: width, Source: source}, Bits: bits}
+	region.received = errorRegionReceipt{label: label, location: region.Location, bitLength: bits.BitLength, octets: len(bits.Bytes), present: true}
+	if len(bits.Bytes) <= len(region.received.bits) {
+		copy(region.received.bits[:], bits.Bytes)
+	} else {
+		region.received.larger = append([]byte(nil), bits.Bytes...)
+	}
 	r.recordReceiver(label, start, width, source, nil)
 	return region, nil
 }
@@ -106,6 +130,21 @@ func (r *Reader) ReadErrorRegion(label ErrorLabel, width int, source Source) (Er
 // WriteErrorRegion replays the owned bits of a selected receiver error arm.
 // A canonical sender must instead construct a source-valid semantic arm.
 func (w *Writer) WriteErrorRegion(region ErrorRegion) error {
+	receipt := &region.received
+	receivedBits := receipt.larger
+	if receivedBits == nil {
+		receivedBits = receipt.bits[:receipt.octets]
+	}
+	parentPath := ""
+	if end := strings.LastIndexByte(receipt.location.Path, '/'); end >= 0 {
+		parentPath = receipt.location.Path[:end]
+	}
+	// The region decoder enters its own scope; its encoder uses the parent.
+	// TS 44.060 V19.0.0 §11.1.3.2 applies an error label at the
+	// received position. Prefix edits may move its bits, but not its path.
+	if w.Canonical() || !receipt.present || parentPath != w.path || receipt.label != region.Label || receipt.location != region.Location || receipt.bitLength != region.Bits.BitLength || !bytes.Equal(receivedBits, region.Bits.Bytes) {
+		return w.operationFailure(errors.New("receiver error region was not received or was edited"), 0, InvalidValue)
+	}
 	if !region.Label.valid() || region.Location.Width != region.Bits.BitLength {
 		return w.operationFailure(errors.New("inconsistent receiver error region"), 0, InvalidValue)
 	}
