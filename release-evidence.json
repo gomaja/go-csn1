@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "06ba8b1c93de194710f6eac2d6694edb548b169e",
+    "revision": "f418efeaa1cd295d54a365a42824eb1478a08be6",
     "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
     "api_ledger_sha256": "6d9a7caa18d93b34d5c63cd6c31dd5ad000d45556bd0421bea8b1d00b0937e7a"
   },
   "schema_version": 1,
-  "compiler_commit": "dfc3a437e0b2dcf072a02f6460d5ec00e24533a4",
+  "compiler_commit": "a80aceb62a86c37e41fda19df65f656ec182919c",
   "sources": [
     {
       "standard": "TS 24.008",
