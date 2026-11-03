@@ -23,7 +23,7 @@ if err != nil {
 encoded, err := uecapability.EncodeGERANPS(decoded.Value)
 ```
 
-`BitsConsumed` and `Tail` are reported by every decoder. Values contain an explicit `Wire` record for received spare bits, padding, implicit zero spans, truncation, list stop records, the transmitted boundary and tail. Every encode uses the generated bit encoder; received bytes are not retained for replay. An unchanged decoded value re-encodes byte for byte. Truncation is recorded per instance in decode order, so recursive and repeated truncated concatenations each keep their own truncation point. Plain `Encode<Type>` rejects edits that move a semantic boundary or conflict with retained wire state.
+`BitsConsumed` and `Tail` are reported by every decoder. Values contain an explicit `Wire` record for received spare bits, padding, implicit zero spans, truncation, list stop records, the transmitted boundary and tail. Every encode uses the generated bit encoder; received bytes are not retained for replay, except the bits of a receiver error region, described below. An unchanged decoded value re-encodes byte for byte. Truncation is recorded per instance in decode order, so recursive and repeated truncated concatenations each keep their own truncation point. Plain `Encode<Type>` rejects edits that move a semantic boundary or conflict with retained wire state.
 
 `Descriptor.DecodeFrom` returns the same typed value and diagnostic as `Descriptor.Decode` when its reader has a containing limit covering exactly the input (`r.PushLimit(len(data)*8)`). The sole exception is the TS 44.018 V19.0.0 §10.5.2.37h Non-GSM Message struct when NR OF CONTAINER OCTETS is 31: only the bounded reader supplies the enclosing value's extent. Without a containing limit, the tail belongs to the caller, and definitions that need the value's extent return an error wrapping `runtime.ErrContextRequired`. The context entry points follow the same rule with the same SI4 ACS value. Source size checks, receiver zero extension (TS 24.008 V20.1.0 §§10.5.1.7, 10.5.5.12 and 10.5.5.12a), and null release alternatives selected at the input boundary (TS 44.018 V19.0.0 §10.5.2.16) need that containing limit unless the grammar establishes its own fixed or length-delimited extent.
 
@@ -50,9 +50,9 @@ Any other fallback shape stops generation. A newly constructed one-bit ignored f
 A receiver error arm (TS 44.060 V19.0.0 §§11.1.2–11.1.3) decodes into a `runtime.ErrorRegion` that keeps the bits it ignored. Plain `Encode<Type>` replays such a region only as it was received. It rejects each of the following with an error of kind `runtime.InvalidValue`:
 - a region the caller built;
 - a received region whose label, location or bits were changed;
-- a received region moved to another position.
+- a received region moved to another path in the message structure, in the same value or another one.
 
-A region copied between two decoded values at the same position still replays, because its bits were received there. Canonical encoding rejects every receiver error region.
+A region copied between two decoded values at the same path still replays, because its bits were received there. So does a region whose bit offset changed because an earlier field was edited. Canonical encoding rejects every receiver error region.
 
 Value-constraint errors are untyped, even when the field is a count or a length, so callers can match them only by text:
 

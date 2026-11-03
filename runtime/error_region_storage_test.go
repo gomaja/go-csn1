@@ -54,7 +54,7 @@ func TestErrorRegionReceiptAllocationCount(t *testing.T) {
 		if size > 128 {
 			want = 2
 		}
-		if count != want {
+		if !raceEnabled && count != want {
 			t.Errorf("%d octets: %g allocations, want %g", size, count, want)
 		}
 	}
