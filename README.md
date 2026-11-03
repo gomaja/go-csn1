@@ -47,6 +47,13 @@ A fallback `{ <known> ! <ignored> }` decodes through its known arm whenever that
 
 Any other fallback shape stops generation. A newly constructed one-bit ignored field is written as 0, which the SI2quater known arm `1` never decodes.
 
+A receiver error arm (TS 44.060 V19.0.0 §§11.1.2–11.1.3) decodes into a `runtime.ErrorRegion` that keeps the bits it ignored. Plain `Encode<Type>` replays such a region only as it was received. It rejects each of the following with an error of kind `runtime.InvalidValue`:
+- a region the caller built;
+- a received region whose label, location or bits were changed;
+- a received region moved to another position.
+
+A region copied between two decoded values at the same position still replays, because its bits were received there. Canonical encoding rejects every receiver error region.
+
 Value-constraint errors are untyped, even when the field is a count or a length, so callers can match them only by text:
 
 - a count that disagrees with the length of its list (`repeat count mismatch`), for example NR_OF_CONTAINER_OCTETS against its CONTAINER octets;
