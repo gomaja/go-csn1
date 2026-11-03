@@ -18,7 +18,7 @@ func TestErrorRegionRefusesMovedPosition(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			r := NewReader([]byte{0xa5})
-			for _, part := range []string{"Message", "First"} {
+			for _, part := range []string{"Message", "First", "Ignore"} {
 				if err := r.Enter(part); err != nil {
 					t.Fatal(err)
 				}
@@ -51,7 +51,7 @@ func TestErrorRegionSamePositionCopy(t *testing.T) {
 	decode := func(input byte) ErrorRegion {
 		t.Helper()
 		r := NewReader([]byte{input})
-		for _, part := range []string{"Message", "First"} {
+		for _, part := range []string{"Message", "First", "Ignore"} {
 			if err := r.Enter(part); err != nil {
 				t.Fatal(err)
 			}
@@ -83,5 +83,35 @@ func TestErrorRegionSamePositionCopy(t *testing.T) {
 	out, err := w.Bytes()
 	if err != nil || !bytes.Equal(out, []byte{0, 0xa5}) {
 		t.Fatalf("same-path copied region replay: %v", err)
+	}
+}
+
+func TestErrorRegionParentScope(t *testing.T) {
+	for _, path := range [][]string{nil, {"Ignore"}, {"Message", "Ignore"}, {"Message", "Entries[2]", "Body", "Ignore"}} {
+		r := NewReader([]byte{0xa5})
+		for _, part := range path {
+			if err := r.Enter(part); err != nil {
+				t.Fatal(err)
+			}
+		}
+		region, err := r.ReadErrorRegion(Ignore, -1, fillSource)
+		if err != nil {
+			t.Fatal(err)
+		}
+		w := NewWriter()
+		if len(path) > 0 {
+			for _, part := range path[:len(path)-1] {
+				if err = w.Enter(part); err != nil {
+					t.Fatal(err)
+				}
+			}
+		}
+		if err = w.WriteErrorRegion(region); err != nil {
+			t.Fatalf("parent scope for %v: %v", path, err)
+		}
+		out, err := w.Bytes()
+		if err != nil || !bytes.Equal(out, []byte{0xa5}) {
+			t.Fatalf("parent replay for %v: %v", path, err)
+		}
 	}
 }
