@@ -15,10 +15,10 @@
 //
 // TS 44.018 V19.0.0 §9.1.58 defines NOTIFY APPLICATION DATA with a 72-bit application-data field, an eight-bit data identity and an optional length-delimited MSISDN. Terminal spare padding requires an explicit containing extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3).
 
-// TS 44.018 V19.0.0 §9.1.47 defines Uplink free. The containing message supplies the exact bit extent; no additional numerical carrier cap is assigned by this intake.
+// TS 44.018 V19.0.0 §9.1.47 defines Uplink free. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3).
 //
-// TS 44.018 V19.0.0 §9.1.49b defines VGCS SMS Information. The containing message supplies the exact bit extent; no additional numerical carrier cap is assigned by this intake.
-// TS 44.018 V19.0.0 §9.1.57 defines VGCS Neighbour Cell Information message. The containing message supplies the exact bit extent; no additional numerical carrier cap is assigned by this intake. TS 44.018 V19.0.0 §9.1.57 p11507 assigns the imperative-message-part-error diagnosis for an all-zero Validity bitmap to the receiving mobile station application. The codec accepts and replays every printed three-bit value.
+// TS 44.018 V19.0.0 §9.1.49b defines VGCS SMS Information. The containing message supplies the exact bit extent; the pinned SACCH Bter maximum is 21 octets (TS 44.006 V19.0.0 §8.8.3).
+// TS 44.018 V19.0.0 §9.1.57 defines VGCS Neighbour Cell Information message. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3). TS 44.018 V19.0.0 §9.1.57 p11507 assigns the imperative-message-part-error diagnosis for an all-zero Validity bitmap to the receiving mobile station application. The codec accepts and replays every printed three-bit value.
 //
 // TS 44.018 V19.0.0 §9.1.49a pp10567–10579. Complete short-header VGCS Additional Information root, including the first header octet; main-DCCH Bter permits at most 23 octets, while SACCH uses 21. The assigned message code is 01000.
 // TS 44.018 V19.0.0 §9.1.61 paragraphs 11817–11827. The complete EC RR message includes its printed four-bit discriminator; TS 45.003 V19.0.0 §5.2b.1 provides 88 information bits.

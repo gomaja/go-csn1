@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"reflect"
 	goruntime "runtime"
 	"runtime/debug"
@@ -251,17 +252,26 @@ func TestNOTIFICATIONFACCHSourceVectors(t *testing.T) {
 			}
 			if row.Bits%8 == 0 {
 				canonicalBytes, err := d.CanonicalAtLength(decoded, len(wire))
-				if err != nil {
-					t.Fatal(err)
-				}
-				reread, err := d.Decode(canonicalBytes)
-				if err != nil {
-					t.Fatal(err)
-				}
-				notificationCheckFields(t, reread.(runtime.Decoded[NOTIFICATIONFACCH]).Value, row)
-				stable, err := d.CanonicalAtLength(reread, len(wire))
-				if err != nil || !bytes.Equal(stable, canonicalBytes) {
-					t.Fatalf("unstable canonical %x: %v", stable, err)
+				if len(wire) > 23 {
+					// TS 44.006 V19.0.0 §8.8.3: the main-DCCH Bter
+					// sender cap leaves oversized reception and replay intact.
+					var extent *runtime.ExtentError
+					if canonicalBytes != nil || !errors.As(err, &extent) || extent.Maximum != 23 || extent.Actual != len(wire) {
+						t.Fatalf("past carrier cap: %v", err)
+					}
+				} else {
+					if err != nil {
+						t.Fatal(err)
+					}
+					reread, err := d.Decode(canonicalBytes)
+					if err != nil {
+						t.Fatal(err)
+					}
+					notificationCheckFields(t, reread.(runtime.Decoded[NOTIFICATIONFACCH]).Value, row)
+					stable, err := d.CanonicalAtLength(reread, len(wire))
+					if err != nil || !bytes.Equal(stable, canonicalBytes) {
+						t.Fatalf("unstable canonical %x: %v", stable, err)
+					}
 				}
 			}
 			for candidate := uint8(0); candidate < 32; candidate++ {

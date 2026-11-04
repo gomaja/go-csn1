@@ -5,7 +5,7 @@
     "api_ledger_sha256": "6d9a7caa18d93b34d5c63cd6c31dd5ad000d45556bd0421bea8b1d00b0937e7a"
   },
   "schema_version": 1,
-  "compiler_commit": "b3eaf2db2e3537534709bed4b8c3a415538ac7e0",
+  "compiler_commit": "a2934fa3aa2cb22c7b516215eafa92ae0d3e42a3",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -5328,11 +5328,11 @@
     },
     {
       "path": "ts44018/messages/generated.go",
-      "sha256": "706944b2cc8e9981e45e53ff8b4691ca23b286a69476c782024fbaae062fd926"
+      "sha256": "a25c69c3de25c85d1116195a1804053a4159fae8e9ce6d42c9b0a0b0b3056b56"
     },
     {
       "path": "ts44018/notification/generated.go",
-      "sha256": "3808a1094417fa6b7166da9c7c3a7c4456f3d94919cc7470c0f8bb3046e7267e"
+      "sha256": "e9716c58a75760f2a1f20d6c1807026979e63de34abe6d44c53df48548826f24"
     },
     {
       "path": "ts44018/packetdlassignment/generated.go",
