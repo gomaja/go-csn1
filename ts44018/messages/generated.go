@@ -9917,11 +9917,11 @@ func EncodeUPLINKFREECanonical(v UPLINKFREE) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.47 p10463, p10468–10472; TS 44.006 V19.0.0 §5.2 p877–879, §6.4a p1149–1151, §8.8.3 p2456–2458 (complete main-DCCH Bter root including its short header: (8*23 - 0)/8 = 23 octets).
 // EncodeUPLINKFREECanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..23 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
 //     octets or an end-selected null cannot fill the requested extent;
 //
@@ -9929,7 +9929,7 @@ func EncodeUPLINKFREECanonical(v UPLINKFREE) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeUPLINKFREECanonicalAtLength(v UPLINKFREE, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeUPLINKFREEBytes, decodeUPLINKFREEBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 23, encodeUPLINKFREEBytes, decodeUPLINKFREEBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation38.failure(operationErr, "", -1, 0)
 		}
@@ -10251,11 +10251,11 @@ func EncodeVGCSSMSINFORMATIONCanonical(v VGCSSMSINFORMATION) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.49b p10589–10590, p10596–10613; TS 44.006 V19.0.0 §5.2 p877–879, §6.4a p1149–1151, §8.8.3 p2456–2458 (complete SACCH Bter root including its short header: (8*21 - 0)/8 = 21 octets).
 // EncodeVGCSSMSINFORMATIONCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..21 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -10263,7 +10263,7 @@ func EncodeVGCSSMSINFORMATIONCanonical(v VGCSSMSINFORMATION) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeVGCSSMSINFORMATIONCanonicalAtLength(v VGCSSMSINFORMATION, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeVGCSSMSINFORMATIONBytes, decodeVGCSSMSINFORMATIONBytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 21, encodeVGCSSMSINFORMATIONBytes, decodeVGCSSMSINFORMATIONBytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation50.failure(operationErr, "", -1, 0)
 		}
@@ -10678,11 +10678,11 @@ func EncodeVGCSNeighbourCellInformationCanonical(v VGCSNeighbourCellInformation)
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.57 p11468, p11475–11488; TS 44.006 V19.0.0 §5.2 p877–879, §6.4a p1149–1151, §8.8.3 p2456–2458 (complete main-DCCH Bter root including its short header: (8*23 - 0)/8 = 23 octets).
 // EncodeVGCSNeighbourCellInformationCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..23 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
 //
@@ -10690,7 +10690,7 @@ func EncodeVGCSNeighbourCellInformationCanonical(v VGCSNeighbourCellInformation)
 // that decode to a different typed value.
 func EncodeVGCSNeighbourCellInformationCanonicalAtLength(v VGCSNeighbourCellInformation, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeVGCSNeighbourCellInformationBytes, DecodeVGCSNeighbourCellInformation, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 23, encodeVGCSNeighbourCellInformationBytes, DecodeVGCSNeighbourCellInformation, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation65.failure(operationErr, "", -1, 0)
 		}

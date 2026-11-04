@@ -1665,11 +1665,11 @@ func EncodeNOTIFICATIONFACCHCanonical(v NOTIFICATIONFACCH) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.21a p7272, p7281–7304; TS 44.006 V19.0.0 §5.2 p877–879, §6.4a p1149–1151, §8.8.3 p2456–2458 (complete main-DCCH Bter root including its short header: (8*23 - 0)/8 = 23 octets).
 // EncodeNOTIFICATIONFACCHCanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit;
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..23 octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content exceeds
 //     octets or an end-selected null cannot fill the requested extent;
 //
@@ -1677,7 +1677,7 @@ func EncodeNOTIFICATIONFACCHCanonical(v NOTIFICATIONFACCH) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeNOTIFICATIONFACCHCanonicalAtLength(v NOTIFICATIONFACCH, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeNOTIFICATIONFACCHBytes, DecodeNOTIFICATIONFACCH, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 23, encodeNOTIFICATIONFACCHBytes, DecodeNOTIFICATIONFACCH, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation2.failure(operationErr, "", -1, 0)
 		}

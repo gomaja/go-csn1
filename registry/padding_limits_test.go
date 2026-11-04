@@ -16,12 +16,6 @@ import (
 // This list is kept equal to the README's explicit unresolved-carrier table.
 // Membership records an open source question, never a wire-size permission.
 var unresolvedCarrierLimits = []string{
-	// TS 44.018 V19.0.0 §§9.1.49b and 9.1.57 use a supplied carrier extent.
-	"TS 44.018/9.1.49b/VGCS SMS INFORMATION",
-	"TS 44.018/9.1.57/VGCS Neighbour Cell Information",
-	// TS 44.018 V19.0.0 §§9.1.21a and 9.1.47 require the actual carrier extent.
-	"TS 44.018/9.1.21a/NOTIFICATION FACCH",
-	"TS 44.018/9.1.47/UPLINK FREE",
 	"TS 44.060/12.10a/ARFCN index list struct",
 	"TS 44.060/12.10a/GPRS Mobile Allocation IE",
 	"TS 44.060/12.10a/RFL number list struct",
@@ -89,14 +83,11 @@ func TestUnresolvedCarrierLimitsMatchREADME(t *testing.T) {
 }
 
 // All descriptors participate, including those with nonzero MaxOctets.
-// Successful explicit encoding at the runtime resource ceiling must have an
-// unresolved carrier record or a named caller-bounded control component. A valid synthetic decode is required for each
+// Successful explicit encoding at the runtime resource ceiling requires a named
+// caller-bounded control component. Unresolved shared IE records do not authorize
+// padding growth. A valid synthetic decode is required for each
 // descriptor, so a failing sample search cannot silently hide a new gap.
 func TestCanonicalRuntimeExtentRequiresUnresolvedCarrier(t *testing.T) {
-	unresolved := map[string]bool{}
-	for _, key := range unresolvedCarrierLimits {
-		unresolved[key] = true
-	}
 	const limit = (1 << 20) / 8
 	if err := runtime.CheckInput(make([]byte, limit)); err != nil {
 		t.Fatal(err)
@@ -135,8 +126,8 @@ func TestCanonicalRuntimeExtentRequiresUnresolvedCarrier(t *testing.T) {
 					t.Errorf("%s: missing caller extent preflight: %v", key, contextErr)
 				}
 				class = "caller-bounded-control"
-			} else if !unresolved[key] {
-				t.Errorf("%s: accepts runtime extent without unresolved carrier record", key)
+			} else {
+				t.Errorf("%s: grows by padding without a numerical carrier record or caller-bounded classification", key)
 			}
 		} else {
 			var extent *runtime.ExtentError
@@ -149,6 +140,9 @@ func TestCanonicalRuntimeExtentRequiresUnresolvedCarrier(t *testing.T) {
 		}
 		counts[class]++
 		t.Logf("%s\t%s\tlargest-ladder-extent=%d\tsample=%x", class, key, largestAccepted, wire)
+	}
+	if counts["unresolved-padding"] != 0 {
+		t.Errorf("unresolved-padding class must be empty: %d", counts["unresolved-padding"])
 	}
 	t.Logf("classification: %v; descriptors=%d", counts, len(Descriptors()))
 }
@@ -252,7 +246,8 @@ func TestPaddingLimitPackageDocumentation(t *testing.T) {
 		phrases []string
 	}{
 		{"../ts44018/ies/doc.go", []string{"Relating that length field to the total extent is unresolved", "canonical explicit lengths are capped at one octet"}},
-		{"../ts44018/messages/doc.go", []string{"authenticated EC-BCCH carrier maximum is 23 octets", "pinned main-DCCH Bter maximum is 23 octets"}},
+		{"../ts44018/messages/doc.go", []string{"authenticated EC-BCCH carrier maximum is 23 octets", "§9.1.47 defines Uplink free. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)", "§9.1.49b defines VGCS SMS Information. The containing message supplies the exact bit extent; the pinned SACCH Bter maximum is 21 octets (TS 44.006 V19.0.0 §8.8.3)", "§9.1.57 defines VGCS Neighbour Cell Information message. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)"}},
+		{"../ts44018/notification/doc.go", []string{"§9.1.21a defines Notification/FACCH. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)"}},
 	} {
 		data, err := os.ReadFile(tc.path)
 		if err != nil {

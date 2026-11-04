@@ -109,7 +109,7 @@ No universal numerical containing maximum has been established from the permitte
 
 BA List Pref includes its eight-bit length field in the CSN.1 root (TS 44.018 V19.0.0 §10.5.2.1c p13984–13989). CHANNEL RELEASE carries it as TLV after the PD/skip octet, message-type octet and RR-cause octet (§9.1.7 p4879–4932). TS 44.006 V19.0.0 §8.8.5 p2466 limits an acknowledged L3 message to 251 octets. Subtracting those three mandatory octets and the BA IEI gives a 247-octet root, including its length octet and at most 246 value octets. The type-4 value ceiling of 255 octets is less restrictive (TS 24.007 V20.0.0 §11.2.1.1.4 p3025, p3043).
 
-EC System Information Types 1, 3 and 4 are bounded to 184 information bits, including their headers: 23 octets (TS 45.003 V19.0.0 §5.2a.1 p9923). Each EC SI instance uses one EC-BCCH block; its 16 blind physical transmissions repeat that instance (TS 45.002 V19.0.0 §6.3.4.4 p2458). EC-Dummy is bounded to 88 information bits including its six-bit header: 11 octets (TS 44.018 V19.0.0 §9.1.62 p11854–11861, §10.1 p13004–13008; TS 45.003 V19.0.0 §5.2b.1 p9934–9935). NOTIFY APPLICATION DATA is bounded to the 23-octet main-DCCH Bter frame; its short L2 header is already part of the root (TS 44.018 V19.0.0 §9.1.58 p11509–11523; TS 44.006 V19.0.0 §§5.2, 6.4a, 8.8.3 p2456–2458). These sender caps preserve the explicit-extent requirement and existing tolerant reception.
+EC System Information Types 1, 3 and 4 are bounded to 184 information bits, including their headers: 23 octets (TS 45.003 V19.0.0 §5.2a.1 p9923). Each EC SI instance uses one EC-BCCH block; its 16 blind physical transmissions repeat that instance (TS 45.002 V19.0.0 §6.3.4.4 p2458). EC-Dummy is bounded to 88 information bits including its six-bit header: 11 octets (TS 44.018 V19.0.0 §9.1.62 p11854–11861, §10.1 p13004–13008; TS 45.003 V19.0.0 §5.2b.1 p9934–9935). NOTIFICATION FACCH, UPLINK FREE, VGCS Neighbour Cell Information and NOTIFY APPLICATION DATA are bounded to the 23-octet main-DCCH Bter frame (TS 44.018 V19.0.0 §9.1.21a p7272, p7281–7304; §9.1.47 p10463, p10468–10472; §9.1.57 p11468, p11475–11488; §9.1.58 p11509–11523). VGCS SMS INFORMATION is bounded to the 21-octet SACCH Bter frame (§9.1.49b p10589–10590, p10596–10613). Each root includes its short L2 header, so no header bits are subtracted from those frame sizes (TS 44.006 V19.0.0 §5.2 p877–879, §6.4a p1149–1151, §8.8.3 p2456–2458). These sender caps preserve the explicit-extent requirement and existing tolerant reception.
 
 Additional source clauses define open or recursive component lists without a standalone numerical containing extent: FLO Ack/Nack Description (§12.3.2 p22132–22142), individual priorities (§12.50 p25241–25268), E-UTRAN parameters (§12.53 p25343–25377), Dynamic Allocation 3 (§12.65 p25735–25751), extended EARFCN priority and neighbour lists (§§12.69–12.70 p25910–25943), the repeated channel requests (§§12.7a–12.7b p22685–22707), and Dual Carrier/DLMC direct encoding 1 through the shared GPRS Mobile Allocation IE (§§12.8.2, 12.8.4, 12.10a). Their source clauses require the actual carrier or assignment context; no universal ceiling is asserted here.
 
@@ -118,10 +118,6 @@ The complete unresolved carrier list, including shared definitions whose open li
 <!-- unresolved-carrier-limits -->
 | Definition (standard/clause/printed name) |
 | --- |
-| `TS 44.018/9.1.49b/VGCS SMS INFORMATION` |
-| `TS 44.018/9.1.57/VGCS Neighbour Cell Information` |
-| `TS 44.018/9.1.21a/NOTIFICATION FACCH` |
-| `TS 44.018/9.1.47/UPLINK FREE` |
 | `TS 44.060/12.10a/ARFCN index list struct` |
 | `TS 44.060/12.10a/GPRS Mobile Allocation IE` |
 | `TS 44.060/12.10a/RFL number list struct` |
@@ -301,7 +297,7 @@ attribution of the 3GPP specifications from which the packages are generated.
 | TS 44.060 §12.28 | `ts44060/ies` | LSA Parameters IE |
 | TS 44.060 §12.8.3 | `ts44060/pulseformat` | Pulse Format IE |
 
-Notification/FACCH (TS 44.018 V19.0.0 §9.1.21a) and Uplink Free (§9.1.47) require the caller’s exact containing extent; no numerical carrier record has been authenticated. TS 44.060 V19.0.0 §§12.43 and 12.47 containers and §§11.2.30a and 11.2.35 control content likewise use the enclosing field or control block extent.
+Notification/FACCH (TS 44.018 V19.0.0 §9.1.21a) and Uplink Free (§9.1.47) require the caller’s exact containing extent, capped at 23 octets by the main-DCCH Bter frame (TS 44.006 V19.0.0 §8.8.3). TS 44.060 V19.0.0 §§12.43 and 12.47 containers and §§11.2.30a and 11.2.35 control content likewise use the enclosing field or control block extent.
 
 ## Additional source-selected publications
 
@@ -321,7 +317,7 @@ Notification/FACCH (TS 44.018 V19.0.0 §9.1.21a) and Uplink Free (§9.1.47) requ
 | TS 44.060 §12.66 | `ts44060/ies` | DLMC Channel Quality Report IE |
 | TS 44.060 §12.27 | `ts44060/nongprsoptions` | Non GPRS Cell Options IE |
 
-VGCS SMS Information (TS 44.018 V19.0.0 §9.1.49b) and VGCS Neighbour Cell Information (§9.1.57) require the caller’s exact containing extent; no numerical carrier maximum has been authenticated. TS 44.060 V19.0.0 §§11.2.1, 11.2.2a, 11.2.8b, 11.2.11, 11.2.14 and 11.2.15 content uses the enclosing control block extent. Non GPRS Cell Options (§12.27) has a 14-octet containing maximum; Extension Information has eight octets, with no default standalone extent.
+VGCS SMS Information (TS 44.018 V19.0.0 §9.1.49b) and VGCS Neighbour Cell Information (§9.1.57) require the caller’s exact containing extent, capped respectively at 21 SACCH and 23 main-DCCH Bter octets (TS 44.006 V19.0.0 §8.8.3). TS 44.060 V19.0.0 §§11.2.1, 11.2.2a, 11.2.8b, 11.2.11, 11.2.14 and 11.2.15 content uses the enclosing control block extent. Non GPRS Cell Options (§12.27) has a 14-octet containing maximum; Extension Information has eight octets, with no default standalone extent.
 
 ## Status and channel reconfiguration publications
 
