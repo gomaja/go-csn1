@@ -5,20 +5,22 @@ import (
 	"math"
 	"testing"
 
+	"github.com/gomaja/go-csn1/ts24008/classmark"
+
 	"github.com/gomaja/go-csn1/runtime"
 )
 
 func TestGERANWrapperWireState(t *testing.T) {
-	cm2, err := DecodeClassmark2ValuePart([]byte{0, 0, 0, 0xaa})
+	cm2, err := classmark.DecodeClassmark2ValuePart([]byte{0, 0, 0, 0xaa})
 	if err != nil {
 		t.Fatal(err)
 	}
 	cm2.Value.Wire.Tail = runtime.BitString{Bytes: []byte{0x55}, BitLength: 8}
-	if out, err := EncodeClassmark2ValuePart(cm2.Value); err != nil || !bytes.Equal(out, []byte{0, 0, 0, 0x55}) {
+	if out, err := classmark.EncodeClassmark2ValuePart(cm2.Value); err != nil || !bytes.Equal(out, []byte{0, 0, 0, 0x55}) {
 		t.Fatalf("edited Classmark 2 tail: %x, %v", out, err)
 	}
 	cm2.Value.Wire.Tail.BitLength = 16
-	if _, err := EncodeClassmark2ValuePart(cm2.Value); err == nil {
+	if _, err := classmark.EncodeClassmark2ValuePart(cm2.Value); err == nil {
 		t.Fatal("accepted inconsistent Classmark 2 tail")
 	}
 	cs, err := DecodeGERANCS([]byte{0x33, 3, 0, 0, 0, 0})
@@ -55,7 +57,7 @@ func TestGERANCSRejectsOverflowedNestedBitCount(t *testing.T) {
 func TestGERANWrapperRejectsOversizedInput(t *testing.T) {
 	oversized := make([]byte, 1<<17+1)
 	oversized[0], oversized[1] = 0x33, 3
-	if _, err := DecodeClassmark2ValuePart(oversized); err == nil {
+	if _, err := classmark.DecodeClassmark2ValuePart(oversized); err == nil {
 		t.Fatal("Classmark 2 accepted oversized input")
 	}
 	if _, err := DecodeGERANCS(oversized); err == nil {

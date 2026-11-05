@@ -2,9 +2,10 @@ package uecapability
 
 import (
 	"bytes"
+	"testing"
+
 	"github.com/gomaja/go-csn1/ts24008/classmark"
 	"github.com/gomaja/go-csn1/ts24008/msrac"
-	"testing"
 )
 
 func FuzzGERANContainers(f *testing.F) {
@@ -28,8 +29,8 @@ func FuzzGERANContainers(f *testing.F) {
 	}
 	f.Add(ps)
 	f.Fuzz(func(t *testing.T, data []byte) {
-		if d, err := DecodeClassmark2ValuePart(data); err == nil {
-			out, err := EncodeClassmark2ValuePart(d.Value)
+		if d, err := classmark.DecodeClassmark2ValuePart(data); err == nil {
+			out, err := classmark.EncodeClassmark2ValuePart(d.Value)
 			if err != nil || !bytes.Equal(out, data) {
 				t.Fatalf("classmark 2 round trip: %v", err)
 			}

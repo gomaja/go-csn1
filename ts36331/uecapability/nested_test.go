@@ -3,9 +3,11 @@ package uecapability
 import (
 	"bytes"
 	"errors"
-	"github.com/gomaja/go-csn1/runtime"
-	"github.com/gomaja/go-csn1/ts24008/msrac"
 	"testing"
+
+	"github.com/gomaja/go-csn1/runtime"
+	"github.com/gomaja/go-csn1/ts24008/classmark"
+	"github.com/gomaja/go-csn1/ts24008/msrac"
 )
 
 func TestTypedManualNestedOperations(t *testing.T) {
@@ -32,7 +34,7 @@ func TestTypedManualNestedOperations(t *testing.T) {
 			if _, err := r.ReadUint(offset); err != nil {
 				t.Fatal(err)
 			}
-			v, err := DecodeClassmark2ValuePartFrom(r)
+			v, err := classmark.DecodeClassmark2ValuePartFrom(r)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -43,7 +45,7 @@ func TestTypedManualNestedOperations(t *testing.T) {
 			if err := w.WriteUint(0, offset); err != nil {
 				t.Fatal(err)
 			}
-			if err := EncodeClassmark2ValuePartTo(w, v); err != nil {
+			if err := classmark.EncodeClassmark2ValuePartTo(w, v); err != nil {
 				t.Fatal(err)
 			}
 			if err := w.WritePaddingTo((offset + 24 + 7) / 8 * 8); err != nil {
@@ -92,10 +94,11 @@ func TestTypedManualNestedOperations(t *testing.T) {
 		})
 	}
 }
+
 func TestManualNestedErrorsAreAbsolute(t *testing.T) {
 	r := runtime.NewReader([]byte{0xff, 0, 0})
 	_, _ = r.ReadUint(8)
-	_, err := DecodeClassmark2ValuePartFrom(r)
+	_, err := classmark.DecodeClassmark2ValuePartFrom(r)
 	var op *runtime.OperationError
 	var de *runtime.DecodeError
 	if !errors.As(err, &op) || !errors.As(err, &de) || op.Location.BitOffset != 24 || de.Offset != 24 || op.Location.Source.Standard != "TS 24.008" {

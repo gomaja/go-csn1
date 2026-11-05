@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"strings"
 	"testing"
+
+	"github.com/gomaja/go-csn1/ts24008/classmark"
 )
 
 func TestCanonicalClassmark2CapabilityReservations(t *testing.T) {
@@ -13,18 +15,18 @@ func TestCanonicalClassmark2CapabilityReservations(t *testing.T) {
 	for revision := uint8(0); revision < 4; revision++ {
 		for power := uint8(0); power < 8; power++ {
 			wire := []byte{revision<<5 | power, 0, 1}
-			d, err := DecodeClassmark2ValuePart(wire)
+			d, err := classmark.DecodeClassmark2ValuePart(wire)
 			if err != nil {
 				t.Fatal(err)
 			}
 			if !d.Value.ReceivedA52() {
 				t.Fatal("received A5/2 unavailable")
 			}
-			plain, err := EncodeClassmark2ValuePart(d.Value)
+			plain, err := classmark.EncodeClassmark2ValuePart(d.Value)
 			if err != nil || !bytes.Equal(plain, wire) {
 				t.Fatalf("plain %x: %v", plain, err)
 			}
-			out, err := EncodeClassmark2ValuePartCanonical(d.Value)
+			out, err := classmark.EncodeClassmark2ValuePartCanonical(d.Value)
 			valid := (revision == 1 || revision == 2) && power != 5 && power != 6
 			if valid {
 				want := []byte{revision<<5 | power, 0, 0}
@@ -36,10 +38,10 @@ func TestCanonicalClassmark2CapabilityReservations(t *testing.T) {
 			}
 		}
 	}
-	if (Classmark2ValuePart{}).ReceivedA52() {
+	if (classmark.Classmark2ValuePart{}).ReceivedA52() {
 		t.Fatal("fresh A5/2 set")
 	}
-	out, err := EncodeClassmark2ValuePartCanonical(Classmark2ValuePart{RevisionLevel: 1})
+	out, err := classmark.EncodeClassmark2ValuePartCanonical(classmark.Classmark2ValuePart{RevisionLevel: 1})
 	if err != nil || !bytes.Equal(out, []byte{0x20, 0, 0}) {
 		t.Fatalf("fresh canonical %x: %v", out, err)
 	}

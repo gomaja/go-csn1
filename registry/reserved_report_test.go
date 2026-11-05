@@ -88,7 +88,7 @@ func TestNestedGERANCSObservationOrigin(t *testing.T) {
 	// GSM Band (TS 24.008 V20.1.0 §10.5.1.7). GERAN-CS adds 40 framing bits
 	// once (TS 36.331 V19.4.0 §6.3.6 UE-CapabilityRAT-ContainerList).
 	value := classmark.Classmark3ValuePart{MultibandSupportedChoice: classmark.Classmark3ValuePartMultibandSupportedChoice{A5Bits: &classmark.Classmark3ValuePartMultibandSupportedChoiceA5Bits{}}, SingleBandSupport: &classmark.SingleBandSupport{GSMBand: 15}}
-	raw, err := uecapability.EncodeGERANCS(uecapability.GERANCS{Classmark2: uecapability.Classmark2ValuePart{RevisionLevel: 1}, Classmark3: value})
+	raw, err := uecapability.EncodeGERANCS(uecapability.GERANCS{Classmark2: classmark.Classmark2ValuePart{RevisionLevel: 1}, Classmark3: value})
 	if err != nil {
 		t.Fatal(err)
 	}

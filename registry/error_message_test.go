@@ -9,7 +9,6 @@ import (
 
 	"github.com/gomaja/go-csn1/runtime"
 	"github.com/gomaja/go-csn1/ts24008/classmark"
-	"github.com/gomaja/go-csn1/ts36331/uecapability"
 	"github.com/gomaja/go-csn1/ts44018/measurement"
 	"github.com/gomaja/go-csn1/ts44018/restoctets"
 	"github.com/gomaja/go-csn1/ts44060/ies"
@@ -52,7 +51,12 @@ func TestRegistryOperationMessages(t *testing.T) {
 	_, clause := LookupClause("synthetic", "1", "Missing")
 	_, ambiguous := Lookup("TS 24.008", "A5 bits")
 	_, unsupported := DecodeWithContext("TS 24.008", "Mobile Station Classmark 2 value part", nil, 0)
-	source := runtime.Source{Standard: "synthetic", Clause: "1"}
+	d, err := Lookup("TS 24.008", "Mobile Station Classmark 2 value part")
+	if err != nil {
+		t.Fatal(err)
+	}
+	readerFailure := func(r *runtime.Reader) error { _, err := d.DecodeFrom(r); return err }
+	_, wrongType := d.Encode(nil)
 	tests := []struct {
 		err  error
 		want string
@@ -62,9 +66,9 @@ func TestRegistryOperationMessages(t *testing.T) {
 		{ambiguous, "CSN.1 lookup invalid-schema in A5 bits: ambiguous CSN.1 definition in TS 24.008; clauses: 10.5.1.7, 10.5.5.12a"},
 		{lookupFailure("synthetic", "", "Value", fmt.Errorf("multiple versions of synthetic: 1 and 2")), "CSN.1 lookup invalid-schema in Value: multiple versions of synthetic: 1 and 2"},
 		{lookupFailure("synthetic", "", "Value", fmt.Errorf("CSN.1 descriptor lacks standard or version")), "CSN.1 lookup invalid-schema in Value: CSN.1 descriptor lacks standard or version"},
-		{manualReaderCheck(nil, "Value", source), "CSN.1 decode invalid-value in Value: nil reader"},
-		{manualReaderCheck(runtime.NewReader(make([]byte, (1<<20)/8+1)), "Value", source), "CSN.1 decode invalid-value in Value: limit at bit 0: input exceeds maximum bit length"},
-		{manualTypeError("encode", "Value", source), "CSN.1 encode invalid-value in Value: wrong value type"},
+		{readerFailure(nil), "CSN.1 decode invalid-value in Mobile Station Classmark 2 value part: nil reader"},
+		{readerFailure(runtime.NewReader(make([]byte, (1<<20)/8+1))), "CSN.1 decode invalid-value in Mobile Station Classmark 2 value part: limit at bit 0: input exceeds maximum bit length"},
+		{wrongType, "CSN.1 encode invalid-value in Mobile Station Classmark 2 value part: wrong value type"},
 		{unsupported, "CSN.1 context invalid-value in Mobile Station Classmark 2 value part: unsupported CSN.1 value"},
 	}
 	for _, tt := range tests {
@@ -112,7 +116,7 @@ func TestGeneratedOperationCauseMessages(t *testing.T) {
 	}{
 		{"generated/nil writer", func() error { return ies.EncodeGPRSCellOptionsIETo(nil, ies.GPRSCellOptionsIE{}) }, "CSN.1 encode invalid-value in GPRSCellOptionsIE: nil writer"},
 		{"generated/classmark2 detail", func() error {
-			_, e := uecapability.EncodeClassmark2ValuePart(uecapability.Classmark2ValuePart{RFPowerCapability: 8})
+			_, e := classmark.EncodeClassmark2ValuePart(classmark.Classmark2ValuePart{RFPowerCapability: 8})
 			return e
 		}, "CSN.1 encode invalid-value at bit 5 in Classmark2ValuePart/RFPowerCapability: invalid Classmark 2 field"},
 		{"generated/context typed", func() error { _, e := restoctets.EncodeSI7RestOctetsCanonical(restoctets.SI7RestOctets{}); return e }, "CSN.1 canonical invalid-value in SI7RestOctets: encode: TS 44.018 §10.5.2.36 <SI7 Rest Octets>: CSN.1 context required"},

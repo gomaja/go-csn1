@@ -6,6 +6,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/gomaja/go-csn1/ts24008/classmark"
 )
 
 func TestClassmark2CanonicalReservedBits(t *testing.T) {
@@ -14,16 +16,16 @@ func TestClassmark2CanonicalReservedBits(t *testing.T) {
 	for _, input := range []string{"800000", "008000", "000040", "000001", "808041", "ffffff", "a00000", "208000", "200040", "200001", "a08041", "bfffff"} {
 		t.Run(input, func(t *testing.T) {
 			wire, _ := hex.DecodeString(input)
-			decoded, err := DecodeClassmark2ValuePart(wire)
+			decoded, err := classmark.DecodeClassmark2ValuePart(wire)
 			if err != nil {
 				t.Fatal(err)
 			}
-			plain, err := EncodeClassmark2ValuePart(decoded.Value)
+			plain, err := classmark.EncodeClassmark2ValuePart(decoded.Value)
 			if err != nil || !bytes.Equal(plain, wire) {
 				t.Fatalf("plain %x: %v", plain, err)
 			}
 			want := []byte{wire[0] & 0x7f, wire[1] & 0x7f, wire[2] & 0xbe}
-			canonical, err := EncodeClassmark2ValuePartCanonical(decoded.Value)
+			canonical, err := classmark.EncodeClassmark2ValuePartCanonical(decoded.Value)
 			if decoded.Value.RevisionLevel == 0 || decoded.Value.RevisionLevel == 3 {
 				if err == nil || !strings.Contains(err.Error(), "value reserved by source table") {
 					t.Errorf("reserved revision canonical: %v", err)
@@ -38,7 +40,7 @@ func TestClassmark2CanonicalReservedBits(t *testing.T) {
 			}
 		})
 	}
-	fresh, err := EncodeClassmark2ValuePart(Classmark2ValuePart{})
+	fresh, err := classmark.EncodeClassmark2ValuePart(classmark.Classmark2ValuePart{})
 	if err != nil || !bytes.Equal(fresh, []byte{0, 0, 0}) {
 		t.Fatalf("fresh %x: %v", fresh, err)
 	}

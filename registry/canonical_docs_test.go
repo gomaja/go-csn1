@@ -275,7 +275,7 @@ func canonicalFunctions(t *testing.T) map[string]string {
 		})
 	}
 
-	out["10.5.1.6\x00Mobile Station Classmark 2 value part\x00"] = "ts36331/uecapability.EncodeClassmark2ValuePartCanonical"
+	out["10.5.1.6\x00Mobile Station Classmark 2 value part\x00"] = "ts24008/classmark.EncodeClassmark2ValuePartCanonical"
 	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-cs\x00"] = "ts36331/uecapability.EncodeGERANCSCanonical"
 	out["UE-CapabilityRAT-ContainerList field descriptions\x00geran-ps\x00"] = "ts36331/uecapability.EncodeGERANPSCanonical"
 	return out
@@ -1042,7 +1042,6 @@ func structTypes(t reflect.Type, into map[reflect.Type]bool) {
 // entry and a valid multiblock assignment; growing that list reaches the
 // IA extent error without selecting a reserved alternative.
 var canonicalSeeds = map[string][]string{
-
 	"11.2.28b\x00Packet DBPSCH Uplink Ack/Nack message content": {"2403"},
 
 	// TS 44.060 V19.0.0 §11.2.18: source-selected canonical arm witnesses.

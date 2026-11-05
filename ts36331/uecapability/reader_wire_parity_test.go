@@ -10,6 +10,8 @@ import (
 	"runtime/debug"
 	"testing"
 
+	"github.com/gomaja/go-csn1/ts24008/classmark"
+
 	"github.com/gomaja/go-csn1/runtime"
 )
 
@@ -78,7 +80,7 @@ func TestManualNestedWireMatchesByteEntry(t *testing.T) {
 	// TS 24.008 V20.1.0 §§10.5.1.6, 10.5.1.7, 10.5.5.12a;
 	// TS 36.331 V19.4.0 §6.3.6 UE-CapabilityRAT-ContainerList.
 	t.Run("Classmark2", func(t *testing.T) {
-		checkNestedReaderParity(t, []byte{0xfe, 0x51, 0xf6}, DecodeClassmark2ValuePart, DecodeClassmark2ValuePartFrom, EncodeClassmark2ValuePart)
+		checkNestedReaderParity(t, []byte{0xfe, 0x51, 0xf6}, classmark.DecodeClassmark2ValuePart, classmark.DecodeClassmark2ValuePartFrom, classmark.EncodeClassmark2ValuePart)
 	})
 	for _, input := range []string{"3303a930a49be5", "330320000000"} {
 		t.Run("GERANCS/"+input, func(t *testing.T) {

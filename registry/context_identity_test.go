@@ -35,13 +35,13 @@ func TestDuplicateContextIdentityRejected(t *testing.T) {
 	}
 	// The name and clause lookups refuse the same catalogue, as the linear oracle does.
 	got, err := Lookup(a.Standard, a.Name)
-	want, wantErr := linearLookup(catalogue, a.Standard, "", a.Name, false)
+	want, wantErr := linearLookup(catalogue(), a.Standard, "", a.Name, false)
 	if err == nil {
 		t.Fatal("name lookup accepted a duplicate identity")
 	}
 	assertLookupEqual(t, got, want, err, wantErr)
 	got, err = LookupClause(a.Standard, a.Clause, a.Name)
-	want, wantErr = linearLookup(catalogue, a.Standard, a.Clause, a.Name, true)
+	want, wantErr = linearLookup(catalogue(), a.Standard, a.Clause, a.Name, true)
 	if err == nil {
 		t.Fatal("clause lookup accepted a duplicate identity")
 	}
@@ -70,7 +70,7 @@ func TestLookupContextEmptyAndVersionFailure(t *testing.T) {
 		t.Fatal("unknown context accepted")
 	}
 	b.Version = "2"
-	catalogueLookup = newLookupIndex([]runtime.Descriptor{a, b})
+	installLookupCatalogue(t, []runtime.Descriptor{a, b})
 	if _, err := LookupContext(a.Standard, a.Clause, a.Name, ""); err == nil {
 		t.Fatal("inconsistent versions accepted")
 	}

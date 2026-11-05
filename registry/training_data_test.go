@@ -297,13 +297,13 @@ func decodeGERANRecord(name, typ string, wire []byte) geranResult {
 			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeGERANPSCanonical, uecapability.DecodeGERANPS)
 		}
 	case strings.Contains(name, "classmark2"):
-		d, err := uecapability.DecodeClassmark2ValuePart(wire)
+		d, err := classmark.DecodeClassmark2ValuePart(wire)
 		out.err = err
 		if err == nil {
 			out.bits, out.tail = d.BitsConsumed, d.Tail.BitLength
 			out.spare3, out.spare4, out.spare5 = wire[0]&0x80 != 0, wire[1]&0x80 != 0, wire[2]&0x40 != 0
-			out.encoded, out.err = uecapability.EncodeClassmark2ValuePart(d.Value)
-			out.canonicalErr = checkCanonical(d.Value, uecapability.EncodeClassmark2ValuePartCanonical, uecapability.DecodeClassmark2ValuePart)
+			out.encoded, out.err = classmark.EncodeClassmark2ValuePart(d.Value)
+			out.canonicalErr = checkCanonical(d.Value, classmark.EncodeClassmark2ValuePartCanonical, classmark.DecodeClassmark2ValuePart)
 			out.canonicalReservation = classmark2SenderReservation(d.Value)
 		}
 	case strings.HasSuffix(name, "classmark3.jsonl"):
@@ -399,7 +399,7 @@ func compareGERANExpected(record geranRecord, wire []byte, got geranResult) stri
 // TS 24.008 V20.1.0 table 10.5.6a permits reception of these codes but
 // forbids their use by a conforming sender. Reception and plain replay remain
 // checked against the external records; canonical rejection is checked here.
-func classmark2SenderReservation(v uecapability.Classmark2ValuePart) string {
+func classmark2SenderReservation(v classmark.Classmark2ValuePart) string {
 	if v.RevisionLevel == 0 || v.RevisionLevel == 3 {
 		return "value reserved by source table: TS 24.008 table 10.5.6a Revision level"
 	}
