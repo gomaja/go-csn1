@@ -12,6 +12,10 @@ import (
 )
 
 func TestCapabilityValueReaderOffsets(t *testing.T) {
+	classmark3, err := classmark.Lookup("Classmark 3 Value part")
+	if err != nil {
+		t.Fatal(err)
+	}
 	// TS 24.007 V20.0.0 §11.4.2 applies a value-part extent from
 	// the value start, including when the IE sits inside a larger PDU.
 	tests := []struct {
@@ -34,7 +38,7 @@ func TestCapabilityValueReaderOffsets(t *testing.T) {
 			decodeFrom: func(r *runtime.Reader) (any, error) {
 				return classmark.DecodeClassmark3ValuePartFrom(r)
 			},
-			descriptor: classmark.Descriptors()[0],
+			descriptor: classmark3,
 		},
 		{
 			name: "MS network capability",
