@@ -7,7 +7,7 @@ import (
 )
 
 func TestManualObservationArithmeticGuards(t *testing.T) {
-	const file = "ts36331/uecapability/generated.go"
+	const file = "ts24008/classmark/generated.go"
 	original, err := os.ReadFile("../../" + file)
 	if err != nil {
 		t.Fatal(err)
@@ -29,10 +29,10 @@ func TestManualObservationArithmeticGuards(t *testing.T) {
 				source = strings.Replace(source, tc.old, tc.replacement, 1)
 			}
 			dir := t.TempDir()
-			if err := os.MkdirAll(dir+"/ts36331/uecapability", 0700); err != nil {
+			if err := os.MkdirAll(dir+"/ts24008/classmark", 0o700); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.WriteFile(dir+"/"+file, []byte(source), 0600); err != nil {
+			if err := os.WriteFile(dir+"/"+file, []byte(source), 0o600); err != nil {
 				t.Fatal(err)
 			}
 			findings, err := ScanSource(file, []byte(source))

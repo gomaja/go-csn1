@@ -107,3 +107,16 @@ func TestRegistryConcurrentFirstUse(t *testing.T) {
 	close(start)
 	wg.Wait()
 }
+
+func TestSourceOriginUsesCatalogue(t *testing.T) {
+	entry := runtime.Descriptor{Standard: "synthetic", Version: "1", Clause: "1", Name: "Value", SourceOrigin: 14}
+	installLookupCatalogue(t, []runtime.Descriptor{entry})
+	entry.SourceOrigin = 0
+	if got := SourceOrigin(entry); got != 14 {
+		t.Fatalf("recorded origin %d; want 14", got)
+	}
+	entry.Version = "other"
+	if got := SourceOrigin(entry); got != 0 {
+		t.Fatalf("unrecorded version origin %d", got)
+	}
+}

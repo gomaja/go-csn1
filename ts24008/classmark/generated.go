@@ -5833,7 +5833,7 @@ func Descriptors() []runtime.Descriptor {
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
-	for _, d := range Descriptors() {
+	for _, d := range descriptorCatalogue {
 		if d.Name == name {
 			matches = append(matches, d)
 		}
@@ -5851,7 +5851,7 @@ func Lookup(name string) (runtime.Descriptor, error) {
 	return runtime.Descriptor{}, operationLocation29.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
-	for _, d := range Descriptors() {
+	for _, d := range descriptorCatalogue {
 		if d.Clause == clause && d.Name == name {
 			return d, nil
 		}
@@ -6816,7 +6816,7 @@ type Classmark2ValuePart struct {
 func (v Classmark2ValuePart) ReceivedA52() bool {
 	return len(v.Wire.Spare) > 3 && v.Wire.Spare[3].BitLength == 1 && len(v.Wire.Spare[3].Bytes) > 0 && v.Wire.Spare[3].Bytes[0]&0x80 != 0
 }
-func classmark2DecodeClassmark2ValuePartBytes(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
+func decodeClassmark2ValuePartBytes(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
 	if err := runtime.CheckInput(data); err != nil {
 		return runtime.Decoded[Classmark2ValuePart]{}, err
 	}
@@ -6870,15 +6870,15 @@ func classmark2DecodeClassmark2ValuePartBytes(data []byte) (runtime.Decoded[Clas
 	v.Wire = runtime.Seal(v, data, 24, tail, r.Wire())
 	return runtime.Decoded[Classmark2ValuePart]{Value: v, BitsConsumed: 24, Tail: tail}, nil
 }
-func classmark2EncodeClassmark2ValuePartBytes(v Classmark2ValuePart) ([]byte, error) {
+func encodeClassmark2ValuePartBytes(v Classmark2ValuePart) ([]byte, error) {
 	if v.RevisionLevel > 3 {
-		return nil, classmark2Classmark2Error("RevisionLevel", 1, 2, "invalid Classmark 2 field")
+		return nil, classmark2Error("RevisionLevel", 1, 2, "invalid Classmark 2 field")
 	}
 	if v.RFPowerCapability > 7 {
-		return nil, classmark2Classmark2Error("RFPowerCapability", 5, 3, "invalid Classmark 2 field")
+		return nil, classmark2Error("RFPowerCapability", 5, 3, "invalid Classmark 2 field")
 	}
 	if v.SSScreeningIndicator > 3 {
-		return nil, classmark2Classmark2Error("SSScreeningIndicator", 10, 2, "invalid Classmark 2 field")
+		return nil, classmark2Error("SSScreeningIndicator", 10, 2, "invalid Classmark 2 field")
 	}
 	if err := runtime.CheckInput(v.Wire.Tail.Bytes); err != nil {
 		return nil, err
@@ -6939,10 +6939,10 @@ func classmark2EncodeClassmark2ValuePartBytes(v Classmark2ValuePart) ([]byte, er
 // applicable band-specific row requires the containing radio context.
 func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
 	if v.RevisionLevel != 1 && v.RevisionLevel != 2 {
-		return nil, classmark2OperationLocation2.failure(classmark2Classmark2Error("RevisionLevel", 1, 2, "value reserved by source table: TS 24.008 table 10.5.6a Revision level"), "", -1, 0)
+		return nil, classmark2OperationLocation2.failure(classmark2Error("RevisionLevel", 1, 2, "value reserved by source table: TS 24.008 table 10.5.6a Revision level"), "", -1, 0)
 	}
 	if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
-		return nil, classmark2OperationLocation2.failure(classmark2Classmark2Error("RFPowerCapability", 5, 3, "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability"), "", -1, 0)
+		return nil, classmark2OperationLocation2.failure(classmark2Error("RFPowerCapability", 5, 3, "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability"), "", -1, 0)
 	}
 	{
 		operationValue, operationErr := EncodeClassmark2ValuePart(runtime.Canonical(v))
@@ -6952,8 +6952,8 @@ func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
 		return operationValue, nil
 	}
 }
-func classmark2Classmark2Error(field string, offset, width int, detail string) error {
-	return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: classmark2ErrorPath("Classmark2ValuePart", field), BitOffset: offset, Width: width, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}}, Detail: detail}
+func classmark2Error(field string, offset, width int, detail string) error {
+	return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: errorPath("Classmark2ValuePart", field), BitOffset: offset, Width: width, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}}, Detail: detail}
 }
 func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, error) {
 	if err := r.Check(); err != nil {
@@ -7116,14 +7116,14 @@ func EncodeClassmark2ValuePartCanonicalAtLength(v Classmark2ValuePart, octets in
 	}
 }
 func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
-	v, err := classmark2DecodeClassmark2ValuePartBytes(data)
+	v, err := decodeClassmark2ValuePartBytes(data)
 	if err != nil {
 		return v, classmark2OperationLocation0.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
-	out, err := classmark2EncodeClassmark2ValuePartBytes(v)
+	out, err := encodeClassmark2ValuePartBytes(v)
 	if err != nil {
 		return nil, classmark2OperationLocation1.failure(err, "", -1, 0)
 	}
@@ -7131,182 +7131,9 @@ func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
 }
 
 var classmark2SourceClause0 = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}
-var classmark2OperationLocation0 = classmark2OperationLocation{"decode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
-var classmark2OperationLocation1 = classmark2OperationLocation{"encode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
-var classmark2OperationLocation2 = classmark2OperationLocation{"canonical", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
-
-func classmark2ConstrainedWidth(path string) int {
-	for i := len(path) - 1; i >= 0; i-- {
-		if path[i] == '/' {
-			path = path[i+1:]
-			break
-		}
-	}
-	switch path {
-	}
-	return 0
-}
-func classmark2IndexParent(path string) string {
-	switch path {
-	}
-	return ""
-}
-
-type classmark2OperationLocation struct {
-	operation, path string
-	source          *runtime.Source
-	kind            runtime.ErrorKind
-}
-
-//go:noinline
-func (c *classmark2OperationLocation) failure(err error, path string, offset, width int) error {
-	if path == "" {
-		path = c.path
-	}
-	return classmark2LocateOperationKind(err, c.operation, path, offset, width, *c.source, c.kind)
-}
-
-//go:noinline
-func (c *classmark2OperationLocation) nilWriter() error {
-	return &runtime.OperationError{Operation: c.operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: c.path, BitOffset: -1, Source: *c.source}, Detail: "nil writer"}
-}
-func classmark2LocateIndex(err error, path string, index int) error {
-	if err == nil {
-		return nil
-	}
-	if deferred, ok := runtime.DeferIndex(err, path, index, classmark2LocateIndex); ok {
-		return deferred
-	}
-	var previous *runtime.OperationError
-	if errors.As(err, &previous) {
-		copy := *previous
-		copy.Location.Path = classmark2IndexedPath(copy.Location.Path, path, index)
-		return &copy
-	}
-	var cause *runtime.DecodeError
-	if errors.As(err, &cause) {
-		return &runtime.OperationError{Operation: "decode", Kind: cause.Kind, Location: runtime.Location{Path: classmark2IndexedPath(cause.Path, path, index), BitOffset: cause.Offset}, Cause: err}
-	}
-	return err
-}
-
-// indexedPath inserts the list immediately after its enclosing codec level.
-// A list already present in the path receives the index on that component.
-func classmark2IndexedPath(full, path string, index int) string {
-	parent := classmark2IndexParent(path)
-	start := 0
-	for rest := full; rest != ""; {
-		component, tail, more := strings.Cut(rest, "/")
-		end := start + len(component)
-		if component == parent {
-			if parent == path {
-				return full[:end] + "[" + strconv.Itoa(index) + "]" + full[end:]
-			}
-			next, _, _ := strings.Cut(tail, "/")
-			if next == path {
-				return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + strings.TrimPrefix(tail, path)
-			}
-			return full[:end] + "/" + path + "[" + strconv.Itoa(index) + "]" + full[end:]
-		}
-		if !more {
-			break
-		}
-		start = end + 1
-		rest = tail
-	}
-	if full == "" {
-		return path + "[" + strconv.Itoa(index) + "]"
-	}
-	return path + "[" + strconv.Itoa(index) + "]/" + full
-}
-func classmark2ErrorPath(parent, child string) string {
-	if child == "" || parent == child || strings.HasSuffix(parent, "/"+child) {
-		return parent
-	}
-	if parent == "" {
-		return child
-	}
-	return parent + "/" + child
-}
-func classmark2ConstraintFailure(r *runtime.Reader, start, width int, detail string) error {
-	return r.ErrorAt(runtime.InvalidValue, start, detail)
-}
-func classmark2LocateOperation(err error, operation, path string, offset, width int, source runtime.Source) error {
-	return classmark2LocateOperationKind(err, operation, path, offset, width, source, runtime.InvalidValue)
-}
-func classmark2LocateOperationKind(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
-	if err == nil {
-		return nil
-	}
-	return classmark2LocatedFailure(err, operation, path, offset, width, source, kind)
-}
-func classmark2LocatedFailure(err error, operation, path string, offset, width int, source runtime.Source, kind runtime.ErrorKind) error {
-	if deferred, ok := runtime.DeferOperation(err, operation, path, offset, width, source, kind, classmark2LocatedFailure); ok {
-		return deferred
-	}
-	var existing *runtime.OperationError
-	if errors.As(err, &existing) {
-		copy := *existing
-		if copy.Location.Source.Standard == "" {
-			copy.Location.Source = source
-		}
-		if copy.Location.Path == "" {
-			copy.Location.Path = path
-		}
-		if copy.Operation != operation && operation == "canonical" {
-			copy.Operation = operation
-			copy.Cause = err
-			return &copy
-		}
-		if copy.Location != existing.Location {
-			return &copy
-		}
-		return err
-	}
-	location := runtime.Location{Path: path, BitOffset: offset, Width: width, Source: source}
-	var de *runtime.DecodeError
-	var be *runtime.BoundError
-	var fe *runtime.FallbackError
-	var ce *runtime.ContextRequiredError
-	var ee *runtime.ExtentError
-	switch {
-	case errors.As(err, &de):
-		kind = de.Kind
-		location.BitOffset = de.Offset
-		if de.Path != "" {
-			location.Path = de.Path
-		}
-		if location.Width == 0 {
-			location.Width = classmark2ConstrainedWidth(de.Path)
-		}
-	case errors.As(err, &be):
-		location.BitOffset = be.Position
-		if be.Limit >= 0 && be.Limit <= 1<<20 && be.Position >= 0 && be.Position <= 1<<20 {
-			location.Width = be.Limit - be.Position
-			if location.Width < 0 {
-				location.Width = -location.Width
-			}
-		}
-		if be.Path != "" {
-			location.Path = be.Path
-		}
-		location.Path = classmark2ErrorPath(location.Path, be.Field)
-	case errors.As(err, &fe):
-		location.BitOffset = fe.Position
-		location.Path = fe.Path
-		kind = runtime.InvalidBranch
-	case errors.As(err, &ce):
-		location.BitOffset = -1
-		location.Width = 0
-	case errors.Is(err, runtime.ErrContextRequired):
-		location.BitOffset = -1
-		location.Width = 0
-	case errors.As(err, &ee):
-		location.BitOffset = -1
-		location.Width = 0
-	}
-	return &runtime.OperationError{Operation: operation, Kind: kind, Location: location, Cause: err}
-}
+var classmark2OperationLocation0 = operationLocation{"decode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
+var classmark2OperationLocation1 = operationLocation{"encode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
+var classmark2OperationLocation2 = operationLocation{"canonical", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
 
 // Finite canonical bounds: TS 24.008 §10.5.1.6 and TS 36.331 §6.3.6,
 // UE-CapabilityRAT-ContainerList field descriptions; receiver tails are separate.

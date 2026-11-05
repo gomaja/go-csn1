@@ -220,93 +220,10 @@ func lookupFailure(standard, clause, name string, cause error) error {
 // DecodeFrom accepts a caller-owned bounded reader at the same octet phase;
 // descriptor byte functions supply the recorded coordinate.
 func SourceOrigin(d runtime.Descriptor) int {
-	switch {
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.1" && d.Name == "Packet Access Reject message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.11" && d.Name == "Packet PDCH Release message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.12" && d.Name == "Packet Polling Request message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.13" && d.Name == "Packet Power Control/Timing Advance message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.14" && d.Name == "Packet PRACH Parameters message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.15" && d.Name == "Packet Queueing Notification message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.16" && d.Name == "Packet Resource Request message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17" && d.Name == "Packet PSI Status message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17a" && d.Name == "Packet Serving Cell Data message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17b" && d.Name == "Packet SI Status message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.17c" && d.Name == "Packet Serving Cell SI message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.18" && d.Name == "PSI1 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.19" && d.Name == "PSI2 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.2" && d.Name == "Packet Control Acknowledgement message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.20" && d.Name == "PSI3 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.21a" && d.Name == "PSI3 ter message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.21b" && d.Name == "PSI3 quater message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.24" && d.Name == "PSI8 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25" && d.Name == "PSI13 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25a" && d.Name == "PSI14 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.25b" && d.Name == "PSI15 message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.26" && d.Name == "Packet TBF Release message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.29" && d.Name == "Packet Uplink Assignment message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.2a" && d.Name == "Packet Cell Change Continue message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.3" && d.Name == "Packet Cell Change Failure message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.30a" && d.Name == "Packet pause message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.31" && d.Name == "Packet Timeslot Reconfigure message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.32" && d.Name == "Additional MS Radio Access Capabilities message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.35" && d.Name == "Packet CS Request message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.38" && d.Name == "MBMS service request message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.39" && d.Name == "MBMS Assignment Non-distribution message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.3a" && d.Name == "Packet Cell Change Notification message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.45" && d.Name == "Packet Physical information message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.5b" && d.Name == "Packet DBPSCH Assignment message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.6" && d.Name == "Packet Downlink Ack/Nack message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.6a" && d.Name == "EGPRS Packet Downlink Ack/Nack message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.8" && d.Name == "Packet Downlink Dummy Control Block message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.8b" && d.Name == "Packet Uplink Dummy Control Block message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9" && d.Name == "Packet Measurement Report message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9b" && d.Name == "Packet Measurement Order message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9c" && d.Name == "Packet Mobile TBF Status message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9d" && d.Name == "PACKET ENHANCED MEASUREMENT REPORT message content":
-		return 14
-	case d.Standard == "TS 44.060" && d.Version == "19.0.0" && d.Clause == "11.2.9e" && d.Name == "Packet Neighbour Cell Data message content":
-		return 14
+	index := catalogueLookup()
+	position, ok := index.clauses[clauseKey{d.Standard, d.Clause, d.Name}]
+	if !ok || index.entries[position].Version != d.Version {
+		return 0
 	}
-	return 0
+	return index.entries[position].SourceOrigin
 }
