@@ -1781,26 +1781,30 @@ func Descriptors() []runtime.Descriptor {
 	return out
 }
 func Lookup(name string) (runtime.Descriptor, error) {
-	var matches []runtime.Descriptor
-	for _, d := range Descriptors() {
+	var found runtime.Descriptor
+	matched := false
+	for _, d := range descriptorCatalogue {
 		if d.Name == name {
-			matches = append(matches, d)
+			if matched {
+				var clauses []string
+				for _, candidate := range descriptorCatalogue {
+					if candidate.Name == name {
+						clauses = append(clauses, candidate.Clause)
+					}
+				}
+				return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
+			}
+			found = d
+			matched = true
 		}
 	}
-	if len(matches) == 1 {
-		return matches[0], nil
+	if matched {
+		return found, nil
 	}
-	if len(matches) == 0 {
-		return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
-	}
-	var clauses []string
-	for _, d := range matches {
-		clauses = append(clauses, d.Clause)
-	}
-	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
+	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
-	for _, d := range Descriptors() {
+	for _, d := range descriptorCatalogue {
 		if d.Clause == clause && d.Name == name {
 			return d, nil
 		}
