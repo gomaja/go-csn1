@@ -15,6 +15,18 @@ import (
 
 var retainedIndex lookupIndex
 
+// testExecutable names the running test binary for a child process.
+// os.Args[0] may be a bare file name, which Windows does not resolve from
+// the working directory.
+func testExecutable(t *testing.T) string {
+	t.Helper()
+	path, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
 func TestLookupIndexStorageBound(t *testing.T) {
 	const count = 1024
 	entries := make([]runtime.Descriptor, count)
@@ -36,7 +48,7 @@ func TestRegistryLazyInitialization(t *testing.T) {
 	if os.Getenv("REGISTRY_FIRST_USE_CHILD") == "idle" {
 		return
 	}
-	cmd := exec.Command(os.Args[0], "-test.run=^TestRegistryLazyInitialization$")
+	cmd := exec.Command(testExecutable(t), "-test.run=^TestRegistryLazyInitialization$")
 	cmd.Env = append(os.Environ(), "REGISTRY_FIRST_USE_CHILD=idle", "GODEBUG=inittrace=1")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -57,7 +69,7 @@ func TestRegistryLazyInitialization(t *testing.T) {
 
 func TestRegistryConcurrentFirstUse(t *testing.T) {
 	if os.Getenv("REGISTRY_FIRST_USE_CHILD") != "concurrent" {
-		cmd := exec.Command(os.Args[0], "-test.run=^TestRegistryConcurrentFirstUse$")
+		cmd := exec.Command(testExecutable(t), "-test.run=^TestRegistryConcurrentFirstUse$")
 		cmd.Env = append(os.Environ(), "REGISTRY_FIRST_USE_CHILD=concurrent")
 		if out, err := cmd.CombinedOutput(); err != nil {
 			t.Fatalf("concurrent first use: %v: %s", err, out)
