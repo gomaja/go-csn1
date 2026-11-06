@@ -2,10 +2,10 @@
   "runtime_contract": {
     "revision": "e7d61d84e24ef3270048a408364f0c0bc0458c55",
     "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
-    "api_ledger_sha256": "793348954b56d084b52b3af50bae2a6dedba47257823c6a984b207956d8bf070"
+    "api_ledger_sha256": "5696614a08b4d099956be9f041c4c8cd90ece0410bdad27ce12d89ef03298c06"
   },
   "schema_version": 1,
-  "compiler_commit": "aec24f8365eb12fe0243074ed83925ffc914e39e",
+  "compiler_commit": "ffb094f833f11ffe9b6fa460b8ca808bfe7a207a",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -5304,7 +5304,7 @@
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "e507747ff701adb5749fe96ed40f0b9c3471c681227d8bf116c616146b967fdd"
+      "sha256": "f474e37bd722b26629af7a5218d0e3036018f9cd109cac156a0980d73377eba4"
     },
     {
       "path": "ts44018/cellselection/generated.go",

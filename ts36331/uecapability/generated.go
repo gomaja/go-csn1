@@ -421,6 +421,38 @@ func shiftOperation(err error, offset int, path string) error {
 	return err
 }
 
+func Descriptors() []runtime.Descriptor {
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
+}
+func Lookup(name string) (runtime.Descriptor, error) {
+	var matches []runtime.Descriptor
+	for _, d := range descriptorCatalogue {
+		if d.Name == name {
+			matches = append(matches, d)
+		}
+	}
+	if len(matches) == 1 {
+		return matches[0], nil
+	}
+	if len(matches) == 0 {
+		return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
+	}
+	var clauses []string
+	for _, d := range matches {
+		clauses = append(clauses, d.Clause)
+	}
+	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
+}
+func LookupClause(clause, name string) (runtime.Descriptor, error) {
+	for _, d := range descriptorCatalogue {
+		if d.Clause == clause && d.Name == name {
+			return d, nil
+		}
+	}
+	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
+}
 func DecodeGERANCS(data []byte) (runtime.Decoded[GERANCS], error) {
 	v, err := decodeGERANCSBytes(data)
 	if err != nil {
@@ -457,6 +489,7 @@ var operationLocation2 = operationLocation{"canonical", "GERANCS", &sourceClause
 var operationLocation3 = operationLocation{"decode", "GERANPS", &sourceClause0, runtime.InvalidValue}
 var operationLocation4 = operationLocation{"encode", "GERANPS", &sourceClause0, runtime.InvalidValue}
 var operationLocation5 = operationLocation{"canonical", "GERANPS", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -762,19 +795,4 @@ var descriptorCatalogue = []runtime.Descriptor{
 	{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-ps", MaxOctets: 50,
 		Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}},
 		Decode: descriptorDecodeGERANPS, DecodeFrom: descriptorDecodeGERANPSFrom, Encode: finiteEncodeGERANPS, Canonical: finiteCanonicalGERANPS, CanonicalAtLength: finiteCanonicalGERANPSAtLength, DecodeWithCollector: finiteCollector(descriptorDecodeGERANPSFrom)},
-}
-
-// Descriptors returns a detached catalogue of the typed GERAN containers.
-func Descriptors() []runtime.Descriptor {
-	return append([]runtime.Descriptor(nil), descriptorCatalogue...)
-}
-
-// Lookup resolves a GERAN container's exact printed name.
-func Lookup(name string) (runtime.Descriptor, error) {
-	for _, d := range descriptorCatalogue {
-		if d.Name == name {
-			return d, nil
-		}
-	}
-	return runtime.Descriptor{}, fmt.Errorf("unknown CSN.1 definition %q", name)
 }

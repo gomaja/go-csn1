@@ -482,7 +482,8 @@ Classmark 2's type, codecs and `ReceivedA52` method belong to
 `ts24008/classmark`. Resolve its printed name with
 `classmark.Lookup("Mobile Station Classmark 2 value part")`.
 `ts36331/uecapability.Lookup` resolves `geran-cs` and `geran-ps`; both packages
-return their own descriptors through `Descriptors`. `GERANCS.Classmark2` has
+also expose `LookupClause` for clause-qualified names and return their own
+descriptors through `Descriptors`. `GERANCS.Classmark2` has
 type `classmark.Classmark2ValuePart`. The registry lists the same descriptors
 in standard, clause, name and context order and builds its catalogue and lookup
 indexes on first use. Importing the registry alone does not build them.
