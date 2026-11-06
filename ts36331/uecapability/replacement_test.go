@@ -3,6 +3,8 @@ package uecapability
 import (
 	"bytes"
 	"testing"
+
+	"github.com/gomaja/go-csn1/ts24008/classmark"
 )
 
 func TestReplaceClassmark2InDecodedGERANCS(t *testing.T) {
@@ -26,9 +28,9 @@ func TestReplaceClassmark2InDecodedGERANCS(t *testing.T) {
 			if err != nil || !bytes.Equal(replay, wire) {
 				t.Fatalf("unchanged %x: %v", replay, err)
 			}
-			d.Value.Classmark2 = Classmark2ValuePart{RevisionLevel: 1}
+			d.Value.Classmark2 = classmark.Classmark2ValuePart{RevisionLevel: 1}
 			if tc.replacement != nil {
-				c, err := DecodeClassmark2ValuePart(tc.replacement)
+				c, err := classmark.DecodeClassmark2ValuePart(tc.replacement)
 				if err != nil {
 					t.Fatal(err)
 				}

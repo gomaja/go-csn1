@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "f418efeaa1cd295d54a365a42824eb1478a08be6",
+    "revision": "e7d61d84e24ef3270048a408364f0c0bc0458c55",
     "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
-    "api_ledger_sha256": "6d9a7caa18d93b34d5c63cd6c31dd5ad000d45556bd0421bea8b1d00b0937e7a"
+    "api_ledger_sha256": "5696614a08b4d099956be9f041c4c8cd90ece0410bdad27ce12d89ef03298c06"
   },
   "schema_version": 1,
-  "compiler_commit": "a2934fa3aa2cb22c7b516215eafa92ae0d3e42a3",
+  "compiler_commit": "ffb094f833f11ffe9b6fa460b8ca808bfe7a207a",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -5292,7 +5292,7 @@
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "43d7dfb598bdbdb8f89e4190730dcd6d36327248ba87a419818ad04d673c200b"
+      "sha256": "2c3a637aee0ed784a6bf60ca165347d12fa7d422568f80fc0a2af001f0a29059"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
@@ -5304,7 +5304,7 @@
     },
     {
       "path": "ts36331/uecapability/generated.go",
-      "sha256": "88693439dc40258899b392f2d211ece2d070d0557b2e7520e3bd5f63603a7489"
+      "sha256": "f474e37bd722b26629af7a5218d0e3036018f9cd109cac156a0980d73377eba4"
     },
     {
       "path": "ts44018/cellselection/generated.go",

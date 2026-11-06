@@ -5808,10 +5808,13 @@ func EncodeSingleBandSupportCanonicalAtLength(v SingleBandSupport, octets int) (
 	}
 }
 func Definitions() []string {
-	return []string{"Classmark 3 Value part", "A5 bits", "R Support", "HSCSD Multi Slot Capability", "MS Measurement capability", "MS Positioning Method Capability", "ECSD Multi Slot Capability", "8-PSK Struct", "Single Band Support"}
+	return []string{"Mobile Station Classmark 2 value part", "Classmark 3 Value part", "A5 bits", "R Support", "HSCSD Multi Slot Capability", "MS Measurement capability", "MS Positioning Method Capability", "ECSD Multi Slot Capability", "8-PSK Struct", "Single Band Support"}
 }
 
-var descriptorCatalogue = []runtime.Descriptor{
+var descriptorCatalogue = []runtime.Descriptor{{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Name: "Mobile Station Classmark 2 value part", MaxOctets: 3,
+	Extent: runtime.Extent{MinimumBits: 24, MaximumBits: 24, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}},
+	Decode: descriptorDecodeClassmark2ValuePart, DecodeFrom: descriptorDecodeClassmark2ValuePartFrom, Encode: finiteEncodeClassmark2ValuePart, Canonical: finiteCanonicalClassmark2ValuePart, CanonicalAtLength: finiteCanonicalClassmark2ValuePartAtLength, DecodeWithCollector: finiteCollector(descriptorDecodeClassmark2ValuePartFrom)},
+
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "Classmark 3 Value part", MaxOctets: 32, Extent: runtime.Extent{MinimumBits: 8, MaximumBits: 256, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeClassmark3ValuePart, DecodeFrom: descriptorDecodeClassmark3ValuePartFrom, DecodeWithCollector: descriptorCollectClassmark3ValuePart, Encode: descriptorEncodeClassmark3ValuePart, Canonical: descriptorCanonicalClassmark3ValuePart, CanonicalAtLength: descriptorCanonicalAtLengthClassmark3ValuePart},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "A5 bits", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 4, MaximumBits: 4, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeA5Bits, DecodeFrom: descriptorDecodeA5BitsFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeA5Bits), Encode: descriptorEncodeA5Bits, Canonical: descriptorCanonicalA5Bits, CanonicalAtLength: descriptorCanonicalAtLengthA5Bits},
 	{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7", Name: "R Support", MaxOctets: 1, Extent: runtime.Extent{MinimumBits: 3, MaximumBits: 3, Finite: true, Fixed: true, NeedsContext: false, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.7"}}, Decode: descriptorDecodeRSupport, DecodeFrom: descriptorDecodeRSupportFrom, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeRSupport), Encode: descriptorEncodeRSupport, Canonical: descriptorCanonicalRSupport, CanonicalAtLength: descriptorCanonicalAtLengthRSupport},
@@ -5830,7 +5833,7 @@ func Descriptors() []runtime.Descriptor {
 }
 func Lookup(name string) (runtime.Descriptor, error) {
 	var matches []runtime.Descriptor
-	for _, d := range Descriptors() {
+	for _, d := range descriptorCatalogue {
 		if d.Name == name {
 			matches = append(matches, d)
 		}
@@ -5848,7 +5851,7 @@ func Lookup(name string) (runtime.Descriptor, error) {
 	return runtime.Descriptor{}, operationLocation29.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
 }
 func LookupClause(clause, name string) (runtime.Descriptor, error) {
-	for _, d := range Descriptors() {
+	for _, d := range descriptorCatalogue {
 		if d.Clause == clause && d.Name == name {
 			return d, nil
 		}
@@ -6777,4 +6780,446 @@ func locatedFailure(err error, operation, path string, offset, width int, source
 		location.Width = 0
 	}
 	return &runtime.OperationError{Operation: operation, Kind: kind, Location: location, Cause: err}
+}
+
+// TS 24.008 V20.1.0 §10.5.1.6 extracted source SHA-256: fe9b53189829aa5e9b350f345f68197cb9ca1851945cbb82b5f74158a39ee3f3.
+// Classmark2ValuePart contains the capabilities of TS 24.008
+// V20.1.0 §10.5.1.6, figure 10.5.6 and tables 10.5.6a-b.
+type Classmark2ValuePart struct {
+	RevisionLevel uint8
+	ESIND         bool
+	// A51Unavailable is the transmitted bit: 0 means A5/1 available, 1 means unavailable (TS 24.008 §10.5.1.6, table 10.5.6a).
+	A51Unavailable       bool
+	RFPowerCapability    uint8
+	PSCapability         bool
+	SSScreeningIndicator uint8
+	SMCapability         bool
+	VBS                  bool
+	VGCS                 bool
+	FC                   bool
+	CM3                  bool
+	LCSVA                bool
+	UCS2                 bool
+	SoLSA                bool
+	CMSP                 bool
+	// A53Available is the transmitted bit: 1 means A5/3 available (TS 24.008 §10.5.1.6, table 10.5.6b).
+	A53Available bool
+	// Wire.Spare records octet 3 bit 8, octet 4 bit 8, octet 5 bit 7,
+	// then A5/2 (octet 5 bit 1). Send zero; accept either received value
+	// (TS 24.008 V20.1.0 figure 10.5.6 and table 10.5.6b).
+	Wire runtime.WireInfo `json:"-"`
+}
+
+// ReceivedA52 reports the received A5/2 bit (TS 24.008 V20.1.0
+// §10.5.1.6 table 10.5.6b). It is false for a fresh value; Wire is omitted
+// from JSON. Plain encoding replays it, and canonical encoding writes zero.
+func (v Classmark2ValuePart) ReceivedA52() bool {
+	return len(v.Wire.Spare) > 3 && v.Wire.Spare[3].BitLength == 1 && len(v.Wire.Spare[3].Bytes) > 0 && v.Wire.Spare[3].Bytes[0]&0x80 != 0
+}
+func decodeClassmark2ValuePartBytes(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
+	if err := runtime.CheckInput(data); err != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, err
+	}
+	if len(data) < 3 {
+		return runtime.Decoded[Classmark2ValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: len(data) * 8, Path: "Classmark2ValuePart", Detail: "classmark 2 value part requires 3 octets"}
+	}
+	r := runtime.NewReader(data[:3])
+	var readErr error
+	read := func(width int) uint8 {
+		if width < 0 || width > 8 {
+			readErr = fmt.Errorf("invalid Classmark 2 read width")
+			return 0
+		}
+		value, err := r.ReadUint(width)
+		if err != nil {
+			readErr = err
+		}
+		return uint8(value)
+	}
+	spare := func() {
+		_, err := r.ReadSpare()
+		if err != nil {
+			readErr = err
+		}
+	}
+	var v Classmark2ValuePart
+	spare()
+	v.RevisionLevel = read(2)
+	v.ESIND = read(1) != 0
+	v.A51Unavailable = read(1) != 0
+	v.RFPowerCapability = read(3)
+	spare()
+	v.PSCapability = read(1) != 0
+	v.SSScreeningIndicator = read(2)
+	v.SMCapability = read(1) != 0
+	v.VBS = read(1) != 0
+	v.VGCS = read(1) != 0
+	v.FC = read(1) != 0
+	v.CM3 = read(1) != 0
+	spare()
+	v.LCSVA = read(1) != 0
+	v.UCS2 = read(1) != 0
+	v.SoLSA = read(1) != 0
+	v.CMSP = read(1) != 0
+	v.A53Available = read(1) != 0
+	spare()
+	if readErr != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, readErr
+	}
+	tail := runtime.BitString{Bytes: append([]byte(nil), data[3:]...), BitLength: (len(data) - 3) * 8}
+	v.Wire = runtime.Seal(v, data, 24, tail, r.Wire())
+	return runtime.Decoded[Classmark2ValuePart]{Value: v, BitsConsumed: 24, Tail: tail}, nil
+}
+func encodeClassmark2ValuePartBytes(v Classmark2ValuePart) ([]byte, error) {
+	if v.RevisionLevel > 3 {
+		return nil, classmark2Error("RevisionLevel", 1, 2, "invalid Classmark 2 field")
+	}
+	if v.RFPowerCapability > 7 {
+		return nil, classmark2Error("RFPowerCapability", 5, 3, "invalid Classmark 2 field")
+	}
+	if v.SSScreeningIndicator > 3 {
+		return nil, classmark2Error("SSScreeningIndicator", 10, 2, "invalid Classmark 2 field")
+	}
+	if err := runtime.CheckInput(v.Wire.Tail.Bytes); err != nil {
+		return nil, err
+	}
+	if v.Wire.Tail.BitLength < 0 || v.Wire.Tail.BitLength%8 != 0 || v.Wire.Tail.BitLength/8 != len(v.Wire.Tail.Bytes) {
+		return nil, fmt.Errorf("classmark 2 tail must be whole octets")
+	}
+	w := runtime.NewWriter()
+	w.WithWire(v.Wire)
+	var writeErr error
+	write := func(value uint8, width int) {
+		if writeErr == nil {
+			writeErr = w.WriteUint(uint64(value), width)
+		}
+	}
+	flag := func(value bool) {
+		var bit uint8
+		if value {
+			bit = 1
+		}
+		write(bit, 1)
+	}
+	spare := func() {
+		if writeErr == nil {
+			writeErr = w.WriteSpare()
+		}
+	}
+	spare()
+	write(v.RevisionLevel, 2)
+	flag(v.ESIND)
+	flag(v.A51Unavailable)
+	write(v.RFPowerCapability, 3)
+	spare()
+	flag(v.PSCapability)
+	write(v.SSScreeningIndicator, 2)
+	flag(v.SMCapability)
+	flag(v.VBS)
+	flag(v.VGCS)
+	flag(v.FC)
+	flag(v.CM3)
+	spare()
+	flag(v.LCSVA)
+	flag(v.UCS2)
+	flag(v.SoLSA)
+	flag(v.CMSP)
+	flag(v.A53Available)
+	spare()
+	if writeErr != nil {
+		return nil, writeErr
+	}
+	return w.Finish(v.Wire.Tail)
+}
+
+// EncodeClassmark2ValuePartCanonical encodes a copy without received wire layout.
+// It returns an located *runtime.OperationError value-constraint error for a reserved sender code
+// (TS 24.008 V20.1.0 table 10.5.6a; TS 24.007 §11.4.2).
+// RF codes 0..4 and 7 have a defined band/RAT interpretation; selecting the
+// applicable band-specific row requires the containing radio context.
+func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
+	if v.RevisionLevel != 1 && v.RevisionLevel != 2 {
+		return nil, classmark2OperationLocation2.failure(classmark2Error("RevisionLevel", 1, 2, "value reserved by source table: TS 24.008 table 10.5.6a Revision level"), "", -1, 0)
+	}
+	if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
+		return nil, classmark2OperationLocation2.failure(classmark2Error("RFPowerCapability", 5, 3, "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability"), "", -1, 0)
+	}
+	{
+		operationValue, operationErr := EncodeClassmark2ValuePart(runtime.Canonical(v))
+		if operationErr != nil {
+			return operationValue, classmark2OperationLocation2.failure(operationErr, "", -1, 0)
+		}
+		return operationValue, nil
+	}
+}
+func classmark2Error(field string, offset, width int, detail string) error {
+	return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: errorPath("Classmark2ValuePart", field), BitOffset: offset, Width: width, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}}, Detail: detail}
+}
+func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, error) {
+	if err := r.Check(); err != nil {
+		return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+	}
+	if r.Remaining() < 24 {
+		return Classmark2ValuePart{}, classmark2OperationLocation0.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: r.ErrorPath("Classmark2ValuePart"), Detail: "classmark 2 value part requires 3 octets"}, "", r.Position(), 0)
+	}
+	if err := r.Enter("Classmark2ValuePart"); err != nil {
+		return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+	}
+	defer r.Leave()
+	before := r.Wire()
+	start := r.Fork()
+	var readErr error
+	read := func(width int) uint8 {
+		value, err := r.ReadUint(width)
+		if err != nil {
+			readErr = err
+		}
+		return uint8(value)
+	}
+	spare := func() {
+		_, err := r.ReadSpare()
+		if err != nil {
+			readErr = err
+		}
+	}
+	var v Classmark2ValuePart
+	spare()
+	v.RevisionLevel = read(2)
+	v.ESIND = read(1) != 0
+	v.A51Unavailable = read(1) != 0
+	v.RFPowerCapability = read(3)
+	spare()
+	v.PSCapability = read(1) != 0
+	v.SSScreeningIndicator = read(2)
+	v.SMCapability = read(1) != 0
+	v.VBS = read(1) != 0
+	v.VGCS = read(1) != 0
+	v.FC = read(1) != 0
+	v.CM3 = read(1) != 0
+	spare()
+	v.LCSVA = read(1) != 0
+	v.UCS2 = read(1) != 0
+	v.SoLSA = read(1) != 0
+	v.CMSP = read(1) != 0
+	v.A53Available = read(1) != 0
+	spare()
+	if readErr != nil {
+		return Classmark2ValuePart{}, classmark2OperationLocation0.failure(readErr, "", r.Position(), 0)
+	}
+	if r.Collecting() {
+		source := runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}
+		origin := start.Position()
+		observe := func(field string, offset, width int, value uint8) error {
+			return r.Observe(origin+offset, width, uint64(value), source, field)
+		}
+		if v.RevisionLevel == 0 || v.RevisionLevel == 3 {
+			if err := observe("RevisionLevel", 1, 2, v.RevisionLevel); err != nil {
+				return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+		if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
+			if err := observe("RFPowerCapability", 5, 3, v.RFPowerCapability); err != nil {
+				return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+		if v.SSScreeningIndicator >= 2 {
+			source = runtime.Source{Standard: "TS 24.080", Version: "19.4.0", Clause: "3.7.1"}
+			if err := observe("SSScreeningIndicator", 10, 2, v.SSScreeningIndicator); err != nil {
+				return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+			}
+		}
+	}
+
+	wire, err := r.ValueWire(start, before, false)
+	if err != nil {
+		return Classmark2ValuePart{}, classmark2OperationLocation0.failure(err, "", r.Position(), 0)
+	}
+
+	wire.SpareCounts = nil
+	wire.ImplicitSpans = nil
+	v.Wire = wire
+	return v, nil
+}
+func EncodeClassmark2ValuePartTo(w *runtime.Writer, v Classmark2ValuePart) error {
+	if w == nil {
+		return classmark2OperationLocation1.nilWriter()
+	}
+	wire := v.Wire
+	wire.Spare = nil
+	return classmark2OperationLocation1.failure(w.WithWireValue(wire, func() error {
+		if err := w.Enter("Classmark2ValuePart"); err != nil {
+			return err
+		}
+		defer w.Leave()
+		if v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3 {
+			return fmt.Errorf("invalid Classmark 2 field")
+		}
+		var writeErr error
+		spareIndex := 0
+		write := func(value uint8, width int) {
+			if writeErr == nil {
+				writeErr = w.WriteUint(uint64(value), width)
+			}
+		}
+		flag := func(v bool) {
+			var b uint8
+			if v {
+				b = 1
+			}
+			write(b, 1)
+		}
+		spare := func() {
+			if writeErr == nil {
+				var bit runtime.BitString
+				if spareIndex < len(v.Wire.Spare) {
+					bit = v.Wire.Spare[spareIndex]
+				}
+				writeErr = w.WriteLayoutBit(bit)
+				spareIndex++
+			}
+		}
+		spare()
+		write(v.RevisionLevel, 2)
+		flag(v.ESIND)
+		flag(v.A51Unavailable)
+		write(v.RFPowerCapability, 3)
+		spare()
+		flag(v.PSCapability)
+		write(v.SSScreeningIndicator, 2)
+		flag(v.SMCapability)
+		flag(v.VBS)
+		flag(v.VGCS)
+		flag(v.FC)
+		flag(v.CM3)
+		spare()
+		flag(v.LCSVA)
+		flag(v.UCS2)
+		flag(v.SoLSA)
+		flag(v.CMSP)
+		flag(v.A53Available)
+		spare()
+		return writeErr
+	}), "", w.Position(), 0)
+}
+
+// EncodeClassmark2ValuePartCanonicalAtLength returns *runtime.ExtentError when octets is not 3. Other errors are located *runtime.OperationError from EncodeClassmark2ValuePartCanonical.
+func EncodeClassmark2ValuePartCanonicalAtLength(v Classmark2ValuePart, octets int) ([]byte, error) {
+	if octets != 3 {
+		return nil, classmark2OperationLocation2.failure(&runtime.ExtentError{Actual: octets, Minimum: 3, Maximum: 3}, "", -1, 0)
+	}
+	{
+		operationValue, operationErr := EncodeClassmark2ValuePartCanonical(v)
+		if operationErr != nil {
+			return operationValue, classmark2OperationLocation2.failure(operationErr, "", -1, 0)
+		}
+		return operationValue, nil
+	}
+}
+func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
+	v, err := decodeClassmark2ValuePartBytes(data)
+	if err != nil {
+		return v, classmark2OperationLocation0.failure(err, "", -1, 0)
+	}
+	return v, nil
+}
+func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
+	out, err := encodeClassmark2ValuePartBytes(v)
+	if err != nil {
+		return nil, classmark2OperationLocation1.failure(err, "", -1, 0)
+	}
+	return out, nil
+}
+
+var classmark2SourceClause0 = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}
+var classmark2OperationLocation0 = operationLocation{"decode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
+var classmark2OperationLocation1 = operationLocation{"encode", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
+var classmark2OperationLocation2 = operationLocation{"canonical", "Classmark2ValuePart", &classmark2SourceClause0, runtime.InvalidValue}
+
+// Finite canonical bounds: TS 24.008 §10.5.1.6 and TS 36.331 §6.3.6,
+// UE-CapabilityRAT-ContainerList field descriptions; receiver tails are separate.
+func finiteCollector(from func(*runtime.Reader) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, c *runtime.Collector) (any, error) {
+		if err := runtime.CheckInput(data); err != nil {
+			return nil, err
+		}
+		r := runtime.NewReaderWithCollector(data, c)
+		if _, err := r.PushLimit(len(data) * 8); err != nil {
+			return nil, err
+		}
+		value, err := from(r)
+		if err != nil {
+			return nil, err
+		}
+		return value, nil
+	}
+}
+func finiteTypeError(operation, name string, source runtime.Source) error {
+	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
+}
+func finiteReaderCheck(r *runtime.Reader, name string, source runtime.Source) error {
+	if err := r.Check(); err != nil {
+		return &runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Cause: err}
+	}
+	return nil
+}
+
+var finiteSourceClassmark2ValuePart = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}
+
+func descriptorDecodeClassmark2ValuePart(data []byte) (any, error) {
+	return DecodeClassmark2ValuePart(data)
+}
+func descriptorDecodeClassmark2ValuePartFrom(r *runtime.Reader) (any, error) {
+	if err := finiteReaderCheck(r, "Mobile Station Classmark 2 value part", finiteSourceClassmark2ValuePart); err != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, err
+	}
+	start := r.Position()
+	before := r.Wire()
+	origin := r.Fork()
+	v, err := DecodeClassmark2ValuePartFrom(r)
+	if err != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, err
+	}
+	// The typed reader stops after the three octets, so a containing value can
+	// continue; the descriptor keeps the rest of a bounded reader in Tail and in
+	// the value's received form, as its byte entry point does.
+	wire, err := r.ValueWire(origin, before, true)
+	if err != nil {
+		return runtime.Decoded[Classmark2ValuePart]{}, err
+	}
+	// TS 24.008 V20.1.0 §10.5.1.6 fixes the value at three octets.
+	// Extend only its received tail; keep the typed reader's wire conventions.
+	v.Wire.Tail = wire.Tail
+	v.Wire.TransmittedBits = wire.TransmittedBits
+	return runtime.Decoded[Classmark2ValuePart]{Value: v, BitsConsumed: r.Position() - start, Tail: wire.Tail}, nil
+}
+func finiteUnwrapClassmark2ValuePart(value any) (Classmark2ValuePart, bool) {
+	switch v := value.(type) {
+	case Classmark2ValuePart:
+		return v, true
+	case runtime.Decoded[Classmark2ValuePart]:
+		return v.Value, true
+	default:
+		return Classmark2ValuePart{}, false
+	}
+}
+func finiteEncodeClassmark2ValuePart(value any) ([]byte, error) {
+	v, ok := finiteUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, finiteTypeError("encode", "Mobile Station Classmark 2 value part", finiteSourceClassmark2ValuePart)
+	}
+	return EncodeClassmark2ValuePart(v)
+}
+func finiteCanonicalClassmark2ValuePart(value any) ([]byte, error) {
+	v, ok := finiteUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "Mobile Station Classmark 2 value part", finiteSourceClassmark2ValuePart)
+	}
+	return EncodeClassmark2ValuePartCanonical(v)
+}
+func finiteCanonicalClassmark2ValuePartAtLength(value any, octets int) ([]byte, error) {
+	v, ok := finiteUnwrapClassmark2ValuePart(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "Mobile Station Classmark 2 value part", finiteSourceClassmark2ValuePart)
+	}
+	return EncodeClassmark2ValuePartCanonicalAtLength(v, octets)
 }

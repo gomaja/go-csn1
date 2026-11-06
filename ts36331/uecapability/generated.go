@@ -14,180 +14,8 @@ import (
 	"github.com/gomaja/go-csn1/ts24008/msrac"
 )
 
-// Classmark2ValuePart contains the capabilities of TS 24.008
-// V20.1.0 §10.5.1.6, figure 10.5.6 and tables 10.5.6a-b.
-type Classmark2ValuePart struct {
-	RevisionLevel uint8
-	ESIND         bool
-	// A51Unavailable is the transmitted bit: 0 means A5/1 available, 1 means unavailable (TS 24.008 §10.5.1.6, table 10.5.6a).
-	A51Unavailable       bool
-	RFPowerCapability    uint8
-	PSCapability         bool
-	SSScreeningIndicator uint8
-	SMCapability         bool
-	VBS                  bool
-	VGCS                 bool
-	FC                   bool
-	CM3                  bool
-	LCSVA                bool
-	UCS2                 bool
-	SoLSA                bool
-	CMSP                 bool
-	// A53Available is the transmitted bit: 1 means A5/3 available (TS 24.008 §10.5.1.6, table 10.5.6b).
-	A53Available bool
-	// Wire.Spare records octet 3 bit 8, octet 4 bit 8, octet 5 bit 7,
-	// then A5/2 (octet 5 bit 1). Send zero; accept either received value
-	// (TS 24.008 V20.1.0 figure 10.5.6 and table 10.5.6b).
-	Wire runtime.WireInfo `json:"-"`
-}
-
-// ReceivedA52 reports the received A5/2 bit (TS 24.008 V20.1.0
-// §10.5.1.6 table 10.5.6b). It is false for a fresh value; Wire is omitted
-// from JSON. Plain encoding replays it, and canonical encoding writes zero.
-func (v Classmark2ValuePart) ReceivedA52() bool {
-	return len(v.Wire.Spare) > 3 && v.Wire.Spare[3].BitLength == 1 && len(v.Wire.Spare[3].Bytes) > 0 && v.Wire.Spare[3].Bytes[0]&0x80 != 0
-}
-
-func decodeClassmark2ValuePartBytes(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
-	if err := runtime.CheckInput(data); err != nil {
-		return runtime.Decoded[Classmark2ValuePart]{}, err
-	}
-	if len(data) < 3 {
-		return runtime.Decoded[Classmark2ValuePart]{}, &runtime.DecodeError{Kind: runtime.Truncated, Offset: len(data) * 8, Path: "Classmark2ValuePart", Detail: "classmark 2 value part requires 3 octets"}
-	}
-	r := runtime.NewReader(data[:3])
-	var readErr error
-	read := func(width int) uint8 {
-		if width < 0 || width > 8 {
-			readErr = fmt.Errorf("invalid Classmark 2 read width")
-			return 0
-		}
-		value, err := r.ReadUint(width)
-		if err != nil {
-			readErr = err
-		}
-		return uint8(value)
-	}
-	spare := func() {
-		_, err := r.ReadSpare()
-		if err != nil {
-			readErr = err
-		}
-	}
-	var v Classmark2ValuePart
-	spare()
-	v.RevisionLevel = read(2)
-	v.ESIND = read(1) != 0
-	v.A51Unavailable = read(1) != 0
-	v.RFPowerCapability = read(3)
-	spare()
-	v.PSCapability = read(1) != 0
-	v.SSScreeningIndicator = read(2)
-	v.SMCapability = read(1) != 0
-	v.VBS = read(1) != 0
-	v.VGCS = read(1) != 0
-	v.FC = read(1) != 0
-	v.CM3 = read(1) != 0
-	spare()
-	v.LCSVA = read(1) != 0
-	v.UCS2 = read(1) != 0
-	v.SoLSA = read(1) != 0
-	v.CMSP = read(1) != 0
-	v.A53Available = read(1) != 0
-	spare()
-	if readErr != nil {
-		return runtime.Decoded[Classmark2ValuePart]{}, readErr
-	}
-	tail := runtime.BitString{Bytes: append([]byte(nil), data[3:]...), BitLength: (len(data) - 3) * 8}
-	v.Wire = runtime.Seal(v, data, 24, tail, r.Wire())
-	return runtime.Decoded[Classmark2ValuePart]{Value: v, BitsConsumed: 24, Tail: tail}, nil
-}
-
-func encodeClassmark2ValuePartBytes(v Classmark2ValuePart) ([]byte, error) {
-	if v.RevisionLevel > 3 {
-		return nil, classmark2Error("RevisionLevel", 1, 2, "invalid Classmark 2 field")
-	}
-	if v.RFPowerCapability > 7 {
-		return nil, classmark2Error("RFPowerCapability", 5, 3, "invalid Classmark 2 field")
-	}
-	if v.SSScreeningIndicator > 3 {
-		return nil, classmark2Error("SSScreeningIndicator", 10, 2, "invalid Classmark 2 field")
-	}
-	if err := runtime.CheckInput(v.Wire.Tail.Bytes); err != nil {
-		return nil, err
-	}
-	if v.Wire.Tail.BitLength < 0 || v.Wire.Tail.BitLength%8 != 0 || v.Wire.Tail.BitLength/8 != len(v.Wire.Tail.Bytes) {
-		return nil, fmt.Errorf("classmark 2 tail must be whole octets")
-	}
-	w := runtime.NewWriter()
-	w.WithWire(v.Wire)
-	var writeErr error
-	write := func(value uint8, width int) {
-		if writeErr == nil {
-			writeErr = w.WriteUint(uint64(value), width)
-		}
-	}
-	flag := func(value bool) {
-		var bit uint8
-		if value {
-			bit = 1
-		}
-		write(bit, 1)
-	}
-	spare := func() {
-		if writeErr == nil {
-			writeErr = w.WriteSpare()
-		}
-	}
-	spare()
-	write(v.RevisionLevel, 2)
-	flag(v.ESIND)
-	flag(v.A51Unavailable)
-	write(v.RFPowerCapability, 3)
-	spare()
-	flag(v.PSCapability)
-	write(v.SSScreeningIndicator, 2)
-	flag(v.SMCapability)
-	flag(v.VBS)
-	flag(v.VGCS)
-	flag(v.FC)
-	flag(v.CM3)
-	spare()
-	flag(v.LCSVA)
-	flag(v.UCS2)
-	flag(v.SoLSA)
-	flag(v.CMSP)
-	flag(v.A53Available)
-	spare()
-	if writeErr != nil {
-		return nil, writeErr
-	}
-	return w.Finish(v.Wire.Tail)
-}
-
-// EncodeClassmark2ValuePartCanonical encodes a copy without received wire layout.
-// It returns an located *runtime.OperationError value-constraint error for a reserved sender code
-// (TS 24.008 V20.1.0 table 10.5.6a; TS 24.007 §11.4.2).
-// RF codes 0..4 and 7 have a defined band/RAT interpretation; selecting the
-// applicable band-specific row requires the containing radio context.
-func EncodeClassmark2ValuePartCanonical(v Classmark2ValuePart) ([]byte, error) {
-	if v.RevisionLevel != 1 && v.RevisionLevel != 2 {
-		return nil, operationLocation2.failure(classmark2Error("RevisionLevel", 1, 2, "value reserved by source table: TS 24.008 table 10.5.6a Revision level"), "", -1, 0)
-	}
-	if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
-		return nil, operationLocation2.failure(classmark2Error("RFPowerCapability", 5, 3, "value reserved by source table: TS 24.008 table 10.5.6a RF Power Capability"), "", -1, 0)
-	}
-	{
-		operationValue, operationErr := EncodeClassmark2ValuePart(runtime.Canonical(v))
-		if operationErr != nil {
-			return operationValue, operationLocation2.failure(operationErr, "", -1, 0)
-		}
-		return operationValue, nil
-	}
-}
-
 type GERANCS struct {
-	Classmark2 Classmark2ValuePart
+	Classmark2 classmark.Classmark2ValuePart
 	Classmark3 classmark.Classmark3ValuePart
 	Wire       runtime.WireInfo `json:"-"`
 }
@@ -202,7 +30,7 @@ func decodeGERANCSBytes(data []byte) (runtime.Decoded[GERANCS], error) {
 	if len(data) < 6 || data[0] != 0x33 || data[1] != 3 {
 		return runtime.Decoded[GERANCS]{}, fmt.Errorf("invalid GERAN CS Classmark 2 TLV")
 	}
-	cm2, err := DecodeClassmark2ValuePart(data[2:5])
+	cm2, err := classmark.DecodeClassmark2ValuePart(data[2:5])
 	if err != nil {
 		return runtime.Decoded[GERANCS]{}, shiftOperation(err, 16, "GERANCS/Classmark2")
 	}
@@ -216,7 +44,7 @@ func decodeGERANCSBytes(data []byte) (runtime.Decoded[GERANCS], error) {
 }
 
 func encodeGERANCSBytes(v GERANCS) ([]byte, error) {
-	cm2, err := EncodeClassmark2ValuePart(v.Classmark2)
+	cm2, err := classmark.EncodeClassmark2ValuePart(v.Classmark2)
 	if err != nil {
 		return nil, shiftOperation(err, 16, "GERANCS/Classmark2")
 	}
@@ -250,30 +78,30 @@ func encodeGERANCSBytes(v GERANCS) ([]byte, error) {
 
 // EncodeGERANCSCanonical uses the shortest equivalent TS 24.008 V20.1.0
 // §10.5.1.7 Classmark 3 value in the TS 36.331 V19.4.0 container.
-// It returns the errors of EncodeClassmark2ValuePartCanonical and
+// It returns the errors of classmark.EncodeClassmark2ValuePartCanonical and
 // classmark.EncodeClassmark3ValuePartCanonical; its own container checks are
 // located *runtime.OperationError.
 func EncodeGERANCSCanonical(v GERANCS) ([]byte, error) {
 	fresh := runtime.Canonical(v)
-	cm2, err := EncodeClassmark2ValuePartCanonical(fresh.Classmark2)
+	cm2, err := classmark.EncodeClassmark2ValuePartCanonical(fresh.Classmark2)
 	if err != nil {
-		return nil, operationLocation5.failure(shiftOperation(err, 16, "GERANCS/Classmark2"), "", -1, 0)
+		return nil, operationLocation2.failure(shiftOperation(err, 16, "GERANCS/Classmark2"), "", -1, 0)
 	}
 	cm3, err := classmark.EncodeClassmark3ValuePartCanonical(fresh.Classmark3)
 	if err != nil {
-		return nil, operationLocation5.failure(shiftOperation(err, 40, "GERANCS/Classmark3"), "", -1, 0)
+		return nil, operationLocation2.failure(shiftOperation(err, 40, "GERANCS/Classmark3"), "", -1, 0)
 	}
 	out := append([]byte{0x33, 3}, cm2...)
 	out = append(out, cm3...)
 	if err := runtime.CheckInput(out); err != nil {
-		return nil, operationLocation5.failure(err, "", -1, 0)
+		return nil, operationLocation2.failure(err, "", -1, 0)
 	}
 	again, err := DecodeGERANCS(out)
 	if err != nil {
-		return nil, operationLocation5.failure(fmt.Errorf("canonical GERAN CS does not decode: %w", err), "", -1, 0)
+		return nil, operationLocation2.failure(fmt.Errorf("canonical GERAN CS does not decode: %w", err), "", -1, 0)
 	}
 	if !runtime.SemanticallyEqual(v, again.Value) {
-		return nil, operationLocation5.failure(fmt.Errorf("canonical GERAN CS changes typed semantics"), "", -1, 0)
+		return nil, operationLocation2.failure(fmt.Errorf("canonical GERAN CS changes typed semantics"), "", -1, 0)
 	}
 	return out, nil
 }
@@ -313,181 +141,16 @@ func encodeGERANPSBytes(v GERANPS) ([]byte, error) {
 func EncodeGERANPSCanonical(v GERANPS) ([]byte, error) {
 	out, err := msrac.EncodeMSRACapabilityValuePartCanonical(v.Capability)
 	if err != nil {
-		return nil, operationLocation8.failure(err, "", -1, 0)
+		return nil, operationLocation5.failure(err, "", -1, 0)
 	}
 	again, err := DecodeGERANPS(out)
 	if err != nil {
-		return nil, operationLocation8.failure(fmt.Errorf("canonical GERAN PS does not decode: %w", err), "", -1, 0)
+		return nil, operationLocation5.failure(fmt.Errorf("canonical GERAN PS does not decode: %w", err), "", -1, 0)
 	}
 	if !runtime.SemanticallyEqual(v, again.Value) {
-		return nil, operationLocation8.failure(fmt.Errorf("canonical GERAN PS changes typed semantics"), "", -1, 0)
+		return nil, operationLocation5.failure(fmt.Errorf("canonical GERAN PS changes typed semantics"), "", -1, 0)
 	}
 	return out, nil
-}
-
-func classmark2Error(field string, offset, width int, detail string) error {
-	return &runtime.OperationError{Operation: "encode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: errorPath("Classmark2ValuePart", field), BitOffset: offset, Width: width, Source: runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}}, Detail: detail}
-}
-
-func DecodeClassmark2ValuePartFrom(r *runtime.Reader) (Classmark2ValuePart, error) {
-	if err := r.Check(); err != nil {
-		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-	}
-	if r.Remaining() < 24 {
-		return Classmark2ValuePart{}, operationLocation0.failure(&runtime.DecodeError{Kind: runtime.Truncated, Offset: r.Position() + r.Remaining(), Path: r.ErrorPath("Classmark2ValuePart"), Detail: "classmark 2 value part requires 3 octets"}, "", r.Position(), 0)
-	}
-	if err := r.Enter("Classmark2ValuePart"); err != nil {
-		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-	}
-	defer r.Leave()
-	before := r.Wire()
-	start := r.Fork()
-	var readErr error
-	read := func(width int) uint8 {
-		value, err := r.ReadUint(width)
-		if err != nil {
-			readErr = err
-		}
-		return uint8(value)
-	}
-	spare := func() {
-		_, err := r.ReadSpare()
-		if err != nil {
-			readErr = err
-		}
-	}
-	var v Classmark2ValuePart
-	spare()
-	v.RevisionLevel = read(2)
-	v.ESIND = read(1) != 0
-	v.A51Unavailable = read(1) != 0
-	v.RFPowerCapability = read(3)
-	spare()
-	v.PSCapability = read(1) != 0
-	v.SSScreeningIndicator = read(2)
-	v.SMCapability = read(1) != 0
-	v.VBS = read(1) != 0
-	v.VGCS = read(1) != 0
-	v.FC = read(1) != 0
-	v.CM3 = read(1) != 0
-	spare()
-	v.LCSVA = read(1) != 0
-	v.UCS2 = read(1) != 0
-	v.SoLSA = read(1) != 0
-	v.CMSP = read(1) != 0
-	v.A53Available = read(1) != 0
-	spare()
-	if readErr != nil {
-		return Classmark2ValuePart{}, operationLocation0.failure(readErr, "", r.Position(), 0)
-	}
-	if r.Collecting() {
-		source := runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6", Table: "10.5.6a"}
-		origin := start.Position()
-		observe := func(field string, offset, width int, value uint8) error {
-			return r.Observe(origin+offset, width, uint64(value), source, field)
-		}
-		if v.RevisionLevel == 0 || v.RevisionLevel == 3 {
-			if err := observe("RevisionLevel", 1, 2, v.RevisionLevel); err != nil {
-				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-			}
-		}
-		if v.RFPowerCapability == 5 || v.RFPowerCapability == 6 {
-			if err := observe("RFPowerCapability", 5, 3, v.RFPowerCapability); err != nil {
-				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-			}
-		}
-		if v.SSScreeningIndicator >= 2 {
-			source = runtime.Source{Standard: "TS 24.080", Version: "19.4.0", Clause: "3.7.1"}
-			if err := observe("SSScreeningIndicator", 10, 2, v.SSScreeningIndicator); err != nil {
-				return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-			}
-		}
-	}
-
-	wire, err := r.ValueWire(start, before, false)
-	if err != nil {
-		return Classmark2ValuePart{}, operationLocation0.failure(err, "", r.Position(), 0)
-	}
-	// TS 24.008 V20.1.0 §10.5.1.6 has no inferred zeros or counted spares.
-	wire.SpareCounts = nil
-	wire.ImplicitSpans = nil
-	v.Wire = wire
-	return v, nil
-}
-func EncodeClassmark2ValuePartTo(w *runtime.Writer, v Classmark2ValuePart) error {
-	if w == nil {
-		return operationLocation1.nilWriter()
-	}
-	wire := v.Wire
-	wire.Spare = nil
-	return operationLocation1.failure(w.WithWireValue(wire, func() error {
-		if err := w.Enter("Classmark2ValuePart"); err != nil {
-			return err
-		}
-		defer w.Leave()
-		if v.RevisionLevel > 3 || v.RFPowerCapability > 7 || v.SSScreeningIndicator > 3 {
-			return fmt.Errorf("invalid Classmark 2 field")
-		}
-		var writeErr error
-		spareIndex := 0
-		write := func(value uint8, width int) {
-			if writeErr == nil {
-				writeErr = w.WriteUint(uint64(value), width)
-			}
-		}
-		flag := func(v bool) {
-			var b uint8
-			if v {
-				b = 1
-			}
-			write(b, 1)
-		}
-		spare := func() {
-			if writeErr == nil {
-				var bit runtime.BitString
-				if spareIndex < len(v.Wire.Spare) {
-					bit = v.Wire.Spare[spareIndex]
-				}
-				writeErr = w.WriteLayoutBit(bit)
-				spareIndex++
-			}
-		}
-		spare()
-		write(v.RevisionLevel, 2)
-		flag(v.ESIND)
-		flag(v.A51Unavailable)
-		write(v.RFPowerCapability, 3)
-		spare()
-		flag(v.PSCapability)
-		write(v.SSScreeningIndicator, 2)
-		flag(v.SMCapability)
-		flag(v.VBS)
-		flag(v.VGCS)
-		flag(v.FC)
-		flag(v.CM3)
-		spare()
-		flag(v.LCSVA)
-		flag(v.UCS2)
-		flag(v.SoLSA)
-		flag(v.CMSP)
-		flag(v.A53Available)
-		spare()
-		return writeErr
-	}), "", w.Position(), 0)
-}
-
-// EncodeClassmark2ValuePartCanonicalAtLength returns *runtime.ExtentError when octets is not 3. Other errors are located *runtime.OperationError from EncodeClassmark2ValuePartCanonical.
-func EncodeClassmark2ValuePartCanonicalAtLength(v Classmark2ValuePart, octets int) ([]byte, error) {
-	if octets != 3 {
-		return nil, operationLocation2.failure(&runtime.ExtentError{Actual: octets, Minimum: 3, Maximum: 3}, "", -1, 0)
-	}
-	{
-		operationValue, operationErr := EncodeClassmark2ValuePartCanonical(v)
-		if operationErr != nil {
-			return operationValue, operationLocation2.failure(operationErr, "", -1, 0)
-		}
-		return operationValue, nil
-	}
 }
 
 // TS 36.331 V19.4.0 §6.3.6 UE-CapabilityRAT-ContainerList:
@@ -495,10 +158,10 @@ func EncodeClassmark2ValuePartCanonicalAtLength(v Classmark2ValuePart, octets in
 // from the original reader, so nested locations include their offset once.
 func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	if err := r.Check(); err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	if r.BoundedRemaining() < 0 {
-		return GERANCS{}, operationLocation3.failure(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-cs"}, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-cs"}, "", r.Position(), 0)
 	}
 	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
 	// §§10.5.1.6–10.5.1.7 require the five framing/Classmark 2 octets
@@ -508,18 +171,18 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	probe := r.Fork()
 	header, headerErr := probe.ReadUint(16)
 	if r.BoundedRemaining() < 48 || headerErr != nil || header != 0x3303 {
-		return GERANCS{}, operationLocation3.failure(&runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: r.ErrorPath("GERANCS"), BitOffset: -1, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}}, Detail: "invalid GERAN CS Classmark 2 TLV"}, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(&runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: r.ErrorPath("GERANCS"), BitOffset: -1, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}}, Detail: "invalid GERAN CS Classmark 2 TLV"}, "", r.Position(), 0)
 	}
 	if r.Collecting() {
 		r.EnterObservationPath("GERANCS")
 		defer r.LeaveObservationPath()
 	}
 	if _, err := r.ReadUint(16); err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
-	cm2, err := DecodeClassmark2ValuePartFrom(r)
+	cm2, err := classmark.DecodeClassmark2ValuePartFrom(r)
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	before := r.Wire()
 	start := r.Fork()
@@ -528,18 +191,18 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	defer r.SetZeroExtension(prior)
 	oldLimit, err := r.PushLimit(min(256, r.Remaining()))
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	cm3, err := classmark.DecodeClassmark3ValuePartFrom(r)
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(wrapperChildError(r, err, "GERANCS/Classmark3"), "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(wrapperChildError(r, err, "GERANCS/Classmark3"), "", r.Position(), 0)
 	}
 	if err := r.PopLimit(oldLimit); err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	wire, err := r.ValueWire(start, before, true)
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	if len(wire.SpareCounts) == 0 {
 		wire.SpareCounts = nil
@@ -552,7 +215,7 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 	// received capability layout belongs to those parts, not to the container.
 	outer, err := r.ValueWire(outerOrigin, outerBefore, true)
 	if err != nil {
-		return GERANCS{}, operationLocation3.failure(err, "", r.Position(), 0)
+		return GERANCS{}, operationLocation0.failure(err, "", r.Position(), 0)
 	}
 	outer.Spare = nil
 	outer.Padding = nil
@@ -565,47 +228,47 @@ func DecodeGERANCSFrom(r *runtime.Reader) (GERANCS, error) {
 }
 func EncodeGERANCSTo(w *runtime.Writer, v GERANCS) error {
 	if w == nil {
-		return operationLocation4.nilWriter()
+		return operationLocation1.nilWriter()
 	}
 	if err := w.WriteUint(0x33, 8); err != nil {
-		return operationLocation4.failure(err, "", w.Position(), 0)
+		return operationLocation1.failure(err, "", w.Position(), 0)
 	}
 	if err := w.WriteUint(3, 8); err != nil {
-		return operationLocation4.failure(err, "", w.Position(), 0)
+		return operationLocation1.failure(err, "", w.Position(), 0)
 	}
-	if err := EncodeClassmark2ValuePartTo(w, v.Classmark2); err != nil {
-		return operationLocation4.failure(err, "", w.Position(), 0)
+	if err := classmark.EncodeClassmark2ValuePartTo(w, v.Classmark2); err != nil {
+		return operationLocation1.failure(err, "", w.Position(), 0)
 	}
-	return operationLocation4.failure(classmark.EncodeClassmark3ValuePartTo(w, v.Classmark3), "", w.Position(), 0)
+	return operationLocation1.failure(classmark.EncodeClassmark3ValuePartTo(w, v.Classmark3), "", w.Position(), 0)
 }
 
 // EncodeGERANCSCanonicalAtLength returns *runtime.ExtentError when octets is outside 6..37. It returns the errors of classmark.EncodeClassmark3ValuePartCanonicalAtLength.
 func EncodeGERANCSCanonicalAtLength(v GERANCS, octets int) ([]byte, error) {
 	if octets < 6 || octets > 37 {
-		return nil, operationLocation5.failure(&runtime.ExtentError{Actual: octets, Minimum: 6, Maximum: 37}, "", -1, 0)
+		return nil, operationLocation2.failure(&runtime.ExtentError{Actual: octets, Minimum: 6, Maximum: 37}, "", -1, 0)
 	}
 	fresh := runtime.Canonical(v)
-	cm2, err := EncodeClassmark2ValuePartCanonical(fresh.Classmark2)
+	cm2, err := classmark.EncodeClassmark2ValuePartCanonical(fresh.Classmark2)
 	if err != nil {
-		return nil, operationLocation5.failure(shiftOperation(err, 16, "GERANCS/Classmark2"), "", -1, 0)
+		return nil, operationLocation2.failure(shiftOperation(err, 16, "GERANCS/Classmark2"), "", -1, 0)
 	}
 	cm3, err := classmark.EncodeClassmark3ValuePartCanonicalAtLength(fresh.Classmark3, octets-5)
 	if err != nil {
-		return nil, operationLocation5.failure(shiftOperation(err, 40, "GERANCS/Classmark3"), "", -1, 0)
+		return nil, operationLocation2.failure(shiftOperation(err, 40, "GERANCS/Classmark3"), "", -1, 0)
 	}
 	return append(append([]byte{0x33, 3}, cm2...), cm3...), nil
 }
 func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	if err := r.Check(); err != nil {
-		return GERANPS{}, operationLocation6.failure(err, "", r.Position(), 0)
+		return GERANPS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
 	if r.BoundedRemaining() < 0 {
-		return GERANPS{}, operationLocation6.failure(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-ps"}, "", r.Position(), 0)
+		return GERANPS{}, operationLocation3.failure(&runtime.ContextRequiredError{Standard: "TS 36.331", Clause: "6.3.6", Name: "geran-ps"}, "", r.Position(), 0)
 	}
 	// TS 36.331 V19.4.0 §6.3.6 and TS 24.008 V20.1.0
 	// §10.5.5.12a require a two-octet minimum.
 	if r.BoundedRemaining() < 16 {
-		return GERANPS{}, operationLocation6.failure(geranPSMinimumError(r, r.Position()+r.Remaining()), "", r.Position(), 0)
+		return GERANPS{}, operationLocation3.failure(geranPSMinimumError(r, r.Position()+r.Remaining()), "", r.Position(), 0)
 	}
 	// As in DecodeGERANPS, receiver-inferred zeros apply only inside the
 	// <Content> of the access capabilities (TS 24.008 V20.1.0 §10.5.5.12a),
@@ -621,11 +284,11 @@ func DecodeGERANPSFrom(r *runtime.Reader) (GERANPS, error) {
 	}
 	v, err := msrac.DecodeMSRACapabilityValuePartFrom(r)
 	if err != nil {
-		return GERANPS{}, operationLocation6.failure(err, "", r.Position(), 0)
+		return GERANPS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
 	wire, err := r.ValueWire(start, before, true)
 	if err != nil {
-		return GERANPS{}, operationLocation6.failure(err, "", r.Position(), 0)
+		return GERANPS{}, operationLocation3.failure(err, "", r.Position(), 0)
 	}
 	if len(wire.SpareCounts) == 0 {
 		wire.SpareCounts = nil
@@ -645,20 +308,20 @@ func geranPSMinimumError(r *runtime.Reader, offset int) error {
 }
 func EncodeGERANPSTo(w *runtime.Writer, v GERANPS) error {
 	if w == nil {
-		return operationLocation7.nilWriter()
+		return operationLocation4.nilWriter()
 	}
-	return operationLocation7.failure(msrac.EncodeMSRACapabilityValuePartTo(w, v.Capability), "", w.Position(), 0)
+	return operationLocation4.failure(msrac.EncodeMSRACapabilityValuePartTo(w, v.Capability), "", w.Position(), 0)
 }
 
 // EncodeGERANPSCanonicalAtLength returns *runtime.ExtentError when octets is outside 2..50. It returns the errors of msrac.EncodeMSRACapabilityValuePartCanonicalAtLength.
 func EncodeGERANPSCanonicalAtLength(v GERANPS, octets int) ([]byte, error) {
 	if octets < 2 || octets > 50 {
-		return nil, operationLocation8.failure(&runtime.ExtentError{Actual: octets, Minimum: 2, Maximum: 50}, "", -1, 0)
+		return nil, operationLocation5.failure(&runtime.ExtentError{Actual: octets, Minimum: 2, Maximum: 50}, "", -1, 0)
 	}
 	{
 		operationValue, operationErr := msrac.EncodeMSRACapabilityValuePartCanonicalAtLength(v.Capability, octets)
 		if operationErr != nil {
-			return operationValue, operationLocation8.failure(operationErr, "", -1, 0)
+			return operationValue, operationLocation5.failure(operationErr, "", -1, 0)
 		}
 		return operationValue, nil
 	}
@@ -758,60 +421,75 @@ func shiftOperation(err error, offset int, path string) error {
 	return err
 }
 
-func DecodeClassmark2ValuePart(data []byte) (runtime.Decoded[Classmark2ValuePart], error) {
-	v, err := decodeClassmark2ValuePartBytes(data)
-	if err != nil {
-		return v, operationLocation0.failure(err, "", -1, 0)
-	}
-	return v, nil
+func Descriptors() []runtime.Descriptor {
+	out := make([]runtime.Descriptor, len(descriptorCatalogue))
+	copy(out, descriptorCatalogue)
+	return out
 }
-func EncodeClassmark2ValuePart(v Classmark2ValuePart) ([]byte, error) {
-	out, err := encodeClassmark2ValuePartBytes(v)
-	if err != nil {
-		return nil, operationLocation1.failure(err, "", -1, 0)
+func Lookup(name string) (runtime.Descriptor, error) {
+	var matches []runtime.Descriptor
+	for _, d := range descriptorCatalogue {
+		if d.Name == name {
+			matches = append(matches, d)
+		}
 	}
-	return out, nil
+	if len(matches) == 1 {
+		return matches[0], nil
+	}
+	if len(matches) == 0 {
+		return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q", name), name, -1, 0)
+	}
+	var clauses []string
+	for _, d := range matches {
+		clauses = append(clauses, d.Clause)
+	}
+	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("ambiguous CSN.1 definition %q in clauses %v", name, clauses), name, -1, 0)
+}
+func LookupClause(clause, name string) (runtime.Descriptor, error) {
+	for _, d := range descriptorCatalogue {
+		if d.Clause == clause && d.Name == name {
+			return d, nil
+		}
+	}
+	return runtime.Descriptor{}, operationLocation6.failure(fmt.Errorf("unknown CSN.1 definition %q in clause %s", name, clause), name, -1, 0)
 }
 func DecodeGERANCS(data []byte) (runtime.Decoded[GERANCS], error) {
 	v, err := decodeGERANCSBytes(data)
 	if err != nil {
-		return v, operationLocation3.failure(err, "", -1, 0)
+		return v, operationLocation0.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGERANCS(v GERANCS) ([]byte, error) {
 	out, err := encodeGERANCSBytes(v)
 	if err != nil {
-		return nil, operationLocation4.failure(err, "", -1, 0)
+		return nil, operationLocation1.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 func DecodeGERANPS(data []byte) (runtime.Decoded[GERANPS], error) {
 	v, err := decodeGERANPSBytes(data)
 	if err != nil {
-		return v, operationLocation6.failure(err, "", -1, 0)
+		return v, operationLocation3.failure(err, "", -1, 0)
 	}
 	return v, nil
 }
 func EncodeGERANPS(v GERANPS) ([]byte, error) {
 	out, err := encodeGERANPSBytes(v)
 	if err != nil {
-		return nil, operationLocation7.failure(err, "", -1, 0)
+		return nil, operationLocation4.failure(err, "", -1, 0)
 	}
 	return out, nil
 }
 
-var sourceClause0 = runtime.Source{Standard: "TS 24.008", Version: "20.1.0", Clause: "10.5.1.6"}
-var operationLocation0 = operationLocation{"decode", "Classmark2ValuePart", &sourceClause0, runtime.InvalidValue}
-var operationLocation1 = operationLocation{"encode", "Classmark2ValuePart", &sourceClause0, runtime.InvalidValue}
-var operationLocation2 = operationLocation{"canonical", "Classmark2ValuePart", &sourceClause0, runtime.InvalidValue}
-var sourceClause1 = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
-var operationLocation3 = operationLocation{"decode", "GERANCS", &sourceClause1, runtime.InvalidValue}
-var operationLocation4 = operationLocation{"encode", "GERANCS", &sourceClause1, runtime.InvalidValue}
-var operationLocation5 = operationLocation{"canonical", "GERANCS", &sourceClause1, runtime.InvalidValue}
-var operationLocation6 = operationLocation{"decode", "GERANPS", &sourceClause1, runtime.InvalidValue}
-var operationLocation7 = operationLocation{"encode", "GERANPS", &sourceClause1, runtime.InvalidValue}
-var operationLocation8 = operationLocation{"canonical", "GERANPS", &sourceClause1, runtime.InvalidValue}
+var sourceClause0 = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
+var operationLocation0 = operationLocation{"decode", "GERANCS", &sourceClause0, runtime.InvalidValue}
+var operationLocation1 = operationLocation{"encode", "GERANCS", &sourceClause0, runtime.InvalidValue}
+var operationLocation2 = operationLocation{"canonical", "GERANCS", &sourceClause0, runtime.InvalidValue}
+var operationLocation3 = operationLocation{"decode", "GERANPS", &sourceClause0, runtime.InvalidValue}
+var operationLocation4 = operationLocation{"encode", "GERANPS", &sourceClause0, runtime.InvalidValue}
+var operationLocation5 = operationLocation{"canonical", "GERANPS", &sourceClause0, runtime.InvalidValue}
+var operationLocation6 = operationLocation{"lookup", "", &sourceClause0, runtime.InvalidSchema}
 
 func constrainedWidth(path string) int {
 	for i := len(path) - 1; i >= 0; i-- {
@@ -988,4 +666,133 @@ func locatedFailure(err error, operation, path string, offset, width int, source
 		location.Width = 0
 	}
 	return &runtime.OperationError{Operation: operation, Kind: kind, Location: location, Cause: err}
+}
+
+// Finite canonical bounds: TS 24.008 §10.5.1.6 and TS 36.331 §6.3.6,
+// UE-CapabilityRAT-ContainerList field descriptions; receiver tails are separate.
+func finiteCollector(from func(*runtime.Reader) (any, error)) func([]byte, *runtime.Collector) (any, error) {
+	return func(data []byte, c *runtime.Collector) (any, error) {
+		if err := runtime.CheckInput(data); err != nil {
+			return nil, err
+		}
+		r := runtime.NewReaderWithCollector(data, c)
+		if _, err := r.PushLimit(len(data) * 8); err != nil {
+			return nil, err
+		}
+		value, err := from(r)
+		if err != nil {
+			return nil, err
+		}
+		return value, nil
+	}
+}
+func finiteTypeError(operation, name string, source runtime.Source) error {
+	return &runtime.OperationError{Operation: operation, Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Detail: "wrong value type"}
+}
+func finiteReaderCheck(r *runtime.Reader, name string, source runtime.Source) error {
+	if err := r.Check(); err != nil {
+		return &runtime.OperationError{Operation: "decode", Kind: runtime.InvalidValue, Location: runtime.Location{Path: name, BitOffset: -1, Source: source}, Cause: err}
+	}
+	return nil
+}
+
+var finiteSourceGERANCS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
+
+func descriptorDecodeGERANCS(data []byte) (any, error) { return DecodeGERANCS(data) }
+func descriptorDecodeGERANCSFrom(r *runtime.Reader) (any, error) {
+	if err := finiteReaderCheck(r, "geran-cs", finiteSourceGERANCS); err != nil {
+		return runtime.Decoded[GERANCS]{}, err
+	}
+	start := r.Position()
+	v, err := DecodeGERANCSFrom(r)
+	if err != nil {
+		return runtime.Decoded[GERANCS]{}, err
+	}
+	return runtime.Decoded[GERANCS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+}
+func finiteUnwrapGERANCS(value any) (GERANCS, bool) {
+	switch v := value.(type) {
+	case GERANCS:
+		return v, true
+	case runtime.Decoded[GERANCS]:
+		return v.Value, true
+	default:
+		return GERANCS{}, false
+	}
+}
+func finiteEncodeGERANCS(value any) ([]byte, error) {
+	v, ok := finiteUnwrapGERANCS(value)
+	if !ok {
+		return nil, finiteTypeError("encode", "geran-cs", finiteSourceGERANCS)
+	}
+	return EncodeGERANCS(v)
+}
+func finiteCanonicalGERANCS(value any) ([]byte, error) {
+	v, ok := finiteUnwrapGERANCS(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "geran-cs", finiteSourceGERANCS)
+	}
+	return EncodeGERANCSCanonical(v)
+}
+func finiteCanonicalGERANCSAtLength(value any, octets int) ([]byte, error) {
+	v, ok := finiteUnwrapGERANCS(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "geran-cs", finiteSourceGERANCS)
+	}
+	return EncodeGERANCSCanonicalAtLength(v, octets)
+}
+
+var finiteSourceGERANPS = runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}
+
+func descriptorDecodeGERANPS(data []byte) (any, error) { return DecodeGERANPS(data) }
+func descriptorDecodeGERANPSFrom(r *runtime.Reader) (any, error) {
+	if err := finiteReaderCheck(r, "geran-ps", finiteSourceGERANPS); err != nil {
+		return runtime.Decoded[GERANPS]{}, err
+	}
+	start := r.Position()
+	v, err := DecodeGERANPSFrom(r)
+	if err != nil {
+		return runtime.Decoded[GERANPS]{}, err
+	}
+	return runtime.Decoded[GERANPS]{Value: v, BitsConsumed: r.Position() - start, Tail: v.Wire.Tail}, nil
+}
+func finiteUnwrapGERANPS(value any) (GERANPS, bool) {
+	switch v := value.(type) {
+	case GERANPS:
+		return v, true
+	case runtime.Decoded[GERANPS]:
+		return v.Value, true
+	default:
+		return GERANPS{}, false
+	}
+}
+func finiteEncodeGERANPS(value any) ([]byte, error) {
+	v, ok := finiteUnwrapGERANPS(value)
+	if !ok {
+		return nil, finiteTypeError("encode", "geran-ps", finiteSourceGERANPS)
+	}
+	return EncodeGERANPS(v)
+}
+func finiteCanonicalGERANPS(value any) ([]byte, error) {
+	v, ok := finiteUnwrapGERANPS(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "geran-ps", finiteSourceGERANPS)
+	}
+	return EncodeGERANPSCanonical(v)
+}
+func finiteCanonicalGERANPSAtLength(value any, octets int) ([]byte, error) {
+	v, ok := finiteUnwrapGERANPS(value)
+	if !ok {
+		return nil, finiteTypeError("canonical", "geran-ps", finiteSourceGERANPS)
+	}
+	return EncodeGERANPSCanonicalAtLength(v, octets)
+}
+
+var descriptorCatalogue = []runtime.Descriptor{
+	{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-cs", MaxOctets: 37,
+		Extent: runtime.Extent{MinimumBits: 48, MaximumBits: 296, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}},
+		Decode: descriptorDecodeGERANCS, DecodeFrom: descriptorDecodeGERANCSFrom, Encode: finiteEncodeGERANCS, Canonical: finiteCanonicalGERANCS, CanonicalAtLength: finiteCanonicalGERANCSAtLength, DecodeWithCollector: finiteCollector(descriptorDecodeGERANCSFrom)},
+	{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions", Name: "geran-ps", MaxOctets: 50,
+		Extent: runtime.Extent{MinimumBits: 16, MaximumBits: 400, Finite: true, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 36.331", Version: "19.4.0", Clause: "UE-CapabilityRAT-ContainerList field descriptions"}},
+		Decode: descriptorDecodeGERANPS, DecodeFrom: descriptorDecodeGERANPSFrom, Encode: finiteEncodeGERANPS, Canonical: finiteCanonicalGERANPS, CanonicalAtLength: finiteCanonicalGERANPSAtLength, DecodeWithCollector: finiteCollector(descriptorDecodeGERANPSFrom)},
 }

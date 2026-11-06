@@ -4,14 +4,15 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/gomaja/go-csn1/ts24008/classmark"
+
 	"github.com/gomaja/go-csn1/registry"
 	"github.com/gomaja/go-csn1/runtime"
-	"github.com/gomaja/go-csn1/ts36331/uecapability"
 )
 
 func TestClassmark2DescriptorExtendsOnlyTail(t *testing.T) {
 	data := []byte{0x20, 0, 0, 0xa5}
-	typed, err := uecapability.DecodeClassmark2ValuePartFrom(runtime.NewReader(data))
+	typed, err := classmark.DecodeClassmark2ValuePartFrom(runtime.NewReader(data))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -25,7 +26,7 @@ func TestClassmark2DescriptorExtendsOnlyTail(t *testing.T) {
 	}
 	typed.Wire.Tail = runtime.BitString{Bytes: []byte{0xa5}, BitLength: 8}
 	typed.Wire.TransmittedBits = 32
-	want := runtime.Decoded[uecapability.Classmark2ValuePart]{Value: typed, BitsConsumed: 24, Tail: typed.Wire.Tail}
+	want := runtime.Decoded[classmark.Classmark2ValuePart]{Value: typed, BitsConsumed: 24, Tail: typed.Wire.Tail}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("descriptor replaced typed wire: got %#v, want %#v", got, want)
 	}

@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/gomaja/go-csn1/runtime"
@@ -136,7 +137,9 @@ func TestLookupCatalogueParity(t *testing.T) {
 func installLookupCatalogue(t *testing.T, entries []runtime.Descriptor) {
 	t.Helper()
 	oldEntries, oldIndex := catalogue, catalogueLookup
-	catalogue, catalogueLookup = entries, newLookupIndex(entries)
+	catalogue = sync.OnceValue(func() []runtime.Descriptor { return append([]runtime.Descriptor(nil), entries...) })
+	catalogueLookup = sync.OnceValue(func() lookupIndex { return newLookupIndex(catalogue()) })
+	catalogueLookup()
 	t.Cleanup(func() { catalogue, catalogueLookup = oldEntries, oldIndex })
 }
 
@@ -148,7 +151,7 @@ func TestLookupVersionFailure(t *testing.T) {
 	} {
 		t.Run([]string{"conflicting versions", "missing version", "missing standard"}[i], func(t *testing.T) {
 			installLookupCatalogue(t, entries)
-			cause := catalogueLookup.versionErr
+			cause := catalogueLookup().versionErr
 			if cause == nil {
 				t.Fatal("missing cached validation failure")
 			}
