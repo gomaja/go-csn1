@@ -495,9 +495,11 @@ func (r *Reader) ReadPadding() BitString {
 	return value
 }
 
-// ReadIgnored retains a nonsemantic "no string" extension arm. TS 44.018
-// V19.0.0 §9.1.55 and TS 44.060 V19.0.0 §12.24 print this construct;
-// pycrate_csn1/csnobj.py consumes the remaining bits in its bounded scope.
+// ReadIgnored retains a nonsemantic "no string" extension arm, or the rest of
+// a component that a description bound cuts, which TS 44.060 V19.0.0
+// §11.1.4.4 ignores. TS 44.018 V19.0.0 §9.1.55 and TS 44.060 V19.0.0 §12.24
+// print the extension arm; pycrate_csn1/csnobj.py consumes the remaining bits
+// in its bounded scope.
 func (r *Reader) ReadIgnored() BitString { return r.ReadPadding() }
 
 // ReadIgnoredFixed retains the exact nonsemantic bit in wire state while
@@ -659,6 +661,10 @@ func (w *Writer) CanonicalTargetReached() bool {
 // the reader does, at the exhausted bound, and keeps the typed length
 // (§12.24 Extension Length). The omitted components must be zero: "The
 // receiver shall assume the value zero for any truncated bit" (§12.24).
+// When the rest of a length-delimited description's bound is too short for
+// its next component, a canonical encoder writes those bits as zeros
+// instead, provided that component and all later ones are zero; a reader
+// ignores them as a cut component (§11.1.4.4).
 // Outside a bound, the canonical target applies. A decoded value follows its
 // recorded truncation point instead.
 func (w *Writer) TruncationReached() bool {
