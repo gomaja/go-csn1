@@ -72,9 +72,13 @@ type Descriptor struct {
 	Extent       Extent
 	Decode       func([]byte) (any, error)
 	// DecodeFrom returns the same value and error as Decode when the reader's
-	// containing limit covers exactly the input. TS 44.018 §10.5.2.37h's
-	// Non-GSM Message struct with NR OF CONTAINER OCTETS 31 is the exception:
-	// only a bounded reader supplies its required enclosing value extent.
+	// containing limit covers exactly the input, except where only that limit
+	// supplies an extent the definition needs. TS 44.018 §10.5.2.37h's
+	// Non-GSM Message struct with NR OF CONTAINER OCTETS 31 needs its
+	// enclosing value extent. When the limit ends inside a component of the
+	// truncated concatenation of a length-delimited description, the reader
+	// keeps the complete components before it and ignores the cut one
+	// (TS 44.060 V19.0.0 §11.1.4.4), where Decode reports truncated input.
 	// Without a containing limit, the tail belongs to the caller; definitions
 	// that need the value's extent return an error wrapping ErrContextRequired.
 	DecodeFrom func(*Reader) (any, error)
