@@ -1,11 +1,11 @@
 {
   "runtime_contract": {
-    "revision": "c901924d79f633485b4d3236a7471f4097d568b8",
+    "revision": "381cddace8f2aa9be95a11f27f4651195865493c",
     "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
-    "api_ledger_sha256": "5696614a08b4d099956be9f041c4c8cd90ece0410bdad27ce12d89ef03298c06"
+    "api_ledger_sha256": "93900b435bac539779eac90f5844f5b8251b9ec833a64ddf69f406d3c3f3eb27"
   },
   "schema_version": 1,
-  "compiler_commit": "475b977a895328327dfa27d5bd586e3ec9df8304",
+  "compiler_commit": "5163e4dc514dfa4ff95c7d22449ba41fadf21ec8",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -49,11 +49,11 @@
     },
     {
       "standard": "TS 44.118",
-      "version": "16.0.0",
-      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.118/44118-g00.zip",
-      "archive_sha256": "1e352abdd57bcb7c100c5c858f7e4641f2279855979c0e4fb12142c0287827fd",
-      "member": "44118-g00.doc",
-      "member_sha256": "7a71d432d1b83e149abac097571cb858875f74d4d5bc8c5a76f01a89edf8d13c"
+      "version": "11.0.0",
+      "archive_url": "https://www.3gpp.org/ftp/Specs/archive/44_series/44.118/44118-b00.zip",
+      "archive_sha256": "8102d99eeea7120ec56adebc27d8d75e298ef8acd990f058b52ff2ee4d46c21e",
+      "member": "44118-b00.doc",
+      "member_sha256": "48fe58997441d529ab8874086c568d9490c375cd52106ad1b46f95074b5e952e"
     },
     {
       "standard": "TS 44.006",
@@ -5287,12 +5287,28 @@
         20188
       ],
       "reason": "Bind the exact printed reference to its clause-owned declaration or field table."
+    },
+    {
+      "citation": "TS 44.060 V19.0.0 §12.48a.6 paragraphs [25074 25082 25083 25106 25194]",
+      "source_text": "{ 0 | 1 \u003c USF : bit (3) \u003e } * (val (N_TS) + 1)",
+      "resolution": "Repeat the optional USF for subsequent assigned timeslots val(N_TS) times, after the first USF.",
+      "evidence": "TS 44.060 V19.0.0 §12.48a.6 paragraphs [25074 25082 25083 25106 25194]: authenticated source quotation and reviewed reading. Target: TS 44.060 §12.48a.6 paragraph 25194, quotation SHA-256 67c9cda229d72eb77b2ede5b483a4953b50c66a0a11f99e4e150ffb84df8bf36.",
+      "policy": "owner-approved-text-rule",
+      "approval_date": "2026-11-07",
+      "paragraphs": [
+        25074,
+        25082,
+        25083,
+        25106,
+        25194
+      ],
+      "reason": "The printed count gives one USF more than the assigned timeslots; the field description and the RTTI struct of the same clause give one per timeslot."
     }
   ],
   "generated_files": [
     {
       "path": "ts24008/classmark/generated.go",
-      "sha256": "ef34025775c47399fc5ba13c58946ae712f305e0e5e25864e8a1723575e4eb61"
+      "sha256": "0a8b7e72eaa1866f2b9e8ab899b27f5e47e9643de26066625eab463a9fba769a"
     },
     {
       "path": "ts24008/msnetcap/generated.go",
@@ -5300,7 +5316,7 @@
     },
     {
       "path": "ts24008/msrac/generated.go",
-      "sha256": "e57105ce5abbbc258067f768e5782278e1d96020afc60efa8d342f120ea9dc7d"
+      "sha256": "3c744dc62fdb26131de7ea84cf9593695cd5dd6cad8402c7309b1ea3eee55e5e"
     },
     {
       "path": "ts36331/uecapability/generated.go",
@@ -5308,7 +5324,7 @@
     },
     {
       "path": "ts44018/cellselection/generated.go",
-      "sha256": "d7328ccf6116744d1e488563874dc68dc4a8a3fc0ae5eabcfa215ed48897baad"
+      "sha256": "cbe7ae5a91b0f5aa284b42cdedf996ed33761270cb34ee3bf58bfb0baf28b90d"
     },
     {
       "path": "ts44018/ecaccess/generated.go",
@@ -5316,39 +5332,39 @@
     },
     {
       "path": "ts44018/ecimmediateassignment2/generated.go",
-      "sha256": "35a1928294adb5fe1baa8c3faa4599c7c72cefdae59d6f1833f9f9d4878db8d1"
+      "sha256": "be8f824b035c267c2cc03b2dd97e5d2367d86bee0a1ebf4c65ae3e2f6c68b3bc"
     },
     {
       "path": "ts44018/ies/generated.go",
-      "sha256": "b8856219415465fd9c2a5e1df074a99db2b83440bcf50f02f1f35765f36f08f2"
+      "sha256": "7f7fefb8afffe89823e70bd3eed0ce70e97ed0a83d825e6973a64abc4ca42d6a"
     },
     {
       "path": "ts44018/measurement/generated.go",
-      "sha256": "52711d8e9fbc2f2a7ecd967968f809e785bab8a4968411fae8f3c20b96b391ca"
+      "sha256": "99b073d760497fbf97c33a2c82adf6d4def82de5b514b814c2a7e96367d6442b"
     },
     {
       "path": "ts44018/messages/generated.go",
-      "sha256": "6ad456ef7b05a9457ef70ee825239d444ea3a1c0e6c3ee25401e93208a5f6e33"
+      "sha256": "1c698db30349e7f34352b4aea527c40597f3ed66fdded12506e140522e0619f0"
     },
     {
       "path": "ts44018/notification/generated.go",
-      "sha256": "e0d200f386592e4a3248cb4d9ca7148a0ee325767e2ba31b1cfb79a01a00cb11"
+      "sha256": "a68904d72c91e21b67a3c7c1635228d9bb17cd27663d2332aaa6f2a86cdf66d6"
     },
     {
       "path": "ts44018/packetdlassignment/generated.go",
-      "sha256": "1d30abb86f9635e5aaa345df7ee17aee1749839c9596ba0c879f6e8ff2b0dc09"
+      "sha256": "363d6ccd9dd31c6d97746d70708cb828875fbab32f5c496df3a33fc83f166ccc"
     },
     {
       "path": "ts44018/packetdlassignment2/generated.go",
-      "sha256": "f0197b78f803059cca3674f54b2f7751d34bcaaaf2a9a53c8fe7fbc2894569d2"
+      "sha256": "026417c1dfd0ccfd4eb0575f9c6233eba6e73f79008e33d7a85ac4633b4abe16"
     },
     {
       "path": "ts44018/restoctets/generated.go",
-      "sha256": "a4cc34ff9debba256da39a7848a5fc6dfe95ae40d74dfc5460b27621758f1941"
+      "sha256": "7d803c478243b3ebe70488a750f90436306326e1fdfbf9c640dfbbbe7af9b498"
     },
     {
       "path": "ts44018/vgcsreconfigure/generated.go",
-      "sha256": "92018d7d8ac99bc955459d8492d6ded0df342a815cae29a81459545b4148f49f"
+      "sha256": "16f4b1a2c6c7d71809df8b1885fca4f794fc9ba117e6898d086a21dfd00f454d"
     },
     {
       "path": "ts44018/vgcsreconfigure2/generated.go",
@@ -5356,19 +5372,19 @@
     },
     {
       "path": "ts44060/access/generated.go",
-      "sha256": "ee40a0550fa96677644ad9e715ed539665240c008763322011b296305279e3e8"
+      "sha256": "bf2bcad7e3826c581b1bc2d258f0e629a5bf3f86261e3f74d9b85c3d5dc63ddf"
     },
     {
       "path": "ts44060/ackmessages/generated.go",
-      "sha256": "31535492135617be4ced98bdc421d090c7dbc1f3e7b2a66c898575f559fa02df"
+      "sha256": "53bbd853bd6e6c4aad2ed3b2a776194a553f0a749a2d3b7db60ef36d9f045e57"
     },
     {
       "path": "ts44060/acknack/generated.go",
-      "sha256": "b3337e4502db1e29d5a6d65f9550983e65f38c0aed2958d23a4fceff7e98c230"
+      "sha256": "4aafaf7a2b0737435549af4d5bffc2e9c0c7dac61af50459305545ec09e55eac"
     },
     {
       "path": "ts44060/assignmentmessages/generated.go",
-      "sha256": "ec157982aebe18582465f394bb955ae2eedf98e4f2d4a6c40eae075fa4186a45"
+      "sha256": "e3f10bd1a77f15249dedab88faaca0aaba52d98476d117bd4cf328a968fe1b33"
     },
     {
       "path": "ts44060/celldata/generated.go",
@@ -5380,47 +5396,59 @@
     },
     {
       "path": "ts44060/controlmessages/generated.go",
-      "sha256": "b865e788c1c579bd9c2da38b442692305e3eb04417ac73591da75212a52d529a"
+      "sha256": "d0f08289ef6ae926b9391bee86c9b503ab35c7caa2cee50c55ccb278cba54d36"
     },
     {
       "path": "ts44060/csgreport/generated.go",
-      "sha256": "76f40b443228277588f2493e17e8d8049267a8187a48fba8f5df4c3285a9a8a5"
+      "sha256": "dcde9adb6a946382f7f442484170ff190cb0c8006e3ec610e6e83f33bd6e7992"
     },
     {
       "path": "ts44060/dbpschuplinkack/generated.go",
-      "sha256": "a5797fec8cc414aaa7c47133d21f909390cdc1b8d811040e06f63bfc2dfb82a0"
+      "sha256": "435c4d6458fed63e74945fed2e2063c5d0ea6b26da5407d2c9da5b51185331d1"
     },
     {
       "path": "ts44060/dbpschuplinkack2/generated.go",
-      "sha256": "c679941e0ee86f52f99af9152a3a7aa6e5c5c4b948cc3955b452a4128d013ac3"
+      "sha256": "569adb3571d48092949afceef53efb6976eef4d3c724f3f40be17ac93c9a4026"
     },
     {
       "path": "ts44060/dtmhandover/generated.go",
-      "sha256": "6c5f6d89c911b33eabfa37e44916452f31c02b8f3963ae449eb9b5f3172e0db1"
+      "sha256": "406c0c90d198bab8b5c151fa47da47b44d3d90a1243cd311102e826a21b14226"
+    },
+    {
+      "path": "ts44060/dtmhandover2/generated.go",
+      "sha256": "346b3cdeb6776a70218377d03932150bd621cad3ea1987a5e661beb154b93046"
+    },
+    {
+      "path": "ts44060/dtmhandover3/generated.go",
+      "sha256": "36143de6b4c7e63a06ceb3dd679302e41298c80624b4de14236bef4600f240f6"
     },
     {
       "path": "ts44060/ecmessages/generated.go",
       "sha256": "4006c7866aa2937db0bff384c2bc35f8264eaefeec322ea99f3959326b457b89"
     },
     {
+      "path": "ts44060/egprsmode2/generated.go",
+      "sha256": "1962adb33a403eeb15fd266d1b12ca23dd6130bcc6442545f6d738035078f735"
+    },
+    {
       "path": "ts44060/eutrancsgtarget/generated.go",
-      "sha256": "8420663ad07f4da00597614dcbcb5b572c41c22ef4078bd29017297711636ea8"
+      "sha256": "ab09cdae22c6d720e6000a4a73a9ca17ed260f7657b3d257f1d661e91efd1e46"
     },
     {
       "path": "ts44060/ies/generated.go",
-      "sha256": "a67a3670d6f2b91ec97bf063843374c8c055919c71c00e5b8e43dc51f1832002"
+      "sha256": "29860b17ae1bcc1dc7ff9b2fe35ad77241a744b52498c32ca88858de6da75dfd"
     },
     {
       "path": "ts44060/mbmsassignment/generated.go",
-      "sha256": "8c387fcc7e00783287a2adb29504bf32b2bc07faf409cca76cb7d5f69b06ce88"
+      "sha256": "eaaf4a30e84e79126976a2fb00436e14da5ca5be0bbf431d326a453c35d82adc"
     },
     {
       "path": "ts44060/mbmsmessages/generated.go",
-      "sha256": "22ec27c22cf2e2211ee9fbde5e7b84169a06e05a4f43642a0355e887749b0072"
+      "sha256": "8438ae0d33571ea2dddec93f4dd35c9a4dac4465204f7b9ec503f5d5c9ec8cd6"
     },
     {
       "path": "ts44060/measurementreport/generated.go",
-      "sha256": "e07acff40b8933658fcd49d363e9b0338bb44ad6fcdaca0d65162eafbf14b281"
+      "sha256": "563813b871c22dacd3d8bc03cbed6af8374ace63f7700016f83c0bd294874181"
     },
     {
       "path": "ts44060/messages/generated.go",
@@ -5428,39 +5456,47 @@
     },
     {
       "path": "ts44060/multipledownlink/generated.go",
-      "sha256": "6d8c4b87628db145e9adfb06a971eafdf71ec54bc1e0546555f7bce3f5b46e1e"
+      "sha256": "a9be6150eef4a5ad61541c5557e63ba047f834e03d3f9f2f90c315c0e044fe4f"
+    },
+    {
+      "path": "ts44060/multipleuplinkassignment2/generated.go",
+      "sha256": "3da12d0a1295551325a31a2152b19b7e4668d69ea25b635353380f8b8f32adec"
     },
     {
       "path": "ts44060/neighbourcelldata/generated.go",
-      "sha256": "d7e487df28a43f66b1d5d2b80d9380bd9b91bb30748e158420c4c2f3cd3983ef"
+      "sha256": "a2cc6491c1a246e0c954ac30f18b48b8f6332cc7226d6aa44ddf5c9f72cd023c"
     },
     {
       "path": "ts44060/nongprsoptions/generated.go",
-      "sha256": "9d901010f6e132526c0780ac4c9fb26ab8204256237846ba040129456a1a7fd1"
+      "sha256": "d1de3167cab0815cad5a7786de9bae0fab8e76154145ce2249189cc477bb8d70"
+    },
+    {
+      "path": "ts44060/packetcsreleaseindication/generated.go",
+      "sha256": "67742fd1cac051d3bbd6cc6903c376cabeb71cd9804292c40befbcd4f32204e3"
     },
     {
       "path": "ts44060/packetdownlinkassignment/generated.go",
-      "sha256": "14b9c210aba04830b577444f738cbed0544fa93c1d06a73c20ba65eb2bbea215"
+      "sha256": "566bed694f6c4f5f2ee9da4e8a60f46220f71758bc134ef7224d458c53ee6c03"
     },
     {
       "path": "ts44060/packetenhancedmeasurement/generated.go",
-      "sha256": "ca8e2f2d42e4f481ba6b873c67bb914fc377a0cbfec3199f748bdd340af188f7"
+      "sha256": "147b31befeb92357e5d59093bccd5c9b7b53155c80b009844cab393a893edcc6"
     },
     {
       "path": "ts44060/packetmeasurementorder/generated.go",
-      "sha256": "2849d233715ff02a4579693cc71537fab0db1d78e300bd1cdbb25ab537e58065"
+      "sha256": "49067aae3dbcd44cfa5b210c186fb1788b63c151ed23790da36ee644103febf1"
     },
     {
       "path": "ts44060/packetsysteminformationtype3/generated.go",
-      "sha256": "be5b73e0d6537e3aa45c451b6a143a23a2f9b1705c95e3d801191c29828466b7"
+      "sha256": "c981404f26d7a29e65c6664695923254080c4de9db86bf11afc69ff071dfe832"
     },
     {
       "path": "ts44060/packettimeslotreconfigure/generated.go",
-      "sha256": "abae61b83ebc16ec651d5e14534e8968c084181cd0af5af074c866250e63281f"
+      "sha256": "8b00674f86528aaddc9ee8892b3a9c252b7bbae6f9180bcc33deaf5c43e46b46"
     },
     {
       "path": "ts44060/packetuplinkassignment/generated.go",
-      "sha256": "331bec9cf271682fc24938866ec905e9954e69e8b68b46c958510ec17ec8082e"
+      "sha256": "5027c3131e7963290c294129fadbe3c340b4f81d08b2b990a2ad330e65eec407"
     },
     {
       "path": "ts44060/padding/generated.go",
@@ -5472,23 +5508,27 @@
     },
     {
       "path": "ts44060/pshandover/generated.go",
-      "sha256": "07ee1118b6a901d6b06b3b7e50aac9f016234e48d076233faf0bbc4b0209db13"
+      "sha256": "b03ebb7cde2354f5b61230e3c98988556f1ced8c897e563154b6ac1c71105dd1"
+    },
+    {
+      "path": "ts44060/pshandover2/generated.go",
+      "sha256": "894e720d7751c4400b9054f855d7cd52133abd76ba6cf5f37049bbbb213c18b4"
     },
     {
       "path": "ts44060/pshandoverradioresources3/generated.go",
-      "sha256": "be02c6bb90d1a22df717a246d68ed3d58ce458cc3b3846dc57552b2f93a069bc"
+      "sha256": "3897e6c2906d103195c9e6e3a8386a29bdb476637344a97be59015f94b90efee"
     },
     {
       "path": "ts44060/psi/generated.go",
-      "sha256": "e432f16c6c43dacb337b0416891cd5d52997ee84d7697fed7bbeed4c7a1d805f"
+      "sha256": "e4ac96cadb4cd414921d204828567b5abd0713a671e5825db8d439cb5a5baaa0"
     },
     {
       "path": "ts44060/psilegacy/generated.go",
-      "sha256": "9fa70138f15f2a790e08c010b25272408d3764c560c3ff0a2ce382479f21c8dc"
+      "sha256": "0682b9254cec7643edacb09159724a6b34c0d9459d0cb1d992910e54f61a9265"
     },
     {
       "path": "ts44060/psineighbours/generated.go",
-      "sha256": "4cfc074b94f91dca09abd85a1a0f0b2d8d9260af2d08a49b82ef6b7ea0d567eb"
+      "sha256": "d2ab2ff1dd4f95efc2d84e7762e1db5ad54198dcd34c0708d4b59719360f5e9b"
     },
     {
       "path": "ts44060/pulseformat/generated.go",
@@ -5504,15 +5544,15 @@
     },
     {
       "path": "ts44060/singledownlink/generated.go",
-      "sha256": "12eec9fe41b8766e94d5b0b6de3a928a8907979bd8343ac1482e70fc4ca2f257"
+      "sha256": "40e2477dacb8fbebf5c730f0d36776469b2c1261e4d0a6b8eacd6bfc05ae7944"
     },
     {
       "path": "ts44060/singleuplink/generated.go",
-      "sha256": "cc304157fec77a17aae06c87a8b8cb7232f8bc7a3a0383bcad7e6194ab749aaf"
+      "sha256": "35f38caed4c4d1e247f7efc03dd5c4b4c8f9d8d3f728c3e20c097f7bb0c14333"
     },
     {
       "path": "ts44060/utrancsgtarget/generated.go",
-      "sha256": "b1b7f64a452304dc7a67558e26f29a8585458dd826d66f7ff7647211883a9820"
+      "sha256": "5f4d883887d9ffe2b6230f3bb8e17ace418ddbfa4ef15d497609438258b66fe3"
     }
   ],
   "validation_commands": [
@@ -5620,7 +5660,7 @@
   "source_policies": [
     {
       "path": "conformance/csn1-expansion.json",
-      "sha256": "80ac8109abfc3bdcabb74895d1f01bf3473cdd67991a29fb34b58a5801fefa0e"
+      "sha256": "2306f1257cecb838b00bd6134a2389437624ee4776ef9d54f118a9388434dc6e"
     }
   ]
 }

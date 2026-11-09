@@ -16,8 +16,8 @@ import (
 // can coexist with a canonical API that requires an explicit external extent.
 func TestDescriptorContextMetadataMatchesOperations(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 632 {
-		t.Fatalf("catalogue has %d descriptors, want 632", len(descriptors))
+	if len(descriptors) != 656 {
+		t.Fatalf("catalogue has %d descriptors, want 656", len(descriptors))
 	}
 	for _, d := range descriptors {
 		t.Run(d.Standard+"/"+d.Clause+"/"+d.Name, func(t *testing.T) {
@@ -264,6 +264,10 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 
 		// TS 44.018 V19.0.0 §10.5.2.25e: source-calculated minimum witness.
 		"TS 44.018/10.5.2.25e/Downlink TBF assignment 2 struct": {17, "000000"},
+		// TS 44.060 V19.0.0 §12.48a.6: source-calculated minimum witness.
+		"TS 44.060/12.48a.6/BTTI Uplink TBF Assignment struct": {21, "000040"},
+		// TS 44.060 V19.0.0 §12.48a.6: source-calculated minimum witness.
+		"TS 44.060/12.48a.6/RTTI Uplink TBF Assignment struct": {18, "000000"},
 		// TS 44.060 V19.0.0 §11.2.9b: source-calculated minimum witness.
 		"TS 44.060/11.2.9b/Add Frequency list struct": {25, "00000000"},
 		// TS 44.060 V19.0.0 §11.2.9b: source-calculated minimum witness.
@@ -521,6 +525,23 @@ func TestDescriptorLargeMinimumIsAttained(t *testing.T) {
 		hex  string
 	}{21, "040000"}
 
+	// TS 44.060 V19.0.0 §§12.48 pp24536–24544
+	// and 12.64 pp25608–25616: 111 accepted bits plus TBF mode 01.
+	// Empty receiver remainders attain the structural minima.
+	fixtures["TS 44.060/12.48/DTM Handover PS Radio Resources 2 IE"] = struct {
+		bits int
+		hex  string
+	}{113, "000000000000000000000000000080"}
+	fixtures["TS 44.060/12.64/DTM Handover PS Radio Resources 3 IE"] = struct {
+		bits int
+		hex  string
+	}{113, "000000000000000000000000000080"}
+	// TS 44.060 V19.0.0 §12.42a pp23890–23904: 23 accepted bits
+	// followed by the two-bit frequency-error designation and empty remainder.
+	fixtures["TS 44.060/12.42a/PS Handover Radio Resources 2 IE"] = struct {
+		bits int
+		hex  string
+	}{25, "00000000"}
 	checked := 0
 	for _, d := range registry.Descriptors() {
 		if d.Extent.MinimumBits <= 16 {

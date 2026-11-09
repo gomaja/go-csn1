@@ -37,7 +37,10 @@ import (
 	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack"
 	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack2"
 	"github.com/gomaja/go-csn1/ts44060/dtmhandover"
+	"github.com/gomaja/go-csn1/ts44060/dtmhandover2"
+	"github.com/gomaja/go-csn1/ts44060/dtmhandover3"
 	"github.com/gomaja/go-csn1/ts44060/ecmessages"
+	"github.com/gomaja/go-csn1/ts44060/egprsmode2"
 	"github.com/gomaja/go-csn1/ts44060/eutrancsgtarget"
 	"github.com/gomaja/go-csn1/ts44060/ies"
 	"github.com/gomaja/go-csn1/ts44060/mbmsassignment"
@@ -45,8 +48,10 @@ import (
 	"github.com/gomaja/go-csn1/ts44060/measurementreport"
 	ts44060messages "github.com/gomaja/go-csn1/ts44060/messages"
 	"github.com/gomaja/go-csn1/ts44060/multipledownlink"
+	"github.com/gomaja/go-csn1/ts44060/multipleuplinkassignment2"
 	"github.com/gomaja/go-csn1/ts44060/neighbourcelldata"
 	"github.com/gomaja/go-csn1/ts44060/nongprsoptions"
+	"github.com/gomaja/go-csn1/ts44060/packetcsreleaseindication"
 	"github.com/gomaja/go-csn1/ts44060/packetdownlinkassignment"
 	"github.com/gomaja/go-csn1/ts44060/packetenhancedmeasurement"
 	"github.com/gomaja/go-csn1/ts44060/packetmeasurementorder"
@@ -56,6 +61,7 @@ import (
 	"github.com/gomaja/go-csn1/ts44060/padding"
 	"github.com/gomaja/go-csn1/ts44060/pdchpairs"
 	"github.com/gomaja/go-csn1/ts44060/pshandover"
+	"github.com/gomaja/go-csn1/ts44060/pshandover2"
 	"github.com/gomaja/go-csn1/ts44060/pshandoverradioresources3"
 	"github.com/gomaja/go-csn1/ts44060/psi"
 	"github.com/gomaja/go-csn1/ts44060/psilegacy"
@@ -126,6 +132,13 @@ func descriptors() []runtime.Descriptor {
 	out = append(out, singleuplink.Descriptors()...)
 	out = append(out, utrancsgtarget.Descriptors()...)
 	out = append(out, uecapability.Descriptors()...)
+	out = append(out, dtmhandover2.Descriptors()...)
+	out = append(out, dtmhandover3.Descriptors()...)
+	out = append(out, egprsmode2.Descriptors()...)
+	out = append(out, multipleuplinkassignment2.Descriptors()...)
+	out = append(out, packetcsreleaseindication.Descriptors()...)
+	out = append(out, pshandover2.Descriptors()...)
+
 	return out
 }
 

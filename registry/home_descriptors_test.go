@@ -21,8 +21,8 @@ func TestHomeDescriptorsMatchRegistry(t *testing.T) {
 		{"TS 36.331", "geran-cs", 48, 296, 37, uecapability.Lookup, uecapability.Descriptors},
 		{"TS 36.331", "geran-ps", 16, 400, 50, uecapability.Lookup, uecapability.Descriptors},
 	}
-	if got := len(registry.Descriptors()); got != 632 {
-		t.Fatalf("registry has %d entries; want 632", got)
+	if got := len(registry.Descriptors()); got != 656 {
+		t.Fatalf("registry has %d entries; want 656", got)
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

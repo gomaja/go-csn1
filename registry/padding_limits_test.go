@@ -96,8 +96,8 @@ func TestCanonicalRuntimeExtentRequiresUnresolvedCarrier(t *testing.T) {
 		t.Fatal("runtime ceiling no longer matches the audit extent")
 	}
 	counts := map[string]int{}
-	if len(Descriptors()) != 632 {
-		t.Fatalf("catalogue has %d descriptors, want 632", len(Descriptors()))
+	if len(Descriptors()) != 656 {
+		t.Fatalf("catalogue has %d descriptors, want 656", len(Descriptors()))
 	}
 	for _, d := range Descriptors() {
 		key := d.Standard + "/" + d.Clause + "/" + d.Name
@@ -266,9 +266,13 @@ func callerBoundedControlComponent(d runtime.Descriptor) bool {
 		return false
 	}
 	switch d.Clause + "/" + d.Name {
-	// TS 44.060 V19.0.0 §11.2.26 uses the containing extent.
-	case "11.2.26/Packet TBF Release message content":
+	// TS 44.060 V19.0.0 §§11.2.26,12.42a p23926 use the containing extent.
+	case "11.2.26/Packet TBF Release message content", "12.42a/Extension Information":
 		return true
+	// TS 44.060 V19.0.0: exact source-selected containing bounds.
+	case "12.48/Extension Information", "12.64/Extension Information":
+		return true
+
 	// TS 44.060 V19.0.0: exact source-selected containing bounds.
 	case "11.2.28b/Packet DBPSCH Uplink Ack/Nack message content", "11.2.9b/Packet Measurement Order message content":
 		return true

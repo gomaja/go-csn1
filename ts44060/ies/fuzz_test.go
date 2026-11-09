@@ -4,12 +4,16 @@ import (
 	"bytes"
 	"reflect"
 	"testing"
+
+	"github.com/gomaja/go-csn1/runtime"
 )
 
 func FuzzIEDefinitions(f *testing.F) {
 	for _, seed := range [][]byte{{}, {0x00}, {0x01}, {0x7f}, {0xff}, {0x2b}, {0x2b, 0x2b}, {0x00, 0x00}, {0x55, 0x55}, {0, 0, 0, 0, 0}} {
 		f.Add(seed)
 	}
+	// TS 44.060 §§11.1.4.4, 12.24: complete R99, cut inside Rel-4.
+	f.Add(gprsCellOptionsWithIgnored(runtime.BitString{Bytes: []byte{0xd7, 0xc0}, BitLength: 10}))
 	f.Fuzz(func(t *testing.T, data []byte) {
 		for _, descriptor := range Descriptors() {
 			definition, err := LookupClause(descriptor.Clause, descriptor.Name)

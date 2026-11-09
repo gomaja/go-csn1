@@ -109,8 +109,8 @@ func TestEveryOrdinaryContentOrigin(t *testing.T) {
 			}
 		})
 	}
-	if roots != 43 {
-		t.Fatalf("source-coordinate roots %d, want 43", roots)
+	if roots != 44 {
+		t.Fatalf("source-coordinate roots %d, want 44", roots)
 	}
 }
 

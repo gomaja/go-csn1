@@ -509,18 +509,24 @@ func encodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTG
 func decodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTGroupSelector(r *runtime.Reader) (*NOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTGroup, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTCELLGLOBALCOUNTGroup(candidate)
@@ -569,18 +575,24 @@ func encodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTVSTKRANDValue(w 
 func decodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTVSTKRANDSelector(r *runtime.Reader) (*uint64, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNOTIFICATIONFACCHCELLGLOBALCOUNTChoiceCELLGLOBALCOUNTVSTKRANDValue(candidate)
@@ -887,18 +899,24 @@ func encodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessAMRCon
 func decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessAMRConfigSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessAMRConfigValue(candidate)
@@ -947,18 +965,24 @@ func encodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessPaging
 func decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessPagingCauseSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessPagingCauseValue(candidate)
@@ -1080,18 +1104,24 @@ func encodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessSMSDat
 func decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessSMSDataConfidentialityIndGroupSelector(r *runtime.Reader) (*NOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessSMSDataConfidentialityIndGroup, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeNOTIFICATIONFACCHPriorityUplinkAccessChoicePriorityUplinkAccessSMSDataConfidentialityIndGroup(candidate)
@@ -1508,18 +1538,24 @@ func encodePagingInformationEMLPPPriorityValue(w *runtime.Writer, v uint8) error
 func decodePagingInformationEMLPPPrioritySelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePagingInformationEMLPPPriorityValue(candidate)

@@ -546,6 +546,11 @@ TS 44.018	10.5.2.25e	RR Packet Downlink Assignment Type 2 value part
 TS 44.018	10.5.2.25e	RTTI Multiple Downlink Assignment DC struct
 TS 44.018	10.5.2.25e	RTTI Multiple Downlink Assignment SC struct
 TS 44.060	11.2.28b	Packet DBPSCH Uplink Ack/Nack message content
+TS 44.060	12.48a.1	EGPRS mode 2 IE
+TS 44.060	12.48a.6	BTTI Uplink TBF Assignment struct
+TS 44.060	12.48a.6	Multiple Uplink Assignment 2 IE
+TS 44.060	12.48a.6	RTTI Uplink TBF Assignment struct
+TS 44.060	12.48a.6	Timeslot description 2 struct
 TS 44.060	11.2.9b	3G Neighbour Cell Description struct
 TS 44.060	11.2.9b	Add Frequency list struct
 TS 44.060	11.2.9b	Add Iu Mode Only Cell List struct
@@ -618,6 +623,22 @@ TS 44.060	12.42	GPRS mode struct
 TS 44.060	12.42	PS Handover Radio Resources IE
 TS 44.060	12.42	Timeslot description struct
 TS 44.060	12.42	Uplink TBF Assignment struct
+TS 44.060	12.48	DTM Handover PS Radio Resources 2 IE
+TS 44.060	12.48	Extension Information
+TS 44.060	12.48	RLC Entity struct
+TS 44.060	12.64	Additional PFCs struct
+TS 44.060	12.64	DTM Handover PS Radio Resources 3 IE
+TS 44.060	12.64	Extension Information
+TS 44.060	12.64	RLC Entity struct
+TS 44.060	11.2.37	Additional PFCs struct
+TS 44.060	11.2.37	Assignment Info struct
+TS 44.060	11.2.37	Downlink TBF assignment struct
+TS 44.060	11.2.37	Multiple Downlink Assignment struct
+TS 44.060	11.2.37	Multiple Uplink Assignment struct
+TS 44.060	11.2.37	Packet CS Release message content
+TS 44.060	11.2.37	RLC Entity struct
+TS 44.060	11.2.37	Timeslot description struct
+TS 44.060	11.2.37	Uplink TBF Assignment struct
 TS 44.060	11.2.29	Access Technologies Request struct
 TS 44.060	11.2.29	Additional PFCs struct
 TS 44.060	11.2.29	Assignment Info struct
@@ -630,3 +651,6 @@ TS 44.060	11.2.29	Packet Uplink Assignment message content
 TS 44.060	11.2.29	RLC Entity Struct
 TS 44.060	11.2.29	Single Block Allocation struct
 TS 44.060	11.2.26	Packet TBF Release message content
+TS 44.060	12.42a	CCN Support Description struct
+TS 44.060	12.42a	Extension Information
+TS 44.060	12.42a	PS Handover Radio Resources 2 IE

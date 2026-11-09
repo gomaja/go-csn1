@@ -224,6 +224,16 @@ Canonical and CanonicalAtLength operations and descriptors at §10.5.2.20.
 
 The same printed `PEO IMM Cell Group Details struct` appears in TS 44.018 §§10.5.2.16–18 and .25. Its Go type names receive a clause suffix such as `Clause105216`, while registry keys retain the printed name and exact clause. `restoctets.Lookup` rejects that unqualified name as ambiguous; `restoctets.LookupClause` resolves it.
 
+Classmark 2's type, codecs and `ReceivedA52` method belong to
+`ts24008/classmark`. Resolve its printed name with
+`classmark.Lookup("Mobile Station Classmark 2 value part")`.
+`ts36331/uecapability.Lookup` resolves `geran-cs` and `geran-ps`; both packages
+also expose `LookupClause` for clause-qualified names and return their own
+descriptors through `Descriptors`. `GERANCS.Classmark2` has
+type `classmark.Classmark2ValuePart`. The registry lists the same descriptors
+in standard, clause, name and context order and builds its catalogue and lookup
+indexes on first use. Importing the registry alone does not build them.
+
 The compiler turns a printed CSN.1 name into a Go identifier by joining runs of letters and digits, capitalizing each run, preserving existing uppercase runs, and prefixing `N` when the result begins with a digit. Anonymous optionals with one labeled value become pointers named after that value, such as `A5Bits *A5Bits`. An optional with several values becomes a pointer to a content-named `Group` struct. Multi-way choices use a content-named type and alternative fields named from labels unique to each branch; unlabeled branches use their bit pattern, such as `Alt01`. Repetitions contain element structs. Repeated labels in the same parent receive `Variant2`, `Variant3`, and so on; inserting a field with a different label does not rename existing public types. Repeated printed names across clauses receive deterministic clause suffixes in Go; an unresolved identifier collision stops generation.
 
 ## Local integration tests
@@ -411,7 +421,9 @@ Ordinary selector-free RLC/MAC control content uses block origin 14, phase 6. DB
 | --- | --- | --- |
 | TS 44.018 §10.5.2.25e | `ts44018/packetdlassignment2` | RR Packet Downlink Assignment Type 2 value part |
 | TS 44.060 §11.2.28b | `ts44060/dbpschuplinkack2` | Packet DBPSCH Uplink Ack/Nack message content |
+| TS 44.060 §12.48a.1 | `ts44060/egprsmode2` | EGPRS mode 2 IE |
 | TS 44.060 §12.51 | `ts44060/ies` | GSM Priority Parameters IE |
+| TS 44.060 §12.48a.6 | `ts44060/multipleuplinkassignment2` | Multiple Uplink Assignment 2 IE |
 | TS 44.060 §11.2.9b | `ts44060/packetmeasurementorder` | Packet Measurement Order message content |
 
 Ordinary selector-free RLC/MAC control content uses block origin 14, phase 6. DBPSCH roots retain their own printed message selector. The caller supplies the documented enclosing extent. Received earlier-release ignored tails replay exactly. A named canonical encoder refuses a requested extent it cannot fill, using its documented typed extent error.
@@ -458,32 +470,62 @@ Fourteen EC-RACH contexts from TS 44.018 table 9.1.65.2 are selected; the ten ta
 
 Content roots retain their authenticated block coordinates. Packet Resource Request imports the selected MS Radio Access Capability 2 IE sender policy. PS Handover Radio Resources derives allocation counts from its enclosing typed value.
 
-## Uplink assignment publication
+## Uplink assignment, DTM handover and CS release publications
 
 | Standard and clause | Package | Printed root | Printed context |
 | --- | --- | --- | --- |
+| TS 44.060 §12.48 | `ts44060/dtmhandover2` | DTM Handover PS Radio Resources 2 IE |  |
+| TS 44.060 §12.64 | `ts44060/dtmhandover3` | DTM Handover PS Radio Resources 3 IE |  |
+| TS 44.060 §11.2.37 | `ts44060/packetcsreleaseindication` | Packet CS Release message content |  |
 | TS 44.060 §11.2.29 | `ts44060/packetuplinkassignment` | Packet Uplink Assignment message content |  |
 
 Content roots retain their authenticated block coordinates. The publications retain typed receiver-only error regions and source-derived allocation reference paths.
 
-## TBF release publication
+## TBF release and PS handover publications
 
 | Standard and clause | Package | Printed root | Printed context |
 | --- | --- | --- | --- |
 | TS 44.060 §11.2.26 | `ts44060/ecmessages` | Packet TBF Release message content |  |
+| TS 44.060 §12.42a | `ts44060/pshandover2` | PS Handover Radio Resources 2 IE |  |
 
 Content roots retain their authenticated block coordinates. The publications retain typed receiver-only error regions and complete earlier-release extension prefixes.
 
-## Held assignment clauses
+## BTTI USF count reading
 
-TS 44.060 V19.0.0 §§12.48a.6, 12.48a.1, 12.42a, 12.48, 12.64 and 11.2.37 are not published. The printed USF count in the §12.48a.6 BTTI Uplink TBF Assignment struct conflicts with its field text and with its RTTI sister struct. These clauses remain held pending resolution.
+TS 44.060 V19.0.0 §12.48a.6 repeats the optional USF `val(N_TS)` times
+after the first USF, following the text reading approved on 2026-11-07. The
+printed count gives one USF more than the assigned timeslots; the field text
+and the RTTI struct of the same clause give one per timeslot. The source leaf
+remains unchanged; the authenticated source binding records this reading.
 
-Classmark 2's type, codecs and `ReceivedA52` method belong to
-`ts24008/classmark`. Resolve its printed name with
-`classmark.Lookup("Mobile Station Classmark 2 value part")`.
-`ts36331/uecapability.Lookup` resolves `geran-cs` and `geran-ps`; both packages
-also expose `LookupClause` for clause-qualified names and return their own
-descriptors through `Descriptors`. `GERANCS.Classmark2` has
-type `classmark.Classmark2ValuePart`. The registry lists the same descriptors
-in standard, clause, name and context order and builds its catalogue and lookup
-indexes on first use. Importing the registry alone does not build them.
+## CN Domain source edition
+
+TS 44.118 V11.0.0 §§9.3.15–9.3.16 supplies source-only CN Domain IE evidence.
+This edition avoids the withdrawal of Release 12 onward and the conflicting
+Release 14 status in the 3GPP record. The selected text matches V14.0.0 and
+V16.0.0 exactly.
+
+## Truncated extension descriptions
+
+Length-delimited and fixed-size descriptions follow TS 44.060 V19.0.0 §11.1.4.4
+inside their bound: when the bound ends inside a component of the truncated
+concatenation, the reader keeps the complete components before it and ignores
+the cut one, whether or not the description has an error branch. The current
+published grammars reach this rule in EPD A/N Extension Info (§11.2.6a) and Extension
+Information in §§12.24, 12.42a, 12.48 and 12.64. A definition shared with a
+published root outside such a bound stops generation with both contexts. A
+definition's own public entry points are exempt from that context check. Any
+other syntax error in the description still takes its error branch, or is
+rejected when there is no error branch. Replay keeps the ignored bits
+exactly. Canonical encoding writes the remaining bits as zeros only when
+they cannot complete the cut component. A zero Go value whose mandatory
+choice has no selected arm cannot encode a complete component: if the bound
+is long enough to complete one, canonical encoding returns
+`*runtime.BoundError` with `Kind: runtime.LengthBound`. It does not invent an
+alternative. Nonzero components that do not fit are also refused. This
+applies through the containing IE's canonical encoder as well. The zero
+default in the §12.24 note is a receiver rule; canonical bytes must still
+decode to the same typed value. Decoded on their own from bytes,
+these descriptions have no bound and report a cut component as truncated
+input. Replay through the reader/writer APIs supplies the same bit bound, and
+the generated byte codecs of the containing values supply it themselves.

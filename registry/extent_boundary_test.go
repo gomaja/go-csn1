@@ -28,8 +28,8 @@ func TestDescriptorReaderEmptyMatchesByte(t *testing.T) {
 // The extent describes canonical bytes; receivers may retain excess input.
 func TestDescriptorDecodeEntryPointBoundaries(t *testing.T) {
 	descriptors := registry.Descriptors()
-	if len(descriptors) != 632 {
-		t.Fatalf("catalogue has %d descriptors, want 632", len(descriptors))
+	if len(descriptors) != 656 {
+		t.Fatalf("catalogue has %d descriptors, want 656", len(descriptors))
 	}
 	for _, d := range descriptors {
 		checkDescriptorTypedBoundaries(t, d)
