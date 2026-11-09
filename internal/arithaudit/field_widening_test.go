@@ -115,6 +115,40 @@ type Middle struct {Bits uint8;Extra *uint8}`
 	}
 }
 
+func TestGeneratedPacketCSReleaseAllocationFieldWidening(t *testing.T) {
+	const name = "ts44060/packetcsreleaseindication/generated.go"
+	checker := &citationChecker{root: filepath.Join("..", ".."), files: make(map[string]citationFile)}
+	file, err := checker.source(name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	findings, err := ScanSource(name, file.source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := 0
+	for _, finding := range findings {
+		if finding.Kind != "conversion" || !strings.HasPrefix(finding.Expression, "uint64(") || !strings.Contains(finding.Expression, "v.DownlinkAssignmentChoice.") {
+			continue
+		}
+		fn := functionAt(file, finding.Line)
+		if fn == nil {
+			t.Fatalf("field conversion outside a function: %s", finding.Key())
+		}
+		handled, err := checker.checkAllocationFieldWidening(file, fn, finding)
+		if !handled || err != nil {
+			t.Fatalf("imported allocation field: handled=%t err=%v", handled, err)
+		}
+		if err := checker.checkGeneratedResidual(finding); err != nil {
+			t.Fatal(err)
+		}
+		checked++
+	}
+	if checked != 4 {
+		t.Fatalf("checked %d imported allocation field conversions, want 4", checked)
+	}
+}
+
 func TestAllocationFieldWideningBindsOccurrence(t *testing.T) {
 	const source = `package codec
 type Root struct{Bits uint8}

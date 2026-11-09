@@ -250,7 +250,7 @@ func TestBoundConflictIsTyped(t *testing.T) {
 // fmt.Errorf; a missing enclosing value wraps runtime.ErrContextRequired.
 func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	files, err := filepath.Glob(filepath.Join("..", "ts*", "*", "generated.go"))
-	if err != nil || len(files) != 56 {
+	if err != nil || len(files) != 62 {
 		t.Fatalf("generated files %v, %v", files, err)
 	}
 	var omitted, length, lengthField, context, wholeOctet int
@@ -275,8 +275,9 @@ func TestGeneratedBoundConflictsAreTyped(t *testing.T) {
 	// remainder to fill the containing extent; both cell-data continuations add
 	// exact containing-octet bounds; the IA length field bounds both choice arms;
 	// a standalone continuation container has no enclosing value in either
-	// its reader or its writer.
-	if omitted == 0 || length != 6 || wholeOctet != 1 || lengthField != 2 || context != 2 {
+	// its reader or its writer. The five extension descriptions add 48
+	// whole-component canonical guards under TS 44.060 §11.1.4.4.
+	if omitted == 0 || length != 54 || wholeOctet != 1 || lengthField != 2 || context != 2 {
 		t.Fatalf("typed bound checks: %d omitted-field, %d length (%d whole-octet), %d length-field, %d context", omitted, length, wholeOctet, lengthField, context)
 	}
 }

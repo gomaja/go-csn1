@@ -475,18 +475,24 @@ func encodeDynamicARFCNMappingDescriptionStructDMCHANGEMARKValue(w *runtime.Writ
 func decodeDynamicARFCNMappingDescriptionStructDMCHANGEMARKSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeDynamicARFCNMappingDescriptionStructDMCHANGEMARKValue(candidate)
@@ -763,18 +769,24 @@ func encodePSI8MessageContentPAGEMODEGroupFallbackKnownCBCHChannelDescriptionVal
 func decodePSI8MessageContentPAGEMODEGroupFallbackKnownCBCHChannelDescriptionSelector(r *runtime.Reader) (*CBCHChannelDescriptionStruct, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePSI8MessageContentPAGEMODEGroupFallbackKnownCBCHChannelDescriptionValue(candidate)
@@ -878,18 +890,24 @@ func encodePSI8MessageContentPAGEMODEGroupFallbackKnownDynamicARFCNMappingDescri
 func decodePSI8MessageContentPAGEMODEGroupFallbackKnownDynamicARFCNMappingDescriptionChoiceDynamicARFCNMappingDescriptionDynamicARFCNMappingDescriptionSelector(r *runtime.Reader) (*DynamicARFCNMappingDescriptionStruct, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodePSI8MessageContentPAGEMODEGroupFallbackKnownDynamicARFCNMappingDescriptionChoiceDynamicARFCNMappingDescriptionDynamicARFCNMappingDescriptionValue(candidate)

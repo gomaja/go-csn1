@@ -374,33 +374,23 @@ func TestEPDANExtensionInfoArms(t *testing.T) {
 }
 
 func TestEGPRSAckMessageExtensionTypes(t *testing.T) {
-	// §11.2.6a pp14469–14480: complete release groups end after
-	// 3, 4 and 6 bits. Cuts inside a group select the printed ignored arm.
+	// §§11.1.4.4, 11.2.6a pp14469–14480: every zero-filled extension
+	// keeps its complete release groups and ignores a cut component. This
+	// includes a bound ending at an optional selector within a group.
 	for dual := 0; dual < 2; dual++ {
 		for index := 0; index < 64; index++ {
-			width := index + 1
-			if dual == 1 && index < 6 {
-				width = index + 65
-			}
 			bits := ackMessageFrame(index, dual, "", 0)
 			v, _, err := readAckMessage(t, bits, dual)
 			if err != nil {
 				t.Fatal(err)
 			}
 			content := v.EPDANExtensionLengthIndexGroup.Content
-			known := width == 3 || width == 4 || width >= 6
-			if known {
-				if content.Known == nil || content.Ignored != nil || content.Alternative != EGPRSPacketDownlinkAckNackMessageContentEPDANExtensionLengthIndexGroupEPDANExtensionInfoEPDANExtensionInfoFallbackAlternativeKnown {
-					t.Fatalf("dual%d/index%d: valid extension degraded to raw bits", dual, index)
-				}
-				value := content.Known
-				if value.Group.IuModeChannelRequestDescription != nil || value.Group.RBId != nil || value.Group.TimeslotNumber != nil || value.ExtendedChannelRequestDescription != nil || value.Group2.EARLYTBFESTABLISHMENT != 0 || value.Group2.SecondaryDualCarrierChannelReport != nil {
-					t.Fatalf("dual%d/index%d: zero extension acquired fields", dual, index)
-				}
-			} else {
-				if content.Ignored == nil || content.Known != nil || content.Alternative != EGPRSPacketDownlinkAckNackMessageContentEPDANExtensionLengthIndexGroupEPDANExtensionInfoEPDANExtensionInfoFallbackAlternativeIgnored || content.Ignored.BitLength != width || !bytes.Equal(content.Ignored.Bytes, make([]byte, (width+7)/8)) {
-					t.Fatalf("dual%d/index%d: ignored extension lost its exact extent", dual, index)
-				}
+			if content.Known == nil || content.Ignored != nil || content.Alternative != EGPRSPacketDownlinkAckNackMessageContentEPDANExtensionLengthIndexGroupEPDANExtensionInfoEPDANExtensionInfoFallbackAlternativeKnown {
+				t.Fatalf("dual%d/index%d: valid extension degraded to raw bits", dual, index)
+			}
+			value := content.Known
+			if value.Group.IuModeChannelRequestDescription != nil || value.Group.RBId != nil || value.Group.TimeslotNumber != nil || value.ExtendedChannelRequestDescription != nil || value.Group2.EARLYTBFESTABLISHMENT != 0 || value.Group2.SecondaryDualCarrierChannelReport != nil {
+				t.Fatalf("dual%d/index%d: zero extension acquired fields", dual, index)
 			}
 		}
 	}

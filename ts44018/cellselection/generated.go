@@ -1053,18 +1053,24 @@ func encodeUTRANFDDDescriptionStructBandwidthFDDValue(w *runtime.Writer, v uint8
 func decodeUTRANFDDDescriptionStructBandwidthFDDSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructBandwidthFDDValue(candidate)
@@ -1255,18 +1261,24 @@ func encodeUTRANFDDDescriptionStructFDDIndic0Group(w *runtime.Writer, v UTRANFDD
 func decodeUTRANFDDDescriptionStructFDDIndic0GroupSelector(r *runtime.Reader) (*UTRANFDDDescriptionStructFDDIndic0Group, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANFDDDescriptionStructFDDIndic0Group(candidate)
@@ -1376,18 +1388,24 @@ func encodeUTRANTDDDescriptionStructBandwidthTDDValue(w *runtime.Writer, v uint8
 func decodeUTRANTDDDescriptionStructBandwidthTDDSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructBandwidthTDDValue(candidate)
@@ -1578,18 +1596,24 @@ func encodeUTRANTDDDescriptionStructTDDIndic0Group(w *runtime.Writer, v UTRANTDD
 func decodeUTRANTDDDescriptionStructTDDIndic0GroupSelector(r *runtime.Reader) (*UTRANTDDDescriptionStructTDDIndic0Group, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeUTRANTDDDescriptionStructTDDIndic0Group(candidate)
@@ -1731,18 +1755,24 @@ func encodeEUTRANDescriptionStructMeasurementBandwidthValue(w *runtime.Writer, v
 func decodeEUTRANDescriptionStructMeasurementBandwidthSelector(r *runtime.Reader) (*uint8, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructMeasurementBandwidthValue(candidate)
@@ -1772,18 +1802,24 @@ func encodeEUTRANDescriptionStructNotAllowedCellsValue(w *runtime.Writer, v ies.
 func decodeEUTRANDescriptionStructNotAllowedCellsSelector(r *runtime.Reader) (*ies.PCIDGroupIE, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructNotAllowedCellsValue(candidate)
@@ -1832,18 +1868,24 @@ func encodeEUTRANDescriptionStructTARGETPCIDValue(w *runtime.Writer, v uint16) e
 func decodeEUTRANDescriptionStructTARGETPCIDSelector(r *runtime.Reader) (*uint16, error) {
 	var failures runtime.ChoiceErrors
 	defer failures.Release()
+	var truncatedErr error
 	candidate := failures.ForkScoped(r)
 	if err := candidate.Expect("0"); err == nil {
 		r.Commit(candidate)
 		return nil, nil
 	} else {
 		failures.Track(err)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
 	}
 	discardReader(candidate)
 	candidate = failures.ForkScoped(r)
 	if err := candidate.Expect("1"); err != nil {
 		failures.Track(err)
 		discardReader(candidate)
+		truncatedErr = runtime.PreferTruncation(truncatedErr, err)
+		if truncatedErr != nil {
+			return nil, failures.Keep(r, truncatedErr)
+		}
 		return nil, r.Error(runtime.InvalidBranch, "optional selector has no matching alternative")
 	}
 	v, err := decodeEUTRANDescriptionStructTARGETPCIDValue(candidate)

@@ -55,14 +55,27 @@ func readerBoundTo(t *testing.T, data []byte) *runtime.Reader {
 	return r
 }
 
-// knownReaderDifference reports the one entry-point difference the catalogue
-// keeps: in TS 44.018 V19.0.0 §10.5.2.37h, NR OF CONTAINER OCTETS 31 makes the
-// container run to the end of the enclosing SI value. The byte entry point has
-// no enclosing value and refuses it; a bounded reader supplies one, and can
-// then either decode the container or reject its content under that extent.
-func knownReaderDifference(d runtime.Descriptor, byteErr error) bool {
-	return d.Standard == "TS 44.018" && d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" &&
-		errors.Is(byteErr, runtime.ErrContextRequired)
+// knownReaderDifference covers explicit containing extents. TS 44.018
+// V19.0.0 §10.5.2.37h requires one for NR OF CONTAINER OCTETS 31.
+// TS 44.060 V19.0.0 §11.1.4.4 also accepts complete extension components
+// when the supplied bound ends inside the next one; standalone byte decoding
+// has no such description bound and keeps its strict truncation policy.
+func knownReaderDifference(d runtime.Descriptor, byteErr, readerErr error) bool {
+	if d.Standard == "TS 44.018" && d.Clause == "10.5.2.37h" && d.Name == "Non-GSM Message struct" && errors.Is(byteErr, runtime.ErrContextRequired) {
+		return true
+	}
+	if d.Standard != "TS 44.060" || readerErr != nil {
+		return false
+	}
+	var cut *runtime.DecodeError
+	if !errors.As(byteErr, &cut) || cut.Kind != runtime.Truncated {
+		return false
+	}
+	switch d.Clause + "/" + d.Name {
+	case "12.24/Extension Information", "11.2.6a/EPD A/N Extension Info", "12.42a/Extension Information", "12.48/Extension Information", "12.64/Extension Information":
+		return true
+	}
+	return false
 }
 
 // sameReaderError compares the public diagnostics, including errors wrapped by
@@ -93,7 +106,7 @@ func TestReaderEntryMatchesByteEntry(t *testing.T) {
 	rng := rand.New(rand.NewSource(20261026))
 	compare := func(d runtime.Descriptor, form string, data []byte, byteValue any, byteErr error, readerValue any, readerErr error) {
 		t.Helper()
-		if form != "report" && form != "report context" && knownReaderDifference(d, byteErr) {
+		if form != "report" && form != "report context" && knownReaderDifference(d, byteErr, readerErr) {
 			return
 		}
 		if form != "report" && form != "report context" {

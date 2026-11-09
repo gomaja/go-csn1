@@ -84,8 +84,14 @@ func TestIgnoredExtensionBitsThatDecodeAsKnownAreRejected(t *testing.T) {
 			}
 		}
 	}
-	if outcomes[true] == 0 || outcomes[false] == 0 {
-		t.Fatalf("outcomes %v do not cover both arms", outcomes)
+	// Every non-reserved bit string is a complete or cut known description
+	// (TS 44.060 V19.0.0 §§11.1.4.4, 12.24). Reserved values retain their
+	// source-table error; a cut must not manufacture a raw fallback value.
+	if outcomes[true] != 0 {
+		t.Fatalf("%d source-valid extensions degraded to raw bits", outcomes[true])
+	}
+	if reservedInputs == 0 || outcomes[false] == reservedInputs {
+		t.Fatalf("outcomes %v with %d reserved inputs do not cover known and reserved values", outcomes, reservedInputs)
 	}
 	t.Logf("kept as ignored %d, decoded through the known arm %d, reserved %d", outcomes[true], outcomes[false]-reservedInputs, reservedInputs)
 }

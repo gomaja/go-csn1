@@ -824,6 +824,19 @@ func TestCanonicalDocsListExactlyReachableErrors(t *testing.T) {
 				record(entryAtLength, err, 23)
 			}
 
+			if d.Standard == "TS 44.060" && d.Clause == "12.48a.1" && d.Name == "EGPRS mode 2 IE" {
+				canonicalAssignmentImportedErrors(t, d, record)
+			}
+
+			if d.Standard == "TS 44.060" && d.Clause == "12.42a" && d.Name == "PS Handover Radio Resources 2 IE" {
+				canonicalHandoverExtensionBound(t, d, record)
+			}
+
+			if d.Standard == "TS 44.060" && d.Clause == "11.2.37" && d.Name == "Packet CS Release message content" {
+				canonicalReleaseImportedErrors(t, d, record)
+				canonicalReleaseUnfilledError(t, d, record)
+			}
+
 			// TS 24.007 V20.0.0 Annex B.1.1.2 p3987-3988: a
 			// deliberately selected null cannot supply remaining positions.
 			// Byte-aligned decode seeds cannot reach these fresh layouts.

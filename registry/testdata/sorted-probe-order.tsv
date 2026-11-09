@@ -574,6 +574,11 @@ TS 44.060	11.2.9b	SI13_PBCCH_LOCATION struct
 TS 44.060	11.2.9b	UTRAN CSG Cells Reporting Description struct
 TS 44.060	11.2.9b	UTRAN FDD Description struct
 TS 44.060	11.2.9b	UTRAN TDD Description struct
+TS 44.060	12.48a.1	EGPRS mode 2 IE
+TS 44.060	12.48a.6	BTTI Uplink TBF Assignment struct
+TS 44.060	12.48a.6	Multiple Uplink Assignment 2 IE
+TS 44.060	12.48a.6	RTTI Uplink TBF Assignment struct
+TS 44.060	12.48a.6	Timeslot description 2 struct
 TS 44.060	12.51	GSM Priority Parameters IE
 TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"4 (CC1)","prefix":"01","suffix":"Spare"}
 TS 44.018	9.1.65	EC MULTILATERATION REQUEST message content (Access Burst method)	{"table":"9.1.65.2","training_sequence":"5 (CC2)","prefix":"01","suffix":"1"}
@@ -629,4 +634,23 @@ TS 44.060	11.2.29	Packet Uplink Assignment message content
 TS 44.060	11.2.29	RLC Entity Struct
 TS 44.060	11.2.29	Single Block Allocation struct
 TS 44.060	11.2.29	extension
+TS 44.060	11.2.37	Additional PFCs struct
+TS 44.060	11.2.37	Assignment Info struct
+TS 44.060	11.2.37	Downlink TBF assignment struct
+TS 44.060	11.2.37	Multiple Downlink Assignment struct
+TS 44.060	11.2.37	Multiple Uplink Assignment struct
+TS 44.060	11.2.37	Packet CS Release message content
+TS 44.060	11.2.37	RLC Entity struct
+TS 44.060	11.2.37	Timeslot description struct
+TS 44.060	11.2.37	Uplink TBF Assignment struct
+TS 44.060	12.48	DTM Handover PS Radio Resources 2 IE
+TS 44.060	12.48	Extension Information
+TS 44.060	12.48	RLC Entity struct
+TS 44.060	12.64	Additional PFCs struct
+TS 44.060	12.64	DTM Handover PS Radio Resources 3 IE
+TS 44.060	12.64	Extension Information
+TS 44.060	12.64	RLC Entity struct
 TS 44.060	11.2.26	Packet TBF Release message content
+TS 44.060	12.42a	CCN Support Description struct
+TS 44.060	12.42a	Extension Information
+TS 44.060	12.42a	PS Handover Radio Resources 2 IE

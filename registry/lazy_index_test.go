@@ -95,7 +95,7 @@ func TestRegistryConcurrentFirstUse(t *testing.T) {
 				d, err = LookupContext(standard, clause, name, "")
 			case 3:
 				entries := Descriptors()
-				if len(entries) != 632 {
+				if len(entries) != 656 {
 					t.Errorf("catalogue length %d", len(entries))
 				}
 				return

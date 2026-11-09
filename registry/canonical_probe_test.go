@@ -18,11 +18,14 @@ import (
 	"github.com/gomaja/go-csn1/ts44060/controlmessages"
 	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack"
 	"github.com/gomaja/go-csn1/ts44060/dbpschuplinkack2"
+	"github.com/gomaja/go-csn1/ts44060/dtmhandover2"
+	"github.com/gomaja/go-csn1/ts44060/dtmhandover3"
 	"github.com/gomaja/go-csn1/ts44060/ecmessages"
 	"github.com/gomaja/go-csn1/ts44060/mbmsassignment"
 	"github.com/gomaja/go-csn1/ts44060/mbmsmessages"
 	"github.com/gomaja/go-csn1/ts44060/measurementreport"
 	"github.com/gomaja/go-csn1/ts44060/neighbourcelldata"
+	"github.com/gomaja/go-csn1/ts44060/packetcsreleaseindication"
 	"github.com/gomaja/go-csn1/ts44060/packetmeasurementorder"
 	"github.com/gomaja/go-csn1/ts44060/packetsysteminformationtype3"
 	"github.com/gomaja/go-csn1/ts44060/packettimeslotreconfigure"
@@ -110,7 +113,7 @@ func TestCanonicalAllDefinitions(t *testing.T) {
 		}
 	}
 	t.Logf("definitions=%d vectors=%d accepted=%d rejected=%d failures=%d", len(defs), len(vectors), accepted, rejected, failures)
-	if len(defs) != 632 || len(vectors) != 38 {
+	if len(defs) != 656 || len(vectors) != 38 {
 		t.Fatalf("unexpected probe breadth: %d definitions and %d vectors", len(defs), len(vectors))
 	}
 }
@@ -389,8 +392,8 @@ func canonicalRegionRefusal(value any, err error) bool {
 	switch v := value.(type) {
 	case ecmessages.PacketTBFReleaseMessageContent:
 		received = v.ReceiverRegionEnds()
-	case packetuplinkassignment.PacketUplinkAssignmentMessageContent:
-		received = v.ReceiverRegionEnds()
+	case packetuplinkassignment.PacketUplinkAssignmentMessageContent, dtmhandover2.DTMHandoverPSRadioResources2IE, dtmhandover3.DTMHandoverPSRadioResources3IE, packetcsreleaseindication.PacketCSReleaseMessageContent:
+		received = v.(interface{ ReceiverRegionEnds() bool }).ReceiverRegionEnds()
 	case dbpschuplinkack2.PacketDBPSCHUplinkAckNackMessageContent:
 		received = v.MESSAGETYPEGroupFallback.Ignored != nil
 		if known := v.MESSAGETYPEGroupFallback.Known; known != nil {
@@ -587,6 +590,13 @@ func canonicalContainerReservation(d runtime.Descriptor, err error) bool {
 func canonicalReservedDesignationRefusal(d runtime.Descriptor, wire []byte, value any, err error) bool {
 	var extent *runtime.ExtentError
 	selected := map[string]string{"12.5.5": "PDCH Pairs Description IE", "12.48a.2": "Single Downlink Assignment 2 IE", "12.48a.3": "Single Uplink Assignment 2 IE", "12.48a.5": "Multiple Downlink Assignment 2 IE"}
+	selected["12.48a.6"] = "Multiple Uplink Assignment 2 IE"
+	selected["12.48a.1"] = "EGPRS mode 2 IE"
+	// TS 44.060 V19.0.0 §12.42a p23904 defines this receiver designation.
+	selected["12.42a"] = "PS Handover Radio Resources 2 IE"
+	// TS 44.060 V19.0.0 §§12.48 p24544 and 12.64 p25616.
+	selected["12.48"] = "DTM Handover PS Radio Resources 2 IE"
+	selected["12.64"] = "DTM Handover PS Radio Resources 3 IE"
 	if (d.Standard != "TS 44.060" || selected[d.Clause] != d.Name) && (d.Standard != "TS 44.018" || d.Clause != "10.5.2.25e" || d.Name != "RR Packet Downlink Assignment Type 2 value part") || !errors.As(err, &extent) || !extent.Required {
 		return false
 	}
@@ -596,6 +606,10 @@ func canonicalReservedDesignationRefusal(d runtime.Descriptor, wire []byte, valu
 	}
 	label := report.Regions[0].Label
 	allowed := label == runtime.PDCHPairsConfigurationError
+	if d.Standard == "TS 44.060" {
+		allowed = allowed || (d.Clause == "12.48" || d.Clause == "12.64") && label == runtime.TBFModeError
+		allowed = allowed || d.Clause == "12.42a" && label == runtime.FrequencyParametersError
+	}
 	if !allowed {
 		return false
 	}

@@ -1,0 +1,4 @@
+// Package multipleuplinkassignment2 contains source-selected CSN.1 codecs.
+//
+// TS 44.060 V19.0.0 §12.48a.6. Standalone callers provide the exact containing bit extent. Both GAMMA lists bind the enclosing explicit N_PAIRS (paragraphs 25040, 25046 and 25049), as do the selected RTTI per-pair USF lists. Ordinary senders check the count. Canonical encoding derives it on an independent copy and refuses incompatible selected lengths. A reserved imported PDCH designation ends the containing assignment, reports its received remainder and preserves the accepted typed prefix. Received values replay exactly; fresh and canonical senders refuse that designation. N_TS and N_PAIRS remain the printed explicit fields; no allocation projection is selected. Application procedures and prior assignment state remain with callers.
+package multipleuplinkassignment2
