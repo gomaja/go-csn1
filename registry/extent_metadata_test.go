@@ -48,7 +48,7 @@ func TestDescriptorExtentMetadataAgainstAcceptedSamples(t *testing.T) {
 	for _, d := range registry.Descriptors() {
 		t.Run(d.Standard+"/"+d.Clause+"/"+d.Name, func(t *testing.T) {
 			e := d.Extent
-			maxOctets := 0
+			maxOctets := explicitCarrierCeiling(d)
 			if e.Finite {
 				maxOctets = (e.MaximumBits + 7) / 8
 			}

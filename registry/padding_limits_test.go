@@ -144,6 +144,10 @@ func TestCanonicalRuntimeExtentRequiresUnresolvedCarrier(t *testing.T) {
 	if counts["unresolved-padding"] != 0 {
 		t.Errorf("unresolved-padding class must be empty: %d", counts["unresolved-padding"])
 	}
+	wantCounts := map[string]int{"source-capped": 409, "exact-or-restricted": 239, "caller-bounded-control": 6, "requires-ACS": 2}
+	if !reflect.DeepEqual(counts, wantCounts) {
+		t.Errorf("classification=%v want %v", counts, wantCounts)
+	}
 	t.Logf("classification: %v; descriptors=%d", counts, len(Descriptors()))
 }
 
@@ -245,6 +249,8 @@ func TestPaddingLimitPackageDocumentation(t *testing.T) {
 		path    string
 		phrases []string
 	}{
+		{"../ts44018/vgcsreconfigure/doc.go", []string{"default canonical ceiling is 251 octets", "§8.8.5 p2466", "EncodeVBSVGCSRECONFIGURECanonicalAtLengthUnacknowledged applies an upper bound of 23 octets", "DescriptorVBSVGCSRECONFIGUREForUnacknowledgedMode returns the descriptor with the same 23-octet upper bound", "§8.8.3 p2456/p2458 and §8.8.5 p2467", "No sender padding is added"}},
+		{"../ts44018/vgcsreconfigure2/doc.go", []string{"default canonical ceiling is 251 octets", "§8.8.5 p2466", "EncodeVBSVGCSRECONFIGURE2CanonicalAtLengthUnacknowledged applies an upper bound of 23 octets", "DescriptorVBSVGCSRECONFIGURE2ForUnacknowledgedMode returns the descriptor with the same 23-octet upper bound", "§8.8.3 p2456/p2458 and §8.8.5 p2467", "No sender padding is added"}},
 		{"../ts44018/ies/doc.go", []string{"Relating that length field to the total extent is unresolved", "canonical explicit lengths are capped at one octet"}},
 		{"../ts44018/messages/doc.go", []string{"authenticated EC-BCCH carrier maximum is 23 octets", "§9.1.47 defines Uplink free. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)", "§9.1.49b defines VGCS SMS Information. The containing message supplies the exact bit extent; the pinned SACCH Bter maximum is 21 octets (TS 44.006 V19.0.0 §8.8.3)", "§9.1.57 defines VGCS Neighbour Cell Information message. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)"}},
 		{"../ts44018/notification/doc.go", []string{"§9.1.21a defines Notification/FACCH. The containing message supplies the exact bit extent; the pinned main-DCCH Bter maximum is 23 octets (TS 44.006 V19.0.0 §8.8.3)"}},

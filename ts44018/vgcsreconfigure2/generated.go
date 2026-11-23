@@ -485,11 +485,11 @@ func EncodeVBSVGCSRECONFIGURE2Canonical(v VBSVGCSRECONFIGURE2) ([]byte, error) {
 	}
 }
 
+// Containing value maximum: TS 44.018 V19.0.0 §9.1.21i p7670, p7677–7683; TS 44.006 V19.0.0 §8.8.5 p2466, §8.5.1 p2246 (acknowledged L3 upper bound including its short header: 251 octets).
 // EncodeVBSVGCSRECONFIGURE2CanonicalAtLength encodes into the value length supplied by the
 // containing message, then checks that the bytes decode to an equivalent
-// typed value. No finite containing maximum is recorded from the printed source;
-// the runtime bit limit applies. It returns:
-//   - *runtime.ExtentError when octets is below 0 or above the runtime bit limit, or the
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..251 octets, or the
 //     encoding does not fill exactly octets;
 //   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
 //     not fit in octets;
@@ -498,7 +498,28 @@ func EncodeVBSVGCSRECONFIGURE2Canonical(v VBSVGCSRECONFIGURE2) ([]byte, error) {
 // that decode to a different typed value.
 func EncodeVBSVGCSRECONFIGURE2CanonicalAtLength(v VBSVGCSRECONFIGURE2, octets int) ([]byte, error) {
 	{
-		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 0, encodeVBSVGCSRECONFIGURE2Bytes, decodeVBSVGCSRECONFIGURE2Bytes, nil)
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 251, encodeVBSVGCSRECONFIGURE2Bytes, decodeVBSVGCSRECONFIGURE2Bytes, nil)
+		if operationErr != nil {
+			return operationValue, operationLocation2.failure(operationErr, "", -1, 0)
+		}
+		return operationValue, nil
+	}
+}
+
+// Unacknowledged-mode upper bound without adding sender padding: TS 44.018 V19.0.0 §9.1.21i p7670, p7677–7683; TS 44.006 V19.0.0 §5.1 p291, §8.8.3 p2456/p2458, §8.8.5 p2467 (unacknowledged main-DCCH Bter upper bound including its short header: 23 octets).
+// EncodeVBSVGCSRECONFIGURE2CanonicalAtLengthUnacknowledged encodes into the value length supplied by the
+// containing message, then checks that the bytes decode to an equivalent
+// typed value. It returns:
+//   - *runtime.ExtentError when octets is outside 0..23 octets, or the
+//     encoding does not fill exactly octets;
+//   - *runtime.BoundError with Kind runtime.CanonicalTarget when content does
+//     not fit in octets;
+//
+// Other errors are located *runtime.OperationError: a field value the grammar cannot carry, or bytes
+// that decode to a different typed value.
+func EncodeVBSVGCSRECONFIGURE2CanonicalAtLengthUnacknowledged(v VBSVGCSRECONFIGURE2, octets int) ([]byte, error) {
+	{
+		operationValue, operationErr := runtime.CanonicalEncodeAtLength(v, octets, 0, 23, encodeVBSVGCSRECONFIGURE2Bytes, decodeVBSVGCSRECONFIGURE2Bytes, nil)
 		if operationErr != nil {
 			return operationValue, operationLocation2.failure(operationErr, "", -1, 0)
 		}
@@ -508,7 +529,7 @@ func EncodeVBSVGCSRECONFIGURE2CanonicalAtLength(v VBSVGCSRECONFIGURE2, octets in
 func Definitions() []string { return []string{"VBS/VGCS RECONFIGURE2"} }
 
 var descriptorCatalogue = []runtime.Descriptor{
-	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21i", Name: "VBS/VGCS RECONFIGURE2", MaxOctets: 0, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21i"}}, Decode: descriptorDecodeVBSVGCSRECONFIGURE2, DecodeFrom: descriptorDecodeVBSVGCSRECONFIGURE2From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeVBSVGCSRECONFIGURE2), Encode: descriptorEncodeVBSVGCSRECONFIGURE2, Canonical: descriptorCanonicalVBSVGCSRECONFIGURE2, CanonicalAtLength: descriptorCanonicalAtLengthVBSVGCSRECONFIGURE2},
+	{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21i", Name: "VBS/VGCS RECONFIGURE2", MaxOctets: 251, Extent: runtime.Extent{MinimumBits: 152, MaximumBits: 0, Finite: false, Fixed: false, NeedsContext: true, Source: runtime.Source{Standard: "TS 44.018", Version: "19.0.0", Clause: "9.1.21i"}}, Decode: descriptorDecodeVBSVGCSRECONFIGURE2, DecodeFrom: descriptorDecodeVBSVGCSRECONFIGURE2From, DecodeWithCollector: descriptorIgnoreCollector(descriptorDecodeVBSVGCSRECONFIGURE2), Encode: descriptorEncodeVBSVGCSRECONFIGURE2, Canonical: descriptorCanonicalVBSVGCSRECONFIGURE2, CanonicalAtLength: descriptorCanonicalAtLengthVBSVGCSRECONFIGURE2},
 }
 
 func Descriptors() []runtime.Descriptor {
@@ -595,6 +616,25 @@ func descriptorCanonicalAtLengthVBSVGCSRECONFIGURE2(value any, octets int) ([]by
 		return nil, descriptorTypeError("canonical", "VBS/VGCS RECONFIGURE2", descriptorSourceVBSVGCSRECONFIGURE2)
 	}
 	return EncodeVBSVGCSRECONFIGURE2CanonicalAtLength(v, octets)
+}
+
+// DescriptorVBSVGCSRECONFIGURE2ForUnacknowledgedMode returns the root descriptor with its unacknowledged canonical upper bound.
+// TS 44.018 V19.0.0 §9.1.21i p7670, p7677–7683; TS 44.006 V19.0.0 §5.1 p291, §8.8.3 p2456/p2458, §8.8.5 p2467 (unacknowledged main-DCCH Bter upper bound including its short header: 23 octets).
+func DescriptorVBSVGCSRECONFIGURE2ForUnacknowledgedMode() runtime.Descriptor {
+	d, err := LookupClause("9.1.21i", "VBS/VGCS RECONFIGURE2")
+	if err != nil {
+		panic(err)
+	}
+	d.MaxOctets = 23
+	d.CanonicalAtLength = descriptorCanonicalAtLengthVBSVGCSRECONFIGURE2Unacknowledged
+	return d
+}
+func descriptorCanonicalAtLengthVBSVGCSRECONFIGURE2Unacknowledged(value any, octets int) ([]byte, error) {
+	v, ok := descriptorUnwrapVBSVGCSRECONFIGURE2(value)
+	if !ok {
+		return nil, descriptorTypeError("canonical", "VBS/VGCS RECONFIGURE2", descriptorSourceVBSVGCSRECONFIGURE2)
+	}
+	return EncodeVBSVGCSRECONFIGURE2CanonicalAtLengthUnacknowledged(v, octets)
 }
 
 //go:noinline
