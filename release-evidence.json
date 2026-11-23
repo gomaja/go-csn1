@@ -2,10 +2,10 @@
   "runtime_contract": {
     "revision": "381cddace8f2aa9be95a11f27f4651195865493c",
     "api_sha256": "de761adc3a683d0d3283c0017936bf5fbf7c411bd8014d9f7ce0e24b7b3c9dc3",
-    "api_ledger_sha256": "93900b435bac539779eac90f5844f5b8251b9ec833a64ddf69f406d3c3f3eb27"
+    "api_ledger_sha256": "697b93ea474c5f52a3c7d3044c67f5a684c3394efd46a02ff51e49f3b8b7cf13"
   },
   "schema_version": 1,
-  "compiler_commit": "5163e4dc514dfa4ff95c7d22449ba41fadf21ec8",
+  "compiler_commit": "877fa417ca34af428c6ea3edf91a6f9faaf5721d",
   "sources": [
     {
       "standard": "TS 24.008",
@@ -5364,11 +5364,11 @@
     },
     {
       "path": "ts44018/vgcsreconfigure/generated.go",
-      "sha256": "16f4b1a2c6c7d71809df8b1885fca4f794fc9ba117e6898d086a21dfd00f454d"
+      "sha256": "41ce145d555d3b3996428a635e38c742012d19df588d7499df843ed8defa361b"
     },
     {
       "path": "ts44018/vgcsreconfigure2/generated.go",
-      "sha256": "8d270f7e21a655975b22e2f7ed0264fa613fc616e3b6306877377b9f685f765e"
+      "sha256": "a0ee3579832a03a734f4dbeaca1fbff236477806169ba9dc866d99283ceeeec6"
     },
     {
       "path": "ts44060/access/generated.go",

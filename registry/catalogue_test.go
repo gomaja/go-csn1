@@ -22,7 +22,7 @@ func TestCatalogueIsDetachedAndOrdered(t *testing.T) {
 		if d.Extent.Finite && d.MaxOctets != (d.Extent.MaximumBits+7)/8 {
 			t.Errorf("%s: inconsistent finite ceiling", d.Name)
 		}
-		if !d.Extent.Finite && d.MaxOctets != 0 {
+		if !d.Extent.Finite && d.MaxOctets != explicitCarrierCeiling(d) {
 			t.Errorf("%s: invented finite ceiling", d.Name)
 		}
 		if d.Extent.Fixed && (!d.Extent.Finite || d.Extent.MinimumBits != d.Extent.MaximumBits) {
@@ -136,4 +136,18 @@ func TestLookupErrorsAreLocated(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+}
+
+// The roots selected by TS 44.018 V19.0.0 §§9.1.21h–9.1.21i retain
+// explicit canonical extents while MaxOctets publishes the carrier ceiling.
+// TS 44.006 V19.0.0 §8.8.5 p2466 supplies the default 251-octet cap;
+// the grammar interval and tolerant receiver extent remain independent.
+func explicitCarrierCeiling(d runtime.Descriptor) int {
+	if d.Standard == "TS 44.018" && d.Version == "19.0.0" {
+		switch d.Clause + "/" + d.Name {
+		case "9.1.21h/VBS/VGCS RECONFIGURE", "9.1.21i/VBS/VGCS RECONFIGURE2":
+			return 251
+		}
+	}
+	return 0
 }
